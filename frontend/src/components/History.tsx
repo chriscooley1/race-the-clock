@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTheme } from "../context/ThemeContext";
+import "./History.css"; // Import the CSS file
 
 interface HistoryProps {
   onLoad: (sequence: string[]) => void;
@@ -11,22 +11,16 @@ const History: React.FC<HistoryProps> = ({ onLoad }) => {
     return savedHistory ? JSON.parse(savedHistory) : [];
   });
 
-  const { theme } = useTheme(); // Access theme from ThemeContext
-
   const handleLoad = (sequence: string) => {
     const newSequence = sequence.split(",").map(item => item.trim());
-    onLoad(newSequence); // Assuming onLoad is a prop function to set the sequence
-    setHistory(prevHistory => [...prevHistory, sequence]); // Update history with new sequence
+    onLoad(newSequence);
+    setHistory(prevHistory => [...prevHistory, sequence]);
   };
 
   return (
-    <div style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
+    <div className="history-container">
       {history.map((sequence, index) => (
-        <button
-          key={index}
-          onClick={() => handleLoad(sequence)}
-          style={{ color: theme.color, backgroundColor: theme.backgroundColor }}
-        >
+        <button key={index} className="history-button" onClick={() => handleLoad(sequence)}>
           {sequence}
         </button>
       ))}

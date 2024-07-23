@@ -1,29 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { createSequence } from '../api';
-import { useTheme } from "../context/ThemeContext"; // Import useTheme
-
-interface SettingsProps {
-  onUpdate: (sequence: string[], speed: number) => void;
-  userId: number;
-}
+import { useTheme } from '../context/ThemeContext';
+import "./Settings.css";
 
 const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [input, setInput] = useState("");
   const [speed, setSpeed] = useState(500);
-  const [quantity, setQuantity] = useState(10); // New state for quantity
-
-  const { theme } = useTheme(); // Access theme from ThemeContext
-
-  useEffect(() => {
-    const savedInput = localStorage.getItem("inputSequence");
-    if (savedInput) {
-      setInput(savedInput);
-    }
-  }, []);
+  const [quantity, setQuantity] = useState(10);
+  const { setTheme } = useTheme();
 
   const handleUpdate = async () => {
     const sequence = input.split(",").map((item) => item.trim());
-    console.log("Updating with sequence:", sequence, "and speed:", speed);
     onUpdate(sequence, speed);
     localStorage.setItem("inputSequence", input);
     try {
@@ -44,19 +31,34 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     setInput(numbers.join(", "));
   };
 
+  const switchToDarkMode = () => {
+    setTheme({
+      backgroundColor: '#333',
+      color: '#fff',
+      // other dark theme properties
+    });
+  };
+
+  const switchToBlueTheme = () => {
+    setTheme({
+      backgroundColor: '#cceeff',
+      color: '#003366',
+      // other blue theme properties
+    });
+  };
+
   return (
-    <div style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
-      <div>
+    <div className="settings-container">
+      <div className="input-field">
         <label htmlFor="sequenceInput">Sequence (comma-separated):</label>
         <textarea
           id="sequenceInput"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter letters or words separated by commas"
-          style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
         />
       </div>
-      <div>
+      <div className="input-field">
         <label htmlFor="speedInput">Speed (milliseconds):</label>
         <input
           id="speedInput"
@@ -64,10 +66,9 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           value={speed}
           onChange={(e) => setSpeed(Number(e.target.value))}
           placeholder="Enter speed in milliseconds"
-          style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
         />
       </div>
-      <div>
+      <div className="input-field">
         <label htmlFor="quantityInput">Quantity:</label>
         <input
           id="quantityInput"
@@ -76,14 +77,17 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           onChange={(e) => setQuantity(Number(e.target.value))}
           placeholder="Enter quantity"
           min="1"
-          style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
         />
       </div>
       <div>
-        <button onClick={generateRandomLetters} style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>Generate Random Letters</button>
-        <button onClick={generateRandomNumbers} style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>Generate Random Numbers</button>
+        <button onClick={generateRandomLetters}>Generate Random Letters</button>
+        <button onClick={generateRandomNumbers}>Generate Random Numbers</button>
       </div>
-      <button onClick={handleUpdate} style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>Update</button>
+      <button onClick={handleUpdate}>Update</button>
+      <div>
+        <button onClick={switchToDarkMode}>Dark Mode</button>
+        <button onClick={switchToBlueTheme}>Blue Theme</button>
+      </div>
     </div>
   );
 };

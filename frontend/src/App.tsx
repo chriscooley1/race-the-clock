@@ -1,29 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import Display from "./components/Display";
 import Settings from "./components/Settings";
 import History from "./components/History";
-import { ThemeProvider } from "./context/ThemeContext";
-import ThemeSelector from "./components/ThemeSelector"; // Import the ThemeSelector component
+import ThemeSelector from "./components/ThemeSelector";
+import { useTheme } from "./context/ThemeContext";
+import './App.css'; // Import the global CSS file
 
 const App: React.FC = () => {
-  const [sequence, setSequence] = useState<string[]>([]);
-  const [speed, setSpeed] = useState<number>(500);
+  const [sequence, setSequence] = React.useState<string[]>([]);
+  const [speed, setSpeed] = React.useState<number>(500);
+  const { theme } = useTheme();
 
   const handleUpdate = (newSequence: string[], newSpeed: number) => {
-    console.log("handleUpdate called with:", newSequence, newSpeed);
     setSequence(newSequence);
     setSpeed(newSpeed);
   };
 
   return (
-    <ThemeProvider> {/* Wrap the app with ThemeProvider */}
-      <div>
-        <ThemeSelector /> {/* Add ThemeSelector component */}
-        <Settings onUpdate={handleUpdate} userId={1} />
-        <Display sequence={sequence} speed={speed} />
-        <History onLoad={(seq) => setSequence(seq)} />
-      </div>
-    </ThemeProvider>
+    <div style={{ backgroundColor: theme.backgroundColor, color: theme.color, minHeight: '100vh', width: '100vw' }}>
+      <ThemeSelector /> {/* Include ThemeSelector here */}
+      <Settings onUpdate={handleUpdate} userId={1} />
+      <Display sequence={sequence} speed={speed} />
+      <History onLoad={(seq) => setSequence(seq)} />
+    </div>
   );
 };
 

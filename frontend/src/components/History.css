@@ -1,0 +1,9 @@
+.history-container {
+  padding: 10px;
+  background-color: var(--history-background-color);
+  color: var(--history-color);
+}
+
+.history-button {
+  margin: 5px;
+}

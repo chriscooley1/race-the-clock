@@ -1,14 +1,15 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
-import { darkTheme, lightTheme } from "../context/themes";
+import { darkTheme, lightTheme, blueTheme } from "../context/ThemeContext";
 
 const ThemeSelector: React.FC = () => {
   const { setTheme } = useTheme();
 
   return (
     <div>
-      <button onClick={() => setTheme(lightTheme)}>Light Theme</button>
-      <button onClick={() => setTheme(darkTheme)}>Dark Theme</button>
+      <button onClick={() => setTheme(lightTheme)}>Light Mode</button>
+      <button onClick={() => setTheme(darkTheme)}>Dark Mode</button>
+      <button onClick={() => setTheme(blueTheme)}>Blue Theme</button>
     </div>
   );
 };

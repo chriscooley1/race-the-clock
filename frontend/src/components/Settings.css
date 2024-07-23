@@ -1,0 +1,9 @@
+.settings-container {
+  margin: 20px;
+  background-color: var(--settings-background-color);
+  color: var(--settings-color);
+}
+
+.input-field {
+  margin-bottom: 10px;
+}
