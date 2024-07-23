@@ -58,3 +58,12 @@ textarea, input, button {
   background-color: #cceeff;
   color: #003366;
 }
+
+.theme-selector {
+  margin: 10px 0;
+}
+
+#theme-select {
+  padding: 5px;
+  margin-left: 10px;
+}
