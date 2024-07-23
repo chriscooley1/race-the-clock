@@ -7,5 +7,5 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom']
   },
-  base: "/letter-reader/",
+  base: "/letter-reader/frontend/",
 });
