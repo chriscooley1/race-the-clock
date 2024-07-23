@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 interface HistoryProps {
   onLoad: (sequence: string[]) => void;
@@ -11,12 +11,10 @@ const History: React.FC<HistoryProps> = ({ onLoad }) => {
   });
 
   const handleLoad = (sequence: string) => {
-    onLoad(sequence.split(",").map((item) => item.trim()));
+    const newSequence = sequence.split(",").map(item => item.trim());
+    onLoad(newSequence); // Assuming onLoad is a prop function to set the sequence
+    setHistory(prevHistory => [...prevHistory, sequence]); // Update history with new sequence
   };
-
-  useEffect(() => {
-    localStorage.setItem("sequenceHistory", JSON.stringify(history));
-  }, [history]);
 
   return (
     <div>
