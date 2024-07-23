@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { createSequence } from '../api';
-import { useTheme } from '../context/ThemeContext';
+import { createSequence } from "../api";
+import { useTheme } from "../context/ThemeContext";
 import "../App.css";
 
 interface SettingsProps {

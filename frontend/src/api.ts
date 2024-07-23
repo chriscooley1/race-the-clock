@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'http://localhost:8000';
+const API_URL = "http://localhost:8000";
 
 export const createUser = (username: string, password: string) => {
   return axios.post(`${API_URL}/users/`, { username, password });

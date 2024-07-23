@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // Define the shape of your theme
 interface Theme {
@@ -10,23 +10,23 @@ interface Theme {
 
 // Define possible themes
 const darkTheme: Theme = {
-  backgroundColor: '#333',
-  color: '#fff',
-  className: 'dark-theme',
+  backgroundColor: "#333",
+  color: "#fff",
+  className: "dark-theme",
   // Add additional dark theme properties here if needed
 };
 
 const blueTheme: Theme = {
-  backgroundColor: '#cceeff',
-  color: '#003366',
-  className: 'blue-theme',
+  backgroundColor: "#cceeff",
+  color: "#003366",
+  className: "blue-theme",
   // Add additional blue theme properties here if needed
 };
 
 const lightTheme: Theme = {
-  backgroundColor: '#fff',
-  color: '#000',
-  className: 'light-theme',
+  backgroundColor: "#fff",
+  color: "#000",
+  className: "light-theme",
   // Add additional light theme properties here if needed
 };
 
@@ -55,7 +55,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
+    throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;
 };
