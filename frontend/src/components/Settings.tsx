@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { createSequence } from '../api';
 import { useTheme } from '../context/ThemeContext';
-import "./Settings.css";
+import "../App.css";
+
+interface SettingsProps {
+  onUpdate: (sequence: string[], speed: number) => void;
+  userId: number;
+}
 
 const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
-  const [input, setInput] = useState("");
-  const [speed, setSpeed] = useState(500);
-  const [quantity, setQuantity] = useState(10);
-  const { setTheme } = useTheme();
+  const [input, setInput] = useState<string>("");
+  const [speed, setSpeed] = useState<number>(500);
+  const [quantity, setQuantity] = useState<number>(10);
+  const { theme } = useTheme();
 
   const handleUpdate = async () => {
     const sequence = input.split(",").map((item) => item.trim());
@@ -31,24 +36,8 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     setInput(numbers.join(", "));
   };
 
-  const switchToDarkMode = () => {
-    setTheme({
-      backgroundColor: '#333',
-      color: '#fff',
-      // other dark theme properties
-    });
-  };
-
-  const switchToBlueTheme = () => {
-    setTheme({
-      backgroundColor: '#cceeff',
-      color: '#003366',
-      // other blue theme properties
-    });
-  };
-
   return (
-    <div className="settings-container">
+    <div className={`settings-container ${theme.className}`}>
       <div className="input-field">
         <label htmlFor="sequenceInput">Sequence (comma-separated):</label>
         <textarea
@@ -80,14 +69,10 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
         />
       </div>
       <div>
-        <button onClick={generateRandomLetters}>Generate Random Letters</button>
-        <button onClick={generateRandomNumbers}>Generate Random Numbers</button>
+        <button type="button" onClick={generateRandomLetters}>Generate Random Letters</button>
+        <button type="button" onClick={generateRandomNumbers}>Generate Random Numbers</button>
       </div>
-      <button onClick={handleUpdate}>Update</button>
-      <div>
-        <button onClick={switchToDarkMode}>Dark Mode</button>
-        <button onClick={switchToBlueTheme}>Blue Theme</button>
-      </div>
+      <button type="button" onClick={handleUpdate}>Update</button>
     </div>
   );
 };

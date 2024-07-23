@@ -4,7 +4,7 @@ import Settings from "./components/Settings";
 import History from "./components/History";
 import ThemeSelector from "./components/ThemeSelector";
 import { useTheme } from "./context/ThemeContext";
-import './App.css'; // Import the global CSS file
+import "./App.css";
 
 const App: React.FC = () => {
   const [sequence, setSequence] = React.useState<string[]>([]);
@@ -17,7 +17,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ backgroundColor: theme.backgroundColor, color: theme.color, minHeight: '100vh', width: '100vw' }}>
+    <div className={`app-container ${theme.className}`}>
       <ThemeSelector /> {/* Include ThemeSelector here */}
       <Settings onUpdate={handleUpdate} userId={1} />
       <Display sequence={sequence} speed={speed} />

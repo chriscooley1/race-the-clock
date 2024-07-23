@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./History.css"; // Import the CSS file
+import "../App.css";
 
 interface HistoryProps {
   onLoad: (sequence: string[]) => void;
@@ -20,7 +20,7 @@ const History: React.FC<HistoryProps> = ({ onLoad }) => {
   return (
     <div className="history-container">
       {history.map((sequence, index) => (
-        <button key={index} className="history-button" onClick={() => handleLoad(sequence)}>
+        <button type="button" key={index} className="history-button" onClick={() => handleLoad(sequence)}>
           {sequence}
         </button>
       ))}

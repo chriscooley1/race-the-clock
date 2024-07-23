@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
-import "./Display.css"; // Import the CSS file
+import "../App.css";
 
 interface DisplayProps {
   sequence: string[];
@@ -21,7 +21,7 @@ const Display: React.FC<DisplayProps> = ({ sequence, speed }) => {
   }, [sequence, speed]);
 
   return (
-    <div className="display-container" style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
+    <div className={`display-container ${theme.className}`}>
       <h1>{sequence[index]}</h1>
     </div>
   );

@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 interface Theme {
   backgroundColor: string;
   color: string;
+  className: string; // Add a className property
   [key: string]: string; // Allow for additional theme properties
 }
 
@@ -11,16 +12,22 @@ interface Theme {
 const darkTheme: Theme = {
   backgroundColor: '#333',
   color: '#fff',
+  className: 'dark-theme',
+  // Add additional dark theme properties here if needed
 };
 
 const blueTheme: Theme = {
   backgroundColor: '#cceeff',
   color: '#003366',
+  className: 'blue-theme',
+  // Add additional blue theme properties here if needed
 };
 
 const lightTheme: Theme = {
   backgroundColor: '#fff',
   color: '#000',
+  className: 'light-theme',
+  // Add additional light theme properties here if needed
 };
 
 // Define the shape of the context
@@ -34,6 +41,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // Define the ThemeProvider component
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  // Set the default theme
   const [theme, setTheme] = useState<Theme>(lightTheme); // Default to light theme
 
   return (
