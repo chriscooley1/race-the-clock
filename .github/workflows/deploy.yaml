@@ -23,31 +23,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up Node.js
+      - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-
+      - name: Navigate to frontend directory
+        run: cd frontend
       - name: Install dependencies
-        run: |
-          cd frontend
-          npm ci
-
+        run: cd frontend && npm ci
       - name: Build
-        run: |
-          cd frontend
-          npm run build
-
+        run: cd frontend && npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './frontend/dist'
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
