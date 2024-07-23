@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createSequence } from '../api';
+import { useTheme } from "../context/ThemeContext"; // Import useTheme
 
 interface SettingsProps {
   onUpdate: (sequence: string[], speed: number) => void;
@@ -10,6 +11,8 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [input, setInput] = useState("");
   const [speed, setSpeed] = useState(500);
   const [quantity, setQuantity] = useState(10); // New state for quantity
+
+  const { theme } = useTheme(); // Access theme from ThemeContext
 
   useEffect(() => {
     const savedInput = localStorage.getItem("inputSequence");
@@ -42,7 +45,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
       <div>
         <label htmlFor="sequenceInput">Sequence (comma-separated):</label>
         <textarea
@@ -50,6 +53,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter letters or words separated by commas"
+          style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
         />
       </div>
       <div>
@@ -60,6 +64,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           value={speed}
           onChange={(e) => setSpeed(Number(e.target.value))}
           placeholder="Enter speed in milliseconds"
+          style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
         />
       </div>
       <div>
@@ -71,13 +76,14 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           onChange={(e) => setQuantity(Number(e.target.value))}
           placeholder="Enter quantity"
           min="1"
+          style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
         />
       </div>
       <div>
-        <button onClick={generateRandomLetters}>Generate Random Letters</button>
-        <button onClick={generateRandomNumbers}>Generate Random Numbers</button>
+        <button onClick={generateRandomLetters} style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>Generate Random Letters</button>
+        <button onClick={generateRandomNumbers} style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>Generate Random Numbers</button>
       </div>
-      <button onClick={handleUpdate}>Update</button>
+      <button onClick={handleUpdate} style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>Update</button>
     </div>
   );
 };

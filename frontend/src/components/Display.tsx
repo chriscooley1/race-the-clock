@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "../context/ThemeContext"; // Import useTheme
 
 interface DisplayProps {
   sequence: string[];
@@ -7,6 +8,7 @@ interface DisplayProps {
 
 const Display: React.FC<DisplayProps> = ({ sequence, speed }) => {
   const [index, setIndex] = useState(0);
+  const { theme } = useTheme(); // Access theme from ThemeContext
 
   useEffect(() => {
     if (sequence.length > 0) {
@@ -18,7 +20,7 @@ const Display: React.FC<DisplayProps> = ({ sequence, speed }) => {
   }, [sequence, speed]);
 
   return (
-    <div>
+    <div style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
       <h1>{sequence[index]}</h1>
     </div>
   );
