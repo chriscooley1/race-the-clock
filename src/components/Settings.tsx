@@ -23,12 +23,25 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate }) => {
 
   return (
     <div>
-      <textarea value={input} onChange={(e) => setInput(e.target.value)} />
-      <input
-        type="number"
-        value={speed}
-        onChange={(e) => setSpeed(Number(e.target.value))}
-      />
+      <div>
+        <label htmlFor="sequenceInput">Sequence (comma-separated):</label>
+        <textarea
+          id="sequenceInput"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Enter letters or words separated by commas"
+        />
+      </div>
+      <div>
+        <label htmlFor="speedInput">Speed (milliseconds):</label>
+        <input
+          id="speedInput"
+          type="number"
+          value={speed}
+          onChange={(e) => setSpeed(Number(e.target.value))}
+          placeholder="Enter speed in milliseconds"
+        />
+      </div>
       <button onClick={handleUpdate}>Update</button>
     </div>
   );
