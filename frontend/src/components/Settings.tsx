@@ -36,6 +36,16 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     setInput(numbers.join(", "));
   };
 
+  const generateAlphabetSequence = () => {
+    const alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
+    setInput(alphabet.join(", "));
+  };
+
+  const generateNumberSequence = () => {
+    const numbers = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
+    setInput(numbers.join(", "));
+  };
+
   return (
     <div className={`settings-container ${theme.className}`}>
       <div className="input-field">
@@ -71,6 +81,8 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
       <div>
         <button type="button" onClick={generateRandomLetters}>Generate Random Letters</button>
         <button type="button" onClick={generateRandomNumbers}>Generate Random Numbers</button>
+        <button type="button" onClick={generateAlphabetSequence}>Generate Alphabet Sequence</button>
+        <button type="button" onClick={generateNumberSequence}>Generate Number Sequence</button>
       </div>
       <button type="button" onClick={handleUpdate}>Update</button>
     </div>
