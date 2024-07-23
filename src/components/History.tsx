@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface HistoryProps {
   onLoad: (sequence: string[]) => void;
@@ -11,13 +11,19 @@ const History: React.FC<HistoryProps> = ({ onLoad }) => {
   });
 
   const handleLoad = (sequence: string) => {
-    onLoad(sequence.split(",").map(item => item.trim()));
+    onLoad(sequence.split(",").map((item) => item.trim()));
   };
+
+  useEffect(() => {
+    localStorage.setItem("sequenceHistory", JSON.stringify(history));
+  }, [history]);
 
   return (
     <div>
       {history.map((sequence, index) => (
-        <button key={index} onClick={() => handleLoad(sequence)}>{sequence}</button>
+        <button key={index} onClick={() => handleLoad(sequence)}>
+          {sequence}
+        </button>
       ))}
     </div>
   );
