@@ -9,6 +9,7 @@ interface SettingsProps {
 const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [input, setInput] = useState("");
   const [speed, setSpeed] = useState(500);
+  const [quantity, setQuantity] = useState(10); // New state for quantity
 
   useEffect(() => {
     const savedInput = localStorage.getItem("inputSequence");
@@ -31,12 +32,12 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   };
 
   const generateRandomLetters = () => {
-    const letters = Array.from({ length: 10 }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26)));
+    const letters = Array.from({ length: quantity }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26)));
     setInput(letters.join(", "));
   };
 
   const generateRandomNumbers = () => {
-    const numbers = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100).toString());
+    const numbers = Array.from({ length: quantity }, () => Math.floor(Math.random() * 100).toString());
     setInput(numbers.join(", "));
   };
 
@@ -59,6 +60,17 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           value={speed}
           onChange={(e) => setSpeed(Number(e.target.value))}
           placeholder="Enter speed in milliseconds"
+        />
+      </div>
+      <div>
+        <label htmlFor="quantityInput">Quantity:</label>
+        <input
+          id="quantityInput"
+          type="number"
+          value={quantity}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          placeholder="Enter quantity"
+          min="1"
         />
       </div>
       <div>
