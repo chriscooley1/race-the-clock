@@ -1,30 +1,27 @@
-# React + TypeScript + Vite
+# Kindergarten Reader
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A tool to help kindergarten students practice reading letters and words at a controlled speed. This project allows for customizable settings, history tracking, and sharing of letter and word sequences among teachers.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Kindergarten Reader](#kindergarten-reader)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Display letters or words in a sequence with adjustable speed.
+- Customizable sequences: input your own or randomize.
+- Save and load past sequences for easy reuse.
+- Share sequences with individual teachers or publicly with all users.
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+1. Clone the repository:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+   ```bash
+   git clone https://github.com/yourusername/kindergarten-reader.git
+   cd kindergarten-reader
+   npm install
+   npm run dev
