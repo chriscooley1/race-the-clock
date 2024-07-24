@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createSequence } from "../api";
 import { useTheme } from "../context/ThemeContext";
 import "../App.css";
@@ -13,6 +14,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [speed, setSpeed] = useState<number>(500);
   const [quantity, setQuantity] = useState<number>(10);
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   const handleUpdate = async () => {
     const sequence = input.split(",").map((item) => item.trim());
@@ -21,6 +23,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     try {
       const response = await createSequence(userId, "My Sequence", input);
       console.log("Sequence saved successfully:", response.data);
+      navigate("/fullscreen-display", { state: { sequence, speed } });
     } catch (error: any) {
       console.error("Error saving sequence:", error.response?.data || error.message || error);
     }

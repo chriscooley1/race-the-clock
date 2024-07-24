@@ -1,8 +1,10 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Display from "./components/Display";
 import Settings from "./components/Settings";
 import History from "./components/History";
 import ThemeSelector from "./components/ThemeSelector";
+import FullScreenDisplay from "./components/FullScreenDisplay";
 import { useTheme } from "./context/ThemeContext";
 import "./App.css";
 
@@ -17,12 +19,19 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className={`app-container ${theme.className}`}>
-      <ThemeSelector /> {/* Include ThemeSelector here */}
-      <Settings onUpdate={handleUpdate} userId={1} />
-      <Display sequence={sequence} speed={speed} />
-      <History onLoad={(seq) => setSequence(seq)} />
-    </div>
+    <Router basename="/letter-reader">
+      <Routes>
+        <Route path="/" element={
+          <div className={`app-container ${theme.className}`}>
+            <ThemeSelector /> {/* Include ThemeSelector here */}
+            <Settings onUpdate={handleUpdate} userId={1} />
+            <Display sequence={sequence} speed={speed} />
+            <History onLoad={(seq) => setSequence(seq)} />
+          </div>
+        } />
+        <Route path="/fullscreen-display" element={<FullScreenDisplay />} />
+      </Routes>
+    </Router>
   );
 };
 
