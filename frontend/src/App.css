@@ -43,6 +43,33 @@ textarea, input, button {
   margin: 10px 0;
 }
 
+/* Flexbox adjustments for form layout */
+.input-field {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  margin: 10px 0;
+}
+
+.input-field label {
+  margin-right: 10px; /* Space between label and input */
+}
+
+textarea, input {
+  flex: 1; /* Make input fields take up the remaining space */
+}
+
+.input-field input[type="number"] {
+  width: 80px; /* Set a fixed width for the quantity input */
+}
+
+/* Center the update button */
+button {
+  display: block;
+  margin: 20px 0;
+  padding: 10px 20px;
+  font-size: 1em;
+}
+
 /* Theme styles */
 .light-theme {
   background-color: #fff;
@@ -95,6 +122,7 @@ textarea, input, button {
   cursor: pointer;
 }
 
+/* Neon and color themes */
 .neon-pink-theme {
   background-color: #ff69b4;
   color: #fff;
