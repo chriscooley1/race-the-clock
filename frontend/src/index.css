@@ -11,8 +11,14 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark; /* Enable color-scheme detection */
-  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optional: If you still want to include font-synthesis for browsers that support it, use this */
+@supports (font-synthesis: none) {
+  :root {
+    font-synthesis: none;
+  }
 }
