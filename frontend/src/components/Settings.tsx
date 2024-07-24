@@ -13,6 +13,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [input, setInput] = useState<string>("");
   const [speed, setSpeed] = useState<number>(500);
   const [quantity, setQuantity] = useState<number>(10);
+  const [dropdownValue, setDropdownValue] = useState<string>("");
   const { theme } = useTheme();
   const navigate = useNavigate();
 
@@ -49,6 +50,26 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     setInput(numbers.join(", "));
   };
 
+  const handleDropdownChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setDropdownValue(event.target.value);
+    switch (event.target.value) {
+      case "randomLetters":
+        generateRandomLetters();
+        break;
+      case "randomNumbers":
+        generateRandomNumbers();
+        break;
+      case "alphabetSequence":
+        generateAlphabetSequence();
+        break;
+      case "numberSequence":
+        generateNumberSequence();
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className={`settings-container ${theme.className}`}>
       <div className="input-field">
@@ -81,11 +102,15 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           min="1"
         />
       </div>
-      <div>
-        <button type="button" onClick={generateRandomLetters}>Generate Random Letters</button>
-        <button type="button" onClick={generateRandomNumbers}>Generate Random Numbers</button>
-        <button type="button" onClick={generateAlphabetSequence}>Generate Alphabet Sequence</button>
-        <button type="button" onClick={generateNumberSequence}>Generate Number Sequence</button>
+      <div className="input-field">
+        <label htmlFor="generateDropdown">Generate Sequence:</label>
+        <select id="generateDropdown" value={dropdownValue} onChange={handleDropdownChange}>
+          <option value="">Select an option</option>
+          <option value="randomLetters">Random Letters</option>
+          <option value="randomNumbers">Random Numbers</option>
+          <option value="alphabetSequence">Alphabet Sequence</option>
+          <option value="numberSequence">Number Sequence</option>
+        </select>
       </div>
       <button type="button" onClick={handleUpdate}>Update</button>
     </div>
