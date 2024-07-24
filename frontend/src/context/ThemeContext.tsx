@@ -13,21 +13,86 @@ const darkTheme: Theme = {
   backgroundColor: "#333",
   color: "#fff",
   className: "dark-theme",
-  // Add additional dark theme properties here if needed
 };
 
 const blueTheme: Theme = {
   backgroundColor: "#cceeff",
   color: "#003366",
   className: "blue-theme",
-  // Add additional blue theme properties here if needed
 };
 
 const lightTheme: Theme = {
   backgroundColor: "#fff",
   color: "#000",
   className: "light-theme",
-  // Add additional light theme properties here if needed
+};
+
+// Additional fun and bright themes
+const neonPinkTheme: Theme = {
+  backgroundColor: "#ff69b4",
+  color: "#fff",
+  className: "neon-pink-theme",
+};
+
+const neonGreenTheme: Theme = {
+  backgroundColor: "#39ff14",
+  color: "#000",
+  className: "neon-green-theme",
+};
+
+const neonBlueTheme: Theme = {
+  backgroundColor: "#1e90ff",
+  color: "#fff",
+  className: "neon-blue-theme",
+};
+
+const neonOrangeTheme: Theme = {
+  backgroundColor: "#ff4500",
+  color: "#fff",
+  className: "neon-orange-theme",
+};
+
+// Rainbow color themes
+const redTheme: Theme = {
+  backgroundColor: "#ff0000",
+  color: "#fff",
+  className: "red-theme",
+};
+
+const orangeTheme: Theme = {
+  backgroundColor: "#ffa500",
+  color: "#000",
+  className: "orange-theme",
+};
+
+const yellowTheme: Theme = {
+  backgroundColor: "#ffff00",
+  color: "#000",
+  className: "yellow-theme",
+};
+
+const greenTheme: Theme = {
+  backgroundColor: "#008000",
+  color: "#fff",
+  className: "green-theme",
+};
+
+const blueThemeColor: Theme = {
+  backgroundColor: "#0000ff",
+  color: "#fff",
+  className: "blue-theme-color",
+};
+
+const indigoTheme: Theme = {
+  backgroundColor: "#4b0082",
+  color: "#fff",
+  className: "indigo-theme",
+};
+
+const violetTheme: Theme = {
+  backgroundColor: "#ee82ee",
+  color: "#000",
+  className: "violet-theme",
 };
 
 // Define the shape of the context
@@ -42,7 +107,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 // Define the ThemeProvider component
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Set the default theme
-  const [theme, setTheme] = useState<Theme>(lightTheme); // Default to light theme
+  const [theme, setTheme] = useState<Theme>(darkTheme); // Default to dark theme
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -61,4 +126,19 @@ export const useTheme = () => {
 };
 
 // Export the predefined themes
-export { darkTheme, blueTheme, lightTheme };
+export {
+  darkTheme,
+  blueTheme,
+  lightTheme,
+  neonPinkTheme,
+  neonGreenTheme,
+  neonBlueTheme,
+  neonOrangeTheme,
+  redTheme,
+  orangeTheme,
+  yellowTheme,
+  greenTheme,
+  blueThemeColor,
+  indigoTheme,
+  violetTheme
+};

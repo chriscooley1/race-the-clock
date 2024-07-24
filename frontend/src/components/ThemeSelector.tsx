@@ -1,12 +1,38 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
-import { darkTheme, lightTheme, blueTheme } from "../context/ThemeContext";
+import {
+  darkTheme,
+  lightTheme,
+  blueTheme,
+  neonPinkTheme,
+  neonGreenTheme,
+  neonBlueTheme,
+  neonOrangeTheme,
+  redTheme,
+  orangeTheme,
+  yellowTheme,
+  greenTheme,
+  blueThemeColor,
+  indigoTheme,
+  violetTheme
+} from "../context/ThemeContext";
 import "../App.css"; // Import the global CSS file
 
 const themes = [
-  { name: "Light Mode", theme: lightTheme },
   { name: "Dark Mode", theme: darkTheme },
+  { name: "Light Mode", theme: lightTheme },
   { name: "Blue Theme", theme: blueTheme },
+  { name: "Neon Pink", theme: neonPinkTheme },
+  { name: "Neon Green", theme: neonGreenTheme },
+  { name: "Neon Blue", theme: neonBlueTheme },
+  { name: "Neon Orange", theme: neonOrangeTheme },
+  { name: "Red", theme: redTheme },
+  { name: "Orange", theme: orangeTheme },
+  { name: "Yellow", theme: yellowTheme },
+  { name: "Green", theme: greenTheme },
+  { name: "Blue", theme: blueThemeColor },
+  { name: "Indigo", theme: indigoTheme },
+  { name: "Violet", theme: violetTheme },
   // Add more themes here as needed
 ];
 

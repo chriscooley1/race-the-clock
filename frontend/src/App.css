@@ -94,3 +94,58 @@ textarea, input, button {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.neon-pink-theme {
+  background-color: #ff69b4;
+  color: #fff;
+}
+
+.neon-green-theme {
+  background-color: #39ff14;
+  color: #000;
+}
+
+.neon-blue-theme {
+  background-color: #1e90ff;
+  color: #fff;
+}
+
+.neon-orange-theme {
+  background-color: #ff4500;
+  color: #fff;
+}
+
+.red-theme {
+  background-color: #ff0000;
+  color: #fff;
+}
+
+.orange-theme {
+  background-color: #ffa500;
+  color: #000;
+}
+
+.yellow-theme {
+  background-color: #ffff00;
+  color: #000;
+}
+
+.green-theme {
+  background-color: #008000;
+  color: #fff;
+}
+
+.blue-theme-color {
+  background-color: #0000ff;
+  color: #fff;
+}
+
+.indigo-theme {
+  background-color: #4b0082;
+  color: #fff;
+}
+
+.violet-theme {
+  background-color: #ee82ee;
+  color: #000;
+}
