@@ -3,3 +3,6 @@ uvicorn
 sqlmodel
 passlib[bcrypt]
 python-jose
+alembic
+python-decouple
+psycopg2
