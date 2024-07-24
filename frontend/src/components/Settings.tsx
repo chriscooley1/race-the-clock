@@ -9,6 +9,15 @@ interface SettingsProps {
   userId: number;
 }
 
+const speedOptions = [
+  { label: "0.25 seconds", value: 250 },
+  { label: "0.5 seconds", value: 500 },
+  { label: "0.75 seconds", value: 750 },
+  { label: "1 second", value: 1000 },
+  { label: "1.5 seconds", value: 1500 },
+  { label: "2 seconds", value: 2000 }
+];
+
 const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [input, setInput] = useState<string>("");
   const [speed, setSpeed] = useState<number>(500);
@@ -82,14 +91,18 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
         />
       </div>
       <div className="input-field">
-        <label htmlFor="speedInput">Speed (milliseconds):</label>
-        <input
+        <label htmlFor="speedInput">Speed:</label>
+        <select
           id="speedInput"
-          type="number"
           value={speed}
           onChange={(e) => setSpeed(Number(e.target.value))}
-          placeholder="Enter speed in milliseconds"
-        />
+        >
+          {speedOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="input-field">
         <label htmlFor="quantityInput">Quantity:</label>
