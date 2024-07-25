@@ -33,8 +33,8 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [speed, setSpeed] = useState<number>(500);
   const [quantity, setQuantity] = useState<number>(10);
   const [dropdownValue, setDropdownValue] = useState<string>("");
-  const [textColor, setTextColor] = useState<string>("#ffffff"); // Add this line
-  const { theme, setTheme } = useTheme(); // Add setTheme
+  const [textColor, setTextColor] = useState<string>("#ffffff");
+  const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleUpdate = async () => {
@@ -92,7 +92,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
 
   const handleTextColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setTextColor(event.target.value);
-    setTheme({ ...theme, textColor: event.target.value }); // Update the theme with the selected text color
+    setTheme({ ...theme, textColor: event.target.value });
   };
 
   return (
@@ -151,7 +151,9 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           ))}
         </select>
       </div>
-      <button className="save-button" onClick={handleUpdate}>Save</button>
+      <div className="button-container">
+        <button className="save-button" onClick={handleUpdate}>Save</button>
+      </div>
     </div>
   );
 };
