@@ -15,8 +15,8 @@ body {
 
 /* Ensure the #root element covers the full viewport */
 #root {
-  height: 100%;
-  width: 100%;
+  /* height: 100%;
+  width: 100%; */
   display: flex;
   flex-direction: column;
 }
@@ -53,10 +53,6 @@ textarea, input, button {
 
 .input-field label {
   margin-right: 10px; /* Space between label and input */
-}
-
-textarea, input {
-  flex: 1; /* Make input fields take up the remaining space */
 }
 
 /* Theme styles */
@@ -186,4 +182,8 @@ textarea, input {
 
 .save-button:hover {
   background-color: #0056b3;
+}
+
+#quantityInput {
+  width: 100px;
 }
