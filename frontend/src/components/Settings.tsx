@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createSequence } from "../api";
 import { useTheme } from "../context/ThemeContext";
-import Display from "./Display";
 import "../App.css";
 
 interface SettingsProps {
@@ -155,7 +154,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
         </select>
       </div>
       <div className="button-container">
-        <button className="save-button" onClick={handleUpdate}>Save</button>
+        <button className="save-button" type="button" onClick={handleUpdate}>Save</button>
       </div>
       {/* Optionally render Display here if needed */}
       {/* <Display sequence={sequence} speed={speed} showCharacters={showCharacters} /> */}
