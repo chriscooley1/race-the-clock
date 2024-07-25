@@ -18,12 +18,23 @@ const speedOptions = [
   { label: "2 seconds", value: 2000 }
 ];
 
+const textColorOptions = [
+  { label: "White", value: "#ffffff" },
+  { label: "Black", value: "#000000" },
+  { label: "Red", value: "#ff0000" },
+  { label: "Blue", value: "#0000ff" },
+  { label: "Green", value: "#00ff00" },
+  { label: "Yellow", value: "#ffff00" },
+  // Add more colors as needed
+];
+
 const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [input, setInput] = useState<string>("");
   const [speed, setSpeed] = useState<number>(500);
   const [quantity, setQuantity] = useState<number>(10);
   const [dropdownValue, setDropdownValue] = useState<string>("");
-  const { theme } = useTheme();
+  const [textColor, setTextColor] = useState<string>("#ffffff"); // Add this line
+  const { theme, setTheme } = useTheme(); // Add setTheme
   const navigate = useNavigate();
 
   const handleUpdate = async () => {
@@ -79,6 +90,11 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     }
   };
 
+  const handleTextColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setTextColor(event.target.value);
+    setTheme({ ...theme, textColor: event.target.value }); // Update the theme with the selected text color
+  };
+
   return (
     <div className={`settings-container ${theme.className}`}>
       <div className="input-field">
@@ -125,7 +141,17 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           <option value="numberSequence">Number Sequence</option>
         </select>
       </div>
-      <button type="button" onClick={handleUpdate}>Update</button>
+      <div className="input-field">
+        <label htmlFor="textColorSelect">Text Color:</label>
+        <select id="textColorSelect" value={textColor} onChange={handleTextColorChange}>
+          {textColorOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button className="save-button" onClick={handleUpdate}>Save</button>
     </div>
   );
 };

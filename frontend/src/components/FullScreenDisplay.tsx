@@ -36,7 +36,7 @@ const FullScreenDisplay: React.FC = () => {
   return (
     <div className={`fullscreen-container ${theme.className}`}>
       <button className="back-button" onClick={handleBack}>Back</button>
-      <h1>{sequence[index]}</h1>
+      <h1 style={{ color: theme.textColor }}>{sequence[index]}</h1>
     </div>
   );
 };

@@ -142,3 +142,63 @@ export {
   indigoTheme,
   violetTheme
 };
+
+
+
+// import React, { createContext, useContext, useState, ReactNode } from 'react';
+
+// interface Theme {
+//   backgroundColor: string;
+//   color: string;
+//   textColor: string; // Add this line
+//   className: string;
+//   [key: string]: string;
+// }
+
+// const darkTheme: Theme = {
+//   backgroundColor: "#333",
+//   color: "#fff",
+//   textColor: "#fff", // Add this line
+//   className: "dark-theme",
+// };
+
+// const lightTheme: Theme = {
+//   backgroundColor: "#fff",
+//   color: "#000",
+//   textColor: "#000", // Add this line
+//   className: "light-theme",
+// };
+
+// const neonTheme: Theme = {
+//   backgroundColor: "#000",
+//   color: "#39ff14",
+//   textColor: "#39ff14", // Add this line
+//   className: "neon-theme",
+// };
+
+// // Add more themes as needed
+
+// interface ThemeContextType {
+//   theme: Theme;
+//   setTheme: (theme: Theme) => void;
+// }
+
+// const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+// export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+//   const [theme, setTheme] = useState<Theme>(lightTheme); // Default theme
+
+//   return (
+//     <ThemeContext.Provider value={{ theme, setTheme }}>
+//       {children}
+//     </ThemeContext.Provider>
+//   );
+// };
+
+// export const useTheme = (): ThemeContextType => {
+//   const context = useContext(ThemeContext);
+//   if (!context) {
+//     throw new Error('useTheme must be used within a ThemeProvider');
+//   }
+//   return context;
+// };

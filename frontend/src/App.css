@@ -47,6 +47,7 @@ textarea, input, button {
 .input-field {
   display: flex;
   align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
   margin: 10px 0;
 }
 
@@ -56,18 +57,6 @@ textarea, input, button {
 
 textarea, input {
   flex: 1; /* Make input fields take up the remaining space */
-}
-
-.input-field input[type="number"] {
-  width: 80px; /* Set a fixed width for the quantity input */
-}
-
-/* Center the update button */
-button {
-  display: block;
-  margin: 20px 0;
-  padding: 10px 20px;
-  font-size: 1em;
 }
 
 /* Theme styles */
