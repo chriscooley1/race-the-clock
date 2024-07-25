@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createSequence } from "../api";
 import { useTheme } from "../context/ThemeContext";
+import Display from "./Display";
 import "../App.css";
 
 interface SettingsProps {
@@ -34,6 +35,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [quantity, setQuantity] = useState<number>(10);
   const [dropdownValue, setDropdownValue] = useState<string>("");
   const [textColor, setTextColor] = useState<string>("#ffffff");
+  const [showCharacters, setShowCharacters] = useState(true);  // Manage visibility
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
 
@@ -44,6 +46,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     try {
       const response = await createSequence(userId, "My Sequence", input);
       console.log("Sequence saved successfully:", response.data);
+      setShowCharacters(false);  // Hide characters on navigation
       navigate("/fullscreen-display", { state: { sequence, speed } });
     } catch (error: any) {
       console.error("Error saving sequence:", error.response?.data || error.message || error);
@@ -154,6 +157,8 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
       <div className="button-container">
         <button className="save-button" onClick={handleUpdate}>Save</button>
       </div>
+      {/* Optionally render Display here if needed */}
+      {/* <Display sequence={sequence} speed={speed} showCharacters={showCharacters} /> */}
     </div>
   );
 };
