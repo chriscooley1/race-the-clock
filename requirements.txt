@@ -6,4 +6,3 @@ sqlmodel
 uvicorn
 pytest
 httpx
-unittest-mock

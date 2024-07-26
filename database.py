@@ -1,8 +1,6 @@
 from decouple import config
 from sqlmodel import Session, create_engine
 
-
-# Production database URL from environment variable
 DATABASE_URL = config("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
 

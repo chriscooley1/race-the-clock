@@ -1,19 +1,23 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000";
+const API_BASE_URL = "http://localhost:8000";
 
-export const createUser = (username: string, password: string) => {
-  return axios.post(`${API_URL}/users/`, { username, password });
+export const getSequences = async (userId: number) => {
+  const response = await axios.get(`${API_BASE_URL}/users/${userId}/sequences`);
+  return response.data;
 };
 
-export const getUser = (userId: number) => {
-  return axios.get(`${API_URL}/users/${userId}`);
+export const createSequence = async (userId: number, name: string, description: string) => {
+  const response = await axios.post(`${API_BASE_URL}/sequences`, { user_id: userId, name, description });
+  return response.data;
 };
 
-export const createSequence = (userId: number, name: string, content: string) => {
-  return axios.post(`${API_URL}/users/${userId}/sequences/`, { name, content });
+export const updateSequence = async (sequenceId: number, name: string, description: string) => {
+  const response = await axios.put(`${API_BASE_URL}/sequences/${sequenceId}`, { name, description });
+  return response.data;
 };
 
-export const getSequences = (skip = 0, limit = 10) => {
-  return axios.get(`${API_URL}/sequences/`, { params: { skip, limit } });
+export const deleteSequence = async (sequenceId: number) => {
+  const response = await axios.delete(`${API_BASE_URL}/sequences/${sequenceId}`);
+  return response.data;
 };
