@@ -8,6 +8,7 @@ import FullScreenDisplay from "./components/FullScreenDisplay";
 import { useTheme } from "./context/ThemeContext";
 import "./App.css";
 
+// App component
 const App: React.FC = () => {
   const [sequence, setSequence] = React.useState<string[]>([]);
   const [speed, setSpeed] = React.useState<number>(500);
@@ -21,15 +22,21 @@ const App: React.FC = () => {
   return (
     <Router basename="/letter-reader">
       <Routes>
-        <Route path="/" element={
-          <div className={`app-container ${theme.className}`}>
-            <ThemeSelector /> {/* Include ThemeSelector here */}
-            <Settings onUpdate={handleUpdate} userId={1} />
-            <Display sequence={sequence} speed={speed} /> {/* Updated */}
-            <History onLoad={(seq) => setSequence(seq)} />
-          </div>
-        } />
-        <Route path="/fullscreen-display" element={<FullScreenDisplay />} />
+        <Route
+          path="/"
+          element={
+            <div className={`app-container ${theme.className}`}>
+              <ThemeSelector /> {/* Include ThemeSelector here */}
+              <Settings onUpdate={handleUpdate} userId={1} />
+              <Display sequence={sequence} speed={speed} />
+              <History onLoad={(seq) => setSequence(seq)} />
+            </div>
+          }
+        />
+        <Route
+          path="/fullscreen-display"
+          element={<FullScreenDisplay />}
+        />
       </Routes>
     </Router>
   );

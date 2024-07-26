@@ -15,6 +15,7 @@ const FullScreenDisplay: React.FC = () => {
   useEffect(() => {
     if (location.state) {
       const { sequence: seq, speed: spd } = location.state as { sequence: string[], speed: number };
+      console.log("Received state:", { sequence: seq, speed: spd }); // For debugging
       setSequence(seq);
       setSpeed(spd);
     }

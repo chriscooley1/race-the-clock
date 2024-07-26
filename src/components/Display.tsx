@@ -21,8 +21,8 @@ const Display: React.FC<DisplayProps> = ({ sequence, speed }) => {
   }, [sequence, speed]);
 
   return (
-    <div className="display-container" style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
-      <h1>{sequence[index]}</h1>  {/* Always render characters */}
+    <div className={`display-container ${theme.className}`}>
+      <h1 style={{ color: theme.textColor }}>{sequence[index]}</h1>
     </div>
   );
 };

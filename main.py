@@ -1,10 +1,24 @@
 from fastapi import FastAPI, Depends, HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session, select, SQLModel, create_engine
+from fastapi.middleware.cors import CORSMiddleware
+from .api import router  # Import your API router
 from database import get_db
 from models import User, UserCreate, Sequence, SequenceCreate
 from typing import List
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Adjust this list to match your frontend URL(s)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Your API router
+app.include_router(router)
 
 @app.get("/users/{user_id}/sequences", response_model=List[Sequence])
 async def get_sequences(user_id: int, db: Session = Depends(get_db)):

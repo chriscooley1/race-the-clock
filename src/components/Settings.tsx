@@ -154,8 +154,6 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
       <div className="button-container">
         <button className="save-button" type="button" onClick={handleUpdate}>Save</button>
       </div>
-      {/* Optionally render Display here if needed */}
-      {/* <Display sequence={sequence} speed={speed} /> */}
     </div>
   );
 };
