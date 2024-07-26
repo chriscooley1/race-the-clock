@@ -1,8 +1,9 @@
-fastapi
-uvicorn
-sqlmodel
-passlib[bcrypt]
-python-jose
 alembic
-python-decouple
+fastapi
 psycopg2
+python-decouple
+sqlmodel
+uvicorn
+pytest
+httpx
+unittest-mock
