@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-
 // Define the shape of your theme
 interface Theme {
   backgroundColor: string;
@@ -114,45 +113,19 @@ const violetTheme: Theme = {
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  changeTheme: (themeName: string) => void;
 }
-
 // Create the ThemeContext
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
 // Define the ThemeProvider component
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Set the default theme
   const [theme, setTheme] = useState<Theme>(darkTheme); // Default to dark theme
-
-  const changeTheme = (newTheme: string) => {
-    // Implement your logic to change the theme
-    const themes: { [key: string]: Theme } = {
-      light: lightTheme,
-      dark: darkTheme,
-      blue: blueTheme,
-      neonPink: neonPinkTheme,
-      neonGreen: neonGreenTheme,
-      neonBlue: neonBlueTheme,
-      neonOrange: neonOrangeTheme,
-      red: redTheme,
-      orange: orangeTheme,
-      yellow: yellowTheme,
-      green: greenTheme,
-      blueColor: blueThemeColor,
-      indigo: indigoTheme,
-      violet: violetTheme,
-    };
-    setTheme(themes[newTheme] || lightTheme); // Default to light theme if not found
-  };
-
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, changeTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
-
 // Custom hook to use the ThemeContext
 export const useTheme = () => {
   const context = useContext(ThemeContext);
@@ -161,7 +134,6 @@ export const useTheme = () => {
   }
   return context;
 };
-
 // Export the predefined themes
 export {
   darkTheme,
@@ -177,5 +149,5 @@ export {
   greenTheme,
   blueThemeColor,
   indigoTheme,
-  violetTheme,
+  violetTheme
 };
