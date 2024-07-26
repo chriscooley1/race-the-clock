@@ -114,6 +114,7 @@ const violetTheme: Theme = {
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  changeTheme: (themeName: string) => void;
 }
 
 // Create the ThemeContext
@@ -124,8 +125,29 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   // Set the default theme
   const [theme, setTheme] = useState<Theme>(darkTheme); // Default to dark theme
 
+  const changeTheme = (newTheme: string) => {
+    // Implement your logic to change the theme
+    const themes: { [key: string]: Theme } = {
+      light: lightTheme,
+      dark: darkTheme,
+      blue: blueTheme,
+      neonPink: neonPinkTheme,
+      neonGreen: neonGreenTheme,
+      neonBlue: neonBlueTheme,
+      neonOrange: neonOrangeTheme,
+      red: redTheme,
+      orange: orangeTheme,
+      yellow: yellowTheme,
+      green: greenTheme,
+      blueColor: blueThemeColor,
+      indigo: indigoTheme,
+      violet: violetTheme,
+    };
+    setTheme(themes[newTheme] || lightTheme); // Default to light theme if not found
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, changeTheme }}>
       {children}
     </ThemeContext.Provider>
   );
@@ -155,5 +177,5 @@ export {
   greenTheme,
   blueThemeColor,
   indigoTheme,
-  violetTheme
+  violetTheme,
 };

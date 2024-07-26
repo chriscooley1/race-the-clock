@@ -15,29 +15,27 @@ const FullScreenDisplay: React.FC = () => {
   useEffect(() => {
     if (location.state) {
       const { sequence: seq, speed: spd } = location.state as { sequence: string[], speed: number };
-      console.log("Received state:", { sequence: seq, speed: spd }); // For debugging
       setSequence(seq);
       setSpeed(spd);
     }
   }, [location.state]);
 
   useEffect(() => {
-    if (sequence.length > 0) {
-      const interval = setInterval(() => {
-        setIndex((prevIndex) => (prevIndex + 1) % sequence.length);
-      }, speed);
-      return () => clearInterval(interval);
-    }
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % sequence.length);
+    }, speed);
+
+    return () => clearInterval(interval);
   }, [sequence, speed]);
 
-  const handleBack = () => {
-    navigate("/");
-  };
-
   return (
-    <div className={`fullscreen-container ${theme.className}`}>
-      <button className="back-button" type="button" onClick={handleBack}>Back</button>
-      <h1 style={{ color: theme.textColor }}>{sequence[index]}</h1>
+    <div className={`fullscreen-display ${theme.className}`}>
+      <button className="back-button" onClick={() => navigate("/")}>
+        Back
+      </button>
+      <div className="display-content" style={{ color: theme.textColor }}>
+        {sequence[index]}
+      </div>
     </div>
   );
 };
