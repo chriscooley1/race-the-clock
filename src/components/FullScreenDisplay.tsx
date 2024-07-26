@@ -21,21 +21,21 @@ const FullScreenDisplay: React.FC = () => {
   }, [location.state]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % sequence.length);
-    }, speed);
+    if (sequence.length > 0) {
+      const interval = setInterval(() => {
+        setIndex((prevIndex) => (prevIndex + 1) % sequence.length);
+      }, speed);
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, [sequence, speed]);
 
   return (
     <div className={`fullscreen-display ${theme.className}`}>
-      <button className="back-button" onClick={() => navigate("/")}>
-        Back
-      </button>
-      <div className="display-content" style={{ color: theme.textColor }}>
+      <div className="display-content">
         {sequence[index]}
       </div>
+      <button className="back-button" onClick={() => navigate("/")}>Back</button>
     </div>
   );
 };

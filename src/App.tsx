@@ -8,7 +8,6 @@ import FullScreenDisplay from "./components/FullScreenDisplay";
 import { useTheme } from "./context/ThemeContext";
 import "./App.css";
 
-// App component
 const App: React.FC = () => {
   const [sequence, setSequence] = React.useState<string[]>([]);
   const [speed, setSpeed] = React.useState<number>(500);
@@ -26,7 +25,7 @@ const App: React.FC = () => {
           path="/"
           element={
             <div className={`app-container ${theme.className}`}>
-              <ThemeSelector /> {/* Include ThemeSelector here */}
+              <ThemeSelector />
               <Settings onUpdate={handleUpdate} userId={1} />
               <Display sequence={sequence} speed={speed} />
               <History onLoad={(seq) => setSequence(seq)} />

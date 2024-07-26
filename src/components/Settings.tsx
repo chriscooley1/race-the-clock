@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createSequence } from "../api";
 import { useTheme } from "../context/ThemeContext";
-import "../App.css";
-
-interface SettingsProps {
-  onUpdate: (sequence: string[], speed: number) => void;
-  userId: number;
-}
+import { createSequence } from "../api";
 
 const speedOptions = [
   { label: "0.25 seconds", value: 250 },
@@ -25,10 +19,9 @@ const textColorOptions = [
   { label: "Blue", value: "#0000ff" },
   { label: "Green", value: "#00ff00" },
   { label: "Yellow", value: "#ffff00" },
-  // Add more colors as needed
 ];
 
-const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
+const Settings: React.FC = () => {
   const [input, setInput] = useState<string>("");
   const [speed, setSpeed] = useState<number>(500);
   const [quantity, setQuantity] = useState<number>(10);
@@ -39,10 +32,9 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
 
   const handleUpdate = async () => {
     const sequence = input.split(",").map((item) => item.trim());
-    onUpdate(sequence, speed);
     localStorage.setItem("inputSequence", input);
     try {
-      const response = await createSequence(userId, "My Sequence", input);
+      const response = await createSequence(1, "My Sequence", input); // Replace 1 with actual userId
       console.log("Sequence saved successfully:", response.data);
       navigate("/fullscreen-display", { state: { sequence, speed } });
     } catch (error: any) {
@@ -97,6 +89,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
 
   return (
     <div className={`settings-container ${theme.className}`}>
+      <h1>Settings</h1>
       <div className="input-field">
         <label htmlFor="sequenceInput">Sequence (comma-separated):</label>
         <div className="input-wrapper">
@@ -162,7 +155,9 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
         </div>
       </div>
       <div className="button-container">
-        <button className="save-button" type="button" onClick={handleUpdate}>Save</button>
+        <button className="save-button" type="button" onClick={handleUpdate}>
+          Save
+        </button>
       </div>
     </div>
   );

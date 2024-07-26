@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
-from sqlmodel import Session, select, SQLModel, create_engine
+from sqlmodel import Session, SQLModel
 from fastapi.middleware.cors import CORSMiddleware
-from .api import router  # Import your API router
 from database import get_db
 from models import User, UserCreate, Sequence, SequenceCreate
 from typing import List
@@ -17,8 +16,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Your API router
-app.include_router(router)
+print("CORS middleware configured with:", ["http://localhost:5173"])
+
+@app.post("/users", response_model=User)
+async def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    db_user = User.from_orm(user)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
 
 @app.get("/users/{user_id}/sequences", response_model=List[Sequence])
 async def get_sequences(user_id: int, db: Session = Depends(get_db)):
@@ -29,6 +35,9 @@ async def get_sequences(user_id: int, db: Session = Depends(get_db)):
 
 @app.post("/sequences", response_model=Sequence)
 async def create_sequence(sequence: SequenceCreate, db: Session = Depends(get_db)):
+    user = db.get(User, sequence.user_id)
+    if not user:
+        raise HTTPException(status_code=400, detail="User not found")
     db_sequence = Sequence.from_orm(sequence)
     db.add(db_sequence)
     db.commit()
