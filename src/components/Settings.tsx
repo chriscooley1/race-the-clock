@@ -21,7 +21,12 @@ const textColorOptions = [
   { label: "Yellow", value: "#ffff00" },
 ];
 
-const Settings: React.FC = () => {
+interface SettingsProps {
+  onUpdate: (newSequence: string[], newSpeed: number) => void;
+  userId: number;
+}
+
+const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const [input, setInput] = useState<string>("");
   const [speed, setSpeed] = useState<number>(500);
   const [quantity, setQuantity] = useState<number>(10);
@@ -34,52 +39,36 @@ const Settings: React.FC = () => {
     const sequence = input.split(",").map((item) => item.trim());
     localStorage.setItem("inputSequence", input);
     try {
-      const response = await createSequence(1, "My Sequence", input); // Replace 1 with actual userId
-      console.log("Sequence saved successfully:", response.data);
+      await createSequence(userId, "My Sequence", input);
+      onUpdate(sequence, speed);
       navigate("/fullscreen-display", { state: { sequence, speed } });
-    } catch (error: any) {
-      console.error("Error saving sequence:", error.response?.data || error.message || error);
+    } catch (error) {
+      console.error("Error saving sequence:", error);
     }
   };
 
-  const generateRandomLetters = () => {
-    const letters = Array.from({ length: quantity }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26)));
-    setInput(letters.join(", "));
-  };
-
-  const generateRandomNumbers = () => {
-    const numbers = Array.from({ length: quantity }, () => Math.floor(Math.random() * 100).toString());
-    setInput(numbers.join(", "));
-  };
-
-  const generateAlphabetSequence = () => {
-    const alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
-    setInput(alphabet.join(", "));
-  };
-
-  const generateNumberSequence = () => {
-    const numbers = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
-    setInput(numbers.join(", "));
+  const generateSequence = (type: string) => {
+    let newSequence: string[] = [];
+    switch (type) {
+      case "randomLetters":
+        newSequence = Array.from({ length: quantity }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26)));
+        break;
+      case "randomNumbers":
+        newSequence = Array.from({ length: quantity }, () => Math.floor(Math.random() * 100).toString());
+        break;
+      case "alphabetSequence":
+        newSequence = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
+        break;
+      case "numberSequence":
+        newSequence = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
+        break;
+    }
+    setInput(newSequence.join(", "));
   };
 
   const handleDropdownChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setDropdownValue(event.target.value);
-    switch (event.target.value) {
-      case "randomLetters":
-        generateRandomLetters();
-        break;
-      case "randomNumbers":
-        generateRandomNumbers();
-        break;
-      case "alphabetSequence":
-        generateAlphabetSequence();
-        break;
-      case "numberSequence":
-        generateNumberSequence();
-        break;
-      default:
-        break;
-    }
+    generateSequence(event.target.value);
   };
 
   const handleTextColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -89,76 +78,62 @@ const Settings: React.FC = () => {
 
   return (
     <div className={`settings-container ${theme.className}`}>
-      <h1>Settings</h1>
+      <h1>Letter Reader</h1>
       <div className="input-field">
         <label htmlFor="sequenceInput">Sequence (comma-separated):</label>
-        <div className="input-wrapper">
-          <textarea
-            id="sequenceInput"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Enter letters or words separated by commas"
-          />
-        </div>
+        <textarea
+          id="sequenceInput"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Enter letters or words separated by commas"
+        />
       </div>
       <div className="input-field">
         <label htmlFor="speedInput">Speed:</label>
-        <div className="input-wrapper">
-          <select
-            id="speedInput"
-            value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))}
-          >
-            {speedOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <select
+          id="speedInput"
+          value={speed}
+          onChange={(e) => setSpeed(Number(e.target.value))}
+        >
+          {speedOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="input-field">
         <label htmlFor="quantityInput">Quantity:</label>
-        <div className="input-wrapper">
-          <input
-            id="quantityInput"
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            placeholder="Enter quantity"
-            min="1"
-          />
-        </div>
+        <input
+          id="quantityInput"
+          type="number"
+          value={quantity}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          placeholder="Enter quantity"
+          min="1"
+        />
       </div>
       <div className="input-field">
         <label htmlFor="generateDropdown">Generate Sequence:</label>
-        <div className="input-wrapper">
-          <select id="generateDropdown" value={dropdownValue} onChange={handleDropdownChange}>
-            <option value="">Select an option</option>
-            <option value="randomLetters">Random Letters</option>
-            <option value="randomNumbers">Random Numbers</option>
-            <option value="alphabetSequence">Alphabet Sequence</option>
-            <option value="numberSequence">Number Sequence</option>
-          </select>
-        </div>
+        <select id="generateDropdown" value={dropdownValue} onChange={handleDropdownChange}>
+          <option value="">Select an option</option>
+          <option value="randomLetters">Random Letters</option>
+          <option value="randomNumbers">Random Numbers</option>
+          <option value="alphabetSequence">Alphabet Sequence</option>
+          <option value="numberSequence">Number Sequence</option>
+        </select>
       </div>
       <div className="input-field">
         <label htmlFor="textColorSelect">Text Color:</label>
-        <div className="input-wrapper">
-          <select id="textColorSelect" value={textColor} onChange={handleTextColorChange}>
-            {textColorOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <select id="textColorSelect" value={textColor} onChange={handleTextColorChange}>
+          {textColorOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       </div>
-      <div className="button-container">
-        <button className="save-button" type="button" onClick={handleUpdate}>
-          Save
-        </button>
-      </div>
+      <button onClick={handleUpdate}>Save</button>
     </div>
   );
 };

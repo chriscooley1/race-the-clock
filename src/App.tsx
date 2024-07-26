@@ -19,24 +19,26 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router basename="/letter-reader">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div className={`app-container ${theme.className}`}>
-              <ThemeSelector />
-              <Settings onUpdate={handleUpdate} userId={1} />
-              <Display sequence={sequence} speed={speed} />
-              <History onLoad={(seq) => setSequence(seq)} />
-            </div>
-          }
-        />
-        <Route
-          path="/fullscreen-display"
-          element={<FullScreenDisplay />}
-        />
-      </Routes>
+    <Router basename="/letter-reader/">
+      <div className={`app-container ${theme.className}`}>
+        <ThemeSelector />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Settings onUpdate={handleUpdate} userId={1} />
+                <Display sequence={sequence} speed={speed} />
+                <History onLoad={(seq) => setSequence(seq)} />
+              </>
+            }
+          />
+          <Route
+            path="/fullscreen-display"
+            element={<FullScreenDisplay />}
+          />
+        </Routes>
+      </div>
     </Router>
   );
 };
