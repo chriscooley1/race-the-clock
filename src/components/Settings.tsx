@@ -99,57 +99,67 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     <div className={`settings-container ${theme.className}`}>
       <div className="input-field">
         <label htmlFor="sequenceInput">Sequence (comma-separated):</label>
-        <textarea
-          id="sequenceInput"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter letters or words separated by commas"
-        />
+        <div className="input-wrapper">
+          <textarea
+            id="sequenceInput"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Enter letters or words separated by commas"
+          />
+        </div>
       </div>
       <div className="input-field">
         <label htmlFor="speedInput">Speed:</label>
-        <select
-          id="speedInput"
-          value={speed}
-          onChange={(e) => setSpeed(Number(e.target.value))}
-        >
-          {speedOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+        <div className="input-wrapper">
+          <select
+            id="speedInput"
+            value={speed}
+            onChange={(e) => setSpeed(Number(e.target.value))}
+          >
+            {speedOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="input-field">
         <label htmlFor="quantityInput">Quantity:</label>
-        <input
-          id="quantityInput"
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
-          placeholder="Enter quantity"
-          min="1"
-        />
+        <div className="input-wrapper">
+          <input
+            id="quantityInput"
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            placeholder="Enter quantity"
+            min="1"
+          />
+        </div>
       </div>
       <div className="input-field">
         <label htmlFor="generateDropdown">Generate Sequence:</label>
-        <select id="generateDropdown" value={dropdownValue} onChange={handleDropdownChange}>
-          <option value="">Select an option</option>
-          <option value="randomLetters">Random Letters</option>
-          <option value="randomNumbers">Random Numbers</option>
-          <option value="alphabetSequence">Alphabet Sequence</option>
-          <option value="numberSequence">Number Sequence</option>
-        </select>
+        <div className="input-wrapper">
+          <select id="generateDropdown" value={dropdownValue} onChange={handleDropdownChange}>
+            <option value="">Select an option</option>
+            <option value="randomLetters">Random Letters</option>
+            <option value="randomNumbers">Random Numbers</option>
+            <option value="alphabetSequence">Alphabet Sequence</option>
+            <option value="numberSequence">Number Sequence</option>
+          </select>
+        </div>
       </div>
       <div className="input-field">
         <label htmlFor="textColorSelect">Text Color:</label>
-        <select id="textColorSelect" value={textColor} onChange={handleTextColorChange}>
-          {textColorOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+        <div className="input-wrapper">
+          <select id="textColorSelect" value={textColor} onChange={handleTextColorChange}>
+            {textColorOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="button-container">
         <button className="save-button" type="button" onClick={handleUpdate}>Save</button>
