@@ -15,7 +15,7 @@ const speedOptions = [
   { label: "0.75 seconds", value: 750 },
   { label: "1 second", value: 1000 },
   { label: "1.5 seconds", value: 1500 },
-  { label: "2 seconds", value: 2000 }
+  { label: "2 seconds", value: 2000 },
 ];
 
 const textColorOptions = [

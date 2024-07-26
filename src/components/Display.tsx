@@ -5,25 +5,24 @@ import "../App.css";
 interface DisplayProps {
   sequence: string[];
   speed: number;
-  showCharacters: boolean;  // New prop to control visibility
 }
 
-const Display: React.FC<DisplayProps> = ({ sequence, speed, showCharacters }) => {
+const Display: React.FC<DisplayProps> = ({ sequence, speed }) => {
   const [index, setIndex] = useState(0);
   const { theme } = useTheme();
 
   useEffect(() => {
-    if (sequence.length > 0 && showCharacters) {
+    if (sequence.length > 0) {
       const interval = setInterval(() => {
         setIndex((prevIndex) => (prevIndex + 1) % sequence.length);
       }, speed);
       return () => clearInterval(interval);
     }
-  }, [sequence, speed, showCharacters]);
+  }, [sequence, speed]);
 
   return (
     <div className="display-container" style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
-      {showCharacters && <h1>{sequence[index]}</h1>}  {/* Conditional rendering */}
+      <h1>{sequence[index]}</h1>  {/* Always render characters */}
     </div>
   );
 };

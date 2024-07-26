@@ -25,7 +25,7 @@ const App: React.FC = () => {
           <div className={`app-container ${theme.className}`}>
             <ThemeSelector /> {/* Include ThemeSelector here */}
             <Settings onUpdate={handleUpdate} userId={1} />
-            <Display sequence={sequence} speed={speed} />
+            <Display sequence={sequence} speed={speed} /> {/* Updated */}
             <History onLoad={(seq) => setSequence(seq)} />
           </div>
         } />
