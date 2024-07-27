@@ -13,30 +13,39 @@ const App: React.FC = () => {
   const [sequence, setSequence] = React.useState<string[]>([]);
   const [speed, setSpeed] = React.useState<number>(500);
   const { theme } = useTheme();
+
   const handleUpdate = (newSequence: string[], newSpeed: number) => {
     setSequence(newSequence);
     setSpeed(newSpeed);
   };
+
+  const handleLoad = (seq: string[]) => {
+    setSequence(seq);
+  };
+
   return (
     <Router basename="/letter-reader/">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div className={`app-container ${theme.className}`}>
-              <ThemeSelector /> {/* Include ThemeSelector here */}
-              <Settings onUpdate={handleUpdate} userId={1} />
-              <Display sequence={sequence} speed={speed} />
-              <History onLoad={(seq) => setSequence(seq)} />
-            </div>
-          }
-        />
-        <Route
-          path="/fullscreen-display"
-          element={<FullScreenDisplay />}
-        />
-      </Routes>
+      <div className={`app-container ${theme.className}`}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <ThemeSelector /> {/* Include ThemeSelector here */}
+                <Settings onUpdate={handleUpdate} userId={1} />
+                <Display sequence={sequence} speed={speed} />
+                <History onLoad={handleLoad} />
+              </>
+            }
+          />
+          <Route
+            path="/fullscreen-display"
+            element={<FullScreenDisplay />}
+          />
+        </Routes>
+      </div>
     </Router>
   );
 };
+
 export default App;

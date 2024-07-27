@@ -2,6 +2,8 @@
 html, body {
   height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /* Style the body */
@@ -10,24 +12,25 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0;
 }
 
 /* Ensure the #root element covers the full viewport */
 #root {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 
 /* Container for the entire app */
 .app-container {
-  min-height: 100vh;
-  width: 100vw;
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme changes */
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s, color 0.3s;
+  width: 100%;
 }
 
 /* Additional global styles */
@@ -45,7 +48,7 @@ textarea, input, button {
 .input-field {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center align the label and input */
+  align-items: center;
   margin: 10px 0;
 }
 
@@ -70,17 +73,17 @@ textarea, input, button {
 /* Theme styles */
 .light-theme {
   background-color: #fff;
-  color: #000; /* Ensure color is set */
+  color: #000;
 }
 
 .dark-theme {
   background-color: #333;
-  color: #fff; /* Ensure color is set */
+  color: #fff;
 }
 
 .blue-theme {
   background-color: #cceeff;
-  color: #003366; /* Ensure color is set */
+  color: #003366;
 }
 
 .theme-selector {
@@ -93,18 +96,18 @@ textarea, input, button {
 }
 
 /* Fullscreen display styles */
-.fullscreen-display {
+.fullscreen-container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100vw;
   position: relative;
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme changes */
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.fullscreen-display h1 {
-  font-size: 10vw; /* Adjust as needed to make the character large */
+.fullscreen-container h1 {
+  font-size: 50vw;
   text-align: center;
   margin: 0;
 }
@@ -160,49 +163,4 @@ textarea, input, button {
 .yellow-theme {
   background-color: #ffff00;
   color: #000;
-}
-
-.green-theme {
-  background-color: #008000;
-  color: #fff;
-}
-
-.blue-theme-color {
-  background-color: #0000ff;
-  color: #fff;
-}
-
-.indigo-theme {
-  background-color: #4b0082;
-  color: #fff;
-}
-
-.violet-theme {
-  background-color: #ee82ee;
-  color: #000;
-}
-
-/* Container for the button to center it */
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px; /* Add space above the button if needed */
-}
-
-.save-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-}
-
-.save-button:hover {
-  background-color: #0056b3;
-}
-
-#quantityInput {
-  width: 100px;
 }
