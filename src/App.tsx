@@ -5,10 +5,11 @@ import Settings from "./components/Settings";
 import History from "./components/History";
 import ThemeSelector from "./components/ThemeSelector";
 import FullScreenDisplay from "./components/FullScreenDisplay";
+import Login from "./components/Login"; // Import new Login component
+import Register from "./components/Register"; // Import new Register component
 import { useTheme } from "./context/ThemeContext";
 import "./App.css";
 
-// App component
 const App: React.FC = () => {
   const [sequence, setSequence] = React.useState<string[]>([]);
   const [speed, setSpeed] = React.useState<number>(500);
@@ -31,17 +32,16 @@ const App: React.FC = () => {
             path="/"
             element={
               <>
-                <ThemeSelector /> {/* Include ThemeSelector here */}
+                <ThemeSelector />
                 <Settings onUpdate={handleUpdate} userId={1} />
                 <Display sequence={sequence} speed={speed} />
                 <History onLoad={handleLoad} />
               </>
             }
           />
-          <Route
-            path="/fullscreen-display"
-            element={<FullScreenDisplay />}
-          />
+          <Route path="/fullscreen-display" element={<FullScreenDisplay />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </Router>

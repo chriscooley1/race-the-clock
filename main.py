@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Depends, HTTPException
-from sqlmodel import Session, SQLModel
+from sqlmodel import Session
 from fastapi.middleware.cors import CORSMiddleware
+from passlib.context import CryptContext
+from pydantic import BaseModel
 from database import get_db
 from models import User, UserCreate, Sequence, SequenceCreate
 from typing import List
@@ -16,11 +18,37 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-print("CORS middleware configured with:", ["http://localhost:5173"])
+# Password context
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# Authentication helpers
+def get_password_hash(password: str):
+    return pwd_context.hash(password)
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+@app.post("/register/")
+def register(user: UserCreate, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.username == user.username).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Username already registered")
+    hashed_password = get_password_hash(user.password)
+    db_user = User(username=user.username, hashed_password=hashed_password)
+    db.add(db_user)
+    db.commit()
+    return {"message": "User registered successfully"}
+
+@app.post("/login/")
+def login(user: UserCreate, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.username == user.username).first()
+    if not db_user or not verify_password(user.password, db_user.hashed_password):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    return {"message": "Login successful"}
 
 @app.post("/users", response_model=User)
 async def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = User.from_orm(user)
+    db_user = User(username=user.username, hashed_password=get_password_hash(user.password))
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
