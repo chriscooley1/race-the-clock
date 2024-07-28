@@ -63,10 +63,15 @@ async def get_sequences(user_id: int, db: Session = Depends(get_db)):
 
 @app.post("/sequences", response_model=Sequence)
 async def create_sequence(sequence: SequenceCreate, db: Session = Depends(get_db)):
+    print("Received data:", sequence.dict())  # Debugging line
     user = db.get(User, sequence.user_id)
     if not user:
         raise HTTPException(status_code=400, detail="User not found")
-    db_sequence = Sequence.from_orm(sequence)
+    db_sequence = Sequence(
+        name=sequence.name,
+        description=sequence.description,
+        user_id=sequence.user_id
+    )
     db.add(db_sequence)
     db.commit()
     db.refresh(db_sequence)

@@ -7,8 +7,8 @@ export const getSequences = async (userId: number) => {
   return response.data;
 };
 
-export const createSequence = async (userId: number, name: string, description: string) => {
-  const response = await axios.post(`${API_BASE_URL}/sequences`, { user_id: userId, name, description });
+export const createSequence = async (userId: number, name: string, sequence: string) => {
+  const response = await axios.post(`${API_BASE_URL}/sequences`, { user_id: userId, name, description: sequence });
   return response.data;
 };
 
