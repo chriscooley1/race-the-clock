@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import "../App.css";
+
 const FullScreenDisplay: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -9,14 +10,18 @@ const FullScreenDisplay: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [sequence, setSequence] = useState<string[]>([]);
   const [speed, setSpeed] = useState<number>(500);
+
   useEffect(() => {
     if (location.state) {
       const { sequence: seq, speed: spd } = location.state as { sequence: string[], speed: number };
-      console.log("Received state:", { sequence: seq, speed: spd }); // For debugging
+      console.log("Received state:", { sequence: seq, speed: spd });
       setSequence(seq);
       setSpeed(spd);
+      localStorage.setItem("inputSequence", seq.join(","));
+      localStorage.setItem("sequenceSpeed", spd.toString());
     }
   }, [location.state]);
+
   useEffect(() => {
     if (sequence.length > 0) {
       const interval = setInterval(() => {
@@ -25,9 +30,11 @@ const FullScreenDisplay: React.FC = () => {
       return () => clearInterval(interval);
     }
   }, [sequence, speed]);
+
   const handleBack = () => {
     navigate("/");
   };
+
   return (
     <div className={`fullscreen-container ${theme.className}`}>
       <button className="back-button" type="button" onClick={handleBack}>Back</button>
@@ -35,4 +42,5 @@ const FullScreenDisplay: React.FC = () => {
     </div>
   );
 };
+
 export default FullScreenDisplay;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createSequence } from "../api";
 import { useTheme } from "../context/ThemeContext";
@@ -25,7 +25,6 @@ const textColorOptions = [
   { label: "Blue", value: "#0000ff" },
   { label: "Green", value: "#00ff00" },
   { label: "Yellow", value: "#ffff00" },
-  // Add more colors as needed
 ];
 
 const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
@@ -37,10 +36,30 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const savedSequence = localStorage.getItem("inputSequence");
+    const savedSpeed = localStorage.getItem("sequenceSpeed");
+    const savedTextColor = localStorage.getItem("sequenceTextColor");
+
+    if (savedSequence) {
+      setInput(savedSequence);
+    }
+    if (savedSpeed) {
+      setSpeed(Number(savedSpeed));
+    }
+    if (savedTextColor) {
+      setTextColor(savedTextColor);
+      setTheme({ ...theme, textColor: savedTextColor });
+    }
+  }, [theme, setTheme]);
+
   const handleUpdate = async () => {
     const sequence = input.split(",").map((item) => item.trim());
     onUpdate(sequence, speed);
     localStorage.setItem("inputSequence", input);
+    localStorage.setItem("sequenceSpeed", speed.toString());
+    localStorage.setItem("sequenceTextColor", textColor);
+
     try {
       const response = await createSequence(userId, "My Sequence", input);
       console.log("Sequence saved successfully:", response);
@@ -128,13 +147,16 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
           placeholder="Enter quantity"
-          min="1"
         />
       </div>
       <div className="input-field">
-        <label htmlFor="generateDropdown">Generate Sequence:</label>
-        <select id="generateDropdown" value={dropdownValue} onChange={handleDropdownChange}>
-          <option value="">Select an option</option>
+        <label htmlFor="dropdownSelect">Generate Sequence:</label>
+        <select
+          id="dropdownSelect"
+          value={dropdownValue}
+          onChange={handleDropdownChange}
+        >
+          <option value="">Select...</option>
           <option value="randomLetters">Random Letters</option>
           <option value="randomNumbers">Random Numbers</option>
           <option value="alphabetSequence">Alphabet Sequence</option>
