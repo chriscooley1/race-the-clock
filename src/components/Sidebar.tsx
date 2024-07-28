@@ -1,24 +1,14 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import "../App.css"
 
 const Sidebar: React.FC = () => {
-  const location = useLocation();
-
-  // Determine whether to show the sidebar or not
-  const isFullScreen = location.pathname === '/full-screen-display';
-
   return (
-    <div className={`sidebar ${isFullScreen ? 'hidden' : ''}`}>
+    <div className="sidebar">
       <ul>
-        <li>
-          <Link to="/your-collections">Your Collections</Link>
-        </li>
-        <li>
-          <Link to="/discover-collections">Discover Collections</Link>
-        </li>
-        <li>
-          <button className="new-collection-button">New Collection</button>
-        </li>
+        <li><Link to="/your-collections">Your Collections</Link></li>
+        <li><Link to="/discover-collections">Discover Collections</Link></li>
+        <li><button>New Collection</button></li>
       </ul>
     </div>
   );

@@ -1,39 +1,63 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import './App.css'; // Ensure this is imported for your styles
-
-// Import your components
-import YourCollections from './components/YourCollections';
-import DiscoverCollections from './components/DiscoverCollections';
-import Home from './components/HomePage';
-// import NewCollection from './components/NewCollection';
-import FullScreenDisplay from './components/FullScreenDisplay'; // Assuming you have this component
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import Display from "./components/Display";
+import Settings from "./components/Settings";
+import History from "./components/History";
+import ThemeSelector from "./components/ThemeSelector";
+import FullScreenDisplay from "./components/FullScreenDisplay";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Sidebar from "./components/Sidebar"; // Import the Sidebar component
+import { useTheme } from "./context/ThemeContext";
+import "./App.css";
 
 const App: React.FC = () => {
+  const [sequence, setSequence] = React.useState<string[]>([]);
+  const [speed, setSpeed] = React.useState<number>(500);
+  const { theme } = useTheme();
+  const location = useLocation();
+
+  const handleUpdate = (newSequence: string[], newSpeed: number) => {
+    setSequence(newSequence);
+    setSpeed(newSpeed);
+  };
+
+  const handleLoad = (seq: string[]) => {
+    setSequence(seq);
+  };
+
+  // Determine if the sidebar should be hidden
+  const shouldHideSidebar = location.pathname === '/fullscreen-display';
+
   return (
-    <Router>
-      <div className="app-container">
-        <div className="sidebar">
-          <h2>Menu</h2>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/your-collections">Your Collections</Link></li>
-            <li><Link to="/discover-collections">Discover Collections</Link></li>
-            <li><button className="new-collection-btn">New Collection</button></li>
-          </ul>
-        </div>
-        <div className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/your-collections" element={<YourCollections />} />
-            <Route path="/discover-collections" element={<DiscoverCollections />} />
-            {/* <Route path="/new-collection" element={<NewCollection />} /> */}
-            <Route path="/fullscreen" element={<FullScreenDisplay />} /> {/* Add route for fullscreen display */}
-          </Routes>
-        </div>
+    <div className={`app-container ${theme.className}`}>
+      {!shouldHideSidebar && <Sidebar />} {/* Conditionally render the sidebar */}
+      <div style={{ flex: 1, marginLeft: shouldHideSidebar ? 0 : '250px' }}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <ThemeSelector />
+                <Settings onUpdate={handleUpdate} userId={1} />
+                <Display sequence={sequence} speed={speed} />
+                <History onLoad={handleLoad} />
+              </>
+            }
+          />
+          <Route path="/fullscreen-display" element={<FullScreenDisplay />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
       </div>
-    </Router>
+    </div>
   );
 };
 
-export default App;
+const AppWrapper: React.FC = () => (
+  <Router basename="/letter-reader/">
+    <App />
+  </Router>
+);
+
+export default AppWrapper;
