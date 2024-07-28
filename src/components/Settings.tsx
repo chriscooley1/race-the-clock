@@ -49,9 +49,9 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     }
     if (savedTextColor) {
       setTextColor(savedTextColor);
-      setTheme({ ...theme, textColor: savedTextColor });
+      setTheme(prevTheme => ({ ...prevTheme, textColor: savedTextColor }));
     }
-  }, [theme, setTheme]);
+  }, [setTheme]);
 
   const handleUpdate = async () => {
     const sequence = input.split(",").map((item) => item.trim());
@@ -111,7 +111,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
 
   const handleTextColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setTextColor(event.target.value);
-    setTheme({ ...theme, textColor: event.target.value });
+    setTheme(prevTheme => ({ ...prevTheme, textColor: event.target.value }));
   };
 
   return (

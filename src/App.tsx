@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Display from "./components/Display";
 import Settings from "./components/Settings";
 import History from "./components/History";
@@ -15,6 +16,7 @@ const App: React.FC = () => {
   const [sequence, setSequence] = React.useState<string[]>([]);
   const [speed, setSpeed] = React.useState<number>(500);
   const { theme } = useTheme();
+  const location = useLocation();
   const location = useLocation();
 
   const handleUpdate = (newSequence: string[], newSpeed: number) => {
@@ -50,6 +52,7 @@ const App: React.FC = () => {
         </Routes>
       </div>
     </div>
+    </div>
   );
 };
 
@@ -59,4 +62,11 @@ const AppWrapper: React.FC = () => (
   </Router>
 );
 
+const AppWrapper: React.FC = () => (
+  <Router basename="/letter-reader/">
+    <App />
+  </Router>
+);
+
+export default AppWrapper;
 export default AppWrapper;
