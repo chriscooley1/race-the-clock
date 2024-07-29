@@ -1,31 +1,22 @@
-import React from 'react';
-import ThemeSelector from './ThemeSelector';
-import Settings from './Settings';
-import History from './History';
-import Display from './Display';
-import FullScreenDisplay from './FullScreenDisplay';
+import React from "react";
+import ThemeSelector from "./ThemeSelector";
+import Settings from "./Settings";
+import History from "./History";
+import Display from "./Display";
 
-const handleSettingsUpdate = (sequence: string[], speed: number) => {
-  // Handle sequence and speed update logic here
-};
+interface HomePageProps {
+  handleSettingsUpdate: (sequence: string[], speed: number) => void;
+  handleHistoryLoad: (sequence: string[]) => void;
+  userId: number;
+}
 
-const handleHistoryLoad = (sequence: string[]) => {
-  // Handle loading the sequence from history
-};
-
-// Example data; replace with actual state or props as needed
-const sequence = ['A', 'B', 'C', 'D'];
-const speed = 500; // Example speed (in milliseconds)
-const userId = 123; // Example userId
-
-const HomePage: React.FC = () => {
+const HomePage: React.FC<HomePageProps> = ({ handleSettingsUpdate, handleHistoryLoad, userId }) => {
   return (
     <div className="home-page">
       <ThemeSelector />
       <Settings onUpdate={handleSettingsUpdate} userId={userId} />
       <History onLoad={handleHistoryLoad} />
-      <Display sequence={sequence} speed={speed} />
-      <FullScreenDisplay />
+      <Display sequence={[]} speed={500} />
     </div>
   );
 };

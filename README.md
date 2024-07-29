@@ -1,10 +1,10 @@
-# Kindergarten Reader
+# Race The Clock
 
 A tool to help kindergarten students practice reading letters and words at a controlled speed. This project allows for customizable settings, history tracking, and sharing of letter and word sequences among teachers.
 
 ## Table of Contents
 
-- [Kindergarten Reader](#kindergarten-reader)
+- [Race The Clock](#race-the-clock)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Installation](#installation)

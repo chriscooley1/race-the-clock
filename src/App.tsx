@@ -1,13 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import Display from "./components/Display";
-import Settings from "./components/Settings";
-import History from "./components/History";
-import ThemeSelector from "./components/ThemeSelector";
 import FullScreenDisplay from "./components/FullScreenDisplay";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Sidebar from "./components/Sidebar"; // Import Sidebar component
+import Sidebar from "./components/Sidebar";
+import HomePage from "./components/HomePage";
 import { useTheme } from "./context/ThemeContext";
 import "./App.css";
 
@@ -35,14 +32,7 @@ const App: React.FC = () => {
         <Routes>
           <Route
             path="/"
-            element={
-              <>
-                <ThemeSelector />
-                <Settings onUpdate={handleUpdate} userId={1} />
-                <Display sequence={sequence} speed={speed} />
-                <History onLoad={handleLoad} />
-              </>
-            }
+            element={<HomePage handleSettingsUpdate={handleUpdate} handleHistoryLoad={handleLoad} userId={1} />}
           />
           <Route path="/fullscreen-display" element={<FullScreenDisplay />} />
           <Route path="/login" element={<Login />} />
@@ -54,7 +44,7 @@ const App: React.FC = () => {
 };
 
 const AppWrapper: React.FC = () => (
-  <Router basename="/letter-reader/">
+  <Router basename="">
     <App />
   </Router>
 );
