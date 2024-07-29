@@ -49,5 +49,4 @@ const AppWrapper: React.FC = () => (
   </Router>
 );
 
-
 export default AppWrapper;

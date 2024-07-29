@@ -70,9 +70,15 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   };
 
   const generateRandomLetters = () => {
-    const letters = Array.from({ length: quantity }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26)));
+    const letters = Array.from({ length: quantity }, () => {
+      const isUpperCase = Math.random() > 0.5;
+      const charCode = isUpperCase 
+        ? 65 + Math.floor(Math.random() * 26)  // Uppercase letters
+        : 97 + Math.floor(Math.random() * 26); // Lowercase letters
+      return String.fromCharCode(charCode);
+    });
     setInput(letters.join(", "));
-  };
+  };  
 
   const generateRandomNumbers = () => {
     const numbers = Array.from({ length: quantity }, () => Math.floor(Math.random() * 100).toString());
@@ -80,9 +86,11 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   };
 
   const generateAlphabetSequence = () => {
-    const alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
+    const uppercase = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
+    const lowercase = Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i));
+    const alphabet = [...uppercase, ...lowercase];
     setInput(alphabet.join(", "));
-  };
+  };  
 
   const generateNumberSequence = () => {
     const numbers = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
