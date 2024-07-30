@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
-  const { setToken } = useAuth();
+  const { setToken, isAuthenticated } = useAuth();
 
   const handleLogout = () => {
     setToken(null);
@@ -15,10 +15,20 @@ const Sidebar: React.FC = () => {
   return (
     <div className="sidebar">
       <ul>
-        <li><Link to="/">HomePage</Link></li>
-        <li><Link to="/your-collections">Your Collections</Link></li>
-        <li><Link to="/discover-collections">Discover Collections</Link></li>
-        <li><button onClick={handleLogout}>Logout</button></li>
+        {isAuthenticated ? (
+          <>
+            <li><Link to="/home">HomePage</Link></li>
+            <li><Link to="/your-collections">Your Collections</Link></li>
+            <li><Link to="/discover-collections">Discover Collections</Link></li>
+            <li><button onClick={handleLogout}>Logout</button></li>
+          </>
+        ) : (
+          <>
+            <li><Link to="/">HomePage</Link></li>
+            <li><Link to="/register">Register</Link></li>
+            <li><Link to="/login">Already Registered</Link></li>
+          </>
+        )}
       </ul>
     </div>
   );

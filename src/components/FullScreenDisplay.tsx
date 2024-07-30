@@ -32,7 +32,7 @@ const FullScreenDisplay: React.FC = () => {
   }, [sequence, speed]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/home"); // Navigate back to HomePage
   };
 
   return (

@@ -28,7 +28,7 @@ const App: React.FC = () => {
   return (
     <AuthProvider>
       <div className={`app-container ${theme.className}`}>
-        <Router>
+        <Router basename="/letter-reader">
           <Sidebar />
           <div style={{ flex: 1, marginLeft: '250px' }}>
             <Routes>
@@ -36,7 +36,7 @@ const App: React.FC = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/home" element={<PrivateRoute element={<HomePage handleSettingsUpdate={handleSettingsUpdate} handleHistoryLoad={handleHistoryLoad} userId={1} />} />} />
-              <Route path="/fullscreen-display" element={<FullScreenDisplay sequence={sequence} speed={speed} />} />
+              <Route path="/fullscreen-display" element={<PrivateRoute element={<FullScreenDisplay sequence={sequence} speed={speed} />} />} />
             </Routes>
           </div>
         </Router>
