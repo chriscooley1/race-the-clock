@@ -7,3 +7,6 @@ uvicorn
 pytest
 httpx
 passlib
+python-jose
+python-multipart
+bcrypt

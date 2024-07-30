@@ -3,16 +3,17 @@ from typing import List, Optional
 
 class UserBase(SQLModel):
     username: str
-    email: str
-    password: str
+    email: Optional[str]
+    hashed_password: str
 
 class User(UserBase, table=True):
     __tablename__ = "users"
     user_id: Optional[int] = Field(default=None, primary_key=True)
     sequences: List["Sequence"] = Relationship(back_populates="user")
 
-class UserCreate(UserBase):
-    pass
+class UserCreate(SQLModel):
+    username: str
+    password: str
 
 class SequenceBase(SQLModel):
     name: str

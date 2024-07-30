@@ -1,39 +1,37 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../api';
 
 const Register: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleRegister = async () => {
     try {
-      const response = await axios.post("/register/", { username, password });
-      alert(response.data.message);
-      // Handle successful registration (e.g., redirect to login)
+      await register(username, password);
+      navigate('/login');
     } catch (error) {
-      alert("Registration failed: " + error.response.data.detail);
+      console.error('Registration failed', error);
     }
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Register</button>
-      </form>
+    <div className="register-container">
+      <h1>Register</h1>
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <button onClick={handleRegister}>Register</button>
     </div>
   );
 };

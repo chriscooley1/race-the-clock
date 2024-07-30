@@ -1,32 +1,31 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
-interface AuthContextType {
-  user: string | null;
-  login: (username: string, password: string) => Promise<void>;
-  logout: () => void;
+interface AuthContextProps {
+  token: string | null;
+  setToken: (token: string | null) => void;
+  isAuthenticated: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<string | null>(null);
+export const AuthProvider: React.FC = ({ children }) => {
+  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
 
-  const login = async (username: string, password: string) => {
-    try {
-      await axios.post('/login/', { username, password });
-      setUser(username);
-    } catch (error) {
-      console.error("Login failed", error);
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      localStorage.removeItem('token');
+      delete axios.defaults.headers.common['Authorization'];
     }
-  };
+  }, [token]);
 
-  const logout = () => {
-    setUser(null);
-  };
+  const isAuthenticated = !!token;
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ token, setToken, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
@@ -35,7 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

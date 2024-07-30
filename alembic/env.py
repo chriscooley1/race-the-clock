@@ -2,8 +2,8 @@ from logging.config import fileConfig
 from decouple import config
 from sqlalchemy import engine_from_config, pool
 from alembic import context
+from models import SQLModel  # Ensure you import your models here
 
-# this is the Alembic Config object, which provides access to the values within the .ini file in use.
 DATABASE_URL = config("DATABASE_URL")
 config = context.config
 
@@ -14,7 +14,6 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # add your model's MetaData object here for 'autogenerate' support
-from models import SQLModel
 target_metadata = SQLModel.metadata
 
 def run_migrations_offline() -> None:
