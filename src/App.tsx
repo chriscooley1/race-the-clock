@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import Sidebar from "./components/Sidebar";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
+import YourCollections from "./components/YourCollections";  // Import YourCollections
 import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -41,10 +42,8 @@ const App: React.FC = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/home" element={<PrivateRoute element={<HomePage handleSettingsUpdate={handleSettingsUpdate} handleHistoryLoad={handleHistoryLoad} userId={1} />} />} />
-              <Route
-                path="/fullscreen-display"
-                element={<PrivateRoute element={<FullScreenDisplay sequence={sequence} speed={speed} onEnterFullScreen={() => handleFullScreenDisplay(true)} onExitFullScreen={() => handleFullScreenDisplay(false)} />} />}
-              />
+              <Route path="/fullscreen-display" element={<PrivateRoute element={<FullScreenDisplay sequence={sequence} speed={speed} onEnterFullScreen={() => handleFullScreenDisplay(true)} onExitFullScreen={() => handleFullScreenDisplay(false)} />} />} />
+              <Route path="/your-collections" element={<PrivateRoute element={<YourCollections />} />} /> {/* Add route for YourCollections */}
             </Routes>
           </div>
         </Router>

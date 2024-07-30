@@ -2,6 +2,10 @@ import axios from "axios";
 
 const API_BASE_URL = "http://localhost:8000";
 
+const getAuthHeaders = () => ({
+  headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+});
+
 export const getSequences = async (userId: number) => {
   const response = await axios.get(`${API_BASE_URL}/users/${userId}/sequences`);
   return response.data;
@@ -45,4 +49,14 @@ export const register = async (username: string, password: string) => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+};
+
+export const getCollections = async () => {
+  const response = await axios.get(`${API_BASE_URL}/users/me/collections`, getAuthHeaders());
+  return response.data;
+};
+
+export const createCollection = async (data: { name: string; description: string }) => {
+  const response = await axios.post(`${API_BASE_URL}/collections`, data, getAuthHeaders());
+  return response.data;
 };

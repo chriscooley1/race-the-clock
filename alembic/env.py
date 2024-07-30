@@ -2,8 +2,9 @@ from logging.config import fileConfig
 from decouple import config
 from sqlalchemy import engine_from_config, pool
 from alembic import context
-from models import SQLModel  # Ensure you import your models here
+from models import SQLModel, User, Sequence, Collection  # Ensure you import your models here
 
+# Load the database URL from the environment variable
 DATABASE_URL = config("DATABASE_URL")
 config = context.config
 
