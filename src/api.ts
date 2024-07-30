@@ -23,9 +23,14 @@ export const deleteSequence = async (sequenceId: number) => {
 };
 
 export const login = async (username: string, password: string) => {
-  const response = await axios.post(`${API_BASE_URL}/token`, {
-    username,
-    password,
+  const params = new URLSearchParams();
+  params.append('username', username);
+  params.append('password', password);
+
+  const response = await axios.post(`${API_BASE_URL}/token`, params, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   });
   return response.data;
 };

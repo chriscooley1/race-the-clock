@@ -33,10 +33,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # OAuth2 scheme
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
 # Authentication helpers
 def get_password_hash(password: str):
     return pwd_context.hash(password)
@@ -72,7 +68,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         raise credentials_exception
     return user
 
-@app.post("/register/", response_model=User)
+@app.post("/register/")
 def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == user.username).first()
     if db_user:
@@ -81,8 +77,11 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(username=user.username, hashed_password=hashed_password)
     db.add(db_user)
     db.commit()
-    db.refresh(db_user)
-    return db_user
+    return {"message": "User registered successfully"}
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
 
 @app.post("/token", response_model=Token)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
