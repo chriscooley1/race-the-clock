@@ -10,7 +10,7 @@ const Register: React.FC = () => {
   const handleRegister = async () => {
     try {
       await register(username, password);
-      navigate('/login');
+      navigate('/login'); // Navigate to login after successful registration
     } catch (error) {
       console.error('Registration failed', error);
     }

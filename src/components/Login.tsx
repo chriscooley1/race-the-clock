@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     try {
       const data = await login(username, password);
       setToken(data.access_token);
-      navigate('/');
+      navigate('/home'); // Navigate to HomePage
     } catch (error) {
       console.error('Login failed', error);
     }

@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Sidebar from "./components/Sidebar";
 import HomePage from "./components/HomePage";
+import LandingPage from "./components/LandingPage"; // Import LandingPage
 import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -31,9 +32,10 @@ const App: React.FC = () => {
           <Sidebar />
           <div style={{ flex: 1, marginLeft: '250px' }}>
             <Routes>
-              <Route path="/" element={<PrivateRoute element={<HomePage handleSettingsUpdate={handleSettingsUpdate} handleHistoryLoad={handleHistoryLoad} userId={1} />} />} />
+              <Route path="/" element={<LandingPage />} /> {/* Default landing page */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/home" element={<PrivateRoute element={<HomePage handleSettingsUpdate={handleSettingsUpdate} handleHistoryLoad={handleHistoryLoad} userId={1} />} />} />
               <Route path="/fullscreen-display" element={<FullScreenDisplay sequence={sequence} speed={speed} />} />
             </Routes>
           </div>
