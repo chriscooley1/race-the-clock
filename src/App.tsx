@@ -12,6 +12,17 @@ import "./App.css";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
+  const [sequence, setSequence] = React.useState<string[]>([]);
+  const [speed, setSpeed] = React.useState<number>(500);
+
+  const handleSettingsUpdate = (newSequence: string[], newSpeed: number) => {
+    setSequence(newSequence);
+    setSpeed(newSpeed);
+  };
+
+  const handleHistoryLoad = (seq: string[]) => {
+    setSequence(seq);
+  };
 
   return (
     <AuthProvider>
@@ -20,10 +31,10 @@ const App: React.FC = () => {
           <Sidebar />
           <div style={{ flex: 1, marginLeft: '250px' }}>
             <Routes>
-              <Route path="/" element={<PrivateRoute element={<HomePage />} />} />
+              <Route path="/" element={<PrivateRoute element={<HomePage handleSettingsUpdate={handleSettingsUpdate} handleHistoryLoad={handleHistoryLoad} userId={1} />} />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/fullscreen-display" element={<FullScreenDisplay />} />
+              <Route path="/fullscreen-display" element={<FullScreenDisplay sequence={sequence} speed={speed} />} />
             </Routes>
           </div>
         </Router>
