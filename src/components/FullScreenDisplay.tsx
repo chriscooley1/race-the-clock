@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import "../App.css";
 
-const FullScreenDisplay: React.FC = () => {
-  const location = useLocation();
+interface FullScreenDisplayProps {
+  sequence: string[];
+  speed: number;
+  onEnterFullScreen: () => void;
+  onExitFullScreen: () => void;
+}
+
+const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({ sequence, speed, onEnterFullScreen, onExitFullScreen }) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
-  const [sequence, setSequence] = useState<string[]>([]);
-  const [speed, setSpeed] = useState<number>(500);
 
   useEffect(() => {
-    if (location.state) {
-      const { sequence: seq, speed: spd } = location.state as { sequence: string[], speed: number };
-      console.log("Received state:", { sequence: seq, speed: spd });
-      setSequence(seq);
-      setSpeed(spd);
-      localStorage.setItem("inputSequence", seq.join(","));
-      localStorage.setItem("sequenceSpeed", spd.toString());
-    }
-  }, [location.state]);
+    onEnterFullScreen();
+    return () => onExitFullScreen();
+  }, [onEnterFullScreen, onExitFullScreen]);
 
   useEffect(() => {
     if (sequence.length > 0) {
