@@ -1,64 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { getCollections, createCollection } from '../api';
-import { useAuth } from '../context/AuthContext';
+import React, { useState, useEffect } from "react";
+import { createCollection, getCollections, deleteCollection, updateCollection } from "../api";
+import "../App.css";
 
 const YourCollections: React.FC = () => {
-  const { token } = useAuth();
-  const [collections, setCollections] = useState<any[]>([]);
-  const [newCollectionName, setNewCollectionName] = useState<string>('');
-  const [newCollectionDescription, setNewCollectionDescription] = useState<string>('');
+  const [collections, setCollections] = useState([]);
+  const [newCollectionName, setNewCollectionName] = useState("");
+  const [newCollectionDescription, setNewCollectionDescription] = useState("");
+
+  const userId = 1; // Replace with the actual user ID
 
   useEffect(() => {
-    if (token) {
-      fetchCollections();
-    }
-  }, [token]);
-
-  const fetchCollections = async () => {
-    try {
-      const response = await getCollections();
-      setCollections(response);
-    } catch (error) {
-      console.error('Error fetching collections:', error);
-    }
-  };
+    const fetchCollections = async () => {
+      const data = await getCollections(userId);
+      setCollections(data);
+    };
+    fetchCollections();
+  }, []);
 
   const handleCreateCollection = async () => {
-    try {
-      const response = await createCollection({
-        name: newCollectionName,
-        description: newCollectionDescription,
-      });
-      setCollections([...collections, response]);
-      setNewCollectionName('');
-      setNewCollectionDescription('');
-    } catch (error) {
-      console.error('Error creating collection:', error);
-    }
+    const newCollection = await createCollection(userId, newCollectionName, newCollectionDescription);
+    setCollections([...collections, newCollection]);
+  };
+
+  const handleDeleteCollection = async (collectionId: number) => {
+    await deleteCollection(collectionId);
+    setCollections(collections.filter((collection) => collection.collection_id !== collectionId));
+  };
+
+  const handleUpdateCollection = async (collectionId: number) => {
+    const updatedCollection = await updateCollection(collectionId, newCollectionName, newCollectionDescription);
+    setCollections(collections.map((collection) => (collection.collection_id === collectionId ? updatedCollection : collection)));
   };
 
   return (
-    <div className="collections-container">
-      <h1>Your Collections</h1>
-      <div className="new-collection">
+    <div className="your-collections">
+      <h2>Your Collections</h2>
+      <div>
         <input
           type="text"
+          placeholder="Collection Name"
           value={newCollectionName}
           onChange={(e) => setNewCollectionName(e.target.value)}
-          placeholder="Collection Name"
         />
-        <textarea
+        <input
+          type="text"
+          placeholder="Collection Description"
           value={newCollectionDescription}
           onChange={(e) => setNewCollectionDescription(e.target.value)}
-          placeholder="Collection Description"
         />
         <button onClick={handleCreateCollection}>Create Collection</button>
       </div>
-      <div className="collections-list">
+      <div>
         {collections.map((collection) => (
-          <div key={collection.id} className="collection-item">
-            <h2>{collection.name}</h2>
+          <div key={collection.collection_id}>
+            <h3>{collection.name}</h3>
             <p>{collection.description}</p>
+            <button onClick={() => handleUpdateCollection(collection.collection_id)}>Update</button>
+            <button onClick={() => handleDeleteCollection(collection.collection_id)}>Delete</button>
           </div>
         ))}
       </div>

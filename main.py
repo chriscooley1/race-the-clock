@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pydantic import BaseModel
 from typing import List, Optional
 from database import get_db
-from models import User, UserCreate, Sequence, SequenceCreate
+from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate
 
 # to get a string like this run:
 # openssl rand -hex 32
@@ -146,3 +146,46 @@ async def delete_sequence(sequence_id: int, db: Session = Depends(get_db)):
     db.delete(db_sequence)
     db.commit()
     return {"detail": "Sequence deleted successfully"}
+
+# New endpoints for collections
+@app.post("/collections", response_model=Collection)
+async def create_collection(collection: CollectionCreate, db: Session = Depends(get_db)):
+    user = db.get(User, collection.user_id)
+    if not user:
+        raise HTTPException(status_code=400, detail="User not found")
+    db_collection = Collection(
+        name=collection.name,
+        description=collection.description,
+        user_id=collection.user_id
+    )
+    db.add(db_collection)
+    db.commit()
+    db.refresh(db_collection)
+    return db_collection
+
+@app.get("/users/{user_id}/collections", response_model=List[Collection])
+async def get_collections(user_id: int, db: Session = Depends(get_db)):
+    user = db.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user.collections
+
+@app.put("/collections/{collection_id}", response_model=Collection)
+async def update_collection(collection_id: int, updated_collection: CollectionCreate, db: Session = Depends(get_db)):
+    db_collection = db.get(Collection, collection_id)
+    if not db_collection:
+        raise HTTPException(status_code=404, detail="Collection not found")
+    for key, value in updated_collection.dict().items():
+        setattr(db_collection, key, value)
+    db.commit()
+    db.refresh(db_collection)
+    return db_collection
+
+@app.delete("/collections/{collection_id}")
+async def delete_collection(collection_id: int, db: Session = Depends(get_db)):
+    db_collection = db.get(Collection, collection_id)
+    if not db_collection:
+        raise HTTPException(status_code=404, detail="Collection not found")
+    db.delete(db_collection)
+    db.commit()
+    return {"detail": "Collection deleted successfully"}

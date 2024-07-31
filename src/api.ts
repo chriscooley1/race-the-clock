@@ -7,22 +7,22 @@ const getAuthHeaders = () => ({
 });
 
 export const getSequences = async (userId: number) => {
-  const response = await axios.get(`${API_BASE_URL}/users/${userId}/sequences`);
+  const response = await axios.get(`${API_BASE_URL}/users/${userId}/sequences`, getAuthHeaders());
   return response.data;
 };
 
 export const createSequence = async (userId: number, name: string, sequence: string) => {
-  const response = await axios.post(`${API_BASE_URL}/sequences`, { user_id: userId, name, description: sequence });
+  const response = await axios.post(`${API_BASE_URL}/sequences`, { user_id: userId, name, description: sequence }, getAuthHeaders());
   return response.data;
 };
 
 export const updateSequence = async (sequenceId: number, name: string, description: string) => {
-  const response = await axios.put(`${API_BASE_URL}/sequences/${sequenceId}`, { name, description });
+  const response = await axios.put(`${API_BASE_URL}/sequences/${sequenceId}`, { name, description }, getAuthHeaders());
   return response.data;
 };
 
 export const deleteSequence = async (sequenceId: number) => {
-  const response = await axios.delete(`${API_BASE_URL}/sequences/${sequenceId}`);
+  const response = await axios.delete(`${API_BASE_URL}/sequences/${sequenceId}`, getAuthHeaders());
   return response.data;
 };
 
@@ -51,12 +51,22 @@ export const logout = () => {
   localStorage.removeItem("token");
 };
 
-export const getCollections = async () => {
-  const response = await axios.get(`${API_BASE_URL}/users/me/collections`, getAuthHeaders());
+export const getCollections = async (userId: number) => {
+  const response = await axios.get(`${API_BASE_URL}/users/${userId}/collections`, getAuthHeaders());
   return response.data;
 };
 
-export const createCollection = async (data: { name: string; description: string }) => {
-  const response = await axios.post(`${API_BASE_URL}/collections`, data, getAuthHeaders());
+export const createCollection = async (userId: number, name: string, description: string) => {
+  const response = await axios.post(`${API_BASE_URL}/collections`, { user_id: userId, name, description }, getAuthHeaders());
+  return response.data;
+};
+
+export const updateCollection = async (collectionId: number, name: string, description: string) => {
+  const response = await axios.put(`${API_BASE_URL}/collections/${collectionId}`, { name, description }, getAuthHeaders());
+  return response.data;
+};
+
+export const deleteCollection = async (collectionId: number) => {
+  const response = await axios.delete(`${API_BASE_URL}/collections/${collectionId}`, getAuthHeaders());
   return response.data;
 };
