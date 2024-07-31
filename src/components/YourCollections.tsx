@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 import { createCollection, getCollections, deleteCollection, updateCollection } from "../api";
 import "../App.css";
 
+// Define an interface for the Collection type
+interface Collection {
+  collection_id: number;
+  name: string;
+  description: string;
+}
+
 const YourCollections: React.FC = () => {
-  const [collections, setCollections] = useState([]);
-  const [newCollectionName, setNewCollectionName] = useState("");
-  const [newCollectionDescription, setNewCollectionDescription] = useState("");
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [newCollectionName, setNewCollectionName] = useState<string>("");
+  const [newCollectionDescription, setNewCollectionDescription] = useState<string>("");
 
   const userId = 1; // Replace with the actual user ID
 
@@ -15,7 +22,7 @@ const YourCollections: React.FC = () => {
       setCollections(data);
     };
     fetchCollections();
-  }, []);
+  }, [userId]);
 
   const handleCreateCollection = async () => {
     const newCollection = await createCollection(userId, newCollectionName, newCollectionDescription);
