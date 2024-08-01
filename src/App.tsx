@@ -8,7 +8,8 @@ import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
 import YourCollections from "./components/YourCollections";
 import NewCollection from "./components/NewCollection";
-import CollectionSetup from "./components/CollectionSetup";  // Import the new component
+import CollectionSetup from "./components/CollectionSetup";
+import CollectionFinalStep from "./components/CollectionFinalStep";
 import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -47,7 +48,8 @@ const App: React.FC = () => {
               <Route path="/fullscreen-display" element={<PrivateRoute element={<FullScreenDisplay sequence={sequence} speed={speed} onEnterFullScreen={() => handleFullScreenDisplay(true)} onExitFullScreen={() => handleFullScreenDisplay(false)} />} />} />
               <Route path="/your-collections" element={<PrivateRoute element={<YourCollections />} />} />
               <Route path="/new-collection" element={<PrivateRoute element={<NewCollection />} />} />
-              <Route path="/collection-setup" element={<PrivateRoute element={<CollectionSetup />} />} /> {/* Add route for CollectionSetup */}
+              <Route path="/collection-setup" element={<PrivateRoute element={<CollectionSetup />} />} />
+              <Route path="/collection-final-step" element={<PrivateRoute element={<CollectionFinalStep />} />} />
             </Routes>
           </div>
         </Router>

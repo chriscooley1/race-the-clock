@@ -1,6 +1,7 @@
 from sqlmodel import Field, SQLModel, Relationship
 from typing import List, Optional
 
+# User Models
 class UserBase(SQLModel):
     username: str
     email: Optional[str]
@@ -16,6 +17,7 @@ class UserCreate(SQLModel):
     username: str
     password: str
 
+# Sequence Models
 class SequenceBase(SQLModel):
     name: str
     description: str
@@ -30,6 +32,7 @@ class Sequence(SequenceBase, table=True):
 class SequenceCreate(SequenceBase):
     pass
 
+# Collection Models
 class CollectionBase(SQLModel):
     name: str
     description: str
@@ -40,6 +43,21 @@ class Collection(CollectionBase, table=True):
     collection_id: Optional[int] = Field(default=None, primary_key=True)
     user_id: int = Field(foreign_key="users.user_id")
     user: User = Relationship(back_populates="collections")
+    items: List["Item"] = Relationship(back_populates="collection")
 
 class CollectionCreate(CollectionBase):
+    pass
+
+# Item Models
+class ItemBase(SQLModel):
+    name: str
+    collection_id: int
+
+class Item(ItemBase, table=True):
+    __tablename__ = "items"
+    item_id: Optional[int] = Field(default=None, primary_key=True)
+    collection_id: int = Field(foreign_key="collections.collection_id")
+    collection: "Collection" = Relationship(back_populates="items")
+
+class ItemCreate(ItemBase):
     pass

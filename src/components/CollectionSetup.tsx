@@ -16,10 +16,9 @@ const CollectionSetup: React.FC = () => {
   };
 
   const handleNext = () => {
-    // Add logic to handle file upload or item count submission
     console.log("File:", file);
     console.log("Item Count:", itemCount);
-    // Navigate to next step or another page
+    navigate("/collection-final-step", { state: { collectionName } });
   };
 
   return (

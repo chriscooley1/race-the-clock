@@ -208,6 +208,7 @@ textarea, input, button {
   color: #000;
 }
 
+/* Sidebar styles duplicate */
 .sidebar {
   width: 250px;
   height: 100vh;
@@ -248,6 +249,7 @@ textarea, input, button {
   background-color: #0056b3;
 }
 
+/* New Collection Container styles */
 .new-collection-container {
   display: flex;
   flex-direction: column;
@@ -266,6 +268,7 @@ textarea, input, button {
   margin-top: 20px;
 }
 
+/* Collection Setup Container styles */
 .collection-setup-container {
   display: flex;
   flex-direction: column;
@@ -282,4 +285,62 @@ textarea, input, button {
 
 .collection-setup-container button {
   margin-top: 20px;
+}
+
+/* Collection Final Step Container styles */
+.collection-final-step-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-item-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.add-button {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.add-button:hover {
+  background-color: darkgreen;
+}
+
+.remove-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.item-container {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.save-button {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.save-button:hover {
+  background-color: darkblue;
 }
