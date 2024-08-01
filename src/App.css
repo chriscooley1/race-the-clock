@@ -247,3 +247,21 @@ textarea, input, button {
 .sidebar ul li button:hover {
   background-color: #0056b3;
 }
+
+.new-collection-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.new-collection-container input[type="text"] {
+  margin: 10px 0;
+}
+
+.new-collection-container input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.new-collection-container button {
+  margin-top: 20px;
+}

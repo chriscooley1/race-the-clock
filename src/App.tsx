@@ -10,6 +10,7 @@ import YourCollections from "./components/YourCollections";  // Import YourColle
 import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
+import NewCollection from "./components/NewCollection";  // Import the new component
 import "./App.css";
 
 const App: React.FC = () => {
@@ -44,6 +45,7 @@ const App: React.FC = () => {
               <Route path="/home" element={<PrivateRoute element={<HomePage handleSettingsUpdate={handleSettingsUpdate} handleHistoryLoad={handleHistoryLoad} userId={1} />} />} />
               <Route path="/fullscreen-display" element={<PrivateRoute element={<FullScreenDisplay sequence={sequence} speed={speed} onEnterFullScreen={() => handleFullScreenDisplay(true)} onExitFullScreen={() => handleFullScreenDisplay(false)} />} />} />
               <Route path="/your-collections" element={<PrivateRoute element={<YourCollections />} />} /> {/* Add route for YourCollections */}
+              <Route path="/new-collection" element={<PrivateRoute element={<NewCollection />} />} />
             </Routes>
           </div>
         </Router>

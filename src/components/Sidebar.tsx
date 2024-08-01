@@ -20,6 +20,7 @@ const Sidebar: React.FC = () => {
             <li><Link to="/home">HomePage</Link></li>
             <li><Link to="/your-collections">Your Collections</Link></li>
             <li><Link to="/discover-collections">Discover Collections</Link></li>
+            <li><Link to="/new-collection">New Collection</Link></li>
             <li><button onClick={handleLogout}>Logout</button></li>
           </>
         ) : (
