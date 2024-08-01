@@ -11,7 +11,7 @@ const NewCollection: React.FC = () => {
   const handleCreate = async () => {
     try {
       await createCollection(1, name, isPublic ? "public" : "private"); // replace 1 with actual userId
-      navigate("/your-collections");
+      navigate("/collection-setup", { state: { collectionName: name } });
     } catch (error) {
       console.error("Error creating collection:", error);
     }

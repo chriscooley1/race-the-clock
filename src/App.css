@@ -265,3 +265,21 @@ textarea, input, button {
 .new-collection-container button {
   margin-top: 20px;
 }
+
+.collection-setup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.collection-setup-container input[type="file"] {
+  margin: 10px 0;
+}
+
+.collection-setup-container input[type="number"] {
+  margin: 10px 0;
+}
+
+.collection-setup-container button {
+  margin-top: 20px;
+}

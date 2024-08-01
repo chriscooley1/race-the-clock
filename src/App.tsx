@@ -6,11 +6,12 @@ import Register from "./components/Register";
 import Sidebar from "./components/Sidebar";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
-import YourCollections from "./components/YourCollections";  // Import YourCollections
+import YourCollections from "./components/YourCollections";
+import NewCollection from "./components/NewCollection";
+import CollectionSetup from "./components/CollectionSetup";  // Import the new component
 import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
-import NewCollection from "./components/NewCollection";  // Import the new component
 import "./App.css";
 
 const App: React.FC = () => {
@@ -39,13 +40,14 @@ const App: React.FC = () => {
           {!hideSidebar && <Sidebar />}
           <div style={{ flex: 1, marginLeft: hideSidebar ? '0' : '250px' }}>
             <Routes>
-              <Route path="/" element={<LandingPage />} /> {/* Default landing page */}
+              <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/home" element={<PrivateRoute element={<HomePage handleSettingsUpdate={handleSettingsUpdate} handleHistoryLoad={handleHistoryLoad} userId={1} />} />} />
               <Route path="/fullscreen-display" element={<PrivateRoute element={<FullScreenDisplay sequence={sequence} speed={speed} onEnterFullScreen={() => handleFullScreenDisplay(true)} onExitFullScreen={() => handleFullScreenDisplay(false)} />} />} />
-              <Route path="/your-collections" element={<PrivateRoute element={<YourCollections />} />} /> {/* Add route for YourCollections */}
+              <Route path="/your-collections" element={<PrivateRoute element={<YourCollections />} />} />
               <Route path="/new-collection" element={<PrivateRoute element={<NewCollection />} />} />
+              <Route path="/collection-setup" element={<PrivateRoute element={<CollectionSetup />} />} /> {/* Add route for CollectionSetup */}
             </Routes>
           </div>
         </Router>
