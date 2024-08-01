@@ -84,9 +84,9 @@ const YourCollections: React.FC = () => {
           onChange={(e) => setNewCollectionDescription(e.target.value)}
         />
         {selectedCollectionId ? (
-          <button onClick={() => handleUpdateCollection(selectedCollectionId)}>Update Collection</button>
+          <button type="button" onClick={() => handleUpdateCollection(selectedCollectionId)}>Update Collection</button>
         ) : (
-          <button onClick={handleCreateCollection}>Create Collection</button>
+          <button type="button" onClick={handleCreateCollection}>Create Collection</button>
         )}
       </div>
       <div>
@@ -94,8 +94,8 @@ const YourCollections: React.FC = () => {
           <div key={collection.collection_id}>
             <h3>{collection.name}</h3>
             <p>{collection.description}</p>
-            <button onClick={() => handleEditCollection(collection)}>Edit</button>
-            <button onClick={() => handleDeleteCollection(collection.collection_id)}>Delete</button>
+            <button type="button" onClick={() => handleEditCollection(collection)}>Edit</button>
+            <button type="button" onClick={() => handleDeleteCollection(collection.collection_id)}>Delete</button>
           </div>
         ))}
       </div>

@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { register } from '../api';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { register } from "../api";
 
 const Register: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async () => {
     try {
       await register(username, password);
-      navigate('/login'); // Navigate to login after successful registration
+      navigate("/login"); // Navigate to login after successful registration
     } catch (error) {
-      console.error('Registration failed', error);
+      console.error("Registration failed", error);
     }
   };
 

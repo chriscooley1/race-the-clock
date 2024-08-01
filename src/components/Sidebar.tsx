@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const Sidebar: React.FC = () => {
 
   const handleLogout = () => {
     setToken(null);
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -21,7 +21,7 @@ const Sidebar: React.FC = () => {
             <li><Link to="/your-collections">Your Collections</Link></li>
             <li><Link to="/discover-collections">Discover Collections</Link></li>
             <li><Link to="/new-collection">New Collection</Link></li>
-            <li><button onClick={handleLogout}>Logout</button></li>
+            <li><button type="button" onClick={handleLogout}>Logout</button></li>
           </>
         ) : (
           <>

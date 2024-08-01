@@ -1,5 +1,5 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
-import axios from 'axios';
+import React, { createContext, useState, useContext, useEffect, ReactNode } from "react";
+import axios from "axios";
 
 interface AuthContextProps {
   token: string | null;
@@ -14,15 +14,15 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
 
   useEffect(() => {
     if (token) {
-      localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      localStorage.setItem("token", token);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
-      localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization'];
+      localStorage.removeItem("token");
+      delete axios.defaults.headers.common["Authorization"];
     }
   }, [token]);
 
@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

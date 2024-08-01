@@ -37,7 +37,7 @@ const NewCollection: React.FC = () => {
         />
         <label>I want to share my collection publicly</label>
       </div>
-      <button onClick={handleCreate}>Next</button>
+      <button type="button" onClick={handleCreate}>Next</button>
     </div>
   );
 };

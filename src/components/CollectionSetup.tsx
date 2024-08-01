@@ -39,7 +39,7 @@ const CollectionSetup: React.FC = () => {
           onChange={(e) => setItemCount(parseInt(e.target.value))}
         />
       </div>
-      <button onClick={handleNext}>Next</button>
+      <button type="button" onClick={handleNext}>Next</button>
     </div>
   );
 };
