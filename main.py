@@ -179,6 +179,7 @@ async def update_collection(collection_id: int, updated_collection: CollectionCr
         setattr(db_collection, key, value)
     db.commit()
     db.refresh(db_collection)
+    print(f"Collection updated: {db_collection}")  # Debugging line
     return db_collection
 
 @app.delete("/collections/{collection_id}")
@@ -188,4 +189,5 @@ async def delete_collection(collection_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Collection not found")
     db.delete(db_collection)
     db.commit()
+    print(f"Collection deleted: {db_collection}")  # Debugging line
     return {"detail": "Collection deleted successfully"}

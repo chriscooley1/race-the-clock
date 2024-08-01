@@ -11,6 +11,7 @@ interface Collection {
 
 const YourCollections: React.FC = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [selectedCollectionId, setSelectedCollectionId] = useState<number | null>(null);
   const [newCollectionName, setNewCollectionName] = useState<string>("");
   const [newCollectionDescription, setNewCollectionDescription] = useState<string>("");
 
@@ -18,25 +19,52 @@ const YourCollections: React.FC = () => {
 
   useEffect(() => {
     const fetchCollections = async () => {
-      const data = await getCollections(userId);
-      setCollections(data);
+      try {
+        const data = await getCollections(userId);
+        setCollections(data);
+      } catch (error) {
+        console.error("Error fetching collections:", error);
+      }
     };
     fetchCollections();
   }, [userId]);
 
   const handleCreateCollection = async () => {
-    const newCollection = await createCollection(userId, newCollectionName, newCollectionDescription);
-    setCollections([...collections, newCollection]);
+    try {
+      const newCollection = await createCollection(userId, newCollectionName, newCollectionDescription);
+      setCollections([...collections, newCollection]);
+      setNewCollectionName("");
+      setNewCollectionDescription("");
+    } catch (error) {
+      console.error("Error creating collection:", error);
+    }
   };
 
   const handleDeleteCollection = async (collectionId: number) => {
-    await deleteCollection(collectionId);
-    setCollections(collections.filter((collection) => collection.collection_id !== collectionId));
+    try {
+      await deleteCollection(collectionId);
+      setCollections(collections.filter((collection) => collection.collection_id !== collectionId));
+    } catch (error) {
+      console.error("Error deleting collection:", error);
+    }
   };
 
   const handleUpdateCollection = async (collectionId: number) => {
-    const updatedCollection = await updateCollection(collectionId, newCollectionName, newCollectionDescription);
-    setCollections(collections.map((collection) => (collection.collection_id === collectionId ? updatedCollection : collection)));
+    try {
+      const updatedCollection = await updateCollection(collectionId, newCollectionName, newCollectionDescription);
+      setCollections(collections.map((collection) => (collection.collection_id === collectionId ? updatedCollection : collection)));
+      setSelectedCollectionId(null);
+      setNewCollectionName("");
+      setNewCollectionDescription("");
+    } catch (error) {
+      console.error("Error updating collection:", error);
+    }
+  };
+
+  const handleEditCollection = (collection: Collection) => {
+    setSelectedCollectionId(collection.collection_id);
+    setNewCollectionName(collection.name);
+    setNewCollectionDescription(collection.description);
   };
 
   return (
@@ -55,14 +83,18 @@ const YourCollections: React.FC = () => {
           value={newCollectionDescription}
           onChange={(e) => setNewCollectionDescription(e.target.value)}
         />
-        <button onClick={handleCreateCollection}>Create Collection</button>
+        {selectedCollectionId ? (
+          <button onClick={() => handleUpdateCollection(selectedCollectionId)}>Update Collection</button>
+        ) : (
+          <button onClick={handleCreateCollection}>Create Collection</button>
+        )}
       </div>
       <div>
         {collections.map((collection) => (
           <div key={collection.collection_id}>
             <h3>{collection.name}</h3>
             <p>{collection.description}</p>
-            <button onClick={() => handleUpdateCollection(collection.collection_id)}>Update</button>
+            <button onClick={() => handleEditCollection(collection)}>Edit</button>
             <button onClick={() => handleDeleteCollection(collection.collection_id)}>Delete</button>
           </div>
         ))}
