@@ -69,11 +69,20 @@ body {
 
 /* Main content area styles */
 .main-content {
+  flex: 1;
   margin-left: 250px; /* Match sidebar width */
   width: calc(100% - 250px);
   padding: 20px;
   display: flex;
   flex-direction: column;
+}
+
+.hide-sidebar .main-content {
+  margin-left: 0;
+}
+
+.display-container h1 {
+  color: inherit; /* Will use the inherited color from parent */
 }
 
 /* Additional global styles */
@@ -153,6 +162,7 @@ textarea, input, button {
   font-size: 50vw;
   text-align: center;
   margin: 0;
+  color: inherit; /* Inherit color from parent */
 }
 
 .back-button {

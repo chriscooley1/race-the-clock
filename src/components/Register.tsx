@@ -31,7 +31,7 @@ const Register: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
-      <button onClick={handleRegister}>Register</button>
+      <button type="button" onClick={handleRegister}>Register</button>
     </div>
   );
 };

@@ -39,7 +39,7 @@ const App: React.FC = () => {
       <div className={`app-container ${theme.className}`}>
         <Router basename="/letter-reader">
           {!hideSidebar && <Sidebar />}
-          <div style={{ flex: 1, marginLeft: hideSidebar ? '0' : '250px' }}>
+          <div className={`main-content ${hideSidebar ? 'hide-sidebar' : ''}`}>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />

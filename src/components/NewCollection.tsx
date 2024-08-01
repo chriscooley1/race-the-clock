@@ -21,21 +21,25 @@ const NewCollection: React.FC = () => {
     <div className="new-collection-container">
       <h1>New Collection</h1>
       <div>
-        <label>Step 1 - Collection Name</label>
+        <label htmlFor="collectionName">Step 1 - Collection Name</label>
         <input
           type="text"
+          id="collectionName"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter collection name"
+          title="Collection Name"
         />
       </div>
       <div>
         <input
           type="checkbox"
+          id="publicCheckbox"
           checked={isPublic}
           onChange={() => setIsPublic(!isPublic)}
+          title="Share collection publicly"
         />
-        <label>I want to share my collection publicly</label>
+        <label htmlFor="publicCheckbox">I want to share my collection publicly</label>
       </div>
       <button type="button" onClick={handleCreate}>Next</button>
     </div>
