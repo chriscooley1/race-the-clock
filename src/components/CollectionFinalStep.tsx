@@ -48,7 +48,7 @@ const CollectionFinalStep: React.FC = () => {
         {items.map((item) => (
           <div key={item.id} className="item-container">
             <span>{item.name}</span>
-            <button className="remove-button" onClick={() => handleRemoveItem(item.id)}>
+            <button className="remove-button" type="button" onClick={() => handleRemoveItem(item.id)}>
               x
             </button>
           </div>

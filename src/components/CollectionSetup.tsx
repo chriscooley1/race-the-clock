@@ -26,17 +26,25 @@ const CollectionSetup: React.FC = () => {
       <h1>Collection: {collectionName}</h1>
       <h2>Step 2 - Set Up Collection Body</h2>
       <div>
-        <label>Upload a file to create a collection from</label>
-        <input type="file" onChange={handleFileChange} />
+        <label htmlFor="fileUpload">Upload a file to create a collection from</label>
+        <input
+          type="file"
+          id="fileUpload"
+          onChange={handleFileChange}
+          title="Choose a file to upload"
+        />
       </div>
       <p>- OR -</p>
       <div>
-        <label>Input a number of Items to add to this Collection</label>
+        <label htmlFor="itemCount">Input a number of Items to add to this Collection</label>
         <input
           type="number"
+          id="itemCount"
           value={itemCount}
           min={1}
           onChange={(e) => setItemCount(parseInt(e.target.value))}
+          placeholder="Enter number of items"
+          title="Enter the number of items"
         />
       </div>
       <button type="button" onClick={handleNext}>Next</button>
