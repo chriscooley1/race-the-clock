@@ -59,7 +59,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     localStorage.setItem("inputSequence", input);
     localStorage.setItem("sequenceSpeed", speed.toString());
     localStorage.setItem("sequenceTextColor", textColor);
-
+  
     try {
       const response = await createSequence(userId, "My Sequence", input);
       console.log("Sequence saved successfully:", response);
@@ -118,8 +118,9 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
   };
 
   const handleTextColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setTextColor(event.target.value);
-    setTheme({ ...theme, textColor: event.target.value });
+    const newTextColor = event.target.value;
+    setTextColor(newTextColor);
+    setTheme({ ...theme, textColor: newTextColor });
   };
 
   return (
