@@ -43,9 +43,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       className={`fullscreen-container ${theme.className}`}
       style={{ color: theme.textColor }} // Use the text color from the theme
     >
-      <button className="back-button" type="button" onClick={handleBack}>
-        Back
-      </button>
+      <button className="back-button" type="button" onClick={handleBack}>Back</button>
       <h1 className="fullscreen-text">{sequence[index]}</h1>
     </div>
   );
