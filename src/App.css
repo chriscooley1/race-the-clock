@@ -276,9 +276,9 @@ textarea, input, button {
 /* Styles for YourCollections component */
 .your-collections {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Adjusts spacing around each item */
   padding: 20px;
-  width: 100%;
 }
 
 .collection-item {
@@ -286,30 +286,40 @@ textarea, input, button {
   padding: 20px;
   margin-bottom: 20px;
   background-color: #fafafa;
+  flex: 0 0 30%; /* Flex basis set to 30% to fit three items per row */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the content vertically and horizontally */
+  justify-content: center;
+  position: relative; /* Needed for absolute positioning of the title background */
 }
 
 .collection-item h1 {
-  color: #6a329f;
+  width: 100%;
+  background-color: #6a329f; /* Purple background */
+  color: white; /* White text color */
+  text-align: center;
   font-size: 1.5em;
   margin: 0;
-  padding-bottom: 10px;
+  padding: 10px 0;
 }
 
 .collection-item h2 {
-  color: #333;
+  color: black; /* Black text color */
   font-size: 1.2em;
-  margin: 0;
-  padding-bottom: 5px;
+  margin: 10px 0; /* Added margin for spacing */
 }
 
 .collection-item p {
-  margin: 5px 0;
+  color: black; /* Black text color */
   font-size: 1em;
+  margin: 5px 0;
 }
 
 .creation-date {
   color: #666;
   font-style: italic;
+  margin-bottom: 10px; /* Added margin for spacing */
 }
 
 .start-button {
@@ -320,11 +330,25 @@ textarea, input, button {
   font-size: 1em;
   cursor: pointer;
   border-radius: 5px;
-  margin-top: 10px;
+  width: 80%; /* Button width relative to container width */
 }
 
 .start-button:hover {
   background-color: #501a72;
+}
+
+/* Adjustments for delete button */
+.remove-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.8em;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .add-item-container {
