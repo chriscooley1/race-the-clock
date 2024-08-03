@@ -150,6 +150,7 @@ async def delete_sequence(sequence_id: int, db: Session = Depends(get_db)):
 # New endpoints for collections
 @app.post("/collections", response_model=Collection)
 async def create_collection(collection: CollectionCreate, db: Session = Depends(get_db)):
+    print("Creating a new collection...")  # Debugging line
     user = db.get(User, collection.user_id)
     if not user:
         raise HTTPException(status_code=400, detail="User not found")
