@@ -297,12 +297,22 @@ textarea, input, button {
 .collection-item h1 {
   border: 5px solid black; /* Thick black border */
   width: 100%;
-  background-color: #6a329f; /* Purple background */
+  background-color: #952E8F; /* Purple background */
   color: black; /* Changed to black text */
   text-align: center;
   font-size: 1.5em;
   margin: 0;
   padding: 10px 0;
+}
+
+.collection-item:before {
+  content: ""; /* This is necessary to create a pseudo-element */
+  position: absolute;
+  left: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  top: 20px; /* Adjust this to be slightly below the title */
+  bottom: 20px; /* Same distance from the bottom as from the sides */
+  border: 5px solid black; /* This creates the solid line frame */
 }
 
 .collection-item h2, .collection-item p, .creation-date {
@@ -311,19 +321,32 @@ textarea, input, button {
   margin: 5px 0;
 }
 
+.collection-item h1, .collection-item h2, .collection-item p, .creation-date {
+  color: black; /* Ensure all text is black */
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.2em; /* Increased font size */
+  font-weight: bold; /* Make the font bold */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Add shadow for depth */
+  text-transform: uppercase; /* UPPERCASE text */
+}
+
 .start-button {
-  background-color: #6a329f;
+  background-color: #952E8F;
   color: black;
   border: 5px solid black; /* Thick black border */
   padding: 10px 20px;
-  font-size: 1.5em;
+  font-size: 1.5em; /* Larger font for the button */
+  font-weight: bold; /* Bold text on the button */
   cursor: pointer;
   border-radius: 5px;
-  width: 80%; /* Button width relative to container width */
+  width: 30%; /* Button width relative to container width */
+  position: relative; /* Needed to layer above the pseudo-element */
+  z-index: 1; /* Ensures the button is above the border */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Subtle text shadow on the button */
 }
 
 .start-button:hover {
-  background-color: #501a72;
+  background-color: #952E8F; /* Darker purple on hover */
 }
 
 /* Adjustments for delete button */
