@@ -132,6 +132,27 @@ textarea, input, button {
   width: 80%;
 }
 
+/* Theme selector adjustments */
+.theme-selector {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.theme-selector label {
+  margin-bottom: 5px;
+}
+
+.theme-selector select {
+  padding: 8px;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
 /* Theme styles */
 .light-theme {
   background-color: #fff;

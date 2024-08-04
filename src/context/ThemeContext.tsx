@@ -119,7 +119,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 // Define the ThemeProvider component
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Set the default theme
-  const [theme, setTheme] = useState<Theme>(darkTheme); // Default to dark theme
+  const [theme, setTheme] = useState<Theme>(lightTheme); // Default to light theme
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}

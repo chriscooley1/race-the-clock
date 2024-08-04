@@ -10,7 +10,11 @@ interface HomePageProps {
   userId: number;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ handleSettingsUpdate, handleHistoryLoad, userId }) => {
+const HomePage: React.FC<HomePageProps> = ({
+  handleSettingsUpdate,
+  handleHistoryLoad,
+  userId,
+}) => {
   return (
     <div className="home-page">
       <ThemeSelector />
