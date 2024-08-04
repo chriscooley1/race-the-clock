@@ -389,6 +389,29 @@ textarea, input, button {
   right: 10px;
 }
 
+.styled-button {
+  background-color: #cceeff; /* Light blue background */
+  color: black; /* Black text color */
+  border: 1px solid #ccc; /* Light border */
+  padding: 10px 20px; /* Padding for button size */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1em; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  text-transform: uppercase; /* Uppercase text */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.styled-button:hover {
+  background-color: #1e90ff; /* Change background on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.styled-button:active {
+  background-color: #0056b3; /* Darker background when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
 .add-item-container {
   display: flex;
   align-items: center;

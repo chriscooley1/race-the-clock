@@ -34,7 +34,9 @@ const Login: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
-      <button type="button" onClick={handleLogin}>Login</button>
+      <button type="button" onClick={handleLogin} className="styled-button">
+        Login
+      </button>
     </div>
   );
 };

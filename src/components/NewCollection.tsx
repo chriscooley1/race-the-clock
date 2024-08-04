@@ -39,9 +39,17 @@ const NewCollection: React.FC = () => {
           onChange={() => setIsPublic(!isPublic)}
           title="Share collection publicly"
         />
-        <label htmlFor="publicCheckbox">I want to share my collection publicly</label>
+        <label htmlFor="publicCheckbox">
+          I want to share my collection publicly
+        </label>
       </div>
-      <button type="button" onClick={handleCreate}>Next</button>
+      <button
+        type="button"
+        onClick={handleCreate}
+        className="styled-button" /* Updated class name */
+      >
+        Next
+      </button>
     </div>
   );
 };

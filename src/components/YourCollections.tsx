@@ -5,7 +5,7 @@ import "../App.css";
 interface Collection {
   collection_id: number;
   name: string;
-  items: any[];  // Define more specific type based on your items structure
+  items: any[]; // Define more specific type based on your items structure
   createdBy: string;
   creationDate: Date;
 }
@@ -18,12 +18,14 @@ const YourCollections: React.FC = () => {
     const fetchCollections = async () => {
       try {
         const data = await getCollections(userId);
-        setCollections(data.map(col => ({
-          ...col,
-          items: col.items || [], // Mock item data, replace or adjust as needed
-          createdBy: "Username", // Mock username, replace with actual data
-          creationDate: new Date() // Mock date, replace with actual data
-        })));
+        setCollections(
+          data.map((col) => ({
+            ...col,
+            items: col.items || [], // Mock item data, replace or adjust as needed
+            createdBy: "Username", // Mock username, replace with actual data
+            creationDate: new Date(), // Mock date, replace with actual data
+          }))
+        );
       } catch (error) {
         console.error("Error fetching collections:", error);
       }
@@ -34,7 +36,11 @@ const YourCollections: React.FC = () => {
   const handleDeleteCollection = async (collectionId: number) => {
     try {
       await deleteCollection(collectionId);
-      setCollections(collections.filter(collection => collection.collection_id !== collectionId));
+      setCollections(
+        collections.filter(
+          (collection) => collection.collection_id !== collectionId
+        )
+      );
     } catch (error) {
       console.error("Error deleting collection:", error);
     }
@@ -47,12 +53,21 @@ const YourCollections: React.FC = () => {
           <h1>{collection.name}</h1>
           <h2>{collection.items.length} items in collection</h2>
           <p>Created by: {collection.createdBy}</p>
-          <p className="creation-date">{collection.creationDate.toLocaleString()}</p>
-          <button type="button" className="start-button">Start</button>
-          <button type="button" onClick={() => handleDeleteCollection(collection.collection_id)}>Delete</button>
+          <p className="creation-date">
+            {collection.creationDate.toLocaleString()}
+          </p>
+          <button type="button" className="start-button">
+            Start
+          </button>
+          <button
+            type="button"
+            onClick={() => handleDeleteCollection(collection.collection_id)}
+            className="styled-button" /* Updated class name */
+          >
+            Delete
+          </button>
         </div>
       ))}
-      {/* Removed the Create New Collection button */}
     </div>
   );
 };

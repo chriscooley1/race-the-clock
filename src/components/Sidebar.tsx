@@ -17,17 +17,39 @@ const Sidebar: React.FC = () => {
       <ul>
         {isAuthenticated ? (
           <>
-            <li><Link to="/home">HomePage</Link></li>
-            <li><Link to="/your-collections">Your Collections</Link></li>
-            <li><Link to="/discover-collections">Discover Collections</Link></li>
-            <li><Link to="/new-collection">New Collection</Link></li>
-            <li><button type="button" onClick={handleLogout}>Logout</button></li>
+            <li>
+              <Link to="/home">HomePage</Link>
+            </li>
+            <li>
+              <Link to="/your-collections">Your Collections</Link>
+            </li>
+            <li>
+              <Link to="/discover-collections">Discover Collections</Link>
+            </li>
+            <li>
+              <Link to="/new-collection">New Collection</Link>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="styled-button" /* Updated class name */
+              >
+                Logout
+              </button>
+            </li>
           </>
         ) : (
           <>
-            <li><Link to="/">HomePage</Link></li>
-            <li><Link to="/register">Register</Link></li>
-            <li><Link to="/login">Already Registered</Link></li>
+            <li>
+              <Link to="/">HomePage</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+            <li>
+              <Link to="/login">Already Registered</Link>
+            </li>
           </>
         )}
       </ul>
