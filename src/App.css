@@ -282,7 +282,7 @@ textarea, input, button {
 }
 
 .collection-item {
-  border: 2px solid #6a329f;
+  border: 5px solid black; /* Thick black border */
   padding: 20px;
   margin-bottom: 20px;
   background-color: #fafafa;
@@ -295,39 +295,28 @@ textarea, input, button {
 }
 
 .collection-item h1 {
+  border: 5px solid black; /* Thick black border */
   width: 100%;
   background-color: #6a329f; /* Purple background */
-  color: white; /* White text color */
+  color: black; /* Changed to black text */
   text-align: center;
   font-size: 1.5em;
   margin: 0;
   padding: 10px 0;
 }
 
-.collection-item h2 {
-  color: black; /* Black text color */
-  font-size: 1.2em;
-  margin: 10px 0; /* Added margin for spacing */
-}
-
-.collection-item p {
-  color: black; /* Black text color */
+.collection-item h2, .collection-item p, .creation-date {
+  color: black; /* Ensure all text is black */
   font-size: 1em;
   margin: 5px 0;
 }
 
-.creation-date {
-  color: #666;
-  font-style: italic;
-  margin-bottom: 10px; /* Added margin for spacing */
-}
-
 .start-button {
   background-color: #6a329f;
-  color: white;
-  border: none;
+  color: black;
+  border: 5px solid black; /* Thick black border */
   padding: 10px 20px;
-  font-size: 1em;
+  font-size: 1.5em;
   cursor: pointer;
   border-radius: 5px;
   width: 80%; /* Button width relative to container width */
