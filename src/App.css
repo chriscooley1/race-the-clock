@@ -72,6 +72,7 @@ body {
   flex: 1;
   margin-left: 250px; /* Default margin for sidebar */
   transition: margin-left 0.3s ease; /* Smooth transition when toggling */
+  padding: 20px; /* Add padding for the main content */
 }
 
 .hide-sidebar .main-content {
@@ -134,8 +135,7 @@ textarea, input, button {
 
 /* Theme selector adjustments */
 .theme-selector {
-  background-color: blue;
-  color: white;
+  background-color: #cceeff;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -147,10 +147,14 @@ textarea, input, button {
   margin-bottom: 5px;
 }
 
-.theme-selector select {
+.theme-selector select, .settings-container textarea {
   padding: 8px;
   font-size: 1em;
   margin-bottom: 10px;
+  background-color: white; /* Set background to white */
+  color: black; /* Set text color to black */
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 /* Theme styles */
@@ -203,7 +207,7 @@ textarea, input, button {
   left: 10px;
   padding: 10px 20px;
   background-color: #ff6666;
-  color: #fff;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -357,7 +361,7 @@ textarea, input, button {
   color: black;
   border: 5px solid black; /* Thick black border */
   padding: 10px 20px;
-  font-size: 1.5em; /* Larger font for the button */
+  font-size:1.5em; /* Larger font for the button */
   font-weight: bold; /* Bold text on the button */
   cursor: pointer;
   border-radius: 5px;
@@ -413,8 +417,8 @@ textarea, input, button {
 }
 
 .save-button {
-  background-color: blue;
-  color: white;
+  background-color: #cceeff;
+  color: black;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -423,5 +427,5 @@ textarea, input, button {
 }
 
 .save-button:hover {
-  background-color: darkblue;
+  background-color: #1e90ff;
 }
