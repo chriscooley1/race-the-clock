@@ -62,7 +62,7 @@ const YourCollections: React.FC = () => {
           <button
             type="button"
             onClick={() => handleDeleteCollection(collection.collection_id)}
-            className="styled-button" /* Updated class name */
+            className="delete-button" /* Ensure this is correctly applied */
           >
             Delete
           </button>

@@ -375,8 +375,31 @@ textarea, input, button {
   background-color: #952E8F; /* Darker purple on hover */
 }
 
+.delete-button {
+  background-color: #ff6666; /* Light red background */
+  color: black; /* Black text color */
+  border: none; /* No border */
+  padding: 10px 20px; /* Padding for button size */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1em; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  text-transform: uppercase; /* Uppercase text */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.delete-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.delete-button:active {
+  background-color: #990000; /* Even darker red when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
 /* Adjustments for delete button */
-.remove-button {
+/* .remove-button {
   background-color: red;
   color: white;
   border: none;
@@ -387,7 +410,7 @@ textarea, input, button {
   position: absolute;
   top: 10px;
   right: 10px;
-}
+} */
 
 .styled-button {
   background-color: #cceeff; /* Light blue background */
