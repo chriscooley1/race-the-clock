@@ -42,6 +42,7 @@ body {
   top: 0;
   left: 0;
   padding: 20px;
+  background-color: pink;
 }
 
 .sidebar h2 {
@@ -382,16 +383,6 @@ textarea, input, button {
 
 .add-button:hover {
   background-color: darkgreen;
-}
-
-.remove-button {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  margin-left: 10px;
 }
 
 .item-container {
