@@ -302,9 +302,17 @@ textarea, input, button {
 /* Styles for YourCollections component */
 .your-collections {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.collections-list {
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-between; /* Adjusts spacing around each item */
   padding: 20px;
+  width: 100%;
 }
 
 .collection-item {
