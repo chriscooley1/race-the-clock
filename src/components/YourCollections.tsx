@@ -37,12 +37,18 @@ const YourCollections: React.FC = () => {
   return (
     <div className="your-collections">
       <h2>Your Collections</h2>
-      <div>
+      <div className="collections-list">
         {collections.map((collection) => (
-          <div key={collection.collection_id}>
-            <h3>{collection.name}</h3>
+          <div key={collection.collection_id} className="collection-item">
+            <h1>{collection.name}</h1>
             <p>{collection.description}</p>
-            <button type="button" onClick={() => handleDeleteCollection(collection.collection_id)}>Delete</button>
+            <button
+              className="delete-button"
+              type="button"
+              onClick={() => handleDeleteCollection(collection.collection_id)}
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>
