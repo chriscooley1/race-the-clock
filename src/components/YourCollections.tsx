@@ -1,7 +1,10 @@
+// YourCollections.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCollections, deleteCollection } from "../api";
 import "../App.css";
+import { useTheme } from "../context/ThemeContext";
+import { themes, textColorOptions } from "../themeOptions";
 
 // Define an interface for the Collection type
 interface Collection {
@@ -13,6 +16,9 @@ interface Collection {
 
 const YourCollections: React.FC = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [speed, setSpeed] = useState<number>(500);
+  const [textColor, setTextColor] = useState<string>("#000000"); // Default text color
+  const { theme, setTheme } = useTheme();
   const userId = 1; // Replace with the actual user ID
   const navigate = useNavigate();
 
@@ -50,14 +56,75 @@ const YourCollections: React.FC = () => {
       const sequenceItems = JSON.parse(collection.description);
       const sequence = sequenceItems.map((item: { name: string }) => item.name);
 
-      // Navigate to a fullscreen display with the sequence
-      navigate("/fullscreen-display", { state: { sequence, speed: 500 } }); // Adjust speed as needed
+      // Navigate to a fullscreen display with the sequence and settings
+      navigate("/fullscreen-display", {
+        state: {
+          sequence,
+          speed,
+          textColor, // Pass textColor to FullScreenDisplay
+          theme: theme.className, // Pass theme className
+        },
+      });
     }
   };
 
   return (
     <div className="your-collections">
       <h2>Your Collections</h2>
+
+      <div className="customization-options">
+        <div className="input-field">
+          <label htmlFor="speedInput">Speed:</label>
+          <select
+            id="speedInput"
+            className="custom-input"
+            value={speed}
+            onChange={(e) => setSpeed(Number(e.target.value))}
+          >
+            <option value={250}>0.25 seconds</option>
+            <option value={500}>0.5 seconds</option>
+            <option value={750}>0.75 seconds</option>
+            <option value={1000}>1 second</option>
+            <option value={1500}>1.5 seconds</option>
+            <option value={2000}>2 seconds</option>
+          </select>
+        </div>
+
+        <div className="input-field">
+          <label htmlFor="textColorInput">Text Color:</label>
+          <select
+            id="textColorInput"
+            className="custom-input"
+            value={textColor}
+            onChange={(e) => setTextColor(e.target.value)}
+          >
+            {textColorOptions.map((color, index) => (
+              <option key={index} value={color.value}>
+                {color.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="input-field">
+          <label htmlFor="themeSelect">Select Theme:</label>
+          <select
+            id="themeSelect"
+            className="custom-input"
+            value={theme.className}
+            onChange={(e) =>
+              setTheme({ ...theme, className: e.target.value })
+            }
+          >
+            {themes.map((theme, index) => (
+              <option key={index} value={theme.className}>
+                {theme.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <div className="collections-list">
         {collections.map((collection) => {
           // Calculate the item count

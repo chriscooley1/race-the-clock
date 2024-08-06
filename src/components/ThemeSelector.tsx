@@ -1,49 +1,8 @@
+// ThemeSelector.tsx
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
-import {
-  darkTheme,
-  lightTheme,
-  blueTheme,
-  neonPinkTheme,
-  neonGreenTheme,
-  neonBlueTheme,
-  neonOrangeTheme,
-  redTheme,
-  orangeTheme,
-  yellowTheme,
-  greenTheme,
-  blueThemeColor,
-  indigoTheme,
-  violetTheme,
-} from "../context/ThemeContext";
+import { themes, textColorOptions } from "../themeOptions";
 import "../App.css"; // Import the global CSS file
-
-const themes = [
-  { name: "Light Mode", theme: lightTheme },
-  { name: "Dark Mode", theme: darkTheme },
-  { name: "Blue Theme", theme: blueTheme },
-  { name: "Neon Pink", theme: neonPinkTheme },
-  { name: "Neon Green", theme: neonGreenTheme },
-  { name: "Neon Blue", theme: neonBlueTheme },
-  { name: "Neon Orange", theme: neonOrangeTheme },
-  { name: "Red", theme: redTheme },
-  { name: "Orange", theme: orangeTheme },
-  { name: "Yellow", theme: yellowTheme },
-  { name: "Green", theme: greenTheme },
-  { name: "Blue", theme: blueThemeColor },
-  { name: "Indigo", theme: indigoTheme },
-  { name: "Violet", theme: violetTheme },
-  // Add more themes here as needed
-];
-
-const textColorOptions = [
-  { label: "White", value: "#ffffff" },
-  { label: "Black", value: "#000000" },
-  { label: "Red", value: "#ff0000" },
-  { label: "Blue", value: "#0000ff" },
-  { label: "Green", value: "#00ff00" },
-  { label: "Yellow", value: "#ffff00" },
-];
 
 const ThemeSelector: React.FC = () => {
   const { setTheme, theme } = useTheme();
@@ -53,7 +12,7 @@ const ThemeSelector: React.FC = () => {
       (theme) => theme.name === event.target.value
     );
     if (selectedTheme) {
-      setTheme({ ...selectedTheme.theme, textColor: theme.textColor });
+      setTheme({ ...theme, className: selectedTheme.className });
     }
   };
 
@@ -78,7 +37,11 @@ const ThemeSelector: React.FC = () => {
       </select>
 
       <label htmlFor="text-color-select">Select Text Color:</label>
-      <select id="text-color-select" value={theme.textColor} onChange={handleTextColorChange}>
+      <select
+        id="text-color-select"
+        value={theme.textColor}
+        onChange={handleTextColorChange}
+      >
         {textColorOptions.map((color, index) => (
           <option key={index} value={color.value}>
             {color.label}

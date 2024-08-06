@@ -14,7 +14,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { sequence, speed } = location.state;
+  const { sequence, speed, textColor } = location.state; // Ensure textColor is extracted
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
 
@@ -39,7 +39,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   return (
     <div
       className={`fullscreen-container ${theme.className}`}
-      style={{ color: theme.textColor }} // Use the text color from the theme
+      style={{ color: textColor || theme.textColor }} // Use passed textColor or fallback to theme textColor
     >
       <button className="back-button" type="button" onClick={handleBack}>
         Back
