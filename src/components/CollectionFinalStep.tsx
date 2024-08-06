@@ -6,8 +6,8 @@ import { saveCollection } from "../api"; // Import API function
 const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { collectionName, isPublic, itemCount, file } = location.state;
-  const [items, setItems] = useState<{ id: number; name: string }[]>([]);
+  const { collectionName, isPublic, itemCount, file, sequence } = location.state;
+  const [items, setItems] = useState<{ id: number; name: string }[]>(sequence.map((name, index) => ({ id: index + 1, name }))); // Initialize with sequence
   const [newItem, setNewItem] = useState<string>("");
 
   const handleAddItem = () => {
@@ -22,12 +22,13 @@ const CollectionFinalStep: React.FC = () => {
   const handleSaveCollection = async () => {
     try {
       // Construct a single API call with all the data
-      await saveCollection(1, collectionName, items, isPublic ? "public" : "private"); // Replace 1 with actual userId
+      const collectionData = items.map((item) => ({ id: item.id, name: item.name }));
+      await saveCollection(1, collectionName, collectionData, isPublic ? "public" : "private"); // Replace 1 with actual userId
       navigate("/your-collections");
     } catch (error) {
       console.error("Error saving collection:", error);
     }
-  };
+  };  
 
   return (
     <div className="collection-final-step-container">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { getCollections, deleteCollection } from "../api";
 import "../App.css";
 
@@ -12,6 +13,7 @@ interface Collection {
 const YourCollections: React.FC = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
   const userId = 1; // Replace with the actual user ID
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCollections = async () => {
@@ -39,9 +41,15 @@ const YourCollections: React.FC = () => {
   };
 
   const handleStartCollection = (collectionId: number) => {
-    // Add logic here to handle starting a collection
-    console.log("Starting collection:", collectionId);
-    // Navigate to the collection display or other functionality as needed
+    const collection = collections.find((col) => col.collection_id === collectionId);
+    if (collection) {
+      // Ensure the sequence is an array of strings
+      const sequenceItems = JSON.parse(collection.description);
+      const sequence = sequenceItems.map((item: { name: string }) => item.name);
+      
+      // Navigate to a fullscreen display with the sequence
+      navigate("/fullscreen-display", { state: { sequence, speed: 500 } }); // Adjust speed as needed
+    }
   };
 
   return (

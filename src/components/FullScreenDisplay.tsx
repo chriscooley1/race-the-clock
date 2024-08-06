@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import "../App.css";
 
 interface FullScreenDisplayProps {
-  sequence: string[];
-  speed: number;
   onEnterFullScreen: () => void;
   onExitFullScreen: () => void;
 }
 
 const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
-  sequence,
-  speed,
   onEnterFullScreen,
   onExitFullScreen,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { sequence, speed } = location.state;
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
 
@@ -35,7 +33,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   }, [sequence, speed]);
 
   const handleBack = () => {
-    navigate("/home"); // Navigate back to HomePage
+    navigate("/your-collections"); // Navigate back to YourCollections
   };
 
   return (
@@ -43,8 +41,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       className={`fullscreen-container ${theme.className}`}
       style={{ color: theme.textColor }} // Use the text color from the theme
     >
-      <button className="back-button" type="button" onClick={handleBack}>Back</button>
-      <h1 className="fullscreen-text">{sequence[index]}</h1>
+      <button className="back-button" type="button" onClick={handleBack}>
+        Back
+      </button>
+      <h1 className="fullscreen-text">{sequence[index]}</h1> {/* Ensure this renders strings */}
     </div>
   );
 };

@@ -8,11 +8,20 @@ const CollectionSetup: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [itemCount, setItemCount] = useState<number>(1);
   const { collectionName, isPublic } = location.state;
+  const [sequence, setSequence] = useState<string[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
     }
+  };
+
+  const generateRandomSequence = (count: number) => {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const generatedSequence = Array.from({ length: count }, () =>
+      alphabet[Math.floor(Math.random() * alphabet.length)]
+    );
+    setSequence(generatedSequence);
   };
 
   const handleNext = () => {
@@ -21,9 +30,12 @@ const CollectionSetup: React.FC = () => {
     console.log("Is Public:", isPublic);
     console.log("File:", file);
     console.log("Item Count:", itemCount);
+    console.log("Generated Sequence:", sequence);
 
     // Navigate to the final step with accumulated data
-    navigate("/collection-final-step", { state: { collectionName, isPublic, itemCount, file } });
+    navigate("/collection-final-step", {
+      state: { collectionName, isPublic, itemCount, file, sequence },
+    });
   };
 
   return (
@@ -51,7 +63,11 @@ const CollectionSetup: React.FC = () => {
           id="itemCount"
           value={itemCount}
           min={1}
-          onChange={(e) => setItemCount(parseInt(e.target.value))}
+          onChange={(e) => {
+            const count = parseInt(e.target.value);
+            setItemCount(count);
+            generateRandomSequence(count);
+          }}
           placeholder="Enter number of items"
           title="Enter the number of items"
         />
