@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { getCollections, deleteCollection } from "../api";
 import "../App.css";
 
@@ -7,7 +7,7 @@ import "../App.css";
 interface Collection {
   collection_id: number;
   name: string;
-  description: string;
+  description: string; // JSON string of items
 }
 
 const YourCollections: React.FC = () => {
@@ -41,12 +41,14 @@ const YourCollections: React.FC = () => {
   };
 
   const handleStartCollection = (collectionId: number) => {
-    const collection = collections.find((col) => col.collection_id === collectionId);
+    const collection = collections.find(
+      (col) => col.collection_id === collectionId
+    );
     if (collection) {
       // Ensure the sequence is an array of strings
       const sequenceItems = JSON.parse(collection.description);
       const sequence = sequenceItems.map((item: { name: string }) => item.name);
-      
+
       // Navigate to a fullscreen display with the sequence
       navigate("/fullscreen-display", { state: { sequence, speed: 500 } }); // Adjust speed as needed
     }
@@ -56,26 +58,30 @@ const YourCollections: React.FC = () => {
     <div className="your-collections">
       <h2>Your Collections</h2>
       <div className="collections-list">
-        {collections.map((collection) => (
-          <div key={collection.collection_id} className="collection-item">
-            <h1>{collection.name}</h1>
-            <p>{collection.description}</p>
-            <button
-              className="start-button"
-              type="button"
-              onClick={() => handleStartCollection(collection.collection_id)}
-            >
-              Start
-            </button>
-            <button
-              className="delete-button"
-              type="button"
-              onClick={() => handleDeleteCollection(collection.collection_id)}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
+        {collections.map((collection) => {
+          // Calculate the item count
+          const itemCount = JSON.parse(collection.description).length;
+          return (
+            <div key={collection.collection_id} className="collection-item">
+              <h1>{collection.name}</h1>
+              <p>{itemCount} item in the collection</p>
+              <button
+                className="start-button"
+                type="button"
+                onClick={() => handleStartCollection(collection.collection_id)}
+              >
+                Start
+              </button>
+              <button
+                className="delete-button"
+                type="button"
+                onClick={() => handleDeleteCollection(collection.collection_id)}
+              >
+                Delete
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
