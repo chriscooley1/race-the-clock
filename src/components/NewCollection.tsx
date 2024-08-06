@@ -27,7 +27,7 @@ const NewCollection: React.FC = () => {
           title="Collection Name"
         />
       </div>
-      <div>
+      <div className="checkbox-container">
         <input
           type="checkbox"
           id="publicCheckbox"
