@@ -1,6 +1,7 @@
-from sqlmodel import Field, SQLModel, Relationship
+from sqlmodel import SQLModel, Field, Relationship, UniqueConstraint
 from typing import List, Optional
 from datetime import datetime
+import sqlalchemy as sa  # Import SQLAlchemy for additional column configurations
 
 # User Models
 class UserBase(SQLModel):
@@ -8,9 +9,12 @@ class UserBase(SQLModel):
     email: Optional[str]
     hashed_password: str
 
-class User(UserBase, table=True):
+class User(SQLModel, table=True):
     __tablename__ = "users"
     user_id: Optional[int] = Field(default=None, primary_key=True)
+    username: str = Field(sa_column=sa.Column(sa.String, unique=True, index=True))
+    hashed_password: str
+    email: Optional[str] = Field(default=None)
     sequences: List["Sequence"] = Relationship(back_populates="user")
     collections: List["Collection"] = Relationship(back_populates="user")
 
@@ -39,10 +43,13 @@ class CollectionBase(SQLModel):
     description: str
     user_id: int
 
-class Collection(CollectionBase, table=True):
+class Collection(SQLModel, table=True):
     __tablename__ = "collections"
     collection_id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    description: str
     user_id: int = Field(foreign_key="users.user_id")
+    status: str = Field(default="private")  # Public or private
     user: User = Relationship(back_populates="collections")
     items: List["Item"] = Relationship(back_populates="collection")
     created_at: datetime = Field(default_factory=datetime.utcnow)

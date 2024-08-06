@@ -77,7 +77,8 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(username=user.username, hashed_password=hashed_password)
     db.add(db_user)
     db.commit()
-    return {"message": "User registered successfully"}
+    db.refresh(db_user)  # Refresh to get the updated object
+    return {"message": "User registered successfully", "user_id": db_user.user_id}
 
 class Token(BaseModel):
     access_token: str
