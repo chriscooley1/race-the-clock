@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
-import { saveCollection } from "../api"; // Assume this is your API call to save the collection
+import { saveCollection } from "../api"; // Import API function
 
 const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { collectionName } = location.state;
+  const { collectionName, isPublic, itemCount, file } = location.state;
   const [items, setItems] = useState<{ id: number; name: string }[]>([]);
   const [newItem, setNewItem] = useState<string>("");
 
@@ -21,8 +21,8 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleSaveCollection = async () => {
     try {
-      // Replace 1 with the actual userId
-      await saveCollection(1, collectionName, items);
+      // Construct a single API call with all the data
+      await saveCollection(1, collectionName, items, isPublic ? "public" : "private"); // Replace 1 with actual userId
       navigate("/your-collections");
     } catch (error) {
       console.error("Error saving collection:", error);

@@ -127,11 +127,12 @@ export const deleteCollection = async (collectionId: number) => {
   return response.data;
 };
 
-// New function to save a collection with items
+// Updated API function to include public/private status
 export const saveCollection = async (
   userId: number,
   collectionName: string,
-  items: { id: number; name: string }[]
+  items: { id: number; name: string }[],
+  status: string // Accepts "public" or "private"
 ) => {
   const response = await axios.post(
     `${API_BASE_URL}/collections`,
@@ -139,6 +140,7 @@ export const saveCollection = async (
       user_id: userId,
       name: collectionName,
       description: JSON.stringify(items), // Convert items array to JSON string
+      status, // Add status to the request
     },
     getAuthHeaders()
   );

@@ -7,7 +7,7 @@ const CollectionSetup: React.FC = () => {
   const location = useLocation();
   const [file, setFile] = useState<File | null>(null);
   const [itemCount, setItemCount] = useState<number>(1);
-  const { collectionName } = location.state;
+  const { collectionName, isPublic } = location.state;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -16,9 +16,14 @@ const CollectionSetup: React.FC = () => {
   };
 
   const handleNext = () => {
+    // Log the details for debugging
+    console.log("Collection Name:", collectionName);
+    console.log("Is Public:", isPublic);
     console.log("File:", file);
     console.log("Item Count:", itemCount);
-    navigate("/collection-final-step", { state: { collectionName } });
+
+    // Navigate to the final step with accumulated data
+    navigate("/collection-final-step", { state: { collectionName, isPublic, itemCount, file } });
   };
 
   return (

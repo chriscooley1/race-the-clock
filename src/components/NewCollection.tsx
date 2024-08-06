@@ -1,20 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
-import { createCollection } from "../api";
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleCreate = async () => {
-    try {
-      await createCollection(1, name, isPublic ? "public" : "private"); // replace 1 with actual userId
-      navigate("/collection-setup", { state: { collectionName: name } });
-    } catch (error) {
-      console.error("Error creating collection:", error);
-    }
+  const handleNext = () => {
+    // Navigate to the setup step with the initial collection details
+    navigate("/collection-setup", { state: { collectionName: name, isPublic } });
   };
 
   return (
@@ -45,8 +40,8 @@ const NewCollection: React.FC = () => {
       </div>
       <button
         type="button"
-        onClick={handleCreate}
-        className="styled-button" /* Updated class name */
+        onClick={handleNext}
+        className="styled-button"
       >
         Next
       </button>
