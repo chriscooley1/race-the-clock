@@ -74,7 +74,7 @@ const YourCollections: React.FC = () => {
 
       <div className="customization-options">
         <div className="input-field">
-          <label htmlFor="speedInput">Speed:</label>
+          <label htmlFor="speedInput">Speed: </label>
           <select
             id="speedInput"
             className="custom-input"
@@ -91,7 +91,7 @@ const YourCollections: React.FC = () => {
         </div>
 
         <div className="input-field">
-          <label htmlFor="textColorInput">Text Color:</label>
+          <label htmlFor="textColorInput">Text Color: </label>
           <select
             id="textColorInput"
             className="custom-input"
@@ -107,7 +107,7 @@ const YourCollections: React.FC = () => {
         </div>
 
         <div className="input-field">
-          <label htmlFor="themeSelect">Select Theme:</label>
+          <label htmlFor="themeSelect">Select Theme: </label>
           <select
             id="themeSelect"
             className="custom-input"

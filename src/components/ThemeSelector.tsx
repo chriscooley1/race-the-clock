@@ -36,7 +36,7 @@ const ThemeSelector: React.FC = () => {
         ))}
       </select>
 
-      <label htmlFor="text-color-select">Select Text Color:</label>
+      <label htmlFor="text-color-select"> Select Text Color: </label>
       <select
         id="text-color-select"
         value={theme.textColor}
