@@ -21,12 +21,14 @@ const Register: React.FC = () => {
       <h1>Register</h1>
       <input
         type="text"
+        className="custom-input"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Username"
       />
       <input
         type="password"
+        className="custom-input"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
