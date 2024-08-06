@@ -1,4 +1,3 @@
-// YourCollections.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCollections, deleteCollection } from "../api";
@@ -10,14 +9,15 @@ import { themes, textColorOptions } from "../themeOptions";
 interface Collection {
   collection_id: number;
   name: string;
-  description: string; // JSON string of items
-  creator_username: string; // Add username to the interface
+  description: string;
+  creator_username: string;
+  created_at: string; // Ensure this field is included
 }
 
 const YourCollections: React.FC = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
   const [speed, setSpeed] = useState<number>(500);
-  const [textColor, setTextColor] = useState<string>("#000000"); // Default text color
+  const [textColor, setTextColor] = useState<string>("#000000");
   const { theme, setTheme } = useTheme();
   const userId = 1; // Replace with the actual user ID
   const navigate = useNavigate();
@@ -52,17 +52,15 @@ const YourCollections: React.FC = () => {
       (col) => col.collection_id === collectionId
     );
     if (collection) {
-      // Ensure the sequence is an array of strings
       const sequenceItems = JSON.parse(collection.description);
       const sequence = sequenceItems.map((item: { name: string }) => item.name);
 
-      // Navigate to a fullscreen display with the sequence and settings
       navigate("/fullscreen-display", {
         state: {
           sequence,
           speed,
-          textColor, // Pass textColor to FullScreenDisplay
-          theme: theme.className, // Pass theme className
+          textColor,
+          theme: theme.className,
         },
       });
     }
@@ -127,13 +125,16 @@ const YourCollections: React.FC = () => {
 
       <div className="collections-list">
         {collections.map((collection) => {
-          // Calculate the item count
           const itemCount = JSON.parse(collection.description).length;
+          const formattedDate = new Date(collection.created_at).toLocaleDateString();
+
           return (
             <div key={collection.collection_id} className="collection-item">
               <h1>{collection.name}</h1>
               <p>{itemCount} items in the collection</p>
-              <p>Created by you</p> {/* Display creator's username */}
+              <p>
+                Created by you on {formattedDate}
+              </p>
               <button
                 className="start-button"
                 type="button"

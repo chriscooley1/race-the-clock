@@ -81,8 +81,16 @@ export const logout = () => {
   localStorage.removeItem("token");
 };
 
+export interface Collection {
+  collection_id: number;
+  name: string;
+  description: string;
+  creator_username: string;
+  created_at: string; // Add this line
+}
+
 // Function to get collections
-export const getCollections = async (userId: number) => {
+export const getCollections = async (userId: number): Promise<Collection[]> => {
   const response = await axios.get(
     `${API_BASE_URL}/users/${userId}/collections`,
     getAuthHeaders()

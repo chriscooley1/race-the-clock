@@ -1,5 +1,6 @@
 from sqlmodel import Field, SQLModel, Relationship
 from typing import List, Optional
+from datetime import datetime
 
 # User Models
 class UserBase(SQLModel):
@@ -44,9 +45,14 @@ class Collection(CollectionBase, table=True):
     user_id: int = Field(foreign_key="users.user_id")
     user: User = Relationship(back_populates="collections")
     items: List["Item"] = Relationship(back_populates="collection")
+    created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class CollectionCreate(CollectionBase):
     pass
+
+class CollectionRead(CollectionBase):
+    collection_id: int
+    created_at: datetime  # Include this field to expose the creation date
 
 # Item Models
 class ItemBase(SQLModel):

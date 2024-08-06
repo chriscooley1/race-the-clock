@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pydantic import BaseModel
 from typing import List, Optional
 from database import get_db
-from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate
+from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead
 
 # to get a string like this run:
 # openssl rand -hex 32
@@ -164,7 +164,7 @@ async def create_collection(collection: CollectionCreate, db: Session = Depends(
     db.refresh(db_collection)
     return db_collection
 
-@app.get("/users/{user_id}/collections", response_model=List[Collection])
+@app.get("/users/{user_id}/collections", response_model=List[CollectionRead])
 async def get_collections(user_id: int, db: Session = Depends(get_db)):
     user = db.get(User, user_id)
     if not user:

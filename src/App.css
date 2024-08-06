@@ -83,7 +83,6 @@ body {
 .home-page {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: flex-start; /* Align items to the top */
   height: 100vh; /* Full viewport height */
   width: 100vw; /* Full viewport width */
@@ -139,7 +138,7 @@ button {
 /* Flexbox adjustments for form layout */
 .input-field {
   display: flex;
-  max-width: 20%;
+  max-width: 100%;
   align-items: center;
   margin: 10px 10px;
 }
