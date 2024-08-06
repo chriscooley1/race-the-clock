@@ -42,6 +42,7 @@ const CollectionFinalStep: React.FC = () => {
         <span>New Item</span>
         <input
           type="text"
+          className="custom-input"
           placeholder="New Item"
           value={newItem}
           onChange={(e) => setNewItem(e.target.value)}

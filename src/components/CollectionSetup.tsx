@@ -61,6 +61,7 @@ const CollectionSetup: React.FC = () => {
         <input
           type="number"
           id="itemCount"
+          className="custom-input"
           value={itemCount}
           min={1}
           onChange={(e) => {

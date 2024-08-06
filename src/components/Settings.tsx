@@ -126,6 +126,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
         <label htmlFor="sequenceInput">Sequence (comma-separated):</label>
         <textarea
           id="sequenceInput"
+          className="custom-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter letters or words separated by commas"
@@ -135,6 +136,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
         <label htmlFor="speedInput">Speed:</label>
         <select
           id="speedInput"
+          className="custom-input"
           value={speed}
           onChange={(e) => setSpeed(Number(e.target.value))}
         >
@@ -150,6 +152,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
         <input
           id="quantityInput"
           type="number"
+          className="custom-input"
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
           placeholder="Enter quantity"
@@ -159,6 +162,7 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
         <label htmlFor="dropdownSelect">Generate Sequence:</label>
         <select
           id="dropdownSelect"
+          className="custom-input"
           value={dropdownValue}
           onChange={handleDropdownChange}
         >
@@ -177,4 +181,5 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
     </div>
   );
 };
+
 export default Settings;

@@ -513,3 +513,12 @@ button {
 .save-button:hover {
   background-color: #1e90ff;
 }
+
+.custom-input {
+  background-color: white !important; /* Ensures background is white */
+  color: black !important;           /* Ensures text color is black */
+  border: 1px solid #ccc !important; /* Light border */
+  border-radius: 4px;                /* Rounded corners */
+  padding: 8px;                      /* Padding inside the field */
+  font-size: 1em;                    /* Font size */
+}
