@@ -8,6 +8,7 @@ interface Collection {
   collection_id: number;
   name: string;
   description: string; // JSON string of items
+  creator_username: string; // Add username to the interface
 }
 
 const YourCollections: React.FC = () => {
@@ -64,7 +65,8 @@ const YourCollections: React.FC = () => {
           return (
             <div key={collection.collection_id} className="collection-item">
               <h1>{collection.name}</h1>
-              <p>{itemCount} item in the collection</p>
+              <p>{itemCount} items in the collection</p>
+              <p>Created by you</p> {/* Display creator's username */}
               <button
                 className="start-button"
                 type="button"

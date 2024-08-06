@@ -410,16 +410,16 @@ button {
   background-color: #952E8F;
   color: black;
   border: 5px solid black; /* Thick black border */
-  padding: 10px 20px;
-  font-size: 1.5em; /* Larger font for the button */
-  font-weight: bold; /* Bold text on the button */
+  padding: 8px 16px; /* Smaller padding */
+  font-size: 1.2em; /* Smaller font size */
+  font-weight: bold;
   cursor: pointer;
   border-radius: 5px;
-  width: 60%; /* Button width relative to container width */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Subtle text shadow on the button */
+  width: 50%; /* Adjust width for smaller size */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   margin-top: auto; /* Push the button down towards the bottom */
-  margin-bottom: 10px; /* Space between start and delete buttons */
-  z-index: 1; /* Ensures the button is above the border */
+  margin-bottom: 5px; /* Reduced space between start and delete buttons */
+  z-index: 1;
 }
 
 .start-button:hover {
@@ -427,27 +427,26 @@ button {
 }
 
 .delete-button {
-  background-color: #ff6666; /* Light red background */
-  color: black; /* Black text color */
-  border: none; /* No border */
-  padding: 10px 20px; /* Padding for button size */
-  border-radius: 5px; /* Rounded corners */
-  font-size: 1em; /* Font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  text-transform: uppercase; /* Uppercase text */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin-bottom: 20px; /* Space from the bottom of the container */
-  z-index: 1; /* Ensure the button is above other elements */
+  background-color: #ff6666;
+  color: black;
+  border: none;
+  padding: 8px 16px; /* Smaller padding */
+  border-radius: 5px;
+  font-size: 1.2em; /* Smaller font size */
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+  z-index: 1;
 }
 
 .delete-button:hover {
-  background-color: #cc0000; /* Darker red on hover */
+  background-color: #cc0000;
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
 .delete-button:active {
-  background-color: #990000; /* Even darker red when active */
+  background-color: #990000;
   transform: scale(0.95); /* Slight scale down when active */
 }
 
