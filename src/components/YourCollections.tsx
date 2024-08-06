@@ -60,19 +60,23 @@ const YourCollections: React.FC = () => {
           sequence,
           speed,
           textColor,
-          theme: theme.className,
+          theme: theme.className, // Pass the theme to FullScreenDisplay
         },
       });
     }
   };
 
+  const handleThemeChange = (className: string) => {
+    setTheme({ ...theme, className }); // Ensure this updates the theme
+  };
+
   return (
     <div className="your-collections">
-      <h2>Your Collections</h2>
+      <h2 style={{ color: "black" }}>Your Collections</h2>
 
       <div className="customization-options">
         <div className="input-field">
-          <label htmlFor="speedInput">Speed: </label>
+          <label htmlFor="speedInput" style={{ color: "black" }}>Speed: </label>
           <select
             id="speedInput"
             className="custom-input"
@@ -89,7 +93,7 @@ const YourCollections: React.FC = () => {
         </div>
 
         <div className="input-field">
-          <label htmlFor="textColorInput">Text Color: </label>
+          <label htmlFor="textColorInput" style={{ color: "black" }}>Text Color: </label>
           <select
             id="textColorInput"
             className="custom-input"
@@ -105,14 +109,12 @@ const YourCollections: React.FC = () => {
         </div>
 
         <div className="input-field">
-          <label htmlFor="themeSelect">Select Theme: </label>
+          <label htmlFor="themeSelect" style={{ color: "black" }}>Select Theme: </label>
           <select
             id="themeSelect"
             className="custom-input"
             value={theme.className}
-            onChange={(e) =>
-              setTheme({ ...theme, className: e.target.value })
-            }
+            onChange={(e) => handleThemeChange(e.target.value)}
           >
             {themes.map((theme, index) => (
               <option key={index} value={theme.className}>
