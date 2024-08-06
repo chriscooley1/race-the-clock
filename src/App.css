@@ -357,8 +357,10 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center; /* Centers the content vertically and horizontally */
-  justify-content: center;
+  justify-content: flex-start; /* Align content to start from the top */
   position: relative; /* Needed for absolute positioning of the title background */
+  height: 300px; /* Set a fixed height to accommodate all content */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
 .collection-item h1 {
@@ -381,6 +383,7 @@ button {
   bottom: 20px; /* Same distance from the bottom as from the sides */
   border: 5px solid black; /* This creates the solid line frame */
   pointer-events: none; /* Ensure it does not capture click events */
+  z-index: 0; /* Position the border below the content */
 }
 
 .collection-item h2,
@@ -412,14 +415,15 @@ button {
   font-weight: bold; /* Bold text on the button */
   cursor: pointer;
   border-radius: 5px;
-  width: 30%; /* Button width relative to container width */
-  position: relative; /* Needed to layer above the pseudo-element */
-  z-index: 1; /* Ensures the button is above the border */
+  width: 60%; /* Button width relative to container width */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Subtle text shadow on the button */
+  margin-top: auto; /* Push the button down towards the bottom */
+  margin-bottom: 10px; /* Space between start and delete buttons */
+  z-index: 1; /* Ensures the button is above the border */
 }
 
 .start-button:hover {
-  background-color: #952E8F; /* Darker purple on hover */
+  background-color: #832E8F; /* Darker purple on hover */
 }
 
 .delete-button {
@@ -433,7 +437,7 @@ button {
   text-transform: uppercase; /* Uppercase text */
   font-weight: bold; /* Bold text */
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  position: relative;
+  margin-bottom: 20px; /* Space from the bottom of the container */
   z-index: 1; /* Ensure the button is above other elements */
 }
 
