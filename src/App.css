@@ -139,7 +139,7 @@ button {
 /* Flexbox adjustments for form layout */
 .input-field {
   display: flex;
-  flex-direction: column;
+  max-width: 20%;
   align-items: center;
   margin: 10px 0;
 }
@@ -494,11 +494,11 @@ button {
   background-color: darkgreen;
 }
 
-.item-container {
+/* .item-container {
   display: flex;
   align-items: center;
   margin: 5px 0;
-}
+} */
 
 .save-button {
   background-color: #cceeff;
@@ -554,4 +554,10 @@ button {
   left: 50%; /* Center horizontally */
   transform: translate(-50%, -50%); /* Adjust position */
   font-size: 14px; /* Size of the checkmark */
+}
+
+.customization-options {
+  width: 1200px;
+  display: flex;
+  justify-content: center;
 }
