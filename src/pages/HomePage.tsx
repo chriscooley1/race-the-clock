@@ -1,8 +1,8 @@
 import React from "react";
-import ThemeSelector from "./ThemeSelector";
-import Settings from "./Settings";
-import History from "./History";
-import Display from "./Display";
+import ThemeSelector from "../components/ThemeSelector";
+import Settings from "../components/Settings";
+import History from "../components/History";
+import Display from "../components/Display";
 
 interface HomePageProps {
   handleSettingsUpdate: (sequence: string[], speed: number) => void;

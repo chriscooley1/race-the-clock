@@ -64,8 +64,13 @@ const SessionSettingsModal = ({ collectionName, onClose, onStart, currentSetting
             </select>
           </div>
           <div className="modal-actions">
-            <button className="cancel-button" onClick={onClose}>Cancel</button>
-            <button className="start-session-button" onClick={() => onStart(minutes, seconds, shuffle, speed, textColor, selectedTheme)}>Start Session</button>
+            <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
+            <button 
+              type="button" 
+              className="start-session-button" 
+              onClick={() => onStart(minutes, seconds, shuffle, speed, textColor, selectedTheme)}>
+              Start Session
+            </button>
           </div>
         </div>
       </div>
