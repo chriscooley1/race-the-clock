@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { themes, textColorOptions } from "../themeOptions";
 
@@ -29,13 +29,22 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   onStart,
   currentSettings,
 }) => {
+  const { setTheme } = useTheme();
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [shuffle, setShuffle] = useState(false);
-  const { setTheme } = useTheme();
   const [speed, setSpeed] = useState(currentSettings.speed);
   const [textColor, setTextColor] = useState(currentSettings.textColor);
-  const [selectedTheme, setSelectedTheme] = useState(currentSettings.theme.className);
+  const [selectedTheme, setSelectedTheme] = useState("light-theme"); // Default to light-theme
+
+  useEffect(() => {
+    // Set default theme to light mode every time the modal is opened
+    const defaultTheme = themes.find((theme) => theme.className === "light-theme");
+    if (defaultTheme) {
+      setTheme(defaultTheme);
+      setSelectedTheme(defaultTheme.className);
+    }
+  }, [setTheme]);
 
   const handleThemeChange = (themeClassName: string) => {
     const newTheme = themes.find((theme) => theme.className === themeClassName);

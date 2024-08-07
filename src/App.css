@@ -15,6 +15,17 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+h1, h2, h3, p, button {
+  color: inherit; /* Use the color from the theme */
+}
+
+.button, .start-session-button, .cancel-button {
+  background-color: var(--color);
+  color: var(--text-color);
 }
 
 /* Ensure the #root element covers the full viewport */
@@ -38,7 +49,7 @@ body {
 /* Sidebar styles */
 .sidebar {
   width: 250px;
-  background-color: #f4f4f4;
+  background-color: #ffe4e1; /* Pastel pink background */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   height: 100%;
   display: flex;
@@ -47,7 +58,6 @@ body {
   top: 50px; /* Adjusted to sit below the navbar */
   left: 0;
   padding: 20px;
-  background-color: pink;
   z-index: 900; /* Ensure sidebar is below the navbar */
 }
 
@@ -253,7 +263,7 @@ button {
 /* Neon and color themes */
 .neon-pink-theme {
   background-color: #ff69b4;
-  color: #fff;
+  color: #000;
 }
 
 .neon-green-theme {
@@ -268,7 +278,7 @@ button {
 
 .neon-orange-theme {
   background-color: #ff4500;
-  color: #fff;
+  color: #000;
 }
 
 .red-theme {

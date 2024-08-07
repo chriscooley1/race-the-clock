@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+
 // Define the shape of your theme
 interface Theme {
   backgroundColor: string;
   color: string;
-  className: string; 
-  textColor: string;  // Add a textColor property
+  className: string;
+  textColor: string; // Add a textColor property
   [key: string]: string; // Allow for additional theme properties
 }
 
@@ -33,9 +34,9 @@ const lightTheme: Theme = {
 // Additional fun and bright themes
 const neonPinkTheme: Theme = {
   backgroundColor: "#ff69b4",
-  color: "#fff",
+  color: "#000", // Changed to black for better contrast
   className: "neon-pink-theme",
-  textColor: "#fff", // Default text color for neon pink theme
+  textColor: "#000", // Default text color for neon pink theme
 };
 
 const neonGreenTheme: Theme = {
@@ -54,9 +55,9 @@ const neonBlueTheme: Theme = {
 
 const neonOrangeTheme: Theme = {
   backgroundColor: "#ff4500",
-  color: "#fff",
+  color: "#000", // Changed to black for better contrast
   className: "neon-orange-theme",
-  textColor: "#fff", // Default text color for neon orange theme
+  textColor: "#000", // Default text color for neon orange theme
 };
 
 // Rainbow color themes
@@ -114,18 +115,37 @@ interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
 }
+
 // Create the ThemeContext
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
 // Define the ThemeProvider component
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Set the default theme
-  const [theme, setTheme] = useState<Theme>(lightTheme); // Default to light theme
+  // Retrieve the theme from localStorage or default to light theme
+  const getInitialTheme = () => {
+    const savedTheme = localStorage.getItem("app-theme");
+    return savedTheme ? JSON.parse(savedTheme) : lightTheme;
+  };
+
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+
+  useEffect(() => {
+    // Save theme to localStorage whenever it changes
+    localStorage.setItem("app-theme", JSON.stringify(theme));
+    
+    // Update CSS variables based on the selected theme
+    document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
+    document.documentElement.style.setProperty("--text-color", theme.textColor);
+    document.documentElement.style.setProperty("--color", theme.color);
+  }, [theme]);
+
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
+
 // Custom hook to use the ThemeContext
 export const useTheme = () => {
   const context = useContext(ThemeContext);
@@ -134,6 +154,7 @@ export const useTheme = () => {
   }
   return context;
 };
+
 // Export the predefined themes
 export {
   darkTheme,
