@@ -71,8 +71,20 @@ const YourCollections = () => {
             <h1>{collection.name}</h1>
             <p>{JSON.parse(collection.description || "[]").length} items</p>
             <p>Created by you on {new Date(collection.created_at).toLocaleDateString()}</p>
-            <button onClick={() => handleStartCollection(collection.collection_id)}>Start</button>
-            <button onClick={() => handleDeleteCollection(collection.collection_id)}>Delete</button>
+            <button
+              type="button"
+              className="start-button"
+              onClick={() => handleStartCollection(collection.collection_id)}
+            >
+              Start
+            </button>
+            <button
+              type="button"
+              className="delete-button"
+              onClick={() => handleDeleteCollection(collection.collection_id)}
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>

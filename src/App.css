@@ -407,47 +407,49 @@ button {
   text-transform: uppercase; /* UPPERCASE text */
 }
 
+/* Styling for the start button */
 .start-button {
-  background-color: #952E8F;
-  color: black;
-  border: 5px solid black; /* Thick black border */
-  padding: 8px 16px; /* Smaller padding */
-  font-size: 1.2em; /* Smaller font size */
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-  width: 50%; /* Adjust width for smaller size */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: auto; /* Push the button down towards the bottom */
-  margin-bottom: 5px; /* Reduced space between start and delete buttons */
-  z-index: 1;
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
 }
 
 .start-button:hover {
-  background-color: #832E8F; /* Darker purple on hover */
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
 }
 
+.start-button:active {
+  background-color: #388e3c; /* Even darker green when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+/* Styling for the delete button */
 .delete-button {
-  background-color: #ff6666;
-  color: black;
-  border: none;
-  padding: 8px 16px; /* Smaller padding */
-  border-radius: 5px;
-  font-size: 1.2em; /* Smaller font size */
-  cursor: pointer;
-  text-transform: uppercase;
-  font-weight: bold;
-  transition: background-color 0.3s, transform 0.3s;
-  z-index: 1;
+  background-color: #ff6666; /* Red background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
 }
 
 .delete-button:hover {
-  background-color: #cc0000;
+  background-color: #cc0000; /* Darker red on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
 .delete-button:active {
-  background-color: #990000;
+  background-color: #990000; /* Even darker red when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
 
@@ -621,21 +623,21 @@ button {
 
 /* Navbar styles */
 .navbar {
-  position: fixed;
+  position: absolute;
   top: 0;
-  right: 0;
   width: 100%;
   height: 50px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Space between items to push them apart */
   align-items: center;
-  padding: 0 20px;
   background-color: #f4f4f4;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  padding: 0 20px; /* Add padding for spacing */
 }
 
 .navbar-title {
+  flex-grow: 1; /* Allow the title to grow and take available space */
+  text-align: center; /* Center the title text */
   font-size: 1.5em;
   font-weight: bold;
 }
@@ -648,8 +650,56 @@ button {
   border-radius: 5px;
   cursor: pointer;
   font-size: 1em;
+  flex-shrink: 0; /* Prevent shrinking so it stays at the edge */
 }
 
 .logout-button:hover {
   background-color: #cc0000;
+}
+
+/* Styling for the start session button */
+.start-session-button {
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-right: 10px; /* Add margin for spacing */
+}
+
+.start-session-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.start-session-button:active {
+  background-color: #388e3c; /* Even darker green when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+/* Styling for the cancel button */
+.cancel-button {
+  background-color: #ff6666; /* Red background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.cancel-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.cancel-button:active {
+  background-color: #990000; /* Even darker red when active */
+  transform: scale(0.95); /* Slight scale down when active */
 }
