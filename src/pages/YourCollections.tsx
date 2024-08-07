@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getCollections, deleteCollection } from "../api";
 import "../App.css";
 import { useTheme } from "../context/ThemeContext";
-import SessionSettingsModal from "./SessionSettingsModal";
+import SessionSettingsModal from "../components/SessionSettingsModal";
 
 const YourCollections = () => {
   const [collections, setCollections] = useState([]);

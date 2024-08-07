@@ -41,7 +41,7 @@ const Navbar = () => {
       </div>
       {menuOpen && (
         <div className="menu">
-          <button onClick={handleLogout}>Logout</button>
+          <button type="button" onClick={handleLogout}>Logout</button>
         </div>
       )}
     </div>

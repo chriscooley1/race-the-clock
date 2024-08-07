@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import Sidebar from "./components/Sidebar";
 import HomePage from "./pages/HomePage";
 import LandingPage from "./components/LandingPage";
-import YourCollections from "./components/YourCollections";
+import YourCollections from "./pages/YourCollections";
 import NewCollection from "./pages/NewCollection";
 import DiscoverCollections from "./pages/DiscoverCollections";
 import CollectionSetup from "./pages/CollectionSetup";
@@ -17,6 +17,7 @@ import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar"; // Import Navbar
+import SessionSettingsModal from "./components/SessionSettingsModal";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -58,6 +59,7 @@ const App: React.FC = () => {
               <Route path="/discover-collections" element={<PrivateRoute element={<DiscoverCollections />} />} />
               <Route path="/name-generator" element={<PrivateRoute element={<NameGenerator />} />} />
               <Route path="/resources" element={<PrivateRoute element={<Resources />} />} />
+              <Route path="/session-settings-modal" element={<PrivateRoute element={<SessionSettingsModal />} />} />
             </Routes>
           </div>
         </Router>
