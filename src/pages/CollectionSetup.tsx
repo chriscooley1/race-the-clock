@@ -6,7 +6,7 @@ import { generateRandomLetters, generateRandomNumbers } from "../utils/RandomGen
 const CollectionSetup: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { collectionName, isPublic } = location.state || {}; // Safely destructure with default
+  const { collectionName, isPublic } = location.state || {};
 
   const [file, setFile] = useState<File | null>(null);
   const [itemCount, setItemCount] = useState<number>(1);
@@ -19,12 +19,12 @@ const CollectionSetup: React.FC = () => {
     }
   };
 
-  const generateRandomSequence = (count: number) => {
+  const generateRandomSequence = () => {
     let generatedSequence: string[] = [];
     if (type === "letters") {
-      generatedSequence = generateRandomLetters(count);
+      generatedSequence = generateRandomLetters(itemCount);
     } else if (type === "numbers") {
-      generatedSequence = generateRandomNumbers(count);
+      generatedSequence = generateRandomNumbers(itemCount);
     }
     setSequence(generatedSequence);
   };
@@ -73,9 +73,8 @@ const CollectionSetup: React.FC = () => {
           value={itemCount}
           min={1}
           onChange={(e) => {
-            const count = parseInt(e.target.value);
+            const count = parseInt(e.target.value, 10);
             setItemCount(count);
-            generateRandomSequence(count);
           }}
           placeholder="Enter number of items"
           title="Enter the number of items"
@@ -93,9 +92,18 @@ const CollectionSetup: React.FC = () => {
           <option value="numbers">Numbers</option>
         </select>
       </div>
+      <button type="button" onClick={generateRandomSequence} className="styled-button">
+        Generate Random Sequence
+      </button>
       <button type="button" onClick={handleNext} className="styled-button">
         Next
       </button>
+      {sequence.length > 0 && (
+        <div>
+          <h3>Generated Sequence:</h3>
+          <p>{sequence.join(", ")}</p>
+        </div>
+      )}
     </div>
   );
 };
