@@ -8,8 +8,11 @@ import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
 import YourCollections from "./components/YourCollections";
 import NewCollection from "./components/NewCollection";
+import DiscoverCollections from "./components/DiscoverCollections";
 import CollectionSetup from "./components/CollectionSetup";
 import CollectionFinalStep from "./components/CollectionFinalStep";
+import NameGenerator from "./components/NameGenerator";
+import Resources from "./components/Resources";
 import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -50,6 +53,9 @@ const App: React.FC = () => {
               <Route path="/new-collection" element={<PrivateRoute element={<NewCollection />} />} />
               <Route path="/collection-setup" element={<PrivateRoute element={<CollectionSetup />} />} />
               <Route path="/collection-final-step" element={<PrivateRoute element={<CollectionFinalStep />} />} />
+              <Route path="/discover-collections" element={<PrivateRoute element={<DiscoverCollections />} />} />
+              <Route path="/name-generator" element={<PrivateRoute element={<NameGenerator />} />} />
+              <Route path="/resources" element={<PrivateRoute element={<Resources />} />} />
             </Routes>
           </div>
         </Router>

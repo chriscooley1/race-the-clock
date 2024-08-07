@@ -122,6 +122,23 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
 
   return (
     <div className={`settings-container ${theme.className}`}>
+      <div className="top-controls">
+        <div className="input-field">
+          <label htmlFor="speedInput">Speed:</label>
+          <select
+            id="speedInput"
+            className="custom-input"
+            value={speed}
+            onChange={(e) => setSpeed(Number(e.target.value))}
+          >
+            {speedOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
       <div className="input-field">
         <label htmlFor="sequenceInput">Sequence (comma-separated):</label>
         <textarea
@@ -131,21 +148,6 @@ const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter letters or words separated by commas"
         />
-      </div>
-      <div className="input-field">
-        <label htmlFor="speedInput">Speed:</label>
-        <select
-          id="speedInput"
-          className="custom-input"
-          value={speed}
-          onChange={(e) => setSpeed(Number(e.target.value))}
-        >
-          {speedOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
       </div>
       <div className="input-field">
         <label htmlFor="quantityInput">Quantity:</label>

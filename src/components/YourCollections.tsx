@@ -72,7 +72,7 @@ const YourCollections: React.FC = () => {
 
   return (
     <div className="your-collections">
-      <h2 style={{ color: "black" }}>Your Collections</h2>
+      <h2 style={{ color: "black" }}>Race The Clock</h2>
 
       <div className="customization-options">
         <div className="input-field">

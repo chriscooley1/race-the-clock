@@ -24,10 +24,16 @@ const Sidebar: React.FC = () => {
               <Link to="/your-collections">Your Collections</Link>
             </li>
             <li>
+              <Link to="/new-collection">New Collection</Link>
+            </li>
+            <li>
               <Link to="/discover-collections">Discover Collections</Link>
             </li>
             <li>
-              <Link to="/new-collection">New Collection</Link>
+              <Link to="/name-generator">Name Generator</Link>
+            </li>
+            <li>
+              <Link to="/resources">Resources</Link>
             </li>
             <li>
               <button
