@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../api";
+import "../App.css";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="auth-container">
       <h1>Register</h1>
       <input
         type="text"
@@ -33,7 +34,9 @@ const Register: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
-      <button type="button" onClick={handleRegister}>Register</button>
+      <button type="button" onClick={handleRegister} className="styled-button">
+        Register
+      </button>
     </div>
   );
 };

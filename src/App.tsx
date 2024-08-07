@@ -16,6 +16,7 @@ import Resources from "./components/Resources";
 import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
+import Navbar from "./components/Navbar"; // Import Navbar
 import "./App.css";
 
 const App: React.FC = () => {
@@ -41,6 +42,7 @@ const App: React.FC = () => {
     <AuthProvider>
       <div className={`app-container ${theme.className}`}>
         <Router basename="/letter-reader">
+          <Navbar /> {/* Add Navbar */}
           {!hideSidebar && <Sidebar />}
           <div style={{ flex: 1, marginLeft: hideSidebar ? '0' : '250px' }}>
             <Routes>

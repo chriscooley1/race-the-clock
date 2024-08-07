@@ -9,7 +9,7 @@ const YourCollections = () => {
   const [collections, setCollections] = useState([]);
   const [speed, setSpeed] = useState(500);
   const [textColor, setTextColor] = useState("#000000");
-  const { theme } = useTheme(); // useTheme hook to get current theme
+  const { theme } = useTheme();
   const userId = 1; // Replace with the actual user ID
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -65,7 +65,6 @@ const YourCollections = () => {
 
   return (
     <div className="your-collections">
-      <h2>Race The Clock</h2>
       <div className="collections-list">
         {collections.map((collection) => (
           <div key={collection.collection_id} className="collection-item">

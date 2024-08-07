@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api";
+import "../App.css";
 import { useAuth } from "../context/AuthContext";
 
 const Login: React.FC = () => {
@@ -20,7 +21,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="auth-container">
       <h1>Login</h1>
       <input
         type="text"
