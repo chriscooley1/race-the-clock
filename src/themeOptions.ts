@@ -1,4 +1,3 @@
-// themeOptions.ts
 export const themes = [
   { name: "Light Mode", className: "light-theme" },
   { name: "Dark Mode", className: "dark-theme" },
