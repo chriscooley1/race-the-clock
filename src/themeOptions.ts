@@ -12,97 +12,97 @@ export const themes: Theme[] = [
     className: "light-theme",
     backgroundColor: "#ffffff",
     color: "#000000",
-    textColor: "#333333"
+    textColor: "#000000"
   },
   { 
     name: "Dark Mode", 
     className: "dark-theme",
     backgroundColor: "#333333",
     color: "#ffffff",
-    textColor: "#f5f5f5"
+    textColor: "#ffffff"
   },
   { 
     name: "Blue Theme", 
     className: "blue-theme",
-    backgroundColor: "#e0f7fa",
-    color: "#0077b6",
-    textColor: "#000000"
+    backgroundColor: "#cceeff",
+    color: "#003366",
+    textColor: "#003366"
   },
   { 
     name: "Neon Pink", 
     className: "neon-pink-theme",
-    backgroundColor: "#ff00ff",
-    color: "#ffffff",
+    backgroundColor: "#ff69b4",
+    color: "#000000",
     textColor: "#000000"
   },
   { 
     name: "Neon Green", 
     className: "neon-green-theme",
     backgroundColor: "#39ff14",
-    color: "#ffffff",
+    color: "#000000",
     textColor: "#000000"
   },
   { 
     name: "Neon Blue", 
     className: "neon-blue-theme",
-    backgroundColor: "#0ff",
+    backgroundColor: "#1e90ff",
     color: "#ffffff",
-    textColor: "#000000"
+    textColor: "#ffffff"
   },
   { 
     name: "Neon Orange", 
     className: "neon-orange-theme",
-    backgroundColor: "#ff6f00",
-    color: "#ffffff",
+    backgroundColor: "#ff4500",
+    color: "#000000",
     textColor: "#000000"
   },
   { 
     name: "Red", 
     className: "red-theme",
-    backgroundColor: "#ffebee",
-    color: "#b71c1c",
-    textColor: "#000000"
+    backgroundColor: "#ff0000",
+    color: "#ffffff",
+    textColor: "#ffffff"
   },
   { 
     name: "Orange", 
     className: "orange-theme",
-    backgroundColor: "#fff3e0",
-    color: "#e65100",
+    backgroundColor: "#ffa500",
+    color: "#000000",
     textColor: "#000000"
   },
   { 
     name: "Yellow", 
     className: "yellow-theme",
-    backgroundColor: "#fffde7",
-    color: "#f9a825",
+    backgroundColor: "#ffff00",
+    color: "#000000",
     textColor: "#000000"
   },
   { 
     name: "Green", 
     className: "green-theme",
-    backgroundColor: "#e8f5e9",
-    color: "#2e7d32",
-    textColor: "#000000"
+    backgroundColor: "#008000",
+    color: "#ffffff",
+    textColor: "#ffffff"
   },
   { 
     name: "Blue", 
     className: "blue-theme-color",
-    backgroundColor: "#e3f2fd",
-    color: "#1e88e5",
-    textColor: "#000000"
+    backgroundColor: "#0000ff",
+    color: "#ffffff",
+    textColor: "#ffffff"
   },
   { 
     name: "Indigo", 
     className: "indigo-theme",
-    backgroundColor: "#e8eaf6",
-    color: "#303f9f",
-    textColor: "#000000"
+    backgroundColor: "#4b0082",
+    color: "#ffffff",
+    textColor: "#ffffff"
   },
   { 
     name: "Violet", 
     className: "violet-theme",
-    backgroundColor: "#f3e5f5",
-    color: "#8e24aa",
+    backgroundColor: "#ee82ee",
+    color: "#000000",
     textColor: "#000000"
   },
   // Add more themes as needed

@@ -5,7 +5,7 @@ interface Theme {
   backgroundColor: string;
   color: string;
   className: string;
-  textColor: string; // Add a textColor property
+  textColor: string;
   [key: string]: string; // Allow for additional theme properties
 }
 
@@ -14,50 +14,50 @@ const darkTheme: Theme = {
   backgroundColor: "#333",
   color: "#fff",
   className: "dark-theme",
-  textColor: "#fff", // Default text color for dark theme
+  textColor: "#fff",
 };
 
 const blueTheme: Theme = {
   backgroundColor: "#cceeff",
   color: "#003366",
   className: "blue-theme",
-  textColor: "#003366", // Default text color for blue theme
+  textColor: "#003366",
 };
 
 const lightTheme: Theme = {
   backgroundColor: "#fff",
   color: "#000",
   className: "light-theme",
-  textColor: "#000", // Default text color for light theme
+  textColor: "#000",
 };
 
 // Additional fun and bright themes
 const neonPinkTheme: Theme = {
   backgroundColor: "#ff69b4",
-  color: "#000", // Changed to black for better contrast
+  color: "#000",
   className: "neon-pink-theme",
-  textColor: "#000", // Default text color for neon pink theme
+  textColor: "#000",
 };
 
 const neonGreenTheme: Theme = {
   backgroundColor: "#39ff14",
   color: "#000",
   className: "neon-green-theme",
-  textColor: "#000", // Default text color for neon green theme
+  textColor: "#000",
 };
 
 const neonBlueTheme: Theme = {
   backgroundColor: "#1e90ff",
   color: "#fff",
   className: "neon-blue-theme",
-  textColor: "#fff", // Default text color for neon blue theme
+  textColor: "#fff",
 };
 
 const neonOrangeTheme: Theme = {
   backgroundColor: "#ff4500",
-  color: "#000", // Changed to black for better contrast
+  color: "#000",
   className: "neon-orange-theme",
-  textColor: "#000", // Default text color for neon orange theme
+  textColor: "#000",
 };
 
 // Rainbow color themes
@@ -65,49 +65,49 @@ const redTheme: Theme = {
   backgroundColor: "#ff0000",
   color: "#fff",
   className: "red-theme",
-  textColor: "#fff", // Default text color for red theme
+  textColor: "#fff",
 };
 
 const orangeTheme: Theme = {
   backgroundColor: "#ffa500",
   color: "#000",
   className: "orange-theme",
-  textColor: "#000", // Default text color for orange theme
+  textColor: "#000",
 };
 
 const yellowTheme: Theme = {
   backgroundColor: "#ffff00",
   color: "#000",
   className: "yellow-theme",
-  textColor: "#000", // Default text color for yellow theme
+  textColor: "#000",
 };
 
 const greenTheme: Theme = {
   backgroundColor: "#008000",
   color: "#fff",
   className: "green-theme",
-  textColor: "#fff", // Default text color for green theme
+  textColor: "#fff",
 };
 
 const blueThemeColor: Theme = {
   backgroundColor: "#0000ff",
   color: "#fff",
   className: "blue-theme-color",
-  textColor: "#fff", // Default text color for blue theme color
+  textColor: "#fff",
 };
 
 const indigoTheme: Theme = {
   backgroundColor: "#4b0082",
   color: "#fff",
   className: "indigo-theme",
-  textColor: "#fff", // Default text color for indigo theme
+  textColor: "#fff",
 };
 
 const violetTheme: Theme = {
   backgroundColor: "#ee82ee",
   color: "#000",
   className: "violet-theme",
-  textColor: "#000", // Default text color for violet theme
+  textColor: "#000",
 };
 
 // Define the shape of the context

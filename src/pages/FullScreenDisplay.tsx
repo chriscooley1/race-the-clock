@@ -15,7 +15,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const { sequence, speed, textColor } = location.state; // Ensure textColor is extracted
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -33,6 +33,12 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   }, [sequence, speed]);
 
   const handleBack = () => {
+    const defaultTheme = {
+      className: "light-theme",
+      textColor: "#000",
+      backgroundColor: "#fff",
+    };
+    setTheme(defaultTheme); // Set the theme back to the default
     navigate("/your-collections"); // Navigate back to YourCollections
   };
 
