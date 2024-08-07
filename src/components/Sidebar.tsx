@@ -1,25 +1,16 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../App.css";
 import { useAuth } from "../context/AuthContext";
 
 const Sidebar: React.FC = () => {
-  const navigate = useNavigate();
-  const { setToken, isAuthenticated } = useAuth();
-
-  const handleLogout = () => {
-    setToken(null);
-    navigate("/login");
-  };
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="sidebar">
       <ul>
         {isAuthenticated ? (
           <>
-            <li>
-              <Link to="/home">HomePage</Link>
-            </li>
             <li>
               <Link to="/your-collections">Your Collections</Link>
             </li>
@@ -35,21 +26,9 @@ const Sidebar: React.FC = () => {
             <li>
               <Link to="/resources">Resources</Link>
             </li>
-            <li>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="styled-button" /* Updated class name */
-              >
-                Logout
-              </button>
-            </li>
           </>
         ) : (
           <>
-            <li>
-              <Link to="/">HomePage</Link>
-            </li>
             <li>
               <Link to="/register">Register</Link>
             </li>

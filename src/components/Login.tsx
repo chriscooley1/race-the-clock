@@ -14,7 +14,7 @@ const Login: React.FC = () => {
     try {
       const data = await login(username, password);
       setToken(data.access_token);
-      navigate("/home"); // Navigate to HomePage
+      navigate("/your-collections"); // Navigate to YourCollections after successful login
     } catch (error) {
       console.error("Login failed", error);
     }
