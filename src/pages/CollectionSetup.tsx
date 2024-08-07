@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
+import { generateRandomLetters, generateRandomNumbers } from "../utils/RandomGenerators";
 
 const CollectionSetup: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { collectionName, isPublic } = location.state || {}; // Safely destructure with default
+
   const [file, setFile] = useState<File | null>(null);
   const [itemCount, setItemCount] = useState<number>(1);
-  const { collectionName, isPublic } = location.state;
   const [sequence, setSequence] = useState<string[]>([]);
+  const [type, setType] = useState<string>("letters");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -17,22 +20,27 @@ const CollectionSetup: React.FC = () => {
   };
 
   const generateRandomSequence = (count: number) => {
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const generatedSequence = Array.from({ length: count }, () =>
-      alphabet[Math.floor(Math.random() * alphabet.length)]
-    );
+    let generatedSequence: string[] = [];
+    if (type === "letters") {
+      generatedSequence = generateRandomLetters(count);
+    } else if (type === "numbers") {
+      generatedSequence = generateRandomNumbers(count);
+    }
     setSequence(generatedSequence);
   };
 
   const handleNext = () => {
-    // Log the details for debugging
+    if (!collectionName) {
+      alert("Collection name is missing. Please go back and enter a name.");
+      return;
+    }
+
     console.log("Collection Name:", collectionName);
     console.log("Is Public:", isPublic);
     console.log("File:", file);
     console.log("Item Count:", itemCount);
     console.log("Generated Sequence:", sequence);
 
-    // Navigate to the final step with accumulated data
     navigate("/collection-final-step", {
       state: { collectionName, isPublic, itemCount, file, sequence },
     });
@@ -72,6 +80,18 @@ const CollectionSetup: React.FC = () => {
           placeholder="Enter number of items"
           title="Enter the number of items"
         />
+      </div>
+      <div>
+        <label htmlFor="typeSelect">Type:</label>
+        <select
+          id="typeSelect"
+          className="custom-input"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        >
+          <option value="letters">Letters</option>
+          <option value="numbers">Numbers</option>
+        </select>
       </div>
       <button type="button" onClick={handleNext} className="styled-button">
         Next

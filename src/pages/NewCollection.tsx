@@ -8,6 +8,11 @@ const NewCollection: React.FC = () => {
   const navigate = useNavigate();
 
   const handleNext = () => {
+    if (!name.trim()) {
+      alert("Please enter a collection name.");
+      return;
+    }
+
     // Navigate to the setup step with the initial collection details
     navigate("/collection-setup", { state: { collectionName: name, isPublic } });
   };
