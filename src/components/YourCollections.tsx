@@ -90,6 +90,7 @@ const YourCollections = () => {
       </div>
       {showModal && selectedCollection && (
         <SessionSettingsModal
+          collectionName={selectedCollection.name} // Pass collection name
           onClose={() => setShowModal(false)}
           onStart={handleStartSession}
           currentSettings={{
