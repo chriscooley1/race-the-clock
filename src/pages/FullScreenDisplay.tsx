@@ -45,7 +45,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   return (
     <div
       className={`fullscreen-container ${theme.className}`}
-      style={{ color: textColor || theme.textColor }} // Use passed textColor or fallback to theme textColor
+      style={{ color: textColor || theme.textColor, overflow: "hidden" }} // Prevent scrolling
     >
       <button className="back-button" type="button" onClick={handleBack}>
         Back

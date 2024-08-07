@@ -240,11 +240,13 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Full viewport height */
+  height: 90vh; /* Full viewport height */
   width: 100vw; /* Full viewport width */
   position: relative;
   transition: background-color 0.3s, color 0.3s;
   overflow: hidden; /* Prevent scrolling */
+  margin: 0; /* Remove default margins */
+  padding: 0; /* Remove default padding */
 }
 
 .fullscreen-text {
