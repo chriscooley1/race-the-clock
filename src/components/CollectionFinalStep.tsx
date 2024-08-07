@@ -11,8 +11,6 @@ const CollectionFinalStep: React.FC = () => {
     sequence.map((name, index) => ({ id: index + 1, name }))
   ); // Initialize with sequence
   const [newItem, setNewItem] = useState<string>("");
-  const [quantity, setQuantity] = useState<number>(10);
-  const [dropdownValue, setDropdownValue] = useState<string>("");
 
   const handleAddItem = () => {
     setItems([...items, { id: items.length + 1, name: newItem }]);
@@ -31,73 +29,14 @@ const CollectionFinalStep: React.FC = () => {
         name: item.name,
       }));
       await saveCollection(
-        1,
+        1, // Assume userId is 1 for example purposes, replace as needed
         collectionName,
         collectionData,
         isPublic ? "public" : "private"
-      ); // Replace 1 with actual userId
-      navigate("/your-collections");
+      );
+      navigate("/your-collections"); // Redirect to the collections page
     } catch (error) {
       console.error("Error saving collection:", error);
-    }
-  };
-
-  const generateRandomLetters = () => {
-    const letters = Array.from({ length: quantity }, () => {
-      const isUpperCase = Math.random() > 0.5;
-      const charCode = isUpperCase
-        ? 65 + Math.floor(Math.random() * 26) // Uppercase letters
-        : 97 + Math.floor(Math.random() * 26); // Lowercase letters
-      return String.fromCharCode(charCode);
-    });
-    setItems([...items, ...letters.map((name, index) => ({ id: items.length + index + 1, name }))]);
-  };
-
-  const generateRandomNumbers = () => {
-    const numbers = Array.from(
-      { length: quantity },
-      () => Math.floor(Math.random() * 100).toString()
-    );
-    setItems([...items, ...numbers.map((name, index) => ({ id: items.length + index + 1, name }))]);
-  };
-
-  const generateAlphabetSequence = () => {
-    const uppercase = Array.from(
-      { length: 26 },
-      (_, i) => String.fromCharCode(65 + i)
-    );
-    const lowercase = Array.from(
-      { length: 26 },
-      (_, i) => String.fromCharCode(97 + i)
-    );
-    const alphabet = [...uppercase, ...lowercase];
-    setItems([...items, ...alphabet.map((name, index) => ({ id: items.length + index + 1, name }))]);
-  };
-
-  const generateNumberSequence = () => {
-    const numbers = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
-    setItems([...items, ...numbers.map((name, index) => ({ id: items.length + index + 1, name }))]);
-  };
-
-  const handleDropdownChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setDropdownValue(event.target.value);
-    switch (event.target.value) {
-      case "randomLetters":
-        generateRandomLetters();
-        break;
-      case "randomNumbers":
-        generateRandomNumbers();
-        break;
-      case "alphabetSequence":
-        generateAlphabetSequence();
-        break;
-      case "numberSequence":
-        generateNumberSequence();
-        break;
-      default:
-        break;
     }
   };
 
@@ -107,10 +46,6 @@ const CollectionFinalStep: React.FC = () => {
       <h2>Step 3 - Fill Out Collection Body</h2>
       <p>To add another item to this Collection, click the add button below.</p>
       <div className="add-item-container">
-        <button className="add-button" type="button" onClick={handleAddItem}>
-          +
-        </button>
-        <span>New Item</span>
         <input
           type="text"
           className="custom-input"
@@ -118,47 +53,27 @@ const CollectionFinalStep: React.FC = () => {
           value={newItem}
           onChange={(e) => setNewItem(e.target.value)}
         />
-        {items.map((item) => (
-          <div key={item.id} className="item-container">
-            <span>{item.name}</span>
-            <button
-              className="remove-button"
-              type="button"
-              onClick={() => handleRemoveItem(item.id)}
-            >
-              x
-            </button>
-          </div>
-        ))}
+        <button className="add-button" type="button" onClick={handleAddItem}>
+          +
+        </button>
       </div>
-
-      <div className="input-field">
-        <label htmlFor="quantityInput">Quantity:</label>
-        <input
-          id="quantityInput"
-          type="number"
-          className="custom-input"
-          value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
-          placeholder="Enter quantity"
-        />
-      </div>
-      <div className="input-field">
-        <label htmlFor="dropdownSelect">Generate Sequence:</label>
-        <select
-          id="dropdownSelect"
-          className="custom-input"
-          value={dropdownValue}
-          onChange={handleDropdownChange}
-        >
-          <option value="">Select...</option>
-          <option value="randomLetters">Random Letters</option>
-          <option value="randomNumbers">Random Numbers</option>
-          <option value="alphabetSequence">Alphabet Sequence</option>
-          <option value="numberSequence">Number Sequence</option>
-        </select>
-      </div>
-
+      {items.map((item) => (
+        <div key={item.id} className="item-container">
+          <input
+            type="text"
+            className="item-input"
+            value={item.name}
+            readOnly // This makes the input read-only, remove if editing is required
+          />
+          <button
+            className="remove-button"
+            type="button"
+            onClick={() => handleRemoveItem(item.id)}
+          >
+            x
+          </button>
+        </div>
+      ))}
       <button
         className="save-button"
         type="button"

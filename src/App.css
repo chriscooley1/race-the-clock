@@ -642,7 +642,7 @@ button {
   display: flex;
   justify-content: space-between; /* Space between items to push them apart */
   align-items: center;
-  background-color: #f4f4f4;
+  background-color: #cceeff; /* Light blue background */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 0 20px; /* Add padding for spacing */
   z-index: 1000; /* Ensure navbar has a high z-index */
@@ -756,4 +756,41 @@ button {
 
 .menu button:hover {
   color: #007bff;
+}
+
+.item-container {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  margin-bottom: 10px; /* Space between items */
+  width: 90%; /* Ensure it spans the full width of the container */
+}
+
+.item-input {
+  flex-grow: 1; /* Allow the input to take up the available space */
+  margin-right: 10px; /* Space between the input and the remove button */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black;
+  background-color: white;
+}
+
+.add-item-container {
+  display: flex;
+  flex-direction: column; /* Ensures add button and items are stacked vertically */
+  width: 100%; /* Use full width of the container */
+  align-items: center; /* Center items horizontally */
+}
+
+.remove-button {
+  padding: 5px 10px;
+  background-color: #ff6666;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.remove-button:hover {
+  background-color: #cc0000;
 }
