@@ -1,34 +1,21 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
   };
 
   const handleLogout = () => {
-    // Clear user session data
-    // For example, you might remove tokens or user information from local storage
-    localStorage.removeItem("userToken"); // Adjust key names as needed
+    localStorage.removeItem("userToken");
     localStorage.removeItem("userData");
 
-    // Optionally, call an API to invalidate the session on the server
-    // fetch('/api/logout', { method: 'POST', credentials: 'include' })
-    //   .then(response => {
-    //     if (response.ok) {
-    //       // Successful logout
-    //     } else {
-    //       // Handle errors
-    //     }
-    //   });
+    navigate("/login");
 
-    // Redirect to the login page or home page
-    navigate("/login"); // Adjust the path as needed
-
-    setMenuOpen(false); // Close the menu after logout
+    setMenuOpen(false);
   };
 
   return (

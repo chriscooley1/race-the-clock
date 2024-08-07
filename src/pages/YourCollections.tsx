@@ -1,24 +1,32 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCollections, deleteCollection } from "../api";
 import "../App.css";
 import { useTheme } from "../context/ThemeContext";
 import SessionSettingsModal from "../components/SessionSettingsModal";
 
+// Define the Collection type
+interface Collection {
+  collection_id: number;
+  name: string;
+  description: string;
+  created_at: string;
+}
+
 const YourCollections = () => {
-  const [collections, setCollections] = useState([]);
-  const [speed, setSpeed] = useState(500);
-  const [textColor, setTextColor] = useState("#000000");
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [speed, setSpeed] = useState<number>(500);
+  const [textColor, setTextColor] = useState<string>("#000000");
   const { theme } = useTheme();
   const userId = 1; // Replace with the actual user ID
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const [selectedCollection, setSelectedCollection] = useState(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
 
   useEffect(() => {
     const fetchCollections = async () => {
       try {
-        const data = await getCollections(userId);
+        const data: Collection[] = await getCollections(userId);
         setCollections(data);
       } catch (error) {
         console.error("Error fetching collections:", error);
@@ -27,7 +35,7 @@ const YourCollections = () => {
     fetchCollections();
   }, [userId]);
 
-  const handleDeleteCollection = async (collectionId) => {
+  const handleDeleteCollection = async (collectionId: number) => {
     try {
       await deleteCollection(collectionId);
       setCollections(collections.filter((collection) => collection.collection_id !== collectionId));
@@ -36,7 +44,7 @@ const YourCollections = () => {
     }
   };
 
-  const handleStartCollection = (collectionId) => {
+  const handleStartCollection = (collectionId: number) => {
     const collection = collections.find((col) => col.collection_id === collectionId);
     if (collection) {
       setSelectedCollection(collection);
@@ -44,10 +52,17 @@ const YourCollections = () => {
     }
   };
 
-  const handleStartSession = (min, sec, shuffle, speed, textColor, themeClassName) => {
+  const handleStartSession = (
+    min: number,
+    sec: number,
+    shuffle: boolean,
+    speed: number,
+    textColor: string,
+    themeClassName: string
+  ) => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
-      const sequence = sequenceItems.map((item) => item.name);
+      const sequence = sequenceItems.map((item: { name: string }) => item.name);
       const duration = min * 60 + sec; // Convert minutes and seconds to total seconds
       navigate("/fullscreen-display", {
         state: {

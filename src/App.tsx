@@ -16,8 +16,7 @@ import Resources from "./components/Resources";
 import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
-import Navbar from "./components/Navbar"; // Import Navbar
-import SessionSettingsModal from "./components/SessionSettingsModal";
+import Navbar from "./components/Navbar";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -43,15 +42,42 @@ const App: React.FC = () => {
     <AuthProvider>
       <div className={`app-container ${theme.className}`}>
         <Router basename="/letter-reader">
-          <Navbar /> {/* Add Navbar */}
+          <Navbar />
           {!hideSidebar && <Sidebar />}
-          <div style={{ flex: 1, marginLeft: hideSidebar ? '0' : '250px' }}>
+          <div style={{ flex: 1, marginLeft: hideSidebar ? "0" : "250px" }}>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/home" element={<PrivateRoute element={<HomePage handleSettingsUpdate={handleSettingsUpdate} handleHistoryLoad={handleHistoryLoad} userId={1} />} />} />
-              <Route path="/fullscreen-display" element={<PrivateRoute element={<FullScreenDisplay sequence={sequence} speed={speed} onEnterFullScreen={() => handleFullScreenDisplay(true)} onExitFullScreen={() => handleFullScreenDisplay(false)} />} />} />
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute
+                    element={
+                      <HomePage
+                        handleSettingsUpdate={handleSettingsUpdate}
+                        handleHistoryLoad={handleHistoryLoad}
+                        userId={1}
+                      />
+                    }
+                  />
+                }
+              />
+              <Route
+                path="/fullscreen-display"
+                element={
+                  <PrivateRoute
+                    element={
+                      <FullScreenDisplay
+                        sequence={sequence}
+                        speed={speed}
+                        onEnterFullScreen={() => handleFullScreenDisplay(true)}
+                        onExitFullScreen={() => handleFullScreenDisplay(false)}
+                      />
+                    }
+                  />
+                }
+              />
               <Route path="/your-collections" element={<PrivateRoute element={<YourCollections />} />} />
               <Route path="/new-collection" element={<PrivateRoute element={<NewCollection />} />} />
               <Route path="/collection-setup" element={<PrivateRoute element={<CollectionSetup />} />} />
@@ -59,7 +85,6 @@ const App: React.FC = () => {
               <Route path="/discover-collections" element={<PrivateRoute element={<DiscoverCollections />} />} />
               <Route path="/name-generator" element={<PrivateRoute element={<NameGenerator />} />} />
               <Route path="/resources" element={<PrivateRoute element={<Resources />} />} />
-              <Route path="/session-settings-modal" element={<PrivateRoute element={<SessionSettingsModal />} />} />
             </Routes>
           </div>
         </Router>

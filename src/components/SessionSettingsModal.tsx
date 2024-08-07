@@ -1,21 +1,46 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { themes, textColorOptions } from "../themeOptions";
 
-const SessionSettingsModal = ({ collectionName, onClose, onStart, currentSettings }) => {
+// Define the prop types
+interface SessionSettingsModalProps {
+  collectionName: string;
+  onClose: () => void;
+  onStart: (
+    min: number,
+    sec: number,
+    shuffle: boolean,
+    speed: number,
+    textColor: string,
+    themeClassName: string
+  ) => void;
+  currentSettings: {
+    speed: number;
+    textColor: string;
+    theme: {
+      className: string;
+    };
+  };
+}
+
+const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
+  collectionName,
+  onClose,
+  onStart,
+  currentSettings,
+}) => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [shuffle, setShuffle] = useState(false);
-  const { setTheme } = useTheme(); // Global theme context for updating the theme
+  const { setTheme } = useTheme();
   const [speed, setSpeed] = useState(currentSettings.speed);
   const [textColor, setTextColor] = useState(currentSettings.textColor);
   const [selectedTheme, setSelectedTheme] = useState(currentSettings.theme.className);
 
-  // Function to handle theme change
-  const handleThemeChange = (themeClassName) => {
+  const handleThemeChange = (themeClassName: string) => {
     const newTheme = themes.find((theme) => theme.className === themeClassName);
     if (newTheme) {
-      setTheme(newTheme); // This sets the global theme
+      setTheme(newTheme);
       setSelectedTheme(themeClassName);
     }
   };
@@ -23,22 +48,37 @@ const SessionSettingsModal = ({ collectionName, onClose, onStart, currentSetting
   return (
     <div className="modal-background">
       <div className="modal-container">
-        <h2>{collectionName}</h2> {/* Display the collection name */}
+        <h2>{collectionName}</h2>
         <h1>Please select settings for the session</h1>
         <div className="modal-content">
           <div className="time-setting">
             <label>Minutes:</label>
-            <input type="number" value={minutes} onChange={(e) => setMinutes(parseInt(e.target.value))} />
+            <input
+              type="number"
+              value={minutes}
+              onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
+            />
             <label>Seconds:</label>
-            <input type="number" value={seconds} onChange={(e) => setSeconds(parseInt(e.target.value))} />
+            <input
+              type="number"
+              value={seconds}
+              onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
+            />
             <div className="checkbox-container">
-              <input type="checkbox" checked={shuffle} onChange={() => setShuffle(!shuffle)} />
+              <input
+                type="checkbox"
+                checked={shuffle}
+                onChange={() => setShuffle(!shuffle)}
+              />
               <label>Shuffle Collection</label>
             </div>
           </div>
           <div className="settings">
             <label>Speed:</label>
-            <select value={speed} onChange={(e) => setSpeed(Number(e.target.value))}>
+            <select
+              value={speed}
+              onChange={(e) => setSpeed(Number(e.target.value))}
+            >
               <option value={250}>0.25 seconds</option>
               <option value={500}>0.5 seconds</option>
               <option value={750}>0.75 seconds</option>
@@ -47,7 +87,10 @@ const SessionSettingsModal = ({ collectionName, onClose, onStart, currentSetting
               <option value={2000}>2 seconds</option>
             </select>
             <label>Text Color:</label>
-            <select value={textColor} onChange={(e) => setTextColor(e.target.value)}>
+            <select
+              value={textColor}
+              onChange={(e) => setTextColor(e.target.value)}
+            >
               {textColorOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
@@ -55,7 +98,10 @@ const SessionSettingsModal = ({ collectionName, onClose, onStart, currentSetting
               ))}
             </select>
             <label>Theme:</label>
-            <select value={selectedTheme} onChange={(e) => handleThemeChange(e.target.value)}>
+            <select
+              value={selectedTheme}
+              onChange={(e) => handleThemeChange(e.target.value)}
+            >
               {themes.map((theme) => (
                 <option key={theme.className} value={theme.className}>
                   {theme.name}
@@ -64,11 +110,16 @@ const SessionSettingsModal = ({ collectionName, onClose, onStart, currentSetting
             </select>
           </div>
           <div className="modal-actions">
-            <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
-            <button 
-              type="button" 
-              className="start-session-button" 
-              onClick={() => onStart(minutes, seconds, shuffle, speed, textColor, selectedTheme)}>
+            <button type="button" className="cancel-button" onClick={onClose}>
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="start-session-button"
+              onClick={() =>
+                onStart(minutes, seconds, shuffle, speed, textColor, selectedTheme)
+              }
+            >
               Start Session
             </button>
           </div>
