@@ -59,6 +59,8 @@ h1, h2, h3, p, button {
   left: 0;
   padding: 20px;
   z-index: 900; /* Ensure sidebar is below the navbar */
+  margin: 0; /* Ensure no margin */
+  padding-right: 0; /* Ensure no padding to the right */
 }
 
 .sidebar h2 {
@@ -84,13 +86,21 @@ h1, h2, h3, p, button {
   color: #007bff;
 }
 
+/* Main content container to ensure elements line up correctly */
 .main-content {
   flex: 1;
-  margin-left: 250px; /* Default margin for sidebar */
-  transition: margin-left 0.3s ease; /* Smooth transition when toggling */
-  padding: 20px; /* Add padding for the main content */
-  max-width: 100%; /* Ensure it does not overflow horizontally */
+  padding: 0; /* Remove padding if any */
   overflow-x: hidden;
+}
+
+.with-sidebar {
+  margin-left: 250px; /* Align with sidebar width */
+  max-width: calc(100% - 250px); /* Ensure it does not overflow horizontally */
+}
+
+.without-sidebar {
+  margin-left: 0; /* No sidebar, no margin needed */
+  max-width: 100%; /* Use full width */
 }
 
 .home-page {
@@ -803,4 +813,36 @@ button {
 
 .remove-button:hover {
   background-color: #cc0000;
+}
+
+/* Collections navbar */
+.collections-navbar {
+  display: flex;
+  justify-content: space-around; /* Evenly space the buttons */
+  align-items: center; /* Center the buttons vertically */
+  width: 100%; /* Full width to align with main content */
+  background-color: #f4f4f4; /* Background color for the navbar */
+  padding: 10px; /* Add padding for spacing */
+  border-bottom: 1px solid #ccc; /* Add a bottom border for separation */
+  box-sizing: border-box; /* Include padding in width calculation */
+  margin: 0; /* Ensure no margins are affecting the layout */
+}
+
+.category-button {
+  background-color: transparent; /* No background */
+  border: none; /* No border */
+  color: #333; /* Text color */
+  padding: 10px 20px; /* Padding for size */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: color 0.3s; /* Smooth color transition */
+  flex-grow: 1; /* Allow buttons to grow and fill the available space */
+  text-align: center; /* Center the text */
+  margin: 0; /* Ensure no margin on the sides */
+}
+
+.category-button:hover,
+.category-button.active {
+  color: #007bff; /* Change text color on hover and active */
 }

@@ -43,49 +43,72 @@ const App: React.FC = () => {
       <div className={`app-container ${theme.className}`}>
         <Router basename="/letter-reader">
           <Navbar />
-          {!hideSidebar && <Sidebar />}
-          <div style={{ flex: 1, marginLeft: hideSidebar ? "0" : "250px" }}>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route
-                path="/home"
-                element={
-                  <PrivateRoute
-                    element={
-                      <HomePage
-                        handleSettingsUpdate={handleSettingsUpdate}
-                        handleHistoryLoad={handleHistoryLoad}
-                        userId={1}
-                      />
-                    }
-                  />
-                }
-              />
-              <Route
-                path="/fullscreen-display"
-                element={
-                  <PrivateRoute
-                    element={
-                      <FullScreenDisplay
-                        sequence={sequence}
-                        speed={speed}
-                        onEnterFullScreen={() => handleFullScreenDisplay(true)}
-                        onExitFullScreen={() => handleFullScreenDisplay(false)}
-                      />
-                    }
-                  />
-                }
-              />
-              <Route path="/your-collections" element={<PrivateRoute element={<YourCollections />} />} />
-              <Route path="/new-collection" element={<PrivateRoute element={<NewCollection />} />} />
-              <Route path="/collection-setup" element={<PrivateRoute element={<CollectionSetup />} />} />
-              <Route path="/collection-final-step" element={<PrivateRoute element={<CollectionFinalStep />} />} />
-              <Route path="/discover-collections" element={<PrivateRoute element={<DiscoverCollections />} />} />
-              <Route path="/name-generator" element={<PrivateRoute element={<NameGenerator />} />} />
-              <Route path="/resources" element={<PrivateRoute element={<Resources />} />} />
-            </Routes>
+          <div className="layout">
+            {!hideSidebar && <Sidebar />}
+            <div className={`main-content ${hideSidebar ? 'without-sidebar' : 'with-sidebar'}`}>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route
+                  path="/home"
+                  element={
+                    <PrivateRoute
+                      element={
+                        <HomePage
+                          handleSettingsUpdate={handleSettingsUpdate}
+                          handleHistoryLoad={handleHistoryLoad}
+                          userId={1}
+                        />
+                      }
+                    />
+                  }
+                />
+                <Route
+                  path="/fullscreen-display"
+                  element={
+                    <PrivateRoute
+                      element={
+                        <FullScreenDisplay
+                          sequence={sequence}
+                          speed={speed}
+                          onEnterFullScreen={() => handleFullScreenDisplay(true)}
+                          onExitFullScreen={() => handleFullScreenDisplay(false)}
+                        />
+                      }
+                    />
+                  }
+                />
+                <Route
+                  path="/your-collections"
+                  element={<PrivateRoute element={<YourCollections />} />}
+                />
+                <Route
+                  path="/new-collection"
+                  element={<PrivateRoute element={<NewCollection />} />}
+                />
+                <Route
+                  path="/collection-setup"
+                  element={<PrivateRoute element={<CollectionSetup />} />}
+                />
+                <Route
+                  path="/collection-final-step"
+                  element={<PrivateRoute element={<CollectionFinalStep />} />}
+                />
+                <Route
+                  path="/discover-collections"
+                  element={<PrivateRoute element={<DiscoverCollections />} />}
+                />
+                <Route
+                  path="/name-generator"
+                  element={<PrivateRoute element={<NameGenerator />} />}
+                />
+                <Route
+                  path="/resources"
+                  element={<PrivateRoute element={<Resources />} />}
+                />
+              </Routes>
+            </div>
           </div>
         </Router>
       </div>

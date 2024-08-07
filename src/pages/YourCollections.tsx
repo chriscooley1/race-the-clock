@@ -4,6 +4,7 @@ import { getCollections, deleteCollection } from "../api";
 import "../App.css";
 import { useTheme } from "../context/ThemeContext";
 import SessionSettingsModal from "../components/SessionSettingsModal";
+import CollectionsNavBar from "../components/CollectionsNavBar";
 
 // Define the Collection type
 interface Collection {
@@ -11,10 +12,13 @@ interface Collection {
   name: string;
   description: string;
   created_at: string;
+  category: string; // Add category field to match the category filtering
 }
 
 const YourCollections = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
   const [speed, setSpeed] = useState<number>(500);
   const [textColor, setTextColor] = useState<string>("#000000");
   const { theme } = useTheme();
@@ -28,17 +32,32 @@ const YourCollections = () => {
       try {
         const data: Collection[] = await getCollections(userId);
         setCollections(data);
+        filterCollections(data, selectedCategory);
       } catch (error) {
         console.error("Error fetching collections:", error);
       }
     };
     fetchCollections();
-  }, [userId]);
+  }, [userId, selectedCategory]);
+
+  const filterCollections = (collections: Collection[], category: string) => {
+    if (category === "All Collections") {
+      setFilteredCollections(collections);
+    } else {
+      setFilteredCollections(
+        collections.filter((collection) => collection.category === category)
+      );
+    }
+  };
 
   const handleDeleteCollection = async (collectionId: number) => {
     try {
       await deleteCollection(collectionId);
-      setCollections(collections.filter((collection) => collection.collection_id !== collectionId));
+      const updatedCollections = collections.filter(
+        (collection) => collection.collection_id !== collectionId
+      );
+      setCollections(updatedCollections);
+      filterCollections(updatedCollections, selectedCategory);
     } catch (error) {
       console.error("Error deleting collection:", error);
     }
@@ -78,10 +97,18 @@ const YourCollections = () => {
     }
   };
 
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <div className="your-collections">
+      <CollectionsNavBar
+        selectedCategory={selectedCategory}
+        onSelectCategory={handleCategorySelect}
+      />
       <div className="collections-list">
-        {collections.map((collection) => (
+        {filteredCollections.map((collection) => (
           <div key={collection.collection_id} className="collection-item">
             <h1>{collection.name}</h1>
             <p>{JSON.parse(collection.description || "[]").length} items</p>
