@@ -38,10 +38,16 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
     onClose(); // Close the modal after saving
   };
 
+  const handleBackgroundClick = (event: React.MouseEvent) => {
+    if ((event.target as HTMLElement).className === "modal-background") {
+      onClose();
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="modal-background">
+    <div className="modal-background" onClick={handleBackgroundClick}>
       <div className="modal-container">
         <h1>Edit Collection</h1>
         <input

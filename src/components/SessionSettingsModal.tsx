@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { themes, textColorOptions } from "../themeOptions";
 
-// Define the prop types
+// Define the prop types for the modal
 interface SessionSettingsModalProps {
   collectionName: string;
   onClose: () => void;
@@ -35,16 +35,15 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   const [shuffle, setShuffle] = useState(false);
   const [speed, setSpeed] = useState(currentSettings.speed);
   const [textColor, setTextColor] = useState(currentSettings.textColor);
-  const [selectedTheme, setSelectedTheme] = useState("light-theme"); // Default to light-theme
+  const [selectedTheme, setSelectedTheme] = useState(currentSettings.theme.className);
 
   useEffect(() => {
-    // Set default theme to light mode every time the modal is opened
-    const defaultTheme = themes.find((theme) => theme.className === "light-theme");
+    // Initialize default theme based on the current settings
+    const defaultTheme = themes.find((theme) => theme.className === selectedTheme);
     if (defaultTheme) {
       setTheme(defaultTheme);
-      setSelectedTheme(defaultTheme.className);
     }
-  }, [setTheme]);
+  }, [setTheme, selectedTheme]);
 
   const handleThemeChange = (themeClassName: string) => {
     const newTheme = themes.find((theme) => theme.className === themeClassName);
@@ -54,8 +53,15 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
     }
   };
 
+  const handleBackgroundClick = (event: React.MouseEvent) => {
+    // Close modal if clicked on modal background
+    if ((event.target as HTMLElement).className === "modal-background") {
+      onClose();
+    }
+  };
+
   return (
-    <div className="modal-background">
+    <div className="modal-background" onClick={handleBackgroundClick}>
       <div className="modal-container">
         <h2>{collectionName}</h2>
         <h1>Please select settings for the session</h1>
@@ -88,19 +94,18 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               value={speed}
               onChange={(e) => setSpeed(Number(e.target.value))}
             >
-              <option value={250}>0.25 seconds</option>
-              <option value={500}>0.5 seconds</option>
-              <option value={750}>0.75 seconds</option>
-              <option value={1000}>1 second</option>
-              <option value={1500}>1.5 seconds</option>
-              <option value={2000}>2 seconds</option>
+              {textColorOptions.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
             <label>Text Color:</label>
             <select
               value={textColor}
               onChange={(e) => setTextColor(e.target.value)}
             >
-              {textColorOptions.map((option) => (
+              {textColorOptions.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -111,7 +116,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               value={selectedTheme}
               onChange={(e) => handleThemeChange(e.target.value)}
             >
-              {themes.map((theme) => (
+              {themes.map(theme => (
                 <option key={theme.className} value={theme.className}>
                   {theme.name}
                 </option>
@@ -119,15 +124,11 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
             </select>
           </div>
           <div className="modal-actions">
-            <button type="button" className="cancel-button" onClick={onClose}>
-              Cancel
-            </button>
+            <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
             <button
               type="button"
               className="start-session-button"
-              onClick={() =>
-                onStart(minutes, seconds, shuffle, speed, textColor, selectedTheme)
-              }
+              onClick={() => onStart(minutes, seconds, shuffle, speed, textColor, selectedTheme)}
             >
               Start Session
             </button>
