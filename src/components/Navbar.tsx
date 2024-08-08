@@ -12,9 +12,12 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("userToken");
     localStorage.removeItem("userData");
-
     navigate("/login");
+    setMenuOpen(false);
+  };
 
+  const handleNavigateToCollections = () => {
+    navigate("/your-collections");
     setMenuOpen(false);
   };
 
@@ -28,6 +31,8 @@ const Navbar = () => {
       </div>
       {menuOpen && (
         <div className="menu">
+          <button type="button" onClick={handleNavigateToCollections}>My Account</button>
+          <button type="button" onClick={handleNavigateToCollections}>Settings</button>
           <button type="button" onClick={handleLogout}>Logout</button>
         </div>
       )}
