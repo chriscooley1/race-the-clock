@@ -51,18 +51,6 @@ const CollectionSetup: React.FC = () => {
       <h1>Collection: {collectionName}</h1>
       <h2>Step 2 - Set Up Collection Body</h2>
       <div>
-        <label htmlFor="fileUpload">
-          Upload a file to create a collection from
-        </label>
-        <input
-          type="file"
-          id="fileUpload"
-          onChange={handleFileChange}
-          title="Choose a file to upload"
-        />
-      </div>
-      <p>- OR -</p>
-      <div>
         <label htmlFor="itemCount">
           Input a number of Items to add to this Collection
         </label>
@@ -95,6 +83,18 @@ const CollectionSetup: React.FC = () => {
       <button type="button" onClick={generateRandomSequence} className="styled-button">
         Generate Random Sequence
       </button>
+      <p>- OR -</p>
+      <div>
+        <label htmlFor="fileUpload">
+          Upload a file to create a collection from
+        </label>
+        <input
+          type="file"
+          id="fileUpload"
+          onChange={handleFileChange}
+          title="Choose a file to upload"
+        />
+      </div>
       <button type="button" onClick={handleNext} className="styled-button">
         Next
       </button>

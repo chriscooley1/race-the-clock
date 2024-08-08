@@ -2,6 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { themes, textColorOptions } from "../themeOptions";
 
+// Speed options defined as they should appear in the SessionSettingsModal
+const speedOptions = [
+  { label: "0.25 seconds", value: 250 },
+  { label: "0.5 seconds", value: 500 },
+  { label: "0.75 seconds", value: 750 },
+  { label: "1 second", value: 1000 },
+  { label: "1.5 seconds", value: 1500 },
+  { label: "2 seconds", value: 2000 },
+];
+
 // Define the prop types for the modal
 interface SessionSettingsModalProps {
   collectionName: string;
@@ -94,7 +104,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               value={speed}
               onChange={(e) => setSpeed(Number(e.target.value))}
             >
-              {textColorOptions.map(option => (
+              {speedOptions.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
