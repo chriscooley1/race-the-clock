@@ -9,104 +9,68 @@ interface Theme {
   [key: string]: string; // Allow for additional theme properties
 }
 
-// Define possible themes
-const darkTheme: Theme = {
-  backgroundColor: "#333",
-  color: "#fff",
-  className: "dark-theme",
-  textColor: "#fff",
-};
-
-const blueTheme: Theme = {
-  backgroundColor: "#cceeff",
-  color: "#003366",
-  className: "blue-theme",
-  textColor: "#003366",
-};
-
+// Define standard themes
 const lightTheme: Theme = {
-  backgroundColor: "#fff",
-  color: "#000",
+  backgroundColor: "#ffffff",
+  color: "#000000",
   className: "light-theme",
+  textColor: "#000000",
+};
+
+const darkTheme: Theme = {
+  backgroundColor: "#333333",
+  color: "#ffffff",
+  className: "dark-theme",
+  textColor: "#ffffff",
+};
+
+// Pastel color themes
+const pastelPinkTheme: Theme = {
+  backgroundColor: "#ffccd5",
+  color: "#000",
+  className: "pastel-pink-theme",
   textColor: "#000",
 };
 
-// Additional fun and bright themes
-const neonPinkTheme: Theme = {
-  backgroundColor: "#ff69b4",
+const pastelGreenTheme: Theme = {
+  backgroundColor: "#ccffcc",
   color: "#000",
-  className: "neon-pink-theme",
+  className: "pastel-green-theme",
   textColor: "#000",
 };
 
-const neonGreenTheme: Theme = {
-  backgroundColor: "#39ff14",
+const pastelBlueTheme: Theme = {
+  backgroundColor: "#cce0ff",
   color: "#000",
-  className: "neon-green-theme",
+  className: "pastel-blue-theme",
   textColor: "#000",
 };
 
-const neonBlueTheme: Theme = {
-  backgroundColor: "#1e90ff",
-  color: "#fff",
-  className: "neon-blue-theme",
-  textColor: "#fff",
-};
-
-const neonOrangeTheme: Theme = {
-  backgroundColor: "#ff4500",
+const pastelPurpleTheme: Theme = {
+  backgroundColor: "#e0ccff",
   color: "#000",
-  className: "neon-orange-theme",
+  className: "pastel-purple-theme",
   textColor: "#000",
 };
 
-// Rainbow color themes
-const redTheme: Theme = {
-  backgroundColor: "#ff0000",
-  color: "#fff",
-  className: "red-theme",
-  textColor: "#fff",
-};
-
-const orangeTheme: Theme = {
-  backgroundColor: "#ffa500",
+const pastelYellowTheme: Theme = {
+  backgroundColor: "#fff9cc",
   color: "#000",
-  className: "orange-theme",
+  className: "pastel-yellow-theme",
   textColor: "#000",
 };
 
-const yellowTheme: Theme = {
-  backgroundColor: "#ffff00",
+const pastelRedTheme: Theme = {
+  backgroundColor: "#ffc1c1",
   color: "#000",
-  className: "yellow-theme",
+  className: "pastel-red-theme",
   textColor: "#000",
 };
 
-const greenTheme: Theme = {
-  backgroundColor: "#008000",
-  color: "#fff",
-  className: "green-theme",
-  textColor: "#fff",
-};
-
-const blueThemeColor: Theme = {
-  backgroundColor: "#0000ff",
-  color: "#fff",
-  className: "blue-theme-color",
-  textColor: "#fff",
-};
-
-const indigoTheme: Theme = {
-  backgroundColor: "#4b0082",
-  color: "#fff",
-  className: "indigo-theme",
-  textColor: "#fff",
-};
-
-const violetTheme: Theme = {
-  backgroundColor: "#ee82ee",
+const pastelOrangeTheme: Theme = {
+  backgroundColor: "#ffe0b3",
   color: "#000",
-  className: "violet-theme",
+  className: "pastel-orange-theme",
   textColor: "#000",
 };
 
@@ -120,7 +84,9 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // Define the ThemeProvider component
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   // Retrieve the theme from localStorage or default to light theme
   const getInitialTheme = () => {
     const savedTheme = localStorage.getItem("app-theme");
@@ -132,9 +98,12 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   useEffect(() => {
     // Save theme to localStorage whenever it changes
     localStorage.setItem("app-theme", JSON.stringify(theme));
-    
+
     // Update CSS variables based on the selected theme
-    document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
+    document.documentElement.style.setProperty(
+      "--background-color",
+      theme.backgroundColor
+    );
     document.documentElement.style.setProperty("--text-color", theme.textColor);
     document.documentElement.style.setProperty("--color", theme.color);
   }, [theme]);
@@ -157,18 +126,13 @@ export const useTheme = () => {
 
 // Export the predefined themes
 export {
-  darkTheme,
-  blueTheme,
   lightTheme,
-  neonPinkTheme,
-  neonGreenTheme,
-  neonBlueTheme,
-  neonOrangeTheme,
-  redTheme,
-  orangeTheme,
-  yellowTheme,
-  greenTheme,
-  blueThemeColor,
-  indigoTheme,
-  violetTheme
+  darkTheme,
+  pastelPinkTheme,
+  pastelGreenTheme,
+  pastelBlueTheme,
+  pastelPurpleTheme,
+  pastelYellowTheme,
+  pastelRedTheme,
+  pastelOrangeTheme,
 };
