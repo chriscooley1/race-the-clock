@@ -120,13 +120,22 @@ const YourCollections = () => {
             >
               Start
             </button>
-            <button
-              type="button"
-              className="delete-button"
-              onClick={() => handleDeleteCollection(collection.collection_id)}
-            >
-              Delete
-            </button>
+            <div className="button-group">
+              <button
+                type="button"
+                className="edit-button"
+                // Add onClick logic when ready to implement
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className="delete-button"
+                onClick={() => handleDeleteCollection(collection.collection_id)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>

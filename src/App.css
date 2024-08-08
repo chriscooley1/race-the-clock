@@ -28,6 +28,16 @@ h1, h2, h3, p, button {
   color: var(--text-color);
 }
 
+.button-group {
+  display: flex;
+  justify-content: flex-start; /* Align buttons to the start */
+}
+
+.edit-button,
+.delete-button {
+  margin-right: 10px; /* Space between the buttons */
+}
+
 /* Ensure the #root element covers the full viewport */
 #root {
   display: flex;
@@ -847,4 +857,27 @@ button {
 .category-button:hover,
 .category-button.active {
   color: #007bff; /* Change text color on hover and active */
+}
+
+.edit-button {
+  background-color: #ffcc00; /* Yellow background */
+  color: black; /* Black text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-right: 10px; /* Add margin for spacing */
+}
+
+.edit-button:hover {
+  background-color: #e6b800; /* Darker yellow on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.edit-button:active {
+  background-color: #cc9900; /* Even darker yellow when active */
+  transform: scale(0.95); /* Slight scale down when active */
 }
