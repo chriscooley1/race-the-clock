@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCollections, deleteCollection } from "../api";
+import axios from "axios";
 import "../App.css";
 import { useTheme } from "../context/ThemeContext";
 import SessionSettingsModal from "../components/SessionSettingsModal";
 import CollectionsNavBar from "../components/CollectionsNavBar";
 import EditCollectionModal from "../components/EditCollectionModal"; // Import the modal
+import { useAuth } from "../context/AuthContext"; // Import useAuth for authentication
 
 // Define the Collection type
 interface Collection {
@@ -23,24 +24,31 @@ const YourCollections = () => {
   const [speed, setSpeed] = useState<number>(500);
   const [textColor, setTextColor] = useState<string>("#000000");
   const { theme } = useTheme();
-  const userId = 1; // Replace with the actual user ID
+  const { token } = useAuth(); // Destructure token from useAuth
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
 
+  // Fetch collections from the backend
+  const fetchCollections = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/users/me/collections", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Ensure token is passed in headers
+        },
+      });
+      const data: Collection[] = response.data;
+      setCollections(data);
+      filterCollections(data, selectedCategory);
+    } catch (error) {
+      console.error("Error fetching collections:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchCollections = async () => {
-      try {
-        const data: Collection[] = await getCollections(userId);
-        setCollections(data);
-        filterCollections(data, selectedCategory);
-      } catch (error) {
-        console.error("Error fetching collections:", error);
-      }
-    };
-    fetchCollections();
-  }, [userId, selectedCategory]);
+    fetchCollections(); // Call fetchCollections when the component mounts or dependencies change
+  }, [selectedCategory, token]); // Fetch collections when category or token changes
 
   const filterCollections = (collections: Collection[], category: string) => {
     if (category === "All Collections") {
@@ -52,9 +60,25 @@ const YourCollections = () => {
     }
   };
 
+  const getItemsCount = (description: string): number => {
+    try {
+      const items = JSON.parse(description);
+      if (Array.isArray(items)) {
+        return items.length;
+      }
+    } catch (error) {
+      console.error("Error parsing description as JSON:", error);
+    }
+    return 0; // Default to 0 if parsing fails or is not an array
+  };
+
   const handleDeleteCollection = async (collectionId: number) => {
     try {
-      await deleteCollection(collectionId);
+      await axios.delete(`http://localhost:8000/collections/${collectionId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Ensure token is passed in headers
+        },
+      });
       const updatedCollections = collections.filter(
         (collection) => collection.collection_id !== collectionId
       );
@@ -118,7 +142,7 @@ const YourCollections = () => {
         {filteredCollections.map((collection) => (
           <div key={collection.collection_id} className="collection-item">
             <h1>{collection.name}</h1>
-            <p>{JSON.parse(collection.description || "[]").length} items</p>
+            <p>{getItemsCount(collection.description)} items</p>
             <p>Created by you on {new Date(collection.created_at).toLocaleDateString()}</p>
             <button
               type="button"

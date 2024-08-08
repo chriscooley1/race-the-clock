@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuth } from "./context/AuthContext";
 
 const API_BASE_URL = "http://localhost:8000";
 
@@ -89,12 +90,12 @@ export interface Collection {
   created_at: string; // Add this line
 }
 
-// Function to get collections
-export const getCollections = async (userId: number): Promise<Collection[]> => {
-  const response = await axios.get(
-    `${API_BASE_URL}/users/${userId}/collections`,
-    getAuthHeaders()
-  );
+export const getCollections = async (token: string) => {
+  const response = await axios.get("http://localhost:8000/users/me/collections", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.data;
 };
 

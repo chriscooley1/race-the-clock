@@ -148,29 +148,22 @@ async def delete_sequence(sequence_id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"detail": "Sequence deleted successfully"}
 
-# New endpoints for collections
 @app.post("/collections", response_model=Collection)
-async def create_collection(collection: CollectionCreate, db: Session = Depends(get_db)):
+async def create_collection(collection: CollectionCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     print("Creating a new collection...")  # Debugging line
-    user = db.get(User, collection.user_id)
-    if not user:
-        raise HTTPException(status_code=400, detail="User not found")
     db_collection = Collection(
         name=collection.name,
         description=collection.description,
-        user_id=collection.user_id
+        user_id=current_user.user_id  # Use the current user's ID
     )
     db.add(db_collection)
     db.commit()
     db.refresh(db_collection)
     return db_collection
 
-@app.get("/users/{user_id}/collections", response_model=List[CollectionRead])
-async def get_collections(user_id: int, db: Session = Depends(get_db)):
-    user = db.get(User, user_id)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return user.collections
+@app.get("/users/me/collections", response_model=List[CollectionRead])
+async def get_collections(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    return current_user.collections
 
 @app.put("/collections/{collection_id}", response_model=Collection)
 async def update_collection(collection_id: int, updated_collection: CollectionCreate, db: Session = Depends(get_db)):
