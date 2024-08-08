@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../App.css";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 import SessionSettingsModal from "../components/SessionSettingsModal";
 import CollectionsNavBar from "../components/CollectionsNavBar";
-import EditCollectionModal from "../components/EditCollectionModal"; // Import the modal
-import { useAuth } from "../context/AuthContext"; // Import useAuth for authentication
+import EditCollectionModal from "../components/EditCollectionModal";
+import "../App.css";
 
 // Define the Collection type
 interface Collection {
@@ -14,8 +14,25 @@ interface Collection {
   name: string;
   description: string;
   created_at: string;
-  category: string; // Add category field to match the category filtering
+  category: string;
 }
+
+interface Item {
+  name: string;
+}
+
+// Function to count items in the collection
+const getItemsCount = (description: string): number => {
+  try {
+    const items = JSON.parse(description);
+    if (Array.isArray(items)) {
+      return items.length;
+    }
+  } catch (error) {
+    console.error("Error parsing description as JSON:", error);
+  }
+  return 0; // Default to 0 if parsing fails or is not an array
+};
 
 const YourCollections = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
@@ -24,31 +41,31 @@ const YourCollections = () => {
   const [speed, setSpeed] = useState<number>(500);
   const [textColor, setTextColor] = useState<string>("#000000");
   const { theme } = useTheme();
-  const { token } = useAuth(); // Destructure token from useAuth
+  const { token } = useAuth();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
 
-  // Fetch collections from the backend
-  const fetchCollections = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/users/me/collections", {
-        headers: {
-          Authorization: `Bearer ${token}`, // Ensure token is passed in headers
-        },
-      });
-      const data: Collection[] = response.data;
-      setCollections(data);
-      filterCollections(data, selectedCategory);
-    } catch (error) {
-      console.error("Error fetching collections:", error);
-    }
-  };
+  const apiBaseUrl = "http://localhost:8000"; // Use local URL for now
 
   useEffect(() => {
-    fetchCollections(); // Call fetchCollections when the component mounts or dependencies change
-  }, [selectedCategory, token]); // Fetch collections when category or token changes
+    const fetchCollections = async () => {
+      try {
+        const response = await axios.get(`${apiBaseUrl}/users/me/collections`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ensure token is passed in headers
+          },
+        });
+        const data: Collection[] = response.data;
+        setCollections(data);
+        filterCollections(data, selectedCategory);
+      } catch (error) {
+        console.error("Error fetching collections:", error);
+      }
+    };
+    fetchCollections();
+  }, [selectedCategory, token, apiBaseUrl]); // Fetch collections when category or token changes
 
   const filterCollections = (collections: Collection[], category: string) => {
     if (category === "All Collections") {
@@ -60,23 +77,11 @@ const YourCollections = () => {
     }
   };
 
-  const getItemsCount = (description: string): number => {
-    try {
-      const items = JSON.parse(description);
-      if (Array.isArray(items)) {
-        return items.length;
-      }
-    } catch (error) {
-      console.error("Error parsing description as JSON:", error);
-    }
-    return 0; // Default to 0 if parsing fails or is not an array
-  };
-
   const handleDeleteCollection = async (collectionId: number) => {
     try {
-      await axios.delete(`http://localhost:8000/collections/${collectionId}`, {
+      await axios.delete(`${apiBaseUrl}/collections/${collectionId}`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Ensure token is passed in headers
+          Authorization: `Bearer ${token}`,
         },
       });
       const updatedCollections = collections.filter(
@@ -187,9 +192,9 @@ const YourCollections = () => {
           isOpen={isEditModalOpen}
           onClose={() => setEditModalOpen(false)}
           collectionName={selectedCollection.name}
-          items={JSON.parse(selectedCollection.description || '[]')}
+          items={JSON.parse(selectedCollection.description || "[]").map((item: Item) => item.name)} // Extract item names
           onSave={(newItems) => {
-            console.log('Save new items:', newItems);
+            console.log("Save new items:", newItems);
             // Implement saving logic here
           }}
         />
