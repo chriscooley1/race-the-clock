@@ -73,22 +73,31 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   return (
     <div className="modal-background" onClick={handleBackgroundClick}>
       <div className="modal-container">
-        <h2>{collectionName}</h2>
-        <h1>Please select settings for the session</h1>
+        <button type="button" className="close-button" onClick={onClose}>
+          X
+        </button>
+        <h1>{collectionName}</h1>
+        <p>Please select settings for the session</p>
         <div className="modal-content">
           <div className="time-setting">
-            <label>Minutes:</label>
-            <input
-              type="number"
-              value={minutes}
-              onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
-            />
-            <label>Seconds:</label>
-            <input
-              type="number"
-              value={seconds}
-              onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
-            />
+            <div className="time-labels">
+              <label>Minutes:</label>
+              <label>Seconds:</label>
+            </div>
+            <div className="time-inputs">
+              <input
+                type="number"
+                value={minutes}
+                onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
+                className="custom-input"
+              />
+              <input
+                type="number"
+                value={seconds}
+                onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
+                className="custom-input"
+              />
+            </div>
             <div className="checkbox-container">
               <input
                 type="checkbox"
@@ -99,34 +108,34 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
             </div>
           </div>
           <div className="settings">
-            <label>Speed:</label>
+            <label> Speed: </label>
             <select
               value={speed}
               onChange={(e) => setSpeed(Number(e.target.value))}
             >
-              {speedOptions.map(option => (
+              {speedOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
               ))}
             </select>
-            <label>Text Color:</label>
+            <label> Text Color: </label>
             <select
               value={textColor}
               onChange={(e) => setTextColor(e.target.value)}
             >
-              {textColorOptions.map(option => (
+              {textColorOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
               ))}
             </select>
-            <label>Theme:</label>
+            <label> Theme: </label>
             <select
               value={selectedTheme}
               onChange={(e) => handleThemeChange(e.target.value)}
             >
-              {themes.map(theme => (
+              {themes.map((theme) => (
                 <option key={theme.className} value={theme.className}>
                   {theme.name}
                 </option>
@@ -134,11 +143,12 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
             </select>
           </div>
           <div className="modal-actions">
-            <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
             <button
               type="button"
               className="start-session-button"
-              onClick={() => onStart(minutes, seconds, shuffle, speed, textColor, selectedTheme)}
+              onClick={() =>
+                onStart(minutes, seconds, shuffle, speed, textColor, selectedTheme)
+              }
             >
               Start Session
             </button>

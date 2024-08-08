@@ -603,6 +603,31 @@ button {
   color: inherit;
   margin-top: 60px; /* Adjust this value to ensure it's below the navbar */
   overflow: hidden; /* Ensures no internal scrolling affects layout */
+  position: relative; /* Added to position the close button */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff6666; /* Red background */
+  color: white; /* White text */
+  border: none;
+  font-size: 1.2em; /* Slightly smaller font size for the box */
+  cursor: pointer;
+  border-radius: 4px; /* Rounded corners */
+  padding: 5px 10px; /* Padding to create a box shape */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.close-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+  transform: scale(1.1); /* Slight scale up on hover */
+}
+
+.close-button:active {
+  background-color: #990000; /* Even darker red when active */
+  transform: scale(0.95); /* Slight scale down when active */
 }
 
 .item-list {
@@ -887,4 +912,40 @@ button {
 .edit-button:active {
   background-color: #cc9900; /* Even darker yellow when active */
   transform: scale(0.95); /* Slight scale down when active */
+}
+
+/* CSS for the session settings modal */
+.time-setting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Add margin for spacing */
+}
+
+.time-labels {
+  display: flex;
+  justify-content: space-between; /* Distribute space evenly between labels */
+  width: 100%; /* Full width to align with inputs */
+  margin-bottom: 10px; /* Margin below labels */
+}
+
+.time-labels label {
+  flex: 1; /* Allow labels to grow equally */
+  text-align: center; /* Center the text */
+}
+
+.time-inputs {
+  display: flex;
+  justify-content: space-between; /* Distribute space evenly between inputs */
+  width: 100%; /* Full width */
+}
+
+.time-inputs input {
+  flex: 1; /* Allow inputs to grow equally */
+  margin: 0 5px; /* Margin between inputs */
+  padding: 8px; /* Padding for input size */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px; /* Rounded corners */
+  text-align: center; /* Center text in inputs */
 }
