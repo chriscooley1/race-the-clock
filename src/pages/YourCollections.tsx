@@ -5,6 +5,7 @@ import "../App.css";
 import { useTheme } from "../context/ThemeContext";
 import SessionSettingsModal from "../components/SessionSettingsModal";
 import CollectionsNavBar from "../components/CollectionsNavBar";
+import EditCollectionModal from "../components/EditCollectionModal"; // Import the modal
 
 // Define the Collection type
 interface Collection {
@@ -26,6 +27,7 @@ const YourCollections = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
+  const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCollections = async () => {
@@ -69,6 +71,11 @@ const YourCollections = () => {
       setSelectedCollection(collection);
       setShowModal(true);
     }
+  };
+
+  const handleEditButtonClick = (collection: Collection) => {
+    setSelectedCollection(collection);
+    setEditModalOpen(true);
   };
 
   const handleStartSession = (
@@ -124,7 +131,7 @@ const YourCollections = () => {
               <button
                 type="button"
                 className="edit-button"
-                // Add onClick logic when ready to implement
+                onClick={() => handleEditButtonClick(collection)}
               >
                 Edit
               </button>
@@ -141,13 +148,25 @@ const YourCollections = () => {
       </div>
       {showModal && selectedCollection && (
         <SessionSettingsModal
-          collectionName={selectedCollection.name} // Pass collection name
+          collectionName={selectedCollection.name}
           onClose={() => setShowModal(false)}
           onStart={handleStartSession}
           currentSettings={{
             speed: speed,
             theme: theme,
             textColor: textColor,
+          }}
+        />
+      )}
+      {isEditModalOpen && selectedCollection && (
+        <EditCollectionModal
+          isOpen={isEditModalOpen}
+          onClose={() => setEditModalOpen(false)}
+          collectionName={selectedCollection.name}
+          items={JSON.parse(selectedCollection.description || '[]')}
+          onSave={(newItems) => {
+            console.log('Save new items:', newItems);
+            // Implement saving logic here
           }}
         />
       )}
