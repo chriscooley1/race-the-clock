@@ -1,11 +1,11 @@
-import React from "react";
-import "../App.css"; // Ensure your CSS is properly set up to handle modal styling
+import React, { useState } from "react";
+import "../App.css";
 
 interface EditCollectionModalProps {
   isOpen: boolean;
   onClose: () => void;
   collectionName: string;
-  items: string[]; // Assuming items are an array of strings for simplicity
+  items: string[];  // Assuming items are an array of strings
   onSave: (items: string[]) => void;
 }
 
@@ -16,11 +16,26 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   items,
   onSave
 }) => {
-  const [editedItems, setEditedItems] = React.useState<string[]>(items);
+  const [editedItems, setEditedItems] = useState<string[]>(items);
+
+  const handleAddItem = () => {
+    setEditedItems([...editedItems, ""]);
+  };
+
+  const handleRemoveItem = (index: number) => {
+    const newItems = editedItems.filter((_, i) => i !== index);
+    setEditedItems(newItems);
+  };
+
+  const handleChangeItem = (index: number, value: string) => {
+    const newItems = [...editedItems];
+    newItems[index] = value;
+    setEditedItems(newItems);
+  };
 
   const handleSave = () => {
     onSave(editedItems);
-    onClose(); // Close modal after save
+    onClose(); // Close the modal after saving
   };
 
   if (!isOpen) return null;
@@ -33,31 +48,26 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
           type="text"
           className="custom-input"
           value={collectionName}
-          readOnly // Make this editable if you want users to change the name
+          readOnly
         />
         <div className="item-list">
           {editedItems.map((item, index) => (
             <div key={index} className="item-container">
               <input
                 type="text"
-                value={item}
-                onChange={(e) => {
-                  const newItems = [...editedItems];
-                  newItems[index] = e.target.value;
-                  setEditedItems(newItems);
-                }}
                 className="custom-input"
+                value={item}
+                onChange={(e) => handleChangeItem(index, e.target.value)}
               />
-              <button className="remove-button" onClick={() => {
-                const newItems = editedItems.filter((_, i) => i !== index);
-                setEditedItems(newItems);
-              }}>Remove</button>
+              <button type="button" className="remove-button" onClick={() => handleRemoveItem(index)}>
+                Remove
+              </button>
             </div>
           ))}
+          <button type="button" className="add-button" onClick={handleAddItem}>Add Item</button>
+          <button type="button" className="save-button" onClick={handleSave}>Save Collection</button>
+          <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
         </div>
-        <button className="add-button" onClick={() => setEditedItems([...editedItems, ''])}>Add Item</button>
-        <button className="save-button" onClick={handleSave}>Save Collection</button>
-        <button className="cancel-button" onClick={onClose}>Cancel</button>
       </div>
     </div>
   );
