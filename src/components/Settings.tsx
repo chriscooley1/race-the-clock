@@ -16,6 +16,9 @@ const speedOptions = [
   { label: "1 second", value: 1000 },
   { label: "1.5 seconds", value: 1500 },
   { label: "2 seconds", value: 2000 },
+  { label: "3 seconds", value: 3000 },
+  { label: "4 seconds", value: 4000 },
+  { label: "5 seconds", value: 5000 },
 ];
 
 const Settings: React.FC<SettingsProps> = ({ onUpdate, userId }) => {

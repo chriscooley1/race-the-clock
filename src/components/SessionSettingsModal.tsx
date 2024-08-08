@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { themes, textColorOptions } from "../themeOptions";
 
-// Speed options defined as they should appear in the SessionSettingsModal
+// Speed options extended to include up to 5 seconds
 const speedOptions = [
   { label: "0.25 seconds", value: 250 },
   { label: "0.5 seconds", value: 500 },
@@ -10,6 +10,9 @@ const speedOptions = [
   { label: "1 second", value: 1000 },
   { label: "1.5 seconds", value: 1500 },
   { label: "2 seconds", value: 2000 },
+  { label: "3 seconds", value: 3000 },
+  { label: "4 seconds", value: 4000 },
+  { label: "5 seconds", value: 5000 },
 ];
 
 // Define the prop types for the modal
