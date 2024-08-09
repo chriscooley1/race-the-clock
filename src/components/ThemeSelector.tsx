@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
-import { themes, textColorOptions } from "../themeOptions";
+import { themes, textColorOptions } from "../context/ThemeContext";
 import "../App.css"; // Import the global CSS file
 
 const ThemeSelector: React.FC = () => {

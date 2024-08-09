@@ -2,77 +2,92 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 // Define the shape of your theme
 interface Theme {
+  name: string;
   backgroundColor: string;
   color: string;
   className: string;
   textColor: string;
-  [key: string]: string; // Allow for additional theme properties
 }
 
-// Define standard themes
-const lightTheme: Theme = {
-  backgroundColor: "#ffffff",
-  color: "#000000",
-  className: "light-theme",
-  textColor: "#000000",
-};
+// Predefined themes
+const themes: Theme[] = [
+  {
+    name: "Light Mode",
+    className: "light-theme",
+    backgroundColor: "#ffffff",
+    color: "#000000",
+    textColor: "#000000",
+  },
+  {
+    name: "Dark Mode",
+    className: "dark-theme",
+    backgroundColor: "#333333",
+    color: "#ffffff",
+    textColor: "#ffffff",
+  },
+  {
+    name: "Pastel Pink",
+    className: "pastel-pink-theme",
+    backgroundColor: "#ffccd5",
+    color: "#000000",
+    textColor: "#000000",
+  },
+  {
+    name: "Pastel Green",
+    className: "pastel-green-theme",
+    backgroundColor: "#ccffcc",
+    color: "#000000",
+    textColor: "#000000",
+  },
+  {
+    name: "Pastel Blue",
+    className: "pastel-blue-theme",
+    backgroundColor: "#cce0ff",
+    color: "#000000",
+    textColor: "#000000",
+  },
+  {
+    name: "Pastel Purple",
+    className: "pastel-purple-theme",
+    backgroundColor: "#e0ccff",
+    color: "#000000",
+    textColor: "#000000",
+  },
+  {
+    name: "Pastel Yellow",
+    className: "pastel-yellow-theme",
+    backgroundColor: "#fff9cc",
+    color: "#000000",
+    textColor: "#000000",
+  },
+  {
+    name: "Pastel Red",
+    className: "pastel-red-theme",
+    backgroundColor: "#ffc1c1",
+    color: "#000000",
+    textColor: "#000000",
+  },
+  {
+    name: "Pastel Orange",
+    className: "pastel-orange-theme",
+    backgroundColor: "#ffe0b3",
+    color: "#000000",
+    textColor: "#000000",
+  },
+];
 
-const darkTheme: Theme = {
-  backgroundColor: "#333333",
-  color: "#ffffff",
-  className: "dark-theme",
-  textColor: "#ffffff",
-};
-
-// Pastel color themes
-const pastelPinkTheme: Theme = {
-  backgroundColor: "#ffccd5",
-  color: "#000",
-  className: "pastel-pink-theme",
-  textColor: "#000",
-};
-
-const pastelGreenTheme: Theme = {
-  backgroundColor: "#ccffcc",
-  color: "#000",
-  className: "pastel-green-theme",
-  textColor: "#000",
-};
-
-const pastelBlueTheme: Theme = {
-  backgroundColor: "#cce0ff",
-  color: "#000",
-  className: "pastel-blue-theme",
-  textColor: "#000",
-};
-
-const pastelPurpleTheme: Theme = {
-  backgroundColor: "#e0ccff",
-  color: "#000",
-  className: "pastel-purple-theme",
-  textColor: "#000",
-};
-
-const pastelYellowTheme: Theme = {
-  backgroundColor: "#fff9cc",
-  color: "#000",
-  className: "pastel-yellow-theme",
-  textColor: "#000",
-};
-
-const pastelRedTheme: Theme = {
-  backgroundColor: "#ffc1c1",
-  color: "#000",
-  className: "pastel-red-theme",
-  textColor: "#000",
-};
-
-const pastelOrangeTheme: Theme = {
-  backgroundColor: "#ffe0b3",
-  color: "#000",
-  className: "pastel-orange-theme",
-  textColor: "#000",
-};
+// Text color options
+const textColorOptions = [
+  { label: "White", value: "#ffffff" },
+  { label: "Black", value: "#000000" },
+  { label: "Pastel Pink", value: "#ffccd5" },
+  { label: "Pastel Green", value: "#ccffcc" },
+  { label: "Pastel Blue", value: "#cce0ff" },
+  { label: "Pastel Purple", value: "#e0ccff" },
+  { label: "Pastel Yellow", value: "#fff9cc" },
+  { label: "Pastel Red", value: "#ffc1c1" },
+  { label: "Pastel Orange", value: "#ffe0b3" },
+];
 
 // Define the shape of the context
 interface ThemeContextType {
@@ -90,7 +105,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   // Retrieve the theme from localStorage or default to light theme
   const getInitialTheme = () => {
     const savedTheme = localStorage.getItem("app-theme");
-    return savedTheme ? JSON.parse(savedTheme) : lightTheme;
+    return savedTheme ? JSON.parse(savedTheme) : themes[0]; // Default to Light Mode
   };
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
@@ -124,15 +139,5 @@ export const useTheme = () => {
   return context;
 };
 
-// Export the predefined themes
-export {
-  lightTheme,
-  darkTheme,
-  pastelPinkTheme,
-  pastelGreenTheme,
-  pastelBlueTheme,
-  pastelPurpleTheme,
-  pastelYellowTheme,
-  pastelRedTheme,
-  pastelOrangeTheme,
-};
+// Export the predefined themes and text color options
+export { themes, textColorOptions };

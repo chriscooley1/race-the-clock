@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { themes, textColorOptions } from "../themeOptions";
+import { themes, textColorOptions } from "../context/ThemeContext";
 
 // Speed options extended to include up to 5 seconds
 const speedOptions = [

@@ -4,7 +4,6 @@ import FullScreenDisplay from "./pages/FullScreenDisplay";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Sidebar from "./components/Sidebar";
-import HomePage from "./pages/HomePage";
 import LandingPage from "./components/LandingPage";
 import YourCollections from "./pages/YourCollections";
 import NewCollection from "./pages/NewCollection";
@@ -50,7 +49,8 @@ const App: React.FC = () => {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route
+                {/* Remove the HomePage Route */}
+                {/* <Route
                   path="/home"
                   element={
                     <PrivateRoute
@@ -63,7 +63,7 @@ const App: React.FC = () => {
                       }
                     />
                   }
-                />
+                /> */}
                 <Route
                   path="/fullscreen-display"
                   element={

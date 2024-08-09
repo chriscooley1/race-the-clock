@@ -16,6 +16,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
     <div className="collections-navbar">
       {categories.map((category) => (
         <button
+          type="button"
           key={category}
           className={`category-button ${
             selectedCategory === category ? "active" : ""
