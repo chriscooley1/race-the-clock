@@ -16,3 +16,13 @@ export const generateRandomNumbers = (quantity: number): string[] => {
   }
   return result;
 };
+
+export const generateFullAlphabet = (): string[] => {
+  const uppercase = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)); // A-Z
+  const lowercase = Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)); // a-z
+  return [...uppercase, ...lowercase];
+};
+
+export const generateNumbersOneToHundred = (): string[] => {
+  return Array.from({ length: 100 }, (_, i) => (i + 1).toString());
+};

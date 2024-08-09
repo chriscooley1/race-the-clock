@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
-import { generateRandomLetters, generateRandomNumbers } from "../utils/RandomGenerators";
+import { generateRandomLetters, generateRandomNumbers, generateFullAlphabet, generateNumbersOneToHundred } from "../utils/RandomGenerators";
 
 const CollectionSetup: React.FC = () => {
   const navigate = useNavigate();
@@ -25,6 +25,10 @@ const CollectionSetup: React.FC = () => {
       generatedSequence = generateRandomLetters(itemCount);
     } else if (type === "numbers") {
       generatedSequence = generateRandomNumbers(itemCount);
+    } else if (type === "alphabet") {
+      generatedSequence = generateFullAlphabet();
+    } else if (type === "numbersOneToHundred") {
+      generatedSequence = generateNumbersOneToHundred();
     }
     setSequence(generatedSequence);
   };
@@ -78,6 +82,8 @@ const CollectionSetup: React.FC = () => {
         >
           <option value="letters">Letters</option>
           <option value="numbers">Numbers</option>
+          <option value="alphabet">Full Alphabet</option>
+          <option value="numbersOneToHundred">Numbers 1-100</option>
         </select>
       </div>
       <button type="button" onClick={generateRandomSequence} className="styled-button">
