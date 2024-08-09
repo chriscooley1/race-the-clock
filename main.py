@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from sqlmodel import Session
+from sqlmodel import Session, SQLModel, create_engine
 from fastapi.middleware.cors import CORSMiddleware
 from passlib.context import CryptContext
 from jose import JWTError, jwt
@@ -9,31 +9,33 @@ from pydantic import BaseModel
 from typing import List, Optional
 from database import get_db
 from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead
+from decouple import config
 
-# to get a string like this run:
-# openssl rand -hex 32
-SECRET_KEY = "your_secret_key"
+SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
+DATABASE_URL = config("DATABASE_URL")
+engine = create_engine(DATABASE_URL)
+
+# Create database tables
+SQLModel.metadata.create_all(engine)
+
 app = FastAPI()
 
-# Add CORS middleware
+ALLOWED_ORIGINS = config("ALLOWED_ORIGINS").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Adjust this list to match your frontend URL(s)
+    # allow_origins=["http://localhost:5173"],  # Adjust this list to match your frontend URL(s)
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Password context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-# OAuth2 scheme
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-# Authentication helpers
 def get_password_hash(password: str):
     return pwd_context.hash(password)
 
