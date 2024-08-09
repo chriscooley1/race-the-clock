@@ -49,21 +49,6 @@ const App: React.FC = () => {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                {/* Remove the HomePage Route */}
-                {/* <Route
-                  path="/home"
-                  element={
-                    <PrivateRoute
-                      element={
-                        <HomePage
-                          handleSettingsUpdate={handleSettingsUpdate}
-                          handleHistoryLoad={handleHistoryLoad}
-                          userId={1}
-                        />
-                      }
-                    />
-                  }
-                /> */}
                 <Route
                   path="/fullscreen-display"
                   element={

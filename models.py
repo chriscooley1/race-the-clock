@@ -55,11 +55,12 @@ class Collection(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class CollectionCreate(CollectionBase):
-    pass
+    status: Optional[str] = "private"  # Allow setting the status
 
 class CollectionRead(CollectionBase):
     collection_id: int
-    created_at: datetime  # Include this field to expose the creation date
+    created_at: datetime
+    status: str  # Include this to expose the status
 
 # Item Models
 class ItemBase(SQLModel):

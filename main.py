@@ -151,12 +151,17 @@ async def delete_sequence(sequence_id: int, db: Session = Depends(get_db)):
     return {"detail": "Sequence deleted successfully"}
 
 @app.post("/collections", response_model=Collection)
-async def create_collection(collection: CollectionCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+async def create_collection(
+    collection: CollectionCreate, 
+    db: Session = Depends(get_db), 
+    current_user: User = Depends(get_current_user)
+):
     print("Creating a new collection...")  # Debugging line
     db_collection = Collection(
         name=collection.name,
         description=collection.description,
-        user_id=current_user.user_id  # Use the current user's ID
+        status=collection.status or "private",  # Use provided status or default to private
+        user_id=current_user.user_id
     )
     db.add(db_collection)
     db.commit()
@@ -188,3 +193,8 @@ async def delete_collection(collection_id: int, db: Session = Depends(get_db)):
     db.commit()
     print(f"Collection deleted: {db_collection}")  # Debugging line
     return {"detail": "Collection deleted successfully"}
+
+@app.get("/collections/public", response_model=List[CollectionRead])
+async def get_public_collections(db: Session = Depends(get_db)):
+    public_collections = db.query(Collection).filter(Collection.status == "public").all()
+    return public_collections
