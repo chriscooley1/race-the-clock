@@ -50,22 +50,37 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
     <div className="modal-background" onClick={handleBackgroundClick}>
       <div className="modal-container">
         <h1>Edit Collection</h1>
-        <input
-          type="text"
-          className="custom-input"
-          value={collectionName}
-          readOnly
-        />
+        <div className="input-group">
+          <label htmlFor="collectionName">Collection Name</label>
+          <input
+            type="text"
+            id="collectionName"
+            className="custom-input"
+            value={collectionName}
+            readOnly
+            title="Collection Name"
+          />
+        </div>
         <div className="item-list">
           {editedItems.map((item, index) => (
             <div key={index} className="item-container">
-              <input
-                type="text"
-                className="custom-input"
-                value={item}
-                onChange={(e) => handleChangeItem(index, e.target.value)}
-              />
-              <button type="button" className="remove-button" onClick={() => handleRemoveItem(index)}>
+              <div className="input-group">
+                <label htmlFor={`item-${index}`}>Item {index + 1}</label>
+                <input
+                  type="text"
+                  id={`item-${index}`}
+                  className="custom-input"
+                  value={item}
+                  onChange={(e) => handleChangeItem(index, e.target.value)}
+                  placeholder={`Enter item ${index + 1}`}
+                  title={`Item ${index + 1}`}
+                />
+              </div>
+              <button
+                type="button"
+                className="remove-button"
+                onClick={() => handleRemoveItem(index)}
+              >
                 Remove
               </button>
             </div>

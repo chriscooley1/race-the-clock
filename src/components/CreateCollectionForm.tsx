@@ -22,24 +22,33 @@ const CreateCollectionForm: React.FC = () => {
   return (
     <div>
       <h1>Create Collection</h1>
-      <input
-        type="text"
-        placeholder="Collection Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <textarea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
+      <div>
+        <label htmlFor="collectionName">Collection Name</label>
+        <input
+          type="text"
+          id="collectionName"
+          placeholder="Enter collection name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="collectionDescription">Description</label>
+        <textarea
+          id="collectionDescription"
+          placeholder="Enter description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
       <div>
         <input
           type="checkbox"
+          id="isPublicCheckbox"
           checked={isPublic}
           onChange={(e) => setIsPublic(e.target.checked)}
         />
-        <label>I want to share my collection publicly</label>
+        <label htmlFor="isPublicCheckbox">I want to share my collection publicly</label>
       </div>
       <button type="button" onClick={handleCreateCollection}>Create Collection</button>
     </div>

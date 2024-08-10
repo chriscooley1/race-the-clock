@@ -48,11 +48,15 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   const [shuffle, setShuffle] = useState(false);
   const [speed, setSpeed] = useState(currentSettings.speed);
   const [textColor, setTextColor] = useState(currentSettings.textColor);
-  const [selectedTheme, setSelectedTheme] = useState(currentSettings.theme.className);
+  const [selectedTheme, setSelectedTheme] = useState(
+    currentSettings.theme.className
+  );
 
   useEffect(() => {
     // Initialize default theme based on the current settings
-    const defaultTheme = themes.find((theme) => theme.className === selectedTheme);
+    const defaultTheme = themes.find(
+      (theme) => theme.className === selectedTheme
+    );
     if (defaultTheme) {
       setTheme(defaultTheme);
     }
@@ -84,37 +88,50 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
         <div className="modal-content">
           <div className="time-setting">
             <div className="time-labels">
-              <label>Minutes:</label>
-              <label>Seconds:</label>
+              <label htmlFor="minutes">Minutes:</label>
+              <label htmlFor="seconds">Seconds:</label>
             </div>
             <div className="time-inputs">
               <input
                 type="number"
+                id="minutes"
                 value={minutes}
                 onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
                 className="custom-input"
+                placeholder="Enter minutes"
+                title="Minutes"
+                min={0}
               />
               <input
                 type="number"
+                id="seconds"
                 value={seconds}
                 onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
                 className="custom-input"
+                placeholder="Enter seconds"
+                title="Seconds"
+                min={0}
+                max={59}
               />
             </div>
             <div className="checkbox-container">
               <input
                 type="checkbox"
+                id="shuffle"
                 checked={shuffle}
                 onChange={() => setShuffle(!shuffle)}
+                title="Shuffle Collection"
               />
-              <label>Shuffle Collection</label>
+              <label htmlFor="shuffle">Shuffle Collection</label>
             </div>
           </div>
           <div className="settings">
-            <label> Speed: </label>
+            <label htmlFor="speed">Speed:</label>
             <select
+              id="speed"
               value={speed}
               onChange={(e) => setSpeed(Number(e.target.value))}
+              title="Select speed"
             >
               {speedOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -122,10 +139,12 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 </option>
               ))}
             </select>
-            <label> Text Color: </label>
+            <label htmlFor="textColor">Text Color:</label>
             <select
+              id="textColor"
               value={textColor}
               onChange={(e) => setTextColor(e.target.value)}
+              title="Select text color"
             >
               {textColorOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -133,10 +152,12 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 </option>
               ))}
             </select>
-            <label> Theme: </label>
+            <label htmlFor="theme">Theme:</label>
             <select
+              id="theme"
               value={selectedTheme}
               onChange={(e) => handleThemeChange(e.target.value)}
+              title="Select theme"
             >
               {themes.map((theme) => (
                 <option key={theme.className} value={theme.className}>
@@ -150,7 +171,14 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               type="button"
               className="start-session-button"
               onClick={() =>
-                onStart(minutes, seconds, shuffle, speed, textColor, selectedTheme)
+                onStart(
+                  minutes,
+                  seconds,
+                  shuffle,
+                  speed,
+                  textColor,
+                  selectedTheme
+                )
               }
             >
               Start Session
