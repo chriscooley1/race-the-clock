@@ -41,7 +41,7 @@ const CreateCollectionForm: React.FC = () => {
         />
         <label>I want to share my collection publicly</label>
       </div>
-      <button onClick={handleCreateCollection}>Create Collection</button>
+      <button type="button" onClick={handleCreateCollection}>Create Collection</button>
     </div>
   );
 };

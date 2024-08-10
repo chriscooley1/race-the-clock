@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CollectionPreviewModal from "../components/CollectionPreviewModal"; // Import your modal component
+import CollectionPreviewModal from "../components/CollectionPreviewModal";
 
 interface Collection {
   collection_id: number;
@@ -8,7 +8,7 @@ interface Collection {
   description: string;
   created_at: string;
   creator_username: string;
-  items?: string[]; // Items are optional and loaded on demand
+  items?: { name: string }[]; // Updated items type
 }
 
 const DiscoverCollections: React.FC = () => {
@@ -27,18 +27,20 @@ const DiscoverCollections: React.FC = () => {
     fetchPublicCollections();
   }, []);
 
-  const openModal = async (collection) => {
+  const openModal = async (collection: Collection) => {
     if (!collection.items) {
       try {
-        const response = await axios.get(`http://localhost:8000/collections/${collection.collection_id}/items`);
-        collection.items = response.data; // Attach fetched items to the collection
+        const response = await axios.get<{ name: string }[]>(`http://localhost:8000/collections/${collection.collection_id}/items`);
+        collection.items = response.data;
       } catch (error) {
         console.error("Error fetching collection items:", error);
-        // Handle errors, e.g., showing a notification or message to the user
+        collection.items = []; // Ensure items is at least an empty array
       }
     }
-    setActiveCollection(collection); // Now with items loaded
-  };  
+    setActiveCollection(collection);
+  };
+
+  const closeModal = () => setActiveCollection(null);
 
   return (
     <div className="discover-collections">

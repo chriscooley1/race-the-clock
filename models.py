@@ -49,7 +49,7 @@ class Collection(SQLModel, table=True):
     name: str
     description: str
     user_id: int = Field(foreign_key="users.user_id")
-    status: str = Field(default="private")  # Public or private
+    status: str = Field(default="private")
     user: User = Relationship(back_populates="collections")
     items: List["Item"] = Relationship(back_populates="collection")
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -75,3 +75,8 @@ class Item(ItemBase, table=True):
 
 class ItemCreate(ItemBase):
     pass
+
+class ItemRead(SQLModel):
+    item_id: int
+    name: str
+    collection_id: int

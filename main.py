@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pydantic import BaseModel
 from typing import List, Optional
 from database import get_db
-from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item
+from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, ItemRead
 from decouple import config
 
 SECRET_KEY = config("SECRET_KEY")
@@ -172,11 +172,11 @@ async def create_collection(
 async def get_collections(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     return current_user.collections
 
-@app.get("/collections/{collection_id}/items", response_model=List[Item])
+@app.get("/collections/{collection_id}/items", response_model=List[ItemRead])
 async def get_collection_items(collection_id: int, db: Session = Depends(get_db)):
-    items = db.exec(select(Item).where(Item.collection_id == collection_id)).all()
+    items = db.query(Item).filter(Item.collection_id == collection_id).all()
     if not items:
-        raise HTTPException(status_code=404, detail="No items found in this collection")
+        raise HTTPException(status_code=404, detail="Items not found")
     return items
 
 
