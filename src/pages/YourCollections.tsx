@@ -38,8 +38,6 @@ const YourCollections = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
   const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
-  const [speed, setSpeed] = useState<number>(500);
-  const [textColor, setTextColor] = useState<string>("#000000");
   const { theme } = useTheme();
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -181,9 +179,9 @@ const YourCollections = () => {
           onClose={() => setShowModal(false)}
           onStart={handleStartSession}
           currentSettings={{
-            speed: speed,
+            speed: 500, // Default speed
             theme: theme,
-            textColor: textColor,
+            textColor: "#000000", // Default text color
           }}
         />
       )}
