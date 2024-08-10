@@ -221,3 +221,4 @@ async def create_items(collection_id: int, items: List[str], db: Session = Depen
         return {"message": "Items added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+    

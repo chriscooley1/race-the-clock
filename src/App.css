@@ -23,6 +23,11 @@ h1, h2, h3, p, button {
   color: inherit; /* Use the color from the theme */
 }
 
+/* Define classes for different text colors */
+.text-color {
+  color: var(--text-color);
+}
+
 .button, .start-session-button, .cancel-button {
   background-color: var(--color);
   color: var(--text-color);
