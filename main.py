@@ -52,6 +52,12 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+def add_items_to_collection(db: Session, collection_id: int, items: List[str]):
+    for item_name in items:
+        item = Item(name=item_name, collection_id=collection_id)
+        db.add(item)
+    db.commit()
+
 async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -172,13 +178,14 @@ async def create_collection(
 async def get_collections(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     return current_user.collections
 
-@app.get("/collections/{collection_id}/items", response_model=List[ItemRead])
+@app.get("/collections/{collection_id}/items")
 async def get_collection_items(collection_id: int, db: Session = Depends(get_db)):
+    print(f"Fetching items for collection_id: {collection_id}")
     items = db.query(Item).filter(Item.collection_id == collection_id).all()
+    print(f"Items found: {items}")
     if not items:
         raise HTTPException(status_code=404, detail="Items not found")
     return items
-
 
 @app.put("/collections/{collection_id}", response_model=Collection)
 async def update_collection(collection_id: int, updated_collection: CollectionCreate, db: Session = Depends(get_db)):
@@ -206,3 +213,11 @@ async def delete_collection(collection_id: int, db: Session = Depends(get_db)):
 async def get_public_collections(db: Session = Depends(get_db)):
     public_collections = db.query(Collection).filter(Collection.status == "public").all()
     return public_collections
+
+@app.post("/collections/{collection_id}/items")
+async def create_items(collection_id: int, items: List[str], db: Session = Depends(get_db)):
+    try:
+        add_items_to_collection(db, collection_id, items)
+        return {"message": "Items added successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")

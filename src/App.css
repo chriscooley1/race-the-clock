@@ -667,12 +667,12 @@ button {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 50%;
+  width: 50%; /* Adjust width as needed */
   text-align: center;
   color: inherit;
-  margin-top: 60px; /* Adjust this value to ensure it's below the navbar */
-  overflow: hidden; /* Ensures no internal scrolling affects layout */
-  position: relative; /* Added to position the close button */
+  margin-top: 60px;
+  overflow: hidden;
+  position: relative;
 }
 
 .close-button {
@@ -716,6 +716,16 @@ button {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+}
+
+ul {
+  list-style-type: none; /* Removes bullet points */
+  padding: 0;
+}
+
+li {
+  padding: 5px 0; /* Adds vertical spacing between items */
+  font-size: 1.2em; /* Larger text for better readability */
 }
 
 .modal-content {
@@ -1017,4 +1027,28 @@ button {
   border: 1px solid #ccc; /* Light border */
   border-radius: 4px; /* Rounded corners */
   text-align: center; /* Center text in inputs */
+}
+
+/* Button styles */
+.preview-button {
+  background-color: #4caf50; /* Green background for preview button */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Consistent padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin: 0 5px; /* Add margin between buttons */
+}
+
+.preview-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.preview-button:active {
+  background-color: #388e3c; /* Even darker green when active */
+  transform: scale(0.95); /* Slight scale down when active */
 }

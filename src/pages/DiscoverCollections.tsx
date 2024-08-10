@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from 'axios';
 import CollectionPreviewModal from "../components/CollectionPreviewModal";
+
+interface Item {
+  name: string;
+}
 
 interface Collection {
   collection_id: number;
@@ -8,7 +12,7 @@ interface Collection {
   description: string;
   created_at: string;
   creator_username: string;
-  items?: { name: string }[]; // Updated items type
+  items: Item[];
 }
 
 const DiscoverCollections: React.FC = () => {
@@ -16,27 +20,48 @@ const DiscoverCollections: React.FC = () => {
   const [activeCollection, setActiveCollection] = useState<Collection | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchPublicCollections = async () => {
       try {
-        const response = await axios.get<Collection[]>("http://localhost:8000/collections/public");
-        setCollections(response.data);
-      } catch (error) {
-        console.error("Error fetching public collections:", error);
+        const collectionsResponse = await axios.get<Collection[]>("http://localhost:8000/collections/public");
+        const collectionsWithItems = await Promise.all(collectionsResponse.data.map(async (collection) => {
+          const itemsUrl = `http://localhost:8000/collections/${collection.collection_id}/items`;
+          try {
+            const itemsResponse = await axios.get<Item[]>(itemsUrl);
+            if (isMounted) {
+              console.log(`Items fetched for collection ${collection.collection_id}:`, itemsResponse.data);
+              return { ...collection, items: itemsResponse.data };
+            }
+          } catch (error) {
+            const itemsError = error as AxiosError;  // Type assertion
+            console.error(`Error fetching items for collection ${collection.collection_id}:`, itemsError);
+            if (isMounted) {
+              if (itemsError.response && itemsError.response.status === 404) {
+                console.log(`No items found for collection ${collection.collection_id}`);
+                return { ...collection, items: [] };
+              }
+              return { ...collection, items: [] };
+            }
+          }
+          return collection;
+        }));
+        if (isMounted) {
+          setCollections(collectionsWithItems);
+        }
+      } catch (collectionsError) {
+        console.error("Error fetching public collections:", collectionsError);
       }
     };
+
     fetchPublicCollections();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const openModal = async (collection: Collection) => {
-    if (!collection.items) {
-      try {
-        const response = await axios.get<{ name: string }[]>(`http://localhost:8000/collections/${collection.collection_id}/items`);
-        collection.items = response.data;
-      } catch (error) {
-        console.error("Error fetching collection items:", error);
-        collection.items = []; // Ensure items is at least an empty array
-      }
-    }
+  const openModal = (collection: Collection) => {
     setActiveCollection(collection);
   };
 
@@ -46,11 +71,11 @@ const DiscoverCollections: React.FC = () => {
     <div className="discover-collections">
       <h1>Discover Public Collections</h1>
       <div className="collections-list">
-        {collections.map(collection => (
+        {collections.map((collection) => (
           <div key={collection.collection_id} className="collection-item">
-            <h2>{collection.name}</h2>
-            <p>Created by {collection.creator_username} on {new Date(collection.created_at).toLocaleDateString()}</p>
-            <button type="button" onClick={() => openModal(collection)}>Preview Collection</button>
+            <h1>{collection.name}</h1>
+            <p>{collection.items.length} items in collection</p>
+            <button type="button" className="preview-button" onClick={() => openModal(collection)}>Preview Collection</button>
           </div>
         ))}
       </div>
