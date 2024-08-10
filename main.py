@@ -1,6 +1,6 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status,APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel import Session, SQLModel, create_engine, select
 from fastapi.middleware.cors import CORSMiddleware
 from passlib.context import CryptContext
 from jose import JWTError, jwt
@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pydantic import BaseModel
 from typing import List, Optional
 from database import get_db
-from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead
+from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item
 from decouple import config
 
 SECRET_KEY = config("SECRET_KEY")
@@ -171,6 +171,14 @@ async def create_collection(
 @app.get("/users/me/collections", response_model=List[CollectionRead])
 async def get_collections(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     return current_user.collections
+
+@app.get("/collections/{collection_id}/items", response_model=List[Item])
+async def get_collection_items(collection_id: int, db: Session = Depends(get_db)):
+    items = db.exec(select(Item).where(Item.collection_id == collection_id)).all()
+    if not items:
+        raise HTTPException(status_code=404, detail="No items found in this collection")
+    return items
+
 
 @app.put("/collections/{collection_id}", response_model=Collection)
 async def update_collection(collection_id: int, updated_collection: CollectionCreate, db: Session = Depends(get_db)):
