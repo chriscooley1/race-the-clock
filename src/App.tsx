@@ -20,18 +20,7 @@ import "./App.css";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
-  const [sequence, setSequence] = React.useState<string[]>([]);
-  const [speed, setSpeed] = React.useState<number>(500);
   const [hideSidebar, setHideSidebar] = React.useState<boolean>(false);
-
-  const handleSettingsUpdate = (newSequence: string[], newSpeed: number) => {
-    setSequence(newSequence);
-    setSpeed(newSpeed);
-  };
-
-  const handleHistoryLoad = (seq: string[]) => {
-    setSequence(seq);
-  };
 
   const handleFullScreenDisplay = (hide: boolean) => {
     setHideSidebar(hide);
@@ -55,8 +44,6 @@ const App: React.FC = () => {
                     <PrivateRoute
                       element={
                         <FullScreenDisplay
-                          sequence={sequence}
-                          speed={speed}
                           onEnterFullScreen={() => handleFullScreenDisplay(true)}
                           onExitFullScreen={() => handleFullScreenDisplay(false)}
                         />
