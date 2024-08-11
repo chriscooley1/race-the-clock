@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTheme } from "../context/ThemeContext";
-import { themes, textColorOptions } from "../context/ThemeContext";
+import { useTheme, colorSchemes } from "../context/ThemeContext"; // Import colorSchemes
 
 const speedOptions = [
   { label: "0.25 seconds", value: 250 },
@@ -45,25 +44,21 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   const [seconds, setSeconds] = useState(0);
   const [shuffle, setShuffle] = useState(false);
   const [speed, setSpeed] = useState(currentSettings.speed);
-  const [textColor, setTextColor] = useState(currentSettings.textColor);
-  const [selectedTheme, setSelectedTheme] = useState(
-    currentSettings.theme.className
+  const [selectedScheme, setSelectedScheme] = useState(
+    colorSchemes.find((scheme) => scheme.className === currentSettings.theme.className) || colorSchemes[0]
   );
 
   useEffect(() => {
-    const defaultTheme = themes.find(
-      (theme) => theme.className === selectedTheme
-    );
-    if (defaultTheme) {
-      setTheme(defaultTheme);
+    if (selectedScheme) {
+      setTheme(selectedScheme);
     }
-  }, [setTheme, selectedTheme]);
+  }, [setTheme, selectedScheme]);
 
-  const handleThemeChange = (themeClassName: string) => {
-    const newTheme = themes.find((theme) => theme.className === themeClassName);
-    if (newTheme) {
-      setTheme(newTheme);
-      setSelectedTheme(themeClassName);
+  const handleSchemeChange = (schemeName: string) => {
+    const newScheme = colorSchemes.find((scheme) => scheme.name === schemeName);
+    if (newScheme) {
+      setTheme(newScheme);
+      setSelectedScheme(newScheme);
     }
   };
 
@@ -135,29 +130,16 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 </option>
               ))}
             </select>
-            <label htmlFor="textColor">Text Color:</label>
+            <label htmlFor="colorScheme">Color Scheme:</label>
             <select
-              id="textColor"
-              value={textColor}
-              onChange={(e) => setTextColor(e.target.value)}
-              title="Select text color"
+              id="colorScheme"
+              value={selectedScheme.name}
+              onChange={(e) => handleSchemeChange(e.target.value)}
+              title="Select color scheme"
             >
-              {textColorOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            <label htmlFor="theme">Theme:</label>
-            <select
-              id="theme"
-              value={selectedTheme}
-              onChange={(e) => handleThemeChange(e.target.value)}
-              title="Select theme"
-            >
-              {themes.map((theme) => (
-                <option key={theme.className} value={theme.className}>
-                  {theme.name}
+              {colorSchemes.map((scheme) => (
+                <option key={scheme.name} value={scheme.name}>
+                  {scheme.name}
                 </option>
               ))}
             </select>
@@ -172,8 +154,8 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   seconds,
                   shuffle,
                   speed,
-                  textColor,
-                  selectedTheme
+                  selectedScheme.textColor,
+                  selectedScheme.name // Pass the scheme name
                 )
               }
             >

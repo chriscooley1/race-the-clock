@@ -12,7 +12,7 @@ interface Collection {
   collection_id: number;
   name: string;
   description: string;
-  created_at: string;
+  created_at: string; // Ensure this is a date string
   category: string;
 }
 
@@ -54,6 +54,7 @@ const YourCollections = () => {
           },
         });
         const data: Collection[] = response.data;
+        console.log(data); // Log the response data
         setCollections(data);
         filterCollections(data, selectedCategory);
       } catch (error) {
@@ -61,7 +62,7 @@ const YourCollections = () => {
       }
     };
     fetchCollections();
-  }, [selectedCategory, token, apiBaseUrl]);
+  }, [selectedCategory, token, apiBaseUrl]);  
 
   const filterCollections = (collections: Collection[], category: string) => {
     if (category === "All Collections") {

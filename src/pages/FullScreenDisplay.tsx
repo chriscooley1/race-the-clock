@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme, colorSchemes } from "../context/ThemeContext"; // Import colorSchemes
 import "../App.css";
 
 interface FullScreenDisplayProps {
@@ -14,7 +14,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { sequence, speed, textColor, shuffle } = location.state; // Include shuffle in the state
+  const { sequence, speed, textColor, shuffle } = location.state;
   const { theme, setTheme } = useTheme();
   const [index, setIndex] = useState(0);
   const [shuffledSequence, setShuffledSequence] = useState<string[]>([]);
@@ -50,19 +50,15 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   }, [shuffledSequence, speed]);
 
   const handleBack = () => {
-    const defaultTheme = {
-      className: "light-theme",
-      textColor: "#000",
-      backgroundColor: "#fff",
-    };
+    const defaultTheme = colorSchemes[0]; // Reset to the default theme
     setTheme(defaultTheme);
     navigate("/your-collections");
   };
 
   return (
     <div
-      className={`fullscreen-container ${theme.className}`}
-      style={{ color: textColor || theme.textColor, overflow: "hidden" }}
+      className={`fullscreen-container ${theme.className || ''}`}
+      style={{ color: textColor || theme.textColor, backgroundColor: theme.backgroundColor, overflow: "hidden" }}
     >
       <button className="back-button" type="button" onClick={handleBack}>
         Back
