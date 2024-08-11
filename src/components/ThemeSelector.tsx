@@ -1,17 +1,17 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
-import { themes, textColorOptions } from "../context/ThemeContext";
+import { colorSchemes, textColorOptions } from "../context/ThemeContext";
 import "../App.css"; // Import the global CSS file
 
 const ThemeSelector: React.FC = () => {
   const { setTheme, theme } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedTheme = themes.find(
-      (theme) => theme.name === event.target.value
+    const selectedScheme = colorSchemes.find(
+      (scheme) => scheme.name === event.target.value
     );
-    if (selectedTheme) {
-      setTheme({ ...theme, className: selectedTheme.className });
+    if (selectedScheme) {
+      setTheme(selectedScheme);
     }
   };
 
@@ -27,15 +27,15 @@ const ThemeSelector: React.FC = () => {
   return (
     <div className="theme-selector">
       <label htmlFor="theme-select">Select Theme:</label>
-      <select id="theme-select" onChange={handleThemeChange}>
-        {themes.map((theme, index) => (
-          <option key={index} value={theme.name}>
-            {theme.name}
+      <select id="theme-select" onChange={handleThemeChange} value={theme.name}>
+        {colorSchemes.map((scheme, index) => (
+          <option key={index} value={scheme.name}>
+            {scheme.name}
           </option>
         ))}
       </select>
 
-      <label htmlFor="text-color-select"> Select Text Color: </label>
+      <label htmlFor="text-color-select">Select Text Color:</label>
       <select
         id="text-color-select"
         value={theme.textColor}

@@ -214,6 +214,12 @@ button {
   margin-bottom: 5px;
 }
 
+/* Fix the text color for theme and text color selectors in the theme selector */
+.theme-selector select,
+.text-color-selector select {
+  color: #000; /* Ensure text is black for readability */
+}
+
 .theme-selector select,
 .settings-container textarea {
   padding: 8px;
@@ -759,6 +765,31 @@ li {
   background-color: white; /* Ensure form elements have a clear background */
 }
 
+/* Modal title - keep consistent color */
+.modal-container h1 {
+  color: #333; /* Use a fixed color */
+  margin-bottom: 20px;
+}
+
+/* Ensure modal labels and headings maintain visibility */
+.modal-container label,
+.modal-container h2 {
+  color: #333; /* Fixed color for visibility */
+}
+
+/* Style for modal labels and text */
+.modal-container label,
+.modal-container h1,
+.modal-container h2,
+.modal-container p {
+  color: #333; /* Use a fixed color for visibility */
+}
+
+/* Ensure modal buttons retain color */
+.modal-container button {
+  color: #fff; /* Keep buttons white */
+}
+
 /* Centering styles for Login and Register */
 .auth-container {
   display: flex;
@@ -796,11 +827,13 @@ li {
   z-index: 1000; /* Ensure navbar has a high z-index */
 }
 
+/* Navbar title - keep consistent color */
 .navbar-title {
-  flex-grow: 1; /* Allow the title to grow and take available space */
-  text-align: center; /* Center the title text */
+  flex-grow: 1;
+  text-align: center;
   font-size: 1.5em;
   font-weight: bold;
+  color: #333; /* Use a fixed color */
 }
 
 .logout-button {
