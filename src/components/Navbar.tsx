@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current location
   const menuRef = useRef<HTMLDivElement>(null); // Reference to the menu element
 
   const handleMenuToggle = () => {
@@ -20,6 +21,10 @@ const Navbar = () => {
   const handleNavigateToCollections = () => {
     navigate("/your-collections");
     setMenuOpen(false);
+  };
+
+  const handleBack = () => {
+    navigate("/your-collections");
   };
 
   useEffect(() => {
@@ -40,7 +45,14 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
+      {/* Show back button only in the FullScreenDisplay */}
+      {location.pathname === "/fullscreen-display" && (
+        <button type="button" className="back-button" onClick={handleBack}>
+          Back
+        </button>
+      )}
       <div className="navbar-title">Race The Clock</div>
+
       <div className="hamburger-menu" onClick={handleMenuToggle}>
         <div className="bar"></div>
         <div className="bar"></div>

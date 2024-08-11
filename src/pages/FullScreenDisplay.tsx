@@ -57,13 +57,27 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   return (
     <div
-      className={`fullscreen-container ${theme.className || ''}`}
-      style={{ color: textColor || theme.textColor, backgroundColor: theme.backgroundColor, overflow: "hidden" }}
+      className={`fullscreen-container ${theme.className || ""}`}
+      style={{
+        color: textColor || theme.textColor,
+        backgroundColor: theme.backgroundColor,
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh", // Ensure it takes full viewport height
+      }}
     >
-      <button className="back-button" type="button" onClick={handleBack}>
-        Back
-      </button>
-      <h1 className="fullscreen-text">{shuffledSequence[index]}</h1> {/* Render shuffled or normal sequence */}
+      <h1
+        className="fullscreen-text"
+        style={{
+          fontSize: "50vw", // Keep your preferred size
+          lineHeight: "0.8", // Adjust line height for descenders
+          margin: "0", // Remove default margin
+        }}
+      >
+        {shuffledSequence[index]}
+      </h1>
     </div>
   );
 };
