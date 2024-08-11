@@ -14,23 +14,40 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { sequence, speed, textColor } = location.state; // Ensure textColor is extracted
+  const { sequence, speed, textColor, shuffle } = location.state; // Include shuffle in the state
   const { theme, setTheme } = useTheme();
   const [index, setIndex] = useState(0);
+  const [shuffledSequence, setShuffledSequence] = useState<string[]>([]);
+
+  // Function to shuffle the sequence
+  const shuffleArray = (array: string[]): string[] => {
+    return array
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+  };
 
   useEffect(() => {
     onEnterFullScreen();
+
+    // Shuffle the sequence if shuffle is true
+    if (shuffle) {
+      setShuffledSequence(shuffleArray(sequence));
+    } else {
+      setShuffledSequence(sequence);
+    }
+
     return () => onExitFullScreen();
-  }, [onEnterFullScreen, onExitFullScreen]);
+  }, [onEnterFullScreen, onExitFullScreen, sequence, shuffle]);
 
   useEffect(() => {
-    if (sequence.length > 0) {
+    if (shuffledSequence.length > 0) {
       const interval = setInterval(() => {
-        setIndex((prevIndex) => (prevIndex + 1) % sequence.length);
+        setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
       }, speed);
       return () => clearInterval(interval);
     }
-  }, [sequence, speed]);
+  }, [shuffledSequence, speed]);
 
   const handleBack = () => {
     const defaultTheme = {
@@ -38,19 +55,19 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       textColor: "#000",
       backgroundColor: "#fff",
     };
-    setTheme(defaultTheme); // Set the theme back to the default
-    navigate("/your-collections"); // Navigate back to YourCollections
+    setTheme(defaultTheme);
+    navigate("/your-collections");
   };
 
   return (
     <div
       className={`fullscreen-container ${theme.className}`}
-      style={{ color: textColor || theme.textColor, overflow: "hidden" }} // Prevent scrolling
+      style={{ color: textColor || theme.textColor, overflow: "hidden" }}
     >
       <button className="back-button" type="button" onClick={handleBack}>
         Back
       </button>
-      <h1 className="fullscreen-text">{sequence[index]}</h1> {/* Ensure this renders strings */}
+      <h1 className="fullscreen-text">{shuffledSequence[index]}</h1> {/* Render shuffled or normal sequence */}
     </div>
   );
 };

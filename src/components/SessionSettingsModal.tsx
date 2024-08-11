@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { themes, textColorOptions } from "../context/ThemeContext";
 
-// Speed options extended to include up to 5 seconds
 const speedOptions = [
   { label: "0.25 seconds", value: 250 },
   { label: "0.5 seconds", value: 500 },
@@ -15,7 +14,6 @@ const speedOptions = [
   { label: "5 seconds", value: 5000 },
 ];
 
-// Define the prop types for the modal
 interface SessionSettingsModalProps {
   collectionName: string;
   onClose: () => void;
@@ -53,7 +51,6 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   );
 
   useEffect(() => {
-    // Initialize default theme based on the current settings
     const defaultTheme = themes.find(
       (theme) => theme.className === selectedTheme
     );
@@ -71,7 +68,6 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   };
 
   const handleBackgroundClick = (event: React.MouseEvent) => {
-    // Close modal if clicked on modal background
     if ((event.target as HTMLElement).className === "modal-background") {
       onClose();
     }

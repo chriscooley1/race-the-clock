@@ -8,7 +8,6 @@ import CollectionsNavBar from "../components/CollectionsNavBar";
 import EditCollectionModal from "../components/EditCollectionModal";
 import "../App.css";
 
-// Define the Collection type
 interface Collection {
   collection_id: number;
   name: string;
@@ -21,7 +20,6 @@ interface Item {
   name: string;
 }
 
-// Function to count items in the collection
 const getItemsCount = (description: string): number => {
   try {
     const items = JSON.parse(description);
@@ -31,7 +29,7 @@ const getItemsCount = (description: string): number => {
   } catch (error) {
     console.error("Error parsing description as JSON:", error);
   }
-  return 0; // Default to 0 if parsing fails or is not an array
+  return 0;
 };
 
 const YourCollections = () => {
@@ -45,14 +43,14 @@ const YourCollections = () => {
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
 
-  const apiBaseUrl = "http://localhost:8000"; // Use local URL for now
+  const apiBaseUrl = "http://localhost:8000";
 
   useEffect(() => {
     const fetchCollections = async () => {
       try {
         const response = await axios.get(`${apiBaseUrl}/users/me/collections`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Ensure token is passed in headers
+            Authorization: `Bearer ${token}`,
           },
         });
         const data: Collection[] = response.data;
@@ -63,7 +61,7 @@ const YourCollections = () => {
       }
     };
     fetchCollections();
-  }, [selectedCategory, token, apiBaseUrl]); // Fetch collections when category or token changes
+  }, [selectedCategory, token, apiBaseUrl]);
 
   const filterCollections = (collections: Collection[], category: string) => {
     if (category === "All Collections") {
@@ -116,7 +114,7 @@ const YourCollections = () => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
       const sequence = sequenceItems.map((item: { name: string }) => item.name);
-      const duration = min * 60 + sec; // Convert minutes and seconds to total seconds
+      const duration = min * 60 + sec;
       navigate("/fullscreen-display", {
         state: {
           sequence,
@@ -179,9 +177,9 @@ const YourCollections = () => {
           onClose={() => setShowModal(false)}
           onStart={handleStartSession}
           currentSettings={{
-            speed: 500, // Default speed
+            speed: 500,
             theme: theme,
-            textColor: "#000000", // Default text color
+            textColor: "#000000",
           }}
         />
       )}
@@ -190,10 +188,9 @@ const YourCollections = () => {
           isOpen={isEditModalOpen}
           onClose={() => setEditModalOpen(false)}
           collectionName={selectedCollection.name}
-          items={JSON.parse(selectedCollection.description || "[]").map((item: Item) => item.name)} // Extract item names
+          items={JSON.parse(selectedCollection.description || "[]").map((item: Item) => item.name)}
           onSave={(newItems) => {
             console.log("Save new items:", newItems);
-            // Implement saving logic here
           }}
         />
       )}
