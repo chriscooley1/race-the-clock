@@ -5,7 +5,7 @@ interface EditCollectionModalProps {
   isOpen: boolean;
   onClose: () => void;
   collectionName: string;
-  items: string[];  // Assuming items are an array of strings
+  items: string[]; // Assuming items are an array of strings
   onSave: (items: string[]) => void;
 }
 
@@ -14,7 +14,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   onClose,
   collectionName,
   items,
-  onSave
+  onSave,
 }) => {
   const [editedItems, setEditedItems] = useState<string[]>(items);
 
@@ -85,9 +85,15 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
               </button>
             </div>
           ))}
-          <button type="button" className="add-button" onClick={handleAddItem}>Add Item</button>
-          <button type="button" className="save-button" onClick={handleSave}>Save Collection</button>
-          <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
+          <button type="button" className="add-button" onClick={handleAddItem}>
+            +
+          </button>
+          <button type="button" className="save-button" onClick={handleSave}>
+            Save Collection
+          </button>
+          <button type="button" className="cancel-button" onClick={onClose}>
+            Cancel
+          </button>
         </div>
       </div>
     </div>

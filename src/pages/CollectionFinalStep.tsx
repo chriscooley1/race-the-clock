@@ -46,7 +46,9 @@ const CollectionFinalStep: React.FC = () => {
       <h2>Step 3 - Fill Out Collection Body</h2>
       <p>To add another item to this Collection, click the add button below.</p>
       <div className="add-item-container">
-        <label htmlFor="new-item-input" className="sr-only">New Item</label>
+        <label htmlFor="new-item-input" className="sr-only">
+          New Item
+        </label>
         <input
           type="text"
           id="new-item-input"
@@ -67,7 +69,9 @@ const CollectionFinalStep: React.FC = () => {
       </div>
       {items.map((item) => (
         <div key={item.id} className="item-container">
-          <label htmlFor={`item-input-${item.id}`} className="sr-only">Item {item.id}</label>
+          <label htmlFor={`item-input-${item.id}`} className="sr-only">
+            Item {item.id}
+          </label>
           <input
             type="text"
             id={`item-input-${item.id}`}

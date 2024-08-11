@@ -597,22 +597,35 @@ button {
 }
 
 .add-button {
-  background-color: green;
-  color: white;
-  border: none;
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
   padding: 10px;
-  border-radius: 50%;
-  font-size: 1.5em;
+  border-radius: 50%; /* Circle shape */
+  font-size: 1.5em; /* Larger font size for "+" */
   cursor: pointer;
-  margin-right: 10px;
+  margin: 10px; /* Space around the button */
+  width: 40px; /* Fixed width */
+  height: 40px; /* Fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add some shadow */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
 }
 
 .add-button:hover {
-  background-color: darkgreen;
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.add-button:active {
+  background-color: #388e3c; /* Even darker green when active */
+  transform: scale(0.95); /* Slight scale down when active */
 }
 
 .save-button {
-  background-color: #cceeff;
+  background-color: #1e90ff;
   color: black;
   border: none;
   padding: 10px 20px;
@@ -622,7 +635,7 @@ button {
 }
 
 .save-button:hover {
-  background-color: #1e90ff;
+  background-color: #003366;
 }
 
 .custom-input {
