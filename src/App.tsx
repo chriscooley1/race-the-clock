@@ -11,7 +11,7 @@ import DiscoverCollections from "./pages/DiscoverCollections";
 import CollectionSetup from "./pages/CollectionSetup";
 import CollectionFinalStep from "./pages/CollectionFinalStep";
 import NameGenerator from "./pages/NameGenerator";
-import Resources from "./components/Resources";
+import Resources from "./pages/Resources";
 import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
