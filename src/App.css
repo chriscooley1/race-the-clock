@@ -1019,7 +1019,7 @@ li {
   background-color: #cc0000;
 }
 
-/* Collections navbar */
+/* Collections navbar styles */
 .collections-navbar {
   display: flex;
   justify-content: space-around; /* Evenly space the buttons */
@@ -1032,24 +1032,41 @@ li {
   margin: 0; /* Ensure no margins are affecting the layout */
 }
 
+/* Category button styles */
 .category-button {
-  background-color: transparent; /* No background */
-  border: none; /* No border */
-  color: #333; /* Text color */
+  background-color: #ffffff; /* White background */
+  border: 2px solid #007bff; /* Blue border */
+  color: #007bff; /* Blue text color */
   padding: 10px 20px; /* Padding for size */
   cursor: pointer; /* Pointer cursor on hover */
   font-size: 1em; /* Font size */
   font-weight: bold; /* Bold text */
-  transition: color 0.3s; /* Smooth color transition */
+  transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Smooth transitions */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  margin: 0 5px; /* Add margin between buttons */
   flex-grow: 1; /* Allow buttons to grow and fill the available space */
   text-align: center; /* Center the text */
-  margin: 0; /* Ensure no margin on the sides */
 }
 
-.category-button:hover,
-.category-button.active {
-  color: #007bff; /* Change text color on hover and active */
+.category-button:hover {
+  background-color: #007bff; /* Blue background on hover */
+  color: #ffffff; /* White text on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
 }
+
+.category-button:active {
+  background-color: #0056b3; /* Darker blue when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+.category-button.active {
+  background-color: #007bff; /* Active state background */
+  color: #ffffff; /* Active state text color */
+  border-color: #0056b3; /* Active state border color */
+}
+
+
 
 .edit-button {
   background-color: #ffcc00; /* Yellow background */
