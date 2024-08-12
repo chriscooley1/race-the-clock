@@ -160,36 +160,39 @@ const YourCollections = () => {
         </select>
       </div>
       <div className="collections-list">
-        {filteredCollections.map((collection) => (
-          <div key={collection.collection_id} className="collection-item">
-            <h1>{collection.name}</h1>
-            <p>{getItemsCount(collection.description)} items</p>
-            <p>Created by you on {new Date(collection.created_at).toLocaleDateString()}</p>
-            <button
-              type="button"
-              className="start-button"
-              onClick={() => handleStartCollection(collection.collection_id)}
-            >
-              Start
-            </button>
-            <div className="button-group">
+        {filteredCollections.map((collection, index) => {
+          const colorClass = `color-${(index % 6) + 1}`; // Cycles through color-1 to color-6
+          return (
+            <div key={collection.collection_id} className={`collection-item ${colorClass}`}>
+              <h1>{collection.name}</h1>
+              <p>{getItemsCount(collection.description)} items</p>
+              <p>Created by you on {new Date(collection.created_at).toLocaleDateString()}</p>
               <button
                 type="button"
-                className="edit-button"
-                onClick={() => handleEditButtonClick(collection)}
+                className="start-button"
+                onClick={() => handleStartCollection(collection.collection_id)}
               >
-                Edit
+                Start
               </button>
-              <button
-                type="button"
-                className="delete-button"
-                onClick={() => handleDeleteCollection(collection.collection_id)}
-              >
-                Delete
-              </button>
+              <div className="button-group">
+                <button
+                  type="button"
+                  className="edit-button"
+                  onClick={() => handleEditButtonClick(collection)}
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  className="delete-button"
+                  onClick={() => handleDeleteCollection(collection.collection_id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       {showModal && selectedCollection && (
         <SessionSettingsModal

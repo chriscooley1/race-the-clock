@@ -351,6 +351,7 @@ button {
 
 .new-collection-container input[type="text"] {
   margin: 10px 0;
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
 }
 
 .new-collection-container input[type="checkbox"] {
@@ -387,6 +388,7 @@ button {
   border-radius: 4px;
   color: black;
   background-color: white;
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
 }
 
 .collection-setup-container input[type="file"] {
@@ -566,6 +568,32 @@ button {
   background-color: #990000; /* Even darker red when active */
 }
 
+.collection-item.color-1 {
+  background-color: #ffcccc; /* Light Red */
+}
+
+.collection-item.color-2 {
+  background-color: #ccffcc; /* Light Green */
+}
+
+.collection-item.color-3 {
+  background-color: #ccccff; /* Light Blue */
+}
+
+.collection-item.color-4 {
+  background-color: #ffffcc; /* Light Yellow */
+}
+
+.collection-item.color-5 {
+  background-color: #ffccff; /* Light Pink */
+}
+
+.collection-item.color-6 {
+  background-color: #ccffff; /* Light Cyan */
+}
+
+/* Add more colors as needed */
+
 /* Styling for the start button */
 .start-button {
   background-color: #4caf50; /* Green background */
@@ -690,6 +718,7 @@ button {
   border-radius: 4px;                /* Rounded corners */
   padding: 8px;                      /* Padding inside the field */
   font-size: 1em;                    /* Font size */
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
 }
 
 .checkbox-container {
@@ -1176,8 +1205,20 @@ li {
 }
 
 .sort-options select {
-  padding: 5px;
+  background-color: white; /* White background */
+  color: black; /* Black text color */
+  border: 1px solid #ccc; /* Optional: Light border */
+  padding: 5px 10px; /* Add horizontal padding for better alignment */
   border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 1em;
+  font-size: 1em; /* Ensure font size fits the box */
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  width: 200px; /* Set a fixed width to ensure content fits */
+  max-width: 100%; /* Ensure it does not overflow container */
+  appearance: none; /* Removes default browser styles */
+  -webkit-appearance: none; /* For Safari */
+  -moz-appearance: none; /* For Firefox */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'><path fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>"); /* Custom arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Position the arrow */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
