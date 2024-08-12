@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useTheme, colorSchemes } from "../context/ThemeContext"; // Import colorSchemes
+import { useTheme, colorSchemes } from "../context/ThemeContext";
+
+interface SessionSettingsModalProps {
+  collectionName: string;
+  onClose: () => void;
+  onStart: (min: number, sec: number, shuffle: boolean, speed: number, textColor: string, themeClassName: string) => void;
+  currentSettings: {
+    speed: number;
+    textColor: string;
+    theme: {
+      className: string;
+    };
+  };
+}
 
 const speedOptions = [
   { label: "0.25 seconds", value: 250 },
@@ -11,33 +24,19 @@ const speedOptions = [
   { label: "3 seconds", value: 3000 },
   { label: "4 seconds", value: 4000 },
   { label: "5 seconds", value: 5000 },
+  { label: "10 seconds", value: 10000 },
+  { label: "30 seconds", value: 30000 },
+  { label: "1 minute", value: 60000 },
+  { label: "2 minutes", value: 120000 },
+  { label: "5 minutes", value: 300000 },
+  { label: "10 minutes", value: 600000 }
 ];
-
-interface SessionSettingsModalProps {
-  collectionName: string;
-  onClose: () => void;
-  onStart: (
-    min: number,
-    sec: number,
-    shuffle: boolean,
-    speed: number,
-    textColor: string,
-    themeClassName: string
-  ) => void;
-  currentSettings: {
-    speed: number;
-    textColor: string;
-    theme: {
-      className: string;
-    };
-  };
-}
 
 const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   collectionName,
   onClose,
   onStart,
-  currentSettings,
+  currentSettings
 }) => {
   const { setTheme } = useTheme();
   const [minutes, setMinutes] = useState(0);
@@ -45,7 +44,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   const [shuffle, setShuffle] = useState(false);
   const [speed, setSpeed] = useState(currentSettings.speed);
   const [selectedScheme, setSelectedScheme] = useState(
-    colorSchemes.find((scheme) => scheme.className === currentSettings.theme.className) || colorSchemes[0]
+    colorSchemes.find(scheme => scheme.className === currentSettings.theme.className) || colorSchemes[0]
   );
 
   useEffect(() => {
@@ -54,15 +53,23 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
     }
   }, [setTheme, selectedScheme]);
 
+  useEffect(() => {
+    const totalSeconds = speed / 1000;
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    setMinutes(mins);
+    setSeconds(secs);
+  }, [speed]);
+
   const handleSchemeChange = (schemeName: string) => {
-    const newScheme = colorSchemes.find((scheme) => scheme.name === schemeName);
+    const newScheme = colorSchemes.find(scheme => scheme.name === schemeName);
     if (newScheme) {
       setTheme(newScheme);
       setSelectedScheme(newScheme);
     }
   };
 
-  const handleBackgroundClick = (event: React.MouseEvent) => {
+  const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if ((event.target as HTMLElement).className === "modal-background") {
       onClose();
     }
@@ -71,9 +78,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   return (
     <div className="modal-background" onClick={handleBackgroundClick}>
       <div className="modal-container">
-        <button type="button" className="close-button" onClick={onClose}>
-          X
-        </button>
+        <button type="button" className="close-button" onClick={onClose}>X</button>
         <h1>{collectionName}</h1>
         <p>Please select settings for the session</p>
         <div className="modal-content">
@@ -117,7 +122,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
             </div>
           </div>
           <div className="settings">
-            <label htmlFor="speed">Speed:</label>
+            <label htmlFor="speed">Speed: </label>
             <select
               id="speed"
               value={speed}
@@ -130,7 +135,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 </option>
               ))}
             </select>
-            <label htmlFor="colorScheme">Color Scheme:</label>
+            <label htmlFor="colorScheme"> Color Scheme: </label>
             <select
               id="colorScheme"
               value={selectedScheme.name}
@@ -155,7 +160,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   shuffle,
                   speed,
                   selectedScheme.textColor,
-                  selectedScheme.name // Pass the scheme name
+                  selectedScheme.name
                 )
               }
             >
