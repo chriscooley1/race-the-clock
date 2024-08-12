@@ -11,7 +11,7 @@ import "../App.css";
 interface Collection {
   collection_id: number;
   name: string;
-  description: string;
+  description: string; // Ensure this is a JSON string
   created_at: string; // Ensure this is a date string
   category: string;
 }
@@ -36,6 +36,7 @@ const YourCollections = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
   const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
+  const [sortOption, setSortOption] = useState<string>("date");
   const { theme } = useTheme();
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -54,24 +55,31 @@ const YourCollections = () => {
           },
         });
         const data: Collection[] = response.data;
-        console.log(data); // Log the response data
         setCollections(data);
-        filterCollections(data, selectedCategory);
+        filterAndSortCollections(data, selectedCategory, sortOption);
       } catch (error) {
         console.error("Error fetching collections:", error);
       }
     };
     fetchCollections();
-  }, [selectedCategory, token, apiBaseUrl]);  
+  }, [selectedCategory, sortOption, token, apiBaseUrl]);
 
-  const filterCollections = (collections: Collection[], category: string) => {
-    if (category === "All Collections") {
-      setFilteredCollections(collections);
-    } else {
-      setFilteredCollections(
-        collections.filter((collection) => collection.category === category)
-      );
+  const filterAndSortCollections = (collections: Collection[], category: string, sortOption: string) => {
+    let filtered = collections;
+    if (category !== "All Collections") {
+      filtered = collections.filter((collection) => collection.category === category);
     }
+
+    const sorted = [...filtered].sort((a, b) => {
+      if (sortOption === "date") {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      } else if (sortOption === "alphabetical") {
+        return a.name.localeCompare(b.name);
+      }
+      return 0;
+    });
+
+    setFilteredCollections(sorted);
   };
 
   const handleDeleteCollection = async (collectionId: number) => {
@@ -85,7 +93,7 @@ const YourCollections = () => {
         (collection) => collection.collection_id !== collectionId
       );
       setCollections(updatedCollections);
-      filterCollections(updatedCollections, selectedCategory);
+      filterAndSortCollections(updatedCollections, selectedCategory, sortOption);
     } catch (error) {
       console.error("Error deleting collection:", error);
     }
@@ -134,12 +142,23 @@ const YourCollections = () => {
     setSelectedCategory(category);
   };
 
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOption(event.target.value);
+  };
+
   return (
     <div className="your-collections">
       <CollectionsNavBar
         selectedCategory={selectedCategory}
         onSelectCategory={handleCategorySelect}
       />
+      <div className="sort-options">
+        <label htmlFor="sort">Sort by:</label>
+        <select id="sort" value={sortOption} onChange={handleSortChange}>
+          <option value="date">Date Created</option>
+          <option value="alphabetical">Alphabetical</option>
+        </select>
+      </div>
       <div className="collections-list">
         {filteredCollections.map((collection) => (
           <div key={collection.collection_id} className="collection-item">

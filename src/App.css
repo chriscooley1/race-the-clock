@@ -1150,3 +1150,20 @@ li {
   background-color: #388e3c; /* Even darker green when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sort-options label {
+  margin-right: 10px;
+}
+
+.sort-options select {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
