@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location
-  const menuRef = useRef<HTMLDivElement>(null); // Reference to the menu element
+  const location = useLocation();
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -18,8 +18,8 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  const handleNavigateToCollections = () => {
-    navigate("/your-collections");
+  const handleNavigate = (path: string) => {
+    navigate(path);
     setMenuOpen(false);
   };
 
@@ -34,10 +34,7 @@ const Navbar = () => {
       }
     };
 
-    // Add event listener to detect clicks outside
     document.addEventListener("mousedown", handleClickOutside);
-
-    // Cleanup event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -45,7 +42,6 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      {/* Show back button only in the FullScreenDisplay */}
       {location.pathname === "/fullscreen-display" && (
         <button type="button" className="back-button" onClick={handleBack}>
           Back
@@ -60,10 +56,10 @@ const Navbar = () => {
       </div>
       {menuOpen && (
         <div className="menu" ref={menuRef}>
-          <button type="button" onClick={handleNavigateToCollections}>
+          <button type="button" onClick={() => handleNavigate("/my-account")}>
             My Account
           </button>
-          <button type="button" onClick={handleNavigateToCollections}>
+          <button type="button" onClick={() => handleNavigate("/settings")}>
             Settings
           </button>
           <button type="button" onClick={handleLogout}>

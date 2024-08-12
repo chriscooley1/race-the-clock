@@ -16,6 +16,8 @@ import { useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar";
+import Settings from "./pages/Settings";
+import MyAccount from "./pages/MyAccount";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -79,6 +81,14 @@ const App: React.FC = () => {
                   path="/resources"
                   element={<PrivateRoute element={<Resources />} />}
                 />
+                <Route 
+                  path="/settings" 
+                  element={<PrivateRoute element={<Settings />} />} 
+                />  // New route for Settings
+                <Route 
+                  path="/my-account" 
+                  element={<PrivateRoute element={<MyAccount />} />} 
+                />  // New route for My Account
               </Routes>
             </div>
           </div>
