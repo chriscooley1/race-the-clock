@@ -6,7 +6,7 @@ import { saveCollection } from "../api"; // Import API function
 const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { collectionName, isPublic, sequence } = location.state;
+  const { collectionName, isPublic, category, sequence } = location.state;
   const [items, setItems] = useState<{ id: number; name: string }[]>(
     sequence.map((name, index) => ({ id: index + 1, name }))
   ); // Initialize with sequence
@@ -32,7 +32,8 @@ const CollectionFinalStep: React.FC = () => {
         1, // Assume userId is 1 for example purposes, replace as needed
         collectionName,
         collectionData,
-        isPublic ? "public" : "private"
+        isPublic ? "public" : "private",
+        category // Pass the category to the API
       );
       navigate("/your-collections"); // Redirect to the collections page
     } catch (error) {

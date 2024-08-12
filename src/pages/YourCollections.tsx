@@ -62,7 +62,7 @@ const YourCollections = () => {
       }
     };
     fetchCollections();
-  }, [selectedCategory, sortOption, token, apiBaseUrl]);
+  }, [selectedCategory, sortOption, token]);
 
   const filterAndSortCollections = (collections: Collection[], category: string, sortOption: string) => {
     let filtered = collections;

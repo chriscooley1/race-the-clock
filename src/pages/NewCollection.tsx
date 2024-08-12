@@ -4,8 +4,11 @@ import "../App.css";
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
+  const [category, setCategory] = useState<string>("Math");
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const categories = ["Math", "Language Arts", "More"];
 
   const handleNext = () => {
     if (!name.trim()) {
@@ -14,7 +17,9 @@ const NewCollection: React.FC = () => {
     }
 
     // Navigate to the setup step with the initial collection details
-    navigate("/collection-setup", { state: { collectionName: name, isPublic } });
+    navigate("/collection-setup", {
+      state: { collectionName: name, isPublic, category },
+    });
   };
 
   return (
@@ -32,6 +37,21 @@ const NewCollection: React.FC = () => {
           title="Collection Name"
         />
       </div>
+      <div className="centered-input">
+        <label htmlFor="categorySelect">Category:</label>
+        <select
+          id="categorySelect"
+          className="custom-input"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="checkbox-container">
         <input
           type="checkbox"
@@ -44,11 +64,7 @@ const NewCollection: React.FC = () => {
           I want to share my collection publicly
         </label>
       </div>
-      <button
-        type="button"
-        onClick={handleNext}
-        className="styled-button"
-      >
+      <button type="button" onClick={handleNext} className="styled-button">
         Next
       </button>
     </div>

@@ -11,7 +11,7 @@ import {
 const CollectionSetup: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { collectionName, isPublic } = location.state || {};
+  const { collectionName, isPublic, category } = location.state || {};
 
   const [file, setFile] = useState<File | null>(null);
   const [itemCount, setItemCount] = useState<number>(1);
@@ -44,14 +44,8 @@ const CollectionSetup: React.FC = () => {
       return;
     }
 
-    console.log("Collection Name:", collectionName);
-    console.log("Is Public:", isPublic);
-    console.log("File:", file);
-    console.log("Item Count:", itemCount);
-    console.log("Generated Sequence:", sequence);
-
     navigate("/collection-final-step", {
-      state: { collectionName, isPublic, itemCount, file, sequence },
+      state: { collectionName, isPublic, category, itemCount, file, sequence },
     });
   };
 
@@ -60,9 +54,7 @@ const CollectionSetup: React.FC = () => {
       <h1>Collection: {collectionName}</h1>
       <h2>Step 2 - Set Up Collection Body</h2>
       <div className="centered-input">
-        <label htmlFor="itemCount">
-          Quantity #:
-        </label>
+        <label htmlFor="itemCount">Quantity #:</label>
         <input
           type="number"
           id="itemCount"
