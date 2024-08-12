@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
-import { generateRandomLetters, generateRandomNumbers, generateFullAlphabet, generateNumbersOneToHundred } from "../utils/RandomGenerators";
+import {
+  generateRandomLetters,
+  generateRandomNumbers,
+  generateFullAlphabet,
+  generateNumbersOneToHundred,
+} from "../utils/RandomGenerators";
 
 const CollectionSetup: React.FC = () => {
   const navigate = useNavigate();
@@ -54,9 +59,9 @@ const CollectionSetup: React.FC = () => {
     <div className="collection-setup-container">
       <h1>Collection: {collectionName}</h1>
       <h2>Step 2 - Set Up Collection Body</h2>
-      <div>
+      <div className="centered-input">
         <label htmlFor="itemCount">
-          Input a number of Items to add to this Collection
+          Quantity #:
         </label>
         <input
           type="number"
@@ -72,7 +77,7 @@ const CollectionSetup: React.FC = () => {
           title="Enter the number of items"
         />
       </div>
-      <div>
+      <div className="centered-input">
         <label htmlFor="typeSelect">Type:</label>
         <select
           id="typeSelect"
@@ -86,11 +91,15 @@ const CollectionSetup: React.FC = () => {
           <option value="numbersOneToHundred">Numbers 1-100</option>
         </select>
       </div>
-      <button type="button" onClick={generateRandomSequence} className="styled-button">
+      <button
+        type="button"
+        onClick={generateRandomSequence}
+        className="styled-button"
+      >
         Generate Random Sequence
       </button>
       <p>- OR -</p>
-      <div>
+      <div className="centered-input">
         <label htmlFor="fileUpload">
           Upload a file to create a collection from
         </label>

@@ -354,6 +354,27 @@ button {
   align-items: center;
 }
 
+.centered-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px; /* Add margin for spacing */
+}
+
+.centered-input label {
+  margin-right: 10px; /* Space between label and input */
+}
+
+.centered-input input[type="number"],
+.centered-input input[type="file"],
+.centered-input select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black;
+  background-color: white;
+}
+
 .collection-setup-container input[type="file"] {
   margin: 10px 0;
 }
@@ -364,6 +385,16 @@ button {
 
 .collection-setup-container button {
   margin-top: 20px;
+}
+
+.collection-setup-container .input-field {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.collection-setup-container label {
+  margin-right: 10px;
 }
 
 /* Collection Final Step Container styles */
