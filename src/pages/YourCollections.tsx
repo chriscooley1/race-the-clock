@@ -190,7 +190,11 @@ const YourCollections = () => {
             <option value="alphabetical">Alphabetical</option>
           </select>
         </div>
-        <button type="button" className="duplicate-collection-button" onClick={() => setDuplicateModalOpen(true)}>
+        <button
+          type="button"
+          className="duplicate-collection-button styled-button" /* Added styled-button class */
+          onClick={() => setDuplicateModalOpen(true)}
+        >
           Duplicate Collection
         </button>
       </div>
@@ -272,18 +276,20 @@ const YourCollections = () => {
               ))}
             </select>
             <div className="button-group">
-              <button
+            <button
                 type="button"
-                onClick={() => setDuplicateModalOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
+                className="duplicate-button styled-button"
                 disabled={!collectionToDuplicate}
                 onClick={handleDuplicateCollection}
               >
                 Duplicate
+              </button>
+              <button
+                type="button"
+                className="cancel-button"
+                onClick={() => setDuplicateModalOpen(false)}
+              >
+                Cancel
               </button>
             </div>
           </div>

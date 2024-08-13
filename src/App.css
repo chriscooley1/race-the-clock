@@ -1222,3 +1222,64 @@ li {
   background-position: right 10px center; /* Position the arrow */
   box-sizing: border-box; /* Include padding in width calculation */
 }
+
+/* Style for the control panel buttons, including duplicate collection */
+.control-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the items horizontally */
+  width: 100%; /* Full width */
+  margin-bottom: 20px; /* Add space below */
+}
+
+.duplicate-collection-button,
+.modal .duplicate-button,
+.modal .cancel-button {
+  background-color: #4caf50; /* Green background for uniformity */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Consistent padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-left: 10px; /* Add margin for spacing between buttons */
+}
+
+.duplicate-collection-button:hover,
+.modal .duplicate-button:hover,
+.modal .cancel-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.duplicate-collection-button:active,
+.modal .duplicate-button:active,
+.modal .cancel-button:active {
+  background-color: #388e3c; /* Even darker green when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+.modal .cancel-button {
+  background-color: #ff6666; /* Red background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Consistent padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-left: 10px; /* Add margin for spacing between buttons */
+}
+
+.modal .cancel-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.modal .cancel-button:active {
+  background-color: #990000; /* Even darker red when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
