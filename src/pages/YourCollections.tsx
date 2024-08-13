@@ -176,6 +176,17 @@ const YourCollections = () => {
     setSortOption(event.target.value);
   };
 
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour12: true,
+      timeZone: "America/Denver", // Adjust the time zone as needed
+    }).format(date);
+  };
+
   return (
     <div className="your-collections">
       <CollectionsNavBar
@@ -200,12 +211,12 @@ const YourCollections = () => {
       </div>
       <div className="collections-list">
         {filteredCollections.map((collection, index) => {
-          const colorClass = `color-${(index % 6) + 1}`; // Cycles through color-1 to color-6
+          const colorClass = `color-${(index % 10) + 1}`; // Cycles through color-1 to color-10
           return (
             <div key={collection.collection_id} className={`collection-item ${colorClass}`}>
               <h1>{collection.name}</h1>
               <p>{getItemsCount(collection.description)} items</p>
-              <p>Created by you on {new Date(collection.created_at).toLocaleDateString()}</p>
+              <p>Created by you on {formatDate(collection.created_at)}</p>
               <button
                 type="button"
                 className="start-button"
