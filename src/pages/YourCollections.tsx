@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useTheme } from "../context/ThemeContext";
@@ -48,6 +48,9 @@ const YourCollections = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
 
   const apiBaseUrl = "http://localhost:8000";
+
+  // Ref for the modal content to check if clicks are outside
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const fetchCollections = async () => {
@@ -117,7 +120,7 @@ const YourCollections = () => {
 
   const handleDuplicateCollection = async () => {
     if (!collectionToDuplicate) return;
-  
+
     const newCollectionName = `${collectionToDuplicate.name} Copy`;
     const newCollection = {
       name: newCollectionName,
@@ -126,7 +129,7 @@ const YourCollections = () => {
       status: "private", // Ensure you include any default values expected by the API
       user_id: collectionToDuplicate.user_id, // Ensure you provide the user_id if required by your API
     };
-  
+
     try {
       const response = await axios.post(`${apiBaseUrl}/collections`, newCollection, {
         headers: {
@@ -140,7 +143,7 @@ const YourCollections = () => {
     } catch (error) {
       console.error("Error duplicating collection:", error);
     }
-  };  
+  };
 
   const handleStartSession = (
     min: number,
@@ -187,6 +190,25 @@ const YourCollections = () => {
     }).format(date);
   };
 
+  // Effect to handle click outside modal
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setDuplicateModalOpen(false); // Close the modal if clicked outside
+      }
+    };
+
+    if (isDuplicateModalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDuplicateModalOpen]);
+
   return (
     <div className="your-collections">
       <CollectionsNavBar
@@ -203,7 +225,7 @@ const YourCollections = () => {
         </div>
         <button
           type="button"
-          className="duplicate-collection-button styled-button" /* Added styled-button class */
+          className="duplicate-collection-button styled-button"
           onClick={() => setDuplicateModalOpen(true)}
         >
           Duplicate Collection
@@ -269,7 +291,7 @@ const YourCollections = () => {
       )}
       {isDuplicateModalOpen && (
         <div className="modal-background">
-          <div className="modal-content">
+          <div className="modal-content" ref={modalRef}>
             <h2>Duplicate Collection</h2>
             <select
               value={collectionToDuplicate?.collection_id || ""}
