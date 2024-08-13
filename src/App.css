@@ -951,21 +951,31 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center; /* Center all elements horizontally */
-  justify-content: center; /* Center all elements vertically if needed */
+  justify-content: center; /* Center all elements vertically */
   height: 100vh; /* Full viewport height for centering */
   width: 100%; /* Full width */
   text-align: center; /* Center text inside elements */
+  padding: 20px; /* Optional padding for spacing */
+  box-sizing: border-box; /* Ensure padding is included in the width/height */
+}
+
+.auth-container h1 {
+  margin-bottom: 20px;
 }
 
 .auth-container input,
 .auth-container button {
   margin-bottom: 10px;
+  padding: 10px;
+  width: 300px; /* Fixed width for inputs/buttons */
+  font-size: 1em;
 }
 
 .link-container {
   margin-top: 10px; /* Add some space above the link */
   display: flex;
   justify-content: center; /* Center the link horizontally */
+  align-items: center; /* Center the link vertically */
   width: 100%; /* Full width to align with other elements */
 }
 
@@ -985,10 +995,6 @@ li {
 
 .link-button:hover {
   text-decoration: none;
-}
-
-.auth-container h1 {
-  margin-bottom: 20px;
 }
 
 .auth-container input {
