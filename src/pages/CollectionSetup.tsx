@@ -7,6 +7,7 @@ import {
   generateFullAlphabet,
   generateNumbersOneToHundred,
 } from "../utils/RandomGenerators";
+import { saveCollection } from "../api"; // Assuming you have this API function
 
 const CollectionSetup: React.FC = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const CollectionSetup: React.FC = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
+      setSequence([]); // Clear any existing sequence
     }
   };
 
@@ -36,6 +38,7 @@ const CollectionSetup: React.FC = () => {
       generatedSequence = generateNumbersOneToHundred();
     }
     setSequence(generatedSequence);
+    setFile(null); // Clear any uploaded file
   };
 
   const handleNext = () => {
@@ -47,6 +50,25 @@ const CollectionSetup: React.FC = () => {
     navigate("/collection-final-step", {
       state: { collectionName, isPublic, category, itemCount, file, sequence },
     });
+  };
+
+  const handleSaveCollection = async () => {
+    try {
+      const collectionData = sequence.map((name, index) => ({
+        id: index + 1,
+        name,
+      }));
+      await saveCollection(
+        1, // Replace with actual user ID logic
+        collectionName,
+        collectionData,
+        isPublic ? "public" : "private",
+        category
+      );
+      navigate("/your-collections"); // Redirect to collections page
+    } catch (error) {
+      console.error("Error saving collection:", error);
+    }
   };
 
   return (
@@ -102,8 +124,12 @@ const CollectionSetup: React.FC = () => {
           title="Choose a file to upload"
         />
       </div>
-      <button type="button" onClick={handleNext} className="styled-button">
-        Next
+      <button
+        type="button"
+        onClick={sequence.length > 0 ? handleSaveCollection : handleNext}
+        className="styled-button"
+      >
+        {sequence.length > 0 ? "Save Collection" : "Next"}
       </button>
       {sequence.length > 0 && (
         <div>
