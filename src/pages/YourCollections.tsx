@@ -257,18 +257,22 @@ const YourCollections = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div className="modal duplicate-modal">
+        <div className="modal-background">
           <div className="modal-content">
             <h2>Duplicate Collection</h2>
             <select
               value={collectionToDuplicate?.collection_id || ""}
               onChange={(e) => {
                 const selectedId = parseInt(e.target.value);
-                const selectedCollection = collections.find(col => col.collection_id === selectedId);
+                const selectedCollection = collections.find(
+                  (col) => col.collection_id === selectedId
+                );
                 setCollectionToDuplicate(selectedCollection || null);
               }}
             >
-              <option value="" disabled>Select a collection to duplicate</option>
+              <option value="" disabled>
+                Select a collection to duplicate
+              </option>
               {collections.map((collection) => (
                 <option key={collection.collection_id} value={collection.collection_id}>
                   {collection.name}
@@ -276,7 +280,7 @@ const YourCollections = () => {
               ))}
             </select>
             <div className="button-group">
-            <button
+              <button
                 type="button"
                 className="duplicate-button styled-button"
                 disabled={!collectionToDuplicate}
