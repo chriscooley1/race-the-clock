@@ -40,6 +40,18 @@ const Login: React.FC = () => {
       <button type="button" onClick={handleLogin} className="styled-button">
         Login
       </button>
+      <div className="link-container">
+        <p>
+          New user?{" "}
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </button>
+        </p>
+      </div>
     </div>
   );
 };

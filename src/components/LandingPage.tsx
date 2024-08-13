@@ -7,8 +7,12 @@ const LandingPage: React.FC = () => {
   return (
     <div className="landing-page">
       <h1>Welcome to the Letter Reader App</h1>
-      <button type="button" onClick={() => navigate("/register")}>Register</button>
-      <button type="button" onClick={() => navigate("/login")}>Already Registered</button>
+      <button type="button" onClick={() => navigate("/register")}>
+        Register
+      </button>
+      <button type="button" onClick={() => navigate("/login")}>
+        Already Registered
+      </button>
     </div>
   );
 };
