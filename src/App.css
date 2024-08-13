@@ -573,24 +573,80 @@ button {
   background-color: #ffcccc; /* Light Red */
 }
 
+.collection-item.color-1 h1 {
+  background-color: #990000; /* Darker but readable Red */
+}
+
 .collection-item.color-2 {
   background-color: #ccffcc; /* Light Green */
+}
+
+.collection-item.color-2 h1 {
+  background-color: #009900; /* Darker but readable Green */
 }
 
 .collection-item.color-3 {
   background-color: #ccccff; /* Light Blue */
 }
 
+.collection-item.color-3 h1 {
+  background-color: #000099; /* Darker but readable Blue */
+}
+
 .collection-item.color-4 {
   background-color: #ffffcc; /* Light Yellow */
+}
+
+.collection-item.color-4 h1 {
+  background-color: #999900; /* Darker but readable Yellow */
 }
 
 .collection-item.color-5 {
   background-color: #ffccff; /* Light Pink */
 }
 
+.collection-item.color-5 h1 {
+  background-color: #990099; /* Darker but readable Pink */
+}
+
 .collection-item.color-6 {
   background-color: #ccffff; /* Light Cyan */
+}
+
+.collection-item.color-6 h1 {
+  background-color: #009999; /* Darker but readable Cyan */
+}
+
+.collection-item.color-7 {
+  background-color: #ffe4b5; /* Light Peach */
+}
+
+.collection-item.color-7 h1 {
+  background-color: #cc6600; /* Darker Peach */
+}
+
+.collection-item.color-8 {
+  background-color: #e0ffe0; /* Light Mint */
+}
+
+.collection-item.color-8 h1 {
+  background-color: #009966; /* Darker Mint */
+}
+
+.collection-item.color-9 {
+  background-color: #f0e68c; /* Light Khaki */
+}
+
+.collection-item.color-9 h1 {
+  background-color: #b8860b; /* Darker Khaki */
+}
+
+.collection-item.color-10 {
+  background-color: #ffd700; /* Light Gold */
+}
+
+.collection-item.color-10 h1 {
+  background-color: #b8860b; /* Darker Gold */
 }
 
 /* Add more colors as needed */
@@ -1123,8 +1179,6 @@ li {
   border-color: #0056b3; /* Active state border color */
 }
 
-
-
 .edit-button {
   background-color: #ffcc00; /* Yellow background */
   color: black; /* Black text */
@@ -1257,14 +1311,14 @@ li {
 .duplicate-collection-button:hover,
 .modal .duplicate-button:hover,
 .modal .cancel-button:hover {
-  background-color: #45a049; /* Darker green on hover */
+  background-color: #007bff; /* Blue on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
 .duplicate-collection-button:active,
 .modal .duplicate-button:active,
 .modal .cancel-button:active {
-  background-color: #388e3c; /* Even darker green when active */
+  background-color: #0056b3; /* Even darker blue when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
 
