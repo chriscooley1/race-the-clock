@@ -14,6 +14,7 @@ interface Collection {
   description: string; // Ensure this is a JSON string
   created_at: string; // Ensure this is a date string
   category: string;
+  user_id: number;
 }
 
 interface Item {
@@ -37,6 +38,8 @@ const YourCollections = () => {
   const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
   const [sortOption, setSortOption] = useState<string>("date");
+  const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
+  const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
   const { theme } = useTheme();
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -112,6 +115,33 @@ const YourCollections = () => {
     setEditModalOpen(true);
   };
 
+  const handleDuplicateCollection = async () => {
+    if (!collectionToDuplicate) return;
+  
+    const newCollectionName = `${collectionToDuplicate.name} Copy`;
+    const newCollection = {
+      name: newCollectionName,
+      description: collectionToDuplicate.description,
+      category: collectionToDuplicate.category,
+      status: "private", // Ensure you include any default values expected by the API
+      user_id: collectionToDuplicate.user_id, // Ensure you provide the user_id if required by your API
+    };
+  
+    try {
+      const response = await axios.post(`${apiBaseUrl}/collections`, newCollection, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const duplicatedCollection: Collection = response.data;
+      setCollections((prevCollections) => [...prevCollections, duplicatedCollection]);
+      filterAndSortCollections([...collections, duplicatedCollection], selectedCategory, sortOption);
+      setDuplicateModalOpen(false); // Close the modal after duplication
+    } catch (error) {
+      console.error("Error duplicating collection:", error);
+    }
+  };  
+
   const handleStartSession = (
     min: number,
     sec: number,
@@ -152,12 +182,17 @@ const YourCollections = () => {
         selectedCategory={selectedCategory}
         onSelectCategory={handleCategorySelect}
       />
-      <div className="sort-options">
-        <label htmlFor="sort">Sort by:</label>
-        <select id="sort" value={sortOption} onChange={handleSortChange}>
-          <option value="date">Date Created</option>
-          <option value="alphabetical">Alphabetical</option>
-        </select>
+      <div className="control-panel">
+        <div className="sort-options">
+          <label htmlFor="sort">Sort by:</label>
+          <select id="sort" value={sortOption} onChange={handleSortChange}>
+            <option value="date">Date Created</option>
+            <option value="alphabetical">Alphabetical</option>
+          </select>
+        </div>
+        <button type="button" className="duplicate-collection-button" onClick={() => setDuplicateModalOpen(true)}>
+          Duplicate Collection
+        </button>
       </div>
       <div className="collections-list">
         {filteredCollections.map((collection, index) => {
@@ -216,6 +251,43 @@ const YourCollections = () => {
             console.log("Save new items:", newItems);
           }}
         />
+      )}
+      {isDuplicateModalOpen && (
+        <div className="modal duplicate-modal">
+          <div className="modal-content">
+            <h2>Duplicate Collection</h2>
+            <select
+              value={collectionToDuplicate?.collection_id || ""}
+              onChange={(e) => {
+                const selectedId = parseInt(e.target.value);
+                const selectedCollection = collections.find(col => col.collection_id === selectedId);
+                setCollectionToDuplicate(selectedCollection || null);
+              }}
+            >
+              <option value="" disabled>Select a collection to duplicate</option>
+              {collections.map((collection) => (
+                <option key={collection.collection_id} value={collection.collection_id}>
+                  {collection.name}
+                </option>
+              ))}
+            </select>
+            <div className="button-group">
+              <button
+                type="button"
+                onClick={() => setDuplicateModalOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={!collectionToDuplicate}
+                onClick={handleDuplicateCollection}
+              >
+                Duplicate
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
