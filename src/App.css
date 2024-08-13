@@ -766,11 +766,16 @@ button {
   padding: 20px;
   border-radius: 8px;
   width: 50%; /* Adjust width as needed */
+  max-width: 700px; /* Set a maximum width for responsiveness */
   text-align: center;
   color: inherit;
-  margin-top: 60px;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add some shadow for depth */
+  display: flex; /* Use flexbox to center content */
+  flex-direction: column; /* Align children in a column */
+  align-items: center; /* Center children horizontally */
+  justify-content: center; /* Center children vertically */
 }
 
 .close-button {
