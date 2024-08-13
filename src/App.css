@@ -1206,7 +1206,7 @@ li {
 .sort-options {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-right: 20px; /* Add space between the sort options and the duplicate button */
 }
 
 .sort-options label {
@@ -1221,15 +1221,8 @@ li {
   border-radius: 4px;
   font-size: 1em; /* Ensure font size fits the box */
   font-family: 'Caveat', cursive; /* Set a default fun font for the body */
-  width: 200px; /* Set a fixed width to ensure content fits */
-  max-width: 100%; /* Ensure it does not overflow container */
-  appearance: none; /* Removes default browser styles */
-  -webkit-appearance: none; /* For Safari */
-  -moz-appearance: none; /* For Firefox */
-  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'><path fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>"); /* Custom arrow */
+  width: 150px; /* Set a fixed width to ensure content fits */
   background-repeat: no-repeat;
-  background-position: right 10px center; /* Position the arrow */
-  box-sizing: border-box; /* Include padding in width calculation */
 }
 
 /* Style for the control panel buttons, including duplicate collection */
