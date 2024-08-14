@@ -1,5 +1,5 @@
 const localConfig = {
-  API_BASE_URL: "http://localhost:8000",
+  API_BASE_URL: "http://localhost:8000/api",
   ALLOWED_ORIGINS: ["http://localhost:5173"],
 };
 
