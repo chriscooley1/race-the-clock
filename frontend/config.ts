@@ -4,8 +4,8 @@ const localConfig = {
 };
 
 const productionConfig = {
-  API_BASE_URL: "https://your-production-api.com",
-  ALLOWED_ORIGINS: ["https://chriscooley1.github.io/race-the-clock/"],
+  API_BASE_URL: "https://race-the-clock-frontend-production.up.railway.app",
+  ALLOWED_ORIGINS: ["https://race-the-clock-backend-production.up.railway.app"],
 };
 
 export const config =
