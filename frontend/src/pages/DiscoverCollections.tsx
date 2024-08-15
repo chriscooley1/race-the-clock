@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError } from "axios";
 import CollectionPreviewModal from "../components/CollectionPreviewModal";
 
 interface Item {

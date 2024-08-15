@@ -35,7 +35,7 @@ const App: React.FC = () => {
           <Navbar />
           <div className="layout">
             {!hideSidebar && <Sidebar />}
-            <div className={`main-content ${hideSidebar ? 'without-sidebar' : 'with-sidebar'}`}>
+            <div className={`main-content ${hideSidebar ? "without-sidebar" : "with-sidebar"}`}>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
