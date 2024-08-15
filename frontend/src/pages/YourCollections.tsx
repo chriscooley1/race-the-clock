@@ -8,6 +8,9 @@ import CollectionsNavBar from "../components/CollectionsNavBar";
 import EditCollectionModal from "../components/EditCollectionModal";
 import "../App.css";
 
+// Import the API base URL from environment variables
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface Collection {
   collection_id: number;
   name: string;
@@ -47,7 +50,8 @@ const YourCollections = () => {
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
 
-  const apiBaseUrl = "http://localhost:8000";
+  // Remove hardcoded localhost URL and use API_BASE_URL instead
+  const apiBaseUrl = API_BASE_URL;
 
   // Ref for the modal content to check if clicks are outside
   const modalRef = useRef<HTMLDivElement | null>(null);
