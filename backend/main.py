@@ -7,8 +7,8 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from pydantic import BaseModel
 from typing import List, Optional
-from .database import get_db
-from .models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, ItemRead
+from database import get_db
+from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, ItemRead
 from decouple import config
 
 SECRET_KEY = config("SECRET_KEY")
