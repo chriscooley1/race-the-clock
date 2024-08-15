@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -15,22 +17,41 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' # Use the Python version your backend requires
+          python-version: '3.10'  # Set to the Python version your backend uses
 
       - name: Install dependencies
         run: |
+          cd backend
           python -m venv venv
           source venv/bin/activate
-          pip install -r backend/requirements.txt
+          pip install -r requirements.txt
 
-      - name: Run Alembic migrations
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Run Tests (Optional)
         run: |
-          source venv/bin/activate
           cd backend
-          alembic upgrade head
+          source venv/bin/activate
+          pytest  # Or any other test command you use
 
       - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Store this in GitHub Secrets
         run: |
-          railway up --environment production
+          cd backend
+          railway up  # This assumes you have a Railway project setup
+
+      # Optional: Use Docker for deployment
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ghcr.io/your-username/your-backend:latest  # Adjust according to your setup
+
+      # Example for deploying to Heroku (if using Heroku)
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}  # Store this in GitHub Secrets
+          heroku_app_name: "your-heroku-app-name"
+          heroku_email: "your-heroku-email"
+          usedocker: true  # If you're deploying via Docker, otherwise remove this line
