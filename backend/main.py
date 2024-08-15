@@ -26,8 +26,8 @@ app = FastAPI()
 ALLOWED_ORIGINS = config("ALLOWED_ORIGINS").split(",")
 app.add_middleware(
     CORSMiddleware,
-    # allow_origins=["http://localhost:5173"],  # Adjust this list to match your frontend URL(s)
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origins=["*"],  # Adjust this list to match your frontend URL(s)
+    # allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
