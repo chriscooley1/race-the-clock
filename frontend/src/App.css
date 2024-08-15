@@ -33,16 +33,12 @@ p, button {
   font-family: 'Patrick Hand', cursive; /* Use a friendly handwriting font for paragraphs and buttons */
 }
 
-.special-font {
-  font-family: 'Comic Neue', cursive; /* Apply a different font for special text */
-}
-
 /* Define classes for different text colors */
 .text-color {
   color: var(--text-color);
 }
 
-.button, .start-session-button, .cancel-button {
+.button, .styled-button, .start-session-button, .cancel-button {
   background-color: var(--color);
   color: var(--text-color);
 }
@@ -53,48 +49,31 @@ p, button {
   margin-top: 20px; /* Add some margin above the buttons */
 }
 
-.edit-button,
-.delete-button {
-  margin-right: 10px; /* Space between the buttons */
-}
-
-/* Ensure the #root element covers the full viewport */
-#root {
+#root, .app-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
 }
 
-/* Container for the entire app */
 .app-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
   transition: background-color 0.3s, color 0.3s;
-  padding-top: 50px; /* Add padding for navbar height */
+  padding-top: 50px;
 }
 
 /* Sidebar styles */
 .sidebar {
   width: 250px;
-  background-color: #ffe4e1; /* Pastel pink background */
+  background-color: #ffe4e1;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   height: 100%;
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 50px; /* Adjusted to sit below the navbar */
+  top: 50px;
   left: 0;
   padding: 20px;
-  z-index: 900; /* Ensure sidebar is below the navbar */
-  margin: 0; /* Ensure no margin */
-  padding-right: 0; /* Ensure no padding to the right */
-}
-
-.sidebar h2 {
-  margin-top: 0;
+  z-index: 900;
 }
 
 .sidebar ul {
@@ -116,63 +95,38 @@ p, button {
   color: #007bff;
 }
 
-/* Main content container to ensure elements line up correctly */
 .main-content {
   flex: 1;
-  padding: 0; /* Remove padding if any */
+  padding: 0;
   overflow-x: hidden;
 }
 
 .with-sidebar {
-  margin-left: 250px; /* Align with sidebar width */
-  max-width: calc(100% - 250px); /* Ensure it does not overflow horizontally */
+  margin-left: 250px;
+  max-width: calc(100% - 250px);
 }
 
 .without-sidebar {
-  margin-left: 0; /* No sidebar, no margin needed */
-  max-width: 100%; /* Use full width */
+  margin-left: 0;
+  max-width: 100%;
 }
 
-.home-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Align items to the top */
-  height: 100vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
-  position: relative;
-  transition: background-color 0.3s, color 0.3s;
-  overflow: hidden; /* Prevent scrolling */
+.special-font {
+  font-family: 'Comic Neue', cursive;
 }
 
-/* Styles for the top bar containing theme and text color selectors */
-.top-bar {
-  display: flex;
-  justify-content: space-between; /* Distribute space evenly */
-  width: 100%; /* Full width to match the page width */
-  padding: 20px; /* Add padding for spacing */
-  background-color: #f4f4f4; /* Optional background color */
-}
-
-.theme-selector, .text-color-selector {
-  /* Styles for individual selectors */
-  margin: 0 10px;
-}
-
-/* Display container for sequences */
 .display-container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  color: inherit; /* Use the inherited color from parent theme */
 }
 
 .display-container h1 {
   font-size: 10vw;
   text-align: center;
   margin: 0;
-  color: inherit;
 }
 
 /* Additional global styles */
@@ -186,32 +140,6 @@ input,
 button {
   display: block;
   margin: 10px 0;
-}
-
-/* Flexbox adjustments for form layout */
-.input-field {
-  display: flex;
-  max-width: 100%;
-  align-items: center;
-  margin: 10px 10px;
-}
-
-.input-field label {
-  margin-bottom: 5px;
-}
-
-.input-wrapper {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.settings-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
 }
 
 /* Theme selector adjustments */
@@ -271,22 +199,21 @@ button {
   margin-left: 10px;
 }
 
-/* Fullscreen display styles */
 .fullscreen-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
+  height: 90vh;
+  width: 100vw;
   position: relative;
   transition: background-color 0.3s, color 0.3s;
-  overflow: hidden; /* Prevent scrolling */
-  margin: 0; /* Remove default margins */
-  padding: 0; /* Remove default padding */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 .fullscreen-text {
-  font-size: 50vw; /* Responsive size */
+  font-size: 50vw;
   text-align: center;
   margin: 0;
 }
@@ -300,7 +227,7 @@ button {
   cursor: pointer;
   font-size: 1em;
   transition: background-color 0.3s;
-  margin-right: 20px; /* Add margin to separate from the title */
+  margin-right: 20px;
 }
 
 .back-button:hover {
@@ -821,47 +748,47 @@ button {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 50%; /* Adjust width as needed */
-  max-width: 700px; /* Set a maximum width for responsiveness */
+  width: 50%;
+  max-width: 700px;
   text-align: center;
   color: inherit;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add some shadow for depth */
-  display: flex; /* Use flexbox to center content */
-  flex-direction: column; /* Align children in a column */
-  align-items: center; /* Center children horizontally */
-  justify-content: center; /* Center children vertically */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .close-button {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #ff6666; /* Red background */
-  color: white; /* White text */
+  background-color: #ff6666;
+  color: white;
   border: none;
-  font-size: 1.2em; /* Slightly smaller font size for the box */
+  font-size: 1.2em;
   cursor: pointer;
-  border-radius: 4px; /* Rounded corners */
-  padding: 5px 10px; /* Padding to create a box shape */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  border-radius: 4px;
+  padding: 5px 10px;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .close-button:hover {
-  background-color: #cc0000; /* Darker red on hover */
-  transform: scale(1.1); /* Slight scale up on hover */
+  background-color: #cc0000;
+  transform: scale(1.1);
 }
 
 .close-button:active {
-  background-color: #990000; /* Even darker red when active */
-  transform: scale(0.95); /* Slight scale down when active */
+  background-color: #990000;
+  transform: scale(0.95);
 }
 
 .item-list {
-  max-height: 300px; /* Adjust based on your preference */
-  overflow-y: auto; /* Enables vertical scrolling */
-  margin-bottom: 20px; /* Provides space below the list */
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
 }
 
 .modal-background {
@@ -870,11 +797,11 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it's above other elements */
+  z-index: 1000;
 }
 
 ul {
@@ -946,17 +873,16 @@ li {
   color: #fff; /* Keep buttons white */
 }
 
-/* Centering styles for Login and Register */
 .auth-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center all elements horizontally */
-  justify-content: center; /* Center all elements vertically */
-  height: 100vh; /* Full viewport height for centering */
-  width: 100%; /* Full width */
-  text-align: center; /* Center text inside elements */
-  padding: 20px; /* Optional padding for spacing */
-  box-sizing: border-box; /* Ensure padding is included in the width/height */
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .auth-container h1 {
@@ -967,16 +893,16 @@ li {
 .auth-container button {
   margin-bottom: 10px;
   padding: 10px;
-  width: 300px; /* Fixed width for inputs/buttons */
+  width: 300px;
   font-size: 1em;
 }
 
 .link-container {
-  margin-top: 10px; /* Add some space above the link */
+  margin-top: 10px;
   display: flex;
-  justify-content: center; /* Center the link horizontally */
-  align-items: center; /* Center the link vertically */
-  width: 100%; /* Full width to align with other elements */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .link-container p {
@@ -986,7 +912,7 @@ li {
 .link-button {
   background: none;
   border: none;
-  color: #007bff; /* Use your primary link color */
+  color: #007bff;
   cursor: pointer;
   font-size: 1em;
   text-decoration: underline;
@@ -1004,28 +930,26 @@ li {
   font-size: 1em;
 }
 
-/* Navbar styles */
 .navbar {
-  position: fixed; /* Ensure the navbar stays at the top */
+  position: fixed;
   top: 0;
   width: 100%;
   height: 50px;
   display: flex;
-  justify-content: space-between; /* Space between items to push them apart */
+  justify-content: space-between;
   align-items: center;
-  background-color: #cceeff; /* Light blue background */
+  background-color: #cceeff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 0 20px; /* Add padding for spacing */
-  z-index: 1000; /* Ensure navbar has a high z-index */
+  padding: 0 20px;
+  z-index: 1000;
 }
 
-/* Navbar title - keep consistent color */
 .navbar-title {
   flex-grow: 1;
   text-align: center;
   font-size: 1.5em;
   font-weight: bold;
-  color: #333; /* Use a fixed color */
+  color: #333;
 }
 
 .logout-button {
@@ -1090,7 +1014,6 @@ li {
   transform: scale(0.95); /* Slight scale down when active */
 }
 
-/* Hamburger menu styles */
 .hamburger-menu {
   cursor: pointer;
   display: flex;
@@ -1102,18 +1025,18 @@ li {
 
 .hamburger-menu .bar {
   height: 3px;
-  background-color: #333; /* Adjust color as needed */
+  background-color: #333;
   transition: 0.3s;
 }
 
 .menu {
   position: absolute;
-  top: 50px; /* Adjust to place below navbar */
-  right: 20px; /* Align with the right edge */
+  top: 50px;
+  right: 20px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  z-index: 1001; /* Ensure it's above other elements */
+  z-index: 1001;
   padding: 10px;
 }
 
