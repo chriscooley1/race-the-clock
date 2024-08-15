@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import CollectionPreviewModal from "../components/CollectionPreviewModal";
 
+// Import the API base URL from environment variables
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface Item {
   name: string;
 }
@@ -24,9 +27,9 @@ const DiscoverCollections: React.FC = () => {
 
     const fetchPublicCollections = async () => {
       try {
-        const collectionsResponse = await axios.get<Collection[]>("http://localhost:8000/collections/public");
+        const collectionsResponse = await axios.get<Collection[]>(`${API_BASE_URL}/collections/public`);
         const collectionsWithItems = await Promise.all(collectionsResponse.data.map(async (collection) => {
-          const itemsUrl = `http://localhost:8000/collections/${collection.collection_id}/items`;
+          const itemsUrl = `${API_BASE_URL}/collections/${collection.collection_id}/items`;
           try {
             const itemsResponse = await axios.get<Item[]>(itemsUrl);
             if (isMounted) {
@@ -34,13 +37,8 @@ const DiscoverCollections: React.FC = () => {
               return { ...collection, items: itemsResponse.data };
             }
           } catch (error) {
-            const itemsError = error as AxiosError;  // Type assertion
-            console.error(`Error fetching items for collection ${collection.collection_id}:`, itemsError);
+            console.error(`Error fetching items for collection ${collection.collection_id}:`, error);
             if (isMounted) {
-              if (itemsError.response && itemsError.response.status === 404) {
-                console.log(`No items found for collection ${collection.collection_id}`);
-                return { ...collection, items: [] };
-              }
               return { ...collection, items: [] };
             }
           }

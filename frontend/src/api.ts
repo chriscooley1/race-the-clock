@@ -90,7 +90,7 @@ export interface Collection {
 }
 
 export const getCollections = async (token: string) => {
-  const response = await axios.get("http://localhost:8000/users/me/collections", {
+  const response = await axios.get(`${API_BASE_URL}/users/me/collections`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

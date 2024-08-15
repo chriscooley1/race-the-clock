@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+// Import the API base URL from environment variables
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const CreateCollectionForm: React.FC = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -8,7 +11,7 @@ const CreateCollectionForm: React.FC = () => {
 
   const handleCreateCollection = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/collections", {
+      const response = await axios.post(`${API_BASE_URL}/collections`, {
         name,
         description,
         status: isPublic ? "public" : "private", // Set status based on checkbox
