@@ -1,9 +1,6 @@
 import axios from "axios";
-import { useAuth } from "./context/AuthContext";
 
-require("dotenv").config();
-
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Function to get authorization headers
 const getAuthHeaders = () => ({
@@ -89,7 +86,7 @@ export interface Collection {
   name: string;
   description: string;
   creator_username: string;
-  created_at: string; // Add this line
+  created_at: string;
 }
 
 export const getCollections = async (token: string) => {
