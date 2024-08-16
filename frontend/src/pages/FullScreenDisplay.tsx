@@ -56,7 +56,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       className={`fullscreen-container ${theme.className || ""}`}
       style={{
         color: theme.displayTextColor || theme.textColor,  // Apply the displayTextColor here
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: theme.displayBackgroundColor || theme.backgroundColor,  // Apply the displayBackgroundColor here
         overflow: "hidden",
         display: "flex",
         alignItems: "center",

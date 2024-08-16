@@ -143,19 +143,19 @@ export const colorSchemes: ColorScheme[] = [
 
 colorSchemes[0]
 
-// Define the shape of your theme
 interface Theme {
   name: string;
   backgroundColor: string;
   textColor: string;
-  className?: string;
-  displayTextColor?: string;  // Add this to manage text color for FullScreenDisplay
+  displayTextColor?: string;
+  displayBackgroundColor?: string;  // New background color state
 }
 
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  setDisplayTextColor: (color: string) => void;  // New function to set displayTextColor
+  setDisplayTextColor: (color: string) => void;
+  setDisplayBackgroundColor: (color: string) => void;  // New function to set background color
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -172,16 +172,25 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setTheme((prevTheme) => ({ ...prevTheme, displayTextColor: color }));
   };
 
+  const setDisplayBackgroundColor = (color: string) => {
+    setTheme((prevTheme) => ({ ...prevTheme, displayBackgroundColor: color }));
+  };
+
   useEffect(() => {
+    localStorage.setItem("app-theme", JSON.stringify(theme));
+
     document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
     document.documentElement.style.setProperty("--text-color", theme.textColor);
     if (theme.displayTextColor) {
       document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor);
     }
-  }, [theme]);  
+    if (theme.displayBackgroundColor) {
+      document.documentElement.style.setProperty("--display-background-color", theme.displayBackgroundColor);
+    }
+  }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, setDisplayTextColor }}>
+    <ThemeContext.Provider value={{ theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor }}>
       {children}
     </ThemeContext.Provider>
   );

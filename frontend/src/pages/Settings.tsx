@@ -9,7 +9,7 @@ const colorOptions = [
 ];
 
 const Settings: React.FC = () => {
-  const { theme, setTheme, setDisplayTextColor } = useTheme();
+  const { theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newTheme = colorSchemes.find(scheme => scheme.name === event.target.value);
@@ -19,7 +19,11 @@ const Settings: React.FC = () => {
   };
 
   const handleTextColorChange = (color: string) => {
-    setDisplayTextColor(color);  // Update the text color in the context
+    setDisplayTextColor(color);
+  };
+
+  const handleBackgroundColorChange = (color: string) => {
+    setDisplayBackgroundColor(color);  // Update the background color in the context
   };
 
   return (
@@ -56,6 +60,27 @@ const Settings: React.FC = () => {
                 border: theme.displayTextColor === color ? "2px solid #000" : "1px solid #ccc"
               }}
               onClick={() => handleTextColorChange(color)}
+            />
+          ))}
+        </div>
+      </div>
+      <div>
+        <label>Background Color for Display:</label>
+        <div className="color-options">
+          {colorOptions.map((color) => (
+            <div
+              key={color}
+              className="color-option"
+              style={{
+                backgroundColor: color,
+                width: "30px",
+                height: "30px",
+                display: "inline-block",
+                margin: "5px",
+                cursor: "pointer",
+                border: theme.displayBackgroundColor === color ? "2px solid #000" : "1px solid #ccc"
+              }}
+              onClick={() => handleBackgroundColorChange(color)}
             />
           ))}
         </div>
