@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import SessionSettingsModal from "../components/SessionSettingsModal";
 import CollectionsNavBar from "../components/CollectionsNavBar";
@@ -43,7 +42,6 @@ const YourCollections = () => {
   const [sortOption, setSortOption] = useState<string>("date");
   const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
   const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
-  const { theme } = useTheme();
   const { token } = useAuth();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -154,13 +152,13 @@ const YourCollections = () => {
     sec: number,
     shuffle: boolean,
     speed: number,
-    textColor: string,
-    themeClassName: string
+    textColor: string
   ) => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
       const sequence = sequenceItems.map((item: { name: string }) => item.name);
       const duration = min * 60 + sec;
+
       navigate("/fullscreen-display", {
         state: {
           sequence,
@@ -168,9 +166,9 @@ const YourCollections = () => {
           speed,
           textColor,
           shuffle,
-          theme: themeClassName,
         },
       });
+
       setShowModal(false);
     }
   };
@@ -277,7 +275,6 @@ const YourCollections = () => {
           onStart={handleStartSession}
           currentSettings={{
             speed: 500,
-            theme: theme,
             textColor: "#000000",
           }}
         />

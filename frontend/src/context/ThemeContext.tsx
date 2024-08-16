@@ -1,7 +1,13 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
+interface ColorScheme {
+  name: string;
+  backgroundColor: string;
+  textColor: string;
+}
+
 // Define color schemes with complementary background and text colors
-export const colorSchemes = [
+export const colorSchemes: ColorScheme[] = [
   {
     name: "Light",
     backgroundColor: "#ffffff",
@@ -83,7 +89,6 @@ export const colorSchemes = [
     backgroundColor: "#8a2be2",
     textColor: "#ffffff",
   },
-  // Additional color schemes with varied text colors
   {
     name: "Coral",
     backgroundColor: "#ff6f61",
@@ -135,6 +140,8 @@ export const colorSchemes = [
     textColor: "#ffffff",
   },
 ];
+
+colorSchemes[0]
 
 // Define the shape of your theme
 interface Theme {

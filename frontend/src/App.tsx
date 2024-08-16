@@ -84,11 +84,11 @@ const App: React.FC = () => {
                 <Route 
                   path="/settings" 
                   element={<PrivateRoute element={<Settings />} />} 
-                />  // New route for Settings
+                />
                 <Route 
                   path="/my-account" 
                   element={<PrivateRoute element={<MyAccount />} />} 
-                />  // New route for My Account
+                />
               </Routes>
             </div>
           </div>

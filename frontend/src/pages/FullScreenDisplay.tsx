@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useTheme, colorSchemes } from "../context/ThemeContext"; // Import colorSchemes
+import { useTheme } from "../context/ThemeContext"; 
 import "../App.css";
 
 interface FullScreenDisplayProps {
@@ -15,11 +15,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const { sequence, speed, textColor, shuffle } = location.state;
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const [index, setIndex] = useState(0);
   const [shuffledSequence, setShuffledSequence] = useState<string[]>([]);
 
-  // Function to shuffle the sequence
   const shuffleArray = (array: string[]): string[] => {
     return array
       .map((value) => ({ value, sort: Math.random() }))
@@ -30,7 +29,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   useEffect(() => {
     onEnterFullScreen();
 
-    // Shuffle the sequence if shuffle is true
     if (shuffle) {
       setShuffledSequence(shuffleArray(sequence));
     } else {
@@ -50,8 +48,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   }, [shuffledSequence, speed]);
 
   const handleBack = () => {
-    const defaultTheme = colorSchemes[0]; // Reset to the default theme
-    setTheme(defaultTheme);
     navigate("/your-collections");
   };
 
@@ -65,19 +61,22 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh", // Ensure it takes full viewport height
+        height: "100vh",
       }}
     >
       <h1
         className="fullscreen-text"
         style={{
-          fontSize: "50vw", // Keep your preferred size
-          lineHeight: "0.8", // Adjust line height for descenders
-          margin: "0", // Remove default margin
+          fontSize: "50vw",
+          lineHeight: "0.8",
+          margin: "0",
         }}
       >
         {shuffledSequence[index]}
       </h1>
+      <button onClick={handleBack} className="back-button">
+        Back
+      </button>
     </div>
   );
 };
