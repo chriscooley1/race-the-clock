@@ -10,24 +10,6 @@ interface SessionSettingsModalProps {
   };
 }
 
-const speedOptions = [
-  { label: "0.25 seconds", value: 250 },
-  { label: "0.5 seconds", value: 500 },
-  { label: "0.75 seconds", value: 750 },
-  { label: "1 second", value: 1000 },
-  { label: "1.5 seconds", value: 1500 },
-  { label: "2 seconds", value: 2000 },
-  { label: "3 seconds", value: 3000 },
-  { label: "4 seconds", value: 4000 },
-  { label: "5 seconds", value: 5000 },
-  { label: "10 seconds", value: 10000 },
-  { label: "30 seconds", value: 30000 },
-  { label: "1 minute", value: 60000 },
-  { label: "2 minutes", value: 120000 },
-  { label: "5 minutes", value: 300000 },
-  { label: "10 minutes", value: 600000 }
-];
-
 const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   collectionName,
   onClose,
@@ -37,20 +19,29 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [shuffle, setShuffle] = useState(false);
-  const [speed, setSpeed] = useState(currentSettings.speed);
 
   useEffect(() => {
-    const totalSeconds = speed / 1000;
+    // Initialize minutes and seconds based on the currentSettings speed
+    const totalSeconds = currentSettings.speed / 1000;
     const mins = Math.floor(totalSeconds / 60);
     const secs = totalSeconds % 60;
     setMinutes(mins);
     setSeconds(secs);
-  }, [speed]);
+  }, [currentSettings.speed]);
 
   const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if ((event.target as HTMLElement).className === "modal-background") {
       onClose();
     }
+  };
+
+  const calculateSpeed = () => {
+    return (minutes * 60 + seconds) * 1000;
+  };
+
+  const handleStartClick = () => {
+    const calculatedSpeed = calculateSpeed();
+    onStart(minutes, seconds, shuffle, calculatedSpeed, currentSettings.textColor);
   };
 
   return (
@@ -99,34 +90,11 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               <label htmlFor="shuffle">Shuffle Collection</label>
             </div>
           </div>
-          <div className="settings">
-            <label htmlFor="speed">Speed: </label>
-            <select
-              id="speed"
-              value={speed}
-              onChange={(e) => setSpeed(Number(e.target.value))}
-              title="Select speed"
-            >
-              {speedOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
           <div className="modal-actions">
             <button
               type="button"
               className="start-session-button"
-              onClick={() =>
-                onStart(
-                  minutes,
-                  seconds,
-                  shuffle,
-                  speed,
-                  currentSettings.textColor
-                )
-              }
+              onClick={handleStartClick}
             >
               Start Session
             </button>

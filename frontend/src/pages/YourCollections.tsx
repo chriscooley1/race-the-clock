@@ -211,7 +211,7 @@ const YourCollections = () => {
   }, [isDuplicateModalOpen]);
 
   return (
-    <div className={`your-collections ${theme.className}`}>
+    <div className="your-collections">
       <CollectionsNavBar
         selectedCategory={selectedCategory}
         onSelectCategory={handleCategorySelect}
@@ -333,7 +333,7 @@ const YourCollections = () => {
         </div>
       )}
     </div>
-  );
+  );  
 };
 
 export default YourCollections;
