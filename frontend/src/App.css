@@ -357,7 +357,8 @@ button {
   min-height: 100vh; /* Ensure it covers the full viewport */
   overflow-y: auto; /* Allow vertical scrolling if needed */
   overflow-x: hidden; /* Prevent horizontal scrolling */
-  background-color: #fafafa; /* Fixed background color */
+  background-color: var(--background-color);
+  color: var(--text-color);
   padding-top: 50px; /* Add padding to prevent overlap with navbar */
 }
 

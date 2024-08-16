@@ -74,9 +74,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       >
         {shuffledSequence[index]}
       </h1>
-      <button onClick={handleBack} className="back-button">
-        Back
-      </button>
     </div>
   );
 };

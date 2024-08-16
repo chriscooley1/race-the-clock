@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import SessionSettingsModal from "../components/SessionSettingsModal";
 import CollectionsNavBar from "../components/CollectionsNavBar";
@@ -13,8 +14,8 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 interface Collection {
   collection_id: number;
   name: string;
-  description: string; // Ensure this is a JSON string
-  created_at: string; // Ensure this is a date string
+  description: string;
+  created_at: string;
   category: string;
   user_id: number;
 }
@@ -42,16 +43,15 @@ const YourCollections = () => {
   const [sortOption, setSortOption] = useState<string>("date");
   const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
   const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
+  const { theme } = useTheme();
   const { token } = useAuth();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
 
-  // Remove hardcoded localhost URL and use API_BASE_URL instead
   const apiBaseUrl = API_BASE_URL;
 
-  // Ref for the modal content to check if clicks are outside
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -128,8 +128,8 @@ const YourCollections = () => {
       name: newCollectionName,
       description: collectionToDuplicate.description,
       category: collectionToDuplicate.category,
-      status: "private", // Ensure you include any default values expected by the API
-      user_id: collectionToDuplicate.user_id, // Ensure you provide the user_id if required by your API
+      status: "private",
+      user_id: collectionToDuplicate.user_id,
     };
 
     try {
@@ -141,7 +141,7 @@ const YourCollections = () => {
       const duplicatedCollection: Collection = response.data;
       setCollections((prevCollections) => [...prevCollections, duplicatedCollection]);
       filterAndSortCollections([...collections, duplicatedCollection], selectedCategory, sortOption);
-      setDuplicateModalOpen(false); // Close the modal after duplication
+      setDuplicateModalOpen(false);
     } catch (error) {
       console.error("Error duplicating collection:", error);
     }
@@ -188,15 +188,14 @@ const YourCollections = () => {
       month: "long",
       day: "numeric",
       hour12: true,
-      timeZone: "America/Denver", // Adjust the time zone as needed
+      timeZone: "America/Denver",
     }).format(date);
   };
 
-  // Effect to handle click outside modal
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        setDuplicateModalOpen(false); // Close the modal if clicked outside
+        setDuplicateModalOpen(false);
       }
     };
 
@@ -212,7 +211,7 @@ const YourCollections = () => {
   }, [isDuplicateModalOpen]);
 
   return (
-    <div className="your-collections">
+    <div className={`your-collections ${theme.className}`}>
       <CollectionsNavBar
         selectedCategory={selectedCategory}
         onSelectCategory={handleCategorySelect}
@@ -235,7 +234,7 @@ const YourCollections = () => {
       </div>
       <div className="collections-list">
         {filteredCollections.map((collection, index) => {
-          const colorClass = `color-${(index % 10) + 1}`; // Cycles through color-1 to color-10
+          const colorClass = `color-${(index % 10) + 1}`;
           return (
             <div key={collection.collection_id} className={`collection-item ${colorClass}`}>
               <h1>{collection.name}</h1>
