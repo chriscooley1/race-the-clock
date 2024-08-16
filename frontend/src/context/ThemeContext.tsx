@@ -148,45 +148,45 @@ interface Theme {
   name: string;
   backgroundColor: string;
   textColor: string;
-  className?: string; // Optional if you still need it for styling
+  className?: string;
+  displayTextColor?: string;  // Add this to manage text color for FullScreenDisplay
 }
 
-// Define the shape of the context
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  setDisplayTextColor: (color: string) => void;  // New function to set displayTextColor
 }
 
-// Create the ThemeContext
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Define the ThemeProvider component
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Retrieve the theme from localStorage or default to the first color scheme
   const getInitialTheme = () => {
     const savedTheme = localStorage.getItem("app-theme");
-    return savedTheme ? JSON.parse(savedTheme) : colorSchemes[0]; // Default to the first color scheme
+    return savedTheme ? JSON.parse(savedTheme) : colorSchemes[0];
   };
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
-  useEffect(() => {
-    // Save theme to localStorage whenever it changes
-    localStorage.setItem("app-theme", JSON.stringify(theme));
+  const setDisplayTextColor = (color: string) => {
+    setTheme((prevTheme) => ({ ...prevTheme, displayTextColor: color }));
+  };
 
-    // Update CSS variables based on the selected theme
+  useEffect(() => {
     document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
     document.documentElement.style.setProperty("--text-color", theme.textColor);
-  }, [theme]);
+    if (theme.displayTextColor) {
+      document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor);
+    }
+  }, [theme]);  
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, setDisplayTextColor }}>
       {children}
     </ThemeContext.Provider>
   );
 };
 
-// Custom hook to use the ThemeContext
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {

@@ -210,12 +210,14 @@ button {
   overflow: hidden;
   margin: 0;
   padding: 0;
+  color: var(--display-text-color, var(--text-color)); /* Use display-text-color with a fallback */
 }
 
 .fullscreen-text {
   font-size: 50vw;
   text-align: center;
   margin: 0;
+  color: inherit; /* Ensure it inherits the correct color */
 }
 
 .back-button {
@@ -699,7 +701,7 @@ button {
 .custom-input {
   background-color: white !important; /* Ensures background is white */
   color: black !important;           /* Ensures text color is black */
-  border: 1px solid #ccc !important; /* Light border */
+  border: 1px solid var(--text-color); /* Use text color for input borders in dark mode */
   border-radius: 4px;                /* Rounded corners */
   padding: 8px;                      /* Padding inside the field */
   font-size: 1em;                    /* Font size */
@@ -1303,4 +1305,17 @@ li {
 .modal .cancel-button:active {
   background-color: #990000; /* Even darker red when active */
   transform: scale(0.95); /* Slight scale down when active */
+}
+
+body, .your-collections, .control-panel, .collections-list, .collection-item {
+  color: var(--text-color);
+}
+
+h1, p, label, button {
+  color: var(--text-color);  /* Ensure text elements use the theme's text color */
+}
+
+input {
+  color: var(--text-color);  /* Ensure input text uses the theme's text color */
+  background-color: var(--background-color);
 }

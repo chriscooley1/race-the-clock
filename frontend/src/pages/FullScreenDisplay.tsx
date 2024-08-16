@@ -14,7 +14,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { sequence, speed, textColor, shuffle } = location.state;
+  const { sequence, speed, shuffle } = location.state;
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
   const [shuffledSequence, setShuffledSequence] = useState<string[]>([]);
@@ -55,7 +55,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     <div
       className={`fullscreen-container ${theme.className || ""}`}
       style={{
-        color: textColor || theme.textColor,
+        color: theme.displayTextColor || theme.textColor,  // Apply the displayTextColor here
         backgroundColor: theme.backgroundColor,
         overflow: "hidden",
         display: "flex",

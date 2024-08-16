@@ -1,14 +1,25 @@
 import React from "react";
 import { useTheme, colorSchemes } from "../context/ThemeContext";
 
+const colorOptions = [
+  "#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#9400d3", // Bright colors
+  "#ffffff", "#000000", "#fdfd96", "#2e8b57", "#ff69b4", "#8a2be2", "#008080", // Additional colors
+  "#ffc107", "#708090", "#ff00ff", "#e6e6fa", "#32cd32", "#00ffff", "#fbceb1", // More colors
+  "#00a86b", "#ff6f61", "#034f84", "#f0f8ff", "#333333" // Even more colors
+];
+
 const Settings: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, setDisplayTextColor } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newTheme = colorSchemes.find(scheme => scheme.name === event.target.value);
     if (newTheme) {
       setTheme(newTheme);
     }
+  };
+
+  const handleTextColorChange = (color: string) => {
+    setDisplayTextColor(color);  // Update the text color in the context
   };
 
   return (
@@ -27,6 +38,27 @@ const Settings: React.FC = () => {
             </option>
           ))}
         </select>
+      </div>
+      <div>
+        <label>Text Color for Display:</label>
+        <div className="color-options">
+          {colorOptions.map((color) => (
+            <div
+              key={color}
+              className="color-option"
+              style={{
+                backgroundColor: color,
+                width: "30px",
+                height: "30px",
+                display: "inline-block",
+                margin: "5px",
+                cursor: "pointer",
+                border: theme.displayTextColor === color ? "2px solid #000" : "1px solid #ccc"
+              }}
+              onClick={() => handleTextColorChange(color)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
