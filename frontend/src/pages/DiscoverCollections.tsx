@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
+import { fetchPublicCollections, fetchItemsForCollection } from "../api";
 import CollectionPreviewModal from "../components/CollectionPreviewModal";
-
-// Import the API base URL from environment variables
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface Item {
   name: string;
@@ -25,34 +22,34 @@ const DiscoverCollections: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchPublicCollections = async () => {
+    const fetchCollections = async () => {
       try {
-        const collectionsResponse = await axios.get<Collection[]>(`${API_BASE_URL}/collections/public`);
-        const collectionsWithItems = await Promise.all(collectionsResponse.data.map(async (collection) => {
-          const itemsUrl = `${API_BASE_URL}/collections/${collection.collection_id}/items`;
-          try {
-            const itemsResponse = await axios.get<Item[]>(itemsUrl);
-            if (isMounted) {
-              console.log(`Items fetched for collection ${collection.collection_id}:`, itemsResponse.data);
-              return { ...collection, items: itemsResponse.data };
+        const collections = await fetchPublicCollections();
+        const collectionsWithItems = await Promise.all(
+          collections.map(async (collection) => {
+            try {
+              const items = await fetchItemsForCollection(collection.collection_id);
+              if (isMounted) {
+                return { ...collection, items };
+              }
+            } catch (error) {
+              console.error(`Error fetching items for collection ${collection.collection_id}:`, error);
+              if (isMounted) {
+                return { ...collection, items: [] };
+              }
             }
-          } catch (error) {
-            console.error(`Error fetching items for collection ${collection.collection_id}:`, error);
-            if (isMounted) {
-              return { ...collection, items: [] };
-            }
-          }
-          return collection;
-        }));
+            return collection;
+          })
+        );
         if (isMounted) {
           setCollections(collectionsWithItems);
         }
-      } catch (collectionsError) {
-        console.error("Error fetching public collections:", collectionsError);
+      } catch (error) {
+        console.error("Error fetching public collections:", error);
       }
     };
 
-    fetchPublicCollections();
+    fetchCollections();
 
     return () => {
       isMounted = false;

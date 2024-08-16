@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { fetchCollections, deleteCollectionById, duplicateCollection } from "../api";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import SessionSettingsModal from "../components/SessionSettingsModal";
 import CollectionsNavBar from "../components/CollectionsNavBar";
 import EditCollectionModal from "../components/EditCollectionModal";
 import "../App.css";
-
-// Import the API base URL from environment variables
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface Collection {
   collection_id: number;
@@ -37,6 +34,7 @@ const getItemsCount = (description: string): number => {
 };
 
 const YourCollections = () => {
+  const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
@@ -48,28 +46,20 @@ const YourCollections = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
-  const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
-
-  const apiBaseUrl = API_BASE_URL;
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const fetchCollections = async () => {
+    const loadCollections = async () => {
       try {
-        const response = await axios.get(`${apiBaseUrl}/users/me/collections`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data: Collection[] = response.data;
+        const data = await fetchCollections();
         setCollections(data);
         filterAndSortCollections(data, selectedCategory, sortOption);
       } catch (error) {
         console.error("Error fetching collections:", error);
       }
     };
-    fetchCollections();
+    loadCollections();
   }, [selectedCategory, sortOption, token]);
 
   const filterAndSortCollections = (collections: Collection[], category: string, sortOption: string) => {
@@ -92,11 +82,7 @@ const YourCollections = () => {
 
   const handleDeleteCollection = async (collectionId: number) => {
     try {
-      await axios.delete(`${apiBaseUrl}/collections/${collectionId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await deleteCollectionById(collectionId);
       const updatedCollections = collections.filter(
         (collection) => collection.collection_id !== collectionId
       );
@@ -115,30 +101,17 @@ const YourCollections = () => {
     }
   };
 
+  // Functions to handle the modal state
   const handleEditButtonClick = (collection: Collection) => {
     setSelectedCollection(collection);
-    setEditModalOpen(true);
+    setEditModalOpen(true);  // This correctly opens the modal
   };
 
   const handleDuplicateCollection = async () => {
     if (!collectionToDuplicate) return;
 
-    const newCollectionName = `${collectionToDuplicate.name} Copy`;
-    const newCollection = {
-      name: newCollectionName,
-      description: collectionToDuplicate.description,
-      category: collectionToDuplicate.category,
-      status: "private",
-      user_id: collectionToDuplicate.user_id,
-    };
-
     try {
-      const response = await axios.post(`${apiBaseUrl}/collections`, newCollection, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const duplicatedCollection: Collection = response.data;
+      const duplicatedCollection = await duplicateCollection(collectionToDuplicate);
       setCollections((prevCollections) => [...prevCollections, duplicatedCollection]);
       filterAndSortCollections([...collections, duplicatedCollection], selectedCategory, sortOption);
       setDuplicateModalOpen(false);
@@ -333,7 +306,7 @@ const YourCollections = () => {
         </div>
       )}
     </div>
-  );  
+  );
 };
 
 export default YourCollections;
