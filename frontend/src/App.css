@@ -1,23 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Chewy&family=Comic+Neue:wght@400;700&family=Patrick+Hand&family=Baloo+2:wght@400;700&display=swap');
 
-
-/* Ensure full viewport height for the root element */
-html,
-body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Prevent horizontal overflow */
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
-}
-
 /* Style the body */
 body {
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  font-family: 'Caveat', cursive;
   background-color: var(--background-color);
   color: var(--text-color);
 }
@@ -25,12 +10,13 @@ body {
 h1, h2, h3, p, button {
   color: inherit; /* Use the color from the theme */
 }
+
 h1, h2, h3 {
-  font-family: 'Chewy', cursive; /* Use a bold and playful font for headings */
+  font-family: 'Chewy', cursive;
 }
 
 p, button {
-  font-family: 'Patrick Hand', cursive; /* Use a friendly handwriting font for paragraphs and buttons */
+  font-family: 'Patrick Hand', cursive;
 }
 
 /* Define classes for different text colors */
@@ -49,36 +35,17 @@ p, button {
   margin-top: 20px; /* Add some margin above the buttons */
 }
 
-#root, .app-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-
 .app-container {
-  transition: background-color 0.3s, color 0.3s;
   padding-top: 50px;
 }
 
-/* Sidebar styles */
 .sidebar {
   width: 250px;
   background-color: #ffe4e1;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   height: 100%;
-  display: flex;
-  flex-direction: column;
   position: fixed;
-  top: 50px;
-  left: 0;
   padding: 20px;
-  z-index: 900;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
 }
 
 .sidebar li {
