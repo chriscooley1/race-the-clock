@@ -1,0 +1,16 @@
+.my-account-container {
+  padding: 20px;
+}
+
+.my-account-heading {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.my-account-info {
+  margin: 10px 0;
+}
+
+.my-account-info strong {
+  font-weight: bold;
+}

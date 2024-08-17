@@ -24,10 +24,40 @@ p, button {
   color: var(--text-color);
 }
 
-.button-group {
+/* Define classes for different text colors */
+.text-color {
+  color: var(--text-color);
+}
+
+.auth-container {
   display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  margin-top: 20px; /* Add some margin above the buttons */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth-container h1 {
+  margin-bottom: 20px;
+}
+
+.auth-container input,
+.auth-container button {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 300px;
+  font-size: 1em;
+}
+
+.auth-container input {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 300px;
+  font-size: 1em;
 }
 
 .app-container {
@@ -295,52 +325,6 @@ button {
   background-color: #b8860b; /* Darker Gold */
 }
 
-/* Styling for the start button */
-.start-button {
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px 20px; /* Padding for size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-}
-
-.start-button:hover {
-  background-color: #45a049; /* Darker green on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.start-button:active {
-  background-color: #388e3c; /* Even darker green when active */
-  transform: scale(0.95); /* Slight scale down when active */
-}
-
-/* Styling for the delete button */
-.delete-button {
-  background-color: #ff6666; /* Red background */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px 20px; /* Padding for size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-}
-
-.delete-button:hover {
-  background-color: #cc0000; /* Darker red on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.delete-button:active {
-  background-color: #990000; /* Even darker red when active */
-  transform: scale(0.95); /* Slight scale down when active */
-}
-
 .styled-button {
   background-color: #cceeff; /* Light blue background */
   color: black; /* Black text color */
@@ -362,12 +346,6 @@ button {
 .styled-button:active {
   background-color: #0056b3; /* Darker background when active */
   transform: scale(0.95); /* Slight scale down when active */
-}
-
-.add-item-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
 }
 
 .add-button {
@@ -455,12 +433,6 @@ button {
   font-size: 14px; /* Size of the checkmark */
 }
 
-.customization-options {
-  width: 1200px;
-  display: flex;
-  justify-content: center;
-}
-
 .modal-container {
   background: #fff;
   padding: 20px;
@@ -476,36 +448,6 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #ff6666;
-  color: white;
-  border: none;
-  font-size: 1.2em;
-  cursor: pointer;
-  border-radius: 4px;
-  padding: 5px 10px;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.close-button:hover {
-  background-color: #cc0000;
-  transform: scale(1.1);
-}
-
-.close-button:active {
-  background-color: #990000;
-  transform: scale(0.95);
-}
-
-.item-list {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-bottom: 20px;
 }
 
 .modal-background {
@@ -671,23 +613,6 @@ li {
   width: 90%; /* Ensure it spans the full width of the container */
 }
 
-.item-input {
-  flex-grow: 1; /* Allow the input to take up the available space */
-  margin-right: 10px; /* Space between the input and the remove button */
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  color: black;
-  background-color: white;
-}
-
-.add-item-container {
-  display: flex;
-  flex-direction: column; /* Ensures add button and items are stacked vertically */
-  width: 100%; /* Use full width of the container */
-  align-items: center; /* Center items horizontally */
-}
-
 .remove-button {
   padding: 5px 10px;
   background-color: #ff6666;
@@ -699,120 +624,6 @@ li {
 
 .remove-button:hover {
   background-color: #cc0000;
-}
-
-.edit-button {
-  background-color: #ffcc00; /* Yellow background */
-  color: black; /* Black text */
-  border: none; /* Remove default border */
-  padding: 10px 20px; /* Padding for size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin-right: 10px; /* Add margin for spacing */
-}
-
-.edit-button:hover {
-  background-color: #e6b800; /* Darker yellow on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.edit-button:active {
-  background-color: #cc9900; /* Even darker yellow when active */
-  transform: scale(0.95); /* Slight scale down when active */
-}
-
-/* CSS for the session settings modal */
-.time-setting {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px; /* Add margin for spacing */
-}
-
-.time-labels {
-  display: flex;
-  justify-content: space-between; /* Distribute space evenly between labels */
-  width: 100%; /* Full width to align with inputs */
-  margin-bottom: 10px; /* Margin below labels */
-}
-
-.time-labels label {
-  flex: 1; /* Allow labels to grow equally */
-  text-align: center; /* Center the text */
-}
-
-.time-inputs {
-  display: flex;
-  justify-content: space-between; /* Distribute space evenly between inputs */
-  width: 100%; /* Full width */
-}
-
-.time-inputs input {
-  flex: 1; /* Allow inputs to grow equally */
-  margin: 0 5px; /* Margin between inputs */
-  padding: 8px; /* Padding for input size */
-  border: 1px solid #ccc; /* Light border */
-  border-radius: 4px; /* Rounded corners */
-  text-align: center; /* Center text in inputs */
-}
-
-/* Button styles */
-.preview-button {
-  background-color: #4caf50; /* Green background for preview button */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px 20px; /* Consistent padding for size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin: 0 5px; /* Add margin between buttons */
-}
-
-.preview-button:hover {
-  background-color: #45a049; /* Darker green on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.preview-button:active {
-  background-color: #388e3c; /* Even darker green when active */
-  transform: scale(0.95); /* Slight scale down when active */
-}
-
-.sort-options {
-  display: flex;
-  align-items: center;
-  margin-right: 20px; /* Add space between the sort options and the duplicate button */
-}
-
-.sort-options label {
-  margin-right: 10px;
-}
-
-.sort-options select {
-  background-color: white; /* White background */
-  color: black; /* Black text color */
-  border: 1px solid #ccc; /* Optional: Light border */
-  padding: 5px 10px; /* Add horizontal padding for better alignment */
-  border-radius: 4px;
-  font-size: 1em; /* Ensure font size fits the box */
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
-  width: 150px; /* Set a fixed width to ensure content fits */
-  background-repeat: no-repeat;
-}
-
-/* Style for the control panel buttons, including duplicate collection */
-.control-panel {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Center the items horizontally */
-  width: 100%; /* Full width */
-  margin-bottom: 20px; /* Add space below */
 }
 
 /* Styling for the buttons within the modal */
@@ -878,21 +689,4 @@ h1, p, label, button {
 input {
   color: var(--text-color);  /* Ensure input text uses the theme's text color */
   background-color: var(--background-color);
-}
-
-.my-account-container {
-  padding: 20px;
-}
-
-.my-account-heading {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.my-account-info {
-  margin: 10px 0;
-}
-
-.my-account-info strong {
-  font-weight: bold;
 }

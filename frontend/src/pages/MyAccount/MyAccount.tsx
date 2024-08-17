@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css";
+import "./MyAccount.css";
 
 const MyAccount: React.FC = () => {
   // Assuming user data is stored somewhere accessible

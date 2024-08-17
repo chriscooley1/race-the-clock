@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchCollections, deleteCollectionById, duplicateCollection } from "../../api";
-import { useAuth } from "../../context/AuthContext/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import SessionSettingsModal from "../../components/SessionSettingsModal/SessionSettingsModal";
 import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNavBar";
-import EditCollectionModal from "../../components/EditCollectionModal";
+import EditCollectionModal from "../../components/EditCollectionModal/EditCollectionModal";
 import "./YourCollections.css";
 
 interface Collection {

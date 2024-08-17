@@ -12,12 +12,12 @@ import CollectionSetup from "./pages/CollectionSetup/CollectionSetup";
 import CollectionFinalStep from "./pages/CollectionFinalStep/CollectionFinalStep";
 import NameGenerator from "./pages/NameGenerator";
 import Resources from "./pages/Resources";
-import { useTheme } from "./context/ThemeContext/ThemeContext";
-import { AuthProvider } from "./context/AuthContext/AuthContext";
+import { useTheme } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar/Navbar";
 import Settings from "./pages/Settings/Settings";
-import MyAccount from "./pages/MyAccount";
+import MyAccount from "./pages/MyAccount/MyAccount";
 import "./App.css";
 
 const App: React.FC = () => {

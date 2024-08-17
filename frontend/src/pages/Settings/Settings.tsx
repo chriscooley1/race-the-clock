@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme, colorSchemes } from "../../context/ThemeContext/ThemeContext";
+import { useTheme, colorSchemes } from "../../context/ThemeContext";
 import "./Settings.css";
 
 const colorOptions = [

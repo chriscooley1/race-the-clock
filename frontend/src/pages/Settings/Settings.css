@@ -33,31 +33,6 @@
   border: 2px solid #000;
 }
 
-/* Theme styles */
-.light-theme {
-  background-color: #fff;
-  color: #000;
-}
-
-.dark-theme {
-  background-color: #333;
-  color: #fff;
-}
-
-.blue-theme {
-  background-color: #cceeff;
-  color: #003366;
-}
-
-.theme-selector {
-  margin: 10px 0;
-}
-
-#theme-select {
-  padding: 5px;
-  margin-left: 10px;
-}
-
 /* Neon and color themes */
 .neon-pink-theme {
   background-color: #ff69b4;
@@ -92,11 +67,6 @@
 .yellow-theme {
   background-color: #ffff00;
   color: #000;
-}
-
-/* Define classes for different text colors */
-.text-color {
-  color: var(--text-color);
 }
 
 .logout-button {

@@ -11,3 +11,109 @@
   color: var(--text-color);
   padding-top: 50px; /* Add padding to prevent overlap with navbar */
 }
+
+.button-group {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  margin-top: 20px; /* Add some margin above the buttons */
+}
+
+/* Styling for the start button */
+.start-button {
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.start-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.start-button:active {
+  background-color: #388e3c; /* Even darker green when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+/* Styling for the delete button */
+.delete-button {
+  background-color: #ff6666; /* Red background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.delete-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.delete-button:active {
+  background-color: #990000; /* Even darker red when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+.edit-button {
+  background-color: #ffcc00; /* Yellow background */
+  color: black; /* Black text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-right: 10px; /* Add margin for spacing */
+}
+
+.edit-button:hover {
+  background-color: #e6b800; /* Darker yellow on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.edit-button:active {
+  background-color: #cc9900; /* Even darker yellow when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Add space between the sort options and the duplicate button */
+}
+
+.sort-options label {
+  margin-right: 10px;
+}
+
+.sort-options select {
+  background-color: white; /* White background */
+  color: black; /* Black text color */
+  border: 1px solid #ccc; /* Optional: Light border */
+  padding: 5px 10px; /* Add horizontal padding for better alignment */
+  border-radius: 4px;
+  font-size: 1em; /* Ensure font size fits the box */
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  width: 150px; /* Set a fixed width to ensure content fits */
+  background-repeat: no-repeat;
+}
+
+/* Style for the control panel buttons, including duplicate collection */
+.control-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the items horizontally */
+  width: 100%; /* Full width */
+  margin-bottom: 20px; /* Add space below */
+}
