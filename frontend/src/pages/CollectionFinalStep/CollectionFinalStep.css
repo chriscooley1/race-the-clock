@@ -5,12 +5,6 @@
   align-items: center;
 }
 
-.add-item-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
 .item-input {
   flex-grow: 1; /* Allow the input to take up the available space */
   margin-right: 10px; /* Space between the input and the remove button */
@@ -26,4 +20,5 @@
   flex-direction: column; /* Ensures add button and items are stacked vertically */
   width: 100%; /* Use full width of the container */
   align-items: center; /* Center items horizontally */
+  margin-bottom: 10px;
 }
