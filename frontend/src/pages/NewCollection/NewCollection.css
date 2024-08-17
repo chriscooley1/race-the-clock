@@ -1,0 +1,19 @@
+/* New Collection Container styles */
+.new-collection-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.new-collection-container input[type="text"] {
+  margin: 10px 0;
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+}
+
+.new-collection-container input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.new-collection-container button {
+  margin-top: 20px;
+}

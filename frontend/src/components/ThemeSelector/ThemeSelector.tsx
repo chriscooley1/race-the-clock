@@ -1,6 +1,6 @@
 import React from "react";
-import { useTheme, colorSchemes } from "../context/ThemeContext";
-import "../App.css";
+import { useTheme, colorSchemes } from "../../context/ThemeContext/ThemeContext";
+import "./ThemeSelector.css";
 
 const ThemeSelector: React.FC = () => {
   const { setTheme, theme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();

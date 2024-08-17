@@ -2,6 +2,11 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+interface Item {
+  id: number;
+  name: string;
+}
+
 // Function to get authorization headers
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");

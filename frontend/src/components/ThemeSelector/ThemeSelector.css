@@ -1,0 +1,31 @@
+/* Theme selector adjustments */
+.theme-selector {
+  background-color: #cceeff;
+  color: inherit; /* Ensure color matches the theme */
+  border: none;
+  padding: 10px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.theme-selector label {
+  margin-bottom: 5px;
+}
+
+/* Fix the text color for theme and text color selectors in the theme selector */
+.theme-selector select,
+.text-color-selector select {
+  color: #000; /* Ensure text is black for readability */
+}
+
+.theme-selector select,
+.settings-container textarea {
+  padding: 8px;
+  font-size: 1em;
+  margin-bottom: 10px;
+  background-color: white; /* Set background to white */
+  color: black; /* Set text color to black */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

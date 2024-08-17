@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from "react";
 import axios from "axios";
+import "./AuthContext.css";
 
 interface AuthContextProps {
   token: string | null;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "../App.css";
-import { saveCollection } from "../api"; // Import API function
+import "./CollectionFinalStep.css";
+import { saveCollection } from "../../api"; // Import API function
 
 interface LocationState {
   collectionName: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css";
+import "./CollectionsNavBar.css";
 
 interface CollectionsNavBarProps {
   onSelectCategory: (category: string) => void;

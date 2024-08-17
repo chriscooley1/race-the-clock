@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
-import "../App.css";
+import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import "./FullScreenDisplay.css";
 
 interface FullScreenDisplayProps {
   onEnterFullScreen: () => void;

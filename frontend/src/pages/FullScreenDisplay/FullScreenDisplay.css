@@ -1,0 +1,21 @@
+
+.fullscreen-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  width: 100vw;
+  position: relative;
+  transition: background-color 0.3s, color 0.3s;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  color: var(--display-text-color, var(--text-color)); /* Use display-text-color with a fallback */
+}
+
+.fullscreen-text {
+  font-size: 50vw;
+  text-align: center;
+  margin: 0;
+  color: inherit; /* Ensure it inherits the correct color */
+}

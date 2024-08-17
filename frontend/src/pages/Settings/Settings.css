@@ -1,0 +1,130 @@
+.settings-container {
+  padding: 20px;
+}
+
+.settings-label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.color-options {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  margin: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  transition: border 0.3s;
+  background-color: var(--color);
+}
+
+/* Adding the background color using the data-color attribute */
+.color-option[data-color] {
+  background-color: attr(data-color color);
+}
+
+.color-option.selected {
+  border: 2px solid #000;
+}
+
+/* Theme styles */
+.light-theme {
+  background-color: #fff;
+  color: #000;
+}
+
+.dark-theme {
+  background-color: #333;
+  color: #fff;
+}
+
+.blue-theme {
+  background-color: #cceeff;
+  color: #003366;
+}
+
+.theme-selector {
+  margin: 10px 0;
+}
+
+#theme-select {
+  padding: 5px;
+  margin-left: 10px;
+}
+
+/* Neon and color themes */
+.neon-pink-theme {
+  background-color: #ff69b4;
+  color: #000;
+}
+
+.neon-green-theme {
+  background-color: #39ff14;
+  color: #000;
+}
+
+.neon-blue-theme {
+  background-color: #1e90ff;
+  color: #fff;
+}
+
+.neon-orange-theme {
+  background-color: #ff4500;
+  color: #000;
+}
+
+.red-theme {
+  background-color: #ff0000;
+  color: #fff;
+}
+
+.orange-theme {
+  background-color: #ffa500;
+  color: #000;
+}
+
+.yellow-theme {
+  background-color: #ffff00;
+  color: #000;
+}
+
+/* Define classes for different text colors */
+.text-color {
+  color: var(--text-color);
+}
+
+.logout-button {
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  flex-shrink: 0; /* Prevent shrinking so it stays at the edge */
+}
+
+.logout-button:hover {
+  background-color: #cc0000;
+}
+
+.hamburger-menu {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 25px;
+}
+
+.hamburger-menu .bar {
+  height: 3px;
+  background-color: #333;
+  transition: 0.3s;
+}

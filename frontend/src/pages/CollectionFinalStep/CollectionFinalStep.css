@@ -1,0 +1,6 @@
+/* Collection Final Step Container styles */
+.collection-final-step-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

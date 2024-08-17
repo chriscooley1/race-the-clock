@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./SessionSettingsModal.css";
 
 interface SessionSettingsModalProps {
   collectionName: string;
