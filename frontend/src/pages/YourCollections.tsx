@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchCollections, deleteCollectionById, duplicateCollection } from "../api";
-import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import SessionSettingsModal from "../components/SessionSettingsModal";
 import CollectionsNavBar from "../components/CollectionsNavBar";
@@ -15,6 +14,7 @@ interface Collection {
   created_at: string;
   category: string;
   user_id: number;
+  creator_username: string; // Add this property
 }
 
 interface Item {
@@ -41,7 +41,6 @@ const YourCollections = () => {
   const [sortOption, setSortOption] = useState<string>("date");
   const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
   const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
-  const { theme } = useTheme();
   const { token } = useAuth();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -266,7 +265,9 @@ const YourCollections = () => {
         <div className="modal-background">
           <div className="modal-content" ref={modalRef}>
             <h2>Duplicate Collection</h2>
+            <label htmlFor="duplicate-collection-select">Select a collection to duplicate</label>
             <select
+              id="duplicate-collection-select"  // Add an id that matches the label
               value={collectionToDuplicate?.collection_id || ""}
               onChange={(e) => {
                 const selectedId = parseInt(e.target.value);
