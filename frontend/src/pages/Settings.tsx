@@ -24,7 +24,7 @@ const Settings: React.FC = () => {
   };
 
   const handleBackgroundColorChange = (color: string) => {
-    setDisplayBackgroundColor(color);  // Update the background color in the context
+    setDisplayBackgroundColor(color);
   };
 
   return (
@@ -51,7 +51,7 @@ const Settings: React.FC = () => {
             <div
               key={color}
               className={`color-option ${theme.displayTextColor === color ? "selected" : ""}`}
-              style={{ backgroundColor: color }}  // Set the color directly here
+              style={{ backgroundColor: color }}
               onClick={() => handleTextColorChange(color)}
             />
           ))}
@@ -63,9 +63,9 @@ const Settings: React.FC = () => {
           {colorOptions.map((color) => (
             <div
               key={color}
-              className={`color-option ${theme.displayTextColor === color ? "selected" : ""}`}
-              style={{ backgroundColor: color }}  // Set the color directly here
-              onClick={() => handleTextColorChange(color)}
+              className={`color-option ${theme.displayBackgroundColor === color ? "selected" : ""}`}
+              style={{ backgroundColor: color }}
+              onClick={() => handleBackgroundColorChange(color)}
             />
           ))}
         </div>

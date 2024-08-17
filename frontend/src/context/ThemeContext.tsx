@@ -9,12 +9,12 @@ interface ColorScheme {
 // Define color schemes with complementary background and text colors
 export const colorSchemes: ColorScheme[] = [
   {
-    name: "Light",
+    name: "White",
     backgroundColor: "#ffffff",
     textColor: "#000000",
   },
   {
-    name: "Dark",
+    name: "Black",
     backgroundColor: "#000000",
     textColor: "#ffffff",
   },
