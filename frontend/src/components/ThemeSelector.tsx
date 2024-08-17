@@ -1,10 +1,9 @@
 import React from "react";
-import { useTheme } from "../context/ThemeContext";
-import { colorSchemes, textColorOptions } from "../context/ThemeContext";
+import { useTheme, colorSchemes } from "../context/ThemeContext";
 import "../App.css";
 
 const ThemeSelector: React.FC = () => {
-  const { setTheme, theme } = useTheme();
+  const { setTheme, theme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedScheme = colorSchemes.find(
@@ -18,10 +17,13 @@ const ThemeSelector: React.FC = () => {
   const handleTextColorChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setTheme((prevTheme) => ({
-      ...prevTheme,
-      textColor: event.target.value,
-    }));
+    setDisplayTextColor(event.target.value);
+  };
+
+  const handleBackgroundColorChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setDisplayBackgroundColor(event.target.value);
   };
 
   return (
@@ -35,15 +37,28 @@ const ThemeSelector: React.FC = () => {
         ))}
       </select>
 
-      <label htmlFor="text-color-select">Select Text Color:</label>
+      <label htmlFor="text-color-select">Select Display Text Color:</label>
       <select
         id="text-color-select"
-        value={theme.textColor}
+        value={theme.displayTextColor || theme.textColor}
         onChange={handleTextColorChange}
       >
-        {textColorOptions.map((color, index) => (
-          <option key={index} value={color.value}>
-            {color.label}
+        {colorSchemes.map((scheme, index) => (
+          <option key={index} value={scheme.textColor}>
+            {scheme.name} Text Color
+          </option>
+        ))}
+      </select>
+
+      <label htmlFor="background-color-select">Select Display Background Color:</label>
+      <select
+        id="background-color-select"
+        value={theme.displayBackgroundColor || theme.backgroundColor}
+        onChange={handleBackgroundColorChange}
+      >
+        {colorSchemes.map((scheme, index) => (
+          <option key={index} value={scheme.backgroundColor}>
+            {scheme.name} Background
           </option>
         ))}
       </select>

@@ -200,7 +200,8 @@ export const saveCollection = async (
   userId: number,
   collectionName: string,
   items: { id: number; name: string }[],
-  status: string // Accepts "public" or "private"
+  status: string, // Accepts "public" or "private"
+  category: string // Add category as a new argument
 ) => {
   try {
     const response = await axios.post(
@@ -210,6 +211,7 @@ export const saveCollection = async (
         name: collectionName,
         description: JSON.stringify(items), // Convert items array to JSON string
         status, // Add status to the request
+        category, // Include category in the request
       },
       getAuthHeaders()
     );

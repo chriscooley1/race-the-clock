@@ -3,12 +3,20 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
 import { saveCollection } from "../api"; // Import API function
 
+interface LocationState {
+  collectionName: string;
+  isPublic: boolean;
+  category: string;
+  sequence: string[]; // Assuming sequence is an array of strings
+}
+
 const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { collectionName, isPublic, category, sequence } = location.state;
+  const { collectionName, isPublic, category, sequence } = location.state as LocationState; // Cast location.state to LocationState
+
   const [items, setItems] = useState<{ id: number; name: string }[]>(
-    sequence.map((name, index) => ({ id: index + 1, name }))
+    sequence.map((name: string, index: number) => ({ id: index + 1, name })) // Explicitly define type of name
   ); // Initialize with sequence
   const [newItem, setNewItem] = useState<string>("");
 

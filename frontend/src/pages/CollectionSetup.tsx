@@ -59,12 +59,12 @@ const CollectionSetup: React.FC = () => {
         name,
       }));
       await saveCollection(
-        1, // Replace with actual user ID logic
+        1, // Assume userId is 1 for example purposes, replace as needed
         collectionName,
         collectionData,
         isPublic ? "public" : "private",
-        category
-      );
+        category // Pass the category to the API
+      );      
       navigate("/your-collections"); // Redirect to collections page
     } catch (error) {
       console.error("Error saving collection:", error);
