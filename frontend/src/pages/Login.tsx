@@ -14,7 +14,7 @@ const Login: React.FC = () => {
     try {
       const data = await login(username, password);
       setToken(data.access_token);
-      navigate("/your-collections"); // Navigate to YourCollections after successful login
+      navigate("/your-collections"); // Use the relative path without the base
     } catch (error) {
       console.error("Login failed", error);
     }
@@ -46,7 +46,7 @@ const Login: React.FC = () => {
           <button
             type="button"
             className="link-button"
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/register")} // Use the relative path without the base
           >
             Register
           </button>
