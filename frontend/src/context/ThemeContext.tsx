@@ -147,8 +147,9 @@ interface Theme {
   name: string;
   backgroundColor: string;
   textColor: string;
+  className?: string; // Add this line to include the optional className property
   displayTextColor?: string;
-  displayBackgroundColor?: string;  // New background color state
+  displayBackgroundColor?: string;
 }
 
 interface ThemeContextType {

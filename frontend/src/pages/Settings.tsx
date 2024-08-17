@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme, colorSchemes } from "../context/ThemeContext";
-import "./Settings.css";  // Import the CSS file
+import "../App.css";
 
 const colorOptions = [
   "#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#9400d3", // Bright colors
