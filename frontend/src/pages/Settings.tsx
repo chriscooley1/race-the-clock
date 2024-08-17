@@ -51,7 +51,7 @@ const Settings: React.FC = () => {
             <div
               key={color}
               className={`color-option ${theme.displayTextColor === color ? "selected" : ""}`}
-              data-color={color}
+              style={{ backgroundColor: color }}  // Set the color directly here
               onClick={() => handleTextColorChange(color)}
             />
           ))}
@@ -63,9 +63,9 @@ const Settings: React.FC = () => {
           {colorOptions.map((color) => (
             <div
               key={color}
-              className={`color-option ${theme.displayBackgroundColor === color ? "selected" : ""}`}
-              data-color={color}
-              onClick={() => handleBackgroundColorChange(color)}
+              className={`color-option ${theme.displayTextColor === color ? "selected" : ""}`}
+              style={{ backgroundColor: color }}  // Set the color directly here
+              onClick={() => handleTextColorChange(color)}
             />
           ))}
         </div>

@@ -164,6 +164,12 @@ button {
   cursor: pointer;
   border: 1px solid #ccc;
   transition: border 0.3s;
+  background-color: var(--color);
+}
+
+/* Adding the background color using the data-color attribute */
+.color-option[data-color] {
+  background-color: attr(data-color color);
 }
 
 .color-option.selected {

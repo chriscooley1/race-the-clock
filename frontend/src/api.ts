@@ -136,6 +136,8 @@ export interface Collection {
   description: string;
   creator_username: string;
   created_at: string;
+  category: string;          // Add this line to include the 'category' property
+  user_id: number;           // Add this line to include the 'user_id' property
 }
 
 export const getCollections = async () => {
@@ -280,9 +282,9 @@ export const duplicateCollection = async (collectionToDuplicate: Collection) => 
   const newCollection = {
     name: newCollectionName,
     description: collectionToDuplicate.description,
-    category: collectionToDuplicate.category,
+    category: collectionToDuplicate.category,  // Using the category from the original collection
     status: "private",
-    user_id: collectionToDuplicate.user_id,
+    user_id: collectionToDuplicate.user_id,     // Using the user_id from the original collection
   };
 
   try {
