@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchPublicCollections, fetchItemsForCollection } from "../api";
 import CollectionPreviewModal from "../components/CollectionPreviewModal";
+import { AxiosError } from "axios"; // Import AxiosError for proper error handling
 
 interface Item {
   name: string;
@@ -16,7 +17,7 @@ interface Collection {
 }
 
 const DiscoverCollections: React.FC = () => {
-  const [collections, setCollections] = useState<Collection[]>([]);
+  const [collections, setCollections] = useState<Collection[]>([]); // Initialized as empty array
   const [activeCollection, setActiveCollection] = useState<Collection | null>(null);
 
   useEffect(() => {
@@ -29,22 +30,23 @@ const DiscoverCollections: React.FC = () => {
           collections.map(async (collection) => {
             try {
               const items = await fetchItemsForCollection(collection.collection_id);
-              if (isMounted) {
-                return { ...collection, items };
+              return { ...collection, items: items || [] }; // Ensure items is an array
+            } catch (err) {
+              const error = err as AxiosError;
+              if (error.response && error.response.status === 404) {
+                console.info(`No items found for collection ${collection.collection_id}`);
+                return { ...collection, items: [] }; // Treat 404 as no items
               }
-            } catch (error) {
               console.error(`Error fetching items for collection ${collection.collection_id}:`, error);
-              if (isMounted) {
-                return { ...collection, items: [] };
-              }
+              return { ...collection, items: [] };
             }
-            return collection;
           })
         );
         if (isMounted) {
-          setCollections(collectionsWithItems);
+          setCollections(collectionsWithItems as Collection[]); // Cast to Collection[]
         }
-      } catch (error) {
+      } catch (err) {
+        const error = err as AxiosError;
         console.error("Error fetching public collections:", error);
       }
     };

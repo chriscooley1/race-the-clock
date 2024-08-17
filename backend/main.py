@@ -180,11 +180,9 @@ async def get_collections(current_user: User = Depends(get_current_user), db: Se
 
 @app.get("/collections/{collection_id}/items")
 async def get_collection_items(collection_id: int, db: Session = Depends(get_db)):
-    print(f"Fetching items for collection_id: {collection_id}")
     items = db.query(Item).filter(Item.collection_id == collection_id).all()
-    print(f"Items found: {items}")
     if not items:
-        raise HTTPException(status_code=404, detail="Items not found")
+        return []  # Instead of raising an exception, return an empty list
     return items
 
 @app.put("/collections/{collection_id}", response_model=Collection)
