@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext"; 
+import { useLocation } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 import "../App.css";
 
 interface FullScreenDisplayProps {
@@ -12,7 +12,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onEnterFullScreen,
   onExitFullScreen,
 }) => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { sequence, speed, shuffle } = location.state;
   const { theme } = useTheme();
@@ -35,8 +34,12 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       setShuffledSequence(sequence);
     }
 
+    // Update CSS variables for the theme
+    document.documentElement.style.setProperty('--display-text-color', theme.displayTextColor || theme.textColor);
+    document.documentElement.style.setProperty('--background-color', theme.displayBackgroundColor || theme.backgroundColor);
+
     return () => onExitFullScreen();
-  }, [onEnterFullScreen, onExitFullScreen, sequence, shuffle]);
+  }, [onEnterFullScreen, onExitFullScreen, sequence, shuffle, theme]);
 
   useEffect(() => {
     if (shuffledSequence.length > 0) {
@@ -47,31 +50,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     }
   }, [shuffledSequence, speed]);
 
-  const handleBack = () => {
-    navigate("/your-collections");
-  };
-
   return (
-    <div
-      className={`fullscreen-container ${theme.className || ""}`}
-      style={{
-        color: theme.displayTextColor || theme.textColor,  // Apply the displayTextColor here
-        backgroundColor: theme.displayBackgroundColor || theme.backgroundColor,  // Apply the displayBackgroundColor here
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
-      <h1
-        className="fullscreen-text"
-        style={{
-          fontSize: "50vw",
-          lineHeight: "0.8",
-          margin: "0",
-        }}
-      >
+    <div className="fullscreen-container">
+      <h1 className="fullscreen-text">
         {shuffledSequence[index]}
       </h1>
     </div>
