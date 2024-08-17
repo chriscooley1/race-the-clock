@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme, colorSchemes } from "../context/ThemeContext";
+import "./Settings.css";  // Import the CSS file
 
 const colorOptions = [
   "#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#9400d3", // Bright colors
@@ -27,10 +28,10 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="settings-container">
       <h2>Settings</h2>
       <div>
-        <label htmlFor="theme-select">Theme:</label>
+        <label htmlFor="theme-select" className="settings-label">Theme:</label>
         <select
           id="theme-select"
           value={theme.name}
@@ -44,42 +45,26 @@ const Settings: React.FC = () => {
         </select>
       </div>
       <div>
-        <label>Text Color for Display:</label>
+        <label className="settings-label">Text Color for Display:</label>
         <div className="color-options">
           {colorOptions.map((color) => (
             <div
               key={color}
-              className="color-option"
-              style={{
-                backgroundColor: color,
-                width: "30px",
-                height: "30px",
-                display: "inline-block",
-                margin: "5px",
-                cursor: "pointer",
-                border: theme.displayTextColor === color ? "2px solid #000" : "1px solid #ccc"
-              }}
+              className={`color-option ${theme.displayTextColor === color ? "selected" : ""}`}
+              data-color={color}
               onClick={() => handleTextColorChange(color)}
             />
           ))}
         </div>
       </div>
       <div>
-        <label>Background Color for Display:</label>
+        <label className="settings-label">Background Color for Display:</label>
         <div className="color-options">
           {colorOptions.map((color) => (
             <div
               key={color}
-              className="color-option"
-              style={{
-                backgroundColor: color,
-                width: "30px",
-                height: "30px",
-                display: "inline-block",
-                margin: "5px",
-                cursor: "pointer",
-                border: theme.displayBackgroundColor === color ? "2px solid #000" : "1px solid #ccc"
-              }}
+              className={`color-option ${theme.displayBackgroundColor === color ? "selected" : ""}`}
+              data-color={color}
               onClick={() => handleBackgroundColorChange(color)}
             />
           ))}

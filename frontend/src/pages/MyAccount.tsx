@@ -1,4 +1,5 @@
 import React from "react";
+import "../App.css";
 
 const MyAccount: React.FC = () => {
   // Assuming user data is stored somewhere accessible
@@ -9,10 +10,10 @@ const MyAccount: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>My Account</h2>
-      <p><strong>Name:</strong> {userData.name}</p>
-      <p><strong>Email:</strong> {userData.email}</p>
+    <div className="my-account-container">
+      <h2 className="my-account-heading">My Account</h2>
+      <p className="my-account-info"><strong>Name:</strong> {userData.name}</p>
+      <p className="my-account-info"><strong>Email:</strong> {userData.email}</p>
     </div>
   );
 };

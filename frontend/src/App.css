@@ -141,6 +141,35 @@ button {
   border-radius: 4px;
 }
 
+.settings-container {
+  padding: 20px;
+}
+
+.settings-label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.color-options {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  margin: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  transition: border 0.3s;
+}
+
+.color-option.selected {
+  border: 2px solid #000;
+}
+
 /* Theme styles */
 .light-theme {
   background-color: #fff;
@@ -1285,4 +1314,21 @@ h1, p, label, button {
 input {
   color: var(--text-color);  /* Ensure input text uses the theme's text color */
   background-color: var(--background-color);
+}
+
+.my-account-container {
+  padding: 20px;
+}
+
+.my-account-heading {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.my-account-info {
+  margin: 10px 0;
+}
+
+.my-account-info strong {
+  font-weight: bold;
 }
