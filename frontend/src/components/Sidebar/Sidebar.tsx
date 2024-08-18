@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./Sidebar.css";
-import { useAuth } from "../../context/AuthContext";
 
 const Sidebar: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   return (
     <div className="sidebar">
@@ -30,10 +30,7 @@ const Sidebar: React.FC = () => {
         ) : (
           <>
             <li>
-              <Link to="/register">Register</Link>
-            </li>
-            <li>
-              <Link to="/login">Already Registered</Link>
+              <button type="button" onClick={() => loginWithRedirect()}>Log In</button>
             </li>
           </>
         )}

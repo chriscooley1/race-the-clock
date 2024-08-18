@@ -1,22 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./Navbar.css";
+import Profile from "../Profile";
+import LoginButton from "../LoginButton";
+import LogoutButton from "../LogoutButton";
 
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
+  const { isAuthenticated } = useAuth0();
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("userData");
-    navigate("/login");
-    setMenuOpen(false);
   };
 
   const handleNavigate = (path: string) => {
@@ -57,17 +55,22 @@ const Navbar: React.FC = () => {
       </div>
       {menuOpen && (
         <div className="menu" ref={menuRef}>
-          <button type="button" onClick={() => handleNavigate("/my-account")}>
-            My Account
-          </button>
-          <button type="button" onClick={() => handleNavigate("/settings")}>
-            Settings
-          </button>
-          <button type="button" onClick={handleLogout}>
-            Logout
-          </button>
+          {isAuthenticated ? (
+            <>
+              <button type="button" onClick={() => handleNavigate("/my-account")}>
+                My Account
+              </button>
+              <button type="button" onClick={() => handleNavigate("/settings")}>
+                Settings
+              </button>
+              <LogoutButton />
+            </>
+          ) : (
+            <LoginButton />
+          )}
         </div>
       )}
+      {isAuthenticated && <Profile />}
     </div>
   );
 };
