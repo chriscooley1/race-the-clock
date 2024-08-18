@@ -1,20 +1,15 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth } from "../context/AuthContext";
 
 interface PrivateRouteProps {
   element: JSX.Element;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated } = useAuth();
 
-  if (isLoading) {
-    // Optionally, you can return a loading spinner or some loading UI here
-    return <div>Loading...</div>;
-  }
-
-  return isAuthenticated ? element : <Navigate to="/" />;
+  return isAuthenticated ? element : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

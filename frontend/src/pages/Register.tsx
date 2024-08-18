@@ -1,28 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../api";
+import { register } from "../api";
 import "../App.css";
-import { useAuth } from "../context/AuthContext";
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { setToken } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      const data = await login(username, password);
-      setToken(data.access_token);
-      navigate("/your-collections"); // Use the relative path without the base
+      await register(username, password);
+      navigate("/login"); // Navigate to login after successful registration
     } catch (error) {
-      console.error("Login failed", error);
+      console.error("Registration failed", error);
     }
   };
 
   return (
     <div className="auth-container">
-      <h1>Login</h1>
+      <h1>Register</h1>
       <input
         type="text"
         className="custom-input"
@@ -37,18 +34,18 @@ const Login: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
-      <button type="button" onClick={handleLogin} className="styled-button">
-        Login
+      <button type="button" onClick={handleRegister} className="styled-button">
+        Register
       </button>
       <div className="link-container">
         <p>
-          New user?{" "}
+          Already have an account?{" "}
           <button
             type="button"
             className="link-button"
-            onClick={() => navigate("/register")} // Use the relative path without the base
+            onClick={() => navigate("/login")}
           >
-            Register
+            Log in
           </button>
         </p>
       </div>
@@ -56,4 +53,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;
