@@ -7,7 +7,12 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
+    // Optionally, you can return a loading spinner or some loading UI here
+    return <div>Loading...</div>;
+  }
 
   return isAuthenticated ? element : <Navigate to="/" />;
 };

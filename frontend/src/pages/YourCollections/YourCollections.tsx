@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchCollections, deleteCollectionById, duplicateCollection } from "../../api";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth0 } from "@auth0/auth0-react"; // Update this import
 import SessionSettingsModal from "../../components/SessionSettingsModal/SessionSettingsModal";
 import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNavBar";
 import EditCollectionModal from "../../components/EditCollectionModal/EditCollectionModal";
@@ -41,7 +41,7 @@ const YourCollections = () => {
   const [sortOption, setSortOption] = useState<string>("date");
   const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
   const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
-  const { token } = useAuth();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0(); // Use useAuth0
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
@@ -49,9 +49,16 @@ const YourCollections = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    console.log("Is Authenticated:", isAuthenticated);
+  
     const loadCollections = async () => {
       try {
-        const data = await fetchCollections();
+        if (!isAuthenticated) return; // Ensure the user is authenticated
+  
+        const data = await fetchCollections(); // Remove the token argument if not needed
+  
+        console.log("Collections:", data);
+  
         setCollections(data);
         filterAndSortCollections(data, selectedCategory, sortOption);
       } catch (error) {
@@ -59,7 +66,7 @@ const YourCollections = () => {
       }
     };
     loadCollections();
-  }, [selectedCategory, sortOption, token]);
+  }, [selectedCategory, sortOption, isAuthenticated, getAccessTokenSilently]);
 
   const filterAndSortCollections = (collections: Collection[], category: string, sortOption: string) => {
     let filtered = collections;

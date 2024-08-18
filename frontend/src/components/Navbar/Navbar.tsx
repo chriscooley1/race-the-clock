@@ -11,7 +11,15 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
+
+  useEffect(() => {
+    if (isLoading) {
+      console.log("Navbar isLoading:", isLoading);
+    } else {
+      console.log("Navbar isAuthenticated:", isAuthenticated);
+    }
+  }, [isLoading, isAuthenticated]);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -55,7 +63,7 @@ const Navbar: React.FC = () => {
       </div>
       {menuOpen && (
         <div className="menu" ref={menuRef}>
-          {isAuthenticated ? (
+          {!isLoading && isAuthenticated ? (
             <>
               <button type="button" onClick={() => handleNavigate("/my-account")}>
                 My Account
@@ -66,11 +74,11 @@ const Navbar: React.FC = () => {
               <LogoutButton />
             </>
           ) : (
-            <LoginButton />
+            !isLoading && <LoginButton />
           )}
         </div>
       )}
-      {isAuthenticated && <Profile />}
+      {!isLoading && isAuthenticated && <Profile />}
     </div>
   );
 };

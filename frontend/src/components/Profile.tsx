@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
@@ -8,6 +8,11 @@ const Profile = () => {
   useEffect(() => {
     const getUserMetadata = async () => {
       const domain = "dev-qbphclcbf77zvgv6.us.auth0.com";
+  
+      if (!user) {
+        console.log("User is undefined");
+        return;
+      }
   
       try {
         const accessToken = await getAccessTokenSilently({
@@ -28,16 +33,20 @@ const Profile = () => {
         const { user_metadata } = await metadataResponse.json();
   
         setUserMetadata(user_metadata);
-      } catch (e) {
-        console.log(e.message);
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          console.log(e.message);
+        } else {
+          console.log("An unknown error occurred.");
+        }
       }
     };
   
     getUserMetadata();
-  }, [getAccessTokenSilently, user?.sub]);
+  }, [getAccessTokenSilently, user]);
 
   return (
-    isAuthenticated && (
+    isAuthenticated && user && (
       <div>
         <img src={user.picture} alt={user.name} />
         <h2>{user.name}</h2>

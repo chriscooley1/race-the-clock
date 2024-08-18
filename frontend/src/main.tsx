@@ -11,9 +11,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       domain={import.meta.env.VITE_AUTH0_DOMAIN}
       clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: `${window.location.origin}/letter-reader/your-collections/`,
         audience: "https://dev-qbphclcbf77zvgv6.us.auth0.com/api/v2/",
-        scope: "read:current_user update:current_user_metadata"
+        scope: "openid profile email",
       }}
     >
       <ThemeProvider>

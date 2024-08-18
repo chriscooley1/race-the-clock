@@ -65,7 +65,7 @@ const CollectionSetup: React.FC = () => {
         isPublic ? "public" : "private",
         category // Pass the category to the API
       );      
-      navigate("/your-collections"); // Redirect to collections page
+      navigate("/your-collections");
     } catch (error) {
       console.error("Error saving collection:", error);
     }
