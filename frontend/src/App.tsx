@@ -4,7 +4,7 @@ import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Sidebar from "./components/Sidebar/Sidebar";
-import LandingPage from "./components/LandingPage";
+import LandingPage from "./pages/LandingPage";
 import YourCollections from "./pages/YourCollections/YourCollections";
 import NewCollection from "./pages/NewCollection/NewCollection";
 import DiscoverCollections from "./pages/DiscoverCollections/DiscoverCollections";
