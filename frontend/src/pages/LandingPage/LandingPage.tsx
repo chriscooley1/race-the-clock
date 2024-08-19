@@ -1,18 +1,18 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./LandingPage.css";
 import "../../App.css";
 
 const LandingPage: React.FC = () => {
-  const navigate = useNavigate();
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <div className="landing-page">
       <h1>Welcome to the Letter Reader App</h1>
-      <button type="button" onClick={() => navigate("/register")}>
+      <button type="button" onClick={() => loginWithRedirect({ appState: { returnTo: '/signup' } })}>
         Register
       </button>
-      <button type="button" onClick={() => navigate("/login")}>
+      <button type="button" onClick={() => loginWithRedirect()}>
         Already Registered
       </button>
     </div>

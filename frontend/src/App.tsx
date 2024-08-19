@@ -1,9 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
-import Sidebar from "./components/Sidebar/Sidebar";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import YourCollections from "./pages/YourCollections/YourCollections";
 import NewCollection from "./pages/NewCollection/NewCollection";
@@ -13,32 +10,32 @@ import CollectionFinalStep from "./pages/CollectionFinalStep/CollectionFinalStep
 import NameGenerator from "./pages/NameGenerator/NameGenerator";
 import Resources from "./pages/Resources";
 import { useTheme } from "./context/ThemeContext";
-import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar/Navbar";
+import Sidebar from "./components/Sidebar/Sidebar";
 import Settings from "./pages/Settings/Settings";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import "./App.css";
+import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
   const [hideSidebar, setHideSidebar] = React.useState<boolean>(false);
+
   const handleFullScreenDisplay = (hide: boolean) => {
     setHideSidebar(hide);
   };
 
   return (
-    <AuthProvider>
-      <div className={`app-container ${theme.className}`}>
-        <Router basename="/letter-reader">
+    <Router>
+      <Auth0ProviderWithHistory>
+        <div className={`app-container ${theme.className}`}>
           <Navbar />
           <div className="layout">
             {!hideSidebar && <Sidebar />}
             <div className={`main-content ${hideSidebar ? "without-sidebar" : "with-sidebar"}`}>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
                 <Route
                   path="/fullscreen-display"
                   element={
@@ -91,9 +88,9 @@ const App: React.FC = () => {
               </Routes>
             </div>
           </div>
-        </Router>
-      </div>
-    </AuthProvider>
+        </div>
+      </Auth0ProviderWithHistory>
+    </Router>
   );
 };
 

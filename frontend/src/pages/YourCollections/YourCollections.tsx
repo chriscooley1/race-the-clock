@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchCollections, deleteCollectionById, duplicateCollection } from "../../api";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth0 } from "@auth0/auth0-react";
 import SessionSettingsModal from "../../components/SessionSettingsModal/SessionSettingsModal";
 import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNavBar";
 import EditCollectionModal from "../../components/EditCollectionModal/EditCollectionModal";
@@ -15,11 +15,13 @@ interface Collection {
   created_at: string;
   category: string;
   user_id: number;
-  creator_username: string; // Add this property
+  creator_username: string;
 }
+
 interface Item {
   name: string;
 }
+
 const getItemsCount = (description: string): number => {
   try {
     const items = JSON.parse(description);
@@ -31,7 +33,8 @@ const getItemsCount = (description: string): number => {
   }
   return 0;
 };
-const YourCollections = () => {
+
+const YourCollections: React.FC = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
@@ -39,7 +42,7 @@ const YourCollections = () => {
   const [sortOption, setSortOption] = useState<string>("date");
   const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
   const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
-  const { token } = useAuth();
+  const { getAccessTokenSilently } = useAuth0(); // Use Auth0 for authentication
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
@@ -49,7 +52,8 @@ const YourCollections = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const data = await fetchCollections();
+        const token = await getAccessTokenSilently();
+        const data = await fetchCollections(token); // Pass the token to the API call
         setCollections(data);
         filterAndSortCollections(data, selectedCategory, sortOption);
       } catch (error) {
@@ -57,7 +61,7 @@ const YourCollections = () => {
       }
     };
     loadCollections();
-  }, [selectedCategory, sortOption, token]);
+  }, [selectedCategory, sortOption, getAccessTokenSilently]);
 
   const filterAndSortCollections = (collections: Collection[], category: string, sortOption: string) => {
     let filtered = collections;
@@ -74,9 +78,11 @@ const YourCollections = () => {
     });
     setFilteredCollections(sorted);
   };
+
   const handleDeleteCollection = async (collectionId: number) => {
     try {
-      await deleteCollectionById(collectionId);
+      const token = await getAccessTokenSilently();
+      await deleteCollectionById(collectionId, token);
       const updatedCollections = collections.filter(
         (collection) => collection.collection_id !== collectionId
       );
@@ -86,6 +92,7 @@ const YourCollections = () => {
       console.error("Error deleting collection:", error);
     }
   };
+
   const handleStartCollection = (collectionId: number) => {
     const collection = collections.find((col) => col.collection_id === collectionId);
     if (collection) {
@@ -93,15 +100,18 @@ const YourCollections = () => {
       setShowModal(true);
     }
   };
+
   // Functions to handle the modal state
   const handleEditButtonClick = (collection: Collection) => {
     setSelectedCollection(collection);
-    setEditModalOpen(true);  // This correctly opens the modal
+    setEditModalOpen(true);
   };
+
   const handleDuplicateCollection = async () => {
     if (!collectionToDuplicate) return;
     try {
-      const duplicatedCollection = await duplicateCollection(collectionToDuplicate);
+      const token = await getAccessTokenSilently();
+      const duplicatedCollection = await duplicateCollection(collectionToDuplicate, token);
       setCollections((prevCollections) => [...prevCollections, duplicatedCollection]);
       filterAndSortCollections([...collections, duplicatedCollection], selectedCategory, sortOption);
       setDuplicateModalOpen(false);
@@ -109,6 +119,7 @@ const YourCollections = () => {
       console.error("Error duplicating collection:", error);
     }
   };
+
   const handleStartSession = (
     min: number,
     sec: number,
@@ -132,12 +143,15 @@ const YourCollections = () => {
       setShowModal(false);
     }
   };
+
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
+
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOption(event.target.value);
   };
+
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-US", {
@@ -148,6 +162,7 @@ const YourCollections = () => {
       timeZone: "America/Denver",
     }).format(date);
   };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -163,6 +178,7 @@ const YourCollections = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDuplicateModalOpen]);
+
   return (
     <div className="your-collections">
       <CollectionsNavBar
@@ -248,7 +264,7 @@ const YourCollections = () => {
             <h2>Duplicate Collection</h2>
             <label htmlFor="duplicate-collection-select">Select a collection to duplicate</label>
             <select
-              id="duplicate-collection-select"  // Add an id that matches the label
+              id="duplicate-collection-select"
               value={collectionToDuplicate?.collection_id || ""}
               onChange={(e) => {
                 const selectedId = parseInt(e.target.value);
@@ -290,4 +306,5 @@ const YourCollections = () => {
     </div>
   );
 };
+
 export default YourCollections;

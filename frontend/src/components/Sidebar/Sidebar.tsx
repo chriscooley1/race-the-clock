@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./Sidebar.css";
-import { useAuth } from "../../context/AuthContext";
 import "../../App.css"; // Global styles for the app
 
 const Sidebar: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth0();
 
   return (
     <div className="sidebar">
