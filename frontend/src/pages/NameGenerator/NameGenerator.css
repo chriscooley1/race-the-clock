@@ -1,3 +1,13 @@
+.name-generator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center elements horizontally */
+  justify-content: flex-start; /* Align elements to the top */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  text-align: center; /* Center text inside the container */
+  padding-top: 80px; /* Add padding to create space below the navbar */
+}
+
 .centered-input {
   display: flex;
   align-items: center;
@@ -31,6 +41,7 @@
   text-transform: uppercase; /* Uppercase text */
   font-weight: bold; /* Bold text */
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-top: 20px; /* Add margin above the button */
 }
 
 .styled-button:hover {

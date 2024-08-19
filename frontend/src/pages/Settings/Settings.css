@@ -51,4 +51,10 @@
 #theme-select {
   padding: 5px;
   margin-left: 10px;
+  background-color: white; /* Set the background to white */
+  color: black; /* Set the text color to black */
+  border: 1px solid #ccc; /* Optional: Add a light border */
+  border-radius: 4px; /* Optional: Add rounded corners */
+  font-size: 1em; /* Ensure font size fits the box */
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
 }

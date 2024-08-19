@@ -70,13 +70,16 @@ const DiscoverCollections: React.FC = () => {
     <div className="discover-collections">
       <h1>Discover Public Collections</h1>
       <div className="collections-list">
-        {(collections || []).map((collection) => (
-          <div key={collection.collection_id} className="collection-item">
-            <h1>{collection.name}</h1>
-            <p>{collection.items.length} items in collection</p>
-            <button type="button" className="preview-button" onClick={() => openModal(collection)}>Preview Collection</button>
-          </div>
-        ))}
+        {(collections || []).map((collection, index) => {
+          const colorClass = `color-${(index % 10) + 1}`; // Apply color classes
+          return (
+            <div key={collection.collection_id} className={`collection-item ${colorClass}`}>
+              <h1>{collection.name}</h1>
+              <p>{collection.items.length} items in collection</p>
+              <button type="button" className="preview-button" onClick={() => openModal(collection)}>Preview Collection</button>
+            </div>
+          );
+        })}
       </div>
       {activeCollection && (
         <CollectionPreviewModal collection={activeCollection} onClose={closeModal} />

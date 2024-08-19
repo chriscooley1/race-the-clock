@@ -12,12 +12,6 @@
   padding-top: 50px; /* Add padding to prevent overlap with navbar */
 }
 
-.button-group {
-  display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  margin-top: 20px; /* Add some margin above the buttons */
-}
-
 /* Styling for the start button */
 .start-button {
   background-color: #4caf50; /* Green background */
@@ -377,43 +371,38 @@
 /* Styling for the buttons within the modal */
 .modal .duplicate-button,
 .modal .cancel-button {
-  background-color: #4caf50; /* Green background */
   color: white; /* White text */
   border: none; /* Remove default border */
-  padding: 10px 20px; /* Consistent padding for size */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor on hover */
   font-size: 1em; /* Font size */
   font-weight: bold; /* Bold text */
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin-left: 10px; /* Add margin for spacing between buttons */
+  flex: none; /* Prevent flex from altering size */
+  display: inline-block; /* Ensure buttons are treated as inline-block elements */
+  text-align: center; /* Center text inside the buttons */
+  padding: 12px 24px; /* Consistent padding for size */
+  box-sizing: border-box; /* Ensure padding and border are included in the button size */
 }
 
-.duplicate-collection-button:hover,
-.modal .duplicate-button:hover,
-.modal .cancel-button:hover {
+.modal .duplicate-button {
+  background-color: #4caf50; /* Green background */
+  height: 48px; /* Ensure consistent height */
+}
+
+.modal .duplicate-button:hover {
   background-color: #007bff; /* Blue on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
-.duplicate-collection-button:active,
-.modal .duplicate-button:active,
-.modal .cancel-button:active {
+.modal .duplicate-button:active {
   background-color: #0056b3; /* Even darker blue when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
 
 .modal .cancel-button {
   background-color: #ff6666; /* Red background */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px 20px; /* Consistent padding for size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin-left: 10px; /* Add margin for spacing between buttons */
+  width: 150px; /* Ensure consistent width */
 }
 
 .modal .cancel-button:hover {
@@ -424,6 +413,42 @@
 .modal .cancel-button:active {
   background-color: #990000; /* Even darker red when active */
   transform: scale(0.95); /* Slight scale down when active */
+}
+
+/* Styling for the dropdown in the modal */
+.modal select {
+  background-color: white; /* White background */
+  color: black; /* Black text color */
+  border: 1px solid #ccc; /* Light border */
+  padding: 8px 12px; /* Padding for better usability */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  cursor: pointer; /* Pointer cursor on hover */
+  width: 100%; /* Full width of the dropdown container */
+  box-sizing: border-box; /* Ensure padding and border are included in the element's size */
+}
+
+.modal select:hover {
+  border-color: #999; /* Slightly darker border on hover */
+}
+
+.modal select:focus {
+  outline: none; /* Remove default outline */
+  border-color: #007bff; /* Blue border when focused */
+}
+
+.modal select option {
+  background-color: white; /* White background for options */
+  color: black; /* Black text for options */
+}
+
+.button-group {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 20px; /* Gap between the buttons */
+  width: 100%; /* Full width */
+  padding: 0 20px; /* Add padding to keep buttons away from the edges */
 }
 
 .styled-button {

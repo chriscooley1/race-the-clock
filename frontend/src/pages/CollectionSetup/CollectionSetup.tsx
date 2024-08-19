@@ -116,7 +116,7 @@ const CollectionSetup: React.FC = () => {
       <p>- OR -</p>
       <div className="centered-input">
         <label htmlFor="fileUpload">
-          Upload a file to create a collection from
+          Choose File
         </label>
         <input
           type="file"

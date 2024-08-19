@@ -27,16 +27,16 @@
   background-color: #4caf50; /* Green background */
   color: white; /* White text */
   border: none; /* Remove default border */
-  padding: 10px;
+  padding: 0; /* Remove padding to better center the + */
   border-radius: 50%; /* Circle shape */
   font-size: 1.5em; /* Larger font size for "+" */
   cursor: pointer;
-  margin: 10px; /* Space around the button */
-  width: 40px; /* Fixed width */
-  height: 40px; /* Fixed height */
+  width: 40px; /* Reduced width */
+  height: 40px; /* Reduced height */
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 0; /* Remove any extra space within the button */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add some shadow */
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
 }

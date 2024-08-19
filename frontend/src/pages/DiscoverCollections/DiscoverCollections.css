@@ -5,11 +5,77 @@
   width: 100%;
   min-height: 100vh;
   padding-top: 50px;
+  background-color: var(--background-color); /* Same background as YourCollections */
+  color: var(--text-color); /* Same text color as YourCollections */
 }
 
-/* Button styles */
+.collections-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+  width: 100%;
+}
+
+/* Collection item styling */
+.collection-item {
+  padding: 20px;
+  margin-bottom: 20px;
+  flex: 0 0 30%; /* Flex basis set to 30% to fit three items per row */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the content vertically and horizontally */
+  justify-content: flex-start; /* Align content to start from the top */
+  position: relative;
+  height: 300px; /* Set a fixed height to accommodate all content */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  border: 5px solid black; /* Thick black border */
+}
+
+/* Title styles */
+.collection-item h1 {
+  border: 5px solid black; /* Thick black border */
+  width: 100%;
+  color: black; /* Black text */
+  text-align: center;
+  font-size: 1.5em;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.collection-item:before {
+  content: ""; /* This is necessary to create a pseudo-element */
+  position: absolute;
+  left: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  top: 20px; /* Adjust this to be slightly below the title */
+  bottom: 20px; /* Same distance from the bottom as from the sides */
+  border: 5px solid black; /* This creates the solid line frame */
+  pointer-events: none; /* Ensure it does not capture click events */
+  z-index: 0; /* Position the border below the content */
+}
+
+.collection-item h2,
+.collection-item p {
+  color: black; /* Ensure all text is black */
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.collection-item h1,
+.collection-item h2,
+.collection-item p {
+  color: black; /* Ensure all text is black */
+  font-family: 'Patrick Hand', cursive; /* Use a friendly handwriting font */
+  font-size: 1.2em; /* Increased font size */
+  font-weight: bold; /* Make the font bold */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+  text-transform: uppercase; /* UPPERCASE text */
+}
+
+/* Styling for the preview button */
 .preview-button {
-  background-color: #4caf50; /* Green background for preview button */
+  background-color: #4caf50; /* Green background */
   color: white; /* White text */
   border: none; /* Remove default border */
   padding: 10px 20px; /* Consistent padding for size */
@@ -31,58 +97,83 @@
   transform: scale(0.95); /* Slight scale down when active */
 }
 
-.collection-item {
-  border: 5px solid black; /* Thick black border */
-  padding: 20px;
-  margin-bottom: 20px;
-  flex: 0 0 30%; /* Flex basis set to 30% to fit three items per row */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers the content vertically and horizontally */
-  justify-content: flex-start; /* Align content to start from the top */
-  position: relative; /* Needed for absolute positioning of the title background */
-  height: 300px; /* Set a fixed height to accommodate all content */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+/* Define the color schemes */
+.color-1 {
+  background-color: #FFEBEE; /* Light Red */
 }
 
-.collection-item h1 {
-  border: 5px solid black; /* Thick black border */
-  width: 100%;
-  color: black; /* Changed to black text */
-  text-align: center;
-  font-size: 1.5em;
-  margin: 0;
-  padding: 10px 0;
+.color-1 h1 {
+  background-color: #D32F2F; /* Dark Red */
 }
 
-.collection-item:before {
-  content: ""; /* This is necessary to create a pseudo-element */
-  position: absolute;
-  left: 20px; /* Adjust as needed */
-  right: 20px; /* Adjust as needed */
-  top: 20px; /* Adjust this to be slightly below the title */
-  bottom: 20px; /* Same distance from the bottom as from the sides */
-  border: 5px solid black; /* This creates the solid line frame */
-  pointer-events: none; /* Ensure it does not capture click events */
-  z-index: 0; /* Position the border below the content */
+.color-2 {
+  background-color: #FFF3E0; /* Light Orange */
 }
 
-.collection-item h2,
-.collection-item p 
-{
-  color: black; /* Ensure all text is black */
-  font-size: 1em;
-  margin: 5px 0;
+.color-2 h1 {
+  background-color: #F57C00; /* Dark Orange */
 }
 
-.collection-item h1,
-.collection-item h2,
-.collection-item p
-{
-  color: black; /* Ensure all text is black */
-  font-family: 'Patrick Hand', cursive; /* Use a friendly handwriting font for paragraphs and buttons */
-  font-size: 1.2em; /* Increased font size */
-  font-weight: bold; /* Make the font bold */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
-  text-transform: uppercase; /* UPPERCASE text */
+.color-3 {
+  background-color: #FFFDE7; /* Light Yellow */
+}
+
+.color-3 h1 {
+  background-color: #FBC02D; /* Dark Yellow */
+}
+
+.color-4 {
+  background-color: #E8F5E9; /* Light Green */
+}
+
+.color-4 h1 {
+  background-color: #388E3C; /* Dark Green */
+}
+
+.color-5 {
+  background-color: #E3F2FD; /* Light Blue */
+}
+
+.color-5 h1 {
+  background-color: #1976D2; /* Dark Blue */
+}
+
+.color-6 {
+  background-color: #EDE7F6; /* Light Purple */
+}
+
+.color-6 h1 {
+  background-color: #7B1FA2; /* Dark Purple */
+}
+
+.color-7 {
+  background-color: #F3E5F5; /* Light Pink */
+}
+
+.color-7 h1 {
+  background-color: #C2185B; /* Dark Pink */
+}
+
+.color-8 {
+  background-color: #FFF8E1; /* Light Amber */
+}
+
+.color-8 h1 {
+  background-color: #FF8F00; /* Dark Amber */
+}
+
+.color-9 {
+  background-color: #F1F8E9; /* Light Lime */
+}
+
+.color-9 h1 {
+  background-color: #AFB42B; /* Dark Lime */
+}
+
+.color-10 {
+  background-color: #ECEFF1; /* Light Gray */
+}
+
+.color-10 h1 {
+  background-color: #455A64; /* Dark Gray */
 }
