@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchPublicCollections, fetchItemsForCollection } from "../../api";
-import CollectionPreviewModal from "../../components/CollectionPreviewModal";
+import CollectionPreviewModal from "../../components/CollectionPreviewModal/CollectionPreviewModal";
 import { AxiosError } from "axios"; // Import AxiosError for proper error handling
 import "./DiscoverCollections.css";
 

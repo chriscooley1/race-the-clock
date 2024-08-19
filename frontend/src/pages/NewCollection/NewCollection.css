@@ -17,3 +17,58 @@
 .new-collection-container button {
   margin-top: 20px;
 }
+
+.centered-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px; /* Add margin for spacing */
+}
+
+.centered-input label {
+  margin-right: 10px; /* Space between label and input */
+}
+
+.centered-input input[type="number"],
+.centered-input input[type="file"],
+.centered-input select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black;
+  background-color: white;
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  appearance: none; /* Remove default styles */
+  -webkit-appearance: none; /* For Safari */
+  width: 20px; /* Set width */
+  height: 20px; /* Set height */
+  background-color: white; /* White background */
+  border: 2px solid #ccc; /* Border to simulate a checkbox */
+  border-radius: 4px; /* Optional: rounded corners */
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative; /* For positioning the checkmark */
+}
+
+.checkbox-container input[type="checkbox"]:checked {
+  background-color: white; /* Keep the background white when checked */
+}
+
+.checkbox-container input[type="checkbox"]:checked:after {
+  content: "✓"; /* Checkmark */
+  color: black; /* Color of the checkmark */
+  position: absolute; /* Position relative to the checkbox */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust position */
+  font-size: 14px; /* Size of the checkmark */
+}

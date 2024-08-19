@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../api";
-import "../App.css";
+import { login } from "../../api";
+import "./Login.css";
+import { useAuth } from "../../context/AuthContext";
 
-const Register: React.FC = () => {
+const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setToken } = useAuth();
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
+  const handleLogin = async () => {
     try {
-      await register(username, password);
-      navigate("/login"); // Navigate to login after successful registration
+      const data = await login(username, password);
+      setToken(data.access_token);
+      navigate("/your-collections"); // Use the relative path without the base
     } catch (error) {
-      console.error("Registration failed", error);
+      console.error("Login failed", error);
     }
   };
 
   return (
     <div className="auth-container">
-      <h1>Register</h1>
+      <h1>Login</h1>
       <input
         type="text"
         className="custom-input"
@@ -34,18 +37,18 @@ const Register: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
-      <button type="button" onClick={handleRegister} className="styled-button">
-        Register
+      <button type="button" onClick={handleLogin} className="styled-button">
+        Login
       </button>
       <div className="link-container">
         <p>
-          Already have an account?{" "}
+          New user?{" "}
           <button
             type="button"
             className="link-button"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/register")} // Use the relative path without the base
           >
-            Log in
+            Register
           </button>
         </p>
       </div>
@@ -53,4 +56,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default Login;

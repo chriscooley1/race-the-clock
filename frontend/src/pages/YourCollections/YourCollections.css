@@ -144,11 +144,96 @@
   padding: 10px 0;
 }
 
-/* Lighter background for the content area */
-.collection-item .content-area {
-  background-color: rgba(255, 255, 255, 0.8); /* Lightened background */
-  padding: 10px;
-  width: 100%;
+.collection-item:before {
+  content: ""; /* This is necessary to create a pseudo-element */
+  position: absolute;
+  left: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  top: 20px; /* Adjust this to be slightly below the title */
+  bottom: 20px; /* Same distance from the bottom as from the sides */
+  border: 5px solid black; /* This creates the solid line frame */
+  pointer-events: none; /* Ensure it does not capture click events */
+  z-index: 0; /* Position the border below the content */
+}
+
+.collection-item h2,
+.collection-item p 
+{
+  color: black; /* Ensure all text is black */
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.collection-item h1,
+.collection-item h2,
+.collection-item p
+{
+  color: black; /* Ensure all text is black */
+  font-family: 'Patrick Hand', cursive; /* Use a friendly handwriting font for paragraphs and buttons */
+  font-size: 1.2em; /* Increased font size */
+  font-weight: bold; /* Make the font bold */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+  text-transform: uppercase; /* UPPERCASE text */
+}
+
+/* Styling for the collection-item buttons */
+.collection-item .button-group {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  margin-top: 0; /* Adjust margin for spacing */
+}
+
+.collection-item .start-button,
+.collection-item .edit-button,
+.collection-item .delete-button {
+  background-color: #4caf50; /* Green background for start button */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Consistent padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin: 0 5px; /* Add margin between buttons */
+}
+
+.collection-item .start-button {
+  margin-bottom: 10px; /* Increased margin below the start button for spacing */
+}
+
+.collection-item .start-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.collection-item .start-button:active {
+  background-color: #388e3c; /* Even darker green when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+.collection-item .edit-button {
+  background-color: #ffcc00; /* Yellow background */
+}
+
+.collection-item .edit-button:hover {
+  background-color: #e6b800; /* Darker yellow on hover */
+}
+
+.collection-item .edit-button:active {
+  background-color: #cc9900; /* Even darker yellow when active */
+}
+
+.collection-item .delete-button {
+  background-color: #ff6666; /* Red background */
+}
+
+.collection-item .delete-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
+
+.collection-item .delete-button:active {
+  background-color: #990000; /* Even darker red when active */
 }
 
 /* Define the color schemes */
@@ -230,4 +315,25 @@
 
 .color-10 h1 {
   background-color: #455A64; /* Dark Gray */
+}
+
+.collections-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+  width: 100%;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: white; /* Modal content background */
+  padding: 20px; /* Padding inside the modal */
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  border-radius: 8px; /* Rounded corners */
+  width: 50%; /* Width of the modal */
+  max-width: 600px; /* Maximum width for larger screens */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
+  text-align: center; /* Center the text */
+  position: relative; /* Position relative for absolute children */
 }

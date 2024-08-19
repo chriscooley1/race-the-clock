@@ -19,63 +19,6 @@ p, button {
   font-family: 'Patrick Hand', cursive;
 }
 
-.button, .styled-button, .start-session-button, .cancel-button {
-  background-color: var(--color);
-  color: var(--text-color);
-}
-
-/* Define classes for different text colors */
-.text-color {
-  color: var(--text-color);
-}
-
-#theme-select {
-  padding: 5px;
-  margin-left: 10px;
-}
-
-.auth-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100%;
-  text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.auth-container h1 {
-  margin-bottom: 20px;
-}
-
-.auth-container input,
-.auth-container button {
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 300px;
-  font-size: 1em;
-}
-
-.auth-container input {
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 300px;
-  font-size: 1em;
-}
-
-.app-container {
-  padding-top: 50px;
-}
-
-.main-content {
-  flex: 1;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-/* Additional global styles */
 h1 {
   font-size: 3em;
   margin: 0;
@@ -88,152 +31,24 @@ button {
   margin: 10px 0;
 }
 
-.centered-input {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px; /* Add margin for spacing */
+.app-container {
+  padding-top: 50px;
 }
 
-.centered-input label {
-  margin-right: 10px; /* Space between label and input */
+.main-content {
+  flex: 1;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-.centered-input input[type="number"],
-.centered-input input[type="file"],
-.centered-input select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  color: black;
-  background-color: white;
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+.button, .styled-button, .start-session-button, .cancel-button {
+  background-color: var(--color);
+  color: var(--text-color);
 }
 
-.collections-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 20px;
-  width: 100%;
-}
-
-.collection-item {
-  border: 5px solid black; /* Thick black border */
-  padding: 20px;
-  margin-bottom: 20px;
-  background-color: #fafafa;
-  flex: 0 0 30%; /* Flex basis set to 30% to fit three items per row */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers the content vertically and horizontally */
-  justify-content: flex-start; /* Align content to start from the top */
-  position: relative; /* Needed for absolute positioning of the title background */
-  height: 300px; /* Set a fixed height to accommodate all content */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
-
-.collection-item h1 {
-  border: 5px solid black; /* Thick black border */
-  width: 100%;
-  background-color: #952E8F; /* Purple background */
-  color: black; /* Changed to black text */
-  text-align: center;
-  font-size: 1.5em;
-  margin: 0;
-  padding: 10px 0;
-}
-
-.collection-item:before {
-  content: ""; /* This is necessary to create a pseudo-element */
-  position: absolute;
-  left: 20px; /* Adjust as needed */
-  right: 20px; /* Adjust as needed */
-  top: 20px; /* Adjust this to be slightly below the title */
-  bottom: 20px; /* Same distance from the bottom as from the sides */
-  border: 5px solid black; /* This creates the solid line frame */
-  pointer-events: none; /* Ensure it does not capture click events */
-  z-index: 0; /* Position the border below the content */
-}
-
-.collection-item h2,
-.collection-item p,
-.creation-date {
-  color: black; /* Ensure all text is black */
-  font-size: 1em;
-  margin: 5px 0;
-}
-
-.collection-item h1,
-.collection-item h2,
-.collection-item p,
-.creation-date {
-  color: black; /* Ensure all text is black */
-  font-family: 'Patrick Hand', cursive; /* Use a friendly handwriting font for paragraphs and buttons */
-  font-size: 1.2em; /* Increased font size */
-  font-weight: bold; /* Make the font bold */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
-  text-transform: uppercase; /* UPPERCASE text */
-}
-
-/* Styling for the collection-item buttons */
-.collection-item .button-group {
-  display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  margin-top: 0; /* Adjust margin for spacing */
-}
-
-.collection-item .start-button,
-.collection-item .edit-button,
-.collection-item .delete-button {
-  background-color: #4caf50; /* Green background for start button */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px 20px; /* Consistent padding for size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin: 0 5px; /* Add margin between buttons */
-}
-
-.collection-item .start-button {
-  margin-bottom: 10px; /* Increased margin below the start button for spacing */
-}
-
-.collection-item .start-button:hover {
-  background-color: #45a049; /* Darker green on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.collection-item .start-button:active {
-  background-color: #388e3c; /* Even darker green when active */
-  transform: scale(0.95); /* Slight scale down when active */
-}
-
-.collection-item .edit-button {
-  background-color: #ffcc00; /* Yellow background */
-}
-
-.collection-item .edit-button:hover {
-  background-color: #e6b800; /* Darker yellow on hover */
-}
-
-.collection-item .edit-button:active {
-  background-color: #cc9900; /* Even darker yellow when active */
-}
-
-.collection-item .delete-button {
-  background-color: #ff6666; /* Red background */
-}
-
-.collection-item .delete-button:hover {
-  background-color: #cc0000; /* Darker red on hover */
-}
-
-.collection-item .delete-button:active {
-  background-color: #990000; /* Even darker red when active */
+/* Define classes for different text colors */
+.text-color {
+  color: var(--text-color);
 }
 
 .styled-button {
@@ -259,48 +74,6 @@ button {
   transform: scale(0.95); /* Slight scale down when active */
 }
 
-.add-button {
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px;
-  border-radius: 50%; /* Circle shape */
-  font-size: 1.5em; /* Larger font size for "+" */
-  cursor: pointer;
-  margin: 10px; /* Space around the button */
-  width: 40px; /* Fixed width */
-  height: 40px; /* Fixed height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add some shadow */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-}
-
-.add-button:hover {
-  background-color: #45a049; /* Darker green on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.add-button:active {
-  background-color: #388e3c; /* Even darker green when active */
-  transform: scale(0.95); /* Slight scale down when active */
-}
-
-.save-button {
-  background-color: #1e90ff;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.save-button:hover {
-  background-color: #003366;
-}
-
 .custom-input {
   background-color: white !important; /* Ensures background is white */
   color: black !important;           /* Ensures text color is black */
@@ -309,56 +82,6 @@ button {
   padding: 8px;                      /* Padding inside the field */
   font-size: 1em;                    /* Font size */
   font-family: 'Caveat', cursive; /* Set a default fun font for the body */
-}
-
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.checkbox-container input[type="checkbox"] {
-  appearance: none; /* Remove default styles */
-  -webkit-appearance: none; /* For Safari */
-  width: 20px; /* Set width */
-  height: 20px; /* Set height */
-  background-color: white; /* White background */
-  border: 2px solid #ccc; /* Border to simulate a checkbox */
-  border-radius: 4px; /* Optional: rounded corners */
-  margin-right: 10px;
-  cursor: pointer;
-  position: relative; /* For positioning the checkmark */
-}
-
-.checkbox-container input[type="checkbox"]:checked {
-  background-color: white; /* Keep the background white when checked */
-}
-
-.checkbox-container input[type="checkbox"]:checked:after {
-  content: "✓"; /* Checkmark */
-  color: black; /* Color of the checkmark */
-  position: absolute; /* Position relative to the checkbox */
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Adjust position */
-  font-size: 14px; /* Size of the checkmark */
-}
-
-.modal-container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 50%;
-  max-width: 700px;
-  text-align: center;
-  color: inherit;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .modal-background {
@@ -382,65 +105,6 @@ ul {
 li {
   padding: 5px 0; /* Adds vertical spacing between items */
   font-size: 1.2em; /* Larger text for better readability */
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: white; /* Modal content background */
-  padding: 20px; /* Padding inside the modal */
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
-  border-radius: 8px; /* Rounded corners */
-  width: 50%; /* Width of the modal */
-  max-width: 600px; /* Maximum width for larger screens */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
-  text-align: center; /* Center the text */
-  position: relative; /* Position relative for absolute children */
-}
-
-.modal-container.dark-theme .modal-content {
-  color: white; /* Set text color for dark theme */
-}
-
-.modal-container.blue-theme .modal-content {
-  color: #003366; /* Set text color for blue theme */
-}
-
-/* Style for modal labels and text */
-.modal-container label,
-.modal-container h1,
-.modal-container h2 {
-  color: inherit; /* Use the inherited color from the modal */
-}
-
-.modal-container input,
-.modal-container select {
-  color: black; /* Keep form elements readable */
-  background-color: white; /* Ensure form elements have a clear background */
-}
-
-/* Modal title - keep consistent color */
-.modal-container h1 {
-  color: #333; /* Use a fixed color */
-  margin-bottom: 20px;
-}
-
-/* Ensure modal labels and headings maintain visibility */
-.modal-container label,
-.modal-container h2 {
-  color: #333; /* Fixed color for visibility */
-}
-
-/* Style for modal labels and text */
-.modal-container label,
-.modal-container h1,
-.modal-container h2,
-.modal-container p {
-  color: #333; /* Use a fixed color for visibility */
-}
-
-/* Ensure modal buttons retain color */
-.modal-container button {
-  color: #fff; /* Keep buttons white */
 }
 
 .link-container {

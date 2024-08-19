@@ -81,3 +81,112 @@
   border-radius: 4px; /* Rounded corners */
   text-align: center; /* Center text in inputs */
 }
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  appearance: none; /* Remove default styles */
+  -webkit-appearance: none; /* For Safari */
+  width: 20px; /* Set width */
+  height: 20px; /* Set height */
+  background-color: white; /* White background */
+  border: 2px solid #ccc; /* Border to simulate a checkbox */
+  border-radius: 4px; /* Optional: rounded corners */
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative; /* For positioning the checkmark */
+}
+
+.checkbox-container input[type="checkbox"]:checked {
+  background-color: white; /* Keep the background white when checked */
+}
+
+.checkbox-container input[type="checkbox"]:checked:after {
+  content: "✓"; /* Checkmark */
+  color: black; /* Color of the checkmark */
+  position: absolute; /* Position relative to the checkbox */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust position */
+  font-size: 14px; /* Size of the checkmark */
+}
+
+.modal-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 700px;
+  text-align: center;
+  color: inherit;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: white; /* Modal content background */
+  padding: 20px; /* Padding inside the modal */
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  border-radius: 8px; /* Rounded corners */
+  width: 50%; /* Width of the modal */
+  max-width: 600px; /* Maximum width for larger screens */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
+  text-align: center; /* Center the text */
+  position: relative; /* Position relative for absolute children */
+}
+
+.modal-container.dark-theme .modal-content {
+  color: white; /* Set text color for dark theme */
+}
+
+.modal-container.blue-theme .modal-content {
+  color: #003366; /* Set text color for blue theme */
+}
+
+/* Style for modal labels and text */
+.modal-container label,
+.modal-container h1,
+.modal-container h2 {
+  color: inherit; /* Use the inherited color from the modal */
+}
+
+.modal-container input,
+.modal-container select {
+  color: black; /* Keep form elements readable */
+  background-color: white; /* Ensure form elements have a clear background */
+}
+
+/* Modal title - keep consistent color */
+.modal-container h1 {
+  color: #333; /* Use a fixed color */
+  margin-bottom: 20px;
+}
+
+/* Ensure modal labels and headings maintain visibility */
+.modal-container label,
+.modal-container h2 {
+  color: #333; /* Fixed color for visibility */
+}
+
+/* Style for modal labels and text */
+.modal-container label,
+.modal-container h1,
+.modal-container h2,
+.modal-container p {
+  color: #333; /* Use a fixed color for visibility */
+}
+
+/* Ensure modal buttons retain color */
+.modal-container button {
+  color: #fff; /* Keep buttons white */
+}
