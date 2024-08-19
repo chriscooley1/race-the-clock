@@ -29,7 +29,7 @@ const DiscoverCollections: React.FC = () => {
       try {
         const collections = await fetchPublicCollections();
         const collectionsWithItems = await Promise.all(
-          collections.map(async (collection) => {
+          (collections || []).map(async (collection) => {
             try {
               const items = await fetchItemsForCollection(collection.collection_id);
               return { ...collection, items: items || [] }; // Ensure items is an array
@@ -70,7 +70,7 @@ const DiscoverCollections: React.FC = () => {
     <div className="discover-collections">
       <h1>Discover Public Collections</h1>
       <div className="collections-list">
-        {collections.map((collection) => (
+        {(collections || []).map((collection) => (
           <div key={collection.collection_id} className="collection-item">
             <h1>{collection.name}</h1>
             <p>{collection.items.length} items in collection</p>
