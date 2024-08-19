@@ -6,6 +6,7 @@ import SessionSettingsModal from "../../components/SessionSettingsModal/SessionS
 import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNavBar";
 import EditCollectionModal from "../../components/EditCollectionModal/EditCollectionModal";
 import "./YourCollections.css";
+
 interface Collection {
   collection_id: number;
   name: string;
