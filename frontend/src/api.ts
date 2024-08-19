@@ -23,7 +23,8 @@ const handleApiError = (error: any) => {
   throw error;
 };
 
-// Update the userId parameter type to string
+// API function examples
+
 export const getSequences = async (userId: string, getAccessTokenSilently: () => Promise<string>) => {
   try {
     const token = await getAccessTokenSilently();
@@ -39,10 +40,9 @@ export const getSequences = async (userId: string, getAccessTokenSilently: () =>
   }
 };
 
-// The rest of the functions follow the same pattern
-
+// Function to create a sequence
 export const createSequence = async (
-  userId: number,
+  userId: string, // Update to string
   name: string,
   sequence: string,
   getAccessTokenSilently: () => Promise<string>
@@ -126,7 +126,7 @@ export const getCollections = async (getAccessTokenSilently: () => Promise<strin
 
 // Function to create a collection
 export const createCollection = async (
-  userId: number,
+  userId: string, // Update to string
   name: string,
   description: string,
   getAccessTokenSilently: () => Promise<string>
@@ -186,7 +186,7 @@ export const deleteCollection = async (collectionId: number, getAccessTokenSilen
 
 // Updated API function to include public/private status
 export const saveCollection = async (
-  userId: number,
+  userId: string, // Update to string
   collectionName: string,
   items: { id: number; name: string }[],
   status: string, // Accepts "public" or "private"

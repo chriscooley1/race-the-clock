@@ -1,21 +1,23 @@
-from fastapi import FastAPI, Depends, HTTPException, status,APIRouter
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from sqlmodel import Session, SQLModel, create_engine, select
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from passlib.context import CryptContext
-from jose import JWTError, jwt
+from sqlmodel import Session, SQLModel, create_engine, select
+from jose import JWTError, jwt, jwk
 from datetime import datetime, timedelta
-from pydantic import BaseModel
 from typing import List, Optional
-from database import get_db
-from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, ItemRead
+from pydantic import BaseModel
 from decouple import config
+import requests
+
+from database import get_db
+from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item
+
+DATABASE_URL = config("DATABASE_URL")
+AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
+AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
 
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-DATABASE_URL = config("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
 
 # Create database tables
@@ -33,31 +35,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-def get_password_hash(password: str):
-    return pwd_context.hash(password)
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
-def add_items_to_collection(db: Session, collection_id: int, items: List[str]):
-    for item_name in items:
-        item = Item(name=item_name, collection_id=collection_id)
-        db.add(item)
-    db.commit()
-
+# Auth0 token validation
 async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -65,71 +43,61 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
+        jwks_url = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
+        jwks = requests.get(jwks_url).json()
+        rsa_key = {}
+        for key in jwks["keys"]:
+            if key["kid"] == jwt.get_unverified_header(token)["kid"]:
+                rsa_key = {
+                    "kty": key["kty"],
+                    "kid": key["kid"],
+                    "use": key["use"],
+                    "n": key["n"],
+                    "e": key["e"],
+                }
+        if rsa_key:
+            payload = jwt.decode(
+                token,
+                jwk.construct(rsa_key),
+                algorithms=["RS256"],
+                audience=AUTH0_AUDIENCE,
+                issuer=f"https://{AUTH0_DOMAIN}/",
+            )
+            username: str = payload.get("sub")
+            if username is None:
+                raise credentials_exception
+        else:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
+
     user = db.query(User).filter(User.username == username).first()
     if user is None:
         raise credentials_exception
     return user
 
-@app.post("/register/")
-def register(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.username == user.username).first()
-    if db_user:
-        raise HTTPException(status_code=400, detail="Username already registered")
-    hashed_password = get_password_hash(user.password)
-    db_user = User(username=user.username, hashed_password=hashed_password)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)  # Refresh to get the updated object
-    return {"message": "User registered successfully", "user_id": db_user.user_id}
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-@app.post("/token", response_model=Token)
-def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.username == form_data.username).first()
-    if not user or not verify_password(form_data.password, user.hashed_password):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
-    return {"access_token": access_token, "token_type": "bearer"}
-
+# User Endpoints
 @app.get("/users/me/", response_model=User)
 async def read_users_me(current_user: User = Depends(get_current_user)):
     return current_user
 
-@app.post("/users", response_model=User)
-async def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = User(username=user.username, hashed_password=get_password_hash(user.password))
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
-
 @app.get("/users/{user_id}/sequences", response_model=List[Sequence])
-async def get_sequences(user_id: int, db: Session = Depends(get_db)):
-    user = db.get(User, user_id)
+async def get_sequences(user_id: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.username == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user.sequences
 
+# Sequence Endpoints
 @app.post("/sequences", response_model=Sequence)
 async def create_sequence(sequence: SequenceCreate, db: Session = Depends(get_db)):
-    print("Received data:", sequence.dict())  # Debugging line
-    user = db.get(User, sequence.user_id)
+    user = db.query(User).filter(User.username == sequence.user_id).first()
     if not user:
         raise HTTPException(status_code=400, detail="User not found")
     db_sequence = Sequence(
         name=sequence.name,
         description=sequence.description,
-        user_id=sequence.user_id
+        user_id=user.user_id
     )
     db.add(db_sequence)
     db.commit()
@@ -156,17 +124,17 @@ async def delete_sequence(sequence_id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"detail": "Sequence deleted successfully"}
 
+# Collection Endpoints
 @app.post("/collections", response_model=Collection)
 async def create_collection(
     collection: CollectionCreate, 
     db: Session = Depends(get_db), 
     current_user: User = Depends(get_current_user)
 ):
-    print("Creating a new collection...")  # Debugging line
     db_collection = Collection(
         name=collection.name,
         description=collection.description,
-        status=collection.status or "private",  # Use provided status or default to private
+        status=collection.status or "private",  
         user_id=current_user.user_id
     )
     db.add(db_collection)
@@ -182,7 +150,7 @@ async def get_collections(current_user: User = Depends(get_current_user), db: Se
 async def get_collection_items(collection_id: int, db: Session = Depends(get_db)):
     items = db.query(Item).filter(Item.collection_id == collection_id).all()
     if not items:
-        return []  # Instead of raising an exception, return an empty list
+        return []  
     return items
 
 @app.put("/collections/{collection_id}", response_model=Collection)
@@ -194,7 +162,6 @@ async def update_collection(collection_id: int, updated_collection: CollectionCr
         setattr(db_collection, key, value)
     db.commit()
     db.refresh(db_collection)
-    print(f"Collection updated: {db_collection}")  # Debugging line
     return db_collection
 
 @app.delete("/collections/{collection_id}")
@@ -204,7 +171,6 @@ async def delete_collection(collection_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Collection not found")
     db.delete(db_collection)
     db.commit()
-    print(f"Collection deleted: {db_collection}")  # Debugging line
     return {"detail": "Collection deleted successfully"}
 
 @app.get("/collections/public", response_model=List[CollectionRead])
@@ -219,4 +185,10 @@ async def create_items(collection_id: int, items: List[str], db: Session = Depen
         return {"message": "Items added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
-    
+
+# Utility function
+def add_items_to_collection(db: Session, collection_id: int, items: List[str]):
+    for item_name in items:
+        item = Item(name=item_name, collection_id=collection_id)
+        db.add(item)
+    db.commit()

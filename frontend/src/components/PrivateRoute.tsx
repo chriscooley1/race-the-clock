@@ -1,5 +1,4 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 interface PrivateRouteProps {
@@ -7,9 +6,14 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
-  return isAuthenticated ? element : <Navigate to="/login" />;
+  if (!isAuthenticated) {
+    loginWithRedirect();
+    return null; // Don't render anything while redirecting
+  }
+
+  return element;
 };
 
 export default PrivateRoute;

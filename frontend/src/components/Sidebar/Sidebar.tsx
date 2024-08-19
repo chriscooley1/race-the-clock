@@ -5,7 +5,13 @@ import "./Sidebar.css";
 import "../../App.css"; // Global styles for the app
 
 const Sidebar: React.FC = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+
+  const handleSignup = () => {
+    loginWithRedirect({
+      screen_hint: "signup",
+    } as any); // Using 'as any' to bypass TypeScript's type checking
+  };
 
   return (
     <div className="sidebar">
@@ -31,10 +37,14 @@ const Sidebar: React.FC = () => {
         ) : (
           <>
             <li>
-              <Link to="/register">Register</Link>
+              <button type="button" onClick={handleSignup}>
+                Register
+              </button>
             </li>
             <li>
-              <Link to="/login">Already Registered</Link>
+              <button type="button" onClick={() => loginWithRedirect()}>
+                Already Registered
+              </button>
             </li>
           </>
         )}
