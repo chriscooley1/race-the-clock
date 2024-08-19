@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
+import "../../App.css"; // Global styles for the app
 
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);

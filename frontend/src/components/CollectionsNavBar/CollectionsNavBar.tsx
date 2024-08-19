@@ -1,5 +1,6 @@
 import React from "react";
 import "./CollectionsNavBar.css";
+import "../../App.css"; // Global styles for the app
 
 interface CollectionsNavBarProps {
   onSelectCategory: (category: string) => void;

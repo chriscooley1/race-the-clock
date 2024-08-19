@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./NewCollection.css";
+import "../../App.css"; // Global styles for the app
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");

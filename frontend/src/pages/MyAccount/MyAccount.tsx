@@ -1,5 +1,6 @@
 import React from "react";
 import "./MyAccount.css";
+import "../../App.css"; // Global styles for the app
 
 const MyAccount: React.FC = () => {
   // Assuming user data is stored somewhere accessible

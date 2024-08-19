@@ -3,6 +3,7 @@ import { fetchPublicCollections, fetchItemsForCollection } from "../../api";
 import CollectionPreviewModal from "../../components/CollectionPreviewModal/CollectionPreviewModal";
 import { AxiosError } from "axios"; // Import AxiosError for proper error handling
 import "./DiscoverCollections.css";
+import "../../App.css"; // Global styles for the app
 
 interface Item {
   name: string;

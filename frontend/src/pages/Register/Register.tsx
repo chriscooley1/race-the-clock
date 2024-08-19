@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../api";
 import "./Register.css";
+import "../../App.css"; // Global styles for the app
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState("");

@@ -121,3 +121,118 @@
 .modal-container button {
   color: #fff; /* Keep buttons white */
 }
+
+/* Styling for the cancel button */
+.cancel-button {
+  background-color: #ff6666; /* Red background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.cancel-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.cancel-button:active {
+  background-color: #990000; /* Even darker red when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+.item-container {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  margin-bottom: 10px; /* Space between items */
+  width: 90%; /* Ensure it spans the full width of the container */
+}
+
+.remove-button {
+  padding: 5px 10px;
+  background-color: #ff6666;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.remove-button:hover {
+  background-color: #cc0000;
+}
+
+/* Styling for the buttons within the modal */
+.modal .cancel-button {
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Consistent padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-left: 10px; /* Add margin for spacing between buttons */
+}
+
+.modal .duplicate-button:hover,
+.modal .cancel-button:hover {
+  background-color: #007bff; /* Blue on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.modal .duplicate-button:active,
+.modal .cancel-button:active {
+  background-color: #0056b3; /* Even darker blue when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+.modal .cancel-button {
+  background-color: #ff6666; /* Red background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Consistent padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-left: 10px; /* Add margin for spacing between buttons */
+}
+
+.modal .cancel-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.modal .cancel-button:active {
+  background-color: #990000; /* Even darker red when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.custom-input {
+  background-color: white !important; /* Ensures background is white */
+  color: black !important;           /* Ensures text color is black */
+  border: 1px solid var(--text-color); /* Use text color for input borders in dark mode */
+  border-radius: 4px;                /* Rounded corners */
+  padding: 8px;                      /* Padding inside the field */
+  font-size: 1em;                    /* Font size */
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+}

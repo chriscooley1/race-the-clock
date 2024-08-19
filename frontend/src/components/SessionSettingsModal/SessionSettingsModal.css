@@ -190,3 +190,26 @@
 .modal-container button {
   color: #fff; /* Keep buttons white */
 }
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.custom-input {
+  background-color: white !important; /* Ensures background is white */
+  color: black !important;           /* Ensures text color is black */
+  border: 1px solid var(--text-color); /* Use text color for input borders in dark mode */
+  border-radius: 4px;                /* Rounded corners */
+  padding: 8px;                      /* Padding inside the field */
+  font-size: 1em;                    /* Font size */
+  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+}

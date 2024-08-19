@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { generateRandomNames } from "../../utils/RandomGenerators"; // Import the function
-import "./NameGenerator.css"
+import "./NameGenerator.css";
+import "../../App.css"; // Global styles for the app
 
 const NameGenerator: React.FC = () => {
   const [nameCount, setNameCount] = useState<number>(1);

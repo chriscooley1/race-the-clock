@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../api";
 import "./Login.css";
 import { useAuth } from "../../context/AuthContext";
+import "../../App.css"; // Global styles for the app
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");

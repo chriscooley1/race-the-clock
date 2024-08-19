@@ -1,4 +1,6 @@
 import React from "react";
+import "./CollectionPreviewModal.css";
+import "../../App.css"; // Global styles for the app
 
 interface ModalProps {
   collection: {

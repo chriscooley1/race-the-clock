@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./CollectionFinalStep.css";
 import { saveCollection } from "../../api"; // Import API function
+import "../../App.css"; // Global styles for the app
 
 interface LocationState {
   collectionName: string;

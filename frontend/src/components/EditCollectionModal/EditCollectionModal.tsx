@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./EditCollectionModal.css";
+import "../../App.css"; // Global styles for the app
 
 interface EditCollectionModalProps {
   isOpen: boolean;

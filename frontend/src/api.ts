@@ -25,7 +25,7 @@ const handleApiError = (error: any) => {
     if (error.response.status === 401) {
       console.error("Unauthorized - Redirecting to login.");
       // Update the redirection path to include the basename
-      window.location.href = "/letter-reader/login"; // Assuming '/letter-reader' is the basename
+      window.location.href = "/letter-reader/yout-collections"; // Assuming '/letter-reader' is the basename
     }
   } else if (error.request) {
     console.error("No response received:", error.request);

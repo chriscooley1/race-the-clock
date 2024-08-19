@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./CollectionSetup.css";
+import "../../App.css"; // Global styles for the app
 import {
   generateRandomLetters,
   generateRandomNumbers,

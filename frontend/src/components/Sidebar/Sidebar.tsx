@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
 import { useAuth } from "../../context/AuthContext";
+import "../../App.css"; // Global styles for the app
 
 const Sidebar: React.FC = () => {
   const { isAuthenticated } = useAuth();
