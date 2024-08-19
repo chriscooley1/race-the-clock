@@ -28,7 +28,6 @@ export const colorSchemes: ColorScheme[] = [
     backgroundColor: "#2e8b57",
     textColor: "#f0f8ff",
   },
-  // Rainbow-inspired and bright color schemes
   {
     name: "Bright Red",
     backgroundColor: "#ff0000",

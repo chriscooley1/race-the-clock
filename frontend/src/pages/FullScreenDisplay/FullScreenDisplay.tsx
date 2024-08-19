@@ -36,8 +36,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     }
 
     // Update CSS variables for the theme
-    document.documentElement.style.setProperty('--display-text-color', theme.displayTextColor || theme.textColor);
-    document.documentElement.style.setProperty('--background-color', theme.displayBackgroundColor || theme.backgroundColor);
+    document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor || theme.textColor);
+    document.documentElement.style.setProperty("--background-color", theme.displayBackgroundColor || theme.backgroundColor);
 
     return () => onExitFullScreen();
   }, [onEnterFullScreen, onExitFullScreen, sequence, shuffle, theme]);
