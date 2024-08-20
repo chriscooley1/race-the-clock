@@ -27,7 +27,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router basename="/letter-reader"> {/* Set the basename here */}
+    <Router> {/* Remove the basename */}
       <Auth0ProviderWithHistory>
         <div className={`app-container ${theme.className}`}>
           <Navbar />

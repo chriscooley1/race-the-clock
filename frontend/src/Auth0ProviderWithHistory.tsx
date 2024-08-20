@@ -10,7 +10,7 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState?: any) => {
-    navigate(appState?.returnTo || "/letter-reader/your-collections");
+    navigate(appState?.returnTo || "/your-collections");
   };
 
   return (

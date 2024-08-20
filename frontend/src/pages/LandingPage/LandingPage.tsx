@@ -1,4 +1,3 @@
-// LandingPage.tsx
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./LandingPage.css";
@@ -10,13 +9,13 @@ const LandingPage: React.FC = () => {
   const handleSignup = () => {
     loginWithRedirect({
       screen_hint: "signup",
-      appState: { returnTo: "/letter-reader/your-collections" },  // Ensure path includes /letter-reader/
+      appState: { returnTo: "/your-collections" },  // Updated path
     } as any);
   };
 
   const handleLogin = () => {
     loginWithRedirect({
-      appState: { returnTo: "/letter-reader/your-collections" },  // Ensure path includes /letter-reader/
+      appState: { returnTo: "/your-collections" },  // Updated path
     });
   };
 

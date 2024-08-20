@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Depends, HTTPException, status, Header
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
-from jose import JWTError, jwt, jwk
+from jose import jwt, jwk
+from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError
 from datetime import datetime, timedelta
 from typing import List, Optional
 from pydantic import BaseModel
@@ -28,7 +29,7 @@ app = FastAPI()
 ALLOWED_ORIGINS = config("ALLOWED_ORIGINS").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust this list to match your frontend URL(s)
+    allow_origins=ALLOWED_ORIGINS,  # Use the list of allowed origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -54,12 +55,13 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
                     "use": key["use"],
                     "n": key["n"],
                     "e": key["e"],
+                    "alg": key.get("alg", "RS256")  # Ensure the algorithm is present
                 }
         if rsa_key:
             payload = jwt.decode(
                 token,
                 jwk.construct(rsa_key),
-                algorithms=["RS256"],
+                algorithms=[rsa_key["alg"]],
                 audience=AUTH0_AUDIENCE,
                 issuer=f"https://{AUTH0_DOMAIN}/",
             )
@@ -68,6 +70,10 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
                 raise credentials_exception
         else:
             raise credentials_exception
+    except ExpiredSignatureError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired")
+    except JWTClaimsError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid claims")
     except JWTError:
         raise credentials_exception
 
