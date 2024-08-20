@@ -17,8 +17,10 @@ const UserSequences: React.FC = () => {
   };
 
   React.useEffect(() => {
-    fetchData();
-  }, []);
+    if (user?.sub) {
+      fetchData();
+    }
+  }, [getAccessTokenSilently, user?.sub]); // Add dependencies
 
   return <div>User Sequences</div>;
 };

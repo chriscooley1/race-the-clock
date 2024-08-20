@@ -27,7 +27,7 @@ const handleApiError = (error: any) => {
 
 export const getSequences = async (userId: string, getAccessTokenSilently: () => Promise<string>) => {
   try {
-    const token = await getAccessTokenSilently();
+    const token = await getAccessTokenSilently(); // Correctly awaited
     const response = await axios.get(
       `${API_BASE_URL}/users/${userId}/sequences`,
       {
@@ -302,9 +302,8 @@ export const duplicateCollection = async (
 };
 
 // Function to fetch collections
-export const fetchCollections = async (getAccessTokenSilently: () => Promise<string>) => {
+export const fetchCollections = async (token: string) => {
   try {
-    const token = await getAccessTokenSilently();
     const response = await axios.get(`${API_BASE_URL}/users/me/collections`, {
       headers: { Authorization: `Bearer ${token}` },
     });

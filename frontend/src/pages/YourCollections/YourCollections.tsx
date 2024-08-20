@@ -42,7 +42,7 @@ const YourCollections: React.FC = () => {
   const [sortOption, setSortOption] = useState<string>("date");
   const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
   const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
-  const { getAccessTokenSilently } = useAuth0(); // Ensure getAccessTokenSilently is correctly imported from useAuth0
+  const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
@@ -52,8 +52,8 @@ const YourCollections: React.FC = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const token = await getAccessTokenSilently(); // Get the token silently
-        const data = await fetchCollections(token); // Pass the token to the API call
+        const token = await getAccessTokenSilently();
+        const data = await fetchCollections(token);
         setCollections(data);
         filterAndSortCollections(data, selectedCategory, sortOption);
       } catch (error) {
@@ -101,7 +101,6 @@ const YourCollections: React.FC = () => {
     }
   };
 
-  // Functions to handle the modal state
   const handleEditButtonClick = (collection: Collection) => {
     setSelectedCollection(collection);
     setEditModalOpen(true);
@@ -173,7 +172,7 @@ const YourCollections: React.FC = () => {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
-    };
+    }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
