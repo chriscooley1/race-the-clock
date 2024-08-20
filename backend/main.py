@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Header
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
 from jose import JWTError, jwt, jwk
@@ -9,7 +9,7 @@ from decouple import config
 import requests
 
 from database import get_db
-from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item
+from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item
 
 DATABASE_URL = config("DATABASE_URL")
 AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
@@ -29,20 +29,20 @@ ALLOWED_ORIGINS = config("ALLOWED_ORIGINS").split(",")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Adjust this list to match your frontend URL(s)
-    # allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Auth0 token validation
-async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+async def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
+        token = authorization.split(" ")[1]  # Extract the token from the "Bearer <token>" format
         jwks_url = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
         jwks = requests.get(jwks_url).json()
         rsa_key = {}

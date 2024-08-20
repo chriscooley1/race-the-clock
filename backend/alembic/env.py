@@ -1,25 +1,25 @@
 from logging.config import fileConfig
-from decouple import config
+from decouple import config as env_config  # Rename to avoid confusion
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 from backend.models import SQLModel, User, Sequence, Collection  # Ensure you import your models here
 
 # Load the database URL from the environment variable
-DATABASE_URL = config("DATABASE_URL")
-config = context.config
+DATABASE_URL = env_config("DATABASE_URL")
+alembic_config = context.config  # Use a different name for Alembic's config
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
+alembic_config.set_main_option("sqlalchemy.url", DATABASE_URL)
+if alembic_config.config_file_name is not None:
+    fileConfig(alembic_config.config_file_name)
 
 # add your model's MetaData object here for 'autogenerate' support
 target_metadata = SQLModel.metadata
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode."""
-    url = config.get_main_option("sqlalchemy.url")
+    url = alembic_config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -33,7 +33,7 @@ def run_migrations_offline() -> None:
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode."""
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
+        alembic_config.get_section(alembic_config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
