@@ -10,7 +10,7 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState?: any) => {
-    navigate(appState?.returnTo || window.location.pathname);
+    navigate(appState?.returnTo || "/letter-reader/your-collections");
   };
 
   return (
@@ -18,7 +18,7 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
       domain={import.meta.env.VITE_AUTH0_DOMAIN}
       clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: `${window.location.origin}/letter-reader/callback`,
         audience: import.meta.env.VITE_AUTH0_AUDIENCE,
         scope: "openid profile email",
       }}

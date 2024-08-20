@@ -1,3 +1,4 @@
+// LandingPage.tsx
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./LandingPage.css";
@@ -9,7 +10,14 @@ const LandingPage: React.FC = () => {
   const handleSignup = () => {
     loginWithRedirect({
       screen_hint: "signup",
-    } as any); // Using 'as any' to bypass TypeScript's type checking
+      appState: { returnTo: "/letter-reader/your-collections" },  // Ensure path includes /letter-reader/
+    } as any);
+  };
+
+  const handleLogin = () => {
+    loginWithRedirect({
+      appState: { returnTo: "/letter-reader/your-collections" },  // Ensure path includes /letter-reader/
+    });
   };
 
   return (
@@ -18,7 +26,7 @@ const LandingPage: React.FC = () => {
       <button type="button" onClick={handleSignup}>
         Register
       </button>
-      <button type="button" onClick={() => loginWithRedirect()}>
+      <button type="button" onClick={handleLogin}>
         Already Registered
       </button>
     </div>

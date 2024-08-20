@@ -42,7 +42,7 @@ const YourCollections: React.FC = () => {
   const [sortOption, setSortOption] = useState<string>("date");
   const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
   const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
-  const { getAccessTokenSilently } = useAuth0(); // Use Auth0 for authentication
+  const { getAccessTokenSilently } = useAuth0(); // Ensure getAccessTokenSilently is correctly imported from useAuth0
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
@@ -52,7 +52,7 @@ const YourCollections: React.FC = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const token = await getAccessTokenSilently();
+        const token = await getAccessTokenSilently(); // Get the token silently
         const data = await fetchCollections(token); // Pass the token to the API call
         setCollections(data);
         filterAndSortCollections(data, selectedCategory, sortOption);
@@ -173,7 +173,7 @@ const YourCollections: React.FC = () => {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
-    }
+    };
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
