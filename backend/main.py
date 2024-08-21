@@ -1,19 +1,29 @@
 from fastapi import FastAPI, Depends, HTTPException, status, Header
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
-from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate  # Added UserCreate
+from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate
 from jose import jwt, jwk
 from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError, JWTError
 from datetime import datetime, timedelta
 from typing import List, Optional
 from pydantic import BaseModel
-from decouple import config
+from decouple import config, AutoConfig
+import os
 from passlib.context import CryptContext
 import requests
 import uvicorn
 from fastapi.routing import APIRoute
 
 from database import get_db
+
+# Determine environment (development or production)
+config_mode = config("NODE_ENV", default="development")
+
+# Load configuration based on the environment
+config_path = ".env.production" if config_mode == "production" else ".env"
+
+# Continue with your existing configuration
+config = AutoConfig(search_path=config_path)
 
 DATABASE_URL = config("DATABASE_URL")
 AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
