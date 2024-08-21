@@ -1,16 +1,17 @@
 from fastapi import FastAPI, Depends, HTTPException, status, Header
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
+from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate  # Added UserCreate
 from jose import jwt, jwk
-from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError
+from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError, JWTError
 from datetime import datetime, timedelta
 from typing import List, Optional
 from pydantic import BaseModel
 from decouple import config
+from passlib.context import CryptContext
 import requests
 
 from database import get_db
-from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item
 
 DATABASE_URL = config("DATABASE_URL")
 AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
@@ -24,6 +25,8 @@ engine = create_engine(DATABASE_URL)
 # Create database tables
 SQLModel.metadata.create_all(engine)
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 app = FastAPI()
 
 ALLOWED_ORIGINS = config("ALLOWED_ORIGINS").split(",")
@@ -36,6 +39,7 @@ app.add_middleware(
 )
 
 # Auth0 token validation
+# Auth0 token validation
 async def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -43,7 +47,7 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        token = authorization.split(" ")[1]  # Extract the token from the "Bearer <token>" format
+        token = authorization.split(" ")[1]
         jwks_url = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
         jwks = requests.get(jwks_url).json()
         rsa_key = {}
@@ -55,7 +59,7 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
                     "use": key["use"],
                     "n": key["n"],
                     "e": key["e"],
-                    "alg": key.get("alg", "RS256")  # Ensure the algorithm is present
+                    "alg": key.get("alg", "RS256")
                 }
         if rsa_key:
             payload = jwt.decode(
@@ -66,6 +70,7 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
                 issuer=f"https://{AUTH0_DOMAIN}/",
             )
             username: str = payload.get("sub")
+            email: str = payload.get("email")  # Fetch email if available
             if username is None:
                 raise credentials_exception
         else:
@@ -77,9 +82,16 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
     except JWTError:
         raise credentials_exception
 
+    # Check if user exists, if not, create the user
     user = db.query(User).filter(User.username == username).first()
     if user is None:
-        raise credentials_exception
+        # Create the user if not found
+        new_user = User(username=username, email=email, hashed_password="")  # No password since Auth0 handles auth
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+        user = new_user
+
     return user
 
 # User Endpoints
@@ -93,6 +105,19 @@ async def get_sequences(user_id: str, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user.sequences
+
+@app.post("/users/", response_model=User)
+async def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.username == user.username).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Username already registered")
+
+    hashed_password = pwd_context.hash(user.password)  # Hash the password
+    new_user = User(username=user.username, email=user.email, hashed_password=hashed_password)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return new_user
 
 # Sequence Endpoints
 @app.post("/sequences", response_model=Sequence)

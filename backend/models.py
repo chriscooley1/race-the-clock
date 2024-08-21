@@ -1,7 +1,13 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import List, Optional
 from datetime import datetime
+from pydantic import BaseModel
 import sqlalchemy as sa  
+
+class UserCreate(BaseModel):
+    username: str
+    email: Optional[str] = None
+    password: str  # Add password field
 
 # User Models
 class UserBase(SQLModel):
@@ -13,6 +19,7 @@ class User(SQLModel, table=True):
     user_id: Optional[int] = Field(default=None, primary_key=True)
     username: str = Field(sa_column=sa.Column(sa.String, unique=True, index=True))
     email: Optional[str] = Field(default=None)
+    hashed_password: str = Field(sa_column=sa.Column(sa.String, nullable=False))  # Add this line
     sequences: List["Sequence"] = Relationship(back_populates="user")
     collections: List["Collection"] = Relationship(back_populates="user")
 
