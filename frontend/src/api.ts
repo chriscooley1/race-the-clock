@@ -3,9 +3,6 @@ import axios from "axios";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 console.log('API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
-console.log('AUTH0_DOMAIN:', import.meta.env.VITE_AUTH0_DOMAIN);
-console.log('AUTH0_CLIENT_ID:', import.meta.env.VITE_AUTH0_CLIENT_ID);
-console.log('AUTH0_AUDIENCE:', import.meta.env.VITE_AUTH0_AUDIENCE);
 
 interface Item {
   id: number;
@@ -32,7 +29,7 @@ const handleApiError = (error: any) => {
 
 export const getSequences = async (userId: string, getAccessTokenSilently: () => Promise<string>) => {
   try {
-    const token = await getAccessTokenSilently(); // Correctly awaited
+    const token = await getAccessTokenSilently();
     const response = await axios.get(
       `${API_BASE_URL}/users/${userId}/sequences`,
       {

@@ -52,8 +52,8 @@ const YourCollections: React.FC = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const token = await getAccessTokenSilently();
-        const data = await fetchCollections(token);
+        const token = await getAccessTokenSilently(); // Get the access token first
+        const data = await fetchCollections(token); // Pass the token to the API function
         setCollections(data);
         filterAndSortCollections(data, selectedCategory, sortOption);
       } catch (error) {
@@ -61,7 +61,7 @@ const YourCollections: React.FC = () => {
       }
     };
     loadCollections();
-  }, [selectedCategory, sortOption, getAccessTokenSilently]);
+  }, [selectedCategory, sortOption, getAccessTokenSilently]);  
 
   const filterAndSortCollections = (collections: Collection[], category: string, sortOption: string) => {
     let filtered = collections;
@@ -81,8 +81,7 @@ const YourCollections: React.FC = () => {
 
   const handleDeleteCollection = async (collectionId: number) => {
     try {
-      const token = await getAccessTokenSilently();
-      await deleteCollectionById(collectionId, token);
+      await deleteCollectionById(collectionId, getAccessTokenSilently);
       const updatedCollections = collections.filter(
         (collection) => collection.collection_id !== collectionId
       );
@@ -109,8 +108,7 @@ const YourCollections: React.FC = () => {
   const handleDuplicateCollection = async () => {
     if (!collectionToDuplicate) return;
     try {
-      const token = await getAccessTokenSilently();
-      const duplicatedCollection = await duplicateCollection(collectionToDuplicate, token);
+      const duplicatedCollection = await duplicateCollection(collectionToDuplicate, getAccessTokenSilently);
       setCollections((prevCollections) => [...prevCollections, duplicatedCollection]);
       filterAndSortCollections([...collections, duplicatedCollection], selectedCategory, sortOption);
       setDuplicateModalOpen(false);
