@@ -191,23 +191,23 @@ export const deleteCollection = async (collectionId: number, getAccessTokenSilen
 
 // Updated API function to include public/private status
 export const saveCollection = async (
-  userId: string, // Update to string
+  userId: string,
   collectionName: string,
   items: { id: number; name: string }[],
-  status: string, // Accepts "public" or "private"
-  category: string, // Add category as a new argument
+  status: string,
+  category: string,
   getAccessTokenSilently: () => Promise<string>
 ) => {
   try {
-    const token = await getAccessTokenSilently();
+    const token = await getAccessTokenSilently(); // Retrieves the token
     const response = await axios.post(
       `${API_BASE_URL}/collections`,
       {
         user_id: userId,
         name: collectionName,
-        description: JSON.stringify(items), // Convert items array to JSON string
-        status, // Add status to the request
-        category, // Include category in the request
+        description: JSON.stringify(items),
+        status,
+        category,
       },
       {
         headers: { Authorization: `Bearer ${token}` },

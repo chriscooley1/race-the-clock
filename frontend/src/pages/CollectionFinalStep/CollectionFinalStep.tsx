@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./CollectionFinalStep.css";
 import { saveCollection } from "../../api"; // Import API function
 import "../../App.css"; // Global styles for the app
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface LocationState {
   collectionName: string;
@@ -15,6 +16,7 @@ const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { collectionName, isPublic, category, sequence } = location.state as LocationState; // Cast location.state to LocationState
+  const { getAccessTokenSilently } = useAuth0(); // Import the function from Auth0
 
   const [items, setItems] = useState<{ id: number; name: string }[]>(
     sequence.map((name: string, index: number) => ({ id: index + 1, name })) // Explicitly define type of name
@@ -32,18 +34,19 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleSaveCollection = async () => {
     try {
-      // Construct a single API call with all the data
+      const token = await getAccessTokenSilently(); // Retrieve the access token
       const collectionData = items.map((item) => ({
         id: item.id,
         name: item.name,
       }));
       await saveCollection(
-        1, // Assume userId is 1 for example purposes, replace as needed
+        "1", // Replace with actual userId, or get it from Auth0
         collectionName,
         collectionData,
         isPublic ? "public" : "private",
-        category // Pass the category to the API
-      );
+        category,
+        getAccessTokenSilently // Pass the function itself
+      );      
       navigate("/your-collections");
     } catch (error) {
       console.error("Error saving collection:", error);

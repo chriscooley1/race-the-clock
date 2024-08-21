@@ -9,8 +9,10 @@ import {
   generateNumbersOneToHundred,
 } from "../../utils/RandomGenerators";
 import { saveCollection } from "../../api"; // Assuming you have this API function
+import { useAuth0 } from "@auth0/auth0-react"; // Import useAuth0
 
 const CollectionSetup: React.FC = () => {
+  const { getAccessTokenSilently } = useAuth0(); // Get the getAccessTokenSilently function
   const navigate = useNavigate();
   const location = useLocation();
   const { collectionName, isPublic, category } = location.state || {};
@@ -55,17 +57,19 @@ const CollectionSetup: React.FC = () => {
 
   const handleSaveCollection = async () => {
     try {
+      const token = await getAccessTokenSilently(); // Get the access token
       const collectionData = sequence.map((name, index) => ({
         id: index + 1,
         name,
       }));
       await saveCollection(
-        1, // Assume userId is 1 for example purposes, replace as needed
+        "1", // Replace with the actual userId
         collectionName,
         collectionData,
         isPublic ? "public" : "private",
-        category // Pass the category to the API
-      );      
+        category,
+        getAccessTokenSilently // Pass the function itself
+      );
       navigate("/your-collections");
     } catch (error) {
       console.error("Error saving collection:", error);
