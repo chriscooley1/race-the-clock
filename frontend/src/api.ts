@@ -253,9 +253,8 @@ export const fetchPublicCollections = async () => {
 };
 
 // Function to fetch items for a specific collection
-export const fetchItemsForCollection = async (collectionId: number, getAccessTokenSilently: () => Promise<string>) => {
+export const fetchItemsForCollection = async (collectionId: number, token: string) => {
   try {
-    const token = await getAccessTokenSilently();
     const response = await axios.get<Item[]>(`${API_BASE_URL}/collections/${collectionId}/items`, {
       headers: { Authorization: `Bearer ${token}` },
     });
