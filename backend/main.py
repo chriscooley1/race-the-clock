@@ -10,6 +10,8 @@ from pydantic import BaseModel
 from decouple import config
 from passlib.context import CryptContext
 import requests
+import uvicorn
+from fastapi.routing import APIRoute
 
 from database import get_db
 
@@ -184,7 +186,12 @@ async def get_collection_items(collection_id: int, db: Session = Depends(get_db)
     return items
 
 @app.put("/collections/{collection_id}", response_model=Collection)
-async def update_collection(collection_id: int, updated_collection: CollectionCreate, db: Session = Depends(get_db)):
+async def update_collection(
+    collection_id: int, 
+    updated_collection: CollectionCreate, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
     db_collection = db.get(Collection, collection_id)
     if not db_collection:
         raise HTTPException(status_code=404, detail="Collection not found")
@@ -222,3 +229,11 @@ def add_items_to_collection(db: Session, collection_id: int, items: List[str]):
         item = Item(name=item_name, collection_id=collection_id)
         db.add(item)
     db.commit()
+
+# This will print all registered routes to the console
+if __name__ == "__main__":
+    for route in app.routes:
+        if isinstance(route, APIRoute):
+            print(f"Path: {route.path} | Methods: {route.methods}")
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)

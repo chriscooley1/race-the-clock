@@ -55,8 +55,10 @@ class Collection(SQLModel, table=True):
     items: List["Item"] = Relationship(back_populates="collection")
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
-class CollectionCreate(CollectionBase):
-    status: Optional[str] = "private"  # Allow setting the status
+class CollectionCreate(SQLModel):
+    name: str
+    description: str
+    status: Optional[str] = "private"
 
 class CollectionRead(CollectionBase):
     collection_id: int
