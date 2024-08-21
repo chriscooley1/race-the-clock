@@ -1,14 +1,3 @@
-import { names } from "./NameList";
-
-export const generateRandomNames = (quantity: number): string[] => {
-  let result: string[] = [];
-  for (let i = 0; i < quantity; i++) {
-    const randomName = names[Math.floor(Math.random() * names.length)];
-    result.push(randomName);
-  }
-  return result;
-};
-
 export const generateRandomLetters = (quantity: number): string[] => {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   let result: string[] = [];
