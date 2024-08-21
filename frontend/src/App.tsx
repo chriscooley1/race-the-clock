@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import YourCollections from "./pages/YourCollections/YourCollections";
@@ -27,70 +27,68 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router> {/* Remove the basename */}
-      <Auth0ProviderWithHistory>
-        <div className={`app-container ${theme.className}`}>
-          <Navbar />
-          <div className="layout">
-            {!hideSidebar && <Sidebar />}
-            <div className={`main-content ${hideSidebar ? "without-sidebar" : "with-sidebar"}`}>
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route
-                  path="/fullscreen-display"
-                  element={
-                    <PrivateRoute
-                      element={
-                        <FullScreenDisplay
-                          onEnterFullScreen={() => handleFullScreenDisplay(true)}
-                          onExitFullScreen={() => handleFullScreenDisplay(false)}
-                        />
-                      }
-                    />
-                  }
-                />
-                <Route
-                  path="/your-collections"
-                  element={<PrivateRoute element={<YourCollections />} />}
-                />
-                <Route
-                  path="/new-collection"
-                  element={<PrivateRoute element={<NewCollection />} />}
-                />
-                <Route
-                  path="/collection-setup"
-                  element={<PrivateRoute element={<CollectionSetup />} />}
-                />
-                <Route
-                  path="/collection-final-step"
-                  element={<PrivateRoute element={<CollectionFinalStep />} />}
-                />
-                <Route
-                  path="/discover-collections"
-                  element={<PrivateRoute element={<DiscoverCollections />} />}
-                />
-                <Route
-                  path="/name-generator"
-                  element={<PrivateRoute element={<NameGenerator />} />}
-                />
-                <Route
-                  path="/resources"
-                  element={<PrivateRoute element={<Resources />} />}
-                />
-                <Route 
-                  path="/settings" 
-                  element={<PrivateRoute element={<Settings />} />} 
-                />
-                <Route 
-                  path="/my-account" 
-                  element={<PrivateRoute element={<MyAccount />} />} 
-                />
-              </Routes>
-            </div>
+    <Auth0ProviderWithHistory>
+      <div className={`app-container ${theme.className}`}>
+        <Navbar />
+        <div className="layout">
+          {!hideSidebar && <Sidebar />}
+          <div className={`main-content ${hideSidebar ? "without-sidebar" : "with-sidebar"}`}>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route
+                path="/fullscreen-display"
+                element={
+                  <PrivateRoute
+                    element={
+                      <FullScreenDisplay
+                        onEnterFullScreen={() => handleFullScreenDisplay(true)}
+                        onExitFullScreen={() => handleFullScreenDisplay(false)}
+                      />
+                    }
+                  />
+                }
+              />
+              <Route
+                path="/your-collections"
+                element={<PrivateRoute element={<YourCollections />} />}
+              />
+              <Route
+                path="/new-collection"
+                element={<PrivateRoute element={<NewCollection />} />}
+              />
+              <Route
+                path="/collection-setup"
+                element={<PrivateRoute element={<CollectionSetup />} />}
+              />
+              <Route
+                path="/collection-final-step"
+                element={<PrivateRoute element={<CollectionFinalStep />} />}
+              />
+              <Route
+                path="/discover-collections"
+                element={<PrivateRoute element={<DiscoverCollections />} />}
+              />
+              <Route
+                path="/name-generator"
+                element={<PrivateRoute element={<NameGenerator />} />}
+              />
+              <Route
+                path="/resources"
+                element={<PrivateRoute element={<Resources />} />}
+              />
+              <Route 
+                path="/settings" 
+                element={<PrivateRoute element={<Settings />} />} 
+              />
+              <Route 
+                path="/my-account" 
+                element={<PrivateRoute element={<MyAccount />} />} 
+              />
+            </Routes>
           </div>
         </div>
-      </Auth0ProviderWithHistory>
-    </Router>
+      </div>
+    </Auth0ProviderWithHistory>
   );
 };
 
