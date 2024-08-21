@@ -46,6 +46,7 @@ const YourCollections: React.FC = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,7 +62,7 @@ const YourCollections: React.FC = () => {
       }
     };
     loadCollections();
-  }, [selectedCategory, sortOption, getAccessTokenSilently]);  
+  }, [selectedCategory, sortOption, getAccessTokenSilently]);
 
   const filterAndSortCollections = (collections: Collection[], category: string, sortOption: string) => {
     let filtered = collections;
@@ -80,53 +81,61 @@ const YourCollections: React.FC = () => {
   };
 
   const handleSaveUpdatedItems = async (newItems: string[]) => {
-    if (selectedCollection) {
-      // Filter out any empty strings from newItems
-      const filteredItems = newItems.filter(item => item.trim() !== '');
-  
-      // Parse the existing items from the selected collection
-      const existingItems = JSON.parse(selectedCollection.description || "[]");
-  
-      // Only keep the existing items that are still present in newItems
-      const updatedItems = existingItems.filter(
-        (item: { name: string }) => filteredItems.includes(item.name)
-      );
-  
-      // Add new items that aren't already in the existing items
-      filteredItems.forEach((item, index) => {
-        if (!updatedItems.some((updatedItem: { name: string }) => updatedItem.name === item)) {
-          updatedItems.push({ name: item, id: updatedItems.length + 1 });
-        }
-      });
-  
-      // Convert updatedItems to JSON string to store in the description
-      const updatedDescription = JSON.stringify(updatedItems);
-  
-      console.log("Updating collection with data:", updatedItems);
-  
-      try {
+    setIsLoading(true); // Start loading
+    try {
+      if (selectedCollection) {
+        // Filter out any empty strings from newItems
+        const filteredItems = newItems.filter(item => item.trim() !== '');
+
+        // Parse the existing items from the selected collection
+        const existingItems = JSON.parse(selectedCollection.description || "[]");
+
+        // Only keep the existing items that are still present in newItems
+        const updatedItems = existingItems.filter(
+          (item: { name: string }) => filteredItems.includes(item.name)
+        );
+
+        // Add new items that aren't already in the existing items
+        filteredItems.forEach((item, index) => {
+          if (!updatedItems.some((updatedItem: { name: string }) => updatedItem.name === item)) {
+            updatedItems.push({ name: item, id: updatedItems.length + 1 });
+          }
+        });
+
+        // Convert updatedItems to JSON string to store in the description
+        const updatedDescription = JSON.stringify(updatedItems);
+
+        console.log("Updating collection with data:", updatedItems);
+
         const updatedCollection = await updateCollection(
           selectedCollection.collection_id,
           selectedCollection.name,
           updatedDescription,
           getAccessTokenSilently
         );
-  
+
         console.log("Updated collection returned from API:", updatedCollection);
-  
+
         setCollections((prevCollections) =>
           prevCollections.map((col) =>
-            col.collection_id === updatedCollection.collection_id 
-              ? updatedCollection 
+            col.collection_id === updatedCollection.collection_id
+              ? updatedCollection
               : col
           )
         );
         setSelectedCollection(updatedCollection); // Update the selected collection with the new data
-      } catch (error) {
-        console.error("Error updating collection:", error);
+
+        // Refetch the collections to ensure they're up-to-date
+        const token = await getAccessTokenSilently();
+        const refreshedCollections = await fetchCollections(token);
+        setCollections(refreshedCollections);
       }
+    } catch (error) {
+      console.error("Error updating collection:", error);
+    } finally {
+      setIsLoading(false); // Stop loading
     }
-  };       
+  };
 
   const handleDeleteCollection = async (collectionId: number) => {
     try {
@@ -294,13 +303,13 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isEditModalOpen && selectedCollection && (
-          <EditCollectionModal
-              isOpen={isEditModalOpen}
-              onClose={() => setEditModalOpen(false)}
-              collectionName={selectedCollection.name}
-              items={JSON.parse(selectedCollection.description || "[]").map((item: Item) => item.name)}
-              onSave={handleSaveUpdatedItems} // <-- Pass the save handler here
-          />
+        <EditCollectionModal
+          isOpen={isEditModalOpen}
+          onClose={() => setEditModalOpen(false)}
+          collectionName={selectedCollection.name}
+          items={JSON.parse(selectedCollection.description || "[]").map((item: Item) => item.name)}
+          onSave={handleSaveUpdatedItems} // <-- Pass the save handler here
+        />
       )}
       {isDuplicateModalOpen && (
         <div className="modal-background">
@@ -347,6 +356,7 @@ const YourCollections: React.FC = () => {
           </div>
         </div>
       )}
+      {isLoading && <div>Loading...</div>} {/* Optionally show loading status */}
     </div>
   );
 };
