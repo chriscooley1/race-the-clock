@@ -156,17 +156,17 @@ export const updateCollection = async (
   getAccessTokenSilently: () => Promise<string>
 ) => {
   try {
-    const token = await getAccessTokenSilently();
-    const response = await axios.put(
-      `${API_BASE_URL}/collections/${collectionId}`,
-      { name, description },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    return response.data;
+      const token = await getAccessTokenSilently();
+      const response = await axios.put(
+          `${API_BASE_URL}/collections/${collectionId}`,
+          { name, description },  // Ensure these fields match what your backend expects
+          {
+              headers: { Authorization: `Bearer ${token}` },
+          }
+      );
+      return response.data;
   } catch (error) {
-    handleApiError(error);
+      handleApiError(error);
   }
 };
 

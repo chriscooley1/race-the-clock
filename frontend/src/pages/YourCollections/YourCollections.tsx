@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchCollections, deleteCollectionById, duplicateCollection } from "../../api";
+import { fetchCollections, deleteCollectionById, duplicateCollection, updateCollection } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import SessionSettingsModal from "../../components/SessionSettingsModal/SessionSettingsModal";
 import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNavBar";
@@ -78,6 +78,55 @@ const YourCollections: React.FC = () => {
     });
     setFilteredCollections(sorted);
   };
+
+  const handleSaveUpdatedItems = async (newItems: string[]) => {
+    if (selectedCollection) {
+      // Filter out any empty strings from newItems
+      const filteredItems = newItems.filter(item => item.trim() !== '');
+  
+      // Parse the existing items from the selected collection
+      const existingItems = JSON.parse(selectedCollection.description || "[]");
+  
+      // Only keep the existing items that are still present in newItems
+      const updatedItems = existingItems.filter(
+        (item: { name: string }) => filteredItems.includes(item.name)
+      );
+  
+      // Add new items that aren't already in the existing items
+      filteredItems.forEach((item, index) => {
+        if (!updatedItems.some((updatedItem: { name: string }) => updatedItem.name === item)) {
+          updatedItems.push({ name: item, id: updatedItems.length + 1 });
+        }
+      });
+  
+      // Convert updatedItems to JSON string to store in the description
+      const updatedDescription = JSON.stringify(updatedItems);
+  
+      console.log("Updating collection with data:", updatedItems);
+  
+      try {
+        const updatedCollection = await updateCollection(
+          selectedCollection.collection_id,
+          selectedCollection.name,
+          updatedDescription,
+          getAccessTokenSilently
+        );
+  
+        console.log("Updated collection returned from API:", updatedCollection);
+  
+        setCollections((prevCollections) =>
+          prevCollections.map((col) =>
+            col.collection_id === updatedCollection.collection_id 
+              ? updatedCollection 
+              : col
+          )
+        );
+        setSelectedCollection(updatedCollection); // Update the selected collection with the new data
+      } catch (error) {
+        console.error("Error updating collection:", error);
+      }
+    }
+  };       
 
   const handleDeleteCollection = async (collectionId: number) => {
     try {
@@ -245,15 +294,13 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isEditModalOpen && selectedCollection && (
-        <EditCollectionModal
-          isOpen={isEditModalOpen}
-          onClose={() => setEditModalOpen(false)}
-          collectionName={selectedCollection.name}
-          items={JSON.parse(selectedCollection.description || "[]").map((item: Item) => item.name)}
-          onSave={(newItems) => {
-            console.log("Save new items:", newItems);
-          }}
-        />
+          <EditCollectionModal
+              isOpen={isEditModalOpen}
+              onClose={() => setEditModalOpen(false)}
+              collectionName={selectedCollection.name}
+              items={JSON.parse(selectedCollection.description || "[]").map((item: Item) => item.name)}
+              onSave={handleSaveUpdatedItems} // <-- Pass the save handler here
+          />
       )}
       {isDuplicateModalOpen && (
         <div className="modal-background">
