@@ -2,6 +2,11 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+console.log('API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
+console.log('AUTH0_DOMAIN:', import.meta.env.VITE_AUTH0_DOMAIN);
+console.log('AUTH0_CLIENT_ID:', import.meta.env.VITE_AUTH0_CLIENT_ID);
+console.log('AUTH0_AUDIENCE:', import.meta.env.VITE_AUTH0_AUDIENCE);
+
 interface Item {
   id: number;
   name: string;

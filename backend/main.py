@@ -39,7 +39,6 @@ app.add_middleware(
 )
 
 # Auth0 token validation
-# Auth0 token validation
 async def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
