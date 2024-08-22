@@ -94,36 +94,41 @@ const YourCollections: React.FC = () => {
       if (selectedCollection) {
         // Filter out any empty strings from newItems
         const filteredItems = newItems.filter(item => item.trim() !== "");
-
+    
         // Parse the existing items from the selected collection
         const existingItems = JSON.parse(selectedCollection.description || "[]");
-
+    
         // Only keep the existing items that are still present in newItems
         const updatedItems = existingItems.filter(
           (item: { name: string }) => filteredItems.includes(item.name)
         );
-
+    
         // Add new items that aren't already in the existing items
-        filteredItems.forEach((item, index) => {
+        filteredItems.forEach((item) => {
           if (!updatedItems.some((updatedItem: { name: string }) => updatedItem.name === item)) {
-            updatedItems.push({ name: item, id: updatedItems.length + 1 });
+            updatedItems.push({ name: item });
           }
         });
-
+    
         // Convert updatedItems to JSON string to store in the description
         const updatedDescription = JSON.stringify(updatedItems);
-
-        console.log("Updating collection with data:", updatedItems);
-
+    
+        // Log the data to ensure it's correct
+        console.log({
+          name: selectedCollection.name,
+          description: updatedDescription,
+          category: selectedCollection.category,
+        });
+    
+        // Update the collection with the necessary fields
         const updatedCollection = await updateCollection(
           selectedCollection.collection_id,
           selectedCollection.name,
           updatedDescription,
+          selectedCollection.category, // Pass the category
           getAccessTokenSilently
         );
-
-        console.log("Updated collection returned from API:", updatedCollection);
-
+    
         setCollections((prevCollections) =>
           prevCollections.map((col) =>
             col.collection_id === updatedCollection.collection_id
@@ -132,7 +137,7 @@ const YourCollections: React.FC = () => {
           )
         );
         setSelectedCollection(updatedCollection); // Update the selected collection with the new data
-
+    
         // Refetch the collections to ensure they're up-to-date
         const token = await getAccessTokenSilently();
         const refreshedCollections = await fetchCollections(token);
@@ -142,19 +147,6 @@ const YourCollections: React.FC = () => {
       console.error("Error updating collection:", error);
     } finally {
       setIsLoading(false); // Stop loading
-    }
-  };
-
-  const handleDeleteCollection = async (collectionId: number) => {
-    try {
-      await deleteCollectionById(collectionId, getAccessTokenSilently);
-      const updatedCollections = collections.filter(
-        (collection) => collection.collection_id !== collectionId
-      );
-      setCollections(updatedCollections);
-      filterAndSortCollections(updatedCollections, selectedCategory, sortOption);
-    } catch (error) {
-      console.error("Error deleting collection:", error);
     }
   };
 
@@ -180,6 +172,19 @@ const YourCollections: React.FC = () => {
       setDuplicateModalOpen(false);
     } catch (error) {
       console.error("Error duplicating collection:", error);
+    }
+  };
+
+  const handleDeleteCollection = async (collectionId: number) => {
+    try {
+      await deleteCollectionById(collectionId, getAccessTokenSilently);
+      const updatedCollections = collections.filter(
+        (collection) => collection.collection_id !== collectionId
+      );
+      setCollections(updatedCollections);
+      filterAndSortCollections(updatedCollections, selectedCategory, sortOption);
+    } catch (error) {
+      console.error("Error deleting collection:", error);
     }
   };
 
