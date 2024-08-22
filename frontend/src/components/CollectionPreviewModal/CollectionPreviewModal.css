@@ -15,63 +15,20 @@
   justify-content: center;
 }
 
-/* Modal Content */
-.modal-content {
-  background-color: white; /* Modal content background */
-  padding: 20px; /* Padding inside the modal */
-  font-family: "Caveat", cursive; /* Set a default fun font for the body */
-  border-radius: 8px; /* Rounded corners */
-  width: 50%; /* Width of the modal */
-  max-width: 600px; /* Maximum width for larger screens */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
-  text-align: center; /* Center the text */
-  position: relative; /* Position relative for absolute children */
-}
-
-.modal-container.dark-theme .modal-content {
-  color: white; /* Set text color for dark theme */
-}
-
-.modal-container.blue-theme .modal-content {
-  color: #003366; /* Set text color for blue theme */
-}
-
-/* Style for modal labels and text */
-.modal-container label,
-.modal-container h1,
-.modal-container h2 {
-  color: inherit; /* Use the inherited color from the modal */
-}
-
-.modal-container input,
-.modal-container select {
-  color: black; /* Keep form elements readable */
-  background-color: white; /* Ensure form elements have a clear background */
-}
-
-/* Modal title - keep consistent color */
-.modal-container h1 {
-  color: #333; /* Use a fixed color */
+.list-item {
+  max-height: 300px;
+  overflow-y: auto;
   margin-bottom: 20px;
+  width: 100%; /* Ensures items span the full width */
 }
 
-/* Ensure modal labels and headings maintain visibility */
-.modal-container label,
-.modal-container h2 {
-  color: #333; /* Fixed color for visibility */
-}
-
-/* Style for modal labels and text */
-.modal-container label,
-.modal-container h1,
-.modal-container h2,
-.modal-container p {
-  color: #333; /* Use a fixed color for visibility */
-}
-
-/* Ensure modal buttons retain color */
-.modal-container button {
-  color: #fff; /* Keep buttons white */
+.list-item-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  color: #333;
 }
 
 .modal-background {
