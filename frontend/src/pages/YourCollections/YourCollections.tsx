@@ -92,43 +92,20 @@ const YourCollections: React.FC = () => {
     setIsLoading(true); // Start loading
     try {
       if (selectedCollection) {
-        // Filter out any empty strings from newItems
-        const filteredItems = newItems.filter(item => item.trim() !== "");
-    
-        // Parse the existing items from the selected collection
-        const existingItems = JSON.parse(selectedCollection.description || "[]");
-    
-        // Only keep the existing items that are still present in newItems
-        const updatedItems = existingItems.filter(
-          (item: { name: string }) => filteredItems.includes(item.name)
-        );
-    
-        // Add new items that aren't already in the existing items
-        filteredItems.forEach((item) => {
-          if (!updatedItems.some((updatedItem: { name: string }) => updatedItem.name === item)) {
-            updatedItems.push({ name: item });
-          }
-        });
-    
-        // Convert updatedItems to JSON string to store in the description
+        const updatedItems = newItems.filter(item => item.trim() !== "");
+  
         const updatedDescription = JSON.stringify(updatedItems);
-    
-        // Log the data to ensure it's correct
-        console.log({
-          name: selectedCollection.name,
-          description: updatedDescription,
-          category: selectedCollection.category,
-        });
-    
-        // Update the collection with the necessary fields
+  
+        // Assuming updateCollection is correctly updating the backend
         const updatedCollection = await updateCollection(
           selectedCollection.collection_id,
           selectedCollection.name,
           updatedDescription,
-          selectedCollection.category, // Pass the category
+          selectedCollection.category,
           getAccessTokenSilently
         );
-    
+  
+        // Update the state with the new collection data
         setCollections((prevCollections) =>
           prevCollections.map((col) =>
             col.collection_id === updatedCollection.collection_id
@@ -136,9 +113,11 @@ const YourCollections: React.FC = () => {
               : col
           )
         );
-        setSelectedCollection(updatedCollection); // Update the selected collection with the new data
-    
-        // Refetch the collections to ensure they're up-to-date
+  
+        // Update the selectedCollection to reflect changes immediately
+        setSelectedCollection(updatedCollection);
+  
+        // Optionally, refetch the collections to ensure data is consistent
         const token = await getAccessTokenSilently();
         const refreshedCollections = await fetchCollections(token);
         setCollections(refreshedCollections);
@@ -148,7 +127,7 @@ const YourCollections: React.FC = () => {
     } finally {
       setIsLoading(false); // Stop loading
     }
-  };
+  };  
 
   const handleStartCollection = (collectionId: number) => {
     const collection = collections.find((col) => col.collection_id === collectionId);
