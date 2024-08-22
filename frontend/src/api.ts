@@ -1,4 +1,5 @@
 import axios from "axios";
+import { User } from "@auth0/auth0-react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -26,6 +27,21 @@ const handleApiError = (error: any) => {
 };
 
 // API function examples
+
+export const getCurrentUser = async (
+  getAccessTokenSilently: () => Promise<string>
+): Promise<User> => {
+  try {
+    const token = await getAccessTokenSilently();
+    const response = await axios.get(`${API_BASE_URL}/users/me/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw new Error("Could not fetch current user.");
+  }
+};
 
 export const getSequences = async (userId: string, getAccessTokenSilently: () => Promise<string>) => {
   try {

@@ -10,9 +10,10 @@ import {
 } from "../../utils/RandomGenerators";
 import { saveCollection } from "../../api"; // Assuming you have this API function
 import { useAuth0 } from "@auth0/auth0-react"; // Import useAuth0
+import { getCurrentUser } from "../../api";
 
 const CollectionSetup: React.FC = () => {
-  const { getAccessTokenSilently } = useAuth0(); // Get the getAccessTokenSilently function
+  const { user, getAccessTokenSilently } = useAuth0(); // Access user directly
   const navigate = useNavigate();
   const location = useLocation();
   const { collectionName, isPublic, category } = location.state || {};
@@ -57,13 +58,18 @@ const CollectionSetup: React.FC = () => {
 
   const handleSaveCollection = async () => {
     try {
+      if (!user || !user.sub) {
+        throw new Error("User ID is undefined");
+      }
+  
       const token = await getAccessTokenSilently(); // Get the access token
       const collectionData = sequence.map((name, index) => ({
         id: index + 1,
         name,
       }));
+      
       await saveCollection(
-        "1", // Replace with the actual userId
+        user.sub, // Use the Auth0 user ID directly from useAuth0
         collectionName,
         collectionData,
         isPublic ? "public" : "private",
@@ -73,6 +79,7 @@ const CollectionSetup: React.FC = () => {
       navigate("/your-collections");
     } catch (error) {
       console.error("Error saving collection:", error);
+      alert("There was an error saving your collection. Please try again.");
     }
   };
 

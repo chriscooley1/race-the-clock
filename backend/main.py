@@ -13,6 +13,7 @@ from passlib.context import CryptContext
 import requests
 import uvicorn
 from fastapi.routing import APIRoute
+import pytz
 
 from database import get_db
 
@@ -173,12 +174,17 @@ async def create_collection(
     db: Session = Depends(get_db), 
     current_user: User = Depends(get_current_user)
 ):
+    # Convert the current UTC time to MST
+    utc_time = datetime.utcnow()
+    mst_time = utc_time.astimezone(pytz.timezone('America/Denver'))
+    
     db_collection = Collection(
         name=collection.name,
         description=collection.description,
         status=collection.status or "private",  
         category=collection.category,
-        user_id=current_user.user_id
+        user_id=current_user.user_id,
+        created_at=mst_time  # Set the created_at time to MST
     )
     db.add(db_collection)
     db.commit()
