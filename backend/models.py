@@ -19,7 +19,7 @@ class User(SQLModel, table=True):
     user_id: Optional[int] = Field(default=None, primary_key=True)
     username: str = Field(sa_column=sa.Column(sa.String, unique=True, index=True))
     email: Optional[str] = Field(default=None)
-    hashed_password: str = Field(sa_column=sa.Column(sa.String, nullable=False))  # Add this line
+    hashed_password: str = Field(sa_column=sa.Column(sa.String, nullable=False))
     sequences: List["Sequence"] = Relationship(back_populates="user")
     collections: List["Collection"] = Relationship(back_populates="user")
 
@@ -43,6 +43,7 @@ class CollectionBase(SQLModel):
     name: str
     description: str
     user_id: int
+    category: str
 
 class Collection(SQLModel, table=True):
     __tablename__ = "collections"
@@ -51,6 +52,7 @@ class Collection(SQLModel, table=True):
     description: str
     user_id: int = Field(foreign_key="users.user_id")
     status: str = Field(default="private")
+    category: str
     user: User = Relationship(back_populates="collections")
     items: List["Item"] = Relationship(back_populates="collection")
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -59,6 +61,7 @@ class CollectionCreate(SQLModel):
     name: str
     description: str
     status: Optional[str] = "private"
+    category: str
 
 class CollectionRead(CollectionBase):
     collection_id: int

@@ -177,6 +177,7 @@ async def create_collection(
         name=collection.name,
         description=collection.description,
         status=collection.status or "private",  
+        category=collection.category,
         user_id=current_user.user_id
     )
     db.add(db_collection)

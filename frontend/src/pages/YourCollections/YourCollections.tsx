@@ -64,11 +64,18 @@ const YourCollections: React.FC = () => {
     loadCollections();
   }, [selectedCategory, sortOption, getAccessTokenSilently]);
 
-  const filterAndSortCollections = (collections: Collection[], category: string, sortOption: string) => {
+  const filterAndSortCollections = (
+    collections: Collection[],
+    category: string,
+    sortOption: string
+  ) => {
     let filtered = collections;
+  
+    // Filter collections based on selected category, but include all in "All Collections"
     if (category !== "All Collections") {
       filtered = collections.filter((collection) => collection.category === category);
     }
+  
     const sorted = [...filtered].sort((a, b) => {
       if (sortOption === "date") {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
@@ -77,6 +84,7 @@ const YourCollections: React.FC = () => {
       }
       return 0;
     });
+  
     setFilteredCollections(sorted);
   };
 
