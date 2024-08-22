@@ -46,7 +46,7 @@ const Settings: React.FC = () => {
         </select>
       </div>
       <div>
-        <label className="settings-label">Text Color for Display:</label>
+        <label className="settings-label">Text Color for FullScreenDisplay:</label>
         <div className="color-options">
           {colorOptions.map((color) => (
             <div
@@ -59,7 +59,7 @@ const Settings: React.FC = () => {
         </div>
       </div>
       <div>
-        <label className="settings-label">Background Color for Display:</label>
+        <label className="settings-label">Background Color for FullScreenDisplay:</label>
         <div className="color-options">
           {colorOptions.map((color) => (
             <div
