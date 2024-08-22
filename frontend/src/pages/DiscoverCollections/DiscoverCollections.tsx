@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { fetchPublicCollections, fetchItemsForCollection } from "../../api";
+import { fetchPublicCollections } from "../../api";  
 import CollectionPreviewModal from "../../components/CollectionPreviewModal/CollectionPreviewModal";
-import { AxiosError } from "axios"; // Import AxiosError for proper error handling
+import { AxiosError } from "axios"; 
 import "./DiscoverCollections.css";
-import "../../App.css"; // Global styles for the app
+import "../../App.css"; 
 import { useAuth0 } from "@auth0/auth0-react";
 
 interface Item {
@@ -13,14 +13,14 @@ interface Item {
 interface Collection {
   collection_id: number;
   name: string;
-  description: string;
+  description: string; 
   created_at: string;
   creator_username: string;
   items: Item[];
 }
 
 const DiscoverCollections: React.FC = () => {
-  const { getAccessTokenSilently } = useAuth0();  // Add this line
+  const { getAccessTokenSilently } = useAuth0();
   const [collections, setCollections] = useState<Collection[]>([]);
   const [activeCollection, setActiveCollection] = useState<Collection | null>(null);
 
@@ -30,23 +30,25 @@ const DiscoverCollections: React.FC = () => {
     const fetchCollections = async () => {
       try {
         const collections = await fetchPublicCollections();
-        const collectionsWithItems = await Promise.all(
-          (collections || []).map(async (collection) => {
-            try {
-              const token = await getAccessTokenSilently();  // Fetch the token
-              const items = await fetchItemsForCollection(collection.collection_id, token); // Pass the token
-              return { ...collection, items: items || [] };
-            } catch (err) {
-              const error = err as AxiosError;
-              if (error.response && error.response.status === 404) {
-                console.info(`No items found for collection ${collection.collection_id}`);
-                return { ...collection, items: [] };
-              }
-              console.error(`Error fetching items for collection ${collection.collection_id}:`, error);
-              return { ...collection, items: [] };
+        
+        // Ensure collections is an array
+        const collectionsWithItems = (collections || []).map(collection => {
+          let parsedItems: Item[] = [];
+          
+          try {
+            // Only try to parse if the description looks like JSON (starts with [ or {)
+            if (collection.description && (collection.description.trim().startsWith("[") || collection.description.trim().startsWith("{"))) {
+              parsedItems = JSON.parse(collection.description);
+            } else {
+              console.warn(`Skipping parsing for collection ${collection.collection_id}: description is not valid JSON.`);
             }
-          })
-        );
+          } catch (err) {
+            console.error("Failed to parse items from description:", err);
+          }
+    
+          return { ...collection, items: parsedItems };
+        });
+    
         if (isMounted) {
           setCollections(collectionsWithItems as Collection[]);
         }

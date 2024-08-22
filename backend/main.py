@@ -224,6 +224,10 @@ async def delete_collection(collection_id: int, db: Session = Depends(get_db)):
 @app.get("/collections/public", response_model=List[CollectionRead])
 async def get_public_collections(db: Session = Depends(get_db)):
     public_collections = db.query(Collection).filter(Collection.status == "public").all()
+    
+    for collection in public_collections:
+        collection.items = db.query(Item).filter(Item.collection_id == collection.collection_id).all()
+    
     return public_collections
 
 @app.post("/collections/{collection_id}/items")
