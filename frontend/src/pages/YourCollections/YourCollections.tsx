@@ -85,7 +85,7 @@ const YourCollections: React.FC = () => {
     try {
       if (selectedCollection) {
         // Filter out any empty strings from newItems
-        const filteredItems = newItems.filter(item => item.trim() !== '');
+        const filteredItems = newItems.filter(item => item.trim() !== "");
 
         // Parse the existing items from the selected collection
         const existingItems = JSON.parse(selectedCollection.description || "[]");

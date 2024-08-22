@@ -19,7 +19,7 @@
 .modal-content {
   background-color: white; /* Modal content background */
   padding: 20px; /* Padding inside the modal */
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  font-family: "Caveat", cursive; /* Set a default fun font for the body */
   border-radius: 8px; /* Rounded corners */
   width: 50%; /* Width of the modal */
   max-width: 600px; /* Maximum width for larger screens */

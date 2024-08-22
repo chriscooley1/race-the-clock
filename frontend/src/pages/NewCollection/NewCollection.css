@@ -7,7 +7,7 @@
 
 .new-collection-container input[type="text"] {
   margin: 10px 0;
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  font-family: "Caveat", cursive; /* Set a default fun font for the body */
 }
 
 .new-collection-container input[type="checkbox"] {
@@ -37,7 +37,7 @@
   border-radius: 4px;
   color: black;
   background-color: white;
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  font-family: "Caveat", cursive; /* Set a default fun font for the body */
 }
 
 .checkbox-container {
@@ -103,5 +103,5 @@
   border-radius: 4px;                /* Rounded corners */
   padding: 8px;                      /* Padding inside the field */
   font-size: 1em;                    /* Font size */
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  font-family: "Caveat", cursive; /* Set a default fun font for the body */
 }

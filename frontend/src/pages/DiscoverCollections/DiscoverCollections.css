@@ -66,7 +66,7 @@
 .collection-item h2,
 .collection-item p {
   color: black; /* Ensure all text is black */
-  font-family: 'Patrick Hand', cursive; /* Use a friendly handwriting font */
+  font-family: "Patrick Hand", cursive; /* Use a friendly handwriting font */
   font-size: 1.2em; /* Increased font size */
   font-weight: bold; /* Make the font bold */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for depth */

@@ -10,9 +10,9 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
   const navigate = useNavigate();
 
   // Debug environment variables
-  console.log('AUTH0_DOMAIN:', import.meta.env.VITE_AUTH0_DOMAIN);
-  console.log('AUTH0_CLIENT_ID:', import.meta.env.VITE_AUTH0_CLIENT_ID);
-  console.log('AUTH0_AUDIENCE:', import.meta.env.VITE_AUTH0_AUDIENCE);
+  console.log("AUTH0_DOMAIN:", import.meta.env.VITE_AUTH0_DOMAIN);
+  console.log("AUTH0_CLIENT_ID:", import.meta.env.VITE_AUTH0_CLIENT_ID);
+  console.log("AUTH0_AUDIENCE:", import.meta.env.VITE_AUTH0_AUDIENCE);
 
   const onRedirectCallback = (appState?: any) => {
     navigate(appState?.returnTo || "/your-collections");

@@ -98,7 +98,7 @@
   padding: 5px 10px; /* Add horizontal padding for better alignment */
   border-radius: 4px;
   font-size: 1em; /* Ensure font size fits the box */
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  font-family: "Caveat", cursive; /* Set a default fun font for the body */
   width: 150px; /* Set a fixed width to ensure content fits */
   background-repeat: no-repeat;
 }
@@ -163,7 +163,7 @@
 .collection-item p
 {
   color: black; /* Ensure all text is black */
-  font-family: 'Patrick Hand', cursive; /* Use a friendly handwriting font for paragraphs and buttons */
+  font-family: "Patrick Hand", cursive; /* Use a friendly handwriting font for paragraphs and buttons */
   font-size: 1.2em; /* Increased font size */
   font-weight: bold; /* Make the font bold */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
@@ -323,7 +323,7 @@
 .modal-content {
   background-color: white; /* Modal content background */
   padding: 20px; /* Padding inside the modal */
-  font-family: 'Caveat', cursive; /* Set a default fun font for the body */
+  font-family: "Caveat", cursive; /* Set a default fun font for the body */
   border-radius: 8px; /* Rounded corners */
   width: 50%; /* Width of the modal */
   max-width: 600px; /* Maximum width for larger screens */

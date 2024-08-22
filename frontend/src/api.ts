@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-console.log('API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
+console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
 
 interface Item {
   id: number;
@@ -15,7 +15,7 @@ const handleApiError = (error: any) => {
     console.error("API Error:", error.response.data);
     if (error.response.status === 401) {
       console.error("Unauthorized - Redirecting to login.");
-      window.location.href = "/letter-reader/"; // Assuming '/letter-reader' is the basename
+      window.location.href = "/letter-reader/"; // Assuming "/letter-reader" is the basename
     }
   } else if (error.request) {
     console.error("No response received:", error.request);

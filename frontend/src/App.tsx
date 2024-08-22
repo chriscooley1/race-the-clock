@@ -19,10 +19,10 @@ import "./App.css";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 
 const App: React.FC = () => {
-  console.log('API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
-  console.log('AUTH0_DOMAIN:', import.meta.env.VITE_AUTH0_DOMAIN);
-  console.log('AUTH0_CLIENT_ID:', import.meta.env.VITE_AUTH0_CLIENT_ID);
-  console.log('AUTH0_AUDIENCE:', import.meta.env.VITE_AUTH0_AUDIENCE);
+  console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
+  console.log("AUTH0_DOMAIN:", import.meta.env.VITE_AUTH0_DOMAIN);
+  console.log("AUTH0_CLIENT_ID:", import.meta.env.VITE_AUTH0_CLIENT_ID);
+  console.log("AUTH0_AUDIENCE:", import.meta.env.VITE_AUTH0_AUDIENCE);
 
   const { theme } = useTheme();
   const [hideSidebar, setHideSidebar] = React.useState<boolean>(false);
