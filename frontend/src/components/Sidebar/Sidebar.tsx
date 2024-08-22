@@ -11,9 +11,14 @@ const Sidebar: React.FC = () => {
   // Check if the current route is the landing page
   const isLandingPage = location.pathname === "/";
 
+  // Hide the entire sidebar when on the landing page
+  if (isLandingPage) {
+    return null;
+  }
+
   return (
     <div className="sidebar">
-      {!isLandingPage && isAuthenticated && (  // Hide sidebar content on the LandingPage
+      {isAuthenticated && (
         <ul>
           <li>
             <Link to="/your-collections">Your Collections</Link>
