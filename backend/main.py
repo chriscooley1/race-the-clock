@@ -11,7 +11,6 @@ from decouple import config, AutoConfig
 import os
 from passlib.context import CryptContext
 import requests
-import uvicorn
 from fastapi.routing import APIRoute
 import pytz
 
@@ -263,10 +262,32 @@ def add_items_to_collection(db: Session, collection_id: int, items: List[str]):
         db.add(item)
     db.commit()
 
-# This will print all registered routes to the console
-if __name__ == "__main__":
-    for route in app.routes:
-        if isinstance(route, APIRoute):
-            print(f"Path: {route.path} | Methods: {route.methods}")
+@app.post("/collections/subscribe/{collection_id}", response_model=Collection)
+async def subscribe_to_collection(
+    collection_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    # Fetch the public collection
+    public_collection = db.query(Collection).filter(Collection.collection_id == collection_id, Collection.status == "public").first()
+    
+    if not public_collection:
+        raise HTTPException(status_code=404, detail="Collection not found or not public")
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Check if the user has already subscribed to this collection
+    existing_subscription = db.query(Collection).filter(Collection.name == public_collection.name, Collection.user_id == current_user.user_id).first()
+    if existing_subscription:
+        raise HTTPException(status_code=400, detail="You have already subscribed to this collection.")
+
+    # Duplicate the collection for the user
+    new_collection = Collection(
+        name=public_collection.name,
+        description=public_collection.description,
+        category=public_collection.category,
+        user_id=current_user.user_id,
+        status="private"
+    )
+    db.add(new_collection)
+    db.commit()
+    db.refresh(new_collection)
+    return new_collection

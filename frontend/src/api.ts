@@ -143,6 +143,7 @@ export interface Collection {
   created_at: string;
   category: string;
   user_id: number;
+  items: { name: string }[]; // Adjust based on your actual item structure
 }
 
 export const getCollections = async (getAccessTokenSilently: () => Promise<string>) => {
@@ -348,5 +349,25 @@ export const fetchCollections = async (token: string) => {
     return response.data;
   } catch (error) {
     handleApiError(error);
+  }
+};
+
+export const subscribeToCollection = async (
+  collectionId: number,
+  getAccessTokenSilently: () => Promise<string>
+): Promise<Collection> => {
+  try {
+    const token = await getAccessTokenSilently();
+    const response = await axios.post(
+      `${API_BASE_URL}/collections/subscribe/${collectionId}`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw new Error("Could not subscribe to the collection.");
   }
 };
