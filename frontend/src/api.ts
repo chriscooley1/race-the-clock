@@ -45,21 +45,16 @@ export const getCurrentUser = async (
 
 // Function to update the display name
 export const updateDisplayName = async (
-  displayName: string,
+  displayNamePayload: { display_name: string },
   getAccessTokenSilently: () => Promise<string>
-): Promise<void> => {
+) => {
   try {
     const token = await getAccessTokenSilently();
-    await axios.put(
-      `${API_BASE_URL}/users/me/display_name`,
-      { display_name: displayName }, // This is the data payload
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    await axios.put(`${API_BASE_URL}/users/me/display_name`, displayNamePayload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
   } catch (error) {
     handleApiError(error);
-    throw new Error("Could not update display name.");
   }
 };
 

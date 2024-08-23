@@ -10,6 +10,10 @@ class UserCreate(BaseModel):
     email: Optional[str] = None
     password: str  # Add password field
 
+# Define a Pydantic model for the request body
+class DisplayNameUpdate(BaseModel):
+    display_name: str
+
 # User Models
 class UserBase(SQLModel):
     username: str

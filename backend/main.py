@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, status, Header
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
-from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate
+from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate, DisplayNameUpdate
 from jose import jwt, jwk
 from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError, JWTError
 from datetime import datetime, timedelta
@@ -148,8 +148,12 @@ async def create_sequence(sequence: SequenceCreate, db: Session = Depends(get_db
     return db_sequence
 
 @app.put("/users/me/display_name", response_model=User)
-async def update_display_name(display_name: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    current_user.display_name = display_name
+async def update_display_name(
+    display_name_update: DisplayNameUpdate,  # Use the Pydantic model
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    current_user.display_name = display_name_update.display_name
     db.add(current_user)
     db.commit()
     db.refresh(current_user)
