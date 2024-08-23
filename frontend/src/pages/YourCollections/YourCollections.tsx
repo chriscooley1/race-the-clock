@@ -15,6 +15,7 @@ interface Collection {
   category: string;
   user_id: number;
   creator_username: string;
+  items: Item[]; // Add this line
 }
 interface Item {
   name: string;
@@ -246,17 +247,17 @@ const YourCollections: React.FC = () => {
         </div>
         <button
           type="button"
-          className="duplicate-collection-button styled-button"
+          className="duplicate-collection-button your-styled-button"
           onClick={() => setDuplicateModalOpen(true)}
         >
           Duplicate Collection
         </button>
       </div>
-      <div className="collections-list">
+      <div className="your-collections-list">
         {filteredCollections.map((collection, index) => {
           const colorClass = `color-${(index % 10) + 1}`;
           return (
-            <div key={collection.collection_id} className={`collection-item ${colorClass}`}>
+            <div key={collection.collection_id} className={`your-collection-item ${colorClass}`}>
               <h1>{collection.name}</h1>
               <p>{getItemsCount(collection.description)} items</p>
               <p>Created by you on {formatDate(collection.created_at)}</p>
@@ -267,10 +268,10 @@ const YourCollections: React.FC = () => {
               >
                 Start
               </button>
-              <div className="button-group">
+              <div className="your-button-group">
                 <button
                   type="button"
-                  className="edit-button"
+                  className="your-edit-button"
                   onClick={() => handleEditButtonClick(collection)}
                 >
                   Edit
@@ -308,8 +309,8 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div className="modal-background">
-          <div className="modal-content" ref={modalRef}>
+        <div className="your-modal-background">
+          <div className="your-modal-content" ref={modalRef}>
             <h2>Duplicate Collection</h2>
             <label htmlFor="duplicate-collection-select">Select a collection to duplicate</label>
             <select
@@ -332,10 +333,10 @@ const YourCollections: React.FC = () => {
                 </option>
               ))}
             </select>
-            <div className="button-group">
+            <div className="your-button-group">
               <button
                 type="button"
-                className="duplicate-button styled-button"
+                className="duplicate-button your-styled-button"
                 disabled={!collectionToDuplicate}
                 onClick={handleDuplicateCollection}
               >
@@ -343,7 +344,7 @@ const YourCollections: React.FC = () => {
               </button>
               <button
                 type="button"
-                className="cancel-button"
+                className="your-cancel-button"
                 onClick={() => setDuplicateModalOpen(false)}
               >
                 Cancel

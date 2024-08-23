@@ -58,7 +58,7 @@
   transform: scale(0.95); /* Slight scale down when active */
 }
 
-.edit-button {
+.your-edit-button {
   background-color: #ffcc00; /* Yellow background */
   color: black; /* Black text */
   border: none; /* Remove default border */
@@ -71,12 +71,12 @@
   margin-right: 10px; /* Add margin for spacing */
 }
 
-.edit-button:hover {
+.your-edit-button:hover {
   background-color: #e6b800; /* Darker yellow on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
-.edit-button:active {
+.your-edit-button:active {
   background-color: #cc9900; /* Even darker yellow when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
@@ -113,7 +113,7 @@
 }
 
 /* Base styles for the collection items */
-.collection-item {
+.your-collection-item {
   padding: 20px;
   margin-bottom: 20px;
   flex: 0 0 30%; /* Flex basis set to 30% to fit three items per row */
@@ -128,7 +128,7 @@
 }
 
 /* Title styles */
-.collection-item h1 {
+.your-collection-item h1 {
   border: 5px solid black; /* Thick black border */
   width: 100%;
   color: black; /* Black text */
@@ -138,7 +138,7 @@
   padding: 10px 0;
 }
 
-.collection-item:before {
+.your-collection-item:before {
   content: ""; /* This is necessary to create a pseudo-element */
   position: absolute;
   left: 20px; /* Adjust as needed */
@@ -150,17 +150,17 @@
   z-index: 0; /* Position the border below the content */
 }
 
-.collection-item h2,
-.collection-item p 
+.your-collection-item h2,
+.your-collection-item p 
 {
   color: black; /* Ensure all text is black */
   font-size: 1em;
   margin: 5px 0;
 }
 
-.collection-item h1,
-.collection-item h2,
-.collection-item p
+.your-collection-item h1,
+.your-collection-item h2,
+.your-collection-item p
 {
   color: black; /* Ensure all text is black */
   font-family: "Patrick Hand", cursive; /* Use a friendly handwriting font for paragraphs and buttons */
@@ -170,16 +170,16 @@
   text-transform: uppercase; /* UPPERCASE text */
 }
 
-/* Styling for the collection-item buttons */
-.collection-item .button-group {
+/* Styling for the your-collection-item buttons */
+.your-collection-item .your-button-group {
   display: flex;
   justify-content: center; /* Center the buttons horizontally */
   margin-top: 0; /* Adjust margin for spacing */
 }
 
-.collection-item .start-button,
-.collection-item .edit-button,
-.collection-item .delete-button {
+.your-collection-item .start-button,
+.your-collection-item .your-edit-button,
+.your-collection-item .delete-button {
   background-color: #4caf50; /* Green background for start button */
   color: white; /* White text */
   border: none; /* Remove default border */
@@ -192,126 +192,45 @@
   margin: 0 5px; /* Add margin between buttons */
 }
 
-.collection-item .start-button {
+.your-collection-item .start-button {
   margin-bottom: 10px; /* Increased margin below the start button for spacing */
 }
 
-.collection-item .start-button:hover {
+.your-collection-item .start-button:hover {
   background-color: #45a049; /* Darker green on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
-.collection-item .start-button:active {
+.your-collection-item .start-button:active {
   background-color: #388e3c; /* Even darker green when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
 
-.collection-item .edit-button {
+.your-collection-item .your-edit-button {
   background-color: #ffcc00; /* Yellow background */
 }
 
-.collection-item .edit-button:hover {
+.your-collection-item .your-edit-button:hover {
   background-color: #e6b800; /* Darker yellow on hover */
 }
 
-.collection-item .edit-button:active {
+.your-collection-item .your-edit-button:active {
   background-color: #cc9900; /* Even darker yellow when active */
 }
 
-.collection-item .delete-button {
+.your-collection-item .delete-button {
   background-color: #ff6666; /* Red background */
 }
 
-.collection-item .delete-button:hover {
+.your-collection-item .delete-button:hover {
   background-color: #cc0000; /* Darker red on hover */
 }
 
-.collection-item .delete-button:active {
+.your-collection-item .delete-button:active {
   background-color: #990000; /* Even darker red when active */
 }
 
-/* Define the color schemes */
-.color-1 {
-  background-color: #FFEBEE; /* Light Red */
-}
-
-.color-1 h1 {
-  background-color: #D32F2F; /* Dark Red */
-}
-
-.color-2 {
-  background-color: #FFF3E0; /* Light Orange */
-}
-
-.color-2 h1 {
-  background-color: #F57C00; /* Dark Orange */
-}
-
-.color-3 {
-  background-color: #FFFDE7; /* Light Yellow */
-}
-
-.color-3 h1 {
-  background-color: #FBC02D; /* Dark Yellow */
-}
-
-.color-4 {
-  background-color: #E8F5E9; /* Light Green */
-}
-
-.color-4 h1 {
-  background-color: #388E3C; /* Dark Green */
-}
-
-.color-5 {
-  background-color: #E3F2FD; /* Light Blue */
-}
-
-.color-5 h1 {
-  background-color: #1976D2; /* Dark Blue */
-}
-
-.color-6 {
-  background-color: #EDE7F6; /* Light Purple */
-}
-
-.color-6 h1 {
-  background-color: #7B1FA2; /* Dark Purple */
-}
-
-.color-7 {
-  background-color: #F3E5F5; /* Light Pink */
-}
-
-.color-7 h1 {
-  background-color: #C2185B; /* Dark Pink */
-}
-
-.color-8 {
-  background-color: #FFF8E1; /* Light Amber */
-}
-
-.color-8 h1 {
-  background-color: #FF8F00; /* Dark Amber */
-}
-
-.color-9 {
-  background-color: #F1F8E9; /* Light Lime */
-}
-
-.color-9 h1 {
-  background-color: #AFB42B; /* Dark Lime */
-}
-
-.color-10 {
-  background-color: #ECEFF1; /* Light Gray */
-}
-
-.color-10 h1 {
-  background-color: #455A64; /* Dark Gray */
-}
-
-.collections-list {
+.your-collections-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -320,7 +239,7 @@
 }
 
 /* Modal Content */
-.modal-content {
+.your-modal-content {
   background-color: white; /* Modal content background */
   padding: 20px; /* Padding inside the modal */
   font-family: "Caveat", cursive; /* Set a default fun font for the body */
@@ -332,7 +251,7 @@
   position: relative; /* Position relative for absolute children */
 }
 
-.modal-background {
+.your-modal-background {
   position: fixed;
   top: 0;
   left: 0;
@@ -346,7 +265,7 @@
 }
 
 /* Styling for the cancel button */
-.cancel-button {
+.your-cancel-button {
   background-color: #ff6666; /* Red background */
   color: white; /* White text */
   border: none; /* Remove default border */
@@ -358,19 +277,19 @@
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
 }
 
-.cancel-button:hover {
+.your-cancel-button:hover {
   background-color: #cc0000; /* Darker red on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
-.cancel-button:active {
+.your-cancel-button:active {
   background-color: #990000; /* Even darker red when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
 
 /* Styling for the buttons within the modal */
 .modal .duplicate-button,
-.modal .cancel-button {
+.modal .your-cancel-button {
   color: white; /* White text */
   border: none; /* Remove default border */
   border-radius: 5px; /* Rounded corners */
@@ -400,17 +319,17 @@
   transform: scale(0.95); /* Slight scale down when active */
 }
 
-.modal .cancel-button {
+.modal .your-cancel-button {
   background-color: #ff6666; /* Red background */
   width: 150px; /* Ensure consistent width */
 }
 
-.modal .cancel-button:hover {
+.modal .your-cancel-button:hover {
   background-color: #cc0000; /* Darker red on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
-.modal .cancel-button:active {
+.modal .your-cancel-button:active {
   background-color: #990000; /* Even darker red when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
@@ -443,7 +362,7 @@
   color: black; /* Black text for options */
 }
 
-.button-group {
+.your-button-group {
   display: flex;
   justify-content: center; /* Center the buttons */
   gap: 20px; /* Gap between the buttons */
@@ -451,7 +370,7 @@
   padding: 0 20px; /* Add padding to keep buttons away from the edges */
 }
 
-.styled-button {
+.your-styled-button {
   background-color: #cceeff; /* Light blue background */
   color: black; /* Black text color */
   border: 1px solid #ccc; /* Light border */
@@ -464,12 +383,12 @@
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
 }
 
-.styled-button:hover {
+.your-styled-button:hover {
   background-color: #1e90ff; /* Change background on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
-.styled-button:active {
+.your-styled-button:active {
   background-color: #0056b3; /* Darker background when active */
   transform: scale(0.95); /* Slight scale down when active */
 }

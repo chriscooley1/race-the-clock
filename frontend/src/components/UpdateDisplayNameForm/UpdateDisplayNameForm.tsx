@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { updateDisplayName } from "../api"; // Make sure this function is correctly implemented
+import { updateDisplayName } from "../../api"; // Make sure this function is correctly implemented
+import "./UpdateDisplayNameForm.css";
 
 const UpdateDisplayNameForm: React.FC = () => {
   const [displayName, setDisplayName] = useState("");

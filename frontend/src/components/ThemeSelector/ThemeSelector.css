@@ -19,8 +19,7 @@
   color: #000; /* Ensure text is black for readability */
 }
 
-.theme-selector select,
-.settings-container textarea {
+.theme-selector select {
   padding: 8px;
   font-size: 1em;
   margin-bottom: 10px;
@@ -32,9 +31,4 @@
 
 .theme-selector {
   margin: 10px 0;
-}
-
-#theme-select {
-  padding: 5px;
-  margin-left: 10px;
 }

@@ -13,10 +13,12 @@ interface Item {
 interface Collection {
   collection_id: number;
   name: string;
-  description: string; 
+  description: string;
   created_at: string;
   creator_username: string;
   items: Item[];
+  category: string; // Add category
+  user_id: number;  // Add user_id
 }
 
 const DiscoverCollections: React.FC = () => {
@@ -74,11 +76,11 @@ const DiscoverCollections: React.FC = () => {
   return (
     <div className="discover-collections">
       <h1>Discover Public Collections</h1>
-      <div className="collections-list">
+      <div className="discover-collections-list">
         {(collections || []).map((collection, index) => {
           const colorClass = `color-${(index % 10) + 1}`;
           return (
-            <div key={collection.collection_id} className={`collection-item ${colorClass}`}>
+            <div key={collection.collection_id} className={`discover-collection-item ${colorClass}`}>
               <h1>{collection.name}</h1>
               <p>{collection.items.length} items in collection</p>
               <button type="button" className="preview-button" onClick={() => openModal(collection)}>Preview Collection</button>

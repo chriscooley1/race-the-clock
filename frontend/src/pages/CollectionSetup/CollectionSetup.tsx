@@ -87,12 +87,12 @@ const CollectionSetup: React.FC = () => {
     <div className="collection-setup-container">
       <h1>Collection: {collectionName}</h1>
       <h2>Step 2 - Set Up Collection Body</h2>
-      <div className="centered-input">
+      <div className="setup-centered-input">
         <label htmlFor="itemCount">Quantity #:</label>
         <input
           type="number"
           id="itemCount"
-          className="custom-input"
+          className="setup-custom-input"
           value={itemCount}
           min={1}
           onChange={(e) => {
@@ -103,11 +103,11 @@ const CollectionSetup: React.FC = () => {
           title="Enter the number of items"
         />
       </div>
-      <div className="centered-input">
+      <div className="setup-centered-input">
         <label htmlFor="typeSelect">Type:</label>
         <select
           id="typeSelect"
-          className="custom-input"
+          className="setup-custom-input"
           value={type}
           onChange={(e) => setType(e.target.value)}
         >
@@ -120,12 +120,12 @@ const CollectionSetup: React.FC = () => {
       <button
         type="button"
         onClick={generateRandomSequence}
-        className="styled-button"
+        className="setup-styled-button"
       >
         Generate Random Sequence
       </button>
       <p>- OR -</p>
-      <div className="centered-input">
+      <div className="setup-centered-input">
         <label htmlFor="fileUpload">
           Choose File
         </label>
@@ -139,7 +139,7 @@ const CollectionSetup: React.FC = () => {
       <button
         type="button"
         onClick={sequence.length > 0 ? handleSaveCollection : handleNext}
-        className="styled-button"
+        className="setup-styled-button"
       >
         {sequence.length > 0 ? "Save Collection" : "Next"}
       </button>

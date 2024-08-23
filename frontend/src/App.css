@@ -73,3 +73,84 @@ input {
 .text-color {
   color: var(--text-color);
 }
+
+/* Define the color schemes */
+.color-1 {
+  background-color: #FFEBEE; /* Light Red */
+}
+
+.color-1 h1 {
+  background-color: #D32F2F; /* Dark Red */
+}
+
+.color-2 {
+  background-color: #FFF3E0; /* Light Orange */
+}
+
+.color-2 h1 {
+  background-color: #F57C00; /* Dark Orange */
+}
+
+.color-3 {
+  background-color: #FFFDE7; /* Light Yellow */
+}
+
+.color-3 h1 {
+  background-color: #FBC02D; /* Dark Yellow */
+}
+
+.color-4 {
+  background-color: #E8F5E9; /* Light Green */
+}
+
+.color-4 h1 {
+  background-color: #388E3C; /* Dark Green */
+}
+
+.color-5 {
+  background-color: #E3F2FD; /* Light Blue */
+}
+
+.color-5 h1 {
+  background-color: #1976D2; /* Dark Blue */
+}
+
+.color-6 {
+  background-color: #EDE7F6; /* Light Purple */
+}
+
+.color-6 h1 {
+  background-color: #7B1FA2; /* Dark Purple */
+}
+
+.color-7 {
+  background-color: #F3E5F5; /* Light Pink */
+}
+
+.color-7 h1 {
+  background-color: #C2185B; /* Dark Pink */
+}
+
+.color-8 {
+  background-color: #FFF8E1; /* Light Amber */
+}
+
+.color-8 h1 {
+  background-color: #FF8F00; /* Dark Amber */
+}
+
+.color-9 {
+  background-color: #F1F8E9; /* Light Lime */
+}
+
+.color-9 h1 {
+  background-color: #AFB42B; /* Dark Lime */
+}
+
+.color-10 {
+  background-color: #ECEFF1; /* Light Gray */
+}
+
+.color-10 h1 {
+  background-color: #455A64; /* Dark Gray */
+}

@@ -31,18 +31,18 @@ const NewCollection: React.FC = () => {
         <input
           type="text"
           id="collectionName"
-          className="custom-input"
+          className="new-custom-input"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter collection name"
           title="Collection Name"
         />
       </div>
-      <div className="centered-input">
+      <div className="new-centered-input">
         <label htmlFor="categorySelect">Category:</label>
         <select
           id="categorySelect"
-          className="custom-input"
+          className="new-custom-input"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
@@ -53,7 +53,7 @@ const NewCollection: React.FC = () => {
           ))}
         </select>
       </div>
-      <div className="checkbox-container">
+      <div className="new-checkbox-container">
         <input
           type="checkbox"
           id="publicCheckbox"
@@ -65,7 +65,7 @@ const NewCollection: React.FC = () => {
           I want to share my collection publicly
         </label>
       </div>
-      <button type="button" onClick={handleNext} className="styled-button">
+      <button type="button" onClick={handleNext} className="new-styled-button">
         Next
       </button>
     </div>

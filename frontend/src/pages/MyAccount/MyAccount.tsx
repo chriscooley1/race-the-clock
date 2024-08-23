@@ -3,7 +3,7 @@ import "./MyAccount.css";
 import "../../App.css"; // Global styles for the app
 import { useAuth0 } from "@auth0/auth0-react";
 import { getCurrentUser } from "../../api"; // Import the function to get user data
-import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm"; // Import the form
+import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm/UpdateDisplayNameForm"; // Import the form
 
 const MyAccount: React.FC = () => {
   const { user, getAccessTokenSilently } = useAuth0();

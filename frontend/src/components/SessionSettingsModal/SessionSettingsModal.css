@@ -89,8 +89,8 @@
 }
 
 .sess-checkbox-container input[type="checkbox"] {
-  appearance: none; /* Remove default styles */
   -webkit-appearance: none; /* For Safari */
+  appearance: none; /* Remove default styles */
   width: 20px; /* Set width */
   height: 20px; /* Set height */
   background-color: white; /* White background */

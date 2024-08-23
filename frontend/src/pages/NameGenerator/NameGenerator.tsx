@@ -35,18 +35,18 @@ const NameGenerator: React.FC = () => {
   return (
     <div className="name-generator-container">
       <h1>Name Generator</h1>
-      <div className="centered-input">
+      <div className="gen-centered-input">
         <label htmlFor="nameInput">Add a Name:</label>
         <input
           type="text"
           id="nameInput"
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
-          className="custom-input"
+          className="gen-custom-input"
           placeholder="Enter a name" // Placeholder attribute
           title="Name Input" // Title attribute
         />
-        <button type="button" onClick={handleAddName} className="styled-button">
+        <button type="button" onClick={handleAddName} className="gen-styled-button">
           Add Name
         </button>
       </div>
@@ -59,7 +59,7 @@ const NameGenerator: React.FC = () => {
                 type="text"
                 value={name}
                 onChange={(e) => handleEditName(index, e.target.value)}
-                className="custom-input"
+                className="gen-custom-input"
                 placeholder="Edit name" // Placeholder attribute
                 title={`Edit name ${index + 1}`} // Title attribute
               />
@@ -78,7 +78,7 @@ const NameGenerator: React.FC = () => {
       <button
         type="button"
         onClick={handleGenerateName}
-        className="styled-button"
+        className="gen-styled-button"
         disabled={nameList.length === 0}
         title="Generate a random name from the list" // Title attribute
       >

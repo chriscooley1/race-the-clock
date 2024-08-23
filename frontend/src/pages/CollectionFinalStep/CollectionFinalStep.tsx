@@ -65,14 +65,14 @@ const CollectionFinalStep: React.FC = () => {
         <input
           type="text"
           id="new-item-input"
-          className="custom-input"
+          className="final-custom-input"
           placeholder="New Item"
           title="Enter a new item to add to the collection"
           value={newItem}
           onChange={(e) => setNewItem(e.target.value)}
         />
         <button
-          className="add-button"
+          className="final-add-button"
           type="button"
           onClick={handleAddItem}
           title="Add Item"
@@ -81,20 +81,20 @@ const CollectionFinalStep: React.FC = () => {
         </button>
       </div>
       {items.map((item) => (
-        <div key={item.id} className="item-container">
+        <div key={item.id} className="final-item-container">
           <label htmlFor={`item-input-${item.id}`} className="sr-only">
             Item {item.id}
           </label>
           <input
             type="text"
             id={`item-input-${item.id}`}
-            className="item-input"
+            className="final-item-input"
             value={item.name}
             readOnly // This makes the input read-only, remove if editing is required
             title={`Item ${item.id}: ${item.name}`}
           />
           <button
-            className="remove-button"
+            className="final-remove-button"
             type="button"
             onClick={() => handleRemoveItem(item.id)}
             title="Remove Item"
@@ -104,7 +104,7 @@ const CollectionFinalStep: React.FC = () => {
         </div>
       ))}
       <button
-        className="save-button"
+        className="final-save-button"
         type="button"
         onClick={handleSaveCollection}
         title="Save Collection"

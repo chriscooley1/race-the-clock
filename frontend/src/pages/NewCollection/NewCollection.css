@@ -18,20 +18,20 @@
   margin-top: 20px;
 }
 
-.centered-input {
+.new-centered-input {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px; /* Add margin for spacing */
 }
 
-.centered-input label {
+.new-centered-input label {
   margin-right: 10px; /* Space between label and input */
 }
 
-.centered-input input[type="number"],
-.centered-input input[type="file"],
-.centered-input select {
+.new-centered-input input[type="number"],
+.new-centered-input input[type="file"],
+.new-centered-input select {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -40,15 +40,15 @@
   font-family: "Caveat", cursive; /* Set a default fun font for the body */
 }
 
-.checkbox-container {
+.new-checkbox-container {
   display: flex;
   align-items: center;
   margin-top: 10px;
 }
 
-.checkbox-container input[type="checkbox"] {
-  appearance: none; /* Remove default styles */
+.new-checkbox-container input[type="checkbox"] {
   -webkit-appearance: none; /* For Safari */
+  appearance: none; /* Remove default styles */
   width: 20px; /* Set width */
   height: 20px; /* Set height */
   background-color: white; /* White background */
@@ -59,11 +59,11 @@
   position: relative; /* For positioning the checkmark */
 }
 
-.checkbox-container input[type="checkbox"]:checked {
+.new-checkbox-container input[type="checkbox"]:checked {
   background-color: white; /* Keep the background white when checked */
 }
 
-.checkbox-container input[type="checkbox"]:checked:after {
+.new-checkbox-container input[type="checkbox"]:checked:after {
   content: "✓"; /* Checkmark */
   color: black; /* Color of the checkmark */
   position: absolute; /* Position relative to the checkbox */
@@ -73,7 +73,7 @@
   font-size: 14px; /* Size of the checkmark */
 }
 
-.styled-button {
+.new-styled-button {
   background-color: #cceeff; /* Light blue background */
   color: black; /* Black text color */
   border: 1px solid #ccc; /* Light border */
@@ -86,17 +86,17 @@
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
 }
 
-.styled-button:hover {
+.new-styled-button:hover {
   background-color: #1e90ff; /* Change background on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
-.styled-button:active {
+.new-styled-button:active {
   background-color: #0056b3; /* Darker background when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
 
-.custom-input {
+.new-custom-input {
   background-color: white !important; /* Ensures background is white */
   color: black !important;           /* Ensures text color is black */
   border: 1px solid var(--text-color); /* Use text color for input borders in dark mode */

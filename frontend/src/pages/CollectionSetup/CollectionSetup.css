@@ -52,20 +52,20 @@
   margin-right: 10px;
 }
 
-.centered-input {
+.setup-centered-input {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px; /* Add margin for spacing */
 }
 
-.centered-input label {
+.setup-centered-input label {
   margin-right: 10px; /* Space between label and input */
 }
 
-.centered-input input[type="number"],
-.centered-input input[type="file"],
-.centered-input select {
+.setup-centered-input input[type="number"],
+.setup-centered-input input[type="file"],
+.setup-centered-input select {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -74,7 +74,7 @@
   font-family: "Caveat", cursive; /* Set a default fun font for the body */
 }
 
-.styled-button {
+.setup-styled-button {
   background-color: #cceeff; /* Light blue background */
   color: black; /* Black text color */
   border: 1px solid #ccc; /* Light border */
@@ -87,17 +87,17 @@
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
 }
 
-.styled-button:hover {
+.setup-styled-button:hover {
   background-color: #1e90ff; /* Change background on hover */
   transform: scale(1.05); /* Slight scale up on hover */
 }
 
-.styled-button:active {
+.setup-styled-button:active {
   background-color: #0056b3; /* Darker background when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
 
-.custom-input {
+.setup-custom-input {
   background-color: white !important; /* Ensures background is white */
   color: black !important;           /* Ensures text color is black */
   border: 1px solid var(--text-color); /* Use text color for input borders in dark mode */

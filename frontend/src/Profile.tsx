@@ -7,7 +7,7 @@ const Profile = () => {
 
   useEffect(() => {
     const getUserMetadata = async () => {
-      const domain = import.meta.env.VITE_AUTH0_DOMAIN; // Replace this with your actual Auth0 domain if it's hardcoded
+      const domain = import.meta.env.VITE_AUTH0_DOMAIN;
   
       try {
         const accessToken = await getAccessTokenSilently({
@@ -29,7 +29,8 @@ const Profile = () => {
   
         setUserMetadata(user_metadata);
       } catch (e) {
-        console.log(e.message);
+        const error = e as Error;
+        console.log(error.message);
       }
     };
   
