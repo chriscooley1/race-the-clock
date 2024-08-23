@@ -1,45 +1,72 @@
-.modal-container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 50%;
-  max-width: 700px;
-  text-align: center;
-  color: inherit;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.list-item {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-bottom: 20px;
-  width: 100%; /* Ensures items span the full width */
-}
-
-.list-item-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  font-size: 1.2em;
-  color: #333;
-}
-
-.modal-background {
+.prev-modal-background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow: hidden; /* Prevent the entire background from scrolling */
+}
+
+.prev-modal-content {
+  background: #fff; /* White background */
+  padding: 20px; /* Padding inside the modal */
+  border-radius: 8px; /* Rounded corners */
+  width: 50%; /* Set width to 50% of the screen */
+  max-width: 700px; /* Maximum width */
+  max-height: 80vh; /* Maximum height to allow space for scrolling */
+  text-align: center; /* Center the text */
+  color: inherit; /* Inherit text color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.prev-button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.prev-button-group button {
+  background-color: #0275d8; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Add padding */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin: 0 5px; /* Space between the buttons */
+}
+
+.prev-button-group button:hover {
+  background-color: #025aa5; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.prev-button-group button:active {
+  background-color: #014f86; /* Even darker blue when active */
+  transform: scale(0.95); /* Slight scale down when active */
+}
+
+.prev-button-group button:first-child {
+  background-color: #d9534f; /* Red background for close button */
+}
+
+.prev-button-group button:first-child:hover {
+  background-color: #c9302c; /* Darker red on hover */
+}
+
+.prev-button-group button:first-child:active {
+  background-color: #ac2925; /* Even darker red when active */
 }

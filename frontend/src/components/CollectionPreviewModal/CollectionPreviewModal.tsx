@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { subscribeToCollection, Collection } from "../../api";
+import "./CollectionPreviewModal.css";
 
 interface CollectionPreviewModalProps {
   collection: Collection;
@@ -38,8 +39,8 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({ collect
   }, [onClose]);
 
   return (
-    <div className="modal-background">
-      <div className="modal-content" ref={modalRef}> {/* Attach the ref to the modal content */}
+    <div className="prev-modal-background">
+      <div className="prev-modal-content" ref={modalRef}> {/* Attach the ref to the modal content */}
         <h2>{collection.name}</h2>
         <p>{collection.items.length} items in collection</p>
         
@@ -49,10 +50,10 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({ collect
           ))}
         </ul>
         
-        <div className="button-group">
-          <button onClick={onClose}>Close Preview</button>
+        <div className="prev-button-group">
+          <button type="button" onClick={onClose}>Close Preview</button>
           {!isSubscribed && (
-            <button onClick={handleSubscribe}>Subscribe to Collection</button>
+            <button type="button" onClick={handleSubscribe}>Subscribe to Collection</button>
           )}
         </div>
       </div>
