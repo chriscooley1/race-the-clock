@@ -7,7 +7,6 @@ import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNav
 import EditCollectionModal from "../../components/EditCollectionModal/EditCollectionModal";
 import "./YourCollections.css";
 import "../../App.css"; // Global styles for the app
-
 interface Collection {
   collection_id: number;
   name: string;
@@ -17,11 +16,9 @@ interface Collection {
   user_id: number;
   creator_username: string;
 }
-
 interface Item {
   name: string;
 }
-
 const getItemsCount = (description: string): number => {
   try {
     const items = JSON.parse(description);
@@ -33,7 +30,6 @@ const getItemsCount = (description: string): number => {
   }
   return 0;
 };
-
 const YourCollections: React.FC = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
@@ -47,9 +43,7 @@ const YourCollections: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
-
   const modalRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
     const loadCollections = async () => {
       try {
@@ -63,7 +57,6 @@ const YourCollections: React.FC = () => {
     };
     loadCollections();
   }, [selectedCategory, sortOption, getAccessTokenSilently]);
-
   const filterAndSortCollections = (
     collections: Collection[],
     category: string,
@@ -87,25 +80,47 @@ const YourCollections: React.FC = () => {
   
     setFilteredCollections(sorted);
   };
-
   const handleSaveUpdatedItems = async (newItems: string[]) => {
     setIsLoading(true); // Start loading
     try {
       if (selectedCollection) {
-        const updatedItems = newItems.filter(item => item.trim() !== "");
-  
+        // Filter out any empty strings from newItems
+        const filteredItems = newItems.filter(item => item.trim() !== "");
+
+        // Parse the existing items from the selected collection
+        const existingItems = JSON.parse(selectedCollection.description || "[]");
+
+        // Only keep the existing items that are still present in newItems
+        const updatedItems = existingItems.filter(
+          (item: { name: string }) => filteredItems.includes(item.name)
+        );
+
+        // Add new items that aren't already in the existing items
+        filteredItems.forEach((item) => {
+          if (!updatedItems.some((updatedItem: { name: string }) => updatedItem.name === item)) {
+            updatedItems.push({ name: item });
+          }
+        });
+
+        // Convert updatedItems to JSON string to store in the description
         const updatedDescription = JSON.stringify(updatedItems);
-  
-        // Assuming updateCollection is correctly updating the backend
+
+        // Log the data to ensure it's correct
+        console.log({
+          name: selectedCollection.name,
+          description: updatedDescription,
+          category: selectedCollection.category,
+        });
+
+        // Update the collection with the necessary fields
         const updatedCollection = await updateCollection(
           selectedCollection.collection_id,
           selectedCollection.name,
           updatedDescription,
-          selectedCollection.category,
+          selectedCollection.category, // Pass the category
           getAccessTokenSilently
         );
-  
-        // Update the state with the new collection data
+
         setCollections((prevCollections) =>
           prevCollections.map((col) =>
             col.collection_id === updatedCollection.collection_id
@@ -113,11 +128,9 @@ const YourCollections: React.FC = () => {
               : col
           )
         );
-  
-        // Update the selectedCollection to reflect changes immediately
-        setSelectedCollection(updatedCollection);
-  
-        // Optionally, refetch the collections to ensure data is consistent
+        setSelectedCollection(updatedCollection); // Update the selected collection with the new data
+
+        // Refetch the collections to ensure they're up-to-date
         const token = await getAccessTokenSilently();
         const refreshedCollections = await fetchCollections(token);
         setCollections(refreshedCollections);
@@ -127,7 +140,7 @@ const YourCollections: React.FC = () => {
     } finally {
       setIsLoading(false); // Stop loading
     }
-  };  
+  };
 
   const handleStartCollection = (collectionId: number) => {
     const collection = collections.find((col) => col.collection_id === collectionId);
@@ -136,12 +149,10 @@ const YourCollections: React.FC = () => {
       setShowModal(true);
     }
   };
-
   const handleEditButtonClick = (collection: Collection) => {
     setSelectedCollection(collection);
     setEditModalOpen(true);
   };
-
   const handleDuplicateCollection = async () => {
     if (!collectionToDuplicate) return;
     try {
@@ -153,7 +164,6 @@ const YourCollections: React.FC = () => {
       console.error("Error duplicating collection:", error);
     }
   };
-
   const handleDeleteCollection = async (collectionId: number) => {
     try {
       await deleteCollectionById(collectionId, getAccessTokenSilently);
@@ -166,7 +176,6 @@ const YourCollections: React.FC = () => {
       console.error("Error deleting collection:", error);
     }
   };
-
   const handleStartSession = (
     min: number,
     sec: number,
@@ -190,15 +199,12 @@ const YourCollections: React.FC = () => {
       setShowModal(false);
     }
   };
-
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
-
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOption(event.target.value);
   };
-
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-US", {
@@ -209,7 +215,6 @@ const YourCollections: React.FC = () => {
       timeZone: "America/Denver",
     }).format(date);
   };
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -225,7 +230,6 @@ const YourCollections: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDuplicateModalOpen]);
-
   return (
     <div className="your-collections">
       <CollectionsNavBar
@@ -352,5 +356,4 @@ const YourCollections: React.FC = () => {
     </div>
   );
 };
-
 export default YourCollections;
