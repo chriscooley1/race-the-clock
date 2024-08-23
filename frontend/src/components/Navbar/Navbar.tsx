@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="navbar">
       {location.pathname === "/fullscreen-display" && (
-        <button type="button" className="back-button" onClick={handleBack}>
+        <button type="button" className="nav-back-button" onClick={handleBack}>
           Back
         </button>
       )}
@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
         <div className="bar"></div>
       </div>
       {menuOpen && (
-        <div className="menu" ref={menuRef}>
+        <div className="nav-menu" ref={menuRef}>
           <button type="button" onClick={() => handleNavigate("/my-account")}>
             My Account
           </button>

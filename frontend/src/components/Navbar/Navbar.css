@@ -1,4 +1,4 @@
-.back-button {
+.nav-back-button {
   background-color: #ff6666;
   color: white;
   border: none;
@@ -10,7 +10,7 @@
   margin-right: 20px;
 }
 
-.back-button:hover {
+.nav-back-button:hover {
   background-color: #cc0000;
 }
 
@@ -36,7 +36,7 @@
   color: #333;
 }
 
-.menu {
+.nav-menu {
   position: absolute;
   top: 50px;
   right: 20px;
@@ -47,7 +47,7 @@
   padding: 10px;
 }
 
-.menu button {
+.nav-menu button {
   background-color: transparent;
   border: none;
   color: #333;
@@ -57,6 +57,21 @@
   transition: color 0.3s;
 }
 
-.menu button:hover {
+.nav-menu button:hover {
   color: #007bff;
+}
+
+.hamburger-menu {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 25px;
+}
+
+.hamburger-menu .bar {
+  height: 3px;
+  background-color: #333;
+  transition: 0.3s;
 }

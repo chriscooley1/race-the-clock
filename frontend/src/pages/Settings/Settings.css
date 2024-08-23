@@ -33,21 +33,6 @@
   border: 2px solid #000;
 }
 
-.hamburger-menu {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 25px;
-}
-
-.hamburger-menu .bar {
-  height: 3px;
-  background-color: #333;
-  transition: 0.3s;
-}
-
 #theme-select {
   padding: 5px;
   margin-left: 10px;

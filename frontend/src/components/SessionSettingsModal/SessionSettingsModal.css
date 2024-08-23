@@ -22,7 +22,7 @@
   transform: scale(0.95); /* Slight scale down when active */
 }
 
-.close-button {
+.sess-close-button {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -36,12 +36,12 @@
   transition: background-color 0.3s, transform 0.3s;
 }
 
-.close-button:hover {
+.sess-close-button:hover {
   background-color: #cc0000;
   transform: scale(1.1);
 }
 
-.close-button:active {
+.sess-close-button:active {
   background-color: #990000;
   transform: scale(0.95);
 }
@@ -82,13 +82,13 @@
   text-align: center; /* Center text in inputs */
 }
 
-.checkbox-container {
+.sess-checkbox-container {
   display: flex;
   align-items: center;
   margin-top: 10px;
 }
 
-.checkbox-container input[type="checkbox"] {
+.sess-checkbox-container input[type="checkbox"] {
   appearance: none; /* Remove default styles */
   -webkit-appearance: none; /* For Safari */
   width: 20px; /* Set width */
@@ -101,11 +101,11 @@
   position: relative; /* For positioning the checkmark */
 }
 
-.checkbox-container input[type="checkbox"]:checked {
+.sess-checkbox-container input[type="checkbox"]:checked {
   background-color: white; /* Keep the background white when checked */
 }
 
-.checkbox-container input[type="checkbox"]:checked:after {
+.sess-checkbox-container input[type="checkbox"]:checked:after {
   content: "✓"; /* Checkmark */
   color: black; /* Color of the checkmark */
   position: absolute; /* Position relative to the checkbox */
@@ -115,7 +115,20 @@
   font-size: 14px; /* Size of the checkmark */
 }
 
-.modal-container {
+.sess-modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.sess-modal-container {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -133,7 +146,7 @@
 }
 
 /* Modal Content */
-.modal-content {
+.sess-modal-content {
   background-color: white; /* Modal content background */
   padding: 20px; /* Padding inside the modal */
   font-family: "Caveat", cursive; /* Set a default fun font for the body */
@@ -145,66 +158,53 @@
   position: relative; /* Position relative for absolute children */
 }
 
-.modal-container.dark-theme .modal-content {
+.sess-modal-container.dark-theme .sess-modal-content {
   color: white; /* Set text color for dark theme */
 }
 
-.modal-container.blue-theme .modal-content {
+.sess-modal-container.blue-theme .sess-modal-content {
   color: #003366; /* Set text color for blue theme */
 }
 
 /* Style for modal labels and text */
-.modal-container label,
-.modal-container h1,
-.modal-container h2 {
+.sess-modal-container label,
+.sess-modal-container h1,
+.sess-modal-container h2 {
   color: inherit; /* Use the inherited color from the modal */
 }
 
-.modal-container input,
-.modal-container select {
+.sess-modal-container input,
+.sess-modal-container select {
   color: black; /* Keep form elements readable */
   background-color: white; /* Ensure form elements have a clear background */
 }
 
 /* Modal title - keep consistent color */
-.modal-container h1 {
+.sess-modal-container h1 {
   color: #333; /* Use a fixed color */
   margin-bottom: 20px;
 }
 
 /* Ensure modal labels and headings maintain visibility */
-.modal-container label,
-.modal-container h2 {
+.sess-modal-container label,
+.sess-modal-container h2 {
   color: #333; /* Fixed color for visibility */
 }
 
 /* Style for modal labels and text */
-.modal-container label,
-.modal-container h1,
-.modal-container h2,
-.modal-container p {
+.sess-modal-container label,
+.sess-modal-container h1,
+.sess-modal-container h2,
+.sess-modal-container p {
   color: #333; /* Use a fixed color for visibility */
 }
 
 /* Ensure modal buttons retain color */
-.modal-container button {
+.sess-modal-container button {
   color: #fff; /* Keep buttons white */
 }
 
-.modal-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.custom-input {
+.sess-custom-input {
   background-color: white !important; /* Ensures background is white */
   color: black !important;           /* Ensures text color is black */
   border: 1px solid var(--text-color); /* Use text color for input borders in dark mode */

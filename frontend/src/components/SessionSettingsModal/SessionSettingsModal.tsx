@@ -23,7 +23,6 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   const [shuffle, setShuffle] = useState(false);
 
   useEffect(() => {
-    // Initialize minutes and seconds based on the currentSettings speed
     const totalSeconds = currentSettings.speed / 1000;
     const mins = Math.floor(totalSeconds / 60);
     const secs = totalSeconds % 60;
@@ -32,7 +31,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   }, [currentSettings.speed]);
 
   const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if ((event.target as HTMLElement).className === "modal-background") {
+    if ((event.target as HTMLElement).classList.contains("sess-modal-background")) {
       onClose();
     }
   };
@@ -47,12 +46,12 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   };
 
   return (
-    <div className="modal-background" onClick={handleBackgroundClick}>
-      <div className="modal-container">
-        <button type="button" className="close-button" onClick={onClose}>X</button>
+    <div className="sess-modal-background" onClick={handleBackgroundClick}>
+      <div className="sess-modal-container">
+        <button type="button" className="sess-close-button" onClick={onClose}>X</button>
         <h1>{collectionName}</h1>
         <p>Please select settings for the session</p>
-        <div className="modal-content">
+        <div className="sess-modal-content">
           <div className="time-setting">
             <div className="time-labels">
               <label htmlFor="minutes">Minutes:</label>
@@ -64,7 +63,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 id="minutes"
                 value={minutes}
                 onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
-                className="custom-input"
+                className="sess-custom-input"
                 placeholder="Enter minutes"
                 title="Minutes"
                 min={0}
@@ -74,14 +73,14 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 id="seconds"
                 value={seconds}
                 onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
-                className="custom-input"
+                className="sess-custom-input"
                 placeholder="Enter seconds"
                 title="Seconds"
                 min={0}
                 max={59}
               />
             </div>
-            <div className="checkbox-container">
+            <div className="sess-checkbox-container">
               <input
                 type="checkbox"
                 id="shuffle"
