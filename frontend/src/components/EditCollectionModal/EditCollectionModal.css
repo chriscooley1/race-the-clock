@@ -1,220 +1,54 @@
-.item-list {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-bottom: 20px;
+.edit-item-list {
+  width: 100%;
 }
 
-.add-button {
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px;
-  border-radius: 50%; /* Circle shape */
-  font-size: 1.5em; /* Larger font size for "+" */
-  cursor: pointer;
-  margin: 10px; /* Space around the button */
-  width: 40px; /* Fixed width */
-  height: 40px; /* Fixed height */
+.edit-item-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add some shadow */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-bottom: 10px;
+  width: 100%; /* Ensure it spans the full width of the container */
 }
 
-.add-button:hover {
-  background-color: #45a049; /* Darker green on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
+.edit-item-input-group {
+  flex-grow: 1;
+  margin-right: 10px; /* Space between the input and the remove button */
 }
 
-.add-button:active {
-  background-color: #388e3c; /* Even darker green when active */
-  transform: scale(0.95); /* Slight scale down when active */
+.edit-item-input {
+  width: 100%;
 }
 
-.save-button {
-  background-color: #1e90ff;
-  color: black;
+.edit-add-button {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5em;
+  padding: 10px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  margin-top: 10px; /* Adjust margin as needed for spacing */
+}
+
+.edit-add-button:hover {
+  background-color: #4cae4c;
+}
+
+.edit-save-button {
+  background-color: #0275d8;
+  color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px;
 }
 
-.save-button:hover {
-  background-color: #003366;
+.edit-save-button:hover {
+  background-color: #025aa5;
 }
 
-.modal-container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 50%;
-  max-width: 700px;
-  text-align: center;
-  color: inherit;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: white; /* Modal content background */
-  padding: 20px; /* Padding inside the modal */
-  font-family: "Caveat", cursive; /* Set a default fun font for the body */
-  border-radius: 8px; /* Rounded corners */
-  width: 50%; /* Width of the modal */
-  max-width: 600px; /* Maximum width for larger screens */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
-  text-align: center; /* Center the text */
-  position: relative; /* Position relative for absolute children */
-}
-
-.modal-container.dark-theme .modal-content {
-  color: white; /* Set text color for dark theme */
-}
-
-.modal-container.blue-theme .modal-content {
-  color: #003366; /* Set text color for blue theme */
-}
-
-/* Style for modal labels and text */
-.modal-container label,
-.modal-container h1,
-.modal-container h2 {
-  color: inherit; /* Use the inherited color from the modal */
-}
-
-.modal-container input,
-.modal-container select {
-  color: black; /* Keep form elements readable */
-  background-color: white; /* Ensure form elements have a clear background */
-}
-
-/* Modal title - keep consistent color */
-.modal-container h1 {
-  color: #333; /* Use a fixed color */
-  margin-bottom: 20px;
-}
-
-/* Ensure modal labels and headings maintain visibility */
-.modal-container label,
-.modal-container h2 {
-  color: #333; /* Fixed color for visibility */
-}
-
-/* Style for modal labels and text */
-.modal-container label,
-.modal-container h1,
-.modal-container h2,
-.modal-container p {
-  color: #333; /* Use a fixed color for visibility */
-}
-
-/* Ensure modal buttons retain color */
-.modal-container button {
-  color: #fff; /* Keep buttons white */
-}
-
-/* Styling for the cancel button */
-.cancel-button {
-  background-color: #ff6666; /* Red background */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px 20px; /* Padding for size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-}
-
-.cancel-button:hover {
-  background-color: #cc0000; /* Darker red on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.cancel-button:active {
-  background-color: #990000; /* Even darker red when active */
-  transform: scale(0.95); /* Slight scale down when active */
-}
-
-.item-container {
-  display: flex;
-  align-items: center; /* Center items vertically */
-  margin-bottom: 10px; /* Space between items */
-  width: 90%; /* Ensure it spans the full width of the container */
-}
-
-.remove-button {
-  padding: 5px 10px;
-  background-color: #ff6666;
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.remove-button:hover {
-  background-color: #cc0000;
-}
-
-/* Styling for the buttons within the modal */
-.modal .cancel-button {
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px 20px; /* Consistent padding for size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin-left: 10px; /* Add margin for spacing between buttons */
-}
-
-.modal .duplicate-button:hover,
-.modal .cancel-button:hover {
-  background-color: #007bff; /* Blue on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.modal .duplicate-button:active,
-.modal .cancel-button:active {
-  background-color: #0056b3; /* Even darker blue when active */
-  transform: scale(0.95); /* Slight scale down when active */
-}
-
-.modal .cancel-button {
-  background-color: #ff6666; /* Red background */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  padding: 10px 20px; /* Consistent padding for size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin-left: 10px; /* Add margin for spacing between buttons */
-}
-
-.modal .cancel-button:hover {
-  background-color: #cc0000; /* Darker red on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.modal .cancel-button:active {
-  background-color: #990000; /* Even darker red when active */
-  transform: scale(0.95); /* Slight scale down when active */
-}
-
-.modal-background {
+.edit-modal-background {
   position: fixed;
   top: 0;
   left: 0;
@@ -225,14 +59,78 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 20px;
 }
 
-.custom-input {
-  background-color: white !important; /* Ensures background is white */
-  color: black !important;           /* Ensures text color is black */
-  border: 1px solid var(--text-color); /* Use text color for input borders in dark mode */
-  border-radius: 4px;                /* Rounded corners */
-  padding: 8px;                      /* Padding inside the field */
-  font-size: 1em;                    /* Font size */
-  font-family: "Caveat", cursive; /* Set a default fun font for the body */
+.edit-modal-container {
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 700px;
+  color: #f2f2f2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.edit-modal-container h1 {
+  color: #f2f2f2;
+  margin-bottom: 20px;
+}
+
+.edit-item-container .edit-remove-button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0; /* Remove extra padding */
+  width: 40px; /* Set a fixed width */
+  height: 40px; /* Set height to match the input field */
+  display: flex;
+  align-items: center; /* Center icon vertically */
+  justify-content: center; /* Center icon horizontally */
+  cursor: pointer;
+}
+
+.edit-item-container .edit-remove-button:hover {
+  background-color: #c9302c;
+}
+
+.edit-remove-icon {
+  font-size: 1.2em;
+  line-height: 1; /* Ensure the icon doesn't add extra space */
+}
+
+.edit-button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.edit-cancel-button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-cancel-button:hover {
+  background-color: #c9302c;
+}
+
+.edit-custom-input {
+  background-color: white !important;
+  color: black !important;
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 1em;
+  font-family: "Caveat", cursive;
 }
