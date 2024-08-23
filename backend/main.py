@@ -147,6 +147,14 @@ async def create_sequence(sequence: SequenceCreate, db: Session = Depends(get_db
     db.refresh(db_sequence)
     return db_sequence
 
+@app.put("/users/me/display_name", response_model=User)
+async def update_display_name(display_name: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    current_user.display_name = display_name
+    db.add(current_user)
+    db.commit()
+    db.refresh(current_user)
+    return current_user
+
 @app.put("/sequences/{sequence_id}", response_model=Sequence)
 async def update_sequence(sequence_id: int, updated_sequence: SequenceCreate, db: Session = Depends(get_db)):
     db_sequence = db.get(Sequence, sequence_id)

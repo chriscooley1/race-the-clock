@@ -21,6 +21,7 @@ class User(SQLModel, table=True):
     username: str = Field(sa_column=sa.Column(sa.String, unique=True, index=True))
     email: Optional[str] = Field(default=None)
     hashed_password: str = Field(sa_column=sa.Column(sa.String, nullable=False))
+    display_name: Optional[str] = Field(default=None)
     sequences: List["Sequence"] = Relationship(back_populates="user")
     collections: List["Collection"] = Relationship(back_populates="user")
 
