@@ -7,9 +7,9 @@ from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError, JWT
 from datetime import datetime, timedelta
 from typing import List, Optional
 from pydantic import BaseModel
-from decouple import config, AutoConfig
 import logging
 import os
+from decouple import config, AutoConfig
 from passlib.context import CryptContext
 import requests
 from fastapi.routing import APIRoute
@@ -20,22 +20,17 @@ from database import get_db
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Determine environment (development or production)
 config_mode = os.getenv("NODE_ENV", "development")
 logger.info(f"Running in {config_mode} mode")
 
-# Determine environment (development or production)
-config_mode = config("NODE_ENV", default="development")
-
 # Load configuration based on the environment
 config_path = ".env.production" if config_mode == "production" else ".env"
-
-# Continue with your existing configuration
 config = AutoConfig(search_path=config_path)
 
 DATABASE_URL = config("DATABASE_URL")
 AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
 AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
-
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
 
