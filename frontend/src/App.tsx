@@ -23,6 +23,7 @@ const App: React.FC = () => {
   console.log("AUTH0_DOMAIN:", import.meta.env.VITE_AUTH0_DOMAIN);
   console.log("AUTH0_CLIENT_ID:", import.meta.env.VITE_AUTH0_CLIENT_ID);
   console.log("AUTH0_AUDIENCE:", import.meta.env.VITE_AUTH0_AUDIENCE);
+  console.log("NODE_ENV:", import.meta.env.MODE);
 
   const { theme } = useTheme();
   const [hideSidebar, setHideSidebar] = React.useState<boolean>(false);
