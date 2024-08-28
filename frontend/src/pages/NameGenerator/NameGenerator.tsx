@@ -43,8 +43,8 @@ const NameGenerator: React.FC = () => {
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
           className="gen-custom-input"
-          placeholder="Enter a name" // Placeholder attribute
-          title="Name Input" // Title attribute
+          placeholder="Enter a name"
+          title="Name Input"
         />
         <button type="button" onClick={handleAddName} className="gen-styled-button">
           Add Name
