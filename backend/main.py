@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from typing import List, Optional
 from pydantic import BaseModel
 from decouple import config, AutoConfig
+import logging
 import os
 from passlib.context import CryptContext
 import requests
@@ -15,6 +16,12 @@ from fastapi.routing import APIRoute
 import pytz
 
 from database import get_db
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+config_mode = os.getenv("NODE_ENV", "development")
+logger.info(f"Running in {config_mode} mode")
 
 # Determine environment (development or production)
 config_mode = config("NODE_ENV", default="development")
