@@ -9,6 +9,7 @@ const UpdateDisplayNameForm: React.FC = () => {
 
   const handleUpdateDisplayName = async () => {
     try {
+      console.log("Attempting to update display name:", displayName);
       await updateDisplayName({ display_name: displayName }, getAccessTokenSilently);
       alert("Display name updated successfully");
     } catch (error) {
@@ -22,7 +23,10 @@ const UpdateDisplayNameForm: React.FC = () => {
         type="text"
         className="update-display-name-input"
         value={displayName}
-        onChange={(e) => setDisplayName(e.target.value)}
+        onChange={(e) => {
+          console.log("Display name input changed:", e.target.value);
+          setDisplayName(e.target.value);
+        }}
         placeholder="Enter your display name"
       />
       <button

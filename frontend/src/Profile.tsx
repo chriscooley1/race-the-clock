@@ -8,29 +8,30 @@ const Profile = () => {
   useEffect(() => {
     const getUserMetadata = async () => {
       const domain = import.meta.env.VITE_AUTH0_DOMAIN;
-  
+
       try {
+        console.log("Fetching user metadata...");
         const accessToken = await getAccessTokenSilently({
           authorizationParams: {
             audience: `https://${domain}/api/v2/`,
             scope: "read:current_user",
           },
         });
-  
+
         const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user?.sub}`;
-  
+
         const metadataResponse = await fetch(userDetailsByIdUrl, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-  
+
         const { user_metadata } = await metadataResponse.json();
-  
+        console.log("User metadata fetched:", user_metadata);
         setUserMetadata(user_metadata);
       } catch (e) {
         const error = e as Error;
-        console.log(error.message);
+        console.log("Error fetching user metadata:", error.message);
       }
     };
   

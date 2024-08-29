@@ -14,6 +14,7 @@ const Settings: React.FC = () => {
   const { theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log("Theme selected:", event.target.value);
     const newTheme = colorSchemes.find(scheme => scheme.name === event.target.value);
     if (newTheme) {
       setTheme(newTheme);
@@ -21,10 +22,12 @@ const Settings: React.FC = () => {
   };
 
   const handleTextColorChange = (color: string) => {
+    console.log("Text color selected:", color);
     setDisplayTextColor(color);
   };
 
   const handleBackgroundColorChange = (color: string) => {
+    console.log("Background color selected:", color);
     setDisplayBackgroundColor(color);
   };
 

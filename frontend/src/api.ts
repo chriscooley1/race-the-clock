@@ -25,15 +25,15 @@ const handleApiError = (error: any) => {
 };
 
 // API function examples
-
-export const getCurrentUser = async (
-  getAccessTokenSilently: () => Promise<string>
-): Promise<User> => {
+export const getCurrentUser = async (getAccessTokenSilently: () => Promise<string>): Promise<User> => {
   try {
+    console.log("Fetching access token for current user...");
     const token = await getAccessTokenSilently();
+    console.log("Access token retrieved:", token);
     const response = await axios.get(`${API_BASE_URL}/users/me/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log("Current user data:", response.data);
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -42,15 +42,15 @@ export const getCurrentUser = async (
 };
 
 // Function to update the display name
-export const updateDisplayName = async (
-  displayNamePayload: { display_name: string },
-  getAccessTokenSilently: () => Promise<string>
-) => {
+export const updateDisplayName = async (displayNamePayload: { display_name: string }, getAccessTokenSilently: () => Promise<string>) => {
   try {
+    console.log("Updating display name with payload:", displayNamePayload);
     const token = await getAccessTokenSilently();
+    console.log("Access token retrieved:", token);
     await axios.put(`${API_BASE_URL}/users/me/display_name`, displayNamePayload, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log("Display name updated successfully.");
   } catch (error) {
     handleApiError(error);
   }
@@ -58,13 +58,16 @@ export const updateDisplayName = async (
 
 export const getSequences = async (userId: string, getAccessTokenSilently: () => Promise<string>) => {
   try {
+    console.log("Fetching sequences for user ID:", userId);
     const token = await getAccessTokenSilently();
+    console.log("Access token retrieved:", token);
     const response = await axios.get(
       `${API_BASE_URL}/users/${userId}/sequences`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    console.log("Sequences retrieved:", response.data);
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -72,14 +75,11 @@ export const getSequences = async (userId: string, getAccessTokenSilently: () =>
 };
 
 // Function to create a sequence
-export const createSequence = async (
-  userId: string, // Update to string
-  name: string,
-  sequence: string,
-  getAccessTokenSilently: () => Promise<string>
-) => {
+export const createSequence = async (userId: string, name: string, sequence: string, getAccessTokenSilently: () => Promise<string>) => {
   try {
+    console.log("Creating sequence with name:", name);
     const token = await getAccessTokenSilently();
+    console.log("Access token retrieved:", token);
     const response = await axios.post(
       `${API_BASE_URL}/sequences`,
       { user_id: userId, name, description: sequence },
@@ -87,6 +87,7 @@ export const createSequence = async (
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    console.log("Sequence created successfully:", response.data);
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -94,14 +95,11 @@ export const createSequence = async (
 };
 
 // Function to update a sequence
-export const updateSequence = async (
-  sequenceId: number,
-  name: string,
-  description: string,
-  getAccessTokenSilently: () => Promise<string>
-) => {
+export const updateSequence = async (sequenceId: number, name: string, description: string, getAccessTokenSilently: () => Promise<string>) => {
   try {
+    console.log(`Updating sequence ID: ${sequenceId} with name: ${name}`);
     const token = await getAccessTokenSilently();
+    console.log("Access token retrieved:", token);
     const response = await axios.put(
       `${API_BASE_URL}/sequences/${sequenceId}`,
       { name, description },
@@ -109,6 +107,7 @@ export const updateSequence = async (
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    console.log("Sequence updated successfully:", response.data);
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -118,13 +117,16 @@ export const updateSequence = async (
 // Function to delete a sequence
 export const deleteSequence = async (sequenceId: number, getAccessTokenSilently: () => Promise<string>) => {
   try {
+    console.log("Deleting sequence ID:", sequenceId);
     const token = await getAccessTokenSilently();
+    console.log("Access token retrieved:", token);
     const response = await axios.delete(
       `${API_BASE_URL}/sequences/${sequenceId}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    console.log("Sequence deleted successfully.");
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -132,7 +134,6 @@ export const deleteSequence = async (sequenceId: number, getAccessTokenSilently:
 };
 
 // Collection-related functions
-
 export interface Collection {
   collection_id: number;
   name: string;
@@ -157,14 +158,11 @@ export const getCollections = async (getAccessTokenSilently: () => Promise<strin
 };
 
 // Function to create a collection
-export const createCollection = async (
-  userId: string, // Update to string
-  name: string,
-  description: string,
-  getAccessTokenSilently: () => Promise<string>
-) => {
+export const createCollection = async (userId: string, name: string, description: string, getAccessTokenSilently: () => Promise<string>) => {
   try {
+    console.log("Creating collection with name:", name);
     const token = await getAccessTokenSilently();
+    console.log("Access token retrieved:", token);
     const response = await axios.post(
       `${API_BASE_URL}/collections`,
       { user_id: userId, name, description },
@@ -172,6 +170,7 @@ export const createCollection = async (
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    console.log("Collection created successfully:", response.data);
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -179,27 +178,23 @@ export const createCollection = async (
 };
 
 // Function to update a collection
-export const updateCollection = async (
-  collectionId: number,
-  name: string,
-  description: string,
-  category: string, // Keep category if necessary
-  getAccessTokenSilently: () => Promise<string>
-) => {
+export const updateCollection = async (collectionId: number, name: string, description: string, category: string, getAccessTokenSilently: () => Promise<string>) => {
   try {
+    console.log(`Updating collection ID: ${collectionId} with name: ${name}`);
     const token = await getAccessTokenSilently();
-
+    console.log("Access token retrieved:", token);
     const response = await axios.put(
       `${API_BASE_URL}/collections/${collectionId}`,
       {
         name,
         description,
-        category, // Include category if necessary
+        category,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    console.log("Collection updated successfully:", response.data);
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -209,13 +204,16 @@ export const updateCollection = async (
 // Function to delete a collection
 export const deleteCollection = async (collectionId: number, getAccessTokenSilently: () => Promise<string>) => {
   try {
+    console.log("Deleting collection ID:", collectionId);
     const token = await getAccessTokenSilently();
+    console.log("Access token retrieved:", token);
     const response = await axios.delete(
       `${API_BASE_URL}/collections/${collectionId}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    console.log("Collection deleted successfully.");
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -223,16 +221,11 @@ export const deleteCollection = async (collectionId: number, getAccessTokenSilen
 };
 
 // Updated API function to include public/private status
-export const saveCollection = async (
-  userId: string,
-  collectionName: string,
-  items: { id: number; name: string }[],
-  status: string,
-  category: string,
-  getAccessTokenSilently: () => Promise<string>
-) => {
+export const saveCollection = async (userId: string, collectionName: string, items: { id: number; name: string }[], status: string, category: string, getAccessTokenSilently: () => Promise<string>) => {
   try {
-    const token = await getAccessTokenSilently(); // Retrieves the token
+    console.log("Saving collection with name:", collectionName);
+    const token = await getAccessTokenSilently();
+    console.log("Access token retrieved:", token);
     const response = await axios.post(
       `${API_BASE_URL}/collections`,
       {
@@ -246,6 +239,7 @@ export const saveCollection = async (
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    console.log("Collection saved successfully:", response.data);
     return response.data;
   } catch (error) {
     handleApiError(error);

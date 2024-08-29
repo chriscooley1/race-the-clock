@@ -20,27 +20,32 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   const [editedItems, setEditedItems] = useState<string[]>(items);
 
   const handleAddItem = () => {
+    console.log("Adding new item...");
     setEditedItems(["", ...editedItems]);
-  };  
+  };
 
   const handleRemoveItem = (index: number) => {
+    console.log("Removing item at index:", index);
     const newItems = editedItems.filter((_, i) => i !== index);
     setEditedItems(newItems);
   };
 
   const handleChangeItem = (index: number, value: string) => {
+    console.log(`Changing item at index ${index} to ${value}`);
     const newItems = [...editedItems];
     newItems[index] = value;
     setEditedItems(newItems);
   };
 
   const handleSave = () => {
+    console.log("Saving collection with items:", editedItems);
     onSave(editedItems);
     onClose(); // Close the modal after saving
   };
 
   const handleBackgroundClick = (event: React.MouseEvent) => {
     if ((event.target as HTMLElement).className === "edit-modal-background") {
+      console.log("Clicked on background, closing modal...");
       onClose();
     }
   };

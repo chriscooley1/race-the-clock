@@ -169,14 +169,17 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   const setDisplayTextColor = (color: string) => {
+    console.log("Setting display text color:", color);
     setTheme((prevTheme) => ({ ...prevTheme, displayTextColor: color }));
   };
 
   const setDisplayBackgroundColor = (color: string) => {
+    console.log("Setting display background color:", color);
     setTheme((prevTheme) => ({ ...prevTheme, displayBackgroundColor: color }));
   };
 
   useEffect(() => {
+    console.log("Current theme settings:", theme);
     localStorage.setItem("app-theme", JSON.stringify(theme));
 
     document.documentElement.style.setProperty("--background-color", theme.backgroundColor);

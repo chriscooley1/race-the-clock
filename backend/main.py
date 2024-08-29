@@ -37,7 +37,13 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI()
 
-logger.info(f"Allowed origins for CORS: {ALLOWED_ORIGINS}")
+@app.middleware("http")
+async def log_requests(request, call_next):
+    logger.info(f"Request method: {request.method}, Request origin: {request.headers.get('origin')}")
+    response = await call_next(request)
+    logger.info(f"Response status: {response.status_code}")
+    logger.info(f"Response headers: {response.headers}")
+    return response
 
 app.add_middleware(
     CORSMiddleware,

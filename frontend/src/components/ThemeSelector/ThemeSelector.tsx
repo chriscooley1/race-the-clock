@@ -10,6 +10,7 @@ const ThemeSelector: React.FC = () => {
     const selectedScheme = colorSchemes.find(
       (scheme) => scheme.name === event.target.value
     );
+    console.log("Selected theme:", selectedScheme);
     if (selectedScheme) {
       setTheme(selectedScheme);
     }
@@ -18,12 +19,14 @@ const ThemeSelector: React.FC = () => {
   const handleTextColorChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
+    console.log("Selected text color:", event.target.value);
     setDisplayTextColor(event.target.value);
   };
 
   const handleBackgroundColorChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
+    console.log("Selected background color:", event.target.value);
     setDisplayBackgroundColor(event.target.value);
   };
 

@@ -15,6 +15,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({ collect
 
   const handleSubscribe = async () => {
     try {
+      console.log("Attempting to subscribe to collection:", collection.collection_id);
       await subscribeToCollection(collection.collection_id, getAccessTokenSilently);
       setIsSubscribed(true);
       alert("You have subscribed to this collection!");
@@ -28,12 +29,14 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({ collect
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        console.log("Clicked outside the modal, closing...");
         onClose();
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
+      console.log("Cleaning up event listener for handleClickOutside");
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);

@@ -31,14 +31,13 @@ const DiscoverCollections: React.FC = () => {
 
     const fetchCollections = async () => {
       try {
+        console.log("Fetching public collections...");
         const collections = await fetchPublicCollections();
-        
-        // Ensure collections is an array
+        console.log("Fetched collections:", collections);
         const collectionsWithItems = (collections || []).map(collection => {
           let parsedItems: Item[] = [];
-          
+
           try {
-            // Only try to parse if the description looks like JSON (starts with [ or {)
             if (collection.description && (collection.description.trim().startsWith("[") || collection.description.trim().startsWith("{"))) {
               parsedItems = JSON.parse(collection.description);
             } else {
@@ -47,12 +46,13 @@ const DiscoverCollections: React.FC = () => {
           } catch (err) {
             console.error("Failed to parse items from description:", err);
           }
-    
+
           return { ...collection, items: parsedItems };
         });
-    
+
         if (isMounted) {
           setCollections(collectionsWithItems as Collection[]);
+          console.log("Updated collections with items:", collectionsWithItems);
         }
       } catch (err) {
         const error = err as AxiosError;
@@ -68,6 +68,7 @@ const DiscoverCollections: React.FC = () => {
   }, [getAccessTokenSilently]);
 
   const openModal = (collection: Collection) => {
+    console.log("Opening modal for collection:", collection);
     setActiveCollection(collection);
   };
 

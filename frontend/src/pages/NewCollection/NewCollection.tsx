@@ -17,6 +17,11 @@ const NewCollection: React.FC = () => {
       return;
     }
 
+    console.log("Navigating to collection setup with:", {
+      name,
+      category,
+      isPublic,
+    });
     // Navigate to the setup step with the initial collection details
     navigate("/collection-setup", {
       state: { collectionName: name, isPublic, category },

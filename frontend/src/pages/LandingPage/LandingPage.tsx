@@ -7,15 +7,17 @@ const LandingPage: React.FC = () => {
   const { loginWithRedirect } = useAuth0();
 
   const handleSignup = () => {
+    console.log("Signup button clicked");
     loginWithRedirect({
       screen_hint: "signup",
-      appState: { returnTo: "/your-collections" },  // Updated path
+      appState: { returnTo: "/your-collections" },
     } as any);
   };
 
   const handleLogin = () => {
+    console.log("Login button clicked");
     loginWithRedirect({
-      appState: { returnTo: "/your-collections" },  // Updated path
+      appState: { returnTo: "/your-collections" },
     });
   };
 

@@ -26,7 +26,9 @@ const CollectionSetup: React.FC = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        console.log("Fetching current user...");
         const fetchedUser = await getCurrentUser(getAccessTokenSilently);
+        console.log("Fetched user:", fetchedUser);
         setCurrentUser(fetchedUser);
       } catch (error) {
         console.error("Error fetching current user:", error);
@@ -80,13 +82,20 @@ const CollectionSetup: React.FC = () => {
         name,
       }));
 
+      console.log("Saving collection with data:", {
+        username: currentUser.username,
+        collectionName,
+        collectionData,
+        isPublic,
+        category,
+      });
       await saveCollection(
-        currentUser.username, // Use the current user's username from the backend
+        currentUser.username,
         collectionName,
         collectionData,
         isPublic ? "public" : "private",
         category,
-        getAccessTokenSilently // Pass the function itself
+        getAccessTokenSilently
       );
       navigate("/your-collections");
     } catch (error) {

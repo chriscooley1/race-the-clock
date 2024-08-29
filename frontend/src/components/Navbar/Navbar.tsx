@@ -12,15 +12,18 @@ const Navbar: React.FC = () => {
   const { logout } = useAuth0();
 
   const handleMenuToggle = () => {
+    console.log("Toggling menu. Current state:", menuOpen);
     setMenuOpen(!menuOpen);
   };
 
   const handleLogout = () => {
-    logout({ logoutParams: { returnTo: window.location.origin } }); // Corrected property
+    console.log("Logging out...");
+    logout({ logoutParams: { returnTo: window.location.origin } });
     setMenuOpen(false);
   };
 
   const handleNavigate = (path: string) => {
+    console.log("Navigating to:", path);
     navigate(path);
     setMenuOpen(false);
   };
@@ -32,11 +35,13 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        console.log("Clicked outside menu, closing...");
         setMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
+      console.log("Cleaning up event listener for handleClickOutside");
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);

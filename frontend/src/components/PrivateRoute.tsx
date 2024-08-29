@@ -9,6 +9,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   if (!isAuthenticated) {
+    console.log("User not authenticated. Redirecting to login.");
     loginWithRedirect();
     return null; // Don't render anything while redirecting
   }

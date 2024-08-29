@@ -26,22 +26,34 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
     const totalSeconds = currentSettings.speed / 1000;
     const mins = Math.floor(totalSeconds / 60);
     const secs = totalSeconds % 60;
+    console.log("Current settings speed:", currentSettings.speed);
+    console.log("Calculated minutes:", mins, "Calculated seconds:", secs);
     setMinutes(mins);
     setSeconds(secs);
   }, [currentSettings.speed]);
 
   const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if ((event.target as HTMLElement).classList.contains("sess-modal-background")) {
+      console.log("Background clicked, closing modal...");
       onClose();
     }
   };
 
   const calculateSpeed = () => {
-    return (minutes * 60 + seconds) * 1000;
+    const speed = (minutes * 60 + seconds) * 1000;
+    console.log("Calculated speed in ms:", speed);
+    return speed;
   };
 
   const handleStartClick = () => {
     const calculatedSpeed = calculateSpeed();
+    console.log("Starting session with:", {
+      minutes,
+      seconds,
+      shuffle,
+      calculatedSpeed,
+      textColor: currentSettings.textColor,
+    });
     onStart(minutes, seconds, shuffle, calculatedSpeed, currentSettings.textColor);
   };
 

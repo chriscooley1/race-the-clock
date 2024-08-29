@@ -12,7 +12,9 @@ const MyAccount: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        console.log("Fetching user data...");
         const userProfile = await getCurrentUser(getAccessTokenSilently);
+        console.log("Fetched user profile:", userProfile);
         setUserData(userProfile);
       } catch (error) {
         console.error("Error fetching user data:", error);

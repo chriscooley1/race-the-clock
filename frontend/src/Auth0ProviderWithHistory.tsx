@@ -10,6 +10,7 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState?: any) => {
+    console.log("Redirect callback with appState:", appState);
     navigate(appState?.returnTo || "/your-collections");
   };
 

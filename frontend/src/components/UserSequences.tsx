@@ -8,8 +8,9 @@ const UserSequences: React.FC = () => {
   const fetchData = async () => {
     try {
       if (user?.sub) {
+        console.log("Fetching sequences for user:", user.sub);
         const sequences = await getSequences(user.sub, getAccessTokenSilently);
-        console.log(sequences);
+        console.log("Fetched sequences:", sequences);
       }
     } catch (error) {
       console.error("Error fetching sequences", error);
@@ -18,6 +19,7 @@ const UserSequences: React.FC = () => {
 
   React.useEffect(() => {
     if (user?.sub) {
+      console.log("User sub found, fetching sequences...");
       fetchData();
     }
   }, [getAccessTokenSilently, user?.sub]); // Add dependencies

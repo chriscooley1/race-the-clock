@@ -27,20 +27,21 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   useEffect(() => {
+    console.log("Entering FullScreenDisplay with sequence:", sequence);
     onEnterFullScreen();
 
     if (shuffle) {
+      console.log("Shuffling sequence...");
       setShuffledSequence(shuffleArray(sequence));
     } else {
       setShuffledSequence(sequence);
     }
 
-    // Apply FullScreenDisplay-specific styles
     document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor || theme.textColor);
     document.documentElement.style.setProperty("--background-color", theme.displayBackgroundColor || theme.backgroundColor);
 
     return () => {
-      // Reset styles when exiting FullScreenDisplay
+      console.log("Exiting FullScreenDisplay");
       document.documentElement.style.setProperty("--display-text-color", theme.textColor);
       document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
       onExitFullScreen();
@@ -49,8 +50,13 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   useEffect(() => {
     if (shuffledSequence.length > 0) {
+      console.log("Starting sequence display with speed:", speed);
       const interval = setInterval(() => {
-        setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
+        setIndex((prevIndex) => {
+          const newIndex = (prevIndex + 1) % shuffledSequence.length;
+          console.log("Displaying item at index:", newIndex);
+          return newIndex;
+        });
       }, speed);
       return () => clearInterval(interval);
     }

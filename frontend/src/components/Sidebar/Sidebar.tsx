@@ -8,11 +8,13 @@ const Sidebar: React.FC = () => {
   const { isAuthenticated } = useAuth0();
   const location = useLocation();
 
+  console.log("Current route:", location.pathname);
   // Check if the current route is the landing page
   const isLandingPage = location.pathname === "/";
 
   // Hide the entire sidebar when on the landing page
   if (isLandingPage) {
+    console.log("Landing page detected, hiding sidebar...");
     return null;
   }
 

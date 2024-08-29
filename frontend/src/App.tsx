@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const [hideSidebar, setHideSidebar] = React.useState<boolean>(false);
 
   const handleFullScreenDisplay = (hide: boolean) => {
+    console.log("Setting hideSidebar to:", hide);
     setHideSidebar(hide);
   };
 

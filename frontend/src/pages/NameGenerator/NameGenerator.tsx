@@ -9,17 +9,20 @@ const NameGenerator: React.FC = () => {
 
   const handleAddName = () => {
     if (nameInput.trim() !== "") {
+      console.log("Adding name:", nameInput.trim());
       setNameList([...nameList, nameInput.trim()]);
       setNameInput(""); // Clear the input after adding
     }
   };
 
   const handleRemoveName = (index: number) => {
+    console.log("Removing name at index:", index);
     const updatedList = nameList.filter((_, i) => i !== index);
     setNameList(updatedList);
   };
 
   const handleEditName = (index: number, newName: string) => {
+    console.log("Editing name at index:", index, "to:", newName.trim());
     const updatedList = [...nameList];
     updatedList[index] = newName.trim();
     setNameList(updatedList);
@@ -28,6 +31,7 @@ const NameGenerator: React.FC = () => {
   const handleGenerateName = () => {
     if (nameList.length > 0) {
       const randomIndex = Math.floor(Math.random() * nameList.length);
+      console.log("Generated random name:", nameList[randomIndex]);
       setGeneratedName(nameList[randomIndex]);
     }
   };

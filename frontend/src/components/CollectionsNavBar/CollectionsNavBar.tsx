@@ -22,7 +22,10 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           className={`category-button ${
             selectedCategory === category ? "active" : ""
           }`}
-          onClick={() => onSelectCategory(category)}
+          onClick={() => {
+            console.log("Category selected:", category);
+            onSelectCategory(category);
+          }}
         >
           {category}
         </button>

@@ -45,11 +45,14 @@ const YourCollections: React.FC = () => {
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
   const modalRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const loadCollections = async () => {
       try {
+        console.log("Fetching collections...");
         const token = await getAccessTokenSilently(); // Get the access token first
         const data = await fetchCollections(token); // Pass the token to the API function
+        console.log("Collections fetched:", data);
         setCollections(data);
         filterAndSortCollections(data, selectedCategory, sortOption);
       } catch (error) {
@@ -58,6 +61,7 @@ const YourCollections: React.FC = () => {
     };
     loadCollections();
   }, [selectedCategory, sortOption, getAccessTokenSilently]);
+
   const filterAndSortCollections = (
     collections: Collection[],
     category: string,
@@ -81,9 +85,11 @@ const YourCollections: React.FC = () => {
   
     setFilteredCollections(sorted);
   };
+
   const handleSaveUpdatedItems = async (newItems: string[]) => {
     setIsLoading(true); // Start loading
     try {
+      console.log("Saving updated items:", newItems);
       if (selectedCollection) {
         // Filter out any empty strings from newItems
         const filteredItems = newItems.filter(item => item.trim() !== "");
@@ -135,6 +141,7 @@ const YourCollections: React.FC = () => {
         const token = await getAccessTokenSilently();
         const refreshedCollections = await fetchCollections(token);
         setCollections(refreshedCollections);
+        console.log("Updated collection:", selectedCollection);
       }
     } catch (error) {
       console.error("Error updating collection:", error);
@@ -150,14 +157,18 @@ const YourCollections: React.FC = () => {
       setShowModal(true);
     }
   };
+
   const handleEditButtonClick = (collection: Collection) => {
     setSelectedCollection(collection);
     setEditModalOpen(true);
   };
+
   const handleDuplicateCollection = async () => {
     if (!collectionToDuplicate) return;
     try {
+      console.log("Duplicating collection:", collectionToDuplicate);
       const duplicatedCollection = await duplicateCollection(collectionToDuplicate, getAccessTokenSilently);
+      console.log("Duplicated collection:", duplicatedCollection);
       setCollections((prevCollections) => [...prevCollections, duplicatedCollection]);
       filterAndSortCollections([...collections, duplicatedCollection], selectedCategory, sortOption);
       setDuplicateModalOpen(false);
@@ -165,18 +176,22 @@ const YourCollections: React.FC = () => {
       console.error("Error duplicating collection:", error);
     }
   };
+
   const handleDeleteCollection = async (collectionId: number) => {
     try {
+      console.log("Deleting collection with ID:", collectionId);
       await deleteCollectionById(collectionId, getAccessTokenSilently);
       const updatedCollections = collections.filter(
         (collection) => collection.collection_id !== collectionId
       );
+      console.log("Updated collections after deletion:", updatedCollections);
       setCollections(updatedCollections);
       filterAndSortCollections(updatedCollections, selectedCategory, sortOption);
     } catch (error) {
       console.error("Error deleting collection:", error);
     }
   };
+
   const handleStartSession = (
     min: number,
     sec: number,
@@ -200,12 +215,15 @@ const YourCollections: React.FC = () => {
       setShowModal(false);
     }
   };
+
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
+
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOption(event.target.value);
   };
+
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-US", {
@@ -216,6 +234,7 @@ const YourCollections: React.FC = () => {
       timeZone: "America/Denver",
     }).format(date);
   };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -357,4 +376,5 @@ const YourCollections: React.FC = () => {
     </div>
   );
 };
+
 export default YourCollections;
