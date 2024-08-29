@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, status, Header
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
 from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate, DisplayNameUpdate
@@ -42,6 +43,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.options("/{path:path}")
+async def options_handler(path: str):
+    logging.debug(f"Received OPTIONS request for {path}")
+    return JSONResponse(
+        status_code=200,
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+    )
 
 # Auth0 token validation
 async def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
