@@ -37,6 +37,10 @@ const CollectionFinalStep: React.FC = () => {
 
     fetchUser();
   }, [getAccessTokenSilently]);
+  // Log after setting the user data
+  useEffect(() => {
+    console.log("User data in state:", currentUser);
+  }, [currentUser]);
 
   const handleAddItem = () => {
     setItems([...items, { id: items.length + 1, name: newItem }]);
@@ -48,6 +52,8 @@ const CollectionFinalStep: React.FC = () => {
   };
 
   const handleSaveCollection = async () => {
+    console.log("User data before saving collection:", currentUser);
+
     try {
       if (!currentUser || !currentUser.username) {
         throw new Error("Current user is undefined");

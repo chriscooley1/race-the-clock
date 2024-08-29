@@ -36,7 +36,11 @@ const CollectionSetup: React.FC = () => {
     };
 
     fetchUser();
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently]);  
+  // Log after setting the user data
+  useEffect(() => {
+    console.log("User data in state:", currentUser);
+  }, [currentUser]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -72,6 +76,8 @@ const CollectionSetup: React.FC = () => {
   };
 
   const handleSaveCollection = async () => {
+    console.log("User data before saving collection:", currentUser);
+
     try {
       if (!currentUser || !currentUser.username) {
         throw new Error("Current user is undefined");
