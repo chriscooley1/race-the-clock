@@ -16,17 +16,7 @@ import pytz
 
 from database import get_db
 
-app = FastAPI()
-
-ALLOWED_ORIGINS = [config("ALLOWED_ORIGINS")]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,  # Use the list of allowed origins
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
+# Logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -36,6 +26,7 @@ AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
 AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
+ALLOWED_ORIGINS = config("ALLOWED_ORIGINS").split(",")  # Fetch from environment
 
 engine = create_engine(DATABASE_URL)
 
@@ -44,8 +35,25 @@ SQLModel.metadata.create_all(engine)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+app = FastAPI()
 
+logger.info(f"Allowed origins for CORS: {ALLOWED_ORIGINS}")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,  # Use the list of allowed origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.middleware("http")
+async def log_requests(request, call_next):
+    logger.info(f"Request: {request.method} {request.url}")
+    response = await call_next(request)
+    logger.info(f"Response status: {response.status_code}")
+    logger.info(f"Response headers: {response.headers}")
+    return response
 
 # @app.options("/{path:path}")
 # async def options_handler(path: str):
