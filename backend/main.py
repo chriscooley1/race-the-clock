@@ -16,6 +16,17 @@ import pytz
 
 from database import get_db
 
+app = FastAPI()
+
+ALLOWED_ORIGINS = [config("ALLOWED_ORIGINS")]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,  # Use the list of allowed origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -33,29 +44,20 @@ SQLModel.metadata.create_all(engine)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-app = FastAPI()
-
-ALLOWED_ORIGINS = [config("ALLOWED_ORIGINS")]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,  # Use the list of allowed origins
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
-@app.options("/{path:path}")
-async def options_handler(path: str):
-    logging.debug(f"Received OPTIONS request for {path}")
-    return JSONResponse(
-        status_code=200,
-        headers={
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        },
-    )
+
+# @app.options("/{path:path}")
+# async def options_handler(path: str):
+#     logging.debug(f"Received OPTIONS request for {path}")
+#     return JSONResponse(
+#         status_code=200,
+#         headers={
+#             "Access-Control-Allow-Origin": "*",
+#             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+#             "Access-Control-Allow-Headers": "Content-Type, Authorization",
+#         },
+#     )
 
 # Auth0 token validation
 async def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
