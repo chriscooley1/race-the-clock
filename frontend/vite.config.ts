@@ -2,11 +2,11 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
+  const env = loadEnv(mode, process.cwd(), ""); // Loads environment variables directly
 
   return {
     plugins: [react()],
-    base: env.NODE_ENV === "production" ? "/" : "/",
+    base: "/", // Assuming the app is hosted at the root
     define: {
       "process.env": env
     }
