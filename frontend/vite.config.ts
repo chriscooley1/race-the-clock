@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    base: env.NODE_ENV === "production" ? "/letter-reader/" : "/",
+    base: env.NODE_ENV === "production" ? "/" : "/",
     define: {
       "process.env": env
     }
