@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./CollectionFinalStep.css";
-import { saveCollection } from "../../api"; // Import API function
+import { saveCollection, getCurrentUser } from "../../api"; // Import API functions
 import "../../App.css"; // Global styles for the app
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -15,13 +15,26 @@ interface LocationState {
 const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { collectionName, isPublic, category, sequence } = location.state as LocationState; // Cast location.state to LocationState
+  const { collectionName, isPublic, category, sequence } = location.state as LocationState;
   const { getAccessTokenSilently } = useAuth0(); // Import the function from Auth0
-
   const [items, setItems] = useState<{ id: number; name: string }[]>(
     sequence.map((name: string, index: number) => ({ id: index + 1, name })) // Explicitly define type of name
-  ); // Initialize with sequence
+  );
   const [newItem, setNewItem] = useState<string>("");
+  const [currentUser, setCurrentUser] = useState<any>(null); // State to hold current user data
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const fetchedUser = await getCurrentUser(getAccessTokenSilently);
+        setCurrentUser(fetchedUser);
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
+    };
+
+    fetchUser();
+  }, [getAccessTokenSilently]);
 
   const handleAddItem = () => {
     setItems([...items, { id: items.length + 1, name: newItem }]);
@@ -34,19 +47,23 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleSaveCollection = async () => {
     try {
-      const token = await getAccessTokenSilently(); // Retrieve the access token
+      if (!currentUser || !currentUser.username) {
+        throw new Error("Current user is undefined");
+      }
+
       const collectionData = items.map((item) => ({
         id: item.id,
         name: item.name,
       }));
+
       await saveCollection(
-        "1", // Replace with actual userId, or get it from Auth0
+        currentUser.username, // Use the current user's username from the backend
         collectionName,
         collectionData,
         isPublic ? "public" : "private",
         category,
         getAccessTokenSilently // Pass the function itself
-      );      
+      );
       navigate("/your-collections");
     } catch (error) {
       console.error("Error saving collection:", error);

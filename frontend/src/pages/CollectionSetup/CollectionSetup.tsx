@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./CollectionSetup.css";
 import "../../App.css"; // Global styles for the app
@@ -8,12 +8,11 @@ import {
   generateFullAlphabet,
   generateNumbersOneToHundred,
 } from "../../utils/RandomGenerators";
-import { saveCollection } from "../../api"; // Assuming you have this API function
-import { useAuth0 } from "@auth0/auth0-react"; // Import useAuth0
-import { getCurrentUser } from "../../api";
+import { saveCollection, getCurrentUser } from "../../api";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CollectionSetup: React.FC = () => {
-  const { user, getAccessTokenSilently } = useAuth0(); // Access user directly
+  const { getAccessTokenSilently } = useAuth0(); // Removed `user` from here
   const navigate = useNavigate();
   const location = useLocation();
   const { collectionName, isPublic, category } = location.state || {};
@@ -22,6 +21,20 @@ const CollectionSetup: React.FC = () => {
   const [itemCount, setItemCount] = useState<number>(1);
   const [sequence, setSequence] = useState<string[]>([]);
   const [type, setType] = useState<string>("letters");
+  const [currentUser, setCurrentUser] = useState<any>(null); // State to hold current user data
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const fetchedUser = await getCurrentUser(getAccessTokenSilently);
+        setCurrentUser(fetchedUser);
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
+    };
+
+    fetchUser();
+  }, [getAccessTokenSilently]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -58,18 +71,17 @@ const CollectionSetup: React.FC = () => {
 
   const handleSaveCollection = async () => {
     try {
-      if (!user || !user.sub) {
-        throw new Error("User ID is undefined");
+      if (!currentUser || !currentUser.username) {
+        throw new Error("Current user is undefined");
       }
-  
-      const token = await getAccessTokenSilently(); // Get the access token
+
       const collectionData = sequence.map((name, index) => ({
         id: index + 1,
         name,
       }));
-      
+
       await saveCollection(
-        user.sub, // Use the Auth0 user ID directly from useAuth0
+        currentUser.username, // Use the current user's username from the backend
         collectionName,
         collectionData,
         isPublic ? "public" : "private",

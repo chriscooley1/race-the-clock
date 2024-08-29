@@ -55,18 +55,6 @@ async def log_requests(request, call_next):
     logger.info(f"Response headers: {response.headers}")
     return response
 
-# @app.options("/{path:path}")
-# async def options_handler(path: str):
-#     logging.debug(f"Received OPTIONS request for {path}")
-#     return JSONResponse(
-#         status_code=200,
-#         headers={
-#             "Access-Control-Allow-Origin": "*",
-#             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-#             "Access-Control-Allow-Headers": "Content-Type, Authorization",
-#         },
-#     )
-
 # Auth0 token validation
 async def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
