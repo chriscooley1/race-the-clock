@@ -3,8 +3,6 @@ import { User } from "@auth0/auth0-react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
-
 interface Item {
   id: number;
   name: string;
