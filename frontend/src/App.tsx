@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import YourCollections from "./pages/YourCollections/YourCollections";
@@ -19,9 +19,14 @@ import "./App.css";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 
 const App: React.FC = () => {
-
   const { theme } = useTheme();
   const [hideSidebar, setHideSidebar] = React.useState<boolean>(false);
+  const location = useLocation();
+
+  React.useEffect(() => {
+    // Hide sidebar on the LandingPage
+    setHideSidebar(location.pathname === "/");
+  }, [location.pathname]);
 
   const handleFullScreenDisplay = (hide: boolean) => {
     console.log("Setting hideSidebar to:", hide);
