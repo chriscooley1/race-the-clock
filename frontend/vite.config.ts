@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: true, // This allows the server to be accessible over the network
-      port: 3000, // Adjust the port as necessary
+      port: 8080, // Adjust the port as necessary
       historyApiFallback: true, // Ensures that the index.html is served for all routes
     },
     resolve: {
