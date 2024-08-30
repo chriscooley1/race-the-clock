@@ -8,7 +8,16 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     base: "/", // Assuming the app is hosted at the root
     define: {
-      "process.env": env
-    }
+      "process.env": env,
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          entryFileNames: `assets/[name].[hash].js`,
+          chunkFileNames: `assets/[name].[hash].js`,
+          assetFileNames: `assets/[name].[hash].[ext]`,
+        },
+      },
+    },
   };
 });
