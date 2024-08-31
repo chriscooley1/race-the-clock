@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
           assetFileNames: `assets/[name].[hash].[ext]`,
         },
       },
+      outDir: "dist", // Ensure the build output goes to the "dist" directory
     },
     server: {
       host: true, // This allows the server to be accessible over the network

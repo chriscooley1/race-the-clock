@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "ESNext",  // Ensure ES modules are used to support import.meta
+    "module": "esnext",  // Ensure ES modules are used to support import.meta
     "moduleResolution": "node",
     "target": "ES2020",
     "strict": true,
