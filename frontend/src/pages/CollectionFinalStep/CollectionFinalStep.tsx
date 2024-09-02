@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./CollectionFinalStep.css";
-import { saveCollection, getCurrentUser } from "../../api"; // Import API functions
-import "../../App.css"; // Global styles for the app
+import { saveCollection, getCurrentUser } from "../../api"; 
+import "../../App.css"; 
 import { useAuth0 } from "@auth0/auth0-react";
 
 interface LocationState {
   collectionName: string;
   isPublic: boolean;
   category: string;
-  sequence: string[]; // Assuming sequence is an array of strings
+  sequence: string[]; 
 }
 
 const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { collectionName, isPublic, category, sequence } = location.state as LocationState;
-  const { getAccessTokenSilently } = useAuth0(); // Import the function from Auth0
-  const [items, setItems] = useState<{ id: number; name: string }[]>(
-    sequence.map((name: string, index: number) => ({ id: index + 1, name })) // Explicitly define type of name
-  );
+  const { getAccessTokenSilently } = useAuth0(); 
+  const [items, setItems] = useState<{ id: number; name: string }[]>(sequence.map((name, index) => ({ id: index + 1, name })));
   const [newItem, setNewItem] = useState<string>("");
-  const [currentUser, setCurrentUser] = useState<any>(null); // State to hold current user data
+  const [currentUser, setCurrentUser] = useState<any>(null); 
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -37,14 +35,14 @@ const CollectionFinalStep: React.FC = () => {
 
     fetchUser();
   }, [getAccessTokenSilently]);
-  // Log after setting the user data
+
   useEffect(() => {
     console.log("User data in state:", currentUser);
   }, [currentUser]);
 
   const handleAddItem = () => {
     setItems([...items, { id: items.length + 1, name: newItem }]);
-    setNewItem(""); // Reset new item input field
+    setNewItem(""); 
   };
 
   const handleRemoveItem = (id: number) => {
@@ -85,6 +83,10 @@ const CollectionFinalStep: React.FC = () => {
     }
   };
 
+  if (!currentUser) {
+    return <div>Loading user information...</div>; 
+  }
+
   return (
     <div className="collection-final-step-container">
       <h1>Collection: {collectionName}</h1>
@@ -122,7 +124,7 @@ const CollectionFinalStep: React.FC = () => {
             id={`item-input-${item.id}`}
             className="final-item-input"
             value={item.name}
-            readOnly // This makes the input read-only, remove if editing is required
+            readOnly 
             title={`Item ${item.id}: ${item.name}`}
           />
           <button

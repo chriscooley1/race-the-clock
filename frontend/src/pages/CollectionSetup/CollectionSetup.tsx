@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./CollectionSetup.css";
-import "../../App.css"; // Global styles for the app
+import "../../App.css"; 
 import {
   generateRandomLetters,
   generateRandomNumbers,
@@ -12,7 +12,7 @@ import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const CollectionSetup: React.FC = () => {
-  const { getAccessTokenSilently } = useAuth0(); // Removed `user` from here
+  const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
   const location = useLocation();
   const { collectionName, isPublic, category } = location.state || {};
@@ -21,7 +21,7 @@ const CollectionSetup: React.FC = () => {
   const [itemCount, setItemCount] = useState<number>(1);
   const [sequence, setSequence] = useState<string[]>([]);
   const [type, setType] = useState<string>("letters");
-  const [currentUser, setCurrentUser] = useState<any>(null); // State to hold current user data
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -34,10 +34,10 @@ const CollectionSetup: React.FC = () => {
         console.error("Error fetching current user:", error);
       }
     };
-
+  
     fetchUser();
-  }, [getAccessTokenSilently]);  
-  // Log after setting the user data
+  }, [getAccessTokenSilently]);
+  
   useEffect(() => {
     console.log("User data in state:", currentUser);
   }, [currentUser]);
@@ -61,7 +61,7 @@ const CollectionSetup: React.FC = () => {
       generatedSequence = generateNumbersOneToHundred();
     }
     setSequence(generatedSequence);
-    setFile(null); // Clear any uploaded file
+    setFile(null);
   };
 
   const handleNext = () => {
@@ -110,6 +110,10 @@ const CollectionSetup: React.FC = () => {
     }
   };
 
+  if (!currentUser) {
+    return <div>Loading user information...</div>;
+  }
+
   return (
     <div className="collection-setup-container">
       <h1>Collection: {collectionName}</h1>
@@ -153,9 +157,7 @@ const CollectionSetup: React.FC = () => {
       </button>
       <p>- OR -</p>
       <div className="setup-centered-input">
-        <label htmlFor="fileUpload">
-          Choose File
-        </label>
+        <label htmlFor="fileUpload">Choose File</label>
         <input
           type="file"
           id="fileUpload"

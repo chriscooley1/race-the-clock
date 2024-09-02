@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 # Set up environment configuration directly
 DATABASE_URL = config("DATABASE_URL")
 AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
+logger.info(f"AUTH0_DOMAIN is set to: {AUTH0_DOMAIN}")
 AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
@@ -36,9 +37,10 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI()
 
+# Single middleware function to log requests
 @app.middleware("http")
 async def log_requests(request, call_next):
-    logger.info(f"Request method: {request.method}, Request origin: {request.headers.get('origin')}")
+    logger.info(f"Request: {request.method} {request.url}")
     response = await call_next(request)
     logger.info(f"Response status: {response.status_code}")
     logger.info(f"Response headers: {response.headers}")
@@ -51,14 +53,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.middleware("http")
-async def log_requests(request, call_next):
-    logger.info(f"Request: {request.method} {request.url}")
-    response = await call_next(request)
-    logger.info(f"Response status: {response.status_code}")
-    logger.info(f"Response headers: {response.headers}")
-    return response
 
 # Auth0 token validation
 async def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
@@ -204,7 +198,7 @@ async def create_collection(
 ):
     # Convert the current UTC time to MST
     utc_time = datetime.utcnow()
-    mst_time = utc_time.astimezone(pytz.timezone('America/Denver'))
+    mst_time = utc_time.astimezone(pytz.timezone("America/Denver"))
     
     db_collection = Collection(
         name=collection.name,

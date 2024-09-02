@@ -36,6 +36,7 @@ export const getCurrentUser = async (getAccessTokenSilently: () => Promise<strin
     console.log("Current user data:", response.data);
     return response.data;
   } catch (error) {
+    console.error("Error fetching user data:", error);
     handleApiError(error);
     throw new Error("Could not fetch current user.");
   }

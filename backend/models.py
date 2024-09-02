@@ -61,7 +61,7 @@ class Collection(SQLModel, table=True):
     category: str
     user: User = Relationship(back_populates="collections")
     items: List["Item"] = Relationship(back_populates="collection")
-    created_at: datetime = Field(default_factory=lambda: datetime.now(pytz.timezone('America/Denver')))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(pytz.timezone("America/Denver")))
 
 class CollectionCreate(SQLModel):
     name: str
