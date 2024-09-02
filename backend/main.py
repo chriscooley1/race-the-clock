@@ -26,7 +26,6 @@ AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
 AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
-ALLOWED_ORIGINS = config("ALLOWED_ORIGINS").split(",")  # Fetch from environment
 
 engine = create_engine(DATABASE_URL)
 
@@ -47,7 +46,7 @@ async def log_requests(request, call_next):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,  # Use the list of allowed origins
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -71,6 +70,10 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
     try:
         token = authorization.split(" ")[1]
         jwks_url = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
+        
+        # Logging the JWKS URL
+        logger.info(f"Fetching JWKS from URL: {jwks_url}")
+        
         jwks = requests.get(jwks_url).json()
         rsa_key = {}
         for key in jwks["keys"]:
@@ -103,6 +106,9 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid claims")
     except JWTError:
         raise credentials_exception
+    except Exception as e:
+        logger.error(f"Unexpected error during token validation: {str(e)}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
 
     # Check if user exists, if not, create the user
     user = db.query(User).filter(User.username == username).first()

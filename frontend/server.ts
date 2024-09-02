@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 const app = express();
 
 // Define allowed origins
-const allowedOrigins = ['https://race-the-clock-frontend-production.up.railway.app'];
+const allowedOrigins = ["https://race-the-clock-frontend-production.up.railway.app"];
 
 app.use(cors({
     origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
@@ -16,7 +16,7 @@ app.use(cors({
         if (allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true); // Origin is allowed
         } else {
-            callback(new Error('Not allowed by CORS')); // Origin is not allowed
+            callback(new Error("Not allowed by CORS")); // Origin is not allowed
         }
     },
     credentials: true // Allow cookies to be sent along with requests
