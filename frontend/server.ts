@@ -5,12 +5,18 @@ import { Request, Response } from "express";
 
 const app = express();
 
-// Define allowed origins
+// CORS configuration
 const allowedOrigins = ["https://race-the-clock-frontend-production.up.railway.app"];
-
 app.use(cors({
-  origin: true, // This allows all origins
-  credentials: true
+    origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+        if (!origin) return callback(null, true); // Allow requests with no origin (like mobile apps)
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true); // Origin is allowed
+        } else {
+            callback(new Error("Not allowed by CORS")); // Origin is not allowed
+        }
+    },
+    credentials: true // Allow cookies
 }));
 
 app.use(express.static(path.join(__dirname, "dist")));

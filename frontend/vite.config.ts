@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 
 export default defineConfig(({ mode }: ConfigEnv) => {
-  const env = loadEnv(mode, process.cwd(), ""); // Loads environment variables directly
+  const env = loadEnv(mode, process.cwd(), "");
 
   return {
     plugins: [react()],
@@ -19,12 +19,12 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           assetFileNames: `assets/[name].[hash].[ext]`,
         },
       },
-      outDir: "dist", // Ensure the build output goes to the "dist" directory
+      outDir: "dist", 
     },
     server: {
-      host: true, // This allows the server to be accessible over the network
-      port: 5173, // Adjust the port as necessary
-      historyApiFallback: true, // Ensures that the index.html is served for all routes
+      host: true,
+      port: 5173,
+      historyApiFallback: true, 
     },
     resolve: {
       alias: {
