@@ -14,4 +14,4 @@ nixPkgs = ['caddy'] # Install Caddy as a Nix package
 
 # Start the Caddy web server without using a Caddyfile
 [start]
-cmd = 'exec caddy file-server --root dist --listen :${PORT:-3000} --rewrite * /index.html 2>&1'
+cmd = 'exec caddy run --config ./caddy.json 2>&1'

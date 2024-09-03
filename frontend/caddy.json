@@ -1,0 +1,39 @@
+{
+  "apps": {
+    "http": {
+      "servers": {
+        "example": {
+          "listen": [":${PORT:-3000}"],
+          "routes": [
+            {
+              "handle": [
+                {
+                  "handler": "file_server",
+                  "root": "./dist"
+                }
+              ]
+            },
+            {
+              "match": [
+                {
+                  "file": {
+                    "try_files": ["/index.html"]
+                  }
+                }
+              ],
+              "handle": [
+                {
+                  "handler": "static_response",
+                  "headers": {
+                    "Content-Type": "text/html"
+                  },
+                  "body": "{file}"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
