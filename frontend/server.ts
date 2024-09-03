@@ -9,17 +9,8 @@ const app = express();
 const allowedOrigins = ["https://race-the-clock-frontend-production.up.railway.app"];
 
 app.use(cors({
-    origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
-        // Allow requests with no origin, like mobile apps or curl requests
-        if (!origin) return callback(null, true);
-
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true); // Origin is allowed
-        } else {
-            callback(new Error("Not allowed by CORS")); // Origin is not allowed
-        }
-    },
-    credentials: true // Allow cookies to be sent along with requests
+  origin: true, // This allows all origins
+  credentials: true
 }));
 
 app.use(express.static(path.join(__dirname, "dist")));
