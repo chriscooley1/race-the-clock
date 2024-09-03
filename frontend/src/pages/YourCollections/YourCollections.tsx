@@ -47,16 +47,16 @@ const YourCollections: React.FC = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    console.log("Loading collections...");
     const loadCollections = async () => {
       try {
-        console.log("Fetching collections...");
-        const token = await getAccessTokenSilently(); // Get the access token first
-        const data = await fetchCollections(token); // Pass the token to the API function
-        console.log("Collections fetched:", data);
+        const token = await getAccessTokenSilently();
+        const data = await fetchCollections(token);
+        console.log("Fetched collections:", data);
         setCollections(data);
         filterAndSortCollections(data, selectedCategory, sortOption);
       } catch (error) {
-        console.error("Error fetching collections:", error);
+        console.error("Error loading collections:", error);
       }
     };
     loadCollections();
