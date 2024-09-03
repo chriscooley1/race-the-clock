@@ -3,7 +3,7 @@
     "http": {
       "servers": {
         "example": {
-          "listen": [":${PORT:-3000}"],
+          "listen": [":8080"],
           "routes": [
             {
               "handle": [
