@@ -32,6 +32,10 @@ const Navbar: React.FC = () => {
     navigate("/your-collections");
   };
 
+  const handleTitleClick = () => {
+    navigate("/your-collections");
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -53,7 +57,9 @@ const Navbar: React.FC = () => {
           Back
         </button>
       )}
-      <div className="navbar-title">Race The Clock</div>
+      <div className="navbar-title" onClick={handleTitleClick} style={{ cursor: "pointer" }}>
+        Race The Clock
+      </div>
       <div className="hamburger-menu" onClick={handleMenuToggle}>
         <div className="bar"></div>
         <div className="bar"></div>
