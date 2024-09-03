@@ -22,7 +22,8 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, "dist")));
 
 app.get("*", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
+  console.log(`Serving index.html for route: ${req.url}`);
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 const port = process.env.PORT || 3000;
