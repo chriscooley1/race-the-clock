@@ -21,7 +21,7 @@ A tool to help kindergarten students practice reading letters and words at a con
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/kindergarten-reader.git
-   cd kindergarten-reader
+   git clone https://github.com/chriscooley1/race-the-clock
+   cd race-the-clock
    npm install
    npm run dev

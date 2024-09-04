@@ -13,6 +13,7 @@ from decouple import config
 from passlib.context import CryptContext
 import requests
 import pytz
+from sqlalchemy import create_engine
 
 from database import get_db
 
@@ -28,7 +29,14 @@ AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
 
-engine = create_engine(DATABASE_URL)
+# Configure connection pool and other database settings
+engine = create_engine(
+    DATABASE_URL,
+    pool_size=10,          # Set the pool size
+    max_overflow=20,       # Set max overflow connections
+    pool_timeout=30,       # Timeout before the connection is dropped
+    pool_recycle=3600,     # Recycle connections after an hour
+)
 
 # Create database tables
 SQLModel.metadata.create_all(engine)
