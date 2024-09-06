@@ -34,14 +34,22 @@ const App: React.FC = () => {
   const handleFullScreenDisplay = (hide: boolean) => {
     console.log("Setting hideSidebar to:", hide);
     setHideSidebar(hide);
+    console.log("hideSidebar state after setting:", hideSidebar);
   };
   
   // Reset sidebar visibility whenever navigating away from fullscreen
   React.useEffect(() => {
+    console.log("Route changed to:", location.pathname);
+    console.log("hideSidebar state before resetting:", hideSidebar);
+    
     if (location.pathname !== "/fullscreen-display") {
       setHideSidebar(false); // Ensure the sidebar reappears on route change
     }
+  
+    console.log("hideSidebar state after resetting:", hideSidebar);
   }, [location.pathname]);
+
+  console.log("Rendering App, hideSidebar state:", hideSidebar);
 
   return (
     <Auth0ProviderWithHistory>
