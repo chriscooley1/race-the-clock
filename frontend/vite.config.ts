@@ -1,8 +1,10 @@
 import { defineConfig, loadEnv, ConfigEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
+
 export default defineConfig(({ mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd(), "");
+
   return {
     plugins: [react()],
     base: "/", // Assuming the app is hosted at the root
@@ -15,9 +17,16 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           entryFileNames: `assets/[name].[hash].js`,
           chunkFileNames: `assets/[name].[hash].js`,
           assetFileNames: `assets/[name].[hash].[ext]`,
+          manualChunks(id) {
+            // Example for vendor chunking
+            if (id.includes("node_modules")) {
+              return id.toString().split("node_modules/")[1].split("/")[0].toString();
+            }
+          },
         },
       },
       outDir: "dist", 
+      chunkSizeWarningLimit: 1000, // Set to 1 MB (optional, adjust to suppress warnings)
     },
     server: {
       host: true,
