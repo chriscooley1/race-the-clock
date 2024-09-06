@@ -16,18 +16,13 @@
             {
               "match": [
                 {
-                  "file": {
-                    "try_files": ["/index.html"]
-                  }
+                  "path": ["/*"]
                 }
               ],
               "handle": [
                 {
-                  "handler": "static_response",
-                  "headers": {
-                    "Content-Type": ["text/html"]
-                  },
-                  "body": "{file}"
+                  "handler": "rewrite",
+                  "uri": "/index.html"
                 }
               ]
             }
