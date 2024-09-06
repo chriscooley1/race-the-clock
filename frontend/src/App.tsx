@@ -1,5 +1,6 @@
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import YourCollections from "./pages/YourCollections/YourCollections";
 import NewCollection from "./pages/NewCollection/NewCollection";
@@ -18,9 +19,6 @@ import "./App.css";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-// Lazy load FullScreenDisplay and other components
-const FullScreenDisplay = lazy(() => import("./pages/FullScreenDisplay/FullScreenDisplay"));
-
 const App: React.FC = () => {
   const { theme } = useTheme();
   const [hideSidebar, setHideSidebar] = React.useState<boolean>(false);
@@ -38,7 +36,7 @@ const App: React.FC = () => {
 
   return (
     <Auth0ProviderWithHistory>
-      <ErrorBoundary>
+      <ErrorBoundary> {/* Wrap the app content with ErrorBoundary */}
         <div className={`app-container ${theme.className}`}>
           <Navbar />
           <div className="layout">
@@ -49,32 +47,57 @@ const App: React.FC = () => {
                 <Route
                   path="/fullscreen-display"
                   element={
-                    <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute
-                        element={
-                          <FullScreenDisplay
-                            onEnterFullScreen={() => handleFullScreenDisplay(true)}
-                            onExitFullScreen={() => handleFullScreenDisplay(false)}
-                          />
-                        }
-                      />
-                    </Suspense>
+                    <PrivateRoute
+                      element={
+                        <FullScreenDisplay
+                          onEnterFullScreen={() => handleFullScreenDisplay(true)}
+                          onExitFullScreen={() => handleFullScreenDisplay(false)}
+                        />
+                      }
+                    />
                   }
                 />
-                <Route path="/your-collections" element={<PrivateRoute element={<YourCollections />} />} />
-                <Route path="/new-collection" element={<PrivateRoute element={<NewCollection />} />} />
-                <Route path="/collection-setup" element={<PrivateRoute element={<CollectionSetup />} />} />
-                <Route path="/collection-final-step" element={<PrivateRoute element={<CollectionFinalStep />} />} />
-                <Route path="/discover-collections" element={<PrivateRoute element={<DiscoverCollections />} />} />
-                <Route path="/name-generator" element={<PrivateRoute element={<NameGenerator />} />} />
-                <Route path="/resources" element={<PrivateRoute element={<Resources />} />} />
-                <Route path="/settings" element={<PrivateRoute element={<Settings />} />} />
-                <Route path="/my-account" element={<PrivateRoute element={<MyAccount />} />} />
+                <Route
+                  path="/your-collections"
+                  element={<PrivateRoute element={<YourCollections />} />}
+                />
+                <Route
+                  path="/new-collection"
+                  element={<PrivateRoute element={<NewCollection />} />}
+                />
+                <Route
+                  path="/collection-setup"
+                  element={<PrivateRoute element={<CollectionSetup />} />}
+                />
+                <Route
+                  path="/collection-final-step"
+                  element={<PrivateRoute element={<CollectionFinalStep />} />}
+                />
+                <Route
+                  path="/discover-collections"
+                  element={<PrivateRoute element={<DiscoverCollections />} />}
+                />
+                <Route
+                  path="/name-generator"
+                  element={<PrivateRoute element={<NameGenerator />} />}
+                />
+                <Route
+                  path="/resources"
+                  element={<PrivateRoute element={<Resources />} />}
+                />
+                <Route 
+                  path="/settings" 
+                  element={<PrivateRoute element={<Settings />} />} 
+                />
+                <Route 
+                  path="/my-account" 
+                  element={<PrivateRoute element={<MyAccount />} />} 
+                />
               </Routes>
             </div>
           </div>
         </div>
-      </ErrorBoundary>
+      </ErrorBoundary> {/* Closing ErrorBoundary */}
     </Auth0ProviderWithHistory>
   );
 };
