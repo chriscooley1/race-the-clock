@@ -19,7 +19,7 @@ alembic_config.set_main_option("sqlalchemy.url", DATABASE_URL)
 if alembic_config.config_file_name is not None:
     fileConfig(alembic_config.config_file_name)
 
-# add your model's MetaData object here for 'autogenerate' support
+# add your model's MetaData object here for "autogenerate" support
 target_metadata = SQLModel.metadata
 
 def run_migrations_offline() -> None:
