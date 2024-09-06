@@ -23,7 +23,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="landing-page">
-      <h1>Welcome to the Letter Reader App</h1>
+      <h1>Welcome to Race The Clock</h1>
       <button type="button" onClick={handleSignup}>
         Register
       </button>

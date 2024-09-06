@@ -14,7 +14,7 @@ const handleApiError = (error: any) => {
     console.error("API Error:", error.response.data);
     if (error.response.status === 401) {
       console.error("Unauthorized - Redirecting to login.");
-      window.location.href = "/letter-reader/"; // Assuming "/letter-reader" is the basename
+      window.location.href = "/race-the-clock/"; // Assuming "/race-the-clock" is the basename
     }
   } else if (error.request) {
     console.error("No response received:", error.request);
