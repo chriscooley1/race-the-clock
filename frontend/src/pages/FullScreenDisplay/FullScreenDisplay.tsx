@@ -44,7 +44,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       console.log("Exiting FullScreenDisplay");
       document.documentElement.style.setProperty("--display-text-color", theme.textColor);
       document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
-      onExitFullScreen();
+      onExitFullScreen(); // Ensure this is called to reset sidebar
     };
   }, [onEnterFullScreen, onExitFullScreen, sequence, shuffle, theme]);
 

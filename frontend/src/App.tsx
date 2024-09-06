@@ -35,6 +35,13 @@ const App: React.FC = () => {
     console.log("Setting hideSidebar to:", hide);
     setHideSidebar(hide);
   };
+  
+  // Reset sidebar visibility whenever navigating away from fullscreen
+  React.useEffect(() => {
+    if (location.pathname !== "/fullscreen-display") {
+      setHideSidebar(false); // Ensure the sidebar reappears on route change
+    }
+  }, [location.pathname]);
 
   return (
     <Auth0ProviderWithHistory>
