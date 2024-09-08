@@ -1,4 +1,14 @@
 {
+  "logging": {
+    "logs": {
+      "default": {
+        "level": "DEBUG",
+        "writer": {
+          "output": "stdout"
+        }
+      }
+    }
+  },
   "apps": {
     "http": {
       "servers": {
@@ -29,12 +39,6 @@
           ]
         }
       }
-    }
-  },
-  "logs": {
-    "default": {
-      "level": "DEBUG",
-      "output": "stdout"
     }
   }
 }
