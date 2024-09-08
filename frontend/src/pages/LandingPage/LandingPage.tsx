@@ -8,6 +8,7 @@ const LandingPage: React.FC = () => {
 
   const handleSignup = () => {
     console.log("Signup button clicked");
+    localStorage.setItem("preLoginPath", window.location.pathname); // Store current path before redirect
     loginWithRedirect({
       screen_hint: "signup",
       appState: { returnTo: "/your-collections" },
@@ -16,6 +17,7 @@ const LandingPage: React.FC = () => {
 
   const handleLogin = () => {
     console.log("Login button clicked");
+    localStorage.setItem("preLoginPath", window.location.pathname); // Store current path before redirect
     loginWithRedirect({
       appState: { returnTo: "/your-collections" },
     });

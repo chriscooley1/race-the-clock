@@ -11,7 +11,20 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
 
   const onRedirectCallback = (appState?: any) => {
     console.log("Redirect callback with appState:", appState);
-    navigate(appState?.returnTo || "/your-collections");
+
+    // Dynamically determine where to redirect after login
+    let redirectTo = appState?.returnTo || "/your-collections"; // Default route after login
+
+    // Additional fallback paths based on user logic (you can customize based on your needs)
+    if (!appState?.returnTo) {
+      const storedPath = localStorage.getItem("preLoginPath");
+      if (storedPath) {
+        redirectTo = storedPath;
+      }
+    }
+
+    console.log("Redirecting to:", redirectTo);
+    navigate(redirectTo);
   };
 
   return (
