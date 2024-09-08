@@ -30,5 +30,11 @@
         }
       }
     }
+  },
+  "logs": {
+    "default": {
+      "level": "DEBUG",
+      "output": "stdout"
+    }
   }
 }
