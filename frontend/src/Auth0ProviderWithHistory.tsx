@@ -10,23 +10,28 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState?: any) => {
-    let redirectTo = appState?.returnTo || "/your-collections";
+    let redirectTo = appState?.returnTo || localStorage.getItem("preLoginPath") || "/your-collections";
   
-    // Fallback in case the route doesn't exist or fails
-    if (!appState?.returnTo) {
-      const storedPath = localStorage.getItem("preLoginPath");
-      if (storedPath) {
-        redirectTo = storedPath;
-      }
-    }
+    // Check if the redirectTo path is valid
+    const validRoutes = [
+      "/your-collections",
+      "/new-collection",
+      "/discover-collections",
+      "/fullscreen-display",
+      "/collection-setup",
+      "/collection-final-step",
+      "/name-generator",
+      "/resources",
+      "/settings",
+      "/my-account"
+    ];
   
-    // Double-check that the route is valid
-    const validRoutes = ["/your-collections", "/new-collection", "/discover-collections"];
     if (!validRoutes.includes(redirectTo)) {
-      redirectTo = "/"; // Default to home or some valid route
+      redirectTo = "/";
     }
   
     navigate(redirectTo);
+    localStorage.removeItem("preLoginPath");
   };
 
   return (
