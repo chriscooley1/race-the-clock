@@ -9,7 +9,7 @@
               "handle": [
                 {
                   "handler": "file_server",
-                  "root": "./frontend/dist"
+                  "root": "/Users/chriscooley/code/my-projects/race-the-clock/frontend/dist"
                 }
               ]
             },
