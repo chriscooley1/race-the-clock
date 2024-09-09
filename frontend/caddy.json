@@ -1,14 +1,4 @@
 {
-  "logging": {
-    "logs": {
-      "default": {
-        "level": "DEBUG",
-        "writer": {
-          "output": "stdout"
-        }
-      }
-    }
-  },
   "apps": {
     "http": {
       "servers": {
@@ -19,7 +9,7 @@
               "handle": [
                 {
                   "handler": "file_server",
-                  "root": "./dist"
+                  "root": "./frontend/dist"
                 }
               ]
             },
