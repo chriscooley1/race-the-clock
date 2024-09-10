@@ -5,7 +5,7 @@
     "target": "ES2020",
     "strict": true,
     "outDir": "dist",
-    "esModuleInterop": true, // Make sure this is true
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
