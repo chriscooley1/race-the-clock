@@ -13,12 +13,12 @@
               ],
               "handle": [
                 {
-                  "handler": "file_server",
-                  "root": "./dist"
-                },
-                {
                   "handler": "rewrite",
                   "uri": "/index.html"
+                },
+                {
+                  "handler": "file_server",
+                  "root": "./dist"
                 }
               ]
             }
