@@ -6,19 +6,15 @@
           "listen": [":8080"],
           "routes": [
             {
-              "match": [
-                {
-                  "path": ["/*"]
-                }
-              ],
               "handle": [
                 {
                   "handler": "rewrite",
-                  "uri": "/index.html"
+                  "uri": "{http.matchers.file.relative}"
                 },
                 {
                   "handler": "file_server",
-                  "root": "./dist"
+                  "root": "./dist",
+                  "try_files": ["{http.request.uri.path}", "/index.html"]
                 }
               ]
             }
