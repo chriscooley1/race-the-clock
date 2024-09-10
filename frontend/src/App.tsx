@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/LandingPage"; // Keeping LandingPage eager-loaded
 import { useTheme } from "./context/ThemeContext";
@@ -9,17 +9,16 @@ import "./App.css";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-// Lazy load other components
-const FullScreenDisplay = lazy(() => import("./pages/FullScreenDisplay/FullScreenDisplay"));
-const YourCollections = lazy(() => import("./pages/YourCollections/YourCollections"));
-const NewCollection = lazy(() => import("./pages/NewCollection/NewCollection"));
-const DiscoverCollections = lazy(() => import("./pages/DiscoverCollections/DiscoverCollections"));
-const CollectionSetup = lazy(() => import("./pages/CollectionSetup/CollectionSetup"));
-const CollectionFinalStep = lazy(() => import("./pages/CollectionFinalStep/CollectionFinalStep"));
-const NameGenerator = lazy(() => import("./pages/NameGenerator/NameGenerator"));
-const Resources = lazy(() => import("./pages/Resources"));
-const Settings = lazy(() => import("./pages/Settings/Settings"));
-const MyAccount = lazy(() => import("./pages/MyAccount/MyAccount"));
+import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
+import YourCollections from "./pages/YourCollections/YourCollections";
+import NewCollection from "./pages/NewCollection/NewCollection";
+import DiscoverCollections from "./pages/DiscoverCollections/DiscoverCollections";
+import CollectionSetup from "./pages/CollectionSetup/CollectionSetup";
+import CollectionFinalStep from "./pages/CollectionFinalStep/CollectionFinalStep";
+import NameGenerator from "./pages/NameGenerator/NameGenerator";
+import Resources from "./pages/Resources";
+import Settings from "./pages/Settings/Settings";
+import MyAccount from "./pages/MyAccount/MyAccount";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
