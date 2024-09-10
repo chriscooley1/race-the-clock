@@ -15,6 +15,10 @@
                 {
                   "handler": "file_server",
                   "root": "./dist"
+                },
+                {
+                  "handler": "rewrite",
+                  "uri": "/index.html"
                 }
               ]
             }
