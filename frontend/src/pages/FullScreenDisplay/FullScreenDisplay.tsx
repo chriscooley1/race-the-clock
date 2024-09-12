@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import "./FullScreenDisplay.css";
-import "../../App.css"; // Global styles for the app
+import "../../App.css";
 
 interface FullScreenDisplayProps {
   onEnterFullScreen: () => void;
@@ -18,6 +18,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
   const [shuffledSequence, setShuffledSequence] = useState<string[]>([]);
+  const [isPaused, setIsPaused] = useState(false); // State for pausing
+  const [intervalId, setIntervalId] = useState<number | null>(null); // Use 'number' instead of 'NodeJS.Timeout'
 
   const shuffleArray = (array: string[]): string[] => {
     return array
@@ -49,24 +51,45 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   }, [onEnterFullScreen, onExitFullScreen, sequence, shuffle, theme]);
 
   useEffect(() => {
-    if (shuffledSequence.length > 0) {
+    if (shuffledSequence.length > 0 && !isPaused) {
       console.log("Starting sequence display with speed:", speed);
       const interval = setInterval(() => {
-        setIndex((prevIndex) => {
-          const newIndex = (prevIndex + 1) % shuffledSequence.length;
-          console.log("Displaying item at index:", newIndex);
-          return newIndex;
-        });
+        setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
       }, speed);
+      setIntervalId(interval as unknown as number); // Cast interval to 'number' for the browser
       return () => clearInterval(interval);
     }
-  }, [shuffledSequence, speed]);
+  }, [shuffledSequence, speed, isPaused]);
+
+  const handlePauseResume = () => {
+    if (isPaused) {
+      setIsPaused(false);
+    } else {
+      clearInterval(intervalId!); // Clear the interval if pausing
+      setIsPaused(true);
+    }
+  };
+
+  const handleNext = () => {
+    setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
+  };
+
+  const handlePrevious = () => {
+    setIndex((prevIndex) => (prevIndex - 1 + shuffledSequence.length) % shuffledSequence.length);
+  };
+
+  const handleScreenClick = () => {
+    handleNext(); // Advance to next item when screen is clicked
+  };
 
   return (
-    <div className="fullscreen-container">
-      <h1 className="fullscreen-text">
-        {shuffledSequence[index]}
-      </h1>
+    <div className="fullscreen-container" onClick={handleScreenClick}>
+      <button type="button" className="pause-button" onClick={handlePauseResume}>
+        {isPaused ? "Resume" : "Pause"}
+      </button>
+      <h1 className="fullscreen-text">{shuffledSequence[index]}</h1>
+      <button type="button" className="nav-button left" onClick={handlePrevious}>←</button>
+      <button type="button" className="nav-button right" onClick={handleNext}>→</button>
     </div>
   );
 };

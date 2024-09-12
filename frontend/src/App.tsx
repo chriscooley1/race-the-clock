@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import LandingPage from "./pages/LandingPage/LandingPage"; // Keeping LandingPage eager-loaded
+import LandingPage from "./pages/LandingPage/LandingPage";
 import { useTheme } from "./context/ThemeContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar/Navbar";

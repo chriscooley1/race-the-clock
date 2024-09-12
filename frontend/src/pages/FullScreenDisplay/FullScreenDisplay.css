@@ -13,8 +13,56 @@
 }
 
 .fullscreen-text {
-  font-size: 50vw;
+  font-size: 50vw; /* Large font size for fullscreen */
   text-align: center;
   margin: 0;
   color: inherit; /* Ensure it inherits the correct color */
+}
+
+.pause-button {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+.pause-button:hover {
+  background-color: rgba(255, 255, 255, 1); /* Full white on hover */
+}
+
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+  border: none;
+  font-size: 50px;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.nav-button.left {
+  left: 20px;
+}
+
+.nav-button.right {
+  right: 20px;
+}
+
+.nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Darker on hover */
 }
