@@ -364,3 +364,15 @@ export const subscribeToCollection = async (
     throw new Error("Could not subscribe to the collection.");
   }
 };
+
+// Add this new function
+export const searchPublicCollections = async (query: string) => {
+  try {
+    const response = await axios.get<Collection[]>(`${API_BASE_URL}/collections/search`, {
+      params: { query }
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

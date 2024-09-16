@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Header
+from fastapi import FastAPI, Depends, HTTPException, status, Header, Query
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
@@ -363,3 +363,22 @@ async def delete_namelist(
     db.delete(db_namelist)
     db.commit()
     return {"detail": "NameList deleted successfully"}
+
+@app.get("/collections/search", response_model=List[CollectionRead])
+async def search_collections(
+    query: str = Query(None, min_length=1),
+    db: Session = Depends(get_db)
+):
+    search = f"%{query}%"
+    collections = db.query(Collection).join(User).filter(
+        (Collection.status == "public") &
+        (
+            (Collection.name.ilike(search)) |
+            (User.username.ilike(search))
+        )
+    ).all()
+    
+    for collection in collections:
+        collection.items = db.query(Item).filter(Item.collection_id == collection.collection_id).all()
+    
+    return collections

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPublicCollections } from "../../api";  
+import { fetchPublicCollections, searchPublicCollections } from "../../api";  
 import CollectionPreviewModal from "../../components/CollectionPreviewModal/CollectionPreviewModal";
 import { AxiosError } from "axios"; 
 import "./DiscoverCollections.css";
@@ -22,50 +22,43 @@ interface Collection {
 }
 
 const DiscoverCollections: React.FC = () => {
-  const { getAccessTokenSilently } = useAuth0();
+  const { user } = useAuth0();
   const [collections, setCollections] = useState<Collection[]>([]);
   const [activeCollection, setActiveCollection] = useState<Collection | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
-    let isMounted = true;
-
-    const fetchCollections = async () => {
-      try {
-        console.log("Fetching public collections...");
-        const collections = await fetchPublicCollections();
-        console.log("Fetched collections:", collections);
-        const collectionsWithItems = (collections || []).map(collection => {
-          let parsedItems: Item[] = [];
-
-          try {
-            if (collection.description && (collection.description.trim().startsWith("[") || collection.description.trim().startsWith("{"))) {
-              parsedItems = JSON.parse(collection.description);
-            } else {
-              console.warn(`Skipping parsing for collection ${collection.collection_id}: description is not valid JSON.`);
-            }
-          } catch (err) {
-            console.error("Failed to parse items from description:", err);
-          }
-
-          return { ...collection, items: parsedItems };
-        });
-
-        if (isMounted) {
-          setCollections(collectionsWithItems as Collection[]);
-          console.log("Updated collections with items:", collectionsWithItems);
-        }
-      } catch (err) {
-        const error = err as AxiosError;
-        console.error("Error fetching public collections:", error);
-      }
-    };
-
     fetchCollections();
+  }, []);
 
-    return () => {
-      isMounted = false;
-    };
-  }, [getAccessTokenSilently]);
+  const fetchCollections = async () => {
+    try {
+      console.log("Fetching public collections...");
+      const fetchedCollections = await fetchPublicCollections();
+      console.log("Fetched collections:", fetchedCollections);
+      setCollections(fetchedCollections || []);
+    } catch (err) {
+      const error = err as AxiosError;
+      console.error("Error fetching public collections:", error);
+    }
+  };
+
+  const handleSearch = async () => {
+    if (searchQuery.trim() === "") {
+      fetchCollections();
+      return;
+    }
+
+    try {
+      console.log("Searching collections with query:", searchQuery);
+      const searchResults = await searchPublicCollections(searchQuery);
+      console.log("Search results:", searchResults);
+      setCollections(searchResults || []);
+    } catch (err) {
+      const error = err as AxiosError;
+      console.error("Error searching collections:", error);
+    }
+  };
 
   const openModal = (collection: Collection) => {
     console.log("Opening modal for collection:", collection);
@@ -77,13 +70,25 @@ const DiscoverCollections: React.FC = () => {
   return (
     <div className="discover-collections">
       <h1>Discover Public Collections</h1>
+      {user && <p>Welcome, {user.name}</p>}
+      <div className="search-container">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by collection name or username"
+          className="search-input"
+        />
+        <button onClick={handleSearch} className="search-button">Search</button>
+      </div>
       <div className="discover-collections-list">
-        {(collections || []).map((collection, index) => {
+        {collections.map((collection, index) => {
           const colorClass = `color-${(index % 10) + 1}`;
           return (
             <div key={collection.collection_id} className={`discover-collection-item ${colorClass}`}>
               <h1>{collection.name}</h1>
-              <p>{collection.items.length} items in collection</p>
+              <p>Created by: {collection.creator_username}</p>
+              <p>{collection.items?.length || 0} items in collection</p>
               <button type="button" className="preview-button" onClick={() => openModal(collection)}>Preview Collection</button>
             </div>
           );

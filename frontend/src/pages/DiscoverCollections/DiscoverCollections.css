@@ -96,3 +96,44 @@
   background-color: #388e3c; /* Even darker green when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
+
+/* New styles for search functionality */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.search-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 5px solid black;
+  border-radius: 5px 0 0 5px;
+  width: 70%;
+  font-family: "Patrick Hand", cursive;
+}
+
+.search-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: 5px solid black;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-family: "Patrick Hand", cursive;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.search-button:active {
+  background-color: #388e3c;
+  transform: scale(0.95);
+}
