@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./NameGenerator.css";
-import "../../App.css"; // Global styles for the app
+import "../../App.css";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");

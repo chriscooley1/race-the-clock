@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./SessionSettingsModal.css";
-import "../../App.css"; // Global styles for the app
+import "../../App.css";
 
 interface SessionSettingsModalProps {
   collectionName: string;
