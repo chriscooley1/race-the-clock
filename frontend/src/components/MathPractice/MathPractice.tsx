@@ -16,6 +16,13 @@ const MathPractice: React.FC = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [operation, setOperation] = useState<Operation>("multiplication");
 
+  const operationSymbol = {
+    multiplication: "×",
+    addition: "+",
+    subtraction: "−",
+    division: "÷"
+  };
+
   useEffect(() => {
     generateProblems();
   }, [operation]);
@@ -61,7 +68,7 @@ const MathPractice: React.FC = () => {
           <>
             <div className="problem">
               {problems[currentProblemIndex].num1} 
-              {problems[currentProblemIndex].operation === "multiplication" ? " × " : " + "} 
+              {" " + operationSymbol[problems[currentProblemIndex].operation] + " "}
               {problems[currentProblemIndex].num2} = 
               {showAnswer && <span className="answer">{problems[currentProblemIndex].answer}</span>}
             </div>
