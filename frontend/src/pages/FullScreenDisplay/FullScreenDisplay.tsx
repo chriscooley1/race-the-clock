@@ -70,16 +70,18 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     }
   };
 
-  const handleNext = () => {
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
   };
 
-  const handlePrevious = () => {
+  const handlePrevious = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIndex((prevIndex) => (prevIndex - 1 + shuffledSequence.length) % shuffledSequence.length);
   };
 
-  const handleScreenClick = () => {
-    handleNext(); // Advance to next item when screen is clicked
+  const handleScreenClick = (e: React.MouseEvent) => {
+    handleNext(e);
   };
 
   return (
