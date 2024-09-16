@@ -20,7 +20,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [index, setIndex] = useState(0);
   const [shuffledSequence, setShuffledSequence] = useState<string[]>([]);
   const [isPaused, setIsPaused] = useState(false); // State for pausing
-  const [intervalId, setIntervalId] = useState<number | null>(null); // Use 'number' instead of 'NodeJS.Timeout'
+  const [intervalId, setIntervalId] = useState<number | null>(null); // Use "number" instead of "NodeJS.Timeout"
 
   const shuffleArray = (array: string[]): string[] => {
     return array
@@ -57,7 +57,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       const interval = setInterval(() => {
         setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
       }, speed);
-      setIntervalId(interval as unknown as number); // Cast interval to 'number' for the browser
+      setIntervalId(interval as unknown as number); // Cast interval to "number" for the browser
       return () => clearInterval(interval);
     }
   }, [shuffledSequence, speed, isPaused]);

@@ -14,8 +14,8 @@ const Settings: React.FC = () => {
   const { theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();
 
   useEffect(() => {
-    document.querySelectorAll('.color-option').forEach(el => {
-      (el as HTMLElement).style.backgroundColor = el.getAttribute('data-color') || '';
+    document.querySelectorAll(".color-option").forEach(el => {
+      (el as HTMLElement).style.backgroundColor = el.getAttribute("data-color") || "";
     });
   }, []);
 
