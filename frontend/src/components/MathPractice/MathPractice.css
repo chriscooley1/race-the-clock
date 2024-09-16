@@ -1,0 +1,44 @@
+.math-practice {
+  padding: 20px;
+}
+
+.operation-selector {
+  margin-bottom: 20px;
+}
+
+.operation-selector button {
+  margin-right: 10px;
+  padding: 5px 10px;
+}
+
+.operation-selector button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.problem-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.problem {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.answer {
+  font-weight: bold;
+  color: #28a745;
+}
+
+.generate-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

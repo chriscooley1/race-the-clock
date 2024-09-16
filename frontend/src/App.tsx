@@ -20,6 +20,8 @@ import Resources from "./pages/Resources";
 import Settings from "./pages/Settings/Settings";
 import MyAccount from "./pages/MyAccount/MyAccount";
 
+import MathPractice from "./components/MathPractice/MathPractice";
+
 const App: React.FC = () => {
   const { theme } = useTheme();
   const [hideSidebar, setHideSidebar] = React.useState<boolean>(false);
@@ -138,6 +140,14 @@ const App: React.FC = () => {
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
                       <PrivateRoute element={<MyAccount />} />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/math-practice"
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <PrivateRoute element={<MathPractice />} />
                     </Suspense>
                   }
                 />
