@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTheme, colorSchemes } from "../../context/ThemeContext";
 import "./Settings.css";
 import "../../App.css";
@@ -12,6 +12,12 @@ const colorOptions = [
 
 const Settings: React.FC = () => {
   const { theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();
+
+  useEffect(() => {
+    document.querySelectorAll('.color-option').forEach(el => {
+      (el as HTMLElement).style.backgroundColor = el.getAttribute('data-color') || '';
+    });
+  }, []);
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log("Theme selected:", event.target.value);
@@ -55,7 +61,7 @@ const Settings: React.FC = () => {
             <div
               key={color}
               className={`color-option ${theme.displayTextColor === color ? "selected" : ""}`}
-              style={{ backgroundColor: color }}
+              data-color={color}
               onClick={() => handleTextColorChange(color)}
             />
           ))}
@@ -68,7 +74,7 @@ const Settings: React.FC = () => {
             <div
               key={color}
               className={`color-option ${theme.displayBackgroundColor === color ? "selected" : ""}`}
-              style={{ backgroundColor: color }}
+              data-color={color}
               onClick={() => handleBackgroundColorChange(color)}
             />
           ))}
