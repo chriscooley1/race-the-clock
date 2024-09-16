@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import "./FullScreenDisplay.css";
 import "../../App.css";
+import Navbar from "../../components/Navbar/Navbar";
 
 interface FullScreenDisplayProps {
   onEnterFullScreen: () => void;
@@ -85,14 +86,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   return (
-    <div className="fullscreen-container" onClick={handleScreenClick}>
-      <button type="button" className="pause-button" onClick={handlePauseResume}>
-        {isPaused ? "Resume" : "Pause"}
-      </button>
-      <h1 className="fullscreen-text">{shuffledSequence[index]}</h1>
-      <button type="button" className="nav-button left" onClick={handlePrevious}>←</button>
-      <button type="button" className="nav-button right" onClick={handleNext}>→</button>
-    </div>
+    <>
+      <Navbar isPaused={isPaused} onPauseResume={handlePauseResume} />
+      <div className="fullscreen-container" onClick={handleScreenClick}>
+        <h1 className="fullscreen-text">{shuffledSequence[index]}</h1>
+        <button type="button" className="nav-button left" onClick={handlePrevious}>←</button>
+        <button type="button" className="nav-button right" onClick={handleNext}>→</button>
+      </div>
+    </>
   );
 };
 

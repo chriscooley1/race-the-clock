@@ -2,9 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./Navbar.css";
-import "../../App.css"; // Global styles for the app
+import "../../App.css";
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  isPaused?: boolean;
+  onPauseResume?: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,11 +58,18 @@ const Navbar: React.FC = () => {
   return (
     <div className="navbar">
       {location.pathname === "/fullscreen-display" && (
-        <button type="button" className="nav-back-button" onClick={handleBack}>
-          Back
-        </button>
+        <>
+          <button type="button" className="nav-back-button" onClick={handleBack}>
+            Back
+          </button>
+          {onPauseResume && (
+            <button type="button" className="nav-pause-button" onClick={onPauseResume}>
+              {isPaused ? "Resume" : "Pause"}
+            </button>
+          )}
+        </>
       )}
-      <div className="navbar-title" onClick={handleTitleClick} style={{ cursor: "pointer" }}>
+      <div className="navbar-title clickable" onClick={handleTitleClick}>
         Race The Clock
       </div>
       <div className="hamburger-menu" onClick={handleMenuToggle}>

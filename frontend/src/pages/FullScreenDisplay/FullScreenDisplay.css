@@ -1,21 +1,24 @@
 .fullscreen-container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 90vh;
+  align-items: center;
+  height: calc(100vh - 50px); /* Subtract navbar height */
   width: 100vw;
+  padding: 0;
   position: relative;
+  margin-top: 50px; /* Add top margin equal to navbar height */
   transition: background-color 0.3s, color 0.3s;
   overflow: hidden;
   margin: 0;
-  padding: 0;
   color: var(--display-text-color, var(--text-color)); /* Use display-text-color with a fallback */
 }
 
 .fullscreen-text {
-  font-size: 50vw; /* Large font size for fullscreen */
+  font-size: 70vh; /* Slightly reduce font size to ensure fit */
+  line-height: 1;
   text-align: center;
   margin: 0;
+  padding: 0 60px;
   color: inherit; /* Ensure it inherits the correct color */
 }
 
@@ -56,11 +59,11 @@
 }
 
 .nav-button.left {
-  left: 20px;
+  left: 10px;
 }
 
 .nav-button.right {
-  right: 20px;
+  right: 10px;
 }
 
 .nav-button:hover {
