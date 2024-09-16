@@ -26,3 +26,21 @@ export const generateFullAlphabet = (): string[] => {
 export const generateNumbersOneToHundred = (): string[] => {
   return Array.from({ length: 100 }, (_, i) => (i + 1).toString());
 };
+
+const operationSymbol = {
+  multiplication: "×",
+  addition: "+",
+  subtraction: "−",
+  division: "÷"
+} as const;
+
+export const generateMathProblems = (count: number, operation: keyof typeof operationSymbol): string[] => {
+  const problems: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    problems.push(`${num1} ${operationSymbol[operation]} ${num2}`);
+  }
+
+  return problems;
+};

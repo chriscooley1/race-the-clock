@@ -20,7 +20,7 @@ import Resources from "./pages/Resources";
 import Settings from "./pages/Settings/Settings";
 import MyAccount from "./pages/MyAccount/MyAccount";
 
-import MathPractice from "./components/MathPractice/MathPractice";
+import MathCollectionPage from "./pages/MathCollectionPage/MathCollectionPage";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
@@ -144,10 +144,10 @@ const App: React.FC = () => {
                   }
                 />
                 <Route
-                  path="/math-practice"
+                  path="/math-collection"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={<MathPractice />} />
+                      <PrivateRoute element={<MathCollectionPage />} />
                     </Suspense>
                   }
                 />

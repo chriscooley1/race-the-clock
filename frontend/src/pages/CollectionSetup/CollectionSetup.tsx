@@ -7,9 +7,12 @@ import {
   generateRandomNumbers,
   generateFullAlphabet,
   generateNumbersOneToHundred,
+  generateMathProblems, // Add this import
 } from "../../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
+
+type Operation = "multiplication" | "addition" | "subtraction" | "division";
 
 const CollectionSetup: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -22,6 +25,7 @@ const CollectionSetup: React.FC = () => {
   const [sequence, setSequence] = useState<string[]>([]);
   const [type, setType] = useState<string>("letters");
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [operation, setOperation] = useState<Operation>("multiplication");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -51,7 +55,9 @@ const CollectionSetup: React.FC = () => {
 
   const generateRandomSequence = () => {
     let generatedSequence: string[] = [];
-    if (type === "letters") {
+    if (category === "Math Problems") {
+      generatedSequence = generateMathProblems(itemCount, operation);
+    } else if (type === "letters") {
       generatedSequence = generateRandomLetters(itemCount);
     } else if (type === "numbers") {
       generatedSequence = generateRandomNumbers(itemCount);
@@ -148,6 +154,22 @@ const CollectionSetup: React.FC = () => {
           <option value="numbersOneToHundred">Numbers 1-100</option>
         </select>
       </div>
+      {category === "Math Problems" && (
+        <div className="setup-centered-input">
+          <label htmlFor="operationSelect">Operation:</label>
+          <select
+            id="operationSelect"
+            className="setup-custom-input"
+            value={operation}
+            onChange={(e) => setOperation(e.target.value as Operation)}
+          >
+            <option value="multiplication">Multiplication</option>
+            <option value="addition">Addition</option>
+            <option value="subtraction">Subtraction</option>
+            <option value="division">Division</option>
+          </select>
+        </div>
+      )}
       <button
         type="button"
         onClick={generateRandomSequence}

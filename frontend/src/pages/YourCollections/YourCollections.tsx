@@ -7,6 +7,7 @@ import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNav
 import EditCollectionModal from "../../components/EditCollectionModal/EditCollectionModal";
 import "./YourCollections.css";
 import "../../App.css";
+
 interface Collection {
   collection_id: number;
   name: string;
@@ -153,8 +154,14 @@ const YourCollections: React.FC = () => {
   const handleStartCollection = (collectionId: number) => {
     const collection = collections.find((col) => col.collection_id === collectionId);
     if (collection) {
-      setSelectedCollection(collection);
-      setShowModal(true);
+      if (collection.category === "Math Problems") {
+        navigate("/math-collection", {
+          state: { collection },
+        });
+      } else {
+        setSelectedCollection(collection);
+        setShowModal(true);
+      }
     }
   };
 

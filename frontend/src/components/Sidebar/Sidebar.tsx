@@ -37,9 +37,6 @@ const Sidebar: React.FC = () => {
           <li>
             <Link to="/resources">Resources</Link>
           </li>
-          <li>
-            <Link to="/math-practice">Math Practice</Link>
-          </li>
         </ul>
       )}
     </div>

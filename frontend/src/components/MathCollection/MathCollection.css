@@ -32,6 +32,7 @@
 .answer {
   font-weight: bold;
   color: #28a745;
+  margin-left: 10px;
 }
 
 .generate-button {
@@ -41,4 +42,23 @@
   color: white;
   border: none;
   cursor: pointer;
+}
+
+.math-collection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.problem {
+  text-align: center;
+}
+
+.answer {
+  font-weight: bold;
+  color: #28a745;
+  margin-left: 10px;
 }

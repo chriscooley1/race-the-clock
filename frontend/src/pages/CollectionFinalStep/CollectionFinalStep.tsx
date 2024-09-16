@@ -57,10 +57,17 @@ const CollectionFinalStep: React.FC = () => {
         throw new Error("Current user is undefined");
       }
 
-      const collectionData = items.map((item) => ({
-        id: item.id,
-        name: item.name,
-      }));
+      const collectionData = category === "Math Problems"
+        ? items.map((item) => ({
+            id: item.id,
+            name: item.name,
+            problem: item.name,
+            answer: calculateAnswer(item.name),
+          }))
+        : items.map((item) => ({
+            id: item.id,
+            name: item.name,
+          }));
 
       console.log("Saving collection with data:", {
         username: currentUser.username,
@@ -80,6 +87,17 @@ const CollectionFinalStep: React.FC = () => {
       navigate("/your-collections");
     } catch (error) {
       console.error("Error saving collection:", error);
+    }
+  };
+
+  const calculateAnswer = (problem: string): number => {
+    const [num1, operator, num2] = problem.split(' ');
+    switch (operator) {
+      case "+": return parseInt(num1) + parseInt(num2);
+      case "-": return parseInt(num1) - parseInt(num2);
+      case "×": return parseInt(num1) * parseInt(num2);
+      case "÷": return parseFloat((parseInt(num1) / parseInt(num2)).toFixed(2));
+      default: return 0;
     }
   };
 
