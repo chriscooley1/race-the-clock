@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./NameGenerator.css";
 import "../../App.css";
 
@@ -6,26 +8,69 @@ const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
   const [nameList, setNameList] = useState<string[]>([]);
   const [generatedName, setGeneratedName] = useState<string | null>(null);
+  const [nameListId, setNameListId] = useState<number | null>(null);
+  const { getAccessTokenSilently } = useAuth0();
+
+  useEffect(() => {
+    // Load the user's name list when the component mounts
+    loadNameList();
+  }, []);
+
+  const loadNameList = async () => {
+    try {
+      const token = await getAccessTokenSilently();
+      const response = await axios.get("http://localhost:8000/namelists/", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (response.data.length > 0) {
+        const latestNameList = response.data[0];
+        setNameListId(latestNameList.namelist_id);
+        setNameList(latestNameList.names);
+      }
+    } catch (error) {
+      console.error("Error loading name list:", error);
+    }
+  };
+
+  const saveNameList = async (updatedList: string[] = nameList) => {
+    try {
+      const token = await getAccessTokenSilently();
+      const data = { name: "My Name List", names: updatedList };
+      if (nameListId) {
+        await axios.put(`http://localhost:8000/namelists/${nameListId}`, data, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } else {
+        const response = await axios.post("http://localhost:8000/namelists/", data, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setNameListId(response.data.namelist_id);
+      }
+    } catch (error) {
+      console.error("Error saving name list:", error);
+    }
+  };
 
   const handleAddName = () => {
     if (nameInput.trim() !== "") {
-      console.log("Adding name:", nameInput.trim());
-      setNameList([...nameList, nameInput.trim()]);
-      setNameInput(""); // Clear the input after adding
+      const updatedList = [...nameList, nameInput.trim()];
+      setNameList(updatedList);
+      setNameInput("");
+      saveNameList(updatedList);
     }
   };
 
   const handleRemoveName = (index: number) => {
-    console.log("Removing name at index:", index);
     const updatedList = nameList.filter((_, i) => i !== index);
     setNameList(updatedList);
+    saveNameList();
   };
 
   const handleEditName = (index: number, newName: string) => {
-    console.log("Editing name at index:", index, "to:", newName.trim());
     const updatedList = [...nameList];
     updatedList[index] = newName.trim();
     setNameList(updatedList);
+    saveNameList();
   };
 
   const handleGenerateName = () => {

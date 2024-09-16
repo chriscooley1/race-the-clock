@@ -14,7 +14,26 @@ class UserCreate(BaseModel):
 class DisplayNameUpdate(BaseModel):
     display_name: str
 
-# User Models
+# NameList Models
+class NameList(SQLModel, table=True):
+    __tablename__ = "namelists"
+    namelist_id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    names: List[str] = Field(sa_column=sa.Column(sa.JSON))
+    user_id: int = Field(foreign_key="users.user_id")
+    user: "User" = Relationship(back_populates="namelists")
+
+class NameListCreate(BaseModel):
+    name: str
+    names: List[str]
+
+# Add this new model
+class NameListRead(BaseModel):
+    namelist_id: int
+    name: str
+    names: List[str]
+    user_id: int
+
 class UserBase(SQLModel):
     username: str
     email: Optional[str]
@@ -28,6 +47,7 @@ class User(SQLModel, table=True):
     display_name: Optional[str] = Field(default=None)
     sequences: List["Sequence"] = Relationship(back_populates="user")
     collections: List["Collection"] = Relationship(back_populates="user")
+    namelists: List[NameList] = Relationship(back_populates="user")
 
 # Sequence Models
 class SequenceBase(SQLModel):

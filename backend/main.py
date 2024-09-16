@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, status, Header
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
-from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate, DisplayNameUpdate
+from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate, DisplayNameUpdate, NameList, NameListCreate, NameListRead
 from jose import jwt, jwk
 from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError, JWTError
 from datetime import datetime, timedelta
@@ -24,7 +24,6 @@ logger = logging.getLogger(__name__)
 # Set up environment configuration directly
 DATABASE_URL = config("DATABASE_URL")
 AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
-logger.info(f"AUTH0_DOMAIN is set to: {AUTH0_DOMAIN}")
 AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
@@ -310,3 +309,57 @@ async def subscribe_to_collection(
     db.commit()
     db.refresh(new_collection)
     return new_collection
+
+@app.post("/namelists/", response_model=NameListRead)
+async def create_namelist(
+    namelist: NameListCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    db_namelist = NameList(
+        name=namelist.name,
+        names=namelist.names,
+        user_id=current_user.user_id
+    )
+    db.add(db_namelist)
+    db.commit()
+    db.refresh(db_namelist)
+    return db_namelist
+
+@app.get("/namelists/", response_model=List[NameListRead])
+async def get_namelists(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    return db.query(NameList).filter(NameList.user_id == current_user.user_id).all()
+
+@app.put("/namelists/{namelist_id}", response_model=NameListRead)
+async def update_namelist(
+    namelist_id: int,
+    updated_namelist: NameListCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    db_namelist = db.query(NameList).filter(NameList.namelist_id == namelist_id, NameList.user_id == current_user.user_id).first()
+    if not db_namelist:
+        raise HTTPException(status_code=404, detail="NameList not found")
+    
+    db_namelist.name = updated_namelist.name
+    db_namelist.names = updated_namelist.names
+    db.commit()
+    db.refresh(db_namelist)
+    return db_namelist
+
+@app.delete("/namelists/{namelist_id}")
+async def delete_namelist(
+    namelist_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    db_namelist = db.query(NameList).filter(NameList.namelist_id == namelist_id, NameList.user_id == current_user.user_id).first()
+    if not db_namelist:
+        raise HTTPException(status_code=404, detail="NameList not found")
+    
+    db.delete(db_namelist)
+    db.commit()
+    return {"detail": "NameList deleted successfully"}
