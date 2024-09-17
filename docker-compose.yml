@@ -1,5 +1,33 @@
 version: '3'
 services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: race-the-clock
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Masterbob1!
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres:Masterbob1!@db:5432/race-the-clock
+    depends_on:
+      - db
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - app-network
+
   frontend:
     build: ./frontend
     volumes:
@@ -8,3 +36,14 @@ services:
     ports:
       - "5173:5173"
     command: npm run dev -- --host 0.0.0.0
+    env_file:
+      - ./frontend/.env
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
