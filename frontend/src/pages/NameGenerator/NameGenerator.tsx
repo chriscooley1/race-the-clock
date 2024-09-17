@@ -81,6 +81,12 @@ const NameGenerator: React.FC = () => {
     }
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleAddName();
+    }
+  };
+
   return (
     <div className="name-generator-container">
       <h1>Name Generator</h1>
@@ -94,6 +100,7 @@ const NameGenerator: React.FC = () => {
           className="gen-custom-input"
           placeholder="Enter a name"
           title="Name Input"
+          onKeyPress={handleKeyPress}
         />
         <button type="button" onClick={handleAddName} className="gen-styled-button">
           Add Name

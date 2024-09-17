@@ -262,6 +262,13 @@ const YourCollections: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDuplicateModalOpen]);
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLSelectElement>) => {
+    if (event.key === "Enter" && collectionToDuplicate) {
+      handleDuplicateCollection();
+    }
+  };
+
   return (
     <div className="your-collections">
       <CollectionsNavBar
@@ -271,7 +278,7 @@ const YourCollections: React.FC = () => {
       <div className="control-panel">
         <div className="sort-options">
           <label htmlFor="sort">Sort by:</label>
-          <select id="sort" value={sortOption} onChange={handleSortChange}>
+          <select id="sort" value={sortOption} onChange={handleSortChange} onKeyPress={handleKeyPress}>
             <option value="date">Date Created</option>
             <option value="alphabetical">Alphabetical</option>
           </select>

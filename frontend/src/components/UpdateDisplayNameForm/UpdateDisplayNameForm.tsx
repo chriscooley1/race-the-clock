@@ -17,6 +17,12 @@ const UpdateDisplayNameForm: React.FC = () => {
     }
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleUpdateDisplayName();
+    }
+  };
+
   return (
     <div className="update-display-name-form">
       <input
@@ -27,6 +33,7 @@ const UpdateDisplayNameForm: React.FC = () => {
           console.log("Display name input changed:", e.target.value);
           setDisplayName(e.target.value);
         }}
+        onKeyPress={handleKeyPress}
         placeholder="Enter your display name"
       />
       <button

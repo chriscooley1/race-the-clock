@@ -57,6 +57,12 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
     onStart(minutes, seconds, shuffle, calculatedSpeed, currentSettings.textColor);
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleStartClick();
+    }
+  };
+
   return (
     <div className="sess-modal-background" onClick={handleBackgroundClick}>
       <div className="sess-modal-container">
@@ -79,6 +85,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 placeholder="Enter minutes"
                 title="Minutes"
                 min={0}
+                onKeyPress={handleKeyPress}
               />
               <input
                 type="number"
@@ -90,6 +97,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 title="Seconds"
                 min={0}
                 max={59}
+                onKeyPress={handleKeyPress}
               />
             </div>
             <div className="sess-checkbox-container">

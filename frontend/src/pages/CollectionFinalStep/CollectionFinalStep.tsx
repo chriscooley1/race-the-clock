@@ -83,6 +83,12 @@ const CollectionFinalStep: React.FC = () => {
     }
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleAddItem();
+    }
+  };
+
   if (!currentUser) {
     return <div>Loading user information...</div>; 
   }
@@ -104,6 +110,7 @@ const CollectionFinalStep: React.FC = () => {
           title="Enter a new item to add to the collection"
           value={newItem}
           onChange={(e) => setNewItem(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
         <button
           className="final-add-button"

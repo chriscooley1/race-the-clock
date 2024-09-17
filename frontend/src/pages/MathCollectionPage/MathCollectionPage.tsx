@@ -73,7 +73,7 @@ const MathCollectionPage: React.FC = () => {
         <h1 className="math-problem">{currentProblem.name}</h1>
         {showAnswer && (
           <h2 className="math-answer">
-            {eval(currentProblem.name.replace('×', '*').replace('÷', '/'))}
+            {eval(currentProblem.name.replace("×", "*").replace("÷", "/"))}
           </h2>
         )}
         <button type="button" className="nav-button left" onClick={(e) => { e.stopPropagation(); handlePrevious(); }}>←</button>

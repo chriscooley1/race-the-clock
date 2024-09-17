@@ -28,6 +28,12 @@ const NewCollection: React.FC = () => {
     });
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleNext();
+    }
+  };
+
   return (
     <div className="new-collection-container">
       <h1>New Collection</h1>
@@ -41,6 +47,7 @@ const NewCollection: React.FC = () => {
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter collection name"
           title="Collection Name"
+          onKeyPress={handleKeyPress}
         />
       </div>
       <div className="new-centered-input">

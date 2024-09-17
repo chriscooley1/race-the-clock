@@ -122,7 +122,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
             )}
           </div>
         ) : (
-          <h1 className="fullscreen-text">{shuffledSequence[index]?.name || ''}</h1>
+          <h1 className="fullscreen-text">{shuffledSequence[index]?.name || ""}</h1>
         )}
         <button type="button" className="nav-button left" onClick={handlePrevious}>←</button>
         <button type="button" className="nav-button right" onClick={handleNext}>→</button>
