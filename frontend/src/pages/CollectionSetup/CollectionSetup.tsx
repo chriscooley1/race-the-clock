@@ -25,7 +25,7 @@ const CollectionSetup: React.FC = () => {
   const [sequence, setSequence] = useState<string[]>([]);
   const [type, setType] = useState<string>("letters");
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [operation, setOperation] = useState<Operation>("multiplication");
+  const [operation, setOperation] = useState<Operation | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -55,16 +55,28 @@ const CollectionSetup: React.FC = () => {
 
   const generateRandomSequence = () => {
     let generatedSequence: string[] = [];
-    if (category === "Math Problems") {
-      generatedSequence = generateMathProblems(itemCount, operation);
-    } else if (type === "letters") {
-      generatedSequence = generateRandomLetters(itemCount);
-    } else if (type === "numbers") {
-      generatedSequence = generateRandomNumbers(itemCount);
-    } else if (type === "alphabet") {
-      generatedSequence = generateFullAlphabet();
-    } else if (type === "numbersOneToHundred") {
-      generatedSequence = generateNumbersOneToHundred();
+    switch (type) {
+      case "letters":
+        generatedSequence = generateRandomLetters(itemCount);
+        break;
+      case "numbers":
+        generatedSequence = generateRandomNumbers(itemCount);
+        break;
+      case "alphabet":
+        generatedSequence = generateFullAlphabet();
+        break;
+      case "numbersOneToHundred":
+        generatedSequence = generateNumbersOneToHundred();
+        break;
+      case "mathProblems":
+        if (category === "Math Problems" && operation) {
+          generatedSequence = generateMathProblems(itemCount, operation);
+        } else {
+          console.error("Math Problems selected but category or operation is not set correctly");
+        }
+        break;
+      default:
+        console.error("Invalid type selected");
     }
     setSequence(generatedSequence);
     setFile(null);
@@ -152,17 +164,19 @@ const CollectionSetup: React.FC = () => {
           <option value="numbers">Numbers</option>
           <option value="alphabet">Full Alphabet</option>
           <option value="numbersOneToHundred">Numbers 1-100</option>
+          {category === "Math Problems" && <option value="mathProblems">Math Problems</option>}
         </select>
       </div>
-      {category === "Math Problems" && (
+      {category === "Math Problems" && type === "mathProblems" && (
         <div className="setup-centered-input">
           <label htmlFor="operationSelect">Operation:</label>
           <select
             id="operationSelect"
             className="setup-custom-input"
-            value={operation}
+            value={operation || ""}
             onChange={(e) => setOperation(e.target.value as Operation)}
           >
+            <option value="">Select an operation</option>
             <option value="multiplication">Multiplication</option>
             <option value="addition">Addition</option>
             <option value="subtraction">Subtraction</option>
