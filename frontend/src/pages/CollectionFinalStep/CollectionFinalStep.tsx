@@ -61,8 +61,8 @@ const CollectionFinalStep: React.FC = () => {
         ? items.map((item) => ({
             id: item.id,
             name: item.name,
-            problem: item.name,
-            answer: calculateAnswer(item.name),
+            problem: item.name.split("=")[0].trim(), // Remove the answer part
+            answer: calculateAnswer(item.name.split("=")[0].trim()),
           }))
         : items.map((item) => ({
             id: item.id,
@@ -91,7 +91,7 @@ const CollectionFinalStep: React.FC = () => {
   };
 
   const calculateAnswer = (problem: string): number => {
-    const [num1, operator, num2] = problem.split(' ');
+    const [num1, operator, num2] = problem.split(" ");
     switch (operator) {
       case "+": return parseInt(num1) + parseInt(num2);
       case "-": return parseInt(num1) - parseInt(num2);

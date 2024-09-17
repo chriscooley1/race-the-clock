@@ -2,6 +2,13 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import MathCollection from "../../components/MathCollection/MathCollection";
 
+interface MathProblem {
+  id: number;
+  name: string;
+  problem: string;
+  answer: number;
+}
+
 const MathCollectionPage: React.FC = () => {
   const location = useLocation();
   const { collection } = location.state || {};
@@ -12,17 +19,15 @@ const MathCollectionPage: React.FC = () => {
 
   console.log("Raw collection description:", collection.description);
 
-  const problems = JSON.parse(collection.description).map((item: any) => {
-    if (item && typeof item.name === "string") {
-      const parts = item.name.split(" × ");
-      if (parts.length === 2) {
-        return {
-          num1: parseInt(parts[0]),
-          num2: parseInt(parts[1]),
-          operation: "multiplication",
-          answer: parseInt(parts[0]) * parseInt(parts[1]),
-        };
-      }
+  const problems = JSON.parse(collection.description).map((item: MathProblem) => {
+    if (item && typeof item.problem === "string" && typeof item.answer === "number") {
+      const [num1, operation, num2] = item.problem.split(/\s*([\+\-\×\÷])\s*/);
+      return {
+        num1: parseInt(num1),
+        num2: parseInt(num2),
+        operation: operation,
+        answer: item.answer,
+      };
     }
     console.error(`Invalid item structure:`, JSON.stringify(item, null, 2));
     return null;

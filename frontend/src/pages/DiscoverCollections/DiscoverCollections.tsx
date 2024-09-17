@@ -12,7 +12,7 @@ interface Item {
   name: string;
 }
 
-interface Collection extends Omit<APICollection, 'items'> {
+interface Collection extends Omit<APICollection, "items"> {
   items: Item[];
   item_count?: number;
 }

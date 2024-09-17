@@ -16,13 +16,6 @@ const MathCollection: React.FC<MathCollectionProps> = ({ problems }) => {
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const operationSymbol = {
-    multiplication: "×",
-    addition: "+",
-    subtraction: "−",
-    division: "÷"
-  };
-
   const handleClick = () => {
     if (showAnswer) {
       setCurrentProblemIndex((prevIndex) => (prevIndex + 1) % problems.length);
@@ -37,7 +30,7 @@ const MathCollection: React.FC<MathCollectionProps> = ({ problems }) => {
   return (
     <div className="math-collection" onClick={handleClick}>
       <div className="problem">
-        {currentProblem.num1} {operationSymbol[currentProblem.operation as keyof typeof operationSymbol]} {currentProblem.num2} = 
+        {currentProblem.num1} {currentProblem.operation} {currentProblem.num2} = 
         {showAnswer && <span className="answer">{currentProblem.answer}</span>}
       </div>
     </div>
