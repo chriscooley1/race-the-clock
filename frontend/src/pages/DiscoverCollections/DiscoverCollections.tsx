@@ -74,6 +74,12 @@ const DiscoverCollections: React.FC = () => {
     }
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   const openModal = (collection: APICollection) => {
     console.log("Opening modal for collection:", collection);
     const parsedCollection: Collection = {
@@ -94,6 +100,7 @@ const DiscoverCollections: React.FC = () => {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyPress={handleKeyPress}
           placeholder="Search by collection name or username"
           className="search-input"
         />

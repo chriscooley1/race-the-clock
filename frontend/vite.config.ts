@@ -29,9 +29,11 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       chunkSizeWarningLimit: 1000, // Set to 1 MB (optional, adjust to suppress warnings)
     },
     server: {
-      host: true,
+      host: "0.0.0.0", // Allow connections from all hosts
       port: 5173,
-      historyApiFallback: true, 
+      watch: {
+        usePolling: true, // Necessary for some systems, especially in Docker
+      },
     },
     resolve: {
       alias: {
