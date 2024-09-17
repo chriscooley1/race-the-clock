@@ -7,7 +7,8 @@ import {
   generateRandomNumbers,
   generateFullAlphabet,
   generateNumbersOneToHundred,
-  generateMathProblems, // Add this import
+  generateMathProblems,
+  generateRandomPictures
 } from "../../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -26,6 +27,7 @@ const CollectionSetup: React.FC = () => {
   const [type, setType] = useState<string>("letters");
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [operation, setOperation] = useState<Operation | null>(null);
+  const [pictures, setPictures] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -73,6 +75,14 @@ const CollectionSetup: React.FC = () => {
           generatedSequence = generateMathProblems(itemCount, operation);
         } else {
           console.error("Math Problems selected but category or operation is not set correctly");
+        }
+        break;
+      case "numberSense":
+        if (category === "Number Sense") {
+          generatedSequence = generateRandomPictures(itemCount);
+          setPictures(generatedSequence);
+        } else {
+          console.error("Number Sense selected but category is not set correctly");
         }
         break;
       default:
@@ -165,6 +175,7 @@ const CollectionSetup: React.FC = () => {
           <option value="alphabet">Full Alphabet</option>
           <option value="numbersOneToHundred">Numbers 1-100</option>
           {category === "Math Problems" && <option value="mathProblems">Math Problems</option>}
+          {category === "Number Sense" && <option value="numberSense">Random Pictures</option>}
         </select>
       </div>
       {category === "Math Problems" && type === "mathProblems" && (
@@ -212,6 +223,16 @@ const CollectionSetup: React.FC = () => {
         <div>
           <h3>Generated Sequence:</h3>
           <p>{sequence.join(", ")}</p>
+        </div>
+      )}
+      {category === "Number Sense" && pictures.length > 0 && (
+        <div>
+          <h3>Generated Pictures:</h3>
+          <div className="picture-grid">
+            {pictures.map((picture, index) => (
+              <img key={index} src={picture} alt={`Random picture ${index + 1}`} />
+            ))}
+          </div>
         </div>
       )}
     </div>

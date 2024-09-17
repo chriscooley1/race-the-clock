@@ -44,3 +44,12 @@ export const generateMathProblems = (count: number, operation: keyof typeof oper
 
   return problems;
 };
+
+export const generateRandomPictures = (count: number): string[] => {
+  const pictures: string[] = [];
+  for (let i = 0; i < count; i++) {
+    // Replace this with an actual API call to get random images
+    pictures.push(`https://picsum.photos/200/200?random=${i}`);
+  }
+  return pictures;
+};
