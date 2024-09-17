@@ -45,11 +45,21 @@ export const generateMathProblems = (count: number, operation: keyof typeof oper
   return problems;
 };
 
-export const generateRandomPictures = (count: number): string[] => {
-  const pictures: string[] = [];
-  for (let i = 0; i < count; i++) {
-    // Replace this with an actual API call to get random images
-    pictures.push(`https://picsum.photos/200/200?random=${i}`);
-  }
-  return pictures;
-};
+export function generateNumberSenseImages(count: number): { url: string; svg: string; count: number }[] {
+  return Array.from({ length: count }, (_, i) => ({
+    url: generateCountingSvg(i + 1),
+    svg: generateCountingSvg(i + 1),
+    count: i + 1
+  }));
+}
+
+function generateCountingSvg(count: number): string {
+  const svgContent = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+      ${Array.from({ length: count }, (_, i) => 
+        `<circle cx="${30 + (i % 3) * 70}" cy="${30 + Math.floor(i / 3) * 70}" r="20" fill="blue" />`
+      ).join('')}
+    </svg>
+  `;
+  return `data:image/svg+xml,${encodeURIComponent(svgContent)}`;
+}

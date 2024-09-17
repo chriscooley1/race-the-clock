@@ -8,7 +8,7 @@ import {
   generateFullAlphabet,
   generateNumbersOneToHundred,
   generateMathProblems,
-  generateRandomPictures
+  generateNumberSenseImages
 } from "../../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -27,7 +27,7 @@ const CollectionSetup: React.FC = () => {
   const [type, setType] = useState<string>("letters");
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [operation, setOperation] = useState<Operation | null>(null);
-  const [pictures, setPictures] = useState<string[]>([]);
+  const [numberSenseItems, setNumberSenseItems] = useState<{ url?: string; svg?: string; count: number }[]>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -79,8 +79,9 @@ const CollectionSetup: React.FC = () => {
         break;
       case "numberSense":
         if (category === "Number Sense") {
-          generatedSequence = generateRandomPictures(itemCount);
-          setPictures(generatedSequence);
+          const images = generateNumberSenseImages(itemCount);
+          setNumberSenseItems(images);
+          generatedSequence = images.map((_, index) => `Number Sense Image ${index + 1}`);
         } else {
           console.error("Number Sense selected but category is not set correctly");
         }
@@ -114,6 +115,8 @@ const CollectionSetup: React.FC = () => {
       const collectionData = sequence.map((name, index) => ({
         id: index + 1,
         name,
+        svg: type === "numberSense" ? (numberSenseItems[index]?.svg || numberSenseItems[index]?.url) : undefined,
+        count: type === "numberSense" ? numberSenseItems[index]?.count : undefined,
       }));
 
       console.log("Saving collection with data:", {
@@ -225,12 +228,15 @@ const CollectionSetup: React.FC = () => {
           <p>{sequence.join(", ")}</p>
         </div>
       )}
-      {category === "Number Sense" && pictures.length > 0 && (
+      {category === "Number Sense" && numberSenseItems.length > 0 && (
         <div>
-          <h3>Generated Pictures:</h3>
+          <h3>Generated Number Sense Images:</h3>
           <div className="picture-grid">
-            {pictures.map((picture, index) => (
-              <img key={index} src={picture} alt={`Random picture ${index + 1}`} />
+            {numberSenseItems.map((image, index) => (
+              <div key={index} className="number-sense-image">
+                <img src={image.url || image.svg} alt={`Number Sense Image ${index + 1}`} />
+                <p>Count: {image.count}</p>
+              </div>
             ))}
           </div>
         </div>

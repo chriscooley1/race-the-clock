@@ -208,7 +208,11 @@ const YourCollections: React.FC = () => {
   ) => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
-      const sequence = sequenceItems.map((item: { name: string }) => item.name);
+      const sequence = sequenceItems.map((item: { name: string; svg?: string; count?: number }) => ({
+        name: item.name,
+        svg: item.svg,
+        count: item.count
+      }));
       const duration = min * 60 + sec;
       navigate("/fullscreen-display", {
         state: {
@@ -217,6 +221,7 @@ const YourCollections: React.FC = () => {
           speed,
           textColor,
           shuffle,
+          category: selectedCollection.category,  // Make sure this line is present
         },
       });
       setShowModal(false);
