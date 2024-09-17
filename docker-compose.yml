@@ -3,9 +3,9 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_DB: race-the-clock
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Masterbob1!
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -15,13 +15,9 @@ services:
 
   backend:
     build: ./backend
-    volumes:
-      - ./backend:/app
-    ports:
-      - "8000:8000"
     environment:
-      - NODE_ENV=development
-      - DATABASE_URL=postgresql://postgres:Masterbob1!@db:5432/race-the-clock
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      # ... other environment variables ...
     depends_on:
       - db
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
@@ -30,6 +26,9 @@ services:
 
   frontend:
     build: ./frontend
+    environment:
+      - VITE_API_BASE_URL=http://backend:8000
+      # ... other environment variables ...
     volumes:
       - ./frontend:/app
       - /app/node_modules
