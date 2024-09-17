@@ -1,8 +1,8 @@
 /* Collections navbar styles */
 .collections-navbar {
   display: flex;
-  justify-content: space-around; /* Evenly space the buttons */
-  align-items: center; /* Center the buttons vertically */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  justify-content: center; /* Center the buttons */
   width: 100%; /* Full width to align with main content */
   background-color: #f4f4f4; /* Background color for the navbar */
   padding: 10px; /* Add padding for spacing */
@@ -23,9 +23,11 @@
   transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Smooth transitions */
   border-radius: 5px; /* Rounded corners */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-  margin: 0 5px; /* Add margin between buttons */
+  margin: 5px; /* Add margin all around */
   flex-grow: 1; /* Allow buttons to grow and fill the available space */
   text-align: center; /* Center the text */
+  flex: 1 1 auto; /* Allow buttons to grow and shrink */
+  min-width: 120px; /* Set a minimum width */
 }
 
 .category-button:hover {
@@ -43,4 +45,10 @@
   background-color: #007bff; /* Active state background */
   color: #ffffff; /* Active state text color */
   border-color: #0056b3; /* Active state border color */
+}
+
+@media (max-width: 768px) {
+  .category-button {
+    flex-basis: calc(50% - 10px); /* Two buttons per row on smaller screens */
+  }
 }
