@@ -23,8 +23,8 @@ logger = logging.getLogger(__name__)
 
 # Set up environment configuration directly
 DATABASE_URL = config("DATABASE_URL")
-AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
-AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
+AUTH0_DOMAIN = config("AUTH0_DOMAIN")
+AUTH0_AUDIENCE = config("AUTH0_AUDIENCE")
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
 
@@ -55,7 +55,7 @@ async def log_requests(request, call_next):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[config("FRONTEND_URL", default="https://race-the-clock-frontend-production.up.railway.app")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
