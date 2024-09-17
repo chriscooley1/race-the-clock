@@ -1,6 +1,5 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import LandingPage from "./pages/LandingPage/LandingPage";
 import { useTheme } from "./context/ThemeContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar/Navbar";
@@ -9,6 +8,8 @@ import "./App.css";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 
+// Import your page components here
+import LandingPage from "./pages/LandingPage/LandingPage";
 import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
 import YourCollections from "./pages/YourCollections/YourCollections";
 import NewCollection from "./pages/NewCollection/NewCollection";
@@ -19,32 +20,18 @@ import NameGenerator from "./pages/NameGenerator/NameGenerator";
 import Resources from "./pages/Resources";
 import Settings from "./pages/Settings/Settings";
 import MyAccount from "./pages/MyAccount/MyAccount";
-
 import MathCollectionPage from "./pages/MathCollectionPage/MathCollectionPage";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
-  const [hideSidebar, setHideSidebar] = React.useState<boolean>(false);
   const location = useLocation();
+  const [hideSidebar, setHideSidebar] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
-  React.useEffect(() => {
-    // Hide sidebar on the LandingPage
-    setHideSidebar(location.pathname === "/");
+  useEffect(() => {
+    const hiddenRoutes = ["/", "/fullscreen-display", "/math-collection"];
+    setHideSidebar(hiddenRoutes.includes(location.pathname));
   }, [location.pathname]);
-
-  const handleFullScreenDisplay = (hide: boolean) => {
-    console.log("Setting hideSidebar to:", hide);
-    setHideSidebar(hide);
-  };
-
-  // Reset sidebar visibility whenever navigating away from fullscreen
-  React.useEffect(() => {
-    if (location.pathname !== "/fullscreen-display") {
-      setHideSidebar(false); // Ensure the sidebar reappears on route change
-    }
-  }, [location.pathname]);
-
-  console.log("Rendering App, hideSidebar state:", hideSidebar);
 
   return (
     <Auth0ProviderWithHistory>
@@ -60,14 +47,12 @@ const App: React.FC = () => {
                   path="/fullscreen-display"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute
-                        element={
-                          <FullScreenDisplay
-                            onEnterFullScreen={() => handleFullScreenDisplay(true)}
-                            onExitFullScreen={() => handleFullScreenDisplay(false)}
-                          />
-                        }
-                      />
+                      <PrivateRoute element={
+                        <FullScreenDisplay 
+                          onEnterFullScreen={() => setIsFullScreen(true)}
+                          onExitFullScreen={() => setIsFullScreen(false)}
+                        />
+                      } />
                     </Suspense>
                   }
                 />

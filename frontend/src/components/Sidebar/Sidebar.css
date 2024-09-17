@@ -24,9 +24,11 @@
 .with-sidebar {
   margin-left: 250px;
   max-width: calc(100% - 250px);
+  transition: margin-left 0.3s, max-width 0.3s;
 }
 
 .without-sidebar {
   margin-left: 0;
   max-width: 100%;
+  transition: margin-left 0.3s, max-width 0.3s;
 }

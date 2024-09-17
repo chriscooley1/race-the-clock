@@ -9,12 +9,15 @@ const Sidebar: React.FC = () => {
   const location = useLocation();
 
   console.log("Current route:", location.pathname);
-  // Check if the current route is the landing page
-  const isLandingPage = location.pathname === "/";
+  
+  // List of routes where the sidebar should be hidden
+  const hiddenRoutes = ["/", "/math-collection"];
 
-  // Hide the entire sidebar when on the landing page
-  if (isLandingPage) {
-    console.log("Landing page detected, hiding sidebar...");
+  // Check if the current route is in the list of hidden routes
+  const shouldHideSidebar = hiddenRoutes.includes(location.pathname);
+
+  if (shouldHideSidebar) {
+    console.log("Hidden route detected, hiding sidebar...");
     return null;
   }
 

@@ -7,9 +7,11 @@ import "../../App.css";
 interface NavbarProps {
   isPaused?: boolean;
   onPauseResume?: () => void;
+  onBack?: () => void;
+  showBackButton?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume }) => {
+const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, showBackButton }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,9 +59,9 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume }) => {
 
   return (
     <div className="navbar">
-      {location.pathname === "/fullscreen-display" && (
+      {(location.pathname === "/fullscreen-display" || showBackButton) && (
         <>
-          <button type="button" className="nav-back-button" onClick={handleBack}>
+          <button type="button" className="nav-back-button" onClick={onBack || handleBack}>
             Back
           </button>
           {onPauseResume && (
