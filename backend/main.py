@@ -58,9 +58,11 @@ async def log_requests(request, call_next):
 FRONTEND_URL = config("FRONTEND_URL", default="https://race-the-clock-frontend-production.up.railway.app")
 LOCAL_FRONTEND_URL = config("LOCAL_FRONTEND_URL", default="http://localhost:5173")
 
+ALLOWED_ORIGINS = config("ALLOWED_ORIGINS", default="https://race-the-clock-frontend-production.up.railway.app,http://localhost:5173").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL, LOCAL_FRONTEND_URL],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
