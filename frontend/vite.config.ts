@@ -7,15 +7,13 @@ export default defineConfig(({ mode }: ConfigEnv) => {
 
   return {
     plugins: [react()],
-    base: "/", // Assuming the app is hosted at the root
+    base: "/",
     define: {
       "process.env": env,
-      // Explicitly define Auth0 variables
       "import.meta.env.VITE_AUTH0_DOMAIN": JSON.stringify(env.VITE_AUTH0_DOMAIN),
       "import.meta.env.VITE_AUTH0_CLIENT_ID": JSON.stringify(env.VITE_AUTH0_CLIENT_ID),
       "import.meta.env.VITE_AUTH0_AUDIENCE": JSON.stringify(env.VITE_AUTH0_AUDIENCE),
-      // Expose the API base URL
-      "import.meta.env.VITE_API_BASE_URL": JSON.stringify(process.env.VITE_API_BASE_URL),
+      "import.meta.env.VITE_API_BASE_URL": JSON.stringify(env.VITE_API_BASE_URL),
     },
     build: {
       rollupOptions: {
@@ -24,22 +22,26 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           chunkFileNames: `assets/[name].[hash].js`,
           assetFileNames: `assets/[name].[hash].[ext]`,
           manualChunks(id) {
-            // Example for vendor chunking
             if (id.includes("node_modules")) {
               return id.toString().split("node_modules/")[1].split("/")[0].toString();
             }
           },
         },
       },
-      outDir: "dist", 
-      chunkSizeWarningLimit: 1000, // Set to 1 MB (optional, adjust to suppress warnings)
+      outDir: "dist",
+      chunkSizeWarningLimit: 1000,
+      sourcemap: true,
     },
     server: {
-      host: "0.0.0.0", // Allow connections from all hosts
-      port: 5173,
+      host: "0.0.0.0",
+      port: parseInt(process.env.PORT || '5173'),
       watch: {
-        usePolling: true, // Necessary for some systems, especially in Docker
+        usePolling: true,
       },
+    },
+    preview: {
+      port: parseInt(process.env.PORT || '5173'),
+      host: '0.0.0.0',
     },
     resolve: {
       alias: {
