@@ -10,6 +10,10 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     base: "/", // Assuming the app is hosted at the root
     define: {
       "process.env": env,
+      // Explicitly define Auth0 variables
+      "import.meta.env.VITE_AUTH0_DOMAIN": JSON.stringify(env.VITE_AUTH0_DOMAIN),
+      "import.meta.env.VITE_AUTH0_CLIENT_ID": JSON.stringify(env.VITE_AUTH0_CLIENT_ID),
+      "import.meta.env.VITE_AUTH0_AUDIENCE": JSON.stringify(env.VITE_AUTH0_AUDIENCE),
     },
     build: {
       rollupOptions: {
