@@ -22,5 +22,10 @@ COPY . .
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 
-# Run the application with hot reloading in development, otherwise run normally
-CMD uvicorn main:app --host 0.0.0.0 --port $PORT
+# Create a shell script to run the application
+RUN echo '#!/bin/sh' > /app/start.sh && \
+    echo 'uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}' >> /app/start.sh && \
+    chmod +x /app/start.sh
+
+# Run the application
+CMD ["/app/start.sh"]
