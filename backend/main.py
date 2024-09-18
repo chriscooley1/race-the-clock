@@ -54,8 +54,6 @@ async def log_requests(request, call_next):
     logger.info(f"Response headers: {response.headers}")
     return response
 
-from fastapi.middleware.cors import CORSMiddleware
-
 # Get frontend URLs from environment variables
 FRONTEND_URL = config("FRONTEND_URL", default="https://race-the-clock-frontend-production.up.railway.app")
 LOCAL_FRONTEND_URL = config("LOCAL_FRONTEND_URL", default="http://localhost:5173")
