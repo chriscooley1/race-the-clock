@@ -54,9 +54,15 @@ async def log_requests(request, call_next):
     logger.info(f"Response headers: {response.headers}")
     return response
 
+from fastapi.middleware.cors import CORSMiddleware
+
+# Get frontend URLs from environment variables
+FRONTEND_URL = config("FRONTEND_URL", default="https://race-the-clock-frontend-production.up.railway.app")
+LOCAL_FRONTEND_URL = config("LOCAL_FRONTEND_URL", default="http://localhost:5173")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[config("FRONTEND_URL", default="https://race-the-clock-frontend-production.up.railway.app")],
+    allow_origins=[FRONTEND_URL, LOCAL_FRONTEND_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -64,6 +70,7 @@ app.add_middleware(
 
 # Auth0 token validation
 async def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
+    logger.info("Attempting to validate token")
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -71,6 +78,7 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
     )
     try:
         token = authorization.split(" ")[1]
+        logger.info(f"Token extracted: {token[:10]}...")  # Log first 10 chars of token
         jwks_url = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
         
         # Logging the JWKS URL
@@ -103,10 +111,13 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
         else:
             raise credentials_exception
     except ExpiredSignatureError:
+        logger.warning("Token has expired")
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired")
-    except JWTClaimsError:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid claims")
-    except JWTError:
+    except JWTClaimsError as e:
+        logger.warning(f"Invalid claims: {str(e)}")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Invalid claims: {str(e)}")
+    except JWTError as e:
+        logger.warning(f"JWT Error: {str(e)}")
         raise credentials_exception
     except Exception as e:
         logger.error(f"Unexpected error during token validation: {str(e)}")
@@ -223,7 +234,10 @@ async def create_collection(
 
 @app.get("/users/me/collections", response_model=List[CollectionRead])
 async def get_collections(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    return current_user.collections
+    logger.info(f"Fetching collections for user: {current_user.username}")
+    collections = current_user.collections
+    logger.info(f"Found {len(collections)} collections")
+    return collections
 
 @app.get("/collections/{collection_id}/items")
 async def get_collection_items(collection_id: int, db: Session = Depends(get_db)):

@@ -2,6 +2,14 @@ import axios from "axios";
 import { User } from "@auth0/auth0-react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+console.log("Environment variables:", import.meta.env);
+console.log("API_BASE_URL:", API_BASE_URL);
+
+if (!API_BASE_URL) {
+  console.error("VITE_API_BASE_URL is not set in the environment variables");
+}
+
+console.log("API_BASE_URL:", API_BASE_URL); // This will help debug the issue
 
 interface Item {
   id: number;
@@ -334,13 +342,21 @@ export const duplicateCollection = async (
 };
 
 // Function to fetch collections
-export const fetchCollections = async (token: string) => {
+export const fetchCollections = async (getAccessTokenSilently: () => Promise<string>) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/users/me/collections`, {
+    console.log("Fetching collections...");
+    console.log("API_BASE_URL:", API_BASE_URL);
+    const token = await getAccessTokenSilently();
+    console.log("Token received:", token ? "Token exists" : "No token");
+    const url = `${API_BASE_URL}/users/me/collections`;
+    console.log("Fetching from URL:", url);
+    const response = await axios.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log("Fetched collections:", response.data);
     return response.data;
   } catch (error) {
+    console.error("Error fetching collections:", error);
     handleApiError(error);
   }
 };

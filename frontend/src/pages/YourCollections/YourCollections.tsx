@@ -21,16 +21,15 @@ interface Collection {
 interface Item {
   name: string;
 }
-const getItemsCount = (description: string): number => {
+const getItemsCount = (description: string | undefined): number => {
+  if (!description) return 0;
   try {
     const items = JSON.parse(description);
-    if (Array.isArray(items)) {
-      return items.length;
-    }
+    return Array.isArray(items) ? items.length : 0;
   } catch (error) {
-    console.error("Error parsing description as JSON:", error);
+    console.error("Error parsing description:", description);
+    return 0;
   }
-  return 0;
 };
 const YourCollections: React.FC = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
@@ -48,18 +47,21 @@ const YourCollections: React.FC = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    console.log("Loading collections...");
     const loadCollections = async () => {
       try {
-        const token = await getAccessTokenSilently();
-        const data = await fetchCollections(token);
-        console.log("Fetched collections:", data);
-        setCollections(data);
-        filterAndSortCollections(data, selectedCategory, sortOption);
+        const collections = await fetchCollections(getAccessTokenSilently);
+        console.log("Loaded collections:", collections);
+        if (Array.isArray(collections)) {
+          setCollections(collections);
+          filterAndSortCollections(collections, selectedCategory, sortOption);
+        } else {
+          console.error("Unexpected data format:", collections);
+        }
       } catch (error) {
         console.error("Error loading collections:", error);
       }
     };
+
     loadCollections();
   }, [selectedCategory, sortOption, getAccessTokenSilently]);
 
@@ -139,8 +141,7 @@ const YourCollections: React.FC = () => {
         setSelectedCollection(updatedCollection); // Update the selected collection with the new data
 
         // Refetch the collections to ensure they're up-to-date
-        const token = await getAccessTokenSilently();
-        const refreshedCollections = await fetchCollections(token);
+        const refreshedCollections = await fetchCollections(getAccessTokenSilently);
         setCollections(refreshedCollections);
         console.log("Updated collection:", selectedCollection);
       }
@@ -237,7 +238,12 @@ const YourCollections: React.FC = () => {
   };
 
   const formatDate = (dateString: string): string => {
+    if (!dateString) return "Unknown Date";
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      console.error("Invalid date string:", dateString);
+      return "Invalid Date";
+    }
     return new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "long",
@@ -266,6 +272,17 @@ const YourCollections: React.FC = () => {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLSelectElement>) => {
     if (event.key === "Enter" && collectionToDuplicate) {
       handleDuplicateCollection();
+    }
+  };
+
+  const parseDescription = (description: string | undefined): any[] => {
+    if (!description) return [];
+    try {
+      const parsed = JSON.parse(description);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      console.error("Error parsing description:", error);
+      return [];
     }
   };
 
@@ -342,7 +359,7 @@ const YourCollections: React.FC = () => {
           isOpen={isEditModalOpen}
           onClose={() => setEditModalOpen(false)}
           collectionName={selectedCollection.name}
-          items={JSON.parse(selectedCollection.description || "[]").map((item: Item) => item.name)}
+          items={parseDescription(selectedCollection.description).map((item: Item) => item.name)}
           onSave={handleSaveUpdatedItems} // <-- Pass the save handler here
         />
       )}
