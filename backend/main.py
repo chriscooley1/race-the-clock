@@ -25,8 +25,8 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN")
 AUTH0_AUDIENCE = os.environ.get("AUTH0_AUDIENCE")
 SECRET_KEY = os.environ.get("SECRET_KEY")
-FRONTEND_URL = os.environ.get("FRONTEND_URL")
-ALLOWED_ORIGINS = [FRONTEND_URL] if FRONTEND_URL else ["*"]
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://race-the-clock-frontend-production.up.railway.app")
+ALLOWED_ORIGINS = [FRONTEND_URL, "http://localhost:3000"]  # Add any other necessary origins
 ALGORITHM = "HS256"
 
 # Configure connection pool and other database settings
