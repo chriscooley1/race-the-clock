@@ -48,11 +48,14 @@ app = FastAPI()
 # Single middleware function to log requests
 @app.middleware("http")
 async def log_requests(request, call_next):
-    logger.info(f"Request: {request.method} {request.url}")
-    response = await call_next(request)
-    logger.info(f"Response status: {response.status_code}")
-    logger.info(f"Response headers: {response.headers}")
-    return response
+    logger.info(f"Received request: {request.method} {request.url}")
+    try:
+        response = await call_next(request)
+        logger.info(f"Sending response: Status {response.status_code}")
+        return response
+    except Exception as e:
+        logger.error(f"Error processing request: {str(e)}")
+        raise
 
 app.add_middleware(
     CORSMiddleware,

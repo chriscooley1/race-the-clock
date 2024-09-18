@@ -7,6 +7,7 @@ import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNav
 import EditCollectionModal from "../../components/EditCollectionModal/EditCollectionModal";
 import "./YourCollections.css";
 import "../../App.css";
+import axios from 'axios';
 
 interface Collection {
   collection_id: number;
@@ -49,6 +50,8 @@ const YourCollections: React.FC = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
+        console.log("Fetching user collections...");
+        console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
         const collections = await fetchCollections(getAccessTokenSilently);
         console.log("Loaded collections:", collections);
         if (Array.isArray(collections)) {
@@ -59,6 +62,14 @@ const YourCollections: React.FC = () => {
         }
       } catch (error) {
         console.error("Error loading collections:", error);
+        if (axios.isAxiosError(error)) {
+          console.error("Axios error details:", {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status,
+            headers: error.response?.headers,
+          });
+        }
       }
     };
 

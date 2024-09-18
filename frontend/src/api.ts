@@ -357,6 +357,14 @@ export const fetchCollections = async (getAccessTokenSilently: () => Promise<str
     return response.data;
   } catch (error) {
     console.error("Error fetching collections:", error);
+    if (axios.isAxiosError(error)) {
+      console.error("Axios error details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        headers: error.response?.headers,
+      });
+    }
     handleApiError(error);
   }
 };

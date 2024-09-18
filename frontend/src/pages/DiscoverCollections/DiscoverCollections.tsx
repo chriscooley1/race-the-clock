@@ -6,6 +6,7 @@ import "./DiscoverCollections.css";
 import "../../App.css"; 
 import { useAuth0 } from "@auth0/auth0-react";
 import { Collection as APICollection } from "../../api";  // Import the API Collection type
+import axios from 'axios';
 
 interface Item {
   id: number;
@@ -30,15 +31,23 @@ const DiscoverCollections: React.FC = () => {
   const fetchCollections = async () => {
     try {
       console.log("Fetching public collections...");
+      console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
       const fetchedCollections = await fetchPublicCollections();
       console.log("Fetched collections:", fetchedCollections);
       setCollections(fetchedCollections?.map(collection => ({
         ...collection,
         items: parseDescription(collection.description)
       })) || []);
-    } catch (err) {
-      const error = err as AxiosError;
+    } catch (error) {
       console.error("Error fetching public collections:", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error details:", {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status,
+          headers: error.response?.headers,
+        });
+      }
     }
   };
 
