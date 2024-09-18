@@ -10,7 +10,6 @@ from datetime import datetime, timedelta
 from typing import List, Optional
 import logging
 import os
-from decouple import config
 from passlib.context import CryptContext
 import requests
 import pytz
@@ -23,10 +22,13 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Set up environment configuration directly
-DATABASE_URL = config("DATABASE_URL")
-AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
-AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
-SECRET_KEY = config("SECRET_KEY")
+DATABASE_URL = os.environ.get("DATABASE_URL")
+AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN")
+AUTH0_AUDIENCE = os.environ.get("AUTH0_AUDIENCE")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+FRONTEND_URL = os.environ.get("FRONTEND_URL")
+LOCAL_FRONTEND_URL = os.environ.get("LOCAL_FRONTEND_URL")
+ALLOWED_ORIGINS = [FRONTEND_URL, LOCAL_FRONTEND_URL]
 ALGORITHM = "HS256"
 
 # Configure connection pool and other database settings
@@ -53,11 +55,6 @@ async def log_requests(request, call_next):
     logger.info(f"Response status: {response.status_code}")
     logger.info(f"Response headers: {response.headers}")
     return response
-
-# Get frontend URLs from environment variables
-FRONTEND_URL = config("FRONTEND_URL", default="https://race-the-clock-frontend-production.up.railway.app")
-LOCAL_FRONTEND_URL = config("LOCAL_FRONTEND_URL", default="http://localhost:5173")
-ALLOWED_ORIGINS = [FRONTEND_URL, LOCAL_FRONTEND_URL]
 
 app.add_middleware(
     CORSMiddleware,
