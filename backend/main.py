@@ -56,7 +56,7 @@ async def log_requests(request, call_next):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://race-the-clock-frontend-production.up.railway.app"],
+    allow_origins=[config("FRONTEND_URL", default="https://race-the-clock-frontend-production.up.railway.app")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -13,7 +13,11 @@ RUN npm install
 # Copy the rest of the application code into the container
 COPY . .
 
-EXPOSE 5173
+# Run npm build command
+RUN npm run build
 
-# Use the development server command with host set to 0.0.0.0
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+# Use a lightweight server to serve the built files
+RUN npm install -g serve
+
+# Serve the built files
+CMD ["serve", "-s", "dist", "-l", "80"]

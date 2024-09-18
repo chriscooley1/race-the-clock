@@ -16,21 +16,11 @@ COPY requirements.txt .
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install development dependencies for hot reloading
-RUN pip install --no-cache-dir uvicorn[standard] watchfiles
-
 # Copy the rest of the application code into the container
 COPY . .
-
-# Expose the port that the app runs on
-EXPOSE 8000
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 
 # Run the application with hot reloading in development, otherwise run normally
-CMD if [ "$NODE_ENV" = "development" ]; then \
-        uvicorn main:app --host 0.0.0.0 --port 8000 --reload; \
-    else \
-        uvicorn main:app --host 0.0.0.0 --port 8000; \
-    fi
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT
