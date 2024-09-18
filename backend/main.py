@@ -56,7 +56,7 @@ async def log_requests(request, call_next):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[config("FRONTEND_URL", default="https://race-the-clock-frontend-production.up.railway.app")],
+    allow_origins=["https://race-the-clock-frontend-production.up.railway.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -387,4 +387,4 @@ async def search_collections(
 # Add this at the end of your file
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
