@@ -3,7 +3,7 @@ fastapi
 psycopg2
 python-decouple
 sqlmodel
-uvicorn
+uvicorn==0.15.0
 pytest
 httpx
 passlib
