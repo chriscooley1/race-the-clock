@@ -24,8 +24,8 @@ logger = logging.getLogger(__name__)
 
 # Set up environment configuration directly
 DATABASE_URL = config("DATABASE_URL")
-AUTH0_DOMAIN = config("AUTH0_DOMAIN")
-AUTH0_AUDIENCE = config("AUTH0_AUDIENCE")
+AUTH0_DOMAIN = config("VITE_AUTH0_DOMAIN")
+AUTH0_AUDIENCE = config("VITE_AUTH0_AUDIENCE")
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = "HS256"
 
