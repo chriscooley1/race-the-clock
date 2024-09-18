@@ -27,8 +27,7 @@ AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN")
 AUTH0_AUDIENCE = os.environ.get("AUTH0_AUDIENCE")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 FRONTEND_URL = os.environ.get("FRONTEND_URL")
-LOCAL_FRONTEND_URL = os.environ.get("LOCAL_FRONTEND_URL")
-ALLOWED_ORIGINS = [FRONTEND_URL, LOCAL_FRONTEND_URL]
+ALLOWED_ORIGINS = [FRONTEND_URL] if FRONTEND_URL else ["*"]
 ALGORITHM = "HS256"
 
 # Configure connection pool and other database settings
