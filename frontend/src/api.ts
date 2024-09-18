@@ -392,3 +392,13 @@ export const searchPublicCollections = async (query: string) => {
     handleApiError(error);
   }
 };
+
+export const checkBackendHealth = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/health`);
+    return response.data;
+  } catch (error) {
+    console.error("Error checking backend health:", error);
+    throw error;
+  }
+};

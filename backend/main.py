@@ -57,8 +57,7 @@ async def log_requests(request, call_next):
 # Get frontend URLs from environment variables
 FRONTEND_URL = config("FRONTEND_URL", default="https://race-the-clock-frontend-production.up.railway.app")
 LOCAL_FRONTEND_URL = config("LOCAL_FRONTEND_URL", default="http://localhost:5173")
-
-ALLOWED_ORIGINS = config("ALLOWED_ORIGINS", default="https://race-the-clock-frontend-production.up.railway.app,http://localhost:5173").split(",")
+ALLOWED_ORIGINS = [FRONTEND_URL, LOCAL_FRONTEND_URL]
 
 app.add_middleware(
     CORSMiddleware,
@@ -397,6 +396,10 @@ async def search_collections(
         collection.items = db.query(Item).filter(Item.collection_id == collection.collection_id).all()
     
     return collections
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
 
 # Add this at the end of your file
 if __name__ == "__main__":
