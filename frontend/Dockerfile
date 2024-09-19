@@ -7,8 +7,11 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies with verbose logging
+RUN npm install --verbose
+
+# If the above fails, try this alternative:
+# RUN npm ci --verbose
 
 # Copy the rest of the application code
 COPY . .
