@@ -1,10 +1,9 @@
+version: '3'
 services:
   db:
     image: postgres:13
-    environment:
-      POSTGRES_DB: race-the-clock
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Masterbob1!
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -14,8 +13,10 @@ services:
 
   backend:
     build: ./backend
+    env_file:
+      - .env
     environment:
-      - DATABASE_URL=${DATABASE_URL:-${LOCAL_DATABASE_URL}}
+      - DATABASE_URL=${DATABASE_URL}
       - AUTH0_DOMAIN=${AUTH0_DOMAIN}
       - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
       - SECRET_KEY=${SECRET_KEY}
@@ -32,6 +33,8 @@ services:
 
   frontend:
     build: ./frontend
+    env_file:
+      - .env
     environment:
       - NODE_ENV=${NODE_ENV}
       - VITE_API_BASE_URL=${VITE_API_BASE_URL}

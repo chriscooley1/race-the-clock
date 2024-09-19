@@ -54,11 +54,7 @@ SQLModel.metadata.create_all(engine)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-app = FastAPI(lifespan=lifespan)
-
-async def lifespan(app: FastAPI):
-    create_db_and_tables()
-    yield
+app = FastAPI()
 
 # Single middleware function to log requests
 @app.middleware("http")
