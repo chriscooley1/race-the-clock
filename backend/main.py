@@ -13,7 +13,7 @@ from passlib.context import CryptContext
 import requests
 import pytz
 from sqlalchemy import create_engine, text
-from sqlalchemy.exc import OperationalError
+from sqlalchemy.exc import OperationalError, SQLAlchemyError
 import time
 
 from database import get_db, get_engine
@@ -465,8 +465,47 @@ def create_db_and_tables():
 @app.on_event("startup")
 async def startup_event():
     logger.info("Application startup event triggered")
-    create_db_and_tables()
-    logger.info("Application startup complete")
+    try:
+        logger.info("Checking environment variables...")
+        logger.debug(f"DATABASE_URL: {DATABASE_URL}")
+        logger.debug(f"AUTH0_DOMAIN: {AUTH0_DOMAIN}")
+        logger.debug(f"AUTH0_AUDIENCE: {AUTH0_AUDIENCE}")
+        logger.debug(f"FRONTEND_URL: {FRONTEND_URL}")
+        logger.debug(f"LOCAL_FRONTEND_URL: {LOCAL_FRONTEND_URL}")
+        logger.debug(f"ALLOWED_ORIGINS: {ALLOWED_ORIGINS}")
+
+        logger.info("Testing database connection...")
+        engine = get_engine()
+        try:
+            with engine.connect() as connection:
+                result = connection.execute(text("SELECT 1"))
+                logger.info("Database connection successful")
+        except SQLAlchemyError as db_error:
+            logger.error(f"Database connection failed: {str(db_error)}", exc_info=True)
+            raise
+
+        logger.info("Creating database and tables...")
+        try:
+            SQLModel.metadata.create_all(engine)
+            logger.info("Database and tables created successfully")
+        except SQLAlchemyError as table_error:
+            logger.error(f"Error creating tables: {str(table_error)}", exc_info=True)
+            raise
+
+        logger.info("Checking Auth0 configuration...")
+        try:
+            jwks_url = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
+            response = requests.get(jwks_url)
+            response.raise_for_status()
+            logger.info("Auth0 configuration check successful")
+        except requests.RequestException as auth0_error:
+            logger.error(f"Auth0 configuration check failed: {str(auth0_error)}", exc_info=True)
+            raise
+
+        logger.info("Application startup complete")
+    except Exception as e:
+        logger.error(f"Startup failed: {str(e)}", exc_info=True)
+        raise
 
 @app.on_event("shutdown")
 async def shutdown_event():
