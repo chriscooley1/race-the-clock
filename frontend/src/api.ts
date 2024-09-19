@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User } from "@auth0/auth0-react";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://your-backend-url.railway.app';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://race-the-clock-backend-production.up.railway.app";
 console.log("Environment variables:", import.meta.env);
 console.log("API_BASE_URL:", API_BASE_URL);
 
