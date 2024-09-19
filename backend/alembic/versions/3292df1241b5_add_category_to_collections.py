@@ -5,7 +5,7 @@ Revises: 3c4b687d38c6
 Create Date: 2024-08-09 14:34:55.868597
 
 """
-from typing import Sequence
+from typing import Sequence, Optional
 
 from alembic import op
 import sqlalchemy as sa
@@ -14,7 +14,7 @@ import sqlmodel
 
 # revision identifiers, used by Alembic.
 revision: str = '3292df1241b5'
-down_revision: str | None = '3c4b687d38c6'
+down_revision: Optional[str] = '3c4b687d38c6'
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 
