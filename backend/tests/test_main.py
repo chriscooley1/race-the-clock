@@ -1,47 +1,53 @@
 import os
 import sys
-
-# Add the parent directory to the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-os.environ["TESTING"] = "True"
-
 import pytest
-from httpx import AsyncClient
-from sqlmodel import SQLModel, Session
-from main import app, engine, create_db_and_tables
-from models import UserCreate, SequenceCreate, CollectionCreate, NameListCreate
+from fastapi.testclient import TestClient
+from sqlmodel import Session, SQLModel
+from main import app, create_db_and_tables
+from database import get_engine, get_db
+
+# Remove the import of 'engine' from main, as it's no longer there
 
 @pytest.fixture(scope="module")
-def test_app():
-    create_db_and_tables()
-    yield app
+def client():
+    engine = get_engine()
+    SQLModel.metadata.create_all(engine)
+    
+    def get_session_override():
+        return Session(engine)
+    
+    app.dependency_overrides[get_db] = get_session_override
+    
+    with TestClient(app) as client:
+        yield client
+    
     SQLModel.metadata.drop_all(engine)
+    app.dependency_overrides.clear()
 
 @pytest.fixture
 def session():
-    with Session(engine) as session:
+    with Session(get_engine()) as session:
         yield session
 
 @pytest.mark.asyncio
-async def test_health_check(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+async def test_health_check(client):
+    async with AsyncClient(app=client, base_url="http://test") as ac:
         response = await ac.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "healthy"}
 
 # User Endpoints
 @pytest.mark.asyncio
-async def test_create_user(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+async def test_create_user(client):
+    async with AsyncClient(app=client, base_url="http://test") as ac:
         user_data = {"username": "testuser", "email": "testuser@example.com", "password": "password"}
         response = await ac.post("/users/", json=user_data)
     assert response.status_code == 200
     assert response.json()["username"] == "testuser"
 
 @pytest.mark.asyncio
-async def test_read_users_me(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+async def test_read_users_me(client):
+    async with AsyncClient(app=client, base_url="http://test") as ac:
         user_data = {"username": "testuser", "email": "testuser@example.com", "password": "password"}
         await ac.post("/users/", json=user_data)
         response = await ac.get("/users/me/")
@@ -50,8 +56,8 @@ async def test_read_users_me(test_app):
 
 # Sequence Endpoints
 @pytest.mark.asyncio
-async def test_create_sequence(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+async def test_create_sequence(client):
+    async with AsyncClient(app=client, base_url="http://test") as ac:
         user_data = {"username": "testuser", "email": "testuser@example.com", "password": "password"}
         await ac.post("/users/", json=user_data)
         sequence_data = {"name": "testsequence", "description": "A test sequence", "user_id": "testuser"}
@@ -60,8 +66,8 @@ async def test_create_sequence(test_app):
     assert response.json()["name"] == "testsequence"
 
 @pytest.mark.asyncio
-async def test_get_sequences(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+async def test_get_sequences(client):
+    async with AsyncClient(app=client, base_url="http://test") as ac:
         user_data = {"username": "testuser", "email": "testuser@example.com", "password": "password"}
         await ac.post("/users/", json=user_data)
         response = await ac.get("/users/testuser/sequences")
@@ -70,8 +76,8 @@ async def test_get_sequences(test_app):
 
 # Collection Endpoints
 @pytest.mark.asyncio
-async def test_create_collection(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+async def test_create_collection(client):
+    async with AsyncClient(app=client, base_url="http://test") as ac:
         user_data = {"username": "testuser", "email": "testuser@example.com", "password": "password"}
         await ac.post("/users/", json=user_data)
         collection_data = {"name": "testcollection", "description": "A test collection", "category": "test"}
@@ -80,8 +86,8 @@ async def test_create_collection(test_app):
     assert response.json()["name"] == "testcollection"
 
 @pytest.mark.asyncio
-async def test_get_collections(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+async def test_get_collections(client):
+    async with AsyncClient(app=client, base_url="http://test") as ac:
         user_data = {"username": "testuser", "email": "testuser@example.com", "password": "password"}
         await ac.post("/users/", json=user_data)
         response = await ac.get("/users/me/collections")
@@ -90,8 +96,8 @@ async def test_get_collections(test_app):
 
 # NameList Endpoints
 @pytest.mark.asyncio
-async def test_create_namelist(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+async def test_create_namelist(client):
+    async with AsyncClient(app=client, base_url="http://test") as ac:
         user_data = {"username": "testuser", "email": "testuser@example.com", "password": "password"}
         await ac.post("/users/", json=user_data)
         namelist_data = {"name": "testnamelist", "names": ["name1", "name2"]}
@@ -100,8 +106,8 @@ async def test_create_namelist(test_app):
     assert response.json()["name"] == "testnamelist"
 
 @pytest.mark.asyncio
-async def test_get_namelists(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+async def test_get_namelists(client):
+    async with AsyncClient(app=client, base_url="http://test") as ac:
         user_data = {"username": "testuser", "email": "testuser@example.com", "password": "password"}
         await ac.post("/users/", json=user_data)
         response = await ac.get("/namelists/")
