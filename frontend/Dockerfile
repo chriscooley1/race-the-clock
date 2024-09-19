@@ -16,8 +16,8 @@ COPY . .
 # Build the app
 RUN npm run build
 
-# Expose port 5173
-EXPOSE 5173
+# Expose the port the app runs on
+EXPOSE $PORT
 
 # Start the application
 CMD ["npm", "run", "start"]
