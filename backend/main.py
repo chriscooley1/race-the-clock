@@ -128,11 +128,12 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
 # User Endpoints
 @app.get("/users/me/", response_model=User)
 async def read_users_me(current_user: User = Depends(get_current_user)):
+    logger.info(f"Current user: {current_user}")
     return current_user
 
 @app.get("/users/{user_id}/sequences", response_model=List[Sequence])
 async def get_sequences(user_id: str, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.username == user_id).first()
+    user = db.exec(select(User).where(User.username == user_id)).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user.sequences
@@ -159,7 +160,7 @@ async def create_sequence(sequence: SequenceCreate, db: Session = Depends(get_db
     db_sequence = Sequence(
         name=sequence.name,
         description=sequence.description,
-        user_id=user.user_id
+        user_id=user.user_id  # Use the actual user_id here
     )
     db.add(db_sequence)
     db.commit()

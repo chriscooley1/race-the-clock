@@ -1,29 +1,22 @@
 import os
 import sys
+import pytest
+from sqlmodel import SQLModel, Session, create_engine, select
+from models import User, Sequence, Collection, Item, NameList
 
-# Add the parent directory to the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+# Set up testing environment
 os.environ["TESTING"] = "True"
 
-import pytest
-from sqlmodel import SQLModel, Session, create_engine
-from models import User, UserCreate, Sequence, SequenceCreate, Collection, CollectionCreate, Item, ItemCreate, NameList, NameListCreate
+@pytest.fixture(scope="function")
+def engine():
+    return create_engine("sqlite:///./test.db", connect_args={"check_same_thread": False})
 
-# Create a test database
-DATABASE_URL = "sqlite:///./test.db"
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-
-@pytest.fixture(scope="module", autouse=True)
-def create_test_db():
+@pytest.fixture(scope="function")
+def session(engine):
     SQLModel.metadata.create_all(engine)
-    yield
-    SQLModel.metadata.drop_all(engine)
-
-@pytest.fixture
-def session():
     with Session(engine) as session:
         yield session
+    SQLModel.metadata.drop_all(engine)
 
 # User Model Tests
 def test_create_user(session):
@@ -35,30 +28,42 @@ def test_create_user(session):
     assert user.username == "testuser"
 
 def test_read_user(session):
-    user = session.query(User).filter(User.username == "testuser").first()
-    assert user is not None
-    assert user.username == "testuser"
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
+    session.commit()
+    
+    db_user = session.exec(select(User).where(User.username == "testuser")).first()
+    assert db_user is not None
+    assert db_user.username == "testuser"
 
 def test_update_user(session):
-    user = session.query(User).filter(User.username == "testuser").first()
-    user.email = "newemail@example.com"
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    session.refresh(user)
-    assert user.email == "newemail@example.com"
+    
+    db_user = session.exec(select(User).where(User.username == "testuser")).first()
+    db_user.email = "newemail@example.com"
+    session.commit()
+    session.refresh(db_user)
+    assert db_user.email == "newemail@example.com"
 
 def test_delete_user(session):
-    user = session.query(User).filter(User.username == "testuser").first()
-    session.delete(user)
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    user = session.query(User).filter(User.username == "testuser").first()
-    assert user is None
+    
+    db_user = session.exec(select(User).where(User.username == "testuser")).first()
+    session.delete(db_user)
+    session.commit()
+    deleted_user = session.exec(select(User).where(User.username == "testuser")).first()
+    assert deleted_user is None
 
 # Sequence Model Tests
 def test_create_sequence(session):
-    user = User(username="testuser2", email="testuser2@example.com", hashed_password="hashedpassword")
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
     session.add(user)
     session.commit()
-    session.refresh(user)
+    
     sequence = Sequence(name="testsequence", description="A test sequence", user_id=user.user_id)
     session.add(sequence)
     session.commit()
@@ -67,27 +72,54 @@ def test_create_sequence(session):
     assert sequence.name == "testsequence"
 
 def test_read_sequence(session):
-    sequence = session.query(Sequence).filter(Sequence.name == "testsequence").first()
-    assert sequence is not None
-    assert sequence.name == "testsequence"
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
+    session.commit()
+    
+    sequence = Sequence(name="testsequence", description="A test sequence", user_id=user.user_id)
+    session.add(sequence)
+    session.commit()
+    
+    db_sequence = session.exec(select(Sequence).where(Sequence.name == "testsequence")).first()
+    assert db_sequence is not None
+    assert db_sequence.name == "testsequence"
 
 def test_update_sequence(session):
-    sequence = session.query(Sequence).filter(Sequence.name == "testsequence").first()
-    sequence.description = "Updated description"
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    session.refresh(sequence)
-    assert sequence.description == "Updated description"
+    
+    sequence = Sequence(name="testsequence", description="A test sequence", user_id=user.user_id)
+    session.add(sequence)
+    session.commit()
+    
+    db_sequence = session.exec(select(Sequence).where(Sequence.name == "testsequence")).first()
+    db_sequence.description = "Updated description"
+    session.commit()
+    session.refresh(db_sequence)
+    assert db_sequence.description == "Updated description"
 
 def test_delete_sequence(session):
-    sequence = session.query(Sequence).filter(Sequence.name == "testsequence").first()
-    session.delete(sequence)
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    sequence = session.query(Sequence).filter(Sequence.name == "testsequence").first()
-    assert sequence is None
+    
+    sequence = Sequence(name="testsequence", description="A test sequence", user_id=user.user_id)
+    session.add(sequence)
+    session.commit()
+    
+    db_sequence = session.exec(select(Sequence).where(Sequence.name == "testsequence")).first()
+    session.delete(db_sequence)
+    session.commit()
+    deleted_sequence = session.exec(select(Sequence).where(Sequence.name == "testsequence")).first()
+    assert deleted_sequence is None
 
 # Collection Model Tests
 def test_create_collection(session):
-    user = session.query(User).filter(User.username == "testuser2").first()
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
+    session.commit()
+    
     collection = Collection(name="testcollection", description="A test collection", category="test", user_id=user.user_id)
     session.add(collection)
     session.commit()
@@ -96,27 +128,58 @@ def test_create_collection(session):
     assert collection.name == "testcollection"
 
 def test_read_collection(session):
-    collection = session.query(Collection).filter(Collection.name == "testcollection").first()
-    assert collection is not None
-    assert collection.name == "testcollection"
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
+    session.commit()
+    
+    collection = Collection(name="testcollection", description="A test collection", category="test", user_id=user.user_id)
+    session.add(collection)
+    session.commit()
+    
+    db_collection = session.exec(select(Collection).where(Collection.name == "testcollection")).first()
+    assert db_collection is not None
+    assert db_collection.name == "testcollection"
 
 def test_update_collection(session):
-    collection = session.query(Collection).filter(Collection.name == "testcollection").first()
-    collection.description = "Updated description"
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    session.refresh(collection)
-    assert collection.description == "Updated description"
+    
+    collection = Collection(name="testcollection", description="A test collection", category="test", user_id=user.user_id)
+    session.add(collection)
+    session.commit()
+    
+    db_collection = session.exec(select(Collection).where(Collection.name == "testcollection")).first()
+    db_collection.description = "Updated description"
+    session.commit()
+    session.refresh(db_collection)
+    assert db_collection.description == "Updated description"
 
 def test_delete_collection(session):
-    collection = session.query(Collection).filter(Collection.name == "testcollection").first()
-    session.delete(collection)
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    collection = session.query(Collection).filter(Collection.name == "testcollection").first()
-    assert collection is None
+    
+    collection = Collection(name="testcollection", description="A test collection", category="test", user_id=user.user_id)
+    session.add(collection)
+    session.commit()
+    
+    db_collection = session.exec(select(Collection).where(Collection.name == "testcollection")).first()
+    session.delete(db_collection)
+    session.commit()
+    deleted_collection = session.exec(select(Collection).where(Collection.name == "testcollection")).first()
+    assert deleted_collection is None
 
 # Item Model Tests
 def test_create_item(session):
-    collection = session.query(Collection).filter(Collection.name == "testcollection").first()
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
+    session.commit()
+    
+    collection = Collection(name="testcollection", description="A test collection", category="test", user_id=user.user_id)
+    session.add(collection)
+    session.commit()
+    
     item = Item(name="testitem", collection_id=collection.collection_id)
     session.add(item)
     session.commit()
@@ -125,27 +188,66 @@ def test_create_item(session):
     assert item.name == "testitem"
 
 def test_read_item(session):
-    item = session.query(Item).filter(Item.name == "testitem").first()
-    assert item is not None
-    assert item.name == "testitem"
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
+    session.commit()
+    
+    collection = Collection(name="testcollection", description="A test collection", category="test", user_id=user.user_id)
+    session.add(collection)
+    session.commit()
+    
+    item = Item(name="testitem", collection_id=collection.collection_id)
+    session.add(item)
+    session.commit()
+    
+    db_item = session.exec(select(Item).where(Item.name == "testitem")).first()
+    assert db_item is not None
+    assert db_item.name == "testitem"
 
 def test_update_item(session):
-    item = session.query(Item).filter(Item.name == "testitem").first()
-    item.name = "updateditem"
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    session.refresh(item)
-    assert item.name == "updateditem"
+    
+    collection = Collection(name="testcollection", description="A test collection", category="test", user_id=user.user_id)
+    session.add(collection)
+    session.commit()
+    
+    item = Item(name="testitem", collection_id=collection.collection_id)
+    session.add(item)
+    session.commit()
+    
+    db_item = session.exec(select(Item).where(Item.name == "testitem")).first()
+    db_item.name = "updateditem"
+    session.commit()
+    session.refresh(db_item)
+    assert db_item.name == "updateditem"
 
 def test_delete_item(session):
-    item = session.query(Item).filter(Item.name == "testitem").first()
-    session.delete(item)
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    item = session.query(Item).filter(Item.name == "testitem").first()
-    assert item is None
+    
+    collection = Collection(name="testcollection", description="A test collection", category="test", user_id=user.user_id)
+    session.add(collection)
+    session.commit()
+    
+    item = Item(name="testitem", collection_id=collection.collection_id)
+    session.add(item)
+    session.commit()
+    
+    db_item = session.exec(select(Item).where(Item.name == "testitem")).first()
+    session.delete(db_item)
+    session.commit()
+    deleted_item = session.exec(select(Item).where(Item.name == "testitem")).first()
+    assert deleted_item is None
 
 # NameList Model Tests
 def test_create_namelist(session):
-    user = session.query(User).filter(User.username == "testuser2").first()
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
+    session.commit()
+    
     namelist = NameList(name="testnamelist", names=["name1", "name2"], user_id=user.user_id)
     session.add(namelist)
     session.commit()
@@ -154,20 +256,44 @@ def test_create_namelist(session):
     assert namelist.name == "testnamelist"
 
 def test_read_namelist(session):
-    namelist = session.query(NameList).filter(NameList.name == "testnamelist").first()
-    assert namelist is not None
-    assert namelist.name == "testnamelist"
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
+    session.commit()
+    
+    namelist = NameList(name="testnamelist", names=["name1", "name2"], user_id=user.user_id)
+    session.add(namelist)
+    session.commit()
+    
+    db_namelist = session.exec(select(NameList).where(NameList.name == "testnamelist")).first()
+    assert db_namelist is not None
+    assert db_namelist.name == "testnamelist"
 
 def test_update_namelist(session):
-    namelist = session.query(NameList).filter(NameList.name == "testnamelist").first()
-    namelist.names = ["name3", "name4"]
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    session.refresh(namelist)
-    assert namelist.names == ["name3", "name4"]
+    
+    namelist = NameList(name="testnamelist", names=["name1", "name2"], user_id=user.user_id)
+    session.add(namelist)
+    session.commit()
+    
+    db_namelist = session.exec(select(NameList).where(NameList.name == "testnamelist")).first()
+    db_namelist.names = ["name3", "name4"]
+    session.commit()
+    session.refresh(db_namelist)
+    assert db_namelist.names == ["name3", "name4"]
 
 def test_delete_namelist(session):
-    namelist = session.query(NameList).filter(NameList.name == "testnamelist").first()
-    session.delete(namelist)
+    user = User(username="testuser", email="testuser@example.com", hashed_password="hashedpassword")
+    session.add(user)
     session.commit()
-    namelist = session.query(NameList).filter(NameList.name == "testnamelist").first()
-    assert namelist is None
+    
+    namelist = NameList(name="testnamelist", names=["name1", "name2"], user_id=user.user_id)
+    session.add(namelist)
+    session.commit()
+    
+    db_namelist = session.exec(select(NameList).where(NameList.name == "testnamelist")).first()
+    session.delete(db_namelist)
+    session.commit()
+    deleted_namelist = session.exec(select(NameList).where(NameList.name == "testnamelist")).first()
+    assert deleted_namelist is None

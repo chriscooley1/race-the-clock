@@ -61,8 +61,10 @@ class Sequence(SequenceBase, table=True):
     user_id: int = Field(foreign_key="users.user_id")
     user: User = Relationship(back_populates="sequences")
 
-class SequenceCreate(SequenceBase):
-    pass
+class SequenceCreate(SQLModel):
+    name: str
+    description: str
+    user_id: str  # Change this to str to match the username
 
 # Collection Models
 class CollectionBase(SQLModel):
