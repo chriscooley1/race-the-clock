@@ -6,7 +6,7 @@ import "./DiscoverCollections.css";
 import "../../App.css"; 
 import { useAuth0 } from "@auth0/auth0-react";
 import { Collection as APICollection } from "../../api";  // Import the API Collection type
-import axios from 'axios';
+import axios from "axios";
 
 interface Item {
   id: number;

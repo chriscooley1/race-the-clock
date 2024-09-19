@@ -7,7 +7,7 @@ import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNav
 import EditCollectionModal from "../../components/EditCollectionModal/EditCollectionModal";
 import "./YourCollections.css";
 import "../../App.css";
-import axios from 'axios';
+import axios from "axios";
 
 interface Collection {
   collection_id: number;

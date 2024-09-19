@@ -8,7 +8,7 @@ from database import get_engine, get_db
 from models import User
 import jwt
 
-# Remove the import of 'engine' from main, as it's no longer there
+# Remove the import of "engine" from main, as it's no longer there
 
 @pytest.fixture(scope="module")
 def engine():
@@ -104,7 +104,7 @@ def test_get_sequences(authenticated_client):
     user = user_response.json()
     print(f"User data: {user}")
 
-    username = user['username']
+    username = user["username"]
     print(f"Fetching sequences for username: {username}")
     
     response = authenticated_client.get(f"/users/{username}/sequences")

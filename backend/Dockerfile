@@ -23,8 +23,8 @@ COPY . .
 ENV PYTHONUNBUFFERED=1
 
 # Create a shell script to run the application
-RUN echo '#!/bin/bash' > /app/start.sh && \
-    echo 'exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}' >> /app/start.sh && \
+RUN echo "#!/bin/bash" > /app/start.sh && \
+    echo "exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}" >> /app/start.sh && \
     chmod +x /app/start.sh
 
 # Run the application
