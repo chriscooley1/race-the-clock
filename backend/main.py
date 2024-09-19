@@ -29,13 +29,24 @@ FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://race-the-clock-frontend-p
 ALLOWED_ORIGINS = [FRONTEND_URL, "http://localhost:3000"]  # Add any other necessary origins
 ALGORITHM = "HS256"
 
+TESTING = os.environ.get("TESTING", "False") == "True"
+
+if TESTING:
+    DATABASE_URL = "sqlite:///./test.db"
+else:
+    DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL is not set")
+
 # Configure connection pool and other database settings
 engine = create_engine(
     DATABASE_URL,
-    pool_size=10,          # Set the pool size
-    max_overflow=20,       # Set max overflow connections
-    pool_timeout=30,       # Timeout before the connection is dropped
-    pool_recycle=3600,     # Recycle connections after an hour
+    pool_size=10 if not TESTING else None,
+    max_overflow=20 if not TESTING else None,
+    pool_timeout=30 if not TESTING else None,
+    pool_recycle=3600 if not TESTING else None,
+    connect_args={"check_same_thread": False} if TESTING else {}
 )
 
 # Create database tables
@@ -43,7 +54,11 @@ SQLModel.metadata.create_all(engine)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
+
+async def lifespan(app: FastAPI):
+    create_db_and_tables()
+    yield
 
 # Single middleware function to log requests
 @app.middleware("http")
@@ -398,6 +413,12 @@ async def search_collections(
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+if not TESTING:
+    create_db_and_tables()
 
 # Add this at the end of your file
 if __name__ == "__main__":

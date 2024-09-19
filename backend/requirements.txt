@@ -13,3 +13,5 @@ bcrypt
 fastapi-cors
 pytz
 requests
+pytest 
+pytest-asyncio
