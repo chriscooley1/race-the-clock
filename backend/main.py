@@ -12,7 +12,7 @@ import os
 from passlib.context import CryptContext
 import requests
 import pytz
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 import time
 
@@ -431,7 +431,7 @@ def wait_for_db(engine, max_retries=5, retry_interval=5):
     for attempt in range(max_retries):
         try:
             with engine.connect() as conn:
-                conn.execute("SELECT 1")
+                conn.execute(text("SELECT 1"))
             logger.info("Successfully connected to the database")
             return
         except OperationalError as e:
