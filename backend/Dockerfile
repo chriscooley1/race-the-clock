@@ -24,8 +24,16 @@ ENV PYTHONUNBUFFERED=1
 
 # Create a shell script to run the application
 RUN echo "#!/bin/bash" > /app/start.sh && \
+    echo "alembic upgrade head" >> /app/start.sh && \
     echo "exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}" >> /app/start.sh && \
     chmod +x /app/start.sh
+
+# Add a non-root user for better security
+RUN adduser --disabled-password --gecos '' appuser
+USER appuser
+
+# Health check
+HEALTHCHECK CMD curl --fail http://localhost:${PORT:-8080}/health || exit 1
 
 # Run the application
 CMD ["/bin/bash", "/app/start.sh"]
