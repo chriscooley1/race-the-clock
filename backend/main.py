@@ -13,6 +13,8 @@ from passlib.context import CryptContext
 import requests
 import pytz
 from sqlalchemy import create_engine
+from sqlalchemy.exc import OperationalError
+import time
 
 from database import get_db
 
@@ -26,7 +28,8 @@ AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN")
 AUTH0_AUDIENCE = os.environ.get("AUTH0_AUDIENCE")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://race-the-clock-frontend-production.up.railway.app")
-ALLOWED_ORIGINS = [FRONTEND_URL, "http://localhost:3000"]  # Add any other necessary origins
+LOCAL_FRONTEND_URL = os.environ.get("LOCAL_FRONTEND_URL", "http://localhost:5173")
+ALLOWED_ORIGINS = [FRONTEND_URL, LOCAL_FRONTEND_URL]
 ALGORITHM = "HS256"
 
 TESTING = os.environ.get("TESTING", "False") == "True"
@@ -35,9 +38,17 @@ if TESTING:
     DATABASE_URL = "sqlite:///./test.db"
 else:
     DATABASE_URL = os.environ.get("DATABASE_URL")
+    if not DATABASE_URL:
+        # Construct DATABASE_URL from individual components
+        db_user = os.environ.get("POSTGRES_USER")
+        db_pass = os.environ.get("POSTGRES_PASSWORD")
+        db_name = os.environ.get("POSTGRES_DB")
+        db_host = os.environ.get("DB_HOST", "db")  # default to 'db' for Docker
+        db_port = os.environ.get("DB_PORT", "5432")
+        DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
 
 if not DATABASE_URL:
-    raise ValueError("DATABASE_URL is not set")
+    raise ValueError("DATABASE_URL is not set and could not be constructed from individual components")
 
 # Configure connection pool and other database settings
 engine = create_engine(
@@ -415,6 +426,23 @@ def create_db_and_tables():
 
 if not TESTING:
     create_db_and_tables()
+
+def wait_for_db(engine, max_retries=5, retry_interval=5):
+    for attempt in range(max_retries):
+        try:
+            with engine.connect() as conn:
+                conn.execute("SELECT 1")
+            logger.info("Successfully connected to the database")
+            return
+        except OperationalError as e:
+            logger.warning(f"Database connection attempt {attempt + 1} failed: {str(e)}")
+            if attempt + 1 == max_retries:
+                logger.error("Max retries reached. Could not connect to the database.")
+                raise
+            time.sleep(retry_interval)
+
+# Use this function after creating the engine
+wait_for_db(engine)
 
 # Add this at the end of your file
 if __name__ == "__main__":
