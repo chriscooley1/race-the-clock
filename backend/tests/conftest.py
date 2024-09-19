@@ -1,42 +1,37 @@
 import os
-import sys
 import pytest
-from sqlmodel import SQLModel, Session, create_engine
-from fastapi.testclient import TestClient
-from main import app, get_db
-
-# Add the parent directory to the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from sqlalchemy.orm import sessionmaker
+from sqlmodel import SQLModel
+from main import app
+from database import get_db, get_engine
 
 # Set the TESTING environment variable
 os.environ["TESTING"] = "True"
 
-# Create a test database
-DATABASE_URL = "sqlite:///./test.db"
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+# Get the test engine
+test_engine = get_engine()
 
-# Create the test database and tables
-@pytest.fixture(scope="module", autouse=True)
-def create_test_db():
-    SQLModel.metadata.create_all(engine)
+@pytest.fixture(scope="session", autouse=True)
+def setup_test_db():
+    SQLModel.metadata.create_all(test_engine)
     yield
-    SQLModel.metadata.drop_all(engine)
+    SQLModel.metadata.drop_all(test_engine)
 
-# Provide a database session for each test
-@pytest.fixture
-def session():
-    with Session(engine) as session:
-        yield session
+@pytest.fixture(scope="function")
+def db_session():
+    connection = test_engine.connect()
+    transaction = connection.begin()
+    session = sessionmaker(bind=connection)()
+    yield session
+    session.close()
+    transaction.rollback()
+    connection.close()
 
-# Override the get_db dependency to use the test database
-def override_get_db():
-    with Session(engine) as session:
-        yield session
-
-app.dependency_overrides[get_db] = override_get_db
-
-# Provide a test client for the FastAPI app
-@pytest.fixture
-def client():
-    with TestClient(app) as client:
-        yield client
+@pytest.fixture(scope="function")
+def client(db_session):
+    def override_get_db():
+        yield db_session
+    app.dependency_overrides[get_db] = override_get_db
+    from fastapi.testclient import TestClient
+    yield TestClient(app)
+    del app.dependency_overrides[get_db]

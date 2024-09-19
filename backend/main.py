@@ -16,7 +16,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 import time
 
-from database import get_db
+from database import get_db, get_engine
 
 # Logging setup
 logging.basicConfig(level=logging.INFO)
@@ -33,35 +33,6 @@ ALLOWED_ORIGINS = [FRONTEND_URL, LOCAL_FRONTEND_URL]
 ALGORITHM = "HS256"
 
 TESTING = os.environ.get("TESTING", "False") == "True"
-
-if TESTING:
-    DATABASE_URL = "sqlite:///./test.db"
-else:
-    DATABASE_URL = os.environ.get("DATABASE_URL")
-    if not DATABASE_URL:
-        # Construct DATABASE_URL from individual components
-        db_user = os.environ.get("POSTGRES_USER")
-        db_pass = os.environ.get("POSTGRES_PASSWORD")
-        db_name = os.environ.get("POSTGRES_DB")
-        db_host = os.environ.get("DB_HOST", "db")  # default to 'db' for Docker
-        db_port = os.environ.get("DB_PORT", "5432")
-        DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
-
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL is not set and could not be constructed from individual components")
-
-# Configure connection pool and other database settings
-engine = create_engine(
-    DATABASE_URL,
-    pool_size=10 if not TESTING else None,
-    max_overflow=20 if not TESTING else None,
-    pool_timeout=30 if not TESTING else None,
-    pool_recycle=3600 if not TESTING else None,
-    connect_args={"check_same_thread": False} if TESTING else {}
-)
-
-# Create database tables
-SQLModel.metadata.create_all(engine)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -421,31 +392,10 @@ async def search_collections(
 def health_check():
     return {"status": "healthy"}
 
-def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
-
-if not TESTING:
-    create_db_and_tables()
-
-def wait_for_db(engine, max_retries=5, retry_interval=5):
-    for attempt in range(max_retries):
-        try:
-            with engine.connect() as conn:
-                conn.execute(text("SELECT 1"))
-            logger.info("Successfully connected to the database")
-            return
-        except OperationalError as e:
-            logger.warning(f"Database connection attempt {attempt + 1} failed: {str(e)}")
-            if attempt + 1 == max_retries:
-                logger.error("Max retries reached. Could not connect to the database.")
-                raise
-            time.sleep(retry_interval)
-
-# Use this function after creating the engine
-wait_for_db(engine)
-
-# Add this at the end of your file
 if __name__ == "__main__":
+    from sqlmodel import SQLModel
+    engine = get_engine()
+    SQLModel.metadata.create_all(engine)
     import uvicorn
     port = int(os.environ.get("PORT", 8080))
     uvicorn.run("main:app", host="0.0.0.0", port=port, log_level="info")
