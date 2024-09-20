@@ -10,6 +10,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     base: "/",
     define: {
       "process.env": env,
+      "import.meta.env": JSON.stringify(env),
       "import.meta.env.VITE_AUTH0_DOMAIN": JSON.stringify(env.VITE_AUTH0_DOMAIN),
       "import.meta.env.VITE_AUTH0_CLIENT_ID": JSON.stringify(env.VITE_AUTH0_CLIENT_ID),
       "import.meta.env.VITE_AUTH0_AUDIENCE": JSON.stringify(env.VITE_AUTH0_AUDIENCE),
