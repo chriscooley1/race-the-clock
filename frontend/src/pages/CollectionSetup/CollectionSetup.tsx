@@ -81,7 +81,7 @@ const CollectionSetup: React.FC = () => {
         if (category === "Number Sense") {
           const images = generateNumberSenseImages(itemCount);
           setNumberSenseItems(images);
-          generatedSequence = images.map((_, index) => `Number Sense Image ${index + 1}`);
+          generatedSequence = images.map((image, index) => `Number Sense Image ${index + 1} (Count: ${image.count})`);
         } else {
           console.error("Number Sense selected but category is not set correctly");
         }

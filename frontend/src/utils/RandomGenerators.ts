@@ -46,11 +46,14 @@ export const generateMathProblems = (count: number, operation: keyof typeof oper
 };
 
 export function generateNumberSenseImages(count: number): { url: string; svg: string; count: number }[] {
-  return Array.from({ length: count }, (_, i) => ({
-    url: generateCountingSvg(i + 1),
-    svg: generateCountingSvg(i + 1),
-    count: i + 1
-  }));
+  return Array.from({ length: count }, () => {
+    const randomCount = Math.floor(Math.random() * count) + 1;
+    return {
+      url: generateCountingSvg(randomCount),
+      svg: generateCountingSvg(randomCount),
+      count: randomCount
+    };
+  });
 }
 
 function generateCountingSvg(count: number): string {
