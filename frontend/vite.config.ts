@@ -9,8 +9,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     plugins: [react()],
     base: "/",
     define: {
-      "process.env": env,
-      "import.meta.env": JSON.stringify(env),
+      "import.meta.env.MODE": JSON.stringify(mode),
       "import.meta.env.VITE_AUTH0_DOMAIN": JSON.stringify(env.VITE_AUTH0_DOMAIN),
       "import.meta.env.VITE_AUTH0_CLIENT_ID": JSON.stringify(env.VITE_AUTH0_CLIENT_ID),
       "import.meta.env.VITE_AUTH0_AUDIENCE": JSON.stringify(env.VITE_AUTH0_AUDIENCE),
@@ -36,13 +35,13 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     },
     server: {
       host: "0.0.0.0",
-      port: parseInt(process.env.PORT || "5173"),
+      port: parseInt(env.PORT || "5173"),
       watch: {
         usePolling: true,
       },
     },
     preview: {
-      port: parseInt(process.env.PORT || "5173"),
+      port: parseInt(env.PORT || "5173"),
       host: "0.0.0.0",
     },
     resolve: {
