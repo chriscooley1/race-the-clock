@@ -397,7 +397,23 @@ def create_db_and_tables():
     engine = get_engine()
     SQLModel.metadata.create_all(engine)
 
+def wait_for_db(db_url, max_retries=5, retry_interval=5):
+    retries = 0
+    while retries < max_retries:
+        try:
+            engine = create_engine(db_url)
+            engine.connect()
+            logger.info("Successfully connected to the database")
+            return
+        except OperationalError:
+            retries += 1
+            logger.warning(f"Database connection attempt {retries} failed. Retrying in {retry_interval} seconds...")
+            time.sleep(retry_interval)
+    
+    raise Exception("Could not connect to the database after multiple attempts")
+
 if __name__ == "__main__":
+    wait_for_db(DATABASE_URL)
     create_db_and_tables()
     import uvicorn
     port = int(os.environ.get("PORT", 8080))

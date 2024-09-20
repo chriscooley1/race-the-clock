@@ -8,6 +8,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     libpq-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file into the container
@@ -24,8 +25,9 @@ ENV PYTHONUNBUFFERED=1
 
 # Create a shell script to run the application
 RUN echo "#!/bin/bash" > /app/start.sh && \
+    echo "python wait-for-db.py" >> /app/start.sh && \
     echo "alembic upgrade head" >> /app/start.sh && \
-    echo "exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}" >> /app/start.sh && \
+    echo "exec uvicorn main:app --host 0.0.0.0 --port \${PORT:-8080}" >> /app/start.sh && \
     chmod +x /app/start.sh
 
 # Add a non-root user for better security
