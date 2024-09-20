@@ -29,7 +29,7 @@ RUN echo "#!/bin/bash" > /app/start.sh && \
     chmod +x /app/start.sh
 
 # Add a non-root user for better security
-RUN adduser --disabled-password --gecos '' appuser
+RUN adduser --disabled-password --gecos "" appuser
 USER appuser
 
 # Health check
