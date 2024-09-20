@@ -9,7 +9,7 @@ interface Auth0ProviderWithHistoryProps {
 const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ children }) => {
   const navigate = useNavigate();
 
-  console.log("Environment:", import.meta.env.MODE);
+  console.log("All environment variables:", import.meta.env);
   console.log("Auth0 Domain:", import.meta.env.VITE_AUTH0_DOMAIN);
   console.log("Auth0 Client ID:", import.meta.env.VITE_AUTH0_CLIENT_ID);
   console.log("Auth0 Callback URL:", import.meta.env.VITE_AUTH0_CALLBACK_URL);
@@ -17,21 +17,37 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
   console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
 
   const onRedirectCallback = (appState?: any) => {
-    navigate(appState?.returnTo || window.location.pathname);
+    let redirectTo = appState?.returnTo || localStorage.getItem("preLoginPath") || "/your-collections";
+  
+    // Check if the redirectTo path is valid
+    const validRoutes = [
+      "/your-collections",
+      "/new-collection",
+      "/discover-collections",
+      "/fullscreen-display",
+      "/collection-setup",
+      "/collection-final-step",
+      "/name-generator",
+      "/resources",
+      "/settings",
+      "/my-account"
+    ];
+  
+    if (!validRoutes.includes(redirectTo)) {
+      redirectTo = "/";
+    }
+  
+    navigate(redirectTo);
+    localStorage.removeItem("preLoginPath");
   };
-
-  if (!import.meta.env.VITE_AUTH0_DOMAIN || !import.meta.env.VITE_AUTH0_CLIENT_ID || !import.meta.env.VITE_AUTH0_CALLBACK_URL || !import.meta.env.VITE_AUTH0_AUDIENCE) {
-    console.error("Missing Auth0 configuration. Please check your environment variables.");
-    return null;
-  }
 
   return (
     <Auth0Provider
-      domain={import.meta.env.VITE_AUTH0_DOMAIN}
-      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+      domain={import.meta.env.VITE_AUTH0_DOMAIN || "dev-kooql0161qbynbss.us.auth0.com"}
+      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID || "ujXLWixZB1n2MQwqHiSRNMQMMGMOD7bQ"}
       authorizationParams={{
-        redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL,
-        audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+        redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL || "https://race-the-clock-frontend-production.up.railway.app/callback",
+        audience: import.meta.env.VITE_AUTH0_AUDIENCE || "https://dev-kooql0161qbynbss.us.auth0.com/api/v2/",
         scope: "openid profile email",
       }}
       onRedirectCallback={onRedirectCallback}
