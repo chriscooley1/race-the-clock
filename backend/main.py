@@ -53,29 +53,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI()
 
-# Get the environment (development or production)
-ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
-
-if ENVIRONMENT == "production":
-    allowed_origins = [
-        "https://race-the-clock-frontend-production.up.railway.app"
-    ]
-else:
-    allowed_origins = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:5173",  # Vite's default port
-        "http://127.0.0.1:5173"
-    ]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # Single middleware function to log requests
 @app.middleware("http")
 async def log_requests(request, call_next):
@@ -87,6 +64,14 @@ async def log_requests(request, call_next):
     except Exception as e:
         logger.error(f"Error processing request: {type(e).__name__}")
         raise
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Auth0 token validation
 async def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
