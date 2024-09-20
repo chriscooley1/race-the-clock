@@ -56,13 +56,13 @@ app = FastAPI()
 # Single middleware function to log requests
 @app.middleware("http")
 async def log_requests(request, call_next):
-    logger.info(f"Received request: {request.method} {request.url}")
+    logger.info(f"Received request: {request.method} {request.url.path}")
     try:
         response = await call_next(request)
         logger.info(f"Sending response: Status {response.status_code}")
         return response
     except Exception as e:
-        logger.error(f"Error processing request: {str(e)}")
+        logger.error(f"Error processing request: {type(e).__name__}")
         raise
 
 app.add_middleware(
@@ -83,11 +83,7 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
     )
     try:
         token = authorization.split(" ")[1]
-        logger.info(f"Token extracted: {token[:10]}...")  # Log first 10 chars of token
         jwks_url = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
-        
-        # Logging the JWKS URL
-        logger.info(f"Fetching JWKS from URL: {jwks_url}")
         
         jwks = requests.get(jwks_url).json()
         rsa_key = {}
@@ -118,14 +114,14 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
     except ExpiredSignatureError:
         logger.warning("Token has expired")
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired")
-    except JWTClaimsError as e:
-        logger.warning(f"Invalid claims: {str(e)}")
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Invalid claims: {str(e)}")
-    except JWTError as e:
-        logger.warning(f"JWT Error: {str(e)}")
+    except JWTClaimsError:
+        logger.warning("Invalid claims")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid claims")
+    except JWTError:
+        logger.warning("JWT Error")
         raise credentials_exception
     except Exception as e:
-        logger.error(f"Unexpected error during token validation: {str(e)}")
+        logger.error(f"Unexpected error during token validation: {type(e).__name__}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
 
     # Check if user exists, if not, create the user
@@ -143,7 +139,7 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
 # User Endpoints
 @app.get("/users/me/", response_model=User)
 async def read_users_me(current_user: User = Depends(get_current_user)):
-    logger.info(f"Current user: {current_user}")
+    logger.info(f"Fetched current user: {current_user.username}")
     return current_user
 
 @app.get("/users/{user_id}/sequences", response_model=List[Sequence])
