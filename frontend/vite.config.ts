@@ -14,6 +14,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       "import.meta.env.VITE_AUTH0_CLIENT_ID": JSON.stringify(env.VITE_AUTH0_CLIENT_ID),
       "import.meta.env.VITE_AUTH0_AUDIENCE": JSON.stringify(env.VITE_AUTH0_AUDIENCE),
       "import.meta.env.VITE_API_BASE_URL": JSON.stringify(env.VITE_API_BASE_URL),
+      "import.meta.env.VITE_AUTH0_CALLBACK_URL": JSON.stringify(env.VITE_AUTH0_CALLBACK_URL),
     },
     build: {
       rollupOptions: {

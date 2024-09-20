@@ -9,6 +9,12 @@ interface Auth0ProviderWithHistoryProps {
 const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ children }) => {
   const navigate = useNavigate();
 
+  console.log("Auth0 Domain:", import.meta.env.VITE_AUTH0_DOMAIN);
+  console.log("Auth0 Client ID:", import.meta.env.VITE_AUTH0_CLIENT_ID);
+  console.log("Auth0 Callback URL:", import.meta.env.VITE_AUTH0_CALLBACK_URL);
+  console.log("Auth0 Audience:", import.meta.env.VITE_AUTH0_AUDIENCE);
+  console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
+
   const onRedirectCallback = (appState?: any) => {
     let redirectTo = appState?.returnTo || localStorage.getItem("preLoginPath") || "/your-collections";
   
@@ -39,7 +45,7 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
       domain={import.meta.env.VITE_AUTH0_DOMAIN}
       clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: import.meta.env.VITE_AUTH0_REDIRECT_URI || window.location.origin,
+        redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL || window.location.origin,
         audience: import.meta.env.VITE_AUTH0_AUDIENCE,
         scope: "openid profile email",
       }}
