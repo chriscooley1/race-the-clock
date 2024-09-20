@@ -19,8 +19,23 @@ import time
 from database import get_db, get_engine
 
 # Logging setup
+class MountainTimeFormatter(logging.Formatter):
+    def converter(self, timestamp):
+        dt = datetime.fromtimestamp(timestamp)
+        return TIMEZONE.localize(dt)
+
+    def formatTime(self, record, datefmt=None):
+        dt = self.converter(record.created)
+        if datefmt:
+            return dt.strftime(datefmt)
+        return dt.isoformat()
+
+# Update the logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+handler.setFormatter(MountainTimeFormatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+logger.addHandler(handler)
 
 # Set up environment configuration directly
 DATABASE_URL = os.environ.get("DATABASE_URL")
@@ -206,9 +221,8 @@ async def create_collection(
     db: Session = Depends(get_db), 
     current_user: User = Depends(get_current_user)
 ):
-    # Convert the current UTC time to MST
-    utc_time = datetime.utcnow()
-    mst_time = utc_time.astimezone(pytz.timezone("America/Denver"))
+    # Get the current time in Mountain Time
+    mst_time = datetime.now(TIMEZONE)
     
     db_collection = Collection(
         name=collection.name,
@@ -216,7 +230,7 @@ async def create_collection(
         status=collection.status or "private",  
         category=collection.category,
         user_id=current_user.user_id,
-        created_at=mst_time  # Set the created_at time to MST
+        created_at=mst_time  # Set the created_at time to Mountain Time
     )
     db.add(db_collection)
     db.commit()

@@ -3,7 +3,20 @@ from typing import List, Optional
 from datetime import datetime
 from pydantic import BaseModel
 import pytz
-import sqlalchemy as sa  
+import sqlalchemy as sa
+from sqlalchemy import Column, DateTime
+from sqlalchemy.sql import func
+from sqlalchemy.types import TypeDecorator
+
+# Add this custom type for Mountain Time
+class MountainDateTime(TypeDecorator):
+    impl = DateTime
+    def process_bind_param(self, value, dialect):
+        if value is not None:
+            return value.astimezone(pytz.UTC)
+    def process_result_value(self, value, dialect):
+        if value is not None:
+            return pytz.UTC.localize(value).astimezone(pytz.timezone("America/Denver"))
 
 class UserCreate(BaseModel):
     username: str
@@ -83,7 +96,7 @@ class Collection(SQLModel, table=True):
     category: str
     user: User = Relationship(back_populates="collections")
     items: List["Item"] = Relationship(back_populates="collection")
-    created_at: datetime = Field(default_factory=lambda: datetime.now(pytz.timezone("America/Denver")))
+    created_at: datetime = Field(sa_column=Column(MountainDateTime, server_default=func.now()))
 
 class CollectionCreate(SQLModel):
     name: str
