@@ -9,9 +9,7 @@ interface Auth0ProviderWithHistoryProps {
 const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ children }) => {
   const navigate = useNavigate();
 
-  const isDevelopment = import.meta.env.MODE === 'development';
-
-  console.log("Environment:", import.meta.env.MODE);
+  console.log("All environment variables:", import.meta.env);
   console.log("Auth0 Domain:", import.meta.env.VITE_AUTH0_DOMAIN);
   console.log("Auth0 Client ID:", import.meta.env.VITE_AUTH0_CLIENT_ID);
   console.log("Auth0 Callback URL:", import.meta.env.VITE_AUTH0_CALLBACK_URL);
@@ -43,17 +41,13 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
     localStorage.removeItem("preLoginPath");
   };
 
-  const callbackUrl = isDevelopment
-    ? 'http://localhost:5173/callback'
-    : import.meta.env.VITE_AUTH0_CALLBACK_URL || 'https://race-the-clock-frontend-production.up.railway.app/callback';
-
   return (
     <Auth0Provider
-      domain={import.meta.env.VITE_AUTH0_DOMAIN}
-      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+      domain={import.meta.env.VITE_AUTH0_DOMAIN || "dev-kooql0161qbynbss.us.auth0.com"}
+      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID || "ujXLWixZB1n2MQwqHiSRNMQMMGMOD7bQ"}
       authorizationParams={{
-        redirect_uri: callbackUrl,
-        audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+        redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL || "https://race-the-clock-frontend-production.up.railway.app/callback",
+        audience: import.meta.env.VITE_AUTH0_AUDIENCE || "https://dev-kooql0161qbynbss.us.auth0.com/api/v2/",
         scope: "openid profile email",
       }}
       onRedirectCallback={onRedirectCallback}
