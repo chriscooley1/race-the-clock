@@ -37,7 +37,6 @@ export const getCurrentUser = async (getAccessTokenSilently: () => Promise<strin
   try {
     console.log("Fetching access token for current user...");
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     const response = await axios.get(`${API_BASE_URL}/users/me/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -55,7 +54,6 @@ export const updateDisplayName = async (displayNamePayload: { display_name: stri
   try {
     console.log("Updating display name with payload:", displayNamePayload);
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     await axios.put(`${API_BASE_URL}/users/me/display_name`, displayNamePayload, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -69,7 +67,6 @@ export const getSequences = async (userId: string, getAccessTokenSilently: () =>
   try {
     console.log("Fetching sequences for user ID:", userId);
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     const response = await axios.get(
       `${API_BASE_URL}/users/${userId}/sequences`,
       {
@@ -88,7 +85,6 @@ export const createSequence = async (userId: string, name: string, sequence: str
   try {
     console.log("Creating sequence with name:", name);
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     const response = await axios.post(
       `${API_BASE_URL}/sequences`,
       { user_id: userId, name, description: sequence },
@@ -108,7 +104,6 @@ export const updateSequence = async (sequenceId: number, name: string, descripti
   try {
     console.log(`Updating sequence ID: ${sequenceId} with name: ${name}`);
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     const response = await axios.put(
       `${API_BASE_URL}/sequences/${sequenceId}`,
       { name, description },
@@ -128,7 +123,6 @@ export const deleteSequence = async (sequenceId: number, getAccessTokenSilently:
   try {
     console.log("Deleting sequence ID:", sequenceId);
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     const response = await axios.delete(
       `${API_BASE_URL}/sequences/${sequenceId}`,
       {
@@ -171,7 +165,6 @@ export const createCollection = async (userId: string, name: string, description
   try {
     console.log("Creating collection with name:", name);
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     const response = await axios.post(
       `${API_BASE_URL}/collections`,
       { user_id: userId, name, description },
@@ -191,7 +184,6 @@ export const updateCollection = async (collectionId: number, name: string, descr
   try {
     console.log(`Updating collection ID: ${collectionId} with name: ${name}`);
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     const response = await axios.put(
       `${API_BASE_URL}/collections/${collectionId}`,
       {
@@ -215,7 +207,6 @@ export const deleteCollection = async (collectionId: number, getAccessTokenSilen
   try {
     console.log("Deleting collection ID:", collectionId);
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     const response = await axios.delete(
       `${API_BASE_URL}/collections/${collectionId}`,
       {
@@ -234,7 +225,6 @@ export const saveCollection = async (userId: string, collectionName: string, ite
   try {
     console.log("Saving collection with name:", collectionName);
     const token = await getAccessTokenSilently();
-    console.log("Access token retrieved:", token);
     const response = await axios.post(
       `${API_BASE_URL}/collections`,
       {
