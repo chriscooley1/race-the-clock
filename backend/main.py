@@ -11,7 +11,7 @@ import logging
 import os
 from passlib.context import CryptContext
 import requests
-import pytz
+from pytz import timezone
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 import time
@@ -46,6 +46,9 @@ FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://race-the-clock-frontend-p
 LOCAL_FRONTEND_URL = os.environ.get("LOCAL_FRONTEND_URL", "http://localhost:5173")
 ALLOWED_ORIGINS = [FRONTEND_URL, LOCAL_FRONTEND_URL]
 ALGORITHM = "HS256"
+
+# Add this line to define TIMEZONE
+TIMEZONE = timezone("America/Denver")  # This is for Mountain Time
 
 TESTING = os.environ.get("TESTING", "False") == "True"
 
