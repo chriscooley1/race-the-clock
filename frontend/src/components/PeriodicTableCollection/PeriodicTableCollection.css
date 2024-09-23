@@ -1,0 +1,31 @@
+.periodic-table-collection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.element {
+  border: 2px solid #333;
+  padding: 20px;
+  text-align: center;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.element-symbol {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.element-name {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+.atomic-number {
+  font-size: 1.2rem;
+  margin-top: 5px;
+}

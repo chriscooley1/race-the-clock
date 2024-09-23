@@ -1,3 +1,5 @@
+import { periodicTable } from "./periodicTable";
+
 export const generateRandomLetters = (quantity: number): string[] => {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   let result: string[] = [];
@@ -78,3 +80,11 @@ function generateCountingSvg(count: number): string {
   `;
   return `data:image/svg+xml,${encodeURIComponent(svgContent)}`;
 }
+
+export const generatePeriodicTableElements = (count: number): string[] => {
+  const elements = Object.values(periodicTable);
+  const shuffled = elements.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count).map(element => 
+    JSON.stringify({ symbol: element.symbol, name: element.name, atomicNumber: element.atomicNumber })
+  );
+};

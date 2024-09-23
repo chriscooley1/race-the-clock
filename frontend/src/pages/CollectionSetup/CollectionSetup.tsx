@@ -8,12 +8,14 @@ import {
   generateFullAlphabet,
   generateNumbersOneToHundred,
   generateMathProblems,
-  generateNumberSenseImages
+  generateNumberSenseImages,
+  generatePeriodicTableElements
 } from "../../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
+import { periodicTable } from "../../utils/periodicTable"; // Ensure this import exists
 
-type Operation = "multiplication" | "addition" | "subtraction" | "division";
+type Operation = "multiplication" | "addition" | "subtraction" | "division" | "PeriodicElement";
 
 const CollectionSetup: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -72,7 +74,7 @@ const CollectionSetup: React.FC = () => {
         break;
       case "mathProblems":
         if (category === "Math Problems" && operation) {
-          generatedSequence = generateMathProblems(itemCount, operation);
+          generatedSequence = generateMathProblems(itemCount, operation as "multiplication" | "addition" | "subtraction" | "division");
         } else {
           console.error("Math Problems selected but category or operation is not set correctly");
         }
@@ -84,6 +86,13 @@ const CollectionSetup: React.FC = () => {
           generatedSequence = images.map((image, index) => `Number Sense Image ${index + 1} (Count: ${image.count})`);
         } else {
           console.error("Number Sense selected but category is not set correctly");
+        }
+        break;
+      case "periodicTable":
+        if (category === "Periodic Table") {
+          generatedSequence = generatePeriodicTableElements(itemCount);
+        } else {
+          console.error("Periodic Table selected but category is not set correctly");
         }
         break;
       default:
@@ -179,6 +188,7 @@ const CollectionSetup: React.FC = () => {
           <option value="numbersOneToHundred">Numbers 1-100</option>
           {category === "Math Problems" && <option value="mathProblems">Math Problems</option>}
           {category === "Number Sense" && <option value="numberSense">Random Pictures</option>}
+          {category === "Periodic Table" && <option value="periodicTable">Periodic Table</option>}
         </select>
       </div>
       {category === "Math Problems" && type === "mathProblems" && (

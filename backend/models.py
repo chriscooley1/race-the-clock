@@ -84,7 +84,7 @@ class CollectionBase(SQLModel):
     name: str
     description: str
     user_id: int
-    category: str
+    category: str = Field(..., description="Category of the collection")
 
 class Collection(SQLModel, table=True):
     __tablename__ = "collections"
