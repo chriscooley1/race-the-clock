@@ -28,6 +28,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [shuffledSequence, setShuffledSequence] = useState<CollectionItem[]>([]);
   const [isPaused, setIsPaused] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   const shuffleArray = (array: CollectionItem[]): CollectionItem[] => {
     return [...array].sort(() => Math.random() - 0.5);
@@ -63,12 +64,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   }, [onEnterFullScreen, onExitFullScreen, sequence, shuffle, theme, location.state]);
 
   useEffect(() => {
-    if (shuffledSequence.length > 0 && !isPaused) {
+    if (shuffledSequence.length > 0 && !isPaused && category !== "Math") {
       const interval = setInterval(() => {
-        if (category === "Number Sense") {
-          // For Number Sense, don't auto-advance
-          return;
-        }
         setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
       }, speed);
       setIntervalId(interval as unknown as number);
@@ -85,17 +82,23 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
+    if (category === "Math" && !showAnswer) {
+      setShowAnswer(true);
+    } else {
+      setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
+      setShowAnswer(false);
+    }
   };
 
   const handlePrevious = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIndex((prevIndex) => (prevIndex - 1 + shuffledSequence.length) % shuffledSequence.length);
+    setShowAnswer(false);
   };
 
-  const handleScreenClick = (e: React.MouseEvent) => {
-    if (category === "Number Sense") {
-      handleNext(e);
+  const handleScreenClick = () => {
+    if (category === "Math") {
+      handleNext({ stopPropagation: () => {} } as React.MouseEvent);
     }
   };
 
@@ -121,6 +124,11 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
               />
             )}
           </div>
+        ) : category === "Math" ? (
+          <>
+            <h1 className="fullscreen-text">{shuffledSequence[index]?.name || ""}</h1>
+            {showAnswer && <h2 className="fullscreen-text">{(shuffledSequence[index] as any)?.answer || ""}</h2>}
+          </>
         ) : (
           <h1 className="fullscreen-text">{shuffledSequence[index]?.name || ""}</h1>
         )}

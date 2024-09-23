@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
-import "./MathCollectionPage.css"; // We'll create this CSS file
+import "./MathCollectionPage.css";
 import Navbar from "../../components/Navbar/Navbar";
 
 interface MathProblem {
   id: number;
   name: string;
+  answer?: number; // Add this line
 }
 
 const MathCollectionPage: React.FC = () => {
@@ -63,6 +64,13 @@ const MathCollectionPage: React.FC = () => {
 
   const currentProblem = problems[currentIndex];
 
+  const getAnswer = (problem: string): number => {
+    if (currentProblem.answer !== undefined) {
+      return currentProblem.answer;
+    }
+    return eval(problem.replace("×", "*").replace("÷", "/"));
+  };
+
   return (
     <>
       <Navbar 
@@ -73,7 +81,7 @@ const MathCollectionPage: React.FC = () => {
         <h1 className="math-problem">{currentProblem.name}</h1>
         {showAnswer && (
           <h2 className="math-answer">
-            {eval(currentProblem.name.replace("×", "*").replace("÷", "/"))}
+            {getAnswer(currentProblem.name)}
           </h2>
         )}
         <button type="button" className="nav-button left" onClick={(e) => { e.stopPropagation(); handlePrevious(); }}>←</button>

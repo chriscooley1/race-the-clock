@@ -13,7 +13,6 @@ import {
 } from "../../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
-import { periodicTable } from "../../utils/periodicTable"; // Ensure this import exists
 
 type Operation = "multiplication" | "addition" | "subtraction" | "division" | "PeriodicElement";
 
@@ -50,6 +49,31 @@ const CollectionSetup: React.FC = () => {
     console.log("User data in state:", currentUser);
   }, [currentUser]);
 
+  useEffect(() => {
+    switch (category) {
+      case "Math":
+        setType("numbers");
+        break;
+      case "Language Arts":
+        setType("letters");
+        break;
+      case "Number Sense":
+        setType("numberSense");
+        break;
+      case "Periodic Table":
+        setType("periodicTable");
+        break;
+      default:
+        setType("letters");
+    }
+  }, [category]);
+
+  useEffect(() => {
+    if (type === "mathProblems" && !operation) {
+      setOperation("addition"); // Set a default operation
+    }
+  }, [type]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
@@ -60,11 +84,11 @@ const CollectionSetup: React.FC = () => {
   const generateRandomSequence = () => {
     let generatedSequence: string[] = [];
     switch (type) {
-      case "letters":
-        generatedSequence = generateRandomLetters(itemCount);
-        break;
       case "numbers":
         generatedSequence = generateRandomNumbers(itemCount);
+        break;
+      case "letters":
+        generatedSequence = generateRandomLetters(itemCount);
         break;
       case "alphabet":
         generatedSequence = generateFullAlphabet();
@@ -73,10 +97,10 @@ const CollectionSetup: React.FC = () => {
         generatedSequence = generateNumbersOneToHundred();
         break;
       case "mathProblems":
-        if (category === "Math Problems" && operation) {
-          generatedSequence = generateMathProblems(itemCount, operation as "multiplication" | "addition" | "subtraction" | "division");
+        if (operation && operation !== "PeriodicElement") {
+          generatedSequence = generateMathProblems(itemCount, operation);
         } else {
-          console.error("Math Problems selected but category or operation is not set correctly");
+          console.error("Math Problems selected but operation is not set or is PeriodicElement");
         }
         break;
       case "numberSense":
@@ -182,16 +206,28 @@ const CollectionSetup: React.FC = () => {
           value={type}
           onChange={(e) => setType(e.target.value)}
         >
-          <option value="letters">Letters</option>
-          <option value="numbers">Numbers</option>
-          <option value="alphabet">Full Alphabet</option>
-          <option value="numbersOneToHundred">Numbers 1-100</option>
-          {category === "Math Problems" && <option value="mathProblems">Math Problems</option>}
-          {category === "Number Sense" && <option value="numberSense">Random Pictures</option>}
-          {category === "Periodic Table" && <option value="periodicTable">Periodic Table</option>}
+          {category === "Math" && (
+            <>
+              <option value="numbers">Numbers</option>
+              <option value="numbersOneToHundred">Numbers 1-100</option>
+              <option value="mathProblems">Math Problems</option>
+            </>
+          )}
+          {category === "Language Arts" && (
+            <>
+              <option value="letters">Letters</option>
+              <option value="alphabet">Full Alphabet</option>
+            </>
+          )}
+          {category === "Number Sense" && (
+            <option value="numberSense">Random Pictures</option>
+          )}
+          {category === "Periodic Table" && (
+            <option value="periodicTable">Periodic Table</option>
+          )}
         </select>
       </div>
-      {category === "Math Problems" && type === "mathProblems" && (
+      {category === "Math" && type === "mathProblems" && (
         <div className="setup-centered-input">
           <label htmlFor="operationSelect">Operation:</label>
           <select
@@ -212,6 +248,7 @@ const CollectionSetup: React.FC = () => {
         type="button"
         onClick={generateRandomSequence}
         className="setup-styled-button"
+        disabled={type === "mathProblems" && !operation}
       >
         Generate Random Sequence
       </button>
