@@ -11,7 +11,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   onSelectCategory,
   selectedCategory,
 }) => {
-  const categories = ["All Collections", "Math", "Language Arts", "Number Sense"];
+  const categories = ["All Collections", "Math", "Language Arts", "Number Sense", "Periodic Table"];
 
   return (
     <div className="collections-navbar">
