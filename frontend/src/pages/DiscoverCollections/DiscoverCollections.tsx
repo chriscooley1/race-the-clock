@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import "./DiscoverCollections.css";
 import "../../App.css"; 
 import { useAuth0 } from "@auth0/auth0-react";
-import { Collection as APICollection } from "../../api";  // Import the API Collection type
+import { Collection as APICollection } from "../../api";
 import axios from "axios";
 
 interface Item {
@@ -83,8 +83,8 @@ const DiscoverCollections: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
       handleSearch();
     }
   };
@@ -109,11 +109,11 @@ const DiscoverCollections: React.FC = () => {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
           placeholder="Search by collection name or username"
           className="search-input"
         />
-        <button onClick={handleSearch} className="search-button">Search</button>
+        <button type="button" onClick={handleSearch} className="search-button">Search</button>
       </div>
       <div className="discover-collections-list">
         {collections.map((collection, index) => {

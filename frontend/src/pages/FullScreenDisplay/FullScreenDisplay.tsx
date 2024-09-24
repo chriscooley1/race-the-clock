@@ -33,7 +33,7 @@ interface FullScreenDisplayState {
 interface SequenceItem {
   name: string;
   answer: string;
-  svg: string; // Added svg property
+  svg: string;
 }
 
 const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
@@ -70,7 +70,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         ...item,
         id: index, // Use the index as a number id
         answer: item.name, // Use the name property instead of answer
-        svg: item.svg || '' // Provide a default empty string if svg is undefined
+        svg: item.svg || "" // Provide a default empty string if svg is undefined
       })));
     } else {
       console.error("Sequence is empty or undefined");

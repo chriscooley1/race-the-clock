@@ -4,10 +4,10 @@ import "./Settings.css";
 import "../../App.css";
 
 const colorOptions = [
-  "#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#9400d3", // Bright colors
-  "#ffffff", "#000000", "#fdfd96", "#2e8b57", "#ff69b4", "#8a2be2", "#008080", // Additional colors
-  "#ffc107", "#708090", "#ff00ff", "#e6e6fa", "#32cd32", "#00ffff", "#fbceb1", // More colors
-  "#00a86b", "#ff6f61", "#034f84", "#f0f8ff", "#333333" // Even more colors
+  "#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#9400d3",
+  "#ffffff", "#000000", "#fdfd96", "#2e8b57", "#ff69b4", "#8a2be2", "#008080",
+  "#ffc107", "#708090", "#ff00ff", "#e6e6fa", "#32cd32", "#00ffff", "#fbceb1",
+  "#00a86b", "#ff6f61", "#034f84", "#f0f8ff", "#333333"
 ];
 
 const Settings: React.FC = () => {

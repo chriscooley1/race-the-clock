@@ -1,6 +1,6 @@
 import axios from "axios";
 import { User } from "@auth0/auth0-react";
-import { AxiosError } from 'axios';
+import { AxiosError } from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://race-the-clock-backend-production.up.railway.app";
 console.log("Environment variables:", import.meta.env);
@@ -10,7 +10,7 @@ if (!API_BASE_URL) {
   console.error("VITE_API_BASE_URL is not set in the environment variables");
 }
 
-console.log("API_BASE_URL:", API_BASE_URL); // This will help debug the issue
+console.log("API_BASE_URL:", API_BASE_URL);
 
 interface Item {
   id: number;
@@ -19,7 +19,7 @@ interface Item {
 
 // Function to handle API errors
 const handleApiError = (error: unknown) => {
-  if (error instanceof Error && 'response' in error) {
+  if (error instanceof Error && "response" in error) {
     const response = (error as { response: { data: string; status: number } }).response;
     console.error("API Error:", response.data);
     if (response.status === 401) {
@@ -38,7 +38,6 @@ const handleApiError = (error: unknown) => {
   throw error;
 };
 
-// API function examples
 export const getCurrentUser = async (getAccessTokenSilently: () => Promise<string>): Promise<User> => {
   try {
     console.log("Fetching access token for current user...");
@@ -385,7 +384,6 @@ export const subscribeToCollection = async (
   }
 };
 
-// Add this new function
 export const searchPublicCollections = async (query: string) => {
   try {
     const response = await axios.get<Collection[]>(`${API_BASE_URL}/collections/search`, {

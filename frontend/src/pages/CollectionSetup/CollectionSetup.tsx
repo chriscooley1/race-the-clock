@@ -16,13 +16,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 type Operation = "multiplication" | "addition" | "subtraction" | "division" | "PeriodicElement";
 
-// Define an interface for the user
 interface User {
   username: string;
   id: string;
   name: string;
   email: string;
-  // Add other properties as needed
 }
 
 const CollectionSetup: React.FC = () => {
@@ -316,10 +314,10 @@ export default CollectionSetup;
 
 // Define the type guard function
 function isUser(user: unknown): user is User {
-  return typeof user === 'object' && user !== null && typeof (user as User).username === 'string';
+  return typeof user === "object" && user !== null && typeof (user as User).username === "string";
 }
 
 // Define the function to generate a unique ID
 function generateId(): string {
-  return Math.random().toString(36).substr(2, 9);
+  return Math.random().toString(36).slice(2, 11);
 }

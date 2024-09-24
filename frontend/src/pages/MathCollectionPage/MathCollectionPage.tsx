@@ -7,7 +7,7 @@ import Navbar from "../../components/Navbar/Navbar";
 interface MathProblem {
   id: number;
   name: string;
-  answer?: number; // Add this line
+  answer?: number;
 }
 
 const MathCollectionPage: React.FC = () => {
@@ -75,7 +75,7 @@ const MathCollectionPage: React.FC = () => {
     <>
       <Navbar 
         onBack={handleBack}
-        showBackButton={true}
+        hasBackButton={true}
       />
       <div className="math-collection-container" onClick={handleScreenClick}>
         <h1 className="math-problem">{currentProblem.name}</h1>

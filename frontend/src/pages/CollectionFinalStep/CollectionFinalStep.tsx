@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 // Define the generateId function
 function generateId(): string {
-  return Math.random().toString(36).substr(2, 9);
+  return Math.random().toString(36).slice(2, 11);
 }
 
 interface LocationState {
@@ -28,7 +28,6 @@ const CollectionFinalStep: React.FC = () => {
     id: string;
     name: string;
     username: string;
-    // Add other properties as needed
   }
   const [currentUser, setCurrentUser] = useState<User | null>(null); 
 
@@ -41,8 +40,8 @@ const CollectionFinalStep: React.FC = () => {
         const userWithId: User = { 
           ...fetchedUser, 
           id: fetchedUser.id || generateId(),
-          name: fetchedUser.name || "", // Ensure 'name' is a string
-          username: fetchedUser.username || "defaultUsername" // Ensure 'username' is present
+          name: fetchedUser.name || "",
+          username: fetchedUser.username || "defaultUsername" // Ensure "username" is present
         };
         setCurrentUser(userWithId);
       } catch (error) {
@@ -100,8 +99,8 @@ const CollectionFinalStep: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
       handleAddItem();
     }
   };
@@ -127,7 +126,7 @@ const CollectionFinalStep: React.FC = () => {
           title="Enter a new item to add to the collection"
           value={newItem}
           onChange={(e) => setNewItem(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
         />
         <button
           className="final-add-button"

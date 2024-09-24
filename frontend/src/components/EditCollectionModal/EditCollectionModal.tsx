@@ -6,7 +6,7 @@ interface EditCollectionModalProps {
   isOpen: boolean;
   onClose: () => void;
   collectionName: string;
-  items: string[]; // Assuming items are an array of strings
+  items: string[];
   onSave: (items: string[]) => void;
 }
 

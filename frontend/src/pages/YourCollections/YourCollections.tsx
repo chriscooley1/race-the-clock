@@ -17,7 +17,7 @@ interface Collection {
   category: string;
   user_id: number;
   creator_username: string;
-  items: Item[]; // Add this line
+  items: Item[];
 }
 interface Item {
   name: string;
@@ -44,7 +44,7 @@ const YourCollections: React.FC = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -138,7 +138,7 @@ const YourCollections: React.FC = () => {
           selectedCollection.collection_id,
           selectedCollection.name,
           updatedDescription,
-          selectedCollection.category, // Pass the category
+          selectedCollection.category,
           getAccessTokenSilently
         );
 

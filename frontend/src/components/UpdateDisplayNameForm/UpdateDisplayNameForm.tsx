@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { updateDisplayName } from "../../api"; // Make sure this function is correctly implemented
+import { updateDisplayName } from "../../api";
 import "./UpdateDisplayNameForm.css";
 
 const UpdateDisplayNameForm: React.FC = () => {
@@ -17,7 +17,7 @@ const UpdateDisplayNameForm: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleUpdateDisplayName();
     }
@@ -33,7 +33,7 @@ const UpdateDisplayNameForm: React.FC = () => {
           console.log("Display name input changed:", e.target.value);
           setDisplayName(e.target.value);
         }}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         placeholder="Enter your display name"
       />
       <button

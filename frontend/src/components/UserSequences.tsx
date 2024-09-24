@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getSequences } from "../api";
 
 const UserSequences: React.FC = () => {
   const { getAccessTokenSilently, user } = useAuth0();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       if (user?.sub) {
         console.log("Fetching sequences for user:", user.sub);
@@ -15,14 +15,11 @@ const UserSequences: React.FC = () => {
     } catch (error) {
       console.error("Error fetching sequences", error);
     }
-  };
+  }, [getAccessTokenSilently, user?.sub]);
 
   React.useEffect(() => {
-    if (user?.sub) {
-      console.log("User sub found, fetching sequences...");
-      fetchData();
-    }
-  }, [getAccessTokenSilently, user?.sub]); // Add dependencies
+    fetchData();
+  }, [getAccessTokenSilently, user?.sub, fetchData]); // Add fetchData to dependencies
 
   return <div>User Sequences</div>;
 };

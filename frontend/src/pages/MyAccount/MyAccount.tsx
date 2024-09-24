@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./MyAccount.css";
 import "../../App.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getCurrentUser } from "../../api"; // Import the function to get user data
-import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm/UpdateDisplayNameForm"; // Import the form
+import { getCurrentUser } from "../../api";
+import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm/UpdateDisplayNameForm";
 
 interface UserData {
   display_name?: string;

@@ -81,7 +81,7 @@ const NameGenerator: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleAddName();
     }
@@ -100,7 +100,7 @@ const NameGenerator: React.FC = () => {
           className="gen-custom-input"
           placeholder="Enter a name"
           title="Name Input"
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
         />
         <button type="button" onClick={handleAddName} className="gen-styled-button">
           Add Name
@@ -116,14 +116,14 @@ const NameGenerator: React.FC = () => {
                 value={name}
                 onChange={(e) => handleEditName(index, e.target.value)}
                 className="gen-custom-input"
-                placeholder="Edit name" // Placeholder attribute
-                title={`Edit name ${index + 1}`} // Title attribute
+                placeholder="Edit name"
+                title={`Edit name ${index + 1}`}
               />
               <button
                 type="button"
                 onClick={() => handleRemoveName(index)}
                 className="remove-button"
-                title={`Remove name ${index + 1}`} // Title attribute
+                title={`Remove name ${index + 1}`}
               >
                 Remove
               </button>
@@ -136,7 +136,7 @@ const NameGenerator: React.FC = () => {
         onClick={handleGenerateName}
         className="gen-styled-button"
         disabled={nameList.length === 0}
-        title="Generate a random name from the list" // Title attribute
+        title="Generate a random name from the list"
       >
         Generate Random Name
       </button>
