@@ -16,7 +16,11 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
   console.log("Auth0 Audience:", import.meta.env.VITE_AUTH0_AUDIENCE);
   console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
 
-  const onRedirectCallback = (appState?: any) => {
+  interface AppState {
+    returnTo?: string;
+  }
+
+  const onRedirectCallback = (appState?: AppState) => {
     let redirectTo = appState?.returnTo || localStorage.getItem("preLoginPath") || "/your-collections";
   
     // Check if the redirectTo path is valid

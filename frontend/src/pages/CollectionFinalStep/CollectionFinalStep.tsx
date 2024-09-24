@@ -5,6 +5,11 @@ import { saveCollection, getCurrentUser } from "../../api";
 import "../../App.css"; 
 import { useAuth0 } from "@auth0/auth0-react";
 
+// Define the generateId function
+function generateId(): string {
+  return Math.random().toString(36).substr(2, 9);
+}
+
 interface LocationState {
   collectionName: string;
   isPublic: boolean;
@@ -19,7 +24,13 @@ const CollectionFinalStep: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0(); 
   const [items, setItems] = useState<{ id: number; name: string }[]>(sequence.map((name, index) => ({ id: index + 1, name })));
   const [newItem, setNewItem] = useState<string>("");
-  const [currentUser, setCurrentUser] = useState<any>(null); 
+  interface User {
+    id: string;
+    name: string;
+    username: string;
+    // Add other properties as needed
+  }
+  const [currentUser, setCurrentUser] = useState<User | null>(null); 
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -27,7 +38,13 @@ const CollectionFinalStep: React.FC = () => {
         console.log("Fetching current user...");
         const fetchedUser = await getCurrentUser(getAccessTokenSilently);
         console.log("Fetched user:", fetchedUser);
-        setCurrentUser(fetchedUser);
+        const userWithId: User = { 
+          ...fetchedUser, 
+          id: fetchedUser.id || generateId(),
+          name: fetchedUser.name || "", // Ensure 'name' is a string
+          username: fetchedUser.username || "defaultUsername" // Ensure 'username' is present
+        };
+        setCurrentUser(userWithId);
       } catch (error) {
         console.error("Error fetching current user:", error);
       }

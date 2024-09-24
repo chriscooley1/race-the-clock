@@ -1,9 +1,16 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const [userMetadata, setUserMetadata] = useState<any>(null);
+  interface UserMetadata {
+    // Define the structure of your metadata here
+    key1: string;
+    key2: number;
+    // Add other fields as needed
+  }
+  const [userMetadata, setUserMetadata] = useState<UserMetadata | null>(null);
 
   useEffect(() => {
     const getUserMetadata = async () => {

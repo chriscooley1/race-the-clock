@@ -140,8 +140,6 @@ export const colorSchemes: ColorScheme[] = [
   },
 ];
 
-colorSchemes[0]
-
 interface Theme {
   name: string;
   backgroundColor: string;

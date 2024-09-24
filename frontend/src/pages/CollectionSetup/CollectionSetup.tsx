@@ -16,6 +16,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 type Operation = "multiplication" | "addition" | "subtraction" | "division" | "PeriodicElement";
 
+// Define an interface for the user
+interface User {
+  username: string;
+  id: string;
+  name: string;
+  email: string;
+  // Add other properties as needed
+}
+
 const CollectionSetup: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
@@ -26,7 +35,7 @@ const CollectionSetup: React.FC = () => {
   const [itemCount, setItemCount] = useState<number>(1);
   const [sequence, setSequence] = useState<string[]>([]);
   const [type, setType] = useState<string>("letters");
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [operation, setOperation] = useState<Operation | null>(null);
   const [numberSenseItems, setNumberSenseItems] = useState<{ url?: string; svg?: string; count: number }[]>([]);
 
@@ -36,12 +45,23 @@ const CollectionSetup: React.FC = () => {
         console.log("Fetching current user...");
         const fetchedUser = await getCurrentUser(getAccessTokenSilently);
         console.log("Fetched user:", fetchedUser);
-        setCurrentUser(fetchedUser);
+        if (isUser(fetchedUser)) {
+          const userWithDefaults: User = {
+            ...fetchedUser,
+            id: fetchedUser.id || generateId(),
+            name: fetchedUser.name || "Default Name",
+            username: fetchedUser.username || "defaultUsername",
+            email: fetchedUser.email || "default@example.com"
+          };
+          setCurrentUser(userWithDefaults);
+        } else {
+          console.error("Fetched user is missing required properties:", fetchedUser);
+        }
       } catch (error) {
         console.error("Error fetching current user:", error);
       }
     };
-  
+
     fetchUser();
   }, [getAccessTokenSilently]);
   
@@ -293,3 +313,13 @@ const CollectionSetup: React.FC = () => {
 };
 
 export default CollectionSetup;
+
+// Define the type guard function
+function isUser(user: unknown): user is User {
+  return typeof user === 'object' && user !== null && typeof (user as User).username === 'string';
+}
+
+// Define the function to generate a unique ID
+function generateId(): string {
+  return Math.random().toString(36).substr(2, 9);
+}

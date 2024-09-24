@@ -1,5 +1,6 @@
 import axios from "axios";
 import { User } from "@auth0/auth0-react";
+import { AxiosError } from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://race-the-clock-backend-production.up.railway.app";
 console.log("Environment variables:", import.meta.env);
@@ -17,17 +18,22 @@ interface Item {
 }
 
 // Function to handle API errors
-const handleApiError = (error: any) => {
-  if (error.response) {
-    console.error("API Error:", error.response.data);
-    if (error.response.status === 401) {
+const handleApiError = (error: unknown) => {
+  if (error instanceof Error && 'response' in error) {
+    const response = (error as { response: { data: string; status: number } }).response;
+    console.error("API Error:", response.data);
+    if (response.status === 401) {
       console.error("Unauthorized - Redirecting to login.");
       window.location.href = "/race-the-clock/"; // Assuming "/race-the-clock" is the basename
     }
-  } else if (error.request) {
-    console.error("No response received:", error.request);
+  } else if ((error as AxiosError).request) {
+    console.error("No response received:", (error as AxiosError).request);
   } else {
-    console.error("Error in API request setup:", error.message);
+    if (error instanceof Error) {
+      console.error("Error in API request setup:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
   }
   throw error;
 };

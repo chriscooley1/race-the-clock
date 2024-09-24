@@ -23,6 +23,7 @@
     "axios": "^1.7.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "eslint": "^8.57.1",
     "express": "^4.19.2",
     "http-server": "^14.1.1",
     "jwt-decode": "^4.0.0",
