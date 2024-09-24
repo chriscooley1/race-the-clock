@@ -1,6 +1,6 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, UTC
 from pydantic import BaseModel
 import pytz
 import sqlalchemy as sa
@@ -96,7 +96,7 @@ class Collection(SQLModel, table=True):
     category: str
     user: User = Relationship(back_populates="collections")
     items: List["Item"] = Relationship(back_populates="collection")
-    created_at: datetime = Field(sa_column=Column(MountainDateTime, server_default=func.now()))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 class CollectionCreate(SQLModel):
     name: str
