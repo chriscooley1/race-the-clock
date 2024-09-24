@@ -28,6 +28,7 @@ interface FullScreenDisplayState {
   textColor: string;
   shuffle: boolean;
   category: string;
+  type: string;
 }
 
 interface SequenceItem {
@@ -41,7 +42,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onExitFullScreen,
 }) => {
   const location = useLocation();
-  const { sequence, speed, shuffle, category } = location.state as FullScreenDisplayState;
+  const { sequence, speed, shuffle, category, type } = location.state as FullScreenDisplayState;
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
   const [shuffledSequence, setShuffledSequence] = useState<SequenceItem[]>([]);
@@ -88,14 +89,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   }, [onEnterFullScreen, onExitFullScreen, sequence, shuffle, theme, location.state]);
 
   useEffect(() => {
-    if (shuffledSequence.length > 0 && !isPaused && category !== "Math") {
+    if (shuffledSequence.length > 0 && !isPaused && (category !== "Math" || (type !== "mathProblems" && type !== "Math Problems"))) {
       const interval = setInterval(() => {
         setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
       }, speed);
       setIntervalId(interval as unknown as number);
       return () => clearInterval(interval);
     }
-  }, [shuffledSequence, speed, isPaused, category]);
+  }, [shuffledSequence, speed, isPaused, category, type]);
 
   const handlePauseResume = () => {
     setIsPaused(!isPaused);
@@ -121,8 +122,12 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   const handleScreenClick = () => {
-    if (category === "Math") {
-      handleNext({ stopPropagation: () => {} } as React.MouseEvent);
+    if (category === "Math" && (type === "mathProblems" || type === "Math Problems")) {
+      if (!showAnswer) {
+        setShowAnswer(true);
+      } else {
+        handleNext({ stopPropagation: () => {} } as React.MouseEvent);
+      }
     }
   };
 
@@ -148,7 +153,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
               />
             )}
           </div>
-        ) : category === "Math" ? (
+        ) : category === "Math" && (type === "mathProblems" || type === "Math Problems") ? (
           <>
             <h1 className="fullscreen-text">{shuffledSequence[index]?.name || ""}</h1>
             {showAnswer && <h2 className="fullscreen-text">{shuffledSequence[index]?.answer || ""}</h2>}

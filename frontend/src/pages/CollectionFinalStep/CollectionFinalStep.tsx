@@ -14,13 +14,14 @@ interface LocationState {
   collectionName: string;
   isPublic: boolean;
   category: string;
-  sequence: string[]; 
+  sequence: string[];
+  type?: string; // Add this line
 }
 
 const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { collectionName, isPublic, category, sequence } = location.state as LocationState;
+  const { collectionName, isPublic, category, sequence, type: initialType } = location.state as LocationState;
   const { getAccessTokenSilently } = useAuth0(); 
   const [items, setItems] = useState<{ id: number; name: string }[]>(sequence.map((name, index) => ({ id: index + 1, name })));
   const [newItem, setNewItem] = useState<string>("");
@@ -78,12 +79,23 @@ const CollectionFinalStep: React.FC = () => {
         name: item.name,
       }));
 
+      let type = initialType || "default";
+      if (!initialType) {
+        // Determine type based on category if not provided
+        if (category === "Math") {
+          type = "numbers"; // or "mathProblems" if appropriate
+        } else if (category === "Language Arts") {
+          type = "letters";
+        } // ... and so on
+      }
+
       console.log("Saving collection with data:", {
         username: currentUser.username,
         collectionName,
         collectionData,
         isPublic,
         category,
+        type,
       });
       await saveCollection(
         currentUser.username,
@@ -91,6 +103,7 @@ const CollectionFinalStep: React.FC = () => {
         collectionData,
         isPublic ? "public" : "private",
         category,
+        type, // Add this parameter
         getAccessTokenSilently
       );
       navigate("/your-collections");

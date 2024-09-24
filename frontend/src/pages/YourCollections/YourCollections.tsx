@@ -18,6 +18,7 @@ interface Collection {
   user_id: number;
   creator_username: string;
   items: Item[];
+  type: string; // Add this line
 }
 interface Item {
   name: string;
@@ -234,6 +235,7 @@ const YourCollections: React.FC = () => {
           textColor,
           shuffle,
           category: selectedCollection.category,
+          type: selectedCollection.type, // Add this line
         },
       });
       setShowModal(false);

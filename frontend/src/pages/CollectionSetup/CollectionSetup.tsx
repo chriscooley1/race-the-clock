@@ -176,6 +176,7 @@ const CollectionSetup: React.FC = () => {
         collectionData,
         isPublic,
         category,
+        type, // Add this line
       });
       await saveCollection(
         currentUser.username,
@@ -183,6 +184,7 @@ const CollectionSetup: React.FC = () => {
         collectionData,
         isPublic ? "public" : "private",
         category,
+        type, // Add this parameter
         getAccessTokenSilently
       );
       navigate("/your-collections");
