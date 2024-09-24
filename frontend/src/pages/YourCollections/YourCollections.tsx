@@ -27,7 +27,7 @@ const getItemsCount = (description: string | undefined): number => {
   try {
     const items = JSON.parse(description);
     return Array.isArray(items) ? items.length : 0;
-  } catch (error) {
+  } catch {
     console.error("Error parsing description:", description);
     return 0;
   }
@@ -233,7 +233,7 @@ const YourCollections: React.FC = () => {
           speed,
           textColor,
           shuffle,
-          category: selectedCollection.category,  // Make sure this line is present
+          category: selectedCollection.category,
         },
       });
       setShowModal(false);
@@ -286,7 +286,7 @@ const YourCollections: React.FC = () => {
     }
   };
 
-  const parseDescription = (description: string | undefined): any[] => {
+  const parseDescription = (description: string | undefined): string[] => {
     if (!description) return [];
     try {
       const parsed = JSON.parse(description);
@@ -370,8 +370,8 @@ const YourCollections: React.FC = () => {
           isOpen={isEditModalOpen}
           onClose={() => setEditModalOpen(false)}
           collectionName={selectedCollection.name}
-          items={parseDescription(selectedCollection.description).map((item: Item) => item.name)}
-          onSave={handleSaveUpdatedItems} // <-- Pass the save handler here
+          items={parseDescription(selectedCollection.description)}
+          onSave={handleSaveUpdatedItems}
         />
       )}
       {isDuplicateModalOpen && (

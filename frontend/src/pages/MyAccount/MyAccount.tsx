@@ -5,9 +5,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { getCurrentUser } from "../../api"; // Import the function to get user data
 import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm/UpdateDisplayNameForm"; // Import the form
 
+interface UserData {
+  display_name?: string;
+  email?: string;
+}
+
 const MyAccount: React.FC = () => {
   const { user, getAccessTokenSilently } = useAuth0();
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {

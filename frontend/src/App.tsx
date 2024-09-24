@@ -26,7 +26,7 @@ const App: React.FC = () => {
   const { theme } = useTheme();
   const location = useLocation();
   const [hideSidebar, setHideSidebar] = useState(false);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [_isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
     const hiddenRoutes = ["/", "/fullscreen-display", "/math-collection"];

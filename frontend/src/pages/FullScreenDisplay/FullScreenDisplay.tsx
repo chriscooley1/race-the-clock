@@ -17,15 +17,34 @@ interface FullScreenDisplayProps {
   onExitFullScreen: () => void;
 }
 
+interface FullScreenDisplayState {
+  sequence: Array<{
+    name: string;
+    svg?: string;
+    count?: number;
+  }>;
+  duration: number;
+  speed: number;
+  textColor: string;
+  shuffle: boolean;
+  category: string;
+}
+
+interface SequenceItem {
+  name: string;
+  answer: string;
+  svg: string; // Added svg property
+}
+
 const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onEnterFullScreen,
   onExitFullScreen,
 }) => {
   const location = useLocation();
-  const { sequence, speed, shuffle, category } = location.state;
+  const { sequence, speed, shuffle, category } = location.state as FullScreenDisplayState;
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
-  const [shuffledSequence, setShuffledSequence] = useState<CollectionItem[]>([]);
+  const [shuffledSequence, setShuffledSequence] = useState<SequenceItem[]>([]);
   const [isPaused, setIsPaused] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -42,12 +61,17 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       let newShuffledSequence;
       if (shuffle) {
         console.log("Shuffling sequence...");
-        newShuffledSequence = shuffleArray([...sequence]);
+        newShuffledSequence = shuffleArray(sequence.map((item, index) => ({ ...item, id: index })));
       } else {
         newShuffledSequence = [...sequence];
       }
       console.log("New shuffled sequence:", newShuffledSequence);
-      setShuffledSequence(newShuffledSequence);
+      setShuffledSequence(newShuffledSequence.map((item, index) => ({
+        ...item,
+        id: index, // Use the index as a number id
+        answer: item.name, // Use the name property instead of answer
+        svg: item.svg || '' // Provide a default empty string if svg is undefined
+      })));
     } else {
       console.error("Sequence is empty or undefined");
     }
@@ -127,7 +151,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         ) : category === "Math" ? (
           <>
             <h1 className="fullscreen-text">{shuffledSequence[index]?.name || ""}</h1>
-            {showAnswer && <h2 className="fullscreen-text">{(shuffledSequence[index] as any)?.answer || ""}</h2>}
+            {showAnswer && <h2 className="fullscreen-text">{shuffledSequence[index]?.answer || ""}</h2>}
           </>
         ) : (
           <h1 className="fullscreen-text">{shuffledSequence[index]?.name || ""}</h1>
