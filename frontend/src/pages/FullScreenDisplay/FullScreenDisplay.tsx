@@ -141,7 +141,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
     if (category === "Science" && type === "periodicTable") {
-      const [symbol, name, atomicNumber] = currentItem.name.split(' - ');
+      const [symbol, name, atomicNumber] = currentItem.name.split(" - ");
       return (
         <div className="periodic-element">
           <h1 className={`fullscreen-text ${getTextClass(atomicNumber)}`}>{atomicNumber}</h1>
