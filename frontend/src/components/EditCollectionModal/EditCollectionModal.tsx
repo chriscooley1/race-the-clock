@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./EditCollectionModal.css";
 import "../../App.css";
 
@@ -6,8 +6,8 @@ interface EditCollectionModalProps {
   isOpen: boolean;
   onClose: () => void;
   collectionName: string;
-  items: string[];
-  onSave: (items: string[]) => void;
+  items: { name: string; id?: number }[];
+  onSave: (items: { name: string; id?: number }[]) => void;
 }
 
 const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
@@ -17,11 +17,20 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   items,
   onSave,
 }) => {
-  const [editedItems, setEditedItems] = useState<string[]>(items);
+  const [editedItems, setEditedItems] = useState<{ name: string; id?: number }[]>([]);
+
+  useEffect(() => {
+    // Process items when the modal opens
+    const processedItems = items.map(item => ({
+      name: typeof item.name === "object" ? JSON.stringify(item.name) : String(item.name),
+      id: item.id
+    }));
+    setEditedItems(processedItems);
+  }, [items]);
 
   const handleAddItem = () => {
     console.log("Adding new item...");
-    setEditedItems(["", ...editedItems]);
+    setEditedItems([{ name: "" }, ...editedItems]);
   };
 
   const handleRemoveItem = (index: number) => {
@@ -33,7 +42,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   const handleChangeItem = (index: number, value: string) => {
     console.log(`Changing item at index ${index} to ${value}`);
     const newItems = [...editedItems];
-    newItems[index] = value;
+    newItems[index] = { ...newItems[index], name: value };
     setEditedItems(newItems);
   };
 
@@ -87,7 +96,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
                   type="text"
                   id={`item-${index}`}
                   className="edit-custom-input edit-item-input"
-                  value={item}
+                  value={item.name}
                   onChange={(e) => handleChangeItem(index, e.target.value)}
                   placeholder={`Enter item ${index + 1}`}
                   title={`Item ${index + 1}`}

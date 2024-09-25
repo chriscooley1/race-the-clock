@@ -33,6 +33,17 @@ const getItemsCount = (description: string | undefined): number => {
     return 0;
   }
 };
+const parseDescription = (description: string): { name: string; id?: number }[] => {
+  try {
+    const parsed = JSON.parse(description);
+    return Array.isArray(parsed) ? parsed.map((item, index) => ({
+      name: typeof item === "object" && item !== null ? item.name : String(item),
+      id: typeof item === "object" && item !== null && "id" in item ? item.id : index
+    })) : [];
+  } catch {
+    return [{ name: description }];
+  }
+};
 const YourCollections: React.FC = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
@@ -101,33 +112,23 @@ const YourCollections: React.FC = () => {
     setFilteredCollections(sorted);
   };
 
-  const handleSaveUpdatedItems = async (newItems: string[]) => {
-    setIsLoading(true); // Start loading
+  const handleSaveUpdatedItems = async (newItems: { name: string; id?: number }[]) => {
+    setIsLoading(true);
     try {
       console.log("Saving updated items:", newItems);
       if (selectedCollection) {
-        // Filter out any empty strings from newItems
-        const filteredItems = newItems.filter(item => item.trim() !== "");
+        // Filter out any empty items and ensure name is a string
+        const filteredItems = newItems.filter(item => {
+          const itemName = typeof item.name === "object" ? JSON.stringify(item.name) : String(item.name);
+          return itemName.trim() !== "";
+        }).map(item => ({
+          name: typeof item.name === "object" ? JSON.stringify(item.name) : String(item.name),
+          id: item.id
+        }));
 
-        // Parse the existing items from the selected collection
-        const existingItems = JSON.parse(selectedCollection.description || "[]");
+        // Convert filteredItems to JSON string to store in the description
+        const updatedDescription = JSON.stringify(filteredItems);
 
-        // Only keep the existing items that are still present in newItems
-        const updatedItems = existingItems.filter(
-          (item: { name: string }) => filteredItems.includes(item.name)
-        );
-
-        // Add new items that aren't already in the existing items
-        filteredItems.forEach((item) => {
-          if (!updatedItems.some((updatedItem: { name: string }) => updatedItem.name === item)) {
-            updatedItems.push({ name: item });
-          }
-        });
-
-        // Convert updatedItems to JSON string to store in the description
-        const updatedDescription = JSON.stringify(updatedItems);
-
-        // Log the data to ensure it's correct
         console.log({
           name: selectedCollection.name,
           description: updatedDescription,
@@ -150,7 +151,7 @@ const YourCollections: React.FC = () => {
               : col
           )
         );
-        setSelectedCollection(updatedCollection); // Update the selected collection with the new data
+        setSelectedCollection(updatedCollection);
 
         // Refetch the collections to ensure they're up-to-date
         const refreshedCollections = await fetchCollections(getAccessTokenSilently);
@@ -160,7 +161,7 @@ const YourCollections: React.FC = () => {
     } catch (error) {
       console.error("Error updating collection:", error);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -292,17 +293,6 @@ const YourCollections: React.FC = () => {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLSelectElement>) => {
     if (event.key === "Enter" && collectionToDuplicate) {
       handleDuplicateCollection();
-    }
-  };
-
-  const parseDescription = (description: string | undefined): string[] => {
-    if (!description) return [];
-    try {
-      const parsed = JSON.parse(description);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (error) {
-      console.error("Error parsing description:", error);
-      return [];
     }
   };
 

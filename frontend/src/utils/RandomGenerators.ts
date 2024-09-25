@@ -43,16 +43,16 @@ export const generateMathProblems = (count: number, operation: keyof typeof oper
     const num2 = Math.floor(Math.random() * 10) + 1;
     let answer: number;
     switch (operation) {
-      case 'addition':
+      case "addition":
         answer = num1 + num2;
         break;
-      case 'subtraction':
+      case "subtraction":
         answer = num1 - num2;
         break;
-      case 'multiplication':
+      case "multiplication":
         answer = num1 * num2;
         break;
-      case 'division':
+      case "division":
         answer = Math.round((num1 / num2) * 100) / 100; // Round to 2 decimal places
         break;
       default:
