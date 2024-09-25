@@ -63,7 +63,7 @@ const NameGenerator: React.FC = () => {
   const handleRemoveName = (index: number) => {
     const updatedList = nameList.filter((_, i) => i !== index);
     setNameList(updatedList);
-    saveNameList();
+    saveNameList(updatedList);  // Pass the updated list to saveNameList
   };
 
   const handleEditName = (index: number, newName: string) => {
@@ -122,7 +122,7 @@ const NameGenerator: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleRemoveName(index)}
-                className="remove-button"
+                className="name-remove-button"
                 title={`Remove name ${index + 1}`}
               >
                 Remove
