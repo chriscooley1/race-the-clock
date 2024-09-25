@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { adjustColorForColorblindness } from "../utils/colorAdjustment";
 
 interface ColorScheme {
   name: string;
@@ -144,54 +145,77 @@ interface Theme {
   name: string;
   backgroundColor: string;
   textColor: string;
-  className?: string; // Add this line to include the optional className property
+  className?: string;
   displayTextColor?: string;
   displayBackgroundColor?: string;
+  isColorblindMode: boolean;
+  colorblindType: string;
 }
 
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   setDisplayTextColor: (color: string) => void;
-  setDisplayBackgroundColor: (color: string) => void;  // New function to set background color
+  setDisplayBackgroundColor: (color: string) => void;
+  setColorblindMode: (isEnabled: boolean) => void;
+  setColorblindType: (type: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const getInitialTheme = () => {
+  const getInitialTheme = (): Theme => {
     const savedTheme = localStorage.getItem("app-theme");
-    return savedTheme ? JSON.parse(savedTheme) : colorSchemes[0];
+    return savedTheme ? JSON.parse(savedTheme) : {
+      ...colorSchemes[0],
+      isColorblindMode: false,
+      colorblindType: '',
+      displayTextColor: undefined,
+      displayBackgroundColor: undefined,
+    };
   };
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   const setDisplayTextColor = (color: string) => {
-    console.log("Setting display text color:", color);
     setTheme((prevTheme) => ({ ...prevTheme, displayTextColor: color }));
   };
 
   const setDisplayBackgroundColor = (color: string) => {
-    console.log("Setting display background color:", color);
     setTheme((prevTheme) => ({ ...prevTheme, displayBackgroundColor: color }));
   };
 
+  const setColorblindMode = (isEnabled: boolean) => {
+    setTheme((prevTheme) => ({ ...prevTheme, isColorblindMode: isEnabled }));
+  };
+
+  const setColorblindType = (type: string) => {
+    setTheme((prevTheme) => ({ ...prevTheme, colorblindType: type }));
+  };
+
   useEffect(() => {
-    console.log("Current theme settings:", theme);
     localStorage.setItem("app-theme", JSON.stringify(theme));
 
-    document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
-    document.documentElement.style.setProperty("--text-color", theme.textColor);
-    if (theme.displayTextColor) {
-      document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor);
+    let backgroundColor = theme.backgroundColor;
+    let textColor = theme.textColor;
+    let displayTextColor = theme.displayTextColor || theme.textColor;
+    let displayBackgroundColor = theme.displayBackgroundColor || theme.backgroundColor;
+
+    if (theme.isColorblindMode && theme.colorblindType) {
+      backgroundColor = adjustColorForColorblindness(backgroundColor, theme.colorblindType);
+      textColor = adjustColorForColorblindness(textColor, theme.colorblindType);
+      displayTextColor = adjustColorForColorblindness(displayTextColor, theme.colorblindType);
+      displayBackgroundColor = adjustColorForColorblindness(displayBackgroundColor, theme.colorblindType);
     }
-    if (theme.displayBackgroundColor) {
-      document.documentElement.style.setProperty("--display-background-color", theme.displayBackgroundColor);
-    }
+
+    document.documentElement.style.setProperty("--background-color", backgroundColor);
+    document.documentElement.style.setProperty("--text-color", textColor);
+    document.documentElement.style.setProperty("--display-text-color", displayTextColor);
+    document.documentElement.style.setProperty("--display-background-color", displayBackgroundColor);
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor }}>
+    <ThemeContext.Provider value={{ theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor, setColorblindMode, setColorblindType }}>
       {children}
     </ThemeContext.Provider>
   );

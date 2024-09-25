@@ -10,8 +10,22 @@ const colorOptions = [
   "#00a86b", "#ff6f61", "#034f84", "#f0f8ff", "#333333"
 ];
 
+const colorblindTypes = [
+  "Protanopia",
+  "Deuteranopia",
+  "Tritanopia",
+  "Achromatopsia"
+];
+
 const Settings: React.FC = () => {
-  const { theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();
+  const { 
+    theme, 
+    setTheme, 
+    setDisplayTextColor, 
+    setDisplayBackgroundColor,
+    setColorblindMode,
+    setColorblindType
+  } = useTheme();
 
   useEffect(() => {
     document.querySelectorAll(".color-option").forEach(el => {
@@ -23,7 +37,11 @@ const Settings: React.FC = () => {
     console.log("Theme selected:", event.target.value);
     const newTheme = colorSchemes.find(scheme => scheme.name === event.target.value);
     if (newTheme) {
-      setTheme(newTheme);
+      setTheme({
+        ...newTheme,
+        isColorblindMode: false, // or get from current theme
+        colorblindType: "none", // or get from current theme
+      });
     }
   };
 
@@ -35,6 +53,14 @@ const Settings: React.FC = () => {
   const handleBackgroundColorChange = (color: string) => {
     console.log("Background color selected:", color);
     setDisplayBackgroundColor(color);
+  };
+
+  const handleColorblindModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setColorblindMode(event.target.checked);
+  };
+
+  const handleColorblindTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setColorblindType(event.target.value);
   };
 
   return (
@@ -80,6 +106,32 @@ const Settings: React.FC = () => {
           ))}
         </div>
       </div>
+      <div>
+        <label className="settings-label">
+          <input
+            type="checkbox"
+            checked={theme.isColorblindMode}
+            onChange={handleColorblindModeChange}
+          />
+          Enable Colorblind Mode
+        </label>
+      </div>
+      {theme.isColorblindMode && (
+        <div>
+          <label htmlFor="colorblind-type-select" className="settings-label">Colorblind Type:</label>
+          <select
+            id="colorblind-type-select"
+            value={theme.colorblindType}
+            onChange={handleColorblindTypeChange}
+          >
+            {colorblindTypes.map(type => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
     </div>
   );
 };

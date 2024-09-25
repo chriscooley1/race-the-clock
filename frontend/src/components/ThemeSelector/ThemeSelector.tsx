@@ -12,7 +12,11 @@ const ThemeSelector: React.FC = () => {
     );
     console.log("Selected theme:", selectedScheme);
     if (selectedScheme) {
-      setTheme(selectedScheme);
+      setTheme({
+        ...selectedScheme,
+        isColorblindMode: false, // or appropriate default value
+        colorblindType: "none", // or appropriate default value
+      });
     }
   };
 
