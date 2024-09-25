@@ -13,10 +13,34 @@
 }
 
 .fullscreen-text {
-  font-size: 40vw; /* Large font size for fullscreen */
+  font-size: 30vw; /* Larger base size for short text */
+  line-height: 1.2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 90vw;
   text-align: center;
-  margin: 0;
-  color: inherit; /* Ensure it inherits the correct color */
+  transition: font-size 0.3s ease;
+}
+
+/* Adjust font size for longer text */
+.fullscreen-text.short-text {
+  font-size: 30vw; /* Keep the largest size for short text */
+}
+
+.fullscreen-text.medium-text {
+  font-size: 20vw;
+}
+
+.fullscreen-text.long-text {
+  font-size: 15vw;
+}
+
+.fullscreen-text.very-long-text {
+  font-size: 10vw;
+}
+
+.fullscreen-text.extremely-long-text {
+  font-size: 5vw;
 }
 
 .pause-button {

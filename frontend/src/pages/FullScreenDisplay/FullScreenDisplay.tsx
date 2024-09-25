@@ -130,12 +130,20 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   console.log("Rendering with index:", index);
   console.log("Current item:", shuffledSequence[index]);
 
+  const getTextClass = (text: string) => {
+    if (text.length <= 5) return "short-text";
+    if (text.length <= 10) return "medium-text";
+    if (text.length <= 15) return "long-text";
+    if (text.length <= 20) return "very-long-text";
+    return "extremely-long-text";
+  };
+
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
     if (category === "Math" && type === "mathProblems") {
       return (
         <>
-          <h1 className={`fullscreen-text ${currentItem.isAnswer ? "answer" : "problem"}`}>
+          <h1 className={`fullscreen-text ${currentItem.isAnswer ? "answer" : "problem"} ${getTextClass(currentItem.name)}`}>
             {currentItem.name}
           </h1>
         </>
@@ -155,7 +163,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         </div>
       );
     } else {
-      return <h1 className="fullscreen-text">{currentItem.name}</h1>;
+      return <h1 className={`fullscreen-text ${getTextClass(currentItem.name)}`}>{currentItem.name}</h1>;
     }
   };
 
