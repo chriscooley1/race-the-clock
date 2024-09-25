@@ -4,6 +4,7 @@ import "./CollectionFinalStep.css";
 import { saveCollection, getCurrentUser } from "../../api"; 
 import "../../App.css"; 
 import { useAuth0 } from "@auth0/auth0-react";
+import { periodicTable, PeriodicElement } from "../../utils/periodicTable";
 
 // Define the generateId function
 function generateId(): string {
@@ -25,12 +26,22 @@ const CollectionFinalStep: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0(); 
   const [items, setItems] = useState<{ id: number; name: string }[]>(sequence.map((name, index) => ({ id: index + 1, name })));
   const [newItem, setNewItem] = useState<string>("");
+  const [selectedElement, setSelectedElement] = useState<string>("");
   interface User {
     id: string;
     name: string;
     username: string;
   }
   const [currentUser, setCurrentUser] = useState<User | null>(null); 
+
+  const handleElementSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    if (selectedValue) {
+      const element = JSON.parse(selectedValue) as PeriodicElement;
+      setNewItem(JSON.stringify({ symbol: element.symbol, name: element.name, atomicNumber: element.atomicNumber }));
+      setSelectedElement(selectedValue);
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -59,7 +70,8 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleAddItem = () => {
     setItems([...items, { id: items.length + 1, name: newItem }]);
-    setNewItem(""); 
+    setNewItem("");
+    setSelectedElement("");
   };
 
   const handleRemoveItem = (id: number) => {
@@ -128,19 +140,40 @@ const CollectionFinalStep: React.FC = () => {
       <h2>Step 3 - Fill Out Collection Body</h2>
       <p>To add another item to this Collection, click the add button below.</p>
       <div className="add-item-container">
-        <label htmlFor="new-item-input" className="sr-only">
-          New Item
-        </label>
-        <input
-          type="text"
-          id="new-item-input"
-          className="final-custom-input"
-          placeholder="New Item"
-          title="Enter a new item to add to the collection"
-          value={newItem}
-          onChange={(e) => setNewItem(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
+        {category === "Periodic Table" ? (
+          <>
+            <label htmlFor="element-select">Select an element:</label>
+            <select
+              id="element-select"
+              value={selectedElement}
+              onChange={handleElementSelect}
+              className="final-custom-input"
+            >
+              <option value="">Select an element</option>
+              {Object.values(periodicTable).map((element) => (
+                <option key={element.atomicNumber} value={JSON.stringify(element)}>
+                  {element.name} ({element.symbol})
+                </option>
+              ))}
+            </select>
+          </>
+        ) : (
+          <>
+            <label htmlFor="new-item-input" className="sr-only">
+              New Item
+            </label>
+            <input
+              type="text"
+              id="new-item-input"
+              className="final-custom-input"
+              placeholder="New Item"
+              title="Enter a new item to add to the collection"
+              value={newItem}
+              onChange={(e) => setNewItem(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+          </>
+        )}
         <button
           className="final-add-button"
           type="button"
