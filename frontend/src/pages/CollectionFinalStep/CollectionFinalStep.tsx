@@ -38,7 +38,7 @@ const CollectionFinalStep: React.FC = () => {
     const selectedValue = event.target.value;
     if (selectedValue) {
       const element = JSON.parse(selectedValue) as PeriodicElement;
-      setNewItem(JSON.stringify({ symbol: element.symbol, name: element.name, atomicNumber: element.atomicNumber }));
+      setNewItem(`${element.symbol} - ${element.name} - ${element.atomicNumber}`);
       setSelectedElement(selectedValue);
     }
   };
@@ -152,7 +152,7 @@ const CollectionFinalStep: React.FC = () => {
               <option value="">Select an element</option>
               {Object.values(periodicTable).map((element) => (
                 <option key={element.atomicNumber} value={JSON.stringify(element)}>
-                  {element.name} ({element.symbol})
+                  {element.symbol} - {element.name} - {element.atomicNumber}
                 </option>
               ))}
             </select>

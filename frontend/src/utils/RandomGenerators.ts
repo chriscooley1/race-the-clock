@@ -101,9 +101,7 @@ function generateCountingSvg(count: number): string {
 export const generatePeriodicTableElements = (count: number): string[] => {
   const elements = Object.values(periodicTable);
   const shuffled = elements.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count).map(element => 
-    JSON.stringify({ symbol: element.symbol, name: element.name, atomicNumber: element.atomicNumber })
-  );
+  return shuffled.slice(0, count).map(element => `${element.symbol} - ${element.name} - ${element.atomicNumber}`);
 };
 
 export const generateScienceTerms = (count: number): string[] => {
