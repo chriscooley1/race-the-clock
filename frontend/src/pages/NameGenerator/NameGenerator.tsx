@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./NameGenerator.css";
@@ -11,12 +11,7 @@ const NameGenerator: React.FC = () => {
   const [nameListId, setNameListId] = useState<number | null>(null);
   const { getAccessTokenSilently } = useAuth0();
 
-  useEffect(() => {
-    // Load the user's name list when the component mounts
-    loadNameList();
-  }, []);
-
-  const loadNameList = async () => {
+  const loadNameList = useCallback(async () => {
     try {
       const token = await getAccessTokenSilently();
       const response = await axios.get("http://localhost:8000/namelists/", {
@@ -30,7 +25,11 @@ const NameGenerator: React.FC = () => {
     } catch (error) {
       console.error("Error loading name list:", error);
     }
-  };
+  }, [getAccessTokenSilently]);
+
+  useEffect(() => {
+    loadNameList();
+  }, [loadNameList]);
 
   const saveNameList = async (updatedList: string[] = nameList) => {
     try {

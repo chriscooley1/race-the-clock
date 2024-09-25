@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { fetchPublicCollections, searchPublicCollections } from "../../api";  
 import CollectionPreviewModal from "../../components/CollectionPreviewModal/CollectionPreviewModal";
 import { AxiosError } from "axios"; 
@@ -24,11 +24,7 @@ const DiscoverCollections: React.FC = () => {
   const [activeCollection, setActiveCollection] = useState<Collection | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  useEffect(() => {
-    fetchCollections();
-  }, []);
-
-  const fetchCollections = async () => {
+  const fetchCollections = useCallback(async () => {
     try {
       console.log("Fetching public collections...");
       console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
@@ -49,7 +45,11 @@ const DiscoverCollections: React.FC = () => {
         });
       }
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchCollections();
+  }, [fetchCollections]);
 
   const parseDescription = (description: string): Item[] => {
     try {

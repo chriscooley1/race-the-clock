@@ -95,7 +95,7 @@ const CollectionSetup: React.FC = () => {
     if (type === "mathProblems" && !operation) {
       setOperation("addition"); // Set a default operation
     }
-  }, [type]);
+  }, [type, operation]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
