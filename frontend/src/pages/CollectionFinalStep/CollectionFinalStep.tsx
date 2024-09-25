@@ -140,7 +140,7 @@ const CollectionFinalStep: React.FC = () => {
       <h2>Step 3 - Fill Out Collection Body</h2>
       <p>To add another item to this Collection, click the add button below.</p>
       <div className="add-item-container">
-        {category === "Periodic Table" ? (
+        {category === "Science" ? (
           <>
             <label htmlFor="element-select">Select an element:</label>
             <select

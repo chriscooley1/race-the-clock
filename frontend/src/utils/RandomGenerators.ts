@@ -105,3 +105,35 @@ export const generatePeriodicTableElements = (count: number): string[] => {
     JSON.stringify({ symbol: element.symbol, name: element.name, atomicNumber: element.atomicNumber })
   );
 };
+
+export const generateScienceTerms = (count: number): string[] => {
+  const scienceTerms = [
+    "Atom", "Molecule", "Cell", "DNA", "Evolution", "Gravity", "Photosynthesis",
+    "Ecosystem", "Energy", "Force", "Hypothesis", "Experiment", "Theory", "Velocity",
+    "Acceleration", "Mass", "Volume", "Density", "Pressure", "Temperature"
+  ];
+  return shuffleArray(scienceTerms).slice(0, count);
+};
+
+export const generateNursingTerms = (count: number): string[] => {
+  const nursingTerms = [
+    "Vital Signs", "Blood Pressure", "Heart Rate", "Respiratory Rate",
+    "Temperature", "Oxygen Saturation", "Medication Administration",
+    "Intravenous Therapy", "Patient Assessment", "Wound Care",
+    "Infection Control", "Pain Management", "Patient Education",
+    "Documentation", "Cardiopulmonary Resuscitation (CPR)",
+    "Electrocardiogram (ECG)", "Catheterization", "Diabetes Management",
+    "Fall Prevention", "Palliative Care"
+  ];
+
+  const shuffled = nursingTerms.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+};
+
+function shuffleArray<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}

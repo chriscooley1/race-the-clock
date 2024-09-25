@@ -9,7 +9,7 @@ const NewCollection: React.FC = () => {
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const categories = ["Math", "Language Arts", "Number Sense", "Periodic Table"];
+  const categories = ["Math", "Language Arts", "Number Sense", "Science", "Nursing"];
 
   const handleNext = () => {
     if (!name.trim()) {

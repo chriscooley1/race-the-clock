@@ -9,7 +9,9 @@ import {
   generateNumbersOneToHundred,
   generateMathProblems,
   generateNumberSenseImages,
-  generatePeriodicTableElements
+  generatePeriodicTableElements,
+  generateScienceTerms,
+  generateNursingTerms
 } from "../../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -36,7 +38,7 @@ const CollectionSetup: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [operation, setOperation] = useState<Operation | null>(null);
   const [numberSenseItems, setNumberSenseItems] = useState<{ url?: string; svg?: string; count: number }[]>([]);
-
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -78,8 +80,11 @@ const CollectionSetup: React.FC = () => {
       case "Number Sense":
         setType("numberSense");
         break;
-      case "Periodic Table":
-        setType("periodicTable");
+      case "Science":
+        setType("scienceTerms");
+        break;
+      case "Nursing":
+        setType("nursingTerms");
         break;
       default:
         setType("letters");
@@ -122,21 +127,20 @@ const CollectionSetup: React.FC = () => {
           console.error("Math Problems selected but operation is not set or is PeriodicElement");
         }
         break;
-      case "numberSense":
-        if (category === "Number Sense") {
-          const images = generateNumberSenseImages(itemCount);
-          setNumberSenseItems(images);
-          generatedSequence = images.map((image, index) => `Number Sense Image ${index + 1} (Count: ${image.count})`);
-        } else {
-          console.error("Number Sense selected but category is not set correctly");
-        }
+      case "numberSense": {
+        const images = generateNumberSenseImages(itemCount);
+        setNumberSenseItems(images);
+        generatedSequence = images.map((image, index) => `Number Sense Image ${index + 1} (Count: ${image.count})`);
         break;
+      }
       case "periodicTable":
-        if (category === "Periodic Table") {
-          generatedSequence = generatePeriodicTableElements(itemCount);
-        } else {
-          console.error("Periodic Table selected but category is not set correctly");
-        }
+        generatedSequence = generatePeriodicTableElements(itemCount);
+        break;
+      case "scienceTerms":
+        generatedSequence = generateScienceTerms(itemCount);
+        break;
+      case "nursingTerms":
+        generatedSequence = generateNursingTerms(itemCount);
         break;
       default:
         console.error("Invalid type selected");
@@ -243,28 +247,17 @@ const CollectionSetup: React.FC = () => {
           {category === "Number Sense" && (
             <option value="numberSense">Random Pictures</option>
           )}
-          {category === "Periodic Table" && (
-            <option value="periodicTable">Periodic Table</option>
+          {category === "Science" && (
+            <>
+              <option value="periodicTable">Periodic Table</option>
+              <option value="scienceTerms">Science Terms</option>
+            </>
+          )}
+          {category === "Nursing" && (
+            <option value="nursingTerms">Nursing Terms</option>
           )}
         </select>
       </div>
-      {category === "Math" && type === "mathProblems" && (
-        <div className="setup-centered-input">
-          <label htmlFor="operationSelect">Operation:</label>
-          <select
-            id="operationSelect"
-            className="setup-custom-input"
-            value={operation || ""}
-            onChange={(e) => setOperation(e.target.value as Operation)}
-          >
-            <option value="">Select an operation</option>
-            <option value="multiplication">Multiplication</option>
-            <option value="addition">Addition</option>
-            <option value="subtraction">Subtraction</option>
-            <option value="division">Division</option>
-          </select>
-        </div>
-      )}
       <button
         type="button"
         onClick={generateRandomSequence}
