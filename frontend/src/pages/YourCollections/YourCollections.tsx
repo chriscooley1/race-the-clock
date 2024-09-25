@@ -220,8 +220,10 @@ const YourCollections: React.FC = () => {
       console.log("Selected collection:", selectedCollection);
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
       console.log("Parsed sequence items:", sequenceItems);
-      const sequence = sequenceItems.map((item: { name: string } | string, index: number) => ({
+      const sequence = sequenceItems.map((item: { name: string; svg?: string; count?: number } | string, index: number) => ({
         name: typeof item === "object" ? item.name : item,
+        svg: typeof item === "object" ? item.svg : undefined,
+        count: typeof item === "object" ? item.count : undefined,
         isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0
       }));
       console.log("Prepared sequence:", sequence);

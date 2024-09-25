@@ -35,6 +35,7 @@ interface SequenceItem {
   name: string;
   isAnswer?: boolean;
   svg?: string;
+  count?: number;
 }
 
 const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
@@ -174,6 +175,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           ) : (
             <p>No image available for {currentItem.name}</p>
           )}
+          {currentItem.count !== undefined && <p>Count: {currentItem.count}</p>}
         </div>
       );
     } else {
