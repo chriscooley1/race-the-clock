@@ -8,6 +8,7 @@ import EditCollectionModal from "../../components/EditCollectionModal/EditCollec
 import "./YourCollections.css";
 import "../../App.css";
 import axios from "axios";
+import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 
 interface Collection {
   collection_id: number;
@@ -18,7 +19,7 @@ interface Collection {
   user_id: number;
   creator_username: string;
   items: Item[];
-  type: string; // Add this line
+  type: string;
 }
 interface Item {
   name: string;
@@ -49,7 +50,7 @@ const YourCollections: React.FC = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
   const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
-  const [sortOption, setSortOption] = useState<string>("date");
+  const [sortOption, setSortOption] = useState<string>(localStorage.getItem("sortPreference") || "date");
   const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
   const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
   const { getAccessTokenSilently } = useAuth0();
@@ -64,13 +65,13 @@ const YourCollections: React.FC = () => {
       try {
         console.log("Fetching user collections...");
         console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
-        const collections = await fetchCollections(getAccessTokenSilently);
-        console.log("Loaded collections:", collections);
-        if (Array.isArray(collections)) {
-          setCollections(collections);
-          filterAndSortCollections(collections, selectedCategory, sortOption);
+        const fetchedCollections = await fetchCollections(getAccessTokenSilently);
+        console.log("Loaded collections:", fetchedCollections);
+        if (Array.isArray(fetchedCollections)) {
+          setCollections(fetchedCollections);
+          filterAndSortCollections(fetchedCollections, selectedCategory, sortOption);
         } else {
-          console.error("Unexpected data format:", collections);
+          console.error("Unexpected data format:", fetchedCollections);
         }
       } catch (error) {
         console.error("Error loading collections:", error);
@@ -95,7 +96,6 @@ const YourCollections: React.FC = () => {
   ) => {
     let filtered = collections;
   
-    // Filter collections based on selected category, but include all in "All Collections"
     if (category !== "All Collections") {
       filtered = collections.filter((collection) => collection.category === category);
     }
@@ -105,6 +105,8 @@ const YourCollections: React.FC = () => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
       } else if (sortOption === "alphabetical") {
         return a.name.localeCompare(b.name);
+      } else if (sortOption === "category") {
+        return a.category.localeCompare(b.category);
       }
       return 0;
     });
@@ -218,10 +220,9 @@ const YourCollections: React.FC = () => {
       console.log("Selected collection:", selectedCollection);
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
       console.log("Parsed sequence items:", sequenceItems);
-      const sequence = sequenceItems.map((item: { name: string; svg?: string } | string, index: number) => ({
+      const sequence = sequenceItems.map((item: { name: string } | string, index: number) => ({
         name: typeof item === "object" ? item.name : item,
-        isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0,
-        svg: typeof item === "object" ? item.svg : undefined
+        isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0
       }));
       console.log("Prepared sequence:", sequence);
       const duration = min * 60 + sec;
@@ -256,7 +257,10 @@ const YourCollections: React.FC = () => {
   };
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(event.target.value);
+    const newSortOption = event.target.value;
+    setSortOption(newSortOption);
+    localStorage.setItem("sortPreference", newSortOption);
+    filterAndSortCollections(collections, selectedCategory, newSortOption);
   };
 
   const formatDate = (dateString: string): string => {
@@ -297,6 +301,26 @@ const YourCollections: React.FC = () => {
     }
   };
 
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination || sortOption !== "custom") {
+      return;
+    }
+
+    const items = Array.from(filteredCollections);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setFilteredCollections(items);
+    setCollections(prevCollections => {
+      const updatedCollections = prevCollections.map(col => 
+        items.find(item => item.collection_id === col.collection_id) || col
+      );
+      return updatedCollections;
+    });
+    setSortOption("custom");
+    localStorage.setItem("sortPreference", "custom");
+  };
+
   return (
     <div className="your-collections">
       <CollectionsNavBar
@@ -309,6 +333,7 @@ const YourCollections: React.FC = () => {
           <select id="sort" value={sortOption} onChange={handleSortChange} onKeyPress={handleKeyPress}>
             <option value="date">Date Created</option>
             <option value="alphabetical">Alphabetical</option>
+            <option value="category">Category</option>
           </select>
         </div>
         <button
@@ -319,41 +344,57 @@ const YourCollections: React.FC = () => {
           Duplicate Collection
         </button>
       </div>
-      <div className="your-collections-list">
-        {filteredCollections.map((collection, index) => {
-          const colorClass = `color-${(index % 10) + 1}`;
-          return (
-            <div key={collection.collection_id} className={`your-collection-item ${colorClass}`}>
-              <h1>{collection.name}</h1>
-              <p>{getItemsCount(collection.description)} items</p>
-              <p>Created by you on {formatDate(collection.created_at)}</p>
-              <button
-                type="button"
-                className="start-button"
-                onClick={() => handleStartCollection(collection.collection_id)}
-              >
-                Start
-              </button>
-              <div className="your-button-group">
-                <button
-                  type="button"
-                  className="your-edit-button"
-                  onClick={() => handleEditButtonClick(collection)}
-                >
-                  Edit
-                </button>
-                <button
-                  type="button"
-                  className="delete-button"
-                  onClick={() => handleDeleteCollection(collection.collection_id)}
-                >
-                  Delete
-                </button>
-              </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="collections">
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef} className="your-collections-list">
+              {filteredCollections.map((collection, index) => {
+                const colorClass = `color-${(index % 10) + 1}`;
+                return (
+                  <Draggable key={collection.collection_id} draggableId={collection.collection_id.toString()} index={index}>
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className={`your-collection-item ${colorClass}`}
+                      >
+                        <h1>{collection.name}</h1>
+                        <p>{getItemsCount(collection.description)} items</p>
+                        <p>Created by you on {formatDate(collection.created_at)}</p>
+                        <button
+                          type="button"
+                          className="start-button"
+                          onClick={() => handleStartCollection(collection.collection_id)}
+                        >
+                          Start
+                        </button>
+                        <div className="your-button-group">
+                          <button
+                            type="button"
+                            className="your-edit-button"
+                            onClick={() => handleEditButtonClick(collection)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            className="delete-button"
+                            onClick={() => handleDeleteCollection(collection.collection_id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
             </div>
-          );
-        })}
-      </div>
+          )}
+        </Droppable>
+      </DragDropContext>
       {showModal && selectedCollection && (
         <SessionSettingsModal
           collectionName={selectedCollection.name}
