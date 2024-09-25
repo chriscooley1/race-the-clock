@@ -41,9 +41,26 @@ export const generateMathProblems = (count: number, operation: keyof typeof oper
   for (let i = 0; i < count; i++) {
     const num1 = Math.floor(Math.random() * 10) + 1;
     const num2 = Math.floor(Math.random() * 10) + 1;
+    let answer: number;
+    switch (operation) {
+      case 'addition':
+        answer = num1 + num2;
+        break;
+      case 'subtraction':
+        answer = num1 - num2;
+        break;
+      case 'multiplication':
+        answer = num1 * num2;
+        break;
+      case 'division':
+        answer = Math.round((num1 / num2) * 100) / 100; // Round to 2 decimal places
+        break;
+      default:
+        throw new Error(`Unsupported operation: ${operation}`);
+    }
     problems.push(`${num1} ${operationSymbol[operation]} ${num2}`);
+    problems.push(`${answer}`);
   }
-
   return problems;
 };
 

@@ -78,12 +78,9 @@ const MathCollectionPage: React.FC = () => {
         hasBackButton={true}
       />
       <div className="math-collection-container" onClick={handleScreenClick}>
-        <h1 className="math-problem">{currentProblem.name}</h1>
-        {showAnswer && (
-          <h2 className="math-answer">
-            {getAnswer(currentProblem.name)}
-          </h2>
-        )}
+        <h1 className="math-problem">
+          {showAnswer ? getAnswer(currentProblem.name) : currentProblem.name}
+        </h1>
         <button type="button" className="nav-button left" onClick={(e) => { e.stopPropagation(); handlePrevious(); }}>←</button>
         <button type="button" className="nav-button right" onClick={(e) => { e.stopPropagation(); handleNext(); }}>→</button>
       </div>
