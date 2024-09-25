@@ -167,14 +167,8 @@ const YourCollections: React.FC = () => {
   const handleStartCollection = (collectionId: number) => {
     const collection = collections.find((col) => col.collection_id === collectionId);
     if (collection) {
-      if (collection.category === "Math Problems") {
-        navigate("/math-collection", {
-          state: { collection },
-        });
-      } else {
-        setSelectedCollection(collection);
-        setShowModal(true);
-      }
+      setSelectedCollection(collection);
+      setShowModal(true);
     }
   };
 
@@ -220,13 +214,24 @@ const YourCollections: React.FC = () => {
     textColor: string
   ) => {
     if (selectedCollection) {
+      console.log("Selected collection:", selectedCollection);
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
-      const sequence = sequenceItems.map((item: { name: string; svg?: string; count?: number }) => ({
-        name: item.name,
-        svg: item.svg,
-        count: item.count
+      console.log("Parsed sequence items:", sequenceItems);
+      const sequence = sequenceItems.map((item: { name: string } | string, index: number) => ({
+        name: typeof item === "object" ? item.name : item,
+        isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0
       }));
+      console.log("Prepared sequence:", sequence);
       const duration = min * 60 + sec;
+      console.log("Navigating to fullscreen-display with state:", {
+        sequence,
+        duration,
+        speed,
+        textColor,
+        shuffle,
+        category: selectedCollection.category,
+        type: selectedCollection.type,
+      });
       navigate("/fullscreen-display", {
         state: {
           sequence,
@@ -235,10 +240,12 @@ const YourCollections: React.FC = () => {
           textColor,
           shuffle,
           category: selectedCollection.category,
-          type: selectedCollection.type, // Add this line
+          type: selectedCollection.type,
         },
       });
       setShowModal(false);
+    } else {
+      console.error("No collection selected");
     }
   };
 

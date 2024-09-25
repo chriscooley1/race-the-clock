@@ -41,8 +41,12 @@ const MathCollectionPage: React.FC = () => {
   }, [theme]);
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % problems.length);
-    setShowAnswer(false);
+    if (showAnswer) {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % problems.length);
+      setShowAnswer(false);
+    } else {
+      setShowAnswer(true);
+    }
   };
 
   const handlePrevious = () => {
@@ -51,11 +55,7 @@ const MathCollectionPage: React.FC = () => {
   };
 
   const handleScreenClick = () => {
-    if (!showAnswer) {
-      setShowAnswer(true);
-    } else {
-      handleNext();
-    }
+    handleNext();
   };
 
   if (!collection || problems.length === 0) {

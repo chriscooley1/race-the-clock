@@ -33,8 +33,8 @@ interface FullScreenDisplayState {
 
 interface SequenceItem {
   name: string;
-  answer: string;
-  svg: string;
+  isAnswer?: boolean;
+  svg?: string;
 }
 
 const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
@@ -42,13 +42,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onExitFullScreen,
 }) => {
   const location = useLocation();
+  console.log("FullScreenDisplay state:", location.state);
   const { sequence, speed, shuffle, category, type } = location.state as FullScreenDisplayState;
+  console.log("Destructured values:", { sequence, speed, shuffle, category, type });
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
   const [shuffledSequence, setShuffledSequence] = useState<SequenceItem[]>([]);
   const [isPaused, setIsPaused] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
-  const [showAnswer, setShowAnswer] = useState(false);
 
   const shuffleArray = (array: CollectionItem[]): CollectionItem[] => {
     return [...array].sort(() => Math.random() - 0.5);
@@ -107,27 +108,17 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (category === "Math" && !showAnswer) {
-      setShowAnswer(true);
-    } else {
-      setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
-      setShowAnswer(false);
-    }
+    setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
   };
 
   const handlePrevious = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIndex((prevIndex) => (prevIndex - 1 + shuffledSequence.length) % shuffledSequence.length);
-    setShowAnswer(false);
   };
 
   const handleScreenClick = () => {
-    if (category === "Math" && (type === "mathProblems" || type === "Math Problems")) {
-      if (!showAnswer) {
-        setShowAnswer(true);
-      } else {
-        handleNext({ stopPropagation: () => {} } as React.MouseEvent);
-      }
+    if (category === "Math" && type === "mathProblems") {
+      handleNext({ stopPropagation: () => {} } as React.MouseEvent);
     }
   };
 
@@ -139,28 +130,38 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   console.log("Rendering with index:", index);
   console.log("Current item:", shuffledSequence[index]);
 
+  const renderContent = () => {
+    const currentItem = shuffledSequence[index];
+    if (category === "Math" && type === "mathProblems") {
+      return (
+        <>
+          <h1 className={`fullscreen-text ${currentItem.isAnswer ? "answer" : "problem"}`}>
+            {currentItem.name}
+          </h1>
+        </>
+      );
+    } else if (category === "Number Sense") {
+      return (
+        <div className="number-sense-container">
+          {currentItem?.svg && (
+            <img 
+              src={currentItem.svg} 
+              alt={`Number sense ${currentItem.name}`} 
+              className="fullscreen-image" 
+            />
+          )}
+        </div>
+      );
+    } else {
+      return <h1 className="fullscreen-text">{currentItem.name}</h1>;
+    }
+  };
+
   return (
     <>
       <Navbar isPaused={isPaused} onPauseResume={handlePauseResume} />
       <div className="fullscreen-container" onClick={handleScreenClick}>
-        {category === "Number Sense" ? (
-          <div className="number-sense-container">
-            {shuffledSequence[index]?.svg && (
-              <img 
-                src={shuffledSequence[index].svg} 
-                alt={`Number sense ${shuffledSequence[index].name}`} 
-                className="fullscreen-image" 
-              />
-            )}
-          </div>
-        ) : category === "Math" && (type === "mathProblems" || type === "Math Problems") ? (
-          <>
-            <h1 className="fullscreen-text">{shuffledSequence[index]?.name || ""}</h1>
-            {showAnswer && <h2 className="fullscreen-text">{shuffledSequence[index]?.answer || ""}</h2>}
-          </>
-        ) : (
-          <h1 className="fullscreen-text">{shuffledSequence[index]?.name || ""}</h1>
-        )}
+        {renderContent()}
         <button type="button" className="nav-button left" onClick={handlePrevious}>←</button>
         <button type="button" className="nav-button right" onClick={handleNext}>→</button>
       </div>

@@ -116,7 +116,15 @@ const CollectionSetup: React.FC = () => {
         break;
       case "mathProblems":
         if (operation && operation !== "PeriodicElement") {
-          generatedSequence = generateMathProblems(itemCount, operation);
+          const problems = generateMathProblems(itemCount, operation);
+          generatedSequence = problems.flatMap(problem => {
+            const [expression, answer] = problem.split(" = ");
+            const [num1, operation, num2] = expression.split(" ");
+            return [
+              `${num1} ${operation} ${num2}`,
+              `Answer: ${answer}`
+            ];
+          });
         } else {
           console.error("Math Problems selected but operation is not set or is PeriodicElement");
         }
