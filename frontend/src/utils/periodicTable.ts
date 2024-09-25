@@ -1,4 +1,3 @@
-// Create this file if it doesn't exist
 export interface PeriodicElement {
   name: string;
   symbol: string;

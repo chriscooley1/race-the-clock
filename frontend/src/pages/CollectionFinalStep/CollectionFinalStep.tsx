@@ -16,7 +16,7 @@ interface LocationState {
   isPublic: boolean;
   category: string;
   sequence: string[];
-  type?: string; // Add this line
+  type?: string;
 }
 
 const CollectionFinalStep: React.FC = () => {

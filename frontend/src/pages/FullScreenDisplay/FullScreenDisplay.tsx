@@ -50,6 +50,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [shuffledSequence, setShuffledSequence] = useState<SequenceItem[]>([]);
   const [isPaused, setIsPaused] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
+  const [progress, setProgress] = useState(0);
 
   const shuffleArray = (array: CollectionItem[]): CollectionItem[] => {
     return [...array].sort(() => Math.random() - 0.5);
@@ -92,7 +93,11 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   useEffect(() => {
     if (shuffledSequence.length > 0 && !isPaused && (category !== "Math" || (type !== "mathProblems" && type !== "Math Problems"))) {
       const interval = setInterval(() => {
-        setIndex((prevIndex) => (prevIndex + 1) % shuffledSequence.length);
+        setIndex((prevIndex) => {
+          const newIndex = (prevIndex + 1) % shuffledSequence.length;
+          setProgress((newIndex / shuffledSequence.length) * 100);
+          return newIndex;
+        });
       }, speed);
       setIntervalId(interval as unknown as number);
       return () => clearInterval(interval);
@@ -183,6 +188,12 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         {renderContent()}
         <button type="button" className="nav-button left" onClick={handlePrevious}>←</button>
         <button type="button" className="nav-button right" onClick={handleNext}>→</button>
+        <div className="progress-bar-container">
+          <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+        </div>
+        <div className="progress-text">
+          {Math.round(progress)}% Complete
+        </div>
       </div>
     </>
   );

@@ -113,3 +113,28 @@
   font-size: 15vw;
   margin: 0;
 }
+
+.progress-bar-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50;
+  border-radius: 5px;
+  transition: width 0.3s ease-in-out;
+}
+
+.progress-text {
+  position: fixed;
+  bottom: 35px;
+  left: 20px;
+  color: var(--display-text-color);
+  font-size: 14px;
+}
