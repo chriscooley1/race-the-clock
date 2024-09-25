@@ -143,12 +143,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     } else if (category === "Number Sense") {
       return (
         <div className="number-sense-container">
-          {currentItem?.svg && (
+          {currentItem?.svg ? (
             <img 
               src={currentItem.svg} 
               alt={`Number sense ${currentItem.name}`} 
               className="fullscreen-image" 
             />
+          ) : (
+            <p>No image available for {currentItem.name}</p>
           )}
         </div>
       );

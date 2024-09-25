@@ -167,7 +167,7 @@ const CollectionSetup: React.FC = () => {
       const collectionData = sequence.map((name, index) => ({
         id: index + 1,
         name,
-        svg: type === "numberSense" ? (numberSenseItems[index]?.svg || numberSenseItems[index]?.url) : undefined,
+        svg: type === "numberSense" ? numberSenseItems[index]?.svg : undefined,
         count: type === "numberSense" ? numberSenseItems[index]?.count : undefined,
       }));
 
