@@ -1,13 +1,14 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 interface NameWheelProps {
   names: string[];
   isSpinning: boolean;
-  rotation: number;
+  onSpin: () => number;
 }
 
-const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, rotation }) => {
+const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, onSpin }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -60,7 +61,32 @@ const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, rotation }) =>
     };
 
     drawWheel();
-  }, [names, isSpinning, rotation]);
+  }, [names, rotation]);
+
+  useEffect(() => {
+    if (isSpinning) {
+      const targetAngle = onSpin();
+      const startTime = performance.now();
+      const duration = 5000; // 5 seconds
+
+      const animateWheel = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease-out
+
+        setRotation((prevRotation) => {
+          const newRotation = (prevRotation + targetAngle * easeProgress) % (2 * Math.PI);
+          return newRotation;
+        });
+
+        if (progress < 1) {
+          requestAnimationFrame(animateWheel);
+        }
+      };
+
+      requestAnimationFrame(animateWheel);
+    }
+  }, [isSpinning, onSpin]);
 
   return <canvas ref={canvasRef} width={300} height={300} className="name-wheel" id="nameWheel" />;
 };

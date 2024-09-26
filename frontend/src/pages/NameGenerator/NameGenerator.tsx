@@ -12,6 +12,7 @@ const NameGenerator: React.FC = () => {
   const [nameListId, setNameListId] = useState<number | null>(null);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const { getAccessTokenSilently } = useAuth0();
+  // Remove the unused state
 
   const loadNameList = useCallback(async () => {
     try {
@@ -77,23 +78,19 @@ const NameGenerator: React.FC = () => {
   const handleGenerateName = () => {
     if (nameList.length > 0) {
       setIsSpinning(true);
-      const spinDuration = 3000; // 3 seconds
-      const spinRevolutions = 5; // Number of full rotations
+      const spinDuration = 5000; // 5 seconds
+      const spinRevolutions = 5 + Math.random() * 5; // 5 to 10 full rotations
       const randomIndex = Math.floor(Math.random() * nameList.length);
-      const targetAngle = -(randomIndex / nameList.length) * 360 - spinRevolutions * 360;
-
-      // Use the targetAngle to set a rotation style
-      const wheelElement = document.getElementById('nameWheel');
-      if (wheelElement) {
-        wheelElement.style.transition = `transform ${spinDuration}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
-        wheelElement.style.transform = `rotate(${targetAngle}deg)`;
-      }
+      const targetAngle = randomIndex / nameList.length * 360 + spinRevolutions * 360;
 
       setTimeout(() => {
         setGeneratedName(nameList[randomIndex]);
         setIsSpinning(false);
       }, spinDuration);
+
+      return targetAngle;
     }
+    return 0;
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -159,7 +156,7 @@ const NameGenerator: React.FC = () => {
         <NameWheel
           names={nameList}
           isSpinning={isSpinning}
-          rotation={0}
+          onSpin={handleGenerateName}
         />
       )}
       {generatedName && !isSpinning && (
