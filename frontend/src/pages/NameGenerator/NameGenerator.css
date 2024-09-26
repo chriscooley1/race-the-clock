@@ -1,67 +1,97 @@
 .name-generator-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center elements horizontally */
-  justify-content: flex-start; /* Align elements to the top */
-  min-height: 100vh; /* Ensure it covers the full viewport height */
-  text-align: center; /* Center text inside the container */
-  padding-top: 80px; /* Add padding to create space below the navbar */
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 40px;
 }
 
 .gen-centered-input {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px; /* Add margin for spacing */
+  margin-bottom: 20px;
 }
 
 .gen-centered-input label {
-  margin-right: 10px; /* Space between label and input */
-}
-
-.gen-centered-input input[type="number"],
-.gen-centered-input input[type="file"],
-.gen-centered-input select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  color: black;
-  background-color: white;
-  font-family: "Caveat", cursive; /* Set a default fun font for the body */
-}
-
-.gen-styled-button {
-  background-color: #cceeff; /* Light blue background */
-  color: black; /* Black text color */
-  border: 1px solid #ccc; /* Light border */
-  padding: 10px 20px; /* Padding for button size */
-  border-radius: 5px; /* Rounded corners */
-  font-size: 1em; /* Font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  text-transform: uppercase; /* Uppercase text */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin-top: 20px; /* Add margin above the button */
-}
-
-.gen-styled-button:hover {
-  background-color: #1e90ff; /* Change background on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
-}
-
-.gen-styled-button:active {
-  background-color: #0056b3; /* Darker background when active */
-  transform: scale(0.95); /* Slight scale down when active */
+  margin-right: 10px;
 }
 
 .gen-custom-input {
-  background-color: white !important; /* Ensures background is white */
-  color: black !important;           /* Ensures text color is black */
-  border: 1px solid var(--text-color); /* Use text color for input borders in dark mode */
-  border-radius: 4px;                /* Rounded corners */
-  padding: 8px;                      /* Padding inside the field */
-  font-size: 1em;                    /* Font size */
-  font-family: "Caveat", cursive; /* Set a default fun font for the body */
+  background-color: white;
+  color: black;
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 1em;
+  font-family: "Caveat", cursive;
+}
+
+.gen-styled-button {
+  background-color: #cceeff;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-left: 10px;
+}
+
+.gen-styled-button:hover {
+  background-color: #1e90ff;
+  transform: scale(1.05);
+}
+
+.gen-styled-button:active {
+  background-color: #0056b3;
+  transform: scale(0.95);
+}
+
+.name-generator-layout {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.name-wheel-container {
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.name-wheel-container canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.name-controls {
+  flex: 0 0 40%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.name-controls ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.name-controls li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .name-remove-button {
@@ -86,9 +116,18 @@
   transform: scale(0.95);
 }
 
-.name-wheel {
+.generated-name {
+  text-align: center;
   margin-top: 20px;
-  border: 2px solid #ccc;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .name-generator-layout {
+    flex-direction: column;
+  }
+
+  .name-wheel-container,
+  .name-controls {
+    flex: 0 0 100%;
+  }
 }

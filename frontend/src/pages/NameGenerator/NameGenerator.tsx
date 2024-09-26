@@ -12,7 +12,6 @@ const NameGenerator: React.FC = () => {
   const [nameListId, setNameListId] = useState<number | null>(null);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const { getAccessTokenSilently } = useAuth0();
-  // Remove the unused state
 
   const loadNameList = useCallback(async () => {
     try {
@@ -65,32 +64,29 @@ const NameGenerator: React.FC = () => {
   const handleRemoveName = (index: number) => {
     const updatedList = nameList.filter((_, i) => i !== index);
     setNameList(updatedList);
-    saveNameList(updatedList);  // Pass the updated list to saveNameList
+    saveNameList(updatedList);
   };
 
   const handleEditName = (index: number, newName: string) => {
     const updatedList = [...nameList];
     updatedList[index] = newName.trim();
     setNameList(updatedList);
-    saveNameList();
+    saveNameList(updatedList);
   };
 
   const handleGenerateName = () => {
     if (nameList.length > 0) {
       setIsSpinning(true);
-      const spinDuration = 5000; // 5 seconds
       const spinRevolutions = 5 + Math.random() * 5; // 5 to 10 full rotations
-      const randomIndex = Math.floor(Math.random() * nameList.length);
-      const targetAngle = randomIndex / nameList.length * 360 + spinRevolutions * 360;
-
-      setTimeout(() => {
-        setGeneratedName(nameList[randomIndex]);
-        setIsSpinning(false);
-      }, spinDuration);
-
+      const targetAngle = spinRevolutions * 2 * Math.PI;
       return targetAngle;
     }
     return 0;
+  };
+
+  const handleNameSelected = (name: string) => {
+    setGeneratedName(name);
+    setIsSpinning(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -101,70 +97,75 @@ const NameGenerator: React.FC = () => {
 
   return (
     <div className="name-generator-container">
-      <h1>Name Generator</h1>
-      <div className="gen-centered-input">
-        <label htmlFor="nameInput">Add a Name:</label>
-        <input
-          type="text"
-          id="nameInput"
-          value={nameInput}
-          onChange={(e) => setNameInput(e.target.value)}
-          className="gen-custom-input"
-          placeholder="Enter a name"
-          title="Name Input"
-          onKeyDown={handleKeyDown}
-        />
-        <button type="button" onClick={handleAddName} className="gen-styled-button">
-          Add Name
-        </button>
-      </div>
-      <div className="name-list">
-        <h3>Name List:</h3>
-        <ul>
-          {nameList.map((name, index) => (
-            <li key={index}>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => handleEditName(index, e.target.value)}
-                className="gen-custom-input"
-                placeholder="Edit name"
-                title={`Edit name ${index + 1}`}
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveName(index)}
-                className="name-remove-button"
-                title={`Remove name ${index + 1}`}
-              >
-                Remove
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <button
-        type="button"
-        onClick={handleGenerateName}
-        className="gen-styled-button"
-        disabled={nameList.length === 0 || isSpinning}
-        title="Generate a random name from the list"
-      >
-        Generate Random Name
-      </button>
-      {nameList.length > 0 && (
-        <NameWheel
-          names={nameList}
-          isSpinning={isSpinning}
-          onSpin={handleGenerateName}
-        />
-      )}
-      {generatedName && !isSpinning && (
-        <div>
-          <h3>Generated Name:</h3>
-          <p>{generatedName}</p>
+      <h1 className="name-generator-title">Name Generator</h1>
+      <div className="name-generator-layout">
+        <div className="name-wheel-container">
+          {nameList.length > 0 && (
+            <NameWheel
+              names={nameList}
+              isSpinning={isSpinning}
+              onSpin={handleGenerateName}
+              onNameSelected={handleNameSelected}
+            />
+          )}
+          <button
+            type="button"
+            onClick={handleGenerateName}
+            className="gen-styled-button"
+            disabled={nameList.length === 0 || isSpinning}
+            title="Generate a random name from the list"
+          >
+            Generate Random Name
+          </button>
+          {generatedName && !isSpinning && (
+            <div className="generated-name">
+              <h3>Generated Name:</h3>
+              <p>{generatedName}</p>
+            </div>
+          )}
         </div>
-      )}
+        <div className="name-controls">
+          <div className="gen-centered-input">
+            <label htmlFor="nameInput">Add a Name:</label>
+            <input
+              type="text"
+              id="nameInput"
+              value={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
+              className="gen-custom-input"
+              placeholder="Enter a name"
+              title="Name Input"
+              onKeyDown={handleKeyDown}
+            />
+            <button type="button" onClick={handleAddName} className="gen-styled-button">
+              Add Name
+            </button>
+          </div>
+          <h3>Name List:</h3>
+          <ul>
+            {nameList.map((name, index) => (
+              <li key={index}>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => handleEditName(index, e.target.value)}
+                  className="gen-custom-input"
+                  placeholder="Edit name"
+                  title={`Edit name ${index + 1}`}
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveName(index)}
+                  className="name-remove-button"
+                  title={`Remove name ${index + 1}`}
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
