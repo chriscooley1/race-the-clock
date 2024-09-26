@@ -146,15 +146,22 @@ const NameGenerator: React.FC = () => {
           </div>
           <h3>Name List:</h3>
           <ul>
-            {nameList.map((name, index) => (
-              <WheelSegment
-                key={index}
-                name={name}
-                index={index}
-                onRemove={() => handleRemoveName(index)}
-                onEdit={(newName) => handleEditName(index, newName)}
-              />
-            ))}
+            {nameList.map((name, index) => {
+              const segmentAngle = (2 * Math.PI) / nameList.length; // Calculate angle for each name
+              const angle = index * segmentAngle; // This is the angle for each segment on the wheel
+
+              return (
+                <WheelSegment
+                  key={index}
+                  name={name}
+                  index={index}
+                  angle={angle}     // Pass the calculated angle
+                  radius={150}      // Set a static or calculated radius, depending on your layout
+                  onRemove={() => handleRemoveName(index)}
+                  onEdit={(newName) => handleEditName(index, newName)}
+                />
+              );
+            })}
           </ul>
         </div>
       </div>

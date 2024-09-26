@@ -2,18 +2,21 @@ import React from "react";
 
 interface WheelSegmentProps {
   name: string;
-  index: number;
+  index: number;   // index for unique identification
+  angle: number;   // Angle for the text positioning (not used here but kept for consistency)
+  radius: number;  // Radius of the wheel for text positioning (not used here but kept for consistency)
   onRemove: () => void;
   onEdit: (newName: string) => void;
 }
 
 const WheelSegment: React.FC<WheelSegmentProps> = ({ name, index, onRemove, onEdit }) => {
+
   const handleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
     onEdit(e.target.value);
   };
 
   return (
-    <li key={index}>
+    <li className="wheel-segment-item">
       <input
         type="text"
         value={name}
