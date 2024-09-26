@@ -175,7 +175,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           ) : (
             <p>No image available for {currentItem.name}</p>
           )}
-          {currentItem.count !== undefined && <p>Count: {currentItem.count}</p>}
         </div>
       );
     } else {
