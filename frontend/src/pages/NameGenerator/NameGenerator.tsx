@@ -3,12 +3,14 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./NameGenerator.css";
 import "../../App.css";
+import NameWheel from "./NameWheel";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
   const [nameList, setNameList] = useState<string[]>([]);
   const [generatedName, setGeneratedName] = useState<string | null>(null);
   const [nameListId, setNameListId] = useState<number | null>(null);
+  const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const { getAccessTokenSilently } = useAuth0();
 
   const loadNameList = useCallback(async () => {
@@ -74,9 +76,12 @@ const NameGenerator: React.FC = () => {
 
   const handleGenerateName = () => {
     if (nameList.length > 0) {
+      setIsSpinning(true);
       const randomIndex = Math.floor(Math.random() * nameList.length);
-      console.log("Generated random name:", nameList[randomIndex]);
-      setGeneratedName(nameList[randomIndex]);
+      setTimeout(() => {
+        setGeneratedName(nameList[randomIndex]);
+        setIsSpinning(false);
+      }, 3000); // Spin for 3 seconds
     }
   };
 
@@ -134,12 +139,19 @@ const NameGenerator: React.FC = () => {
         type="button"
         onClick={handleGenerateName}
         className="gen-styled-button"
-        disabled={nameList.length === 0}
+        disabled={nameList.length === 0 || isSpinning}
         title="Generate a random name from the list"
       >
         Generate Random Name
       </button>
-      {generatedName && (
+      {nameList.length > 0 && (
+        <NameWheel
+          names={nameList}
+          isSpinning={isSpinning}
+          selectedName={generatedName}
+        />
+      )}
+      {generatedName && !isSpinning && (
         <div>
           <h3>Generated Name:</h3>
           <p>{generatedName}</p>

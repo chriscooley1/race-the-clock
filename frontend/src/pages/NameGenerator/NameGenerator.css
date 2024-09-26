@@ -85,3 +85,10 @@
   background-color: #ff3648;
   transform: scale(0.95);
 }
+
+.name-wheel {
+  margin-top: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
