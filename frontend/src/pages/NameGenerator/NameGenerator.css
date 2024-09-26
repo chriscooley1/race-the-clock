@@ -118,3 +118,14 @@
     flex: 0 0 100%;
   }
 }
+
+.arrow {
+  position: absolute;
+  top: 25px; /* Adjust this based on the size of the wheel */
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid red; /* Changed from border-bottom to border-top */
+}

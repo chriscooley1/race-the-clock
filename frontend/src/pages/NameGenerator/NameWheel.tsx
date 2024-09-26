@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
 
 interface NameWheelProps {
   names: string[];
@@ -8,10 +9,15 @@ interface NameWheelProps {
   stopSpinning: () => void;
 }
 
-const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, onSpin, onNameSelected, stopSpinning }) => {
+const NameWheel: React.FC<NameWheelProps> = ({
+  names,
+  isSpinning,
+  onSpin,
+  onNameSelected,
+  stopSpinning,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [rotation, setRotation] = useState(0);
-
+  const controls = useAnimation();
   const canvasSize = 500;
 
   useEffect(() => {
@@ -32,8 +38,8 @@ const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, onSpin, onName
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       names.forEach((name, index) => {
-        const startAngle = (index / names.length) * 2 * Math.PI - rotation;
-        const endAngle = ((index + 1) / names.length) * 2 * Math.PI - rotation;
+        const startAngle = (index / names.length) * 2 * Math.PI;
+        const endAngle = ((index + 1) / names.length) * 2 * Math.PI;
 
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
@@ -53,87 +59,67 @@ const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, onSpin, onName
         ctx.fillText(name, radius - 10, 0);
         ctx.restore();
       });
-
-      // Draw stationary arrow
-      ctx.save();
-      ctx.translate(centerX, centerY - radius - 10);
-      ctx.beginPath();
-      ctx.moveTo(0, 20);
-      ctx.lineTo(-10, 0);
-      ctx.lineTo(10, 0);
-      ctx.closePath();
-      ctx.fillStyle = "red";
-      ctx.fill();
-      ctx.strokeStyle = "black";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      ctx.restore();
     };
 
     drawWheel();
-  }, [names, rotation]);
+  }, [names]);
 
   useEffect(() => {
     if (isSpinning) {
       const targetAngle = onSpin();
-      const startTime = performance.now();
-      const duration = 5000; // 5 seconds for the animation
+      const totalSlices = names.length;
 
-      // Define the cubic easing function
-      const easeInOutCubic = (t: number) => {
-        return t < 0.5
-          ? 4 * t * t * t // Accelerating phase
-          : 1 - Math.pow(-2 * t + 2, 3) / 2; // Decelerating phase
-      };
+      // Log the initial target angle
+      console.log("Target Angle (radians):", targetAngle);
+      console.log("Target Angle (degrees):", targetAngle * (180 / Math.PI));
 
-      const animateWheel = (currentTime: number) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeProgress = easeInOutCubic(progress); // Use ease-in-out-cubic easing
+      // Use Framer Motion to animate the rotation
+      controls.start({
+        rotate: [0, targetAngle * (180 / Math.PI)], // Convert radians to degrees
+        transition: {
+          duration: 5, // Animation duration in seconds
+          ease: "easeInOut", // Easing function for smooth start and stop
+        },
+      });
 
-        setRotation((prevRotation) => {
-          const newRotation = (prevRotation + targetAngle * easeProgress) % (2 * Math.PI);
-          return newRotation;
-        });
+      // Stop spinning after the animation ends
+      setTimeout(() => {
+        stopSpinning();
 
-        if (progress < 1) {
-          requestAnimationFrame(animateWheel);
-        } else {
-          // Spinning has finished, determine the selected name
-          const sliceAngle = (2 * Math.PI) / names.length;
+        // Normalize rotation to [0, 2π]
+        const normalizedRotation = (targetAngle + Math.PI) % (2 * Math.PI);
 
-          // Normalize rotation within [0, 2π]
-          const normalizedRotation = (rotation % (2 * Math.PI));
+        // Calculate the slice angle (size of each name slice)
+        const sliceAngle = (2 * Math.PI) / totalSlices;
 
-          // Adjust for the arrow at the top (12 o'clock), which is Math.PI / 2 radians offset
-          const adjustedRotation = (normalizedRotation + Math.PI / 2) % (2 * Math.PI);
+        // Log the calculated slice angle and adjusted rotation
+        console.log("Slice Angle (radians):", sliceAngle);
+        console.log("Normalized Rotation (radians):", normalizedRotation);
 
-          // Fine-tune alignment
-          const extraOffset = sliceAngle / 2;
+        // Calculate the final index of the selected name
+        const selectedIndex = Math.floor(normalizedRotation / sliceAngle) % totalSlices;
 
-          // Calculate the index of the selected name
-          const selectedIndex = Math.floor((adjustedRotation + extraOffset) / sliceAngle) % names.length;
+        // Log the final selected index and the selected name
+        console.log("Selected Index:", selectedIndex);
+        console.log("Selected Name:", names[selectedIndex]);
 
-          // Log the selected index and other debug info
-          console.log({
-            rotation,
-            normalizedRotation,
-            adjustedRotation,
-            extraOffset,
-            sliceAngle,
-            selectedIndex,
-          });
-
-          onNameSelected(names[selectedIndex]);
-          stopSpinning();
-        }
-      };
-
-      requestAnimationFrame(animateWheel);
+        onNameSelected(names[selectedIndex]); // Set the selected name
+      }, 5000);
     }
-  }, [isSpinning, onSpin, names, rotation, onNameSelected, stopSpinning]);
+  }, [isSpinning, controls, onSpin, names, onNameSelected, stopSpinning]);
 
-  return <canvas ref={canvasRef} />;
+  return (
+    <div style={{ position: "relative", width: canvasSize, height: canvasSize }}>
+      <motion.div
+        animate={controls} // Attach the motion controls to this div
+        style={{ display: "inline-block" }} // Center the canvas
+      >
+        <canvas ref={canvasRef} />
+      </motion.div>
+      {/* Add the fixed downward-pointing arrow */}
+      <div className="arrow"></div>
+    </div>
+  );
 };
 
 export default NameWheel;

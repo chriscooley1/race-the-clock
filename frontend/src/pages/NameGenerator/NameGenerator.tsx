@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import "./NameGenerator.css";
 import "../../App.css";
 import NameWheel from "./NameWheel";
+import WheelSegment from "./WheelSegment";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
@@ -146,24 +147,13 @@ const NameGenerator: React.FC = () => {
           <h3>Name List:</h3>
           <ul>
             {nameList.map((name, index) => (
-              <li key={index}>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => handleEditName(index, e.target.value)}
-                  className="gen-custom-input"
-                  placeholder="Edit name"
-                  title={`Edit name ${index + 1}`}
-                />
-                <button
-                  type="button"
-                  onClick={() => handleRemoveName(index)}
-                  className="name-remove-button"
-                  title={`Remove name ${index + 1}`}
-                >
-                  Remove
-                </button>
-              </li>
+              <WheelSegment
+                key={index}
+                name={name}
+                index={index}
+                onRemove={() => handleRemoveName(index)}
+                onEdit={(newName) => handleEditName(index, newName)}
+              />
             ))}
           </ul>
         </div>
