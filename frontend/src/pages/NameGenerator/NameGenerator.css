@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
 .gen-centered-input {
@@ -63,12 +63,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-}
-
-.name-wheel-container canvas {
-  max-width: 100%;
-  height: auto;
 }
 
 .name-controls {
@@ -79,12 +73,6 @@
   align-items: center;
   overflow-y: auto;
   max-height: 80vh;
-}
-
-.name-controls ul {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
 }
 
 .name-controls li {
@@ -118,7 +106,6 @@
 
 .generated-name {
   text-align: center;
-  margin-top: 20px;
 }
 
 @media (max-width: 768px) {
