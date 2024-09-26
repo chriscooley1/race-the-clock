@@ -76,8 +76,9 @@ const NameGenerator: React.FC = () => {
 
   const handleGenerateName = () => {
     if (nameList.length > 0) {
+      // The NameWheel component will handle the actual spinning and rotation logic.
       setIsSpinning(true);
-      const spinRevolutions = 5 + Math.random() * 5; // 5 to 10 full rotations
+      const spinRevolutions = 2 + Math.random() * 3; // 2 to 5 full rotations
       const targetAngle = spinRevolutions * 2 * Math.PI;
       return targetAngle;
     }
@@ -106,6 +107,7 @@ const NameGenerator: React.FC = () => {
               isSpinning={isSpinning}
               onSpin={handleGenerateName}
               onNameSelected={handleNameSelected}
+              stopSpinning={() => setIsSpinning(false)}
             />
           )}
           <button

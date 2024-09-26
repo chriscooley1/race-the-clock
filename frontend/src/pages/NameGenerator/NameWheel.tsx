@@ -5,13 +5,14 @@ interface NameWheelProps {
   isSpinning: boolean;
   onSpin: () => number;
   onNameSelected: (name: string) => void;
+  stopSpinning: () => void;
 }
 
-const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, onSpin, onNameSelected }) => {
+const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, onSpin, onNameSelected, stopSpinning }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [rotation, setRotation] = useState(0);
 
-  const canvasSize = 500; // Increase this value to make the wheel larger
+  const canvasSize = 500;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -30,7 +31,6 @@ const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, onSpin, onName
     const drawWheel = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw wheel segments
       names.forEach((name, index) => {
         const startAngle = (index / names.length) * 2 * Math.PI - rotation;
         const endAngle = ((index + 1) / names.length) * 2 * Math.PI - rotation;
@@ -77,34 +77,63 @@ const NameWheel: React.FC<NameWheelProps> = ({ names, isSpinning, onSpin, onName
     if (isSpinning) {
       const targetAngle = onSpin();
       const startTime = performance.now();
-      const duration = 5000; // 5 seconds
-  
+      const duration = 5000; // 5 seconds for the animation
+
+      // Define the cubic easing function
+      const easeInOutCubic = (t: number) => {
+        return t < 0.5
+          ? 4 * t * t * t // Accelerating phase
+          : 1 - Math.pow(-2 * t + 2, 3) / 2; // Decelerating phase
+      };
+
       const animateWheel = (currentTime: number) => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const easeProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease-out
-  
+        const easeProgress = easeInOutCubic(progress); // Use ease-in-out-cubic easing
+
         setRotation((prevRotation) => {
           const newRotation = (prevRotation + targetAngle * easeProgress) % (2 * Math.PI);
           return newRotation;
         });
-  
+
         if (progress < 1) {
           requestAnimationFrame(animateWheel);
         } else {
           // Spinning has finished, determine the selected name
-          const selectedIndex = Math.floor(((rotation % (2 * Math.PI)) / (2 * Math.PI)) * names.length);
+          const sliceAngle = (2 * Math.PI) / names.length;
+
+          // Normalize rotation within [0, 2π]
+          const normalizedRotation = (rotation % (2 * Math.PI));
+
+          // Adjust for the arrow at the top (12 o'clock), which is Math.PI / 2 radians offset
+          const adjustedRotation = (normalizedRotation + Math.PI / 2) % (2 * Math.PI);
+
+          // Fine-tune alignment
+          const extraOffset = sliceAngle / 2;
+
+          // Calculate the index of the selected name
+          const selectedIndex = Math.floor((adjustedRotation + extraOffset) / sliceAngle) % names.length;
+
+          // Log the selected index and other debug info
+          console.log({
+            rotation,
+            normalizedRotation,
+            adjustedRotation,
+            extraOffset,
+            sliceAngle,
+            selectedIndex,
+          });
+
           onNameSelected(names[selectedIndex]);
+          stopSpinning();
         }
       };
-  
+
       requestAnimationFrame(animateWheel);
     }
-  }, [isSpinning, onSpin, names, rotation, onNameSelected]);
+  }, [isSpinning, onSpin, names, rotation, onNameSelected, stopSpinning]);
 
-  return (
-    <canvas ref={canvasRef} />
-  );
+  return <canvas ref={canvasRef} />;
 };
 
 export default NameWheel;
