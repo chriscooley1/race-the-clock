@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useTheme, colorSchemes } from "../../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
+import { colorSchemes, ColorScheme } from "../../constants/colorSchemes";
 import "./Settings.css";
 import "../../App.css";
 
@@ -35,12 +36,12 @@ const Settings: React.FC = () => {
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log("Theme selected:", event.target.value);
-    const newTheme = colorSchemes.find(scheme => scheme.name === event.target.value);
+    const newTheme = colorSchemes.find((scheme: ColorScheme) => scheme.name === event.target.value); // Add "ColorScheme" type
     if (newTheme) {
       setTheme({
         ...newTheme,
-        isColorblindMode: false, // or get from current theme
-        colorblindType: "none", // or get from current theme
+        isColorblindMode: false, 
+        colorblindType: "none", 
       });
     }
   };
@@ -73,7 +74,7 @@ const Settings: React.FC = () => {
           value={theme.name}
           onChange={handleThemeChange}
         >
-          {colorSchemes.map(scheme => (
+          {colorSchemes.map((scheme: ColorScheme) => (
             <option key={scheme.name} value={scheme.name}>
               {scheme.name}
             </option>

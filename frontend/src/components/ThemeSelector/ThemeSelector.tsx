@@ -1,5 +1,6 @@
 import React from "react";
-import { useTheme, colorSchemes } from "../../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
+import { colorSchemes, ColorScheme } from "../../constants/colorSchemes";
 import "./ThemeSelector.css";
 import "../../App.css";
 
@@ -7,15 +8,14 @@ const ThemeSelector: React.FC = () => {
   const { setTheme, theme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedScheme = colorSchemes.find(
-      (scheme) => scheme.name === event.target.value
+    const selectedScheme: ColorScheme | undefined = colorSchemes.find(
+      (scheme: ColorScheme) => scheme.name === event.target.value
     );
-    console.log("Selected theme:", selectedScheme);
     if (selectedScheme) {
       setTheme({
         ...selectedScheme,
-        isColorblindMode: false, // or appropriate default value
-        colorblindType: "none", // or appropriate default value
+        isColorblindMode: false,
+        colorblindType: "none",
       });
     }
   };
