@@ -5,8 +5,7 @@
   align-items: center;
   width: 100%;
   min-height: 100vh; /* Ensure it covers the full viewport */
-  overflow-y: auto; /* Allow vertical scrolling if needed */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow: hidden; /* Prevent parent container from being scrollable */
   background-color: var(--background-color);
   color: var(--text-color);
   padding-top: 50px; /* Add padding to prevent overlap with navbar */
@@ -236,6 +235,23 @@
   justify-content: space-around;
   padding: 20px;
   width: 100%;
+  overflow-y: auto; /* Ensure only this container scrolls */
+  max-height: 80vh; /* Limit the height */
+}
+
+/* Collection items - ensure they are not scrollable */
+.your-collection-item {
+  flex: 0 0 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 300px; /* Fixed height */
+  padding: 20px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  border: 5px solid black;
+  overflow: hidden; /* Prevent scrolling */
 }
 
 /* Modal Content */

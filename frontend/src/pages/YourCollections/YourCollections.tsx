@@ -21,9 +21,11 @@ interface Collection {
   items: Item[];
   type: string;
 }
+
 interface Item {
   name: string;
 }
+
 const getItemsCount = (description: string | undefined): number => {
   if (!description) return 0;
   try {
@@ -34,17 +36,21 @@ const getItemsCount = (description: string | undefined): number => {
     return 0;
   }
 };
+
 const parseDescription = (description: string): { name: string; id?: number }[] => {
   try {
     const parsed = JSON.parse(description);
-    return Array.isArray(parsed) ? parsed.map((item, index) => ({
-      name: typeof item === "object" && item !== null ? item.name : String(item),
-      id: typeof item === "object" && item !== null && "id" in item ? item.id : index
-    })) : [];
+    return Array.isArray(parsed)
+      ? parsed.map((item, index) => ({
+          name: typeof item === "object" && item !== null ? item.name : String(item),
+          id: typeof item === "object" && item !== null && "id" in item ? item.id : index,
+        }))
+      : [];
   } catch {
     return [{ name: description }];
   }
 };
+
 const YourCollections: React.FC = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
@@ -64,11 +70,10 @@ const YourCollections: React.FC = () => {
     const loadCollections = async () => {
       try {
         console.log("Fetching user collections...");
-        console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
         const fetchedCollections = await fetchCollections(getAccessTokenSilently);
         console.log("Loaded collections:", fetchedCollections);
         if (Array.isArray(fetchedCollections)) {
-          setCollections(fetchedCollections);
+          setCollections(fetchedCollections.filter(collection => collection.collection_id != null));
           filterAndSortCollections(fetchedCollections, selectedCategory, sortOption);
         } else {
           console.error("Unexpected data format:", fetchedCollections);
@@ -95,49 +100,36 @@ const YourCollections: React.FC = () => {
     sortOption: string
   ) => {
     let filtered = collections;
-  
+
     if (category !== "All Collections") {
       filtered = collections.filter((collection) => collection.category === category);
     }
+
+    if (sortOption === "date") {
+      filtered.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    } else if (sortOption === "alphabetical") {
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOption === "category") {
+      filtered.sort((a, b) => a.category.localeCompare(b.category));
+    } 
+    // No sorting for "custom", maintain the order based on drag-and-drop
   
-    const sorted = [...filtered].sort((a, b) => {
-      if (sortOption === "date") {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      } else if (sortOption === "alphabetical") {
-        return a.name.localeCompare(b.name);
-      } else if (sortOption === "category") {
-        return a.category.localeCompare(b.category);
-      }
-      return 0;
-    });
-  
-    setFilteredCollections(sorted);
-  };
+    setFilteredCollections(filtered);
+  };  
 
   const handleSaveUpdatedItems = async (newItems: { name: string; id?: number }[]) => {
     setIsLoading(true);
     try {
-      console.log("Saving updated items:", newItems);
       if (selectedCollection) {
-        // Filter out any empty items and ensure name is a string
-        const filteredItems = newItems.filter(item => {
-          const itemName = typeof item.name === "object" ? JSON.stringify(item.name) : String(item.name);
-          return itemName.trim() !== "";
-        }).map(item => ({
-          name: typeof item.name === "object" ? JSON.stringify(item.name) : String(item.name),
-          id: item.id
-        }));
+        const filteredItems = newItems
+          .filter((item) => String(item.name).trim() !== "")
+          .map((item) => ({
+            name: String(item.name),
+            id: item.id,
+          }));
 
-        // Convert filteredItems to JSON string to store in the description
         const updatedDescription = JSON.stringify(filteredItems);
 
-        console.log({
-          name: selectedCollection.name,
-          description: updatedDescription,
-          category: selectedCollection.category,
-        });
-
-        // Update the collection with the necessary fields
         const updatedCollection = await updateCollection(
           selectedCollection.collection_id,
           selectedCollection.name,
@@ -147,18 +139,12 @@ const YourCollections: React.FC = () => {
         );
 
         setCollections((prevCollections) =>
-          prevCollections.map((col) =>
-            col.collection_id === updatedCollection.collection_id
-              ? updatedCollection
-              : col
-          )
+          prevCollections.map((col) => (col.collection_id === updatedCollection.collection_id ? updatedCollection : col))
         );
         setSelectedCollection(updatedCollection);
 
-        // Refetch the collections to ensure they're up-to-date
         const refreshedCollections = await fetchCollections(getAccessTokenSilently);
         setCollections(refreshedCollections);
-        console.log("Updated collection:", selectedCollection);
       }
     } catch (error) {
       console.error("Error updating collection:", error);
@@ -183,9 +169,7 @@ const YourCollections: React.FC = () => {
   const handleDuplicateCollection = async () => {
     if (!collectionToDuplicate) return;
     try {
-      console.log("Duplicating collection:", collectionToDuplicate);
       const duplicatedCollection = await duplicateCollection(collectionToDuplicate, getAccessTokenSilently);
-      console.log("Duplicated collection:", duplicatedCollection);
       setCollections((prevCollections) => [...prevCollections, duplicatedCollection]);
       filterAndSortCollections([...collections, duplicatedCollection], selectedCategory, sortOption);
       setDuplicateModalOpen(false);
@@ -196,12 +180,8 @@ const YourCollections: React.FC = () => {
 
   const handleDeleteCollection = async (collectionId: number) => {
     try {
-      console.log("Deleting collection with ID:", collectionId);
       await deleteCollectionById(collectionId, getAccessTokenSilently);
-      const updatedCollections = collections.filter(
-        (collection) => collection.collection_id !== collectionId
-      );
-      console.log("Updated collections after deletion:", updatedCollections);
+      const updatedCollections = collections.filter((collection) => collection.collection_id !== collectionId);
       setCollections(updatedCollections);
       filterAndSortCollections(updatedCollections, selectedCategory, sortOption);
     } catch (error) {
@@ -217,26 +197,15 @@ const YourCollections: React.FC = () => {
     textColor: string
   ) => {
     if (selectedCollection) {
-      console.log("Selected collection:", selectedCollection);
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
-      console.log("Parsed sequence items:", sequenceItems);
       const sequence = sequenceItems.map((item: { name: string; svg?: string; count?: number } | string, index: number) => ({
         name: typeof item === "object" ? item.name : item,
         svg: typeof item === "object" ? item.svg : undefined,
         count: typeof item === "object" ? item.count : undefined,
-        isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0
+        isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0,
       }));
-      console.log("Prepared sequence:", sequence);
+
       const duration = min * 60 + sec;
-      console.log("Navigating to fullscreen-display with state:", {
-        sequence,
-        duration,
-        speed,
-        textColor,
-        shuffle,
-        category: selectedCollection.category,
-        type: selectedCollection.type,
-      });
       navigate("/fullscreen-display", {
         state: {
           sequence,
@@ -249,8 +218,6 @@ const YourCollections: React.FC = () => {
         },
       });
       setShowModal(false);
-    } else {
-      console.error("No collection selected");
     }
   };
 
@@ -263,13 +230,12 @@ const YourCollections: React.FC = () => {
     setSortOption(newSortOption);
     localStorage.setItem("sortPreference", newSortOption);
     filterAndSortCollections(collections, selectedCategory, newSortOption);
-  };
+  };  
 
   const formatDate = (dateString: string): string => {
     if (!dateString) return "Unknown Date";
     const date = new Date(dateString);
     if (isNaN(date.getTime())) {
-      console.error("Invalid date string:", dateString);
       return "Invalid Date";
     }
     return new Intl.DateTimeFormat("en-US", {
@@ -281,122 +247,112 @@ const YourCollections: React.FC = () => {
     }).format(date);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        setDuplicateModalOpen(false);
-      }
-    };
-    if (isDuplicateModalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isDuplicateModalOpen]);
-
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLSelectElement>) => {
-    if (event.key === "Enter" && collectionToDuplicate) {
-      handleDuplicateCollection();
-    }
-  };
-
   const onDragEnd = (result: DropResult) => {
     if (!result.destination || sortOption !== "custom") {
+      // If there's no destination or the sort mode is not "custom", do nothing
       return;
     }
-
-    const items = Array.from(filteredCollections);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setFilteredCollections(items);
-    setCollections(prevCollections => {
-      const updatedCollections = prevCollections.map(col => 
-        items.find(item => item.collection_id === col.collection_id) || col
-      );
-      return updatedCollections;
-    });
+  
+    // Perform reordering in "custom" sort mode
+    const updatedCollections = Array.from(filteredCollections);
+    const [reorderedItem] = updatedCollections.splice(result.source.index, 1);
+    updatedCollections.splice(result.destination.index, 0, reorderedItem);
+  
+    // Update state with new order
+    setFilteredCollections(updatedCollections);
+    setCollections((prevCollections) =>
+      prevCollections.map((col) =>
+        updatedCollections.find((item) => item.collection_id === col.collection_id) || col
+      )
+    );
+  
+    // Save the "custom" sort preference in localStorage
     setSortOption("custom");
     localStorage.setItem("sortPreference", "custom");
-  };
+  };  
 
   return (
     <div className="your-collections">
-      <CollectionsNavBar
-        selectedCategory={selectedCategory}
-        onSelectCategory={handleCategorySelect}
-      />
+      <CollectionsNavBar selectedCategory={selectedCategory} onSelectCategory={handleCategorySelect} />
       <div className="control-panel">
         <div className="sort-options">
           <label htmlFor="sort">Sort by:</label>
-          <select id="sort" value={sortOption} onChange={handleSortChange} onKeyPress={handleKeyPress}>
+          <select id="sort" value={sortOption} onChange={handleSortChange}>
             <option value="date">Date Created</option>
             <option value="alphabetical">Alphabetical</option>
             <option value="category">Category</option>
+            <option value="custom">Custom</option>
           </select>
         </div>
-        <button
-          type="button"
-          className="duplicate-collection-button your-styled-button"
-          onClick={() => setDuplicateModalOpen(true)}
-        >
+        <button type="button" className="duplicate-collection-button your-styled-button" onClick={() => setDuplicateModalOpen(true)}>
           Duplicate Collection
         </button>
       </div>
+
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="collections">
-          {(provided) => (
+      <Droppable droppableId="collections-droppable">
+        {(provided, snapshot) => {
+          console.log("Droppable - provided:", provided);
+          console.log("Droppable - snapshot:", snapshot);
+          return (
             <div {...provided.droppableProps} ref={provided.innerRef} className="your-collections-list">
               {filteredCollections.map((collection, index) => {
-                const colorClass = `color-${(index % 10) + 1}`;
+                console.log("Rendering collection:", collection, "at index:", index);
                 return (
-                  <Draggable key={collection.collection_id} draggableId={collection.collection_id.toString()} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className={`your-collection-item ${colorClass}`}
-                      >
-                        <h1>{collection.name}</h1>
-                        <p>{getItemsCount(collection.description)} items</p>
-                        <p>Created by you on {formatDate(collection.created_at)}</p>
-                        <button
-                          type="button"
-                          className="start-button"
-                          onClick={() => handleStartCollection(collection.collection_id)}
+                  <Draggable
+                    key={collection.collection_id.toString()}
+                    draggableId={collection.collection_id.toString()}
+                    index={index}
+                  >
+                    {(provided, snapshot) => {
+                      console.log("Draggable - provided:", provided);
+                      console.log("Draggable - snapshot:", snapshot);
+                      return (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className={`your-collection-item color-${(index % 10) + 1}`}
                         >
-                          Start
-                        </button>
-                        <div className="your-button-group">
+                          <h1>{collection.name}</h1>
+                          <p>{getItemsCount(collection.description)} items</p>
+                          <p>Created by you on {formatDate(collection.created_at)}</p>
                           <button
                             type="button"
-                            className="your-edit-button"
-                            onClick={() => handleEditButtonClick(collection)}
+                            className="start-button"
+                            onClick={() => handleStartCollection(collection.collection_id)}
                           >
-                            Edit
+                            Start
                           </button>
-                          <button
-                            type="button"
-                            className="delete-button"
-                            onClick={() => handleDeleteCollection(collection.collection_id)}
-                          >
-                            Delete
-                          </button>
+                          <div className="your-button-group">
+                            <button
+                              type="button"
+                              className="your-edit-button"
+                              onClick={() => handleEditButtonClick(collection)}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              className="delete-button"
+                              onClick={() => handleDeleteCollection(collection.collection_id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      );
+                    }}
                   </Draggable>
                 );
               })}
               {provided.placeholder}
             </div>
-          )}
-        </Droppable>
+          );
+        }}
+      </Droppable>
       </DragDropContext>
+
       {showModal && selectedCollection && (
         <SessionSettingsModal
           collectionName={selectedCollection.name}
@@ -427,9 +383,7 @@ const YourCollections: React.FC = () => {
               value={collectionToDuplicate?.collection_id || ""}
               onChange={(e) => {
                 const selectedId = parseInt(e.target.value);
-                const selectedCollection = collections.find(
-                  (col) => col.collection_id === selectedId
-                );
+                const selectedCollection = collections.find((col) => col.collection_id === selectedId);
                 setCollectionToDuplicate(selectedCollection || null);
               }}
             >
@@ -443,26 +397,17 @@ const YourCollections: React.FC = () => {
               ))}
             </select>
             <div className="your-button-group">
-              <button
-                type="button"
-                className="duplicate-button your-styled-button"
-                disabled={!collectionToDuplicate}
-                onClick={handleDuplicateCollection}
-              >
+              <button type="button" className="duplicate-button your-styled-button" disabled={!collectionToDuplicate} onClick={handleDuplicateCollection}>
                 Duplicate
               </button>
-              <button
-                type="button"
-                className="your-cancel-button"
-                onClick={() => setDuplicateModalOpen(false)}
-              >
+              <button type="button" className="your-cancel-button" onClick={() => setDuplicateModalOpen(false)}>
                 Cancel
               </button>
             </div>
           </div>
         </div>
       )}
-      {isLoading && <div>Loading...</div>} {/* Optionally show loading status */}
+      {isLoading && <div>Loading...</div>}
     </div>
   );
 };
