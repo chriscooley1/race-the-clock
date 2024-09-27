@@ -273,6 +273,10 @@
   position: relative; /* Position relative for absolute children */
 }
 
+.your-modal-content #duplicate-collection-select {
+  margin-left: 10px; /* Add space between the label and the select dropdown */
+}
+
 .your-modal-background {
   position: fixed;
   top: 0;

@@ -399,8 +399,15 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div className="your-modal-background">
-          <div className="your-modal-content" ref={modalRef}>
+        <div
+          className="your-modal-background"
+          onClick={() => setDuplicateModalOpen(false)} // Close modal when clicking on the background
+        >
+          <div
+            className="your-modal-content"
+            ref={modalRef}
+            onClick={(e) => e.stopPropagation()} // Prevent clicks inside the modal from closing it
+          >
             <h2>Duplicate Collection</h2>
             <label htmlFor="duplicate-collection-select">Select a collection to duplicate</label>
             <select
@@ -422,10 +429,19 @@ const YourCollections: React.FC = () => {
               ))}
             </select>
             <div className="your-button-group">
-              <button type="button" className="duplicate-button your-styled-button" disabled={!collectionToDuplicate} onClick={handleDuplicateCollection}>
+              <button
+                type="button"
+                className="duplicate-button your-styled-button"
+                disabled={!collectionToDuplicate}
+                onClick={handleDuplicateCollection}
+              >
                 Duplicate
               </button>
-              <button type="button" className="your-cancel-button" onClick={() => setDuplicateModalOpen(false)}>
+              <button
+                type="button"
+                className="your-cancel-button"
+                onClick={() => setDuplicateModalOpen(false)}
+              >
                 Cancel
               </button>
             </div>

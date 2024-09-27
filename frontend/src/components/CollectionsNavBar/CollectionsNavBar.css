@@ -4,11 +4,9 @@
   flex-wrap: wrap; /* Allow wrapping for smaller screens */
   justify-content: center; /* Center the buttons */
   width: 100%; /* Full width to align with main content */
-  background-color: #f4f4f4; /* Background color for the navbar */
-  padding: 10px; /* Add padding for spacing */
-  border-bottom: 1px solid #ccc; /* Add a bottom border for separation */
   box-sizing: border-box; /* Include padding in width calculation */
-  margin: 0; /* Ensure no margins are affecting the layout */
+  margin: -30px; /* Ensure no margins are affecting the layout */
+  margin-bottom: 0;
 }
 
 /* Category button styles */
