@@ -290,67 +290,92 @@ const YourCollections: React.FC = () => {
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="collections-droppable">
-        {(provided, snapshot) => {
-          console.log("Droppable - provided:", provided);
-          console.log("Droppable - snapshot:", snapshot);
-          return (
-            <div {...provided.droppableProps} ref={provided.innerRef} className="your-collections-list">
-              {filteredCollections.map((collection, index) => {
-                console.log("Rendering collection:", collection, "at index:", index);
-                return (
+        {sortOption === "custom" ? (
+          <Droppable droppableId="collections-droppable">
+            {(provided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef} className="your-collections-list">
+                {filteredCollections.map((collection, index) => (
                   <Draggable
                     key={collection.collection_id.toString()}
                     draggableId={collection.collection_id.toString()}
                     index={index}
                   >
-                    {(provided, snapshot) => {
-                      console.log("Draggable - provided:", provided);
-                      console.log("Draggable - snapshot:", snapshot);
-                      return (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className={`your-collection-item color-${(index % 10) + 1}`}
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className={`your-collection-item color-${(index % 10) + 1}`}
+                      >
+                        <h1>{collection.name}</h1>
+                        <p>{getItemsCount(collection.description)} items</p>
+                        <p>Created by you on {formatDate(collection.created_at)}</p>
+                        <button
+                          type="button"
+                          className="start-button"
+                          onClick={() => handleStartCollection(collection.collection_id)}
                         >
-                          <h1>{collection.name}</h1>
-                          <p>{getItemsCount(collection.description)} items</p>
-                          <p>Created by you on {formatDate(collection.created_at)}</p>
+                          Start
+                        </button>
+                        <div className="your-button-group">
                           <button
                             type="button"
-                            className="start-button"
-                            onClick={() => handleStartCollection(collection.collection_id)}
+                            className="your-edit-button"
+                            onClick={() => handleEditButtonClick(collection)}
                           >
-                            Start
+                            Edit
                           </button>
-                          <div className="your-button-group">
-                            <button
-                              type="button"
-                              className="your-edit-button"
-                              onClick={() => handleEditButtonClick(collection)}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              type="button"
-                              className="delete-button"
-                              onClick={() => handleDeleteCollection(collection.collection_id)}
-                            >
-                              Delete
-                            </button>
-                          </div>
+                          <button
+                            type="button"
+                            className="delete-button"
+                            onClick={() => handleDeleteCollection(collection.collection_id)}
+                          >
+                            Delete
+                          </button>
                         </div>
-                      );
-                    }}
+                      </div>
+                    )}
                   </Draggable>
-                );
-              })}
-              {provided.placeholder}
-            </div>
-          );
-        }}
-      </Droppable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        ) : (
+          // Render static list when not in custom sort mode
+          <div className={`your-collections-list ${sortOption === 'custom' ? 'sort-custom' : ''}`}>
+            {filteredCollections.map((collection, index) => (
+              <div key={collection.collection_id} className={`your-collection-item color-${(index % 10) + 1}`}>
+                <h1>{collection.name}</h1>
+                <p>{getItemsCount(collection.description)} items</p>
+                <p>Created by you on {formatDate(collection.created_at)}</p>
+                <button
+                  type="button"
+                  className="start-button"
+                  onClick={() => handleStartCollection(collection.collection_id)}
+                >
+                  Start
+                </button>
+                <div className="your-button-group">
+                  <button
+                    type="button"
+                    className="your-edit-button"
+                    onClick={() => handleEditButtonClick(collection)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className="delete-button"
+                    onClick={() => handleDeleteCollection(collection.collection_id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </DragDropContext>
 
       {showModal && selectedCollection && (

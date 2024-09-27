@@ -239,6 +239,11 @@
   max-height: 80vh; /* Limit the height */
 }
 
+/* Apply this only when sortOption is 'custom' */
+.your-collections-list.sort-custom .your-collection-item {
+  cursor: grab; /* Indicate that items can be dragged */
+}
+
 /* Collection items - ensure they are not scrollable */
 .your-collection-item {
   flex: 0 0 30%;
@@ -246,6 +251,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  cursor: default; /* Default cursor when not in custom mode */
   height: 300px; /* Fixed height */
   padding: 20px;
   margin-bottom: 20px;
