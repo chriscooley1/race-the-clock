@@ -19,21 +19,33 @@ export const colorSchemes: ColorScheme[] = [
     textColor: "#ffffff",
   },
   {
-    name: "Pastel",
-    backgroundColor: "#fdfd96",
-    textColor: "#034f84",
-  },
-  {
     name: "Ocean Waves",
     backgroundColor: "#2e8b57",
     textColor: "#f0f8ff",
-    backgroundImage: "url('/images/ocean-waves.jpg')",
+    backgroundImage: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')",
   },
   {
     name: "Sunny Meadow",
     backgroundColor: "#fff700",
     textColor: "#333333",
-    backgroundImage: "url('/images/sunny-meadow.jpg')",
+    backgroundImage: "url('https://images.unsplash.com/photo-1493106641515-6b5631de4bb9')",
+  },
+  {
+    name: "Calming Mountains",
+    backgroundColor: "#a8dadc",
+    textColor: "#333333",
+    backgroundImage: "url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0')",
+  },
+  {
+    name: "Dreamy Sunset",
+    backgroundColor: "#ffb347",
+    textColor: "#333333",
+    backgroundImage: "url('https://images.unsplash.com/photo-1497034825429-c343d7c6a68f')",
+  },
+  {
+    name: "Pastel",
+    backgroundColor: "#fdfd96",
+    textColor: "#034f84",
   },
   {
     name: "Bright Red",

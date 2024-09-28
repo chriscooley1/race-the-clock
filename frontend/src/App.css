@@ -4,6 +4,10 @@
 body {
   font-family: "Caveat", cursive;
   background-color: var(--background-color);
+  background-image: var(--background-image); /* Add this to handle background images */
+  background-size: cover; /* Ensure the background image covers the entire area */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
   color: var(--text-color);
 }
 

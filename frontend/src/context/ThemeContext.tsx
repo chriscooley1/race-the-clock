@@ -59,7 +59,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     localStorage.setItem("app-theme", JSON.stringify(theme));
   
     const backgroundColor = theme.backgroundColor;
-    const backgroundImage = theme.backgroundImage || "none"; 
+    const backgroundImage = theme.backgroundImage || "none"; // Make sure this is set to a valid CSS URL
     const textColor = theme.textColor;
     const displayTextColor = theme.displayTextColor || theme.textColor;
     const displayBackgroundColor = theme.displayBackgroundColor || theme.backgroundColor;
@@ -81,7 +81,12 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       document.documentElement.style.setProperty("--display-background-color", displayBackgroundColor);
     }
   
-    document.documentElement.style.setProperty("--background-image", backgroundImage);
+    // Ensure that the URL is wrapped in a proper CSS function
+    if (backgroundImage !== "none") {
+      document.documentElement.style.setProperty("--background-image", `url(${backgroundImage})`);
+    } else {
+      document.documentElement.style.setProperty("--background-image", "none");
+    }
   }, [theme]);
 
   return (
