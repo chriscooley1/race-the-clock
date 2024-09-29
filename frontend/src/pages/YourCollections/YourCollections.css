@@ -1,6 +1,6 @@
 /* YourCollections Container */
 .your-collections {
-  padding-top: 110px; /* Adjusted to account for Navbar + CollectionsNavBar */
+  padding-top: 80px; /* Adjusted to account for Navbar + CollectionsNavBar */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -234,7 +234,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 20px;
+  padding: 0px;
   width: 100%;
   overflow-y: auto; /* Scrollable content */
   max-height: calc(100vh - 170px); /* Adjust for Navbar + CollectionsNavBar height */
@@ -262,16 +262,16 @@
 }
 
 .your-modal-content {
+  position: relative;
+  z-index: 1002; /* Ensure it's on top of the modal background */
   background-color: white; /* Modal content background */
   padding: 20px;
   font-family: "Caveat", cursive;
   border-radius: 8px;
   width: 50%;
   max-width: 600px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
-  position: relative;
-  z-index: 1001; /* Ensure content is above the background */
 }
 
 .your-modal-content #duplicate-collection-select {
@@ -279,7 +279,7 @@
 }
 
 .your-modal-background {
-  position: fixed; /* Ensure the modal stays fixed in the viewport */
+  position: fixed; /* Ensure it covers the whole screen */
   top: 0;
   left: 0;
   width: 100%;
@@ -288,8 +288,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it's on top of all content */
-  overflow: hidden; /* Prevent background content from scrolling */
+  z-index: 1001; /* Ensure it's above the CollectionsNavBar */
+  overflow: hidden; /* Prevent background from scrolling */
+}
+
+/* Prevent scrolling when modal is open */
+.modal-open {
+  overflow: hidden;
 }
 
 /* Styling for the cancel button */
