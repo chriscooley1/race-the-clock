@@ -1,14 +1,14 @@
-/* Styles for YourCollections component */
+/* YourCollections Container */
 .your-collections {
+  padding-top: 110px; /* Adjusted to account for Navbar + CollectionsNavBar */
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 100vh; /* Ensure it covers the full viewport */
-  overflow: hidden; /* Prevent parent container from being scrollable */
+  min-height: 100vh; /* Ensures it covers full viewport height */
   background-color: var(--background-color);
   color: var(--text-color);
-  padding-top: 50px; /* Add padding to prevent overlap with navbar */
+  overflow: hidden;
 }
 
 /* Styling for the start button */
@@ -229,14 +229,15 @@
   background-color: #990000; /* Even darker red when active */
 }
 
+/* Ensure the collections list container has the correct height */
 .your-collections-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 20px;
   width: 100%;
-  overflow-y: auto; /* Ensure only this container scrolls */
-  max-height: 80vh; /* Limit the height */
+  overflow-y: auto; /* Scrollable content */
+  max-height: calc(100vh - 170px); /* Adjust for Navbar + CollectionsNavBar height */
 }
 
 /* Apply this only when sortOption is 'custom' */
@@ -260,17 +261,17 @@
   overflow: hidden; /* Prevent scrolling */
 }
 
-/* Modal Content */
 .your-modal-content {
   background-color: white; /* Modal content background */
-  padding: 20px; /* Padding inside the modal */
-  font-family: "Caveat", cursive; /* Set a default fun font for the body */
-  border-radius: 8px; /* Rounded corners */
-  width: 50%; /* Width of the modal */
-  max-width: 600px; /* Maximum width for larger screens */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
-  text-align: center; /* Center the text */
-  position: relative; /* Position relative for absolute children */
+  padding: 20px;
+  font-family: "Caveat", cursive;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  text-align: center;
+  position: relative;
+  z-index: 1001; /* Ensure content is above the background */
 }
 
 .your-modal-content #duplicate-collection-select {
@@ -278,16 +279,17 @@
 }
 
 .your-modal-background {
-  position: fixed;
+  position: fixed; /* Ensure the modal stays fixed in the viewport */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 1000; /* Ensure it's on top of all content */
+  overflow: hidden; /* Prevent background content from scrolling */
 }
 
 /* Styling for the cancel button */

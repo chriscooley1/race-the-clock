@@ -1,52 +1,63 @@
-/* Collections navbar styles */
+/* Adjust the collections navbar to align with the sidebar */
 .collections-navbar {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
-  justify-content: center; /* Center the buttons */
-  width: 100%; /* Full width to align with main content */
-  box-sizing: border-box; /* Include padding in width calculation */
-  margin: -30px; /* Ensure no margins are affecting the layout */
-  margin-bottom: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: calc(100% - 250px); /* Full width minus sidebar width */
+  left: 250px; /* Align with the sidebar */
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #ffffff;
+  position: fixed;
+  top: 50px; /* Positioned below the main navbar */
+  z-index: 999; /* Just below the main navbar */
+  border-bottom: 2px solid #007bff;
+}
+
+/* Adjust the collections navbar for smaller screens when sidebar is hidden */
+.without-sidebar .collections-navbar {
+  width: 100%; /* Full width when no sidebar */
+  margin-left: 0; /* No margin when sidebar is hidden */
 }
 
 /* Category button styles */
 .category-button {
-  background-color: #ffffff; /* White background */
-  border: 2px solid #007bff; /* Blue border */
-  color: #007bff; /* Blue text color */
-  padding: 10px 20px; /* Padding for size */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 1em; /* Font size */
-  font-weight: bold; /* Bold text */
-  transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Smooth transitions */
-  border-radius: 5px; /* Rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-  margin: 5px; /* Add margin all around */
-  flex-grow: 1; /* Allow buttons to grow and fill the available space */
-  text-align: center; /* Center the text */
-  flex: 1 1 auto; /* Allow buttons to grow and shrink */
-  min-width: 120px; /* Set a minimum width */
+  background-color: #ffffff;
+  border: 2px solid #007bff;
+  color: #007bff;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 5px;
+  flex-grow: 1;
+  text-align: center;
+  min-width: 120px;
 }
 
 .category-button:hover {
-  background-color: #007bff; /* Blue background on hover */
-  color: #ffffff; /* White text on hover */
-  transform: scale(1.05); /* Slight scale up on hover */
+  background-color: #007bff;
+  color: #ffffff;
+  transform: scale(1.05);
 }
 
 .category-button:active {
-  background-color: #0056b3; /* Darker blue when active */
-  transform: scale(0.95); /* Slight scale down when active */
+  background-color: #0056b3;
+  transform: scale(0.95);
 }
 
 .category-button.active {
-  background-color: #007bff; /* Active state background */
-  color: #ffffff; /* Active state text color */
-  border-color: #0056b3; /* Active state border color */
+  background-color: #007bff;
+  color: #ffffff;
+  border-color: #0056b3;
 }
 
+/* Adjust for smaller screens */
 @media (max-width: 768px) {
   .category-button {
-    flex-basis: calc(50% - 10px); /* Two buttons per row on smaller screens */
+    flex-basis: calc(50% - 10px);
   }
 }

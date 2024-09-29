@@ -4,7 +4,9 @@
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   height: 100%;
   position: fixed;
+  top: 0; /* Make sure the sidebar stays fixed at the top */
   padding: 20px;
+  z-index: 1000; /* Ensure sidebar stays on top of the collections navbar */
 }
 
 .sidebar li {
