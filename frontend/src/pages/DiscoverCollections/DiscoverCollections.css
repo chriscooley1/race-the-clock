@@ -21,7 +21,8 @@
 .discover-collection-item {
   padding: 20px;
   margin-bottom: 20px;
-  flex: 0 0 30%; /* Flex basis set to 30% to fit three items per row */
+  flex: 0 0 calc(33.33% - 20px);
+  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center; /* Centers the content vertically and horizontally */
@@ -136,4 +137,28 @@
 .search-button:active {
   background-color: #388e3c;
   transform: scale(0.95);
+}
+
+@media (max-width: 1024px) {
+  .discover-collection-item {
+    flex: 0 0 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .discover-collection-item {
+    flex: 0 0 100%;
+  }
+
+  .search-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-input,
+  .search-button {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
 }
