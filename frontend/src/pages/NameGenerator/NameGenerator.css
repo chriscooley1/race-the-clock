@@ -109,13 +109,36 @@
 }
 
 @media (max-width: 768px) {
-  .name-generator-layout {
-    flex-direction: column;
+  .name-generator-container {
+    padding-top: 10px;
   }
 
-  .name-wheel-container,
-  .name-controls {
-    flex: 0 0 100%;
+  .gen-centered-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gen-centered-input label {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+
+  .gen-custom-input,
+  .gen-styled-button {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+
+  .name-wheel-container {
+    transform: scale(0.8);
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .name-wheel-container {
+    transform: scale(0.6);
   }
 }
 
@@ -128,4 +151,29 @@
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-top: 20px solid red; /* Changed from border-bottom to border-top */
+}
+
+.wheel-segment-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.wheel-segment-item .gen-custom-input {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .wheel-segment-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wheel-segment-item .gen-custom-input,
+  .wheel-segment-item .name-remove-button {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
 }
