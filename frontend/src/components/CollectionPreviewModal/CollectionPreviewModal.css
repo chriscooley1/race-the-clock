@@ -14,11 +14,11 @@
 
 .prev-modal-content {
   background: #fff; /* White background */
-  padding: 20px; /* Padding inside the modal */
+  padding: 15px; /* Slightly reduce padding for smaller screens */
   border-radius: 8px; /* Rounded corners */
-  width: 50%; /* Set width to 50% of the screen */
+  width: 90%; /* Change from 50% to 90% for better mobile support */
   max-width: 700px; /* Maximum width */
-  max-height: 80vh; /* Maximum height to allow space for scrolling */
+  max-height: 90vh; /* Increase from 80vh to 90vh for more vertical space */
   text-align: center; /* Center the text */
   color: inherit; /* Inherit text color */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
@@ -29,9 +29,25 @@
   overflow-y: auto; /* Enable vertical scrolling */
 }
 
+/* Add media query for larger screens */
+@media (min-width: 768px) {
+  .prev-modal-content {
+    width: 70%;
+    padding: 20px;
+  }
+}
+
+/* Add media query for even larger screens */
+@media (min-width: 1200px) {
+  .prev-modal-content {
+    width: 50%;
+  }
+}
+
 .prev-button-group {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* Stack buttons vertically on small screens */
+  align-items: center;
   width: 100%;
   margin-top: 20px;
 }
@@ -46,7 +62,8 @@
   font-size: 16px; /* Font size */
   font-weight: bold; /* Bold text */
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin: 0 5px; /* Space between the buttons */
+  width: 100%; /* Make buttons full width on small screens */
+  margin: 5px 0; /* Add vertical margin between buttons */
 }
 
 .prev-button-group button:hover {
@@ -69,4 +86,17 @@
 
 .prev-button-group button:first-child:active {
   background-color: #ac2925; /* Even darker red when active */
+}
+
+/* Add media query for larger screens */
+@media (min-width: 768px) {
+  .prev-button-group {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .prev-button-group button {
+    width: auto;
+    margin: 0 5px;
+  }
 }

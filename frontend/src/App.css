@@ -158,3 +158,50 @@ input {
 .color-10 h1 {
   background-color: #455A64; /* Dark Gray */
 }
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+  }
+
+  h2 {
+    font-size: 2em;
+  }
+
+  h3 {
+    font-size: 1.5em;
+  }
+}
+
+/* Responsive layout */
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .layout {
+    flex-direction: row;
+  }
+}
+
+.main-content {
+  padding: 15px;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    padding: 20px;
+  }
+}
+
+/* Ensure buttons and inputs are touch-friendly on mobile */
+button, input[type="button"], input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+}
