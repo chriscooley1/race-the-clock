@@ -9,7 +9,9 @@
   font-size: 1em; /* Font size */
   font-weight: bold; /* Bold text */
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  margin-right: 10px; /* Add margin for spacing */
+  margin-right: 0;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .start-session-button:hover {
@@ -80,6 +82,7 @@
   border: 1px solid #ccc; /* Light border */
   border-radius: 4px; /* Rounded corners */
   text-align: center; /* Center text in inputs */
+  width: calc(50% - 5px);
 }
 
 .sess-checkbox-container {
@@ -130,9 +133,9 @@
 
 .sess-modal-container {
   background: #fff;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
-  width: 50%;
+  width: 90%;
   max-width: 700px;
   text-align: center;
   color: inherit;
@@ -212,4 +215,22 @@
   padding: 8px;                      /* Padding inside the field */
   font-size: 1em;                    /* Font size */
   font-family: "Caveat", cursive; /* Set a default fun font for the body */
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+  .sess-modal-container {
+    width: 50%;
+    padding: 20px;
+  }
+
+  .time-inputs input {
+    width: auto;
+  }
+
+  .start-session-button {
+    width: auto;
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
 }

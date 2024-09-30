@@ -7,11 +7,14 @@
   align-items: center;
   margin-bottom: 10px;
   width: 100%; /* Ensure it spans the full width of the container */
+  flex-direction: column; /* Stack items vertically on small screens */
+  align-items: stretch;
 }
 
 .edit-item-input-group {
   flex-grow: 1;
-  margin-right: 10px; /* Space between the input and the remove button */
+  margin-right: 0;
+  margin-bottom: 10px; /* Add space between input and remove button */
 }
 
 .edit-item-input {
@@ -59,15 +62,15 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 10px; /* Reduce padding for smaller screens */
 }
 
 .edit-modal-container {
   background: #2a2a2a;
-  padding: 20px;
+  padding: 15px; /* Reduce padding for smaller screens */
   border-radius: 8px;
-  width: 100%;
-  max-width: 700px;
+  width: 95%; /* Increase width for smaller screens */
+  max-width: 600px; /* Limit max-width */
   color: #f2f2f2;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -94,6 +97,7 @@
   align-items: center; /* Center icon vertically */
   justify-content: center; /* Center icon horizontally */
   cursor: pointer;
+  align-self: flex-end; /* Align remove button to the right */
 }
 
 .edit-item-container .edit-remove-button:hover {
@@ -110,6 +114,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  flex-direction: column; /* Stack buttons vertically on small screens */
 }
 
 .edit-cancel-button {
@@ -133,4 +138,36 @@
   padding: 8px;
   font-size: 1em;
   font-family: "Caveat", cursive;
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+  .edit-modal-background {
+    padding: 20px;
+  }
+
+  .edit-modal-container {
+    width: 80%;
+    padding: 20px;
+  }
+
+  .edit-item-container {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .edit-item-input-group {
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+
+  .edit-button-group {
+    flex-direction: row;
+  }
+
+  .edit-button-group button {
+    width: auto;
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
 }
