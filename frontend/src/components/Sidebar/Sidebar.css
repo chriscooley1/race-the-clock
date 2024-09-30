@@ -4,9 +4,15 @@
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   height: 100%;
   position: fixed;
-  top: 0; /* Make sure the sidebar stays fixed at the top */
+  top: 50px; /* Adjust to account for the navbar height */
+  left: -250px; /* Hide sidebar by default on small screens */
   padding: 20px;
-  z-index: 1000; /* Ensure sidebar stays on top of the collections navbar */
+  z-index: 1000;
+  transition: left 0.3s ease-in-out;
+}
+
+.sidebar.open {
+  left: 0; /* Show sidebar when open */
 }
 
 .sidebar li {
@@ -24,13 +30,24 @@
 }
 
 .with-sidebar {
-  margin-left: 250px;
-  max-width: calc(100% - 250px);
+  margin-left: 0;
+  max-width: 100%;
   transition: margin-left 0.3s, max-width 0.3s;
 }
 
 .without-sidebar {
   margin-left: 0;
   max-width: 100%;
-  transition: margin-left 0.3s, max-width 0.3s;
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+  .sidebar {
+    left: 0; /* Always show sidebar on larger screens */
+  }
+
+  .with-sidebar {
+    margin-left: 250px;
+    max-width: calc(100% - 250px);
+  }
 }
