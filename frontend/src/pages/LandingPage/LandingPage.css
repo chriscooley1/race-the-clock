@@ -38,3 +38,14 @@
   background-color: #0056b3; /* Darker background when active */
   transform: scale(0.95); /* Slight scale down when active */
 }
+
+@media (max-width: 768px) {
+  .landing-page h1 {
+    font-size: 1.5em;
+  }
+
+  .landing-page button {
+    font-size: 0.9em;
+    padding: 8px;
+  }
+}

@@ -16,12 +16,18 @@
 }
 
 .math-problem {
-  font-size: 20vw; /* Adjust this value to make the text larger or smaller */
+  font-size: 10vw; /* Smaller base size */
   line-height: 1;
   text-align: center;
   margin: 0;
-  padding: 0;
+  padding: 0 20px; /* Add some horizontal padding */
   color: inherit;
+}
+
+@media (min-width: 768px) {
+  .math-problem {
+    font-size: 20vw; /* Larger size for bigger screens */
+  }
 }
 
 .math-answer {
@@ -39,12 +45,12 @@
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.5);
   border: none;
-  font-size: 50px;
+  font-size: 30px;
   color: white;
   cursor: pointer;
   z-index: 10;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,4 +67,12 @@
 
 .nav-button:hover {
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+@media (min-width: 768px) {
+  .nav-button {
+    font-size: 50px;
+    width: 60px;
+    height: 60px;
+  }
 }
