@@ -58,11 +58,25 @@
   margin: 0 auto;
 }
 
-.name-wheel-container {
-  flex: 0 0 60%;
+.name-wheel-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid red;
+  position: absolute;
+  top: 20px;
+  z-index: 1;
 }
 
 .name-controls {
@@ -142,17 +156,6 @@
   }
 }
 
-.arrow {
-  position: absolute;
-  top: 25px; /* Adjust this based on the size of the wheel */
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 20px solid red; /* Changed from border-bottom to border-top */
-}
-
 .wheel-segment-item {
   display: flex;
   align-items: center;
@@ -176,4 +179,8 @@
     margin-right: 0;
     margin-bottom: 5px;
   }
+}
+
+.name-wheel-motion {
+  display: inline-block;
 }

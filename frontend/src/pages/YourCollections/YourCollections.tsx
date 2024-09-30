@@ -343,7 +343,7 @@ const YourCollections: React.FC = () => {
           </Droppable>
         ) : (
           // Render static list when not in custom sort mode
-          <div className={`your-collections-list ${sortOption === 'custom' ? 'sort-custom' : ''}`}>
+          <div className={`your-collections-list ${sortOption === "custom" ? "sort-custom" : ""}`}>
             {filteredCollections.map((collection, index) => (
               <div key={collection.collection_id} className={`your-collection-item color-${(index % 10) + 1}`}>
                 <h1>{collection.name}</h1>

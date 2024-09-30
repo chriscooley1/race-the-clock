@@ -240,7 +240,7 @@
   max-height: calc(100vh - 170px); /* Adjust for Navbar + CollectionsNavBar height */
 }
 
-/* Apply this only when sortOption is 'custom' */
+/* Apply this only when sortOption is "custom" */
 .your-collections-list.sort-custom .your-collection-item {
   cursor: grab; /* Indicate that items can be dragged */
 }

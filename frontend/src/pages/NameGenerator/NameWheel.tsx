@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
+import "./NameGenerator.css";
 
 interface NameWheelProps {
   names: string[];
@@ -95,12 +96,13 @@ const NameWheel: React.FC<NameWheelProps> = ({
   }, [isSpinning, controls, onSpin, names, onNameSelected, stopSpinning]);
 
   return (
-    <div style={{ position: "relative", width: canvasSize, height: canvasSize }}>
-      <motion.div animate={controls} style={{ display: "inline-block" }}>
-        <canvas ref={canvasRef} />
-      </motion.div>
-      {/* Add the fixed downward-pointing arrow */}
+    <div className="name-wheel-wrapper">
       <div className="arrow"></div>
+      <div className="name-wheel-container">
+        <motion.div animate={controls} className="name-wheel-motion">
+          <canvas ref={canvasRef} />
+        </motion.div>
+      </div>
     </div>
   );
 };

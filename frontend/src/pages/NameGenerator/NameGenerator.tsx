@@ -101,7 +101,7 @@ const NameGenerator: React.FC = () => {
     <div className="name-generator-container">
       <h1 className="name-generator-title">Name Generator</h1>
       <div className="name-generator-layout">
-        <div className="name-wheel-container">
+        <div className="name-wheel-wrapper">
           {nameList.length > 0 && (
             <NameWheel
               names={nameList}
@@ -111,19 +111,20 @@ const NameGenerator: React.FC = () => {
               stopSpinning={() => setIsSpinning(false)}
             />
           )}
-          <button
-            type="button"
-            onClick={handleGenerateName}
-            className="gen-styled-button"
-            disabled={nameList.length === 0 || isSpinning}
-            title="Generate a random name from the list"
-          >
-            Generate Random Name
-          </button>
+          <div className="generate-button-container">
+            <button
+              type="button"
+              onClick={handleGenerateName}
+              className="gen-styled-button"
+              disabled={nameList.length === 0 || isSpinning}
+              title="Generate a random name from the list"
+            >
+              Generate Random Name
+            </button>
+          </div>
           {generatedName && !isSpinning && (
             <div className="generated-name">
-              <h3>Generated Name:</h3>
-              <p>{generatedName}</p>
+              <h3>{generatedName}</h3>
             </div>
           )}
         </div>
