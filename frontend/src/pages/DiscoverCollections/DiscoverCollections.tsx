@@ -2,8 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { fetchPublicCollections, searchPublicCollections } from "../../api";  
 import CollectionPreviewModal from "../../components/CollectionPreviewModal/CollectionPreviewModal";
 import { AxiosError } from "axios"; 
-import "./DiscoverCollections.css";
-import "../../App.css"; 
 import { useAuth0 } from "@auth0/auth0-react";
 import { Collection as APICollection } from "../../api";
 import axios from "axios";
@@ -101,30 +99,44 @@ const DiscoverCollections: React.FC = () => {
   const closeModal = () => setActiveCollection(null);
 
   return (
-    <div className="discover-collections">
-      <h1>Discover Public Collections</h1>
-      {user && <p>Welcome, {user.name}</p>}
-      <div className="search-container">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Search by collection name or username"
-          className="search-input"
-        />
-        <button type="button" onClick={handleSearch} className="search-button">Search</button>
+    <div className="flex flex-col items-center w-full min-h-screen pt-[50px] bg-[var(--background-color)] text-[var(--text-color)]">
+      <h1 className="text-3xl font-bold mb-4">Discover Public Collections</h1>
+      {user && <p className="mb-4">Welcome, {user.name}</p>}
+      <div className="w-full max-w-2xl mb-6">
+        <div className="flex">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Search by collection name or username"
+            className="flex-grow p-2 border-5 border-black rounded-l-md font-['Patrick_Hand']"
+          />
+          <button 
+            type="button" 
+            onClick={handleSearch} 
+            className="bg-green-500 text-white px-4 py-2 border-5 border-black rounded-r-md font-['Patrick_Hand'] font-bold hover:bg-green-600 transition duration-300"
+          >
+            Search
+          </button>
+        </div>
       </div>
-      <div className="discover-collections-list">
+      <div className="flex flex-wrap justify-around p-5 w-full">
         {collections.map((collection, index) => {
-          const colorClass = `color-${(index % 10) + 1}`;
+          const colorClass = `bg-[var(--color-${(index % 10) + 1})]`;
           const itemCount = collection.item_count ?? collection.items?.length ?? 0;
           return (
-            <div key={collection.collection_id} className={`discover-collection-item ${colorClass}`}>
-              <h1>{collection.name}</h1>
-              <p>Created by: {collection.creator_username}</p>
-              <p>{itemCount} items in collection</p>
-              <button type="button" className="preview-button" onClick={() => openModal(collection)}>Preview Collection</button>
+            <div key={collection.collection_id} className={`${colorClass} p-5 mb-5 flex-[0_0_calc(33.33%-20px)] m-2.5 flex flex-col items-center justify-start relative h-[300px] border-5 border-black`}>
+              <h1 className="w-full text-black text-center text-xl font-bold border-5 border-black p-2.5 mb-2.5">{collection.name}</h1>
+              <p className="text-black text-lg mb-1">Created by: {collection.creator_username}</p>
+              <p className="text-black text-lg mb-4">{itemCount} items in collection</p>
+              <button 
+                type="button" 
+                className="bg-green-500 text-white px-4 py-2 rounded-md font-bold hover:bg-green-600 transition duration-300 transform hover:scale-105 active:scale-95"
+                onClick={() => openModal(collection)}
+              >
+                Preview Collection
+              </button>
             </div>
           );
         })}
