@@ -5,10 +5,10 @@ import "./Settings.css";
 import "../../App.css";
 
 const colorOptions = [
-  "#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#9400d3",
-  "#ffffff", "#000000", "#fdfd96", "#2e8b57", "#ff69b4", "#8a2be2", "#008080",
-  "#ffc107", "#708090", "#ff00ff", "#e6e6fa", "#32cd32", "#00ffff", "#fbceb1",
-  "#00a86b", "#ff6f61", "#034f84", "#f0f8ff", "#333333"
+  'bright-red', 'bright-orange', 'bright-yellow', 'bright-green', 'bright-blue', 'bright-indigo', 'bright-violet',
+  'white', 'black', 'pastel-yellow', 'custom-green', 'hot-pink', 'electric-purple', 'teal',
+  'amber', 'slate', 'magenta', 'lavender', 'mint', 'cyan', 'apricot',
+  'jade', 'coral', 'custom-blue', 'light-blue', 'theme-text'
 ];
 
 const colorblindTypes = [
@@ -36,7 +36,7 @@ const Settings: React.FC = () => {
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log("Theme selected:", event.target.value);
-    const newTheme = colorSchemes.find((scheme: ColorScheme) => scheme.name === event.target.value); // Add "ColorScheme" type
+    const newTheme = colorSchemes.find((scheme: ColorScheme) => scheme.name === event.target.value);
     if (newTheme) {
       setTheme({
         ...newTheme,
@@ -65,14 +65,15 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className="settings-container">
-      <h2>Settings</h2>
-      <div>
-        <label htmlFor="theme-select" className="settings-label">Theme:</label>
+    <div className="p-5">
+      <h2 className="text-2xl font-bold mb-4">Settings</h2>
+      <div className="mb-4">
+        <label htmlFor="theme-select" className="font-bold mr-2">Theme:</label>
         <select
           id="theme-select"
           value={theme.name}
           onChange={handleThemeChange}
+          className="p-2 bg-white text-black border border-gray-300 rounded"
         >
           {colorSchemes.map((scheme: ColorScheme) => (
             <option key={scheme.name} value={scheme.name}>
@@ -81,49 +82,49 @@ const Settings: React.FC = () => {
           ))}
         </select>
       </div>
-      <div>
-        <label className="settings-label">Text Color for FullScreenDisplay:</label>
-        <div className="color-options">
+      <div className="mb-4">
+        <label className="font-bold block mb-2">Text Color for FullScreenDisplay:</label>
+        <div className="flex flex-wrap">
           {colorOptions.map((color) => (
             <div
               key={color}
-              className={`color-option ${theme.displayTextColor === color ? "selected" : ""}`}
-              data-color={color}
+              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 bg-${color} ${theme.displayTextColor === color ? "border-2 border-black" : ""}`}
               onClick={() => handleTextColorChange(color)}
             />
           ))}
         </div>
       </div>
-      <div>
-        <label className="settings-label">Background Color for FullScreenDisplay:</label>
-        <div className="color-options">
+      <div className="mb-4">
+        <label className="font-bold block mb-2">Background Color for FullScreenDisplay:</label>
+        <div className="flex flex-wrap">
           {colorOptions.map((color) => (
             <div
               key={color}
-              className={`color-option ${theme.displayBackgroundColor === color ? "selected" : ""}`}
-              data-color={color}
+              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 bg-${color} ${theme.displayBackgroundColor === color ? "border-2 border-black" : ""}`}
               onClick={() => handleBackgroundColorChange(color)}
             />
           ))}
         </div>
       </div>
-      <div>
-        <label className="settings-label">
+      <div className="mb-4">
+        <label className="flex items-center">
           <input
             type="checkbox"
             checked={theme.isColorblindMode}
             onChange={handleColorblindModeChange}
+            className="mr-2"
           />
-          Enable Colorblind Mode
+          <span className="font-bold">Enable Colorblind Mode</span>
         </label>
       </div>
       {theme.isColorblindMode && (
         <div>
-          <label htmlFor="colorblind-type-select" className="settings-label">Colorblind Type:</label>
+          <label htmlFor="colorblind-type-select" className="font-bold mr-2">Colorblind Type:</label>
           <select
             id="colorblind-type-select"
             value={theme.colorblindType}
             onChange={handleColorblindTypeChange}
+            className="p-2 bg-white text-black border border-gray-300 rounded"
           >
             {colorblindTypes.map(type => (
               <option key={type} value={type}>

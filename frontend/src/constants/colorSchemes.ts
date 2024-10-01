@@ -1,4 +1,3 @@
-// colorSchemes.ts
 export interface ColorScheme {
   name: string;
   backgroundColor: string;
