@@ -101,7 +101,7 @@ const DiscoverCollections: React.FC = () => {
   const closeModal = () => setActiveCollection(null);
 
   return (
-    <div className="pl-[250px] pt-[70px] flex flex-col items-center w-full min-h-screen bg-[var(--background-color)] text-[var(--text-color)]">
+    <div className="pl-[250px] pt-[70px] flex flex-col items-center w-full min-h-screen bg-theme-bg text-theme-text">
       <h1 className="text-3xl font-bold mb-4">Discover Public Collections</h1>
       {user && <p className="mb-4">Welcome, {user.name}</p>}
       <div className="w-full max-w-2xl mb-6">

@@ -290,7 +290,7 @@ const YourCollections: React.FC = () => {
   };  
 
   return (
-    <div className="pl-[250px] pt-[70px] flex flex-col items-center w-full min-h-screen bg-[var(--background-color)] text-[var(--text-color)]">
+    <div className="pl-[250px] pt-[70px] flex flex-col items-center w-full min-h-screen bg-theme-bg text-theme-text dark:bg-gray-800 dark:text-white">
       <CollectionsNavBar 
         onSelectCategory={handleSelectCategory} 
         selectedCategory={selectedCategory}
@@ -303,7 +303,7 @@ const YourCollections: React.FC = () => {
             id="sort-select"
             value={sortOption}
             onChange={handleSortChange}
-            className="bg-white text-black border border-gray-300 rounded p-2.5 text-base font-caveat w-[150px]"
+            className="bg-white text-black dark:bg-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 rounded p-2.5 text-base font-caveat w-[150px]"
           >
             <option value="date">Date Created</option>
             <option value="alphabetical">Alphabetical</option>
@@ -313,7 +313,7 @@ const YourCollections: React.FC = () => {
         </div>
         <button 
           type="button" 
-          className="bg-light-blue text-black border border-gray-300 rounded p-2.5 text-base uppercase font-bold cursor-pointer transition-all duration-300 hover:bg-hover-blue hover:scale-105 active:bg-active-blue active:scale-95"
+          className="bg-light-blue text-black dark:bg-blue-600 dark:text-white border border-gray-300 dark:border-gray-600 rounded p-2.5 text-base uppercase font-bold cursor-pointer transition-all duration-300 hover:bg-hover-blue dark:hover:bg-blue-500 hover:scale-105 active:bg-active-blue dark:active:bg-blue-700 active:scale-95"
           onClick={() => setDuplicateModalOpen(true)}
         >
           Duplicate Collection
@@ -405,13 +405,13 @@ const YourCollections: React.FC = () => {
       )}
       {isDuplicateModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center z-[1001] overflow-hidden">
-          <div ref={modalRef} className="relative z-[1002] bg-white p-5 font-caveat rounded-lg w-1/2 max-w-[600px] shadow-lg text-center">
-            <h2 className="text-2xl font-bold mb-4">Duplicate Collection</h2>
-            <label htmlFor="duplicate-collection-select" className="block mb-2">Select a collection to duplicate:</label>
+          <div ref={modalRef} className="relative z-[1002] bg-white dark:bg-gray-800 p-5 font-caveat rounded-lg w-1/2 max-w-[600px] shadow-lg text-center">
+            <h2 className="text-2xl font-bold mb-4 dark:text-white">Duplicate Collection</h2>
+            <label htmlFor="duplicate-collection-select" className="block mb-2 dark:text-white">Select a collection to duplicate:</label>
             <select
               id="duplicate-collection-select"
               onChange={(e) => setCollectionToDuplicate(JSON.parse(e.target.value))}
-              className="w-full bg-white text-black border border-gray-300 rounded p-2 text-base font-bold cursor-pointer mb-4"
+              className="w-full bg-white text-black dark:bg-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 rounded p-2 text-base font-bold cursor-pointer mb-4"
             >
               <option value="">Select a collection</option>
               {collections.map((collection) => (
@@ -420,7 +420,7 @@ const YourCollections: React.FC = () => {
                 </option>
               ))}
             </select>
-            <div className="flex justify-center gap-5">
+            <div className="flex justify-center space-x-4">
               <button
                 type="button"
                 onClick={handleDuplicateCollection}

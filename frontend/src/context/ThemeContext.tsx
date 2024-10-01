@@ -36,6 +36,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       colorblindType: "",
       displayTextColor: undefined,
       displayBackgroundColor: undefined,
+      isDarkMode: false,
     };
   };
 

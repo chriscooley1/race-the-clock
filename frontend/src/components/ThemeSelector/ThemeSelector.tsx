@@ -3,7 +3,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { appBackgroundColors, collectionColorSchemes, ColorScheme } from "../../constants/colorSchemes";
 
 const ThemeSelector: React.FC = () => {
-  const { setTheme, theme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();
+  const { setTheme, theme, setDisplayTextColor, setDisplayBackgroundColor, toggleDarkMode } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedScheme: ColorScheme | undefined = (appBackgroundColors as ColorScheme[]).find(
@@ -30,7 +30,7 @@ const ThemeSelector: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#cceeff] text-inherit border-none p-4 rounded-md mt-5 w-full max-w-[300px]">
+    <div className="bg-theme-bg text-theme-text border-none p-4 rounded-md mt-5 w-full max-w-[300px]">
       <label htmlFor="theme-select" className="block mb-2 font-bold">Select App Background:</label>
       <select
         id="theme-select"
@@ -75,6 +75,15 @@ const ThemeSelector: React.FC = () => {
           </option>
         ))}
       </select>
+
+      <label htmlFor="dark-mode-toggle" className="block mb-2 font-bold">Dark Mode:</label>
+      <button
+        id="dark-mode-toggle"
+        onClick={toggleDarkMode}
+        className="w-full p-2 mb-4 text-theme-text bg-theme-bg border border-gray-300 rounded-md"
+      >
+        {theme.isDarkMode ? 'Disable Dark Mode' : 'Enable Dark Mode'}
+      </button>
     </div>
   );
 };
