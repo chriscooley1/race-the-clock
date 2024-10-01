@@ -10,6 +10,7 @@ import "../../App.css";
 import axios from "axios";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { colorSchemes } from "../../constants/colorSchemes";
+import { lightenColor } from '../../utils/colorUtils';
 
 interface Collection {
   collection_id: number;
@@ -289,7 +290,7 @@ const YourCollections: React.FC = () => {
   };  
 
   return (
-    <div className="pt-[110px] pl-[250px] flex flex-col items-center w-full min-h-screen bg-theme-bg text-theme-text overflow-hidden">
+    <div className="pl-[250px] pt-[70px] flex flex-col items-center w-full min-h-screen bg-[var(--background-color)] text-[var(--text-color)]">
       <CollectionsNavBar 
         onSelectCategory={handleSelectCategory} 
         selectedCategory={selectedCategory}
@@ -320,29 +321,35 @@ const YourCollections: React.FC = () => {
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        {sortOption === "custom" ? (
-          <Droppable droppableId="collections-droppable">
-            {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef} className="flex flex-wrap justify-around p-0 w-full overflow-y-auto max-h-[calc(100vh-170px)]">
-                {filteredCollections.map((collection, index) => (
-                  <Draggable
-                    key={collection.collection_id.toString()}
-                    draggableId={collection.collection_id.toString()}
-                    index={index}
-                  >
+        <Droppable droppableId="collections">
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef} className="flex flex-wrap justify-around p-5 w-full">
+              {filteredCollections.map((collection, index) => {
+                const baseColor = colorSchemes[index % colorSchemes.length].backgroundColor;
+                const lightColor = lightenColor(baseColor, 0.7); // 70% lighter
+                return (
+                  <Draggable key={collection.collection_id} draggableId={collection.collection_id.toString()} index={index}>
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className={`flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden cursor-grab bg-[${colorSchemes[index % colorSchemes.length].backgroundColor}]`}
+                        className="flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden" 
+                        style={{
+                          ...provided.draggableProps.style,
+                          backgroundColor: lightColor
+                        }}
                       >
-                        <h1 className="w-full text-black text-center text-xl font-bold p-2.5 border-5 border-black mb-2.5">{collection.name}</h1>
-                        <p className="text-black text-base font-bold mb-1">{getItemsCount(collection.description)} items</p>
+                        {/* Collection content */}
+                        <h1 className={`w-full text-black text-center text-xl font-bold p-2.5 border-5 border-black mb-2.5`} style={{backgroundColor: baseColor}}>
+                          {collection.name}
+                        </h1>
+                        <p className="text-black text-base font-bold mb-1">{getItemsCount(collection.description)} items in collection</p>
                         <p className="text-black text-base font-bold mb-2.5">Created by you on {formatDate(collection.created_at)}</p>
                         <button
                           type="button"
-                          className="bg-custom-green text-white border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-green-dark hover:scale-105 active:bg-custom-green-darker active:scale-95 mb-2.5"
+                          className="text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105 active:opacity-70 active:scale-95 mb-2.5"
+                          style={{backgroundColor: baseColor}}
                           onClick={() => handleStartCollection(collection.collection_id)}
                         >
                           Start
@@ -350,14 +357,16 @@ const YourCollections: React.FC = () => {
                         <div className="flex justify-center">
                           <button
                             type="button"
-                            className="bg-[#ffcc00] text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-[#e6b800] hover:scale-105 active:bg-[#cc9900] active:scale-95 mr-2.5"
+                            className="text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105 active:opacity-70 active:scale-95 mr-2.5"
+                            style={{backgroundColor: baseColor}}
                             onClick={() => handleEditButtonClick(collection)}
                           >
                             Edit
                           </button>
                           <button
                             type="button"
-                            className="bg-custom-red text-white border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-red-dark hover:scale-105 active:bg-custom-red-darker active:scale-95"
+                            className="text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105 active:opacity-70 active:scale-95"
+                            style={{backgroundColor: baseColor}}
                             onClick={() => handleDeleteCollection(collection.collection_id)}
                           >
                             Delete
@@ -366,45 +375,12 @@ const YourCollections: React.FC = () => {
                       </div>
                     )}
                   </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ) : (
-          <div className={`flex flex-wrap justify-around p-0 w-full overflow-y-auto max-h-[calc(100vh-170px)] ${sortOption === "custom" ? "cursor-grab" : ""}`}>
-            {filteredCollections.map((collection, index) => (
-              <div key={collection.collection_id} className={`flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden bg-[${colorSchemes[index % colorSchemes.length].backgroundColor}]`}>
-                <h1 className="w-full text-black text-center text-xl font-bold p-2.5 border-5 border-black mb-2.5">{collection.name}</h1>
-                <p className="text-black text-base font-bold mb-1">{getItemsCount(collection.description)} items</p>
-                <p className="text-black text-base font-bold mb-2.5">Created by you on {formatDate(collection.created_at)}</p>
-                <button
-                  type="button"
-                  className="bg-custom-green text-white border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-green-dark hover:scale-105 active:bg-custom-green-darker active:scale-95 mb-2.5"
-                  onClick={() => handleStartCollection(collection.collection_id)}
-                >
-                  Start
-                </button>
-                <div className="flex justify-center">
-                  <button
-                    type="button"
-                    className="bg-[#ffcc00] text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-[#e6b800] hover:scale-105 active:bg-[#cc9900] active:scale-95 mr-2.5"
-                    onClick={() => handleEditButtonClick(collection)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="bg-custom-red text-white border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-red-dark hover:scale-105 active:bg-custom-red-darker active:scale-95"
-                    onClick={() => handleDeleteCollection(collection.collection_id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
 
       {showModal && selectedCollection && (

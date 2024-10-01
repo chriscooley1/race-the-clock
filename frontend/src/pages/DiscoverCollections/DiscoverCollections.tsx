@@ -5,6 +5,8 @@ import { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Collection as APICollection } from "../../api";
 import axios from "axios";
+import { lightenColor } from '../../utils/colorUtils';
+import { colorSchemes } from '../../constants/colorSchemes';
 
 interface Item {
   id: number;
@@ -123,16 +125,24 @@ const DiscoverCollections: React.FC = () => {
       </div>
       <div className="flex flex-wrap justify-around p-5 w-full">
         {collections.map((collection, index) => {
-          const colorClass = `bg-[var(--color-${(index % 10) + 1})]`;
+          const baseColor = colorSchemes[index % colorSchemes.length].backgroundColor;
+          const lightColor = lightenColor(baseColor, 0.7); // 70% lighter
           const itemCount = collection.item_count ?? collection.items?.length ?? 0;
           return (
-            <div key={collection.collection_id} className={`${colorClass} p-5 mb-5 flex-[0_0_calc(33.33%-20px)] m-2.5 flex flex-col items-center justify-start relative h-[300px] border-5 border-black`}>
-              <h1 className="w-full text-black text-center text-xl font-bold border-5 border-black p-2.5 mb-2.5">{collection.name}</h1>
+            <div 
+              key={collection.collection_id} 
+              className="p-5 mb-5 flex-[0_0_calc(33.33%-20px)] m-2.5 flex flex-col items-center justify-start relative h-[300px] border-5 border-black"
+              style={{backgroundColor: lightColor}}
+            >
+              <h1 className="w-full text-black text-center text-xl font-bold border-5 border-black p-2.5 mb-2.5" style={{backgroundColor: baseColor}}>
+                {collection.name}
+              </h1>
               <p className="text-black text-lg mb-1">Created by: {collection.creator_username}</p>
               <p className="text-black text-lg mb-4">{itemCount} items in collection</p>
               <button 
                 type="button" 
-                className="bg-green-500 text-white px-4 py-2 rounded-md font-bold hover:bg-green-600 transition duration-300 transform hover:scale-105 active:scale-95"
+                className="text-black px-4 py-2 rounded-md font-bold transition duration-300 transform hover:scale-105 active:scale-95"
+                style={{backgroundColor: baseColor}}
                 onClick={() => openModal(collection)}
               >
                 Preview Collection
