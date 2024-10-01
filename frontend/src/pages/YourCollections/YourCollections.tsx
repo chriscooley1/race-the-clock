@@ -94,6 +94,22 @@ const YourCollections: React.FC = () => {
     loadCollections();
   }, [selectedCategory, sortOption, getAccessTokenSilently]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setDuplicateModalOpen(false);
+      }
+    };
+
+    if (isDuplicateModalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDuplicateModalOpen]);
+
   const filterAndSortCollections = (
     collections: Collection[],
     category: string,
@@ -221,7 +237,7 @@ const YourCollections: React.FC = () => {
     }
   };
 
-  const handleCategorySelect = (category: string) => {
+  const handleSelectCategory = (category: string) => {
     setSelectedCategory(category);
   };
 
@@ -272,19 +288,32 @@ const YourCollections: React.FC = () => {
   };  
 
   return (
-    <div className="your-collections">
-      <CollectionsNavBar selectedCategory={selectedCategory} onSelectCategory={handleCategorySelect} />
-      <div className="control-panel">
-        <div className="sort-options">
-          <label htmlFor="sort">Sort by:</label>
-          <select id="sort" value={sortOption} onChange={handleSortChange}>
+    <div className="pt-20 flex flex-col items-center w-full min-h-screen bg-theme-bg text-theme-text overflow-hidden">
+      <CollectionsNavBar 
+        onSelectCategory={handleSelectCategory} 
+        selectedCategory={selectedCategory}
+      />
+      
+      <div className="flex items-center justify-center w-full mb-5">
+        <div className="flex items-center mr-5">
+          <label htmlFor="sort-select" className="mr-2.5">Sort by:</label>
+          <select
+            id="sort-select"
+            value={sortOption}
+            onChange={handleSortChange}
+            className="bg-white text-black border border-gray-300 rounded p-2.5 text-base font-caveat w-[150px]"
+          >
             <option value="date">Date Created</option>
             <option value="alphabetical">Alphabetical</option>
             <option value="category">Category</option>
             <option value="custom">Custom</option>
           </select>
         </div>
-        <button type="button" className="duplicate-collection-button your-styled-button" onClick={() => setDuplicateModalOpen(true)}>
+        <button 
+          type="button" 
+          className="bg-light-blue text-black border border-gray-300 rounded p-2.5 text-base uppercase font-bold cursor-pointer transition-all duration-300 hover:bg-hover-blue hover:scale-105 active:bg-active-blue active:scale-95"
+          onClick={() => setDuplicateModalOpen(true)}
+        >
           Duplicate Collection
         </button>
       </div>
@@ -293,7 +322,7 @@ const YourCollections: React.FC = () => {
         {sortOption === "custom" ? (
           <Droppable droppableId="collections-droppable">
             {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef} className="your-collections-list">
+              <div {...provided.droppableProps} ref={provided.innerRef} className="flex flex-wrap justify-around p-0 w-full overflow-y-auto max-h-[calc(100vh-170px)]">
                 {filteredCollections.map((collection, index) => (
                   <Draggable
                     key={collection.collection_id.toString()}
@@ -305,29 +334,29 @@ const YourCollections: React.FC = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className={`your-collection-item color-${(index % 10) + 1}`}
+                        className={`flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden cursor-grab ${`bg-color-${(index % 10) + 1}`}`}
                       >
-                        <h1>{collection.name}</h1>
-                        <p>{getItemsCount(collection.description)} items</p>
-                        <p>Created by you on {formatDate(collection.created_at)}</p>
+                        <h1 className="w-full text-black text-center text-xl font-bold p-2.5 border-5 border-black mb-2.5">{collection.name}</h1>
+                        <p className="text-black text-base font-bold mb-1">{getItemsCount(collection.description)} items</p>
+                        <p className="text-black text-base font-bold mb-2.5">Created by you on {formatDate(collection.created_at)}</p>
                         <button
                           type="button"
-                          className="start-button"
+                          className="bg-custom-green text-white border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-green-dark hover:scale-105 active:bg-custom-green-darker active:scale-95 mb-2.5"
                           onClick={() => handleStartCollection(collection.collection_id)}
                         >
                           Start
                         </button>
-                        <div className="your-button-group">
+                        <div className="flex justify-center">
                           <button
                             type="button"
-                            className="your-edit-button"
+                            className="bg-[#ffcc00] text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-[#e6b800] hover:scale-105 active:bg-[#cc9900] active:scale-95 mr-2.5"
                             onClick={() => handleEditButtonClick(collection)}
                           >
                             Edit
                           </button>
                           <button
                             type="button"
-                            className="delete-button"
+                            className="bg-custom-red text-white border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-red-dark hover:scale-105 active:bg-custom-red-darker active:scale-95"
                             onClick={() => handleDeleteCollection(collection.collection_id)}
                           >
                             Delete
@@ -342,31 +371,30 @@ const YourCollections: React.FC = () => {
             )}
           </Droppable>
         ) : (
-          // Render static list when not in custom sort mode
-          <div className={`your-collections-list ${sortOption === "custom" ? "sort-custom" : ""}`}>
+          <div className={`flex flex-wrap justify-around p-0 w-full overflow-y-auto max-h-[calc(100vh-170px)] ${sortOption === "custom" ? "cursor-grab" : ""}`}>
             {filteredCollections.map((collection, index) => (
-              <div key={collection.collection_id} className={`your-collection-item color-${(index % 10) + 1}`}>
-                <h1>{collection.name}</h1>
-                <p>{getItemsCount(collection.description)} items</p>
-                <p>Created by you on {formatDate(collection.created_at)}</p>
+              <div key={collection.collection_id} className={`flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden ${`bg-color-${(index % 10) + 1}`}`}>
+                <h1 className="w-full text-black text-center text-xl font-bold p-2.5 border-5 border-black mb-2.5">{collection.name}</h1>
+                <p className="text-black text-base font-bold mb-1">{getItemsCount(collection.description)} items</p>
+                <p className="text-black text-base font-bold mb-2.5">Created by you on {formatDate(collection.created_at)}</p>
                 <button
                   type="button"
-                  className="start-button"
+                  className="bg-custom-green text-white border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-green-dark hover:scale-105 active:bg-custom-green-darker active:scale-95 mb-2.5"
                   onClick={() => handleStartCollection(collection.collection_id)}
                 >
                   Start
                 </button>
-                <div className="your-button-group">
+                <div className="flex justify-center">
                   <button
                     type="button"
-                    className="your-edit-button"
+                    className="bg-[#ffcc00] text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-[#e6b800] hover:scale-105 active:bg-[#cc9900] active:scale-95 mr-2.5"
                     onClick={() => handleEditButtonClick(collection)}
                   >
                     Edit
                   </button>
                   <button
                     type="button"
-                    className="delete-button"
+                    className="bg-custom-red text-white border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-red-dark hover:scale-105 active:bg-custom-red-darker active:scale-95"
                     onClick={() => handleDeleteCollection(collection.collection_id)}
                   >
                     Delete
@@ -399,48 +427,34 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div
-          className="your-modal-background"
-          onClick={() => setDuplicateModalOpen(false)} // Close modal when clicking on the background
-        >
-          <div
-            className="your-modal-content"
-            ref={modalRef}
-            onClick={(e) => e.stopPropagation()} // Prevent clicks inside the modal from closing it
-          >
-            <h2>Duplicate Collection</h2>
-            <label htmlFor="duplicate-collection-select">Select a collection to duplicate</label>
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center z-[1001] overflow-hidden">
+          <div ref={modalRef} className="relative z-[1002] bg-white p-5 font-caveat rounded-lg w-1/2 max-w-[600px] shadow-lg text-center">
+            <h2 className="text-2xl font-bold mb-4">Duplicate Collection</h2>
+            <label htmlFor="duplicate-collection-select" className="block mb-2">Select a collection to duplicate:</label>
             <select
               id="duplicate-collection-select"
-              value={collectionToDuplicate?.collection_id || ""}
-              onChange={(e) => {
-                const selectedId = parseInt(e.target.value);
-                const selectedCollection = collections.find((col) => col.collection_id === selectedId);
-                setCollectionToDuplicate(selectedCollection || null);
-              }}
+              onChange={(e) => setCollectionToDuplicate(JSON.parse(e.target.value))}
+              className="w-full bg-white text-black border border-gray-300 rounded p-2 text-base font-bold cursor-pointer mb-4"
             >
-              <option value="" disabled>
-                Select a collection to duplicate
-              </option>
+              <option value="">Select a collection</option>
               {collections.map((collection) => (
-                <option key={collection.collection_id} value={collection.collection_id}>
+                <option key={collection.collection_id} value={JSON.stringify(collection)}>
                   {collection.name}
                 </option>
               ))}
             </select>
-            <div className="your-button-group">
+            <div className="flex justify-center gap-5">
               <button
                 type="button"
-                className="duplicate-button your-styled-button"
-                disabled={!collectionToDuplicate}
                 onClick={handleDuplicateCollection}
+                className="bg-custom-green text-white border-none rounded p-3 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-blue hover:scale-105 active:bg-custom-blue-darker active:scale-95 h-12 inline-block text-center"
               >
                 Duplicate
               </button>
               <button
                 type="button"
-                className="your-cancel-button"
                 onClick={() => setDuplicateModalOpen(false)}
+                className="bg-custom-red text-white border-none rounded p-3 text-base font-bold cursor-pointer transition-all duration-300 hover:bg-custom-red-dark hover:scale-105 active:bg-custom-red-darker active:scale-95 w-[150px] inline-block text-center"
               >
                 Cancel
               </button>
