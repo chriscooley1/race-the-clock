@@ -288,13 +288,13 @@ const YourCollections: React.FC = () => {
   };  
 
   return (
-    <div className="pt-20 flex flex-col items-center w-full min-h-screen bg-theme-bg text-theme-text overflow-hidden">
+    <div className="pt-[110px] pl-[250px] flex flex-col items-center w-full min-h-screen bg-theme-bg text-theme-text overflow-hidden">
       <CollectionsNavBar 
         onSelectCategory={handleSelectCategory} 
         selectedCategory={selectedCategory}
       />
       
-      <div className="flex items-center justify-center w-full mb-5">
+      <div className="flex items-center justify-center w-full mb-5 px-4">
         <div className="flex items-center mr-5">
           <label htmlFor="sort-select" className="mr-2.5">Sort by:</label>
           <select

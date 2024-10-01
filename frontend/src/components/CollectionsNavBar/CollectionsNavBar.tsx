@@ -12,7 +12,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   const categories = ["All Collections", "Math", "Language Arts", "Number Sense", "Science", "Nursing"];
 
   return (
-    <div className="fixed top-[60px] left-[250px] w-[calc(100%-250px)] z-50 bg-white shadow-md p-2 flex flex-wrap justify-center">
+    <div className="fixed top-[50px] left-[250px] w-[calc(100%-250px)] z-30 bg-white shadow-md p-2 flex flex-wrap justify-center">
       {categories.map((category) => (
         <button
           type="button"

@@ -65,7 +65,7 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="pl-[250px] pt-[70px] p-5">
       <h2 className="text-2xl font-bold mb-4">Settings</h2>
       <div className="mb-4">
         <label htmlFor="theme-select" className="font-bold mr-2">Theme:</label>

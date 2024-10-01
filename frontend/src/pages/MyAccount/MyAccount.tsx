@@ -28,7 +28,7 @@ const MyAccount: React.FC = () => {
   }, [getAccessTokenSilently]);
 
   return (
-    <div className="p-5 mx-auto">
+    <div className="pl-[250px] pt-[70px] p-5 mx-auto">
       <h2 className="text-2xl md:text-3xl mb-4">My Account</h2>
       {userData ? (
         <>
