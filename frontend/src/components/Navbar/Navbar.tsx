@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useTheme } from "../../context/ThemeContext";
 import "./Navbar.css";
 import "../../App.css";
 
@@ -17,6 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
+  const { theme, toggleDarkMode } = useTheme();
 
   const handleMenuToggle = () => {
     console.log("Toggling menu. Current state:", menuOpen);
@@ -58,7 +60,15 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
   }, []);
 
   return (
-    <div className="fixed top-0 w-full h-[50px] flex justify-between items-center bg-[#cceeff] shadow-md px-2 md:px-5 z-50">
+    <div className="fixed top-0 w-full h-[50px] flex justify-between items-center bg-[#cceeff] dark:bg-gray-800 shadow-md px-2 md:px-5 z-50">
+      {/* Dark mode toggle */}
+      <button
+        onClick={toggleDarkMode}
+        className="p-2 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white"
+      >
+        {theme.isDarkMode ? '☀️' : '🌙'}
+      </button>
+
       {(location.pathname === "/fullscreen-display" || hasBackButton) && (
         <>
           <button
@@ -79,7 +89,7 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
           )}
         </>
       )}
-      <div className="flex-grow text-center text-lg md:text-xl font-bold text-gray-800 cursor-pointer" onClick={handleTitleClick}>
+      <div className="flex-grow text-center text-lg md:text-xl font-bold text-gray-800 dark:text-white cursor-pointer" onClick={handleTitleClick}>
         Race The Clock
       </div>
       <div className="cursor-pointer flex flex-col justify-between w-[30px] h-[25px]" onClick={handleMenuToggle}>
@@ -88,14 +98,14 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
         <div className="h-[3px] bg-gray-800 transition-all duration-300"></div>
       </div>
       {menuOpen && (
-        <div ref={menuRef} className="absolute top-[50px] right-0 w-full md:w-auto bg-white shadow-md rounded-b md:rounded z-[1001] p-2">
-          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 hover:text-blue-500 transition-colors duration-300" onClick={() => handleNavigate("/my-account")}>
+        <div ref={menuRef} className="absolute top-[50px] right-0 w-full md:w-auto bg-white dark:bg-gray-700 shadow-md rounded-b md:rounded z-[1001] p-2">
+          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 dark:text-white hover:text-blue-500 transition-colors duration-300" onClick={() => handleNavigate("/my-account")}>
             My Account
           </button>
-          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 hover:text-blue-500 transition-colors duration-300" onClick={() => handleNavigate("/settings")}>
+          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 dark:text-white hover:text-blue-500 transition-colors duration-300" onClick={() => handleNavigate("/settings")}>
             Settings
           </button>
-          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 hover:text-blue-500 transition-colors duration-300" onClick={handleLogout}>
+          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 dark:text-white hover:text-blue-500 transition-colors duration-300" onClick={handleLogout}>
             Logout
           </button>
         </div>

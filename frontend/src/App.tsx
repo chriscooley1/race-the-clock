@@ -36,7 +36,7 @@ const App: React.FC = () => {
   return (
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
-        <div className={`app-container ${theme.className} ${isFullScreen ? "fullscreen" : ""}`}>
+        <div className={`app-container ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? 'dark' : ''}`}>
           <Navbar />
           <div className="layout">
             {!hideSidebar && <Sidebar />}

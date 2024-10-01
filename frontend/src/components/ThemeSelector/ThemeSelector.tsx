@@ -1,12 +1,12 @@
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { colorSchemes, ColorScheme } from "../../constants/colorSchemes";
+import { appBackgroundColors, collectionColorSchemes, ColorScheme } from "../../constants/colorSchemes";
 
 const ThemeSelector: React.FC = () => {
   const { setTheme, theme, setDisplayTextColor, setDisplayBackgroundColor } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedScheme: ColorScheme | undefined = colorSchemes.find(
+    const selectedScheme: ColorScheme | undefined = (appBackgroundColors as ColorScheme[]).find(
       (scheme: ColorScheme) => scheme.name === event.target.value
     );
     if (selectedScheme) {
@@ -14,6 +14,7 @@ const ThemeSelector: React.FC = () => {
         ...selectedScheme,
         isColorblindMode: false,
         colorblindType: "none",
+        isDarkMode: selectedScheme.name === "Black",
       });
     }
   };
@@ -30,7 +31,7 @@ const ThemeSelector: React.FC = () => {
 
   return (
     <div className="bg-[#cceeff] text-inherit border-none p-4 rounded-md mt-5 w-full max-w-[300px]">
-      <label htmlFor="theme-select" className="block mb-2 font-bold">Select Theme:</label>
+      <label htmlFor="theme-select" className="block mb-2 font-bold">Select App Background:</label>
       <select
         id="theme-select"
         value={theme.name}
@@ -38,7 +39,7 @@ const ThemeSelector: React.FC = () => {
         className="w-full p-2 mb-4 text-black bg-white border border-gray-300 rounded-md appearance-none bg-no-repeat bg-right-8-center"
         style={{backgroundImage: "url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>\")"}}
       >
-        {colorSchemes.map((scheme, index) => (
+        {(appBackgroundColors as ColorScheme[]).map((scheme: ColorScheme, index: number) => (
           <option key={index} value={scheme.name}>
             {scheme.name}
           </option>
@@ -53,7 +54,7 @@ const ThemeSelector: React.FC = () => {
         className="w-full p-2 mb-4 text-black bg-white border border-gray-300 rounded-md appearance-none bg-no-repeat bg-right-8-center"
         style={{backgroundImage: "url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>\")"}}
       >
-        {colorSchemes.map((scheme, index) => (
+        {collectionColorSchemes.map((scheme, index) => (
           <option key={index} value={scheme.textColor}>
             {scheme.name} Text Color
           </option>
@@ -68,7 +69,7 @@ const ThemeSelector: React.FC = () => {
         className="w-full p-2 mb-4 text-black bg-white border border-gray-300 rounded-md appearance-none bg-no-repeat bg-right-8-center"
         style={{backgroundImage: "url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>\")"}}
       >
-        {colorSchemes.map((scheme, index) => (
+        {collectionColorSchemes.map((scheme, index) => (
           <option key={index} value={scheme.backgroundColor}>
             {scheme.name} Background
           </option>

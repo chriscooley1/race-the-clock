@@ -12,6 +12,7 @@ interface Theme {
   backgroundImage?: string;
   isColorblindMode: boolean;
   colorblindType: string;
+  isDarkMode: boolean;
 }
 
 interface ThemeContextType {
@@ -21,6 +22,7 @@ interface ThemeContextType {
   setDisplayBackgroundColor: (color: string) => void;
   setColorblindMode: (isEnabled: boolean) => void;
   setColorblindType: (type: string) => void;
+  toggleDarkMode: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -55,6 +57,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setTheme((prevTheme) => ({ ...prevTheme, colorblindType: type }));
   };
 
+  const toggleDarkMode = () => {
+    setTheme((prevTheme) => ({ ...prevTheme, isDarkMode: !prevTheme.isDarkMode }));
+  };
+
   useEffect(() => {
     localStorage.setItem("app-theme", JSON.stringify(theme));
   
@@ -87,10 +93,16 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     } else {
       document.documentElement.style.setProperty("--background-image", "none");
     }
+
+    if (theme.isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor, setColorblindMode, setColorblindType }}>
+    <ThemeContext.Provider value={{ theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor, setColorblindMode, setColorblindType, toggleDarkMode }}>
       {children}
     </ThemeContext.Provider>
   );

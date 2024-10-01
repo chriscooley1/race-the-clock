@@ -9,7 +9,7 @@ import "./YourCollections.css";
 import "../../App.css";
 import axios from "axios";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
-import { colorSchemes } from "../../constants/colorSchemes";
+import { collectionColorSchemes } from '../../constants/colorSchemes';
 import { lightenColor } from '../../utils/colorUtils';
 
 interface Collection {
@@ -325,7 +325,7 @@ const YourCollections: React.FC = () => {
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef} className="flex flex-wrap justify-around p-5 w-full">
               {filteredCollections.map((collection, index) => {
-                const baseColor = colorSchemes[index % colorSchemes.length].backgroundColor;
+                const baseColor = collectionColorSchemes[index % collectionColorSchemes.length].backgroundColor;
                 const lightColor = lightenColor(baseColor, 0.7); // 70% lighter
                 return (
                   <Draggable key={collection.collection_id} draggableId={collection.collection_id.toString()} index={index}>

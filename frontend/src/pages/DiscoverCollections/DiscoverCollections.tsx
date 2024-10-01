@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Collection as APICollection } from "../../api";
 import axios from "axios";
 import { lightenColor } from '../../utils/colorUtils';
-import { colorSchemes } from '../../constants/colorSchemes';
+import { collectionColorSchemes } from '../../constants/colorSchemes';
 
 interface Item {
   id: number;
@@ -125,7 +125,7 @@ const DiscoverCollections: React.FC = () => {
       </div>
       <div className="flex flex-wrap justify-around p-5 w-full">
         {collections.map((collection, index) => {
-          const baseColor = colorSchemes[index % colorSchemes.length].backgroundColor;
+          const baseColor = collectionColorSchemes[index % collectionColorSchemes.length].backgroundColor;
           const lightColor = lightenColor(baseColor, 0.7); // 70% lighter
           const itemCount = collection.item_count ?? collection.items?.length ?? 0;
           return (

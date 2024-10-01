@@ -8,6 +8,16 @@ export interface ColorScheme {
 // Define and export the color schemes
 export const colorSchemes: ColorScheme[] = [
   {
+    name: "White",
+    backgroundColor: "#FFFFFF",
+    textColor: "#333333",
+  },
+  {
+    name: "Black",
+    backgroundColor: "#000000",
+    textColor: "#FFFFFF",
+  },
+  {
     name: "Soft Peach",
     backgroundColor: "#FFDAB9",
     textColor: "#333333",
@@ -83,3 +93,9 @@ export const colorSchemes: ColorScheme[] = [
     textColor: "#333333",
   },
 ];
+
+export const collectionColorSchemes = colorSchemes.slice(2); // Exclude White and Black
+
+export const appBackgroundColors = {
+  // Define your app background colors here
+};
