@@ -96,9 +96,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }
 
     if (theme.isDarkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [theme]);
 

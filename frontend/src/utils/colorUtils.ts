@@ -1,6 +1,6 @@
 export function lightenColor(color: string, amount: number): string {
-  // Remove the '#' if it exists
-  color = color.replace(/^#/, '');
+  // Remove the "#"" if it exists
+  color = color.replace(/^#/, "");
   
   // Parse the color
   let r = parseInt(color.slice(0, 2), 16);
@@ -13,5 +13,5 @@ export function lightenColor(color: string, amount: number): string {
   b = Math.min(255, Math.round(b + (255 - b) * amount));
 
   // Convert back to hex
-  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+  return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }

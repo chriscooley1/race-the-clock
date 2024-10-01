@@ -9,8 +9,8 @@ import "./YourCollections.css";
 import "../../App.css";
 import axios from "axios";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
-import { collectionColorSchemes } from '../../constants/colorSchemes';
-import { lightenColor } from '../../utils/colorUtils';
+import { collectionColorSchemes } from "../../constants/colorSchemes";
+import { lightenColor } from "../../utils/colorUtils";
 
 interface Collection {
   collection_id: number;

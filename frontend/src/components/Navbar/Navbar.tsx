@@ -63,10 +63,11 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
     <div className="fixed top-0 w-full h-[50px] flex justify-between items-center bg-[#cceeff] dark:bg-gray-800 shadow-md px-2 md:px-5 z-50">
       {/* Dark mode toggle */}
       <button
+        type="button"
         onClick={toggleDarkMode}
         className="p-2 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white"
       >
-        {theme.isDarkMode ? '☀️' : '🌙'}
+        {theme.isDarkMode ? "☀️" : "🌙"}
       </button>
 
       {(location.pathname === "/fullscreen-display" || hasBackButton) && (

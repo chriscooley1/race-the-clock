@@ -5,8 +5,8 @@ import { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Collection as APICollection } from "../../api";
 import axios from "axios";
-import { lightenColor } from '../../utils/colorUtils';
-import { collectionColorSchemes } from '../../constants/colorSchemes';
+import { lightenColor } from "../../utils/colorUtils";
+import { collectionColorSchemes } from "../../constants/colorSchemes";
 
 interface Item {
   id: number;
