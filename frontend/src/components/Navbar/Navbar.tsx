@@ -58,36 +58,44 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
   }, []);
 
   return (
-    <div className="navbar">
+    <div className="fixed top-0 w-full h-[50px] flex justify-between items-center bg-[#cceeff] shadow-md px-2 md:px-5 z-50">
       {(location.pathname === "/fullscreen-display" || hasBackButton) && (
         <>
-          <button type="button" className="nav-back-button" onClick={onBack || handleBack}>
+          <button
+            type="button"
+            className="bg-red-400 text-white border-none py-2 px-4 rounded cursor-pointer text-base transition-colors duration-300 hover:bg-red-600 mr-5"
+            onClick={onBack || handleBack}
+          >
             Back
           </button>
           {onPauseResume && (
-            <button type="button" className="nav-pause-button" onClick={onPauseResume}>
+            <button
+              type="button"
+              className="bg-green-500 text-white border-none py-2 px-4 rounded cursor-pointer text-base transition-colors duration-300 hover:bg-green-600 ml-2"
+              onClick={onPauseResume}
+            >
               {isPaused ? "Resume" : "Pause"}
             </button>
           )}
         </>
       )}
-      <div className="navbar-title clickable" onClick={handleTitleClick}>
+      <div className="flex-grow text-center text-lg md:text-xl font-bold text-gray-800 cursor-pointer" onClick={handleTitleClick}>
         Race The Clock
       </div>
-      <div className="hamburger-menu" onClick={handleMenuToggle}>
-        <div className="bar"></div>
-        <div className="bar"></div>
-        <div className="bar"></div>
+      <div className="cursor-pointer flex flex-col justify-between w-[30px] h-[25px]" onClick={handleMenuToggle}>
+        <div className="h-[3px] bg-gray-800 transition-all duration-300"></div>
+        <div className="h-[3px] bg-gray-800 transition-all duration-300"></div>
+        <div className="h-[3px] bg-gray-800 transition-all duration-300"></div>
       </div>
       {menuOpen && (
-        <div className="nav-menu" ref={menuRef}>
-          <button type="button" onClick={() => handleNavigate("/my-account")}>
+        <div ref={menuRef} className="absolute top-[50px] right-0 w-full md:w-auto bg-white shadow-md rounded-b md:rounded z-[1001] p-2">
+          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 hover:text-blue-500 transition-colors duration-300" onClick={() => handleNavigate("/my-account")}>
             My Account
           </button>
-          <button type="button" onClick={() => handleNavigate("/settings")}>
+          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 hover:text-blue-500 transition-colors duration-300" onClick={() => handleNavigate("/settings")}>
             Settings
           </button>
-          <button type="button" onClick={handleLogout}>
+          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 hover:text-blue-500 transition-colors duration-300" onClick={handleLogout}>
             Logout
           </button>
         </div>

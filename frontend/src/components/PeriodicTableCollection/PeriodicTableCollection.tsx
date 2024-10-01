@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./PeriodicTableCollection.css";
 
 interface PeriodicElement {
   id: number;
@@ -28,13 +27,13 @@ const PeriodicTableCollection: React.FC<PeriodicTableCollectionProps> = ({ eleme
   const currentElement = elements[currentElementIndex];
 
   return (
-    <div className="periodic-table-collection" onClick={handleClick}>
-      <div className="element">
-        <div className="element-symbol">{currentElement.symbol}</div>
+    <div className="flex justify-center items-center h-[calc(100vh-60px)] text-2xl md:text-3xl cursor-pointer" onClick={handleClick}>
+      <div className="border-2 border-gray-700 p-4 md:p-6 text-center bg-gray-100 rounded-md">
+        <div className="text-5xl md:text-6xl font-bold">{currentElement.symbol}</div>
         {showDetails && (
           <>
-            <div className="element-name">{currentElement.name}</div>
-            <div className="atomic-number">{currentElement.atomicNumber}</div>
+            <div className="text-xl md:text-2xl mt-2">{currentElement.name}</div>
+            <div className="text-lg md:text-xl mt-1">{currentElement.atomicNumber}</div>
           </>
         )}
       </div>
