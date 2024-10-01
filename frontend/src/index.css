@@ -18,6 +18,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --display-background-color: #ffffff;
+  --display-text-color: #000000;
 }
 
 /* Optional: If you still want to include font-synthesis for browsers that support it, use this */

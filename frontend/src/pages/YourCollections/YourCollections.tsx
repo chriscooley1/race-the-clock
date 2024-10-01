@@ -9,6 +9,7 @@ import "./YourCollections.css";
 import "../../App.css";
 import axios from "axios";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
+import { colorSchemes } from "../../constants/colorSchemes";
 
 interface Collection {
   collection_id: number;
@@ -334,7 +335,7 @@ const YourCollections: React.FC = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className={`flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden cursor-grab bg-color-${(index % 10) + 1}`}
+                        className={`flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden cursor-grab bg-[${colorSchemes[index % colorSchemes.length].backgroundColor}]`}
                       >
                         <h1 className="w-full text-black text-center text-xl font-bold p-2.5 border-5 border-black mb-2.5">{collection.name}</h1>
                         <p className="text-black text-base font-bold mb-1">{getItemsCount(collection.description)} items</p>
@@ -373,7 +374,7 @@ const YourCollections: React.FC = () => {
         ) : (
           <div className={`flex flex-wrap justify-around p-0 w-full overflow-y-auto max-h-[calc(100vh-170px)] ${sortOption === "custom" ? "cursor-grab" : ""}`}>
             {filteredCollections.map((collection, index) => (
-              <div key={collection.collection_id} className={`flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden bg-color-${(index % 10) + 1}`}>
+              <div key={collection.collection_id} className={`flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden bg-[${colorSchemes[index % colorSchemes.length].backgroundColor}]`}>
                 <h1 className="w-full text-black text-center text-xl font-bold p-2.5 border-5 border-black mb-2.5">{collection.name}</h1>
                 <p className="text-black text-base font-bold mb-1">{getItemsCount(collection.description)} items</p>
                 <p className="text-black text-base font-bold mb-2.5">Created by you on {formatDate(collection.created_at)}</p>

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss"
+import { colorSchemes } from "./src/constants/colorSchemes"
 
 const config: Config = {
   content: [
@@ -32,37 +33,7 @@ const config: Config = {
         'theme-text': 'var(--text-color)',
         'theme-display-bg': 'var(--display-background-color)',
         'theme-display-text': 'var(--display-text-color)',
-        // Add more color options from your colorOptions array
-        'bright-red': '#ff0000',
-        'bright-orange': '#ff7f00',
-        'bright-yellow': '#ffff00',
-        'bright-green': '#00ff00',
-        'bright-blue': '#0000ff',
-        'bright-indigo': '#4b0082',
-        'bright-violet': '#9400d3',
-        'pastel-yellow': '#fdfd96',
-        'hot-pink': '#ff69b4',
-        'electric-purple': '#8a2be2',
-        'teal': '#008080',
-        'amber': '#ffc107',
-        'slate': '#708090',
-        'magenta': '#ff00ff',
-        'lavender': '#e6e6fa',
-        'mint': '#98ff98',
-        'cyan': '#00ffff',
-        'apricot': '#fbceb1',
-        'jade': '#00a86b',
-        'coral': '#ff6f61',
-        'color-1': '#FF0000', // Red
-        'color-2': '#00FF00', // Green
-        'color-3': '#0000FF', // Blue
-        'color-4': '#FFFF00', // Yellow
-        'color-5': '#FF00FF', // Magenta
-        'color-6': '#00FFFF', // Cyan
-        'color-7': '#FFA500', // Orange
-        'color-8': '#800080', // Purple
-        'color-9': '#008000', // Dark Green
-        'color-10': '#000080', // Navy Blue
+        ...Object.fromEntries(colorSchemes.map(scheme => [scheme.name.toLowerCase().replace(/\s+/g, '-'), scheme.backgroundColor])),
       },
       fontFamily: {
         'caveat': ['Caveat', 'cursive'],
@@ -102,6 +73,10 @@ const config: Config = {
       },
     },
   },
+  safelist: [
+    ...colorSchemes.map(scheme => `bg-[${scheme.backgroundColor}]`),
+    ...colorSchemes.map(scheme => `text-[${scheme.textColor}]`),
+  ],
   plugins: [],
 }
 

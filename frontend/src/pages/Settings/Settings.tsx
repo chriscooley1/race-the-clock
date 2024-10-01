@@ -4,12 +4,10 @@ import { colorSchemes, ColorScheme } from "../../constants/colorSchemes";
 import "./Settings.css";
 import "../../App.css";
 
-const colorOptions = [
-  'bright-red', 'bright-orange', 'bright-yellow', 'bright-green', 'bright-blue', 'bright-indigo', 'bright-violet',
-  'white', 'black', 'pastel-yellow', 'custom-green', 'hot-pink', 'electric-purple', 'teal',
-  'amber', 'slate', 'magenta', 'lavender', 'mint', 'cyan', 'apricot',
-  'jade', 'coral', 'custom-blue', 'light-blue', 'theme-text'
-];
+const colorOptions = colorSchemes.map(scheme => ({
+  name: scheme.name,
+  value: scheme.backgroundColor
+}));
 
 const colorblindTypes = [
   "Protanopia",
@@ -87,9 +85,9 @@ const Settings: React.FC = () => {
         <div className="flex flex-wrap">
           {colorOptions.map((color) => (
             <div
-              key={color}
-              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 bg-${color} ${theme.displayTextColor === color ? "border-2 border-black" : ""}`}
-              onClick={() => handleTextColorChange(color)}
+              key={color.name}
+              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 bg-[${color.value}] ${theme.displayTextColor === color.value ? "border-2 border-black" : ""}`}
+              onClick={() => handleTextColorChange(color.value)}
             />
           ))}
         </div>
@@ -99,9 +97,9 @@ const Settings: React.FC = () => {
         <div className="flex flex-wrap">
           {colorOptions.map((color) => (
             <div
-              key={color}
-              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 bg-${color} ${theme.displayBackgroundColor === color ? "border-2 border-black" : ""}`}
-              onClick={() => handleBackgroundColorChange(color)}
+              key={color.name}
+              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 bg-[${color.value}] ${theme.displayBackgroundColor === color.value ? "border-2 border-black" : ""}`}
+              onClick={() => handleBackgroundColorChange(color.value)}
             />
           ))}
         </div>
