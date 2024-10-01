@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./MyAccount.css";
-import "../../App.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getCurrentUser } from "../../api";
 import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm/UpdateDisplayNameForm";
@@ -30,17 +28,15 @@ const MyAccount: React.FC = () => {
   }, [getAccessTokenSilently]);
 
   return (
-    <div className="my-account-container">
-      <h2 className="my-account-heading">My Account</h2>
+    <div className="p-5 mx-auto">
+      <h2 className="text-2xl md:text-3xl mb-4">My Account</h2>
       {userData ? (
         <>
-          <p className="my-account-info"><strong>Name:</strong> {userData.display_name || user?.name}</p>
-          <p className="my-account-info"><strong>Email:</strong> {userData.email || user?.email}</p>
+          <p className="my-2.5 text-base md:text-lg"><strong>Name:</strong> {userData.display_name || user?.name}</p>
+          <p className="my-2.5 text-base md:text-lg"><strong>Email:</strong> {userData.email || user?.email}</p>
           
-          {/* Add the form here */}
-          <h3>Update Display Name</h3>
+          <h3 className="text-xl mt-6 mb-3">Update Display Name</h3>
           <UpdateDisplayNameForm />
-
         </>
       ) : (
         <p>Loading user data...</p>

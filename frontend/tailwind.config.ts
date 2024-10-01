@@ -26,6 +26,12 @@ const config: Config = {
           dark: '#025aa5',
           darker: '#014f86',
         },
+        'hover-blue': '#1e90ff',
+        'active-blue': '#0056b3',
+        'theme-bg': 'var(--background-color)',
+        'theme-text': 'var(--text-color)',
+        'theme-display-bg': 'var(--display-background-color)',
+        'theme-display-text': 'var(--display-text-color)',
       },
       fontFamily: {
         'caveat': ['Caveat', 'cursive'],
@@ -40,6 +46,28 @@ const config: Config = {
       },
       transitionProperty: {
         'background-transform': 'background-color, transform',
+      },
+      fontSize: {
+        'vw-5': '5vw',
+        'vw-7': '7vw',
+        'vw-10': '10vw',
+        'vw-15': '15vw',
+        'vw-20': '20vw',
+      },
+      maxWidth: {
+        'collection-setup': '600px',
+      },
+      minHeight: {
+        'screen': '100vh',
+      },
+      borderWidth: {
+        '5': '5px',
+      },
+      width: {
+        'landing-button': '300px',
+      },
+      backgroundImage: {
+        'theme-bg-image': 'var(--background-image)',
       },
     },
   },
