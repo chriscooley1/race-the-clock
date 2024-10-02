@@ -114,21 +114,21 @@ const Navbar: React.FC<NavbarProps> = ({
         >
           <button
             type="button"
-            className="w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 hover:text-blue-500 dark:text-white"
+            className="hover:text-hover-blue w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 dark:text-white"
             onClick={() => handleNavigate("/my-account")}
           >
             My Account
           </button>
           <button
             type="button"
-            className="w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 hover:text-blue-500 dark:text-white"
+            className="hover:text-hover-blue w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 dark:text-white"
             onClick={() => handleNavigate("/settings")}
           >
             Settings
           </button>
           <button
             type="button"
-            className="w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 hover:text-blue-500 dark:text-white"
+            className="hover:text-hover-blue w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 dark:text-white"
             onClick={handleLogout}
           >
             Logout

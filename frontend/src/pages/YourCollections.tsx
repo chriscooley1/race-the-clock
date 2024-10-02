@@ -5,12 +5,11 @@ import {
   deleteCollectionById,
   duplicateCollection,
   updateCollection,
-} from "../../api";
+} from "../api";
 import { useAuth0 } from "@auth0/auth0-react";
-import SessionSettingsModal from "../../components/SessionSettingsModal";
-import CollectionsNavBar from "../../components/CollectionsNavBar";
-import EditCollectionModal from "../../components/EditCollectionModal";
-import "../../App.css";
+import SessionSettingsModal from "../components/SessionSettingsModal";
+import CollectionsNavBar from "../components/CollectionsNavBar";
+import EditCollectionModal from "../components/EditCollectionModal";
 import axios from "axios";
 import {
   DragDropContext,
@@ -18,8 +17,8 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
-import { collectionColorSchemes } from "../../constants/colorSchemes";
-import { lightenColor } from "../../utils/colorUtils";
+import { collectionColorSchemes } from "../constants/colorSchemes";
+import { lightenColor } from "../utils/colorUtils";
 
 interface Collection {
   collection_id: number;
@@ -411,7 +410,7 @@ const YourCollections: React.FC = () => {
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="collections">
+        <Droppable droppableId="collections" isDropDisabled={sortOption !== "custom"}>
           {(provided) => (
             <div
               {...provided.droppableProps}
@@ -423,7 +422,11 @@ const YourCollections: React.FC = () => {
                   collectionColorSchemes[index % collectionColorSchemes.length]
                     .backgroundColor;
                 const lightColor = lightenColor(baseColor, 0.7);
-                return (
+
+                // Only allow dragging when in "custom" sort mode
+                const isDraggable = sortOption === "custom";
+
+                return isDraggable ? (
                   <Draggable
                     key={collection.collection_id}
                     draggableId={collection.collection_id.toString()}
@@ -447,8 +450,7 @@ const YourCollections: React.FC = () => {
                           {collection.name}
                         </h1>
                         <p className="mb-1 text-base font-bold text-black">
-                          {getItemsCount(collection.description)} items in
-                          collection
+                          {getItemsCount(collection.description)} items in collection
                         </p>
                         <p className="mb-2.5 text-base font-bold text-black">
                           Created by you on {formatDate(collection.created_at)}
@@ -456,10 +458,8 @@ const YourCollections: React.FC = () => {
                         <button
                           type="button"
                           className="mb-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                          style={{ backgroundColor: baseColor }}
-                          onClick={() =>
-                            handleStartCollection(collection.collection_id)
-                          }
+                          style={{ backgroundColor: "green" }}
+                          onClick={() => handleStartCollection(collection.collection_id)}
                         >
                           Start
                         </button>
@@ -467,7 +467,7 @@ const YourCollections: React.FC = () => {
                           <button
                             type="button"
                             className="mr-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                            style={{ backgroundColor: baseColor }}
+                            style={{ backgroundColor: "yellow" }}
                             onClick={() => handleEditButtonClick(collection)}
                           >
                             Edit
@@ -475,10 +475,8 @@ const YourCollections: React.FC = () => {
                           <button
                             type="button"
                             className="cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                            style={{ backgroundColor: baseColor }}
-                            onClick={() =>
-                              handleDeleteCollection(collection.collection_id)
-                            }
+                            style={{ backgroundColor: "red" }}
+                            onClick={() => handleDeleteCollection(collection.collection_id)}
                           >
                             Delete
                           </button>
@@ -486,6 +484,53 @@ const YourCollections: React.FC = () => {
                       </div>
                     )}
                   </Draggable>
+                ) : (
+                  <div
+                    key={collection.collection_id}
+                    className="border-5 relative mb-5 box-border flex h-[300px] flex-[0_0_30%] flex-col items-center justify-start overflow-hidden border-black p-5"
+                    style={{
+                      backgroundColor: lightColor,
+                    }}
+                  >
+                    <h1
+                      className="border-5 mb-2.5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
+                      style={{ backgroundColor: baseColor }}
+                    >
+                      {collection.name}
+                    </h1>
+                    <p className="mb-1 text-base font-bold text-black">
+                      {getItemsCount(collection.description)} items in collection
+                    </p>
+                    <p className="mb-2.5 text-base font-bold text-black">
+                      Created by you on {formatDate(collection.created_at)}
+                    </p>
+                    <button
+                      type="button"
+                      className="mb-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                      style={{ backgroundColor: "green" }}
+                      onClick={() => handleStartCollection(collection.collection_id)}
+                    >
+                      Start
+                    </button>
+                    <div className="flex justify-center">
+                      <button
+                        type="button"
+                        className="mr-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                        style={{ backgroundColor: "yellow" }}
+                        onClick={() => handleEditButtonClick(collection)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className="cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                        style={{ backgroundColor: "red" }}
+                        onClick={() => handleDeleteCollection(collection.collection_id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
                 );
               })}
               {provided.placeholder}
@@ -515,7 +560,7 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div className="fixed left-0 top-0 z-[1001] flex size-full items-center justify-center overflow-hidden bg-black bg-opacity-70">
+        <div className="fixed left-0 top-0 z-[1001] flex size-full items-center justify-center overflow-hidden bg-black/70">
           <div
             ref={modalRef}
             className="font-caveat relative z-[1002] w-1/2 max-w-[600px] rounded-lg bg-white p-5 text-center shadow-lg dark:bg-gray-800"
