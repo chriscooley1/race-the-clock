@@ -122,5 +122,5 @@ export const periodicTable: { [key: number]: PeriodicElement } = {
   115: { name: "Moscovium", symbol: "Mc", atomicNumber: 115 },
   116: { name: "Livermorium", symbol: "Lv", atomicNumber: 116 },
   117: { name: "Tennessine", symbol: "Ts", atomicNumber: 117 },
-  118: { name: "Oganesson", symbol: "Og", atomicNumber: 118 }
+  118: { name: "Oganesson", symbol: "Og", atomicNumber: 118 },
 };

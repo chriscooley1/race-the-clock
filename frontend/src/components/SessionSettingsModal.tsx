@@ -3,7 +3,13 @@ import React, { useState, useEffect } from "react";
 interface SessionSettingsModalProps {
   collectionName: string;
   onClose: () => void;
-  onStart: (min: number, sec: number, shuffle: boolean, speed: number, textColor: string) => void;
+  onStart: (
+    min: number,
+    sec: number,
+    shuffle: boolean,
+    speed: number,
+    textColor: string,
+  ) => void;
   currentSettings: {
     speed: number;
     textColor: string;
@@ -40,7 +46,13 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
 
   const handleStartClick = () => {
     const calculatedSpeed = calculateSpeed();
-    onStart(minutes, seconds, shuffle, calculatedSpeed, currentSettings.textColor);
+    onStart(
+      minutes,
+      seconds,
+      shuffle,
+      calculatedSpeed,
+      currentSettings.textColor,
+    );
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -50,26 +62,35 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50" onClick={handleBackgroundClick}>
-      <div className="bg-white p-6 rounded-lg w-full max-w-md text-gray-800 shadow-lg">
-        <button type="button" className="absolute top-2 right-2 bg-red-500 text-white rounded-full size-8 flex items-center justify-center hover:bg-red-600 transition duration-300" onClick={onClose}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+      onClick={handleBackgroundClick}
+    >
+      <div className="w-full max-w-md rounded-lg bg-white p-6 text-gray-800 shadow-lg">
+        <button
+          type="button"
+          className="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-red-500 text-white transition duration-300 hover:bg-red-600"
+          onClick={onClose}
+        >
           X
         </button>
-        <h1 className="text-2xl font-bold mb-4">{collectionName}</h1>
+        <h1 className="mb-4 text-2xl font-bold">{collectionName}</h1>
         <p className="mb-4">Please select settings for the session</p>
         <div className="space-y-4">
           <div className="flex flex-col items-center">
-            <div className="flex justify-between w-full mb-2">
-              <label htmlFor="minutes" className="mr-2">Minutes:</label>
+            <div className="mb-2 flex w-full justify-between">
+              <label htmlFor="minutes" className="mr-2">
+                Minutes:
+              </label>
               <label htmlFor="seconds">Seconds:</label>
             </div>
-            <div className="flex justify-between w-full">
+            <div className="flex w-full justify-between">
               <input
                 type="number"
                 id="minutes"
                 value={minutes}
                 onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
-                className="w-24 p-2 border border-gray-300 rounded"
+                className="w-24 rounded border border-gray-300 p-2"
                 placeholder="Minutes"
                 title="Minutes"
                 min={0}
@@ -80,7 +101,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 id="seconds"
                 value={seconds}
                 onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
-                className="w-24 p-2 border border-gray-300 rounded"
+                className="w-24 rounded border border-gray-300 p-2"
                 placeholder="Seconds"
                 title="Seconds"
                 min={0}
@@ -102,7 +123,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
           </div>
           <button
             type="button"
-            className="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300"
+            className="w-full rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
             onClick={handleStartClick}
           >
             Start Session

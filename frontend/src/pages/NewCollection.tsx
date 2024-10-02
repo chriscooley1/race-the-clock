@@ -7,7 +7,13 @@ const NewCollection: React.FC = () => {
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const categories = ["Math", "Language Arts", "Number Sense", "Science", "Nursing"];
+  const categories = [
+    "Math",
+    "Language Arts",
+    "Number Sense",
+    "Science",
+    "Nursing",
+  ];
 
   const handleNext = () => {
     if (!name.trim()) {
@@ -32,14 +38,16 @@ const NewCollection: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-5 max-w-[600px] mx-auto">
-      <h1 className="text-2xl md:text-3xl mb-4">New Collection</h1>
-      <div className="w-full max-w-[300px] mb-4">
-        <label htmlFor="collectionName" className="block mb-2">Step 1 - Collection Name</label>
+    <div className="mx-auto flex max-w-[600px] flex-col items-center p-5">
+      <h1 className="mb-4 text-2xl md:text-3xl">New Collection</h1>
+      <div className="mb-4 w-full max-w-[300px]">
+        <label htmlFor="collectionName" className="mb-2 block">
+          Step 1 - Collection Name
+        </label>
         <input
           type="text"
           id="collectionName"
-          className="w-full bg-white text-black border border-[var(--text-color)] rounded p-2 text-base font-caveat"
+          className="font-caveat w-full rounded border border-[var(--text-color)] bg-white p-2 text-base text-black"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter collection name"
@@ -47,11 +55,13 @@ const NewCollection: React.FC = () => {
           onKeyDown={handleKeyDown}
         />
       </div>
-      <div className="w-full max-w-[300px] mb-4 flex items-center justify-center">
-        <label htmlFor="categorySelect" className="mr-2">Category:</label>
+      <div className="mb-4 flex w-full max-w-[300px] items-center justify-center">
+        <label htmlFor="categorySelect" className="mr-2">
+          Category:
+        </label>
         <select
           id="categorySelect"
-          className="w-full bg-white text-black border border-[var(--text-color)] rounded p-2 text-base font-caveat"
+          className="font-caveat w-full rounded border border-[var(--text-color)] bg-white p-2 text-base text-black"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
@@ -62,23 +72,23 @@ const NewCollection: React.FC = () => {
           ))}
         </select>
       </div>
-      <div className="flex items-center mt-2.5 text-sm">
+      <div className="mt-2.5 flex items-center text-sm">
         <input
           type="checkbox"
           id="publicCheckbox"
           checked={isPublic}
           onChange={() => setIsPublic(!isPublic)}
           title="Share collection publicly"
-          className="size-5 bg-white border-2 border-gray-300 rounded cursor-pointer mr-2.5 appearance-none checked:bg-white checked:after:content-['✓'] checked:after:absolute checked:after:top-1/2 checked:after:left-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:text-black checked:after:text-sm relative"
+          className="relative mr-2.5 size-5 cursor-pointer appearance-none rounded border-2 border-gray-300 bg-white checked:bg-white checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:text-sm checked:after:text-black checked:after:content-['✓']"
         />
         <label htmlFor="publicCheckbox">
           I want to share my collection publicly
         </label>
       </div>
-      <button 
-        type="button" 
-        onClick={handleNext} 
-        className="mt-5 w-full max-w-[300px] bg-light-blue text-black border border-gray-300 rounded p-2.5 text-base uppercase font-bold cursor-pointer transition-all duration-300 hover:bg-hover-blue hover:scale-105 active:bg-active-blue active:scale-95"
+      <button
+        type="button"
+        onClick={handleNext}
+        className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 w-full max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
       >
         Next
       </button>

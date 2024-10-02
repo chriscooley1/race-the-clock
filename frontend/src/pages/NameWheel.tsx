@@ -19,7 +19,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const controls = useAnimation();
   const canvasSize = 500;
-  const radius = canvasSize / 2 - 30;  // Radius calculation
+  const radius = canvasSize / 2 - 30; // Radius calculation
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -52,19 +52,19 @@ const NameWheel: React.FC<NameWheelProps> = ({
 
         // Draw name text in the middle of each segment
         ctx.save();
-        ctx.translate(canvasSize / 2, canvasSize / 2);  // Move to center
-        const textAngle = (startAngle + endAngle) / 2;  // Middle of the segment
-        ctx.rotate(textAngle);  // Rotate to the correct angle
-        ctx.textAlign = "right";  // Align text properly
-        ctx.fillStyle = "black";  // Set text color
-        ctx.font = "16px Arial";  // Set font
-        ctx.fillText(name, radius - 10, 0);  // Position the text
-        ctx.restore();  // Restore the canvas context state
+        ctx.translate(canvasSize / 2, canvasSize / 2); // Move to center
+        const textAngle = (startAngle + endAngle) / 2; // Middle of the segment
+        ctx.rotate(textAngle); // Rotate to the correct angle
+        ctx.textAlign = "right"; // Align text properly
+        ctx.fillStyle = "black"; // Set text color
+        ctx.font = "16px Arial"; // Set font
+        ctx.fillText(name, radius - 10, 0); // Position the text
+        ctx.restore(); // Restore the canvas context state
       });
     };
 
     drawWheel();
-  }, [names, radius]);  // Add "radius" to the dependency array
+  }, [names, radius]); // Add "radius" to the dependency array
 
   useEffect(() => {
     if (isSpinning) {
@@ -87,16 +87,17 @@ const NameWheel: React.FC<NameWheelProps> = ({
         const normalizedRotation = (targetAngle + Math.PI) % (2 * Math.PI);
         const sliceAngle = (2 * Math.PI) / totalSlices;
 
-        const selectedIndex = Math.floor(normalizedRotation / sliceAngle) % totalSlices;
+        const selectedIndex =
+          Math.floor(normalizedRotation / sliceAngle) % totalSlices;
 
-        onNameSelected(names[selectedIndex]);  // Set the selected name
+        onNameSelected(names[selectedIndex]); // Set the selected name
       }, 5000);
     }
   }, [isSpinning, controls, onSpin, names, onNameSelected, stopSpinning]);
 
   return (
     <div className="relative">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 size-0 border-x-[20px] border-x-transparent border-t-[40px] border-t-black"></div>
+      <div className="absolute left-1/2 top-0 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-black"></div>
       <div className="relative">
         <motion.div animate={controls} className="inline-block">
           <canvas ref={canvasRef} />

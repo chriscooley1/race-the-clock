@@ -16,7 +16,7 @@ const NameGenerator: React.FC = () => {
     try {
       const token = await getAccessTokenSilently();
       const response = await axios.get("http://localhost:8000/namelists/", {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.length > 0) {
         const latestNameList = response.data[0];
@@ -38,12 +38,16 @@ const NameGenerator: React.FC = () => {
       const data = { name: "My Name List", names: updatedList };
       if (nameListId) {
         await axios.put(`http://localhost:8000/namelists/${nameListId}`, data, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        const response = await axios.post("http://localhost:8000/namelists/", data, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await axios.post(
+          "http://localhost:8000/namelists/",
+          data,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         setNameListId(response.data.namelist_id);
       }
     } catch (error) {
@@ -95,24 +99,26 @@ const NameGenerator: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen pt-20">
-      <div className="flex flex-col items-center w-full max-w-md">
+    <div className="flex min-h-screen flex-col items-center pt-20">
+      <div className="flex w-full max-w-md flex-col items-center">
         <div className="mb-5 w-full">
-          <div className="flex items-center justify-center mb-5">
-            <label htmlFor="nameInput" className="mr-2">Add a Name:</label>
+          <div className="mb-5 flex items-center justify-center">
+            <label htmlFor="nameInput" className="mr-2">
+              Add a Name:
+            </label>
             <input
               type="text"
               id="nameInput"
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="bg-white text-black border border-current rounded p-2 text-base font-caveat"
+              className="font-caveat rounded border border-current bg-white p-2 text-base text-black"
               placeholder="Enter a name"
             />
             <button
               type="button"
               onClick={handleAddName}
-              className="ml-2 bg-light-blue text-black px-4 py-2 rounded font-bold uppercase transition duration-300 hover:bg-hover-blue hover:scale-105 active:bg-active-blue active:scale-95"
+              className="bg-light-blue hover:bg-hover-blue active:bg-active-blue ml-2 rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
             >
               Add
             </button>
@@ -120,7 +126,7 @@ const NameGenerator: React.FC = () => {
           <button
             type="button"
             onClick={handleSpin}
-            className="w-full bg-light-blue text-black px-4 py-2 rounded font-bold uppercase transition duration-300 hover:bg-hover-blue hover:scale-105 active:bg-active-blue active:scale-95"
+            className="bg-light-blue hover:bg-hover-blue active:bg-active-blue w-full rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
           >
             Spin the Wheel
           </button>
@@ -135,7 +141,7 @@ const NameGenerator: React.FC = () => {
           />
         </div>
         <div className="mt-5 w-full">
-          <h2 className="text-xl font-bold mb-2">Names on the Wheel:</h2>
+          <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
           <ul className="list-none p-0">
             {nameList.map((name, index) => (
               <WheelSegment

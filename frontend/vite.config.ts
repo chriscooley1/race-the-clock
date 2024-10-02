@@ -10,11 +10,21 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     base: "/",
     define: {
       "import.meta.env.MODE": JSON.stringify(mode),
-      "import.meta.env.VITE_AUTH0_DOMAIN": JSON.stringify(env.VITE_AUTH0_DOMAIN),
-      "import.meta.env.VITE_AUTH0_CLIENT_ID": JSON.stringify(env.VITE_AUTH0_CLIENT_ID),
-      "import.meta.env.VITE_AUTH0_AUDIENCE": JSON.stringify(env.VITE_AUTH0_AUDIENCE),
-      "import.meta.env.VITE_API_BASE_URL": JSON.stringify(env.VITE_API_BASE_URL),
-      "import.meta.env.VITE_AUTH0_CALLBACK_URL": JSON.stringify(env.VITE_AUTH0_CALLBACK_URL),
+      "import.meta.env.VITE_AUTH0_DOMAIN": JSON.stringify(
+        env.VITE_AUTH0_DOMAIN,
+      ),
+      "import.meta.env.VITE_AUTH0_CLIENT_ID": JSON.stringify(
+        env.VITE_AUTH0_CLIENT_ID,
+      ),
+      "import.meta.env.VITE_AUTH0_AUDIENCE": JSON.stringify(
+        env.VITE_AUTH0_AUDIENCE,
+      ),
+      "import.meta.env.VITE_API_BASE_URL": JSON.stringify(
+        env.VITE_API_BASE_URL,
+      ),
+      "import.meta.env.VITE_AUTH0_CALLBACK_URL": JSON.stringify(
+        env.VITE_AUTH0_CALLBACK_URL,
+      ),
     },
     build: {
       rollupOptions: {
@@ -24,7 +34,11 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           assetFileNames: `assets/[name].[hash].[ext]`,
           manualChunks(id) {
             if (id.includes("node_modules")) {
-              return id.toString().split("node_modules/")[1].split("/")[0].toString();
+              return id
+                .toString()
+                .split("node_modules/")[1]
+                .split("/")[0]
+                .toString();
             }
           },
         },

@@ -2,41 +2,44 @@ import React, { useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { colorSchemes, ColorScheme } from "../constants/colorSchemes";
 
-const colorOptions = colorSchemes.map(scheme => ({
+const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
-  value: scheme.backgroundColor
+  value: scheme.backgroundColor,
 }));
 
 const colorblindTypes = [
   "Protanopia",
   "Deuteranopia",
   "Tritanopia",
-  "Achromatopsia"
+  "Achromatopsia",
 ];
 
 const Settings: React.FC = () => {
-  const { 
-    theme, 
-    setTheme, 
-    setDisplayTextColor, 
+  const {
+    theme,
+    setTheme,
+    setDisplayTextColor,
     setDisplayBackgroundColor,
     setColorblindMode,
-    setColorblindType
+    setColorblindType,
   } = useTheme();
 
   useEffect(() => {
-    document.querySelectorAll(".color-option").forEach(el => {
-      (el as HTMLElement).style.backgroundColor = el.getAttribute("data-color") || "";
+    document.querySelectorAll(".color-option").forEach((el) => {
+      (el as HTMLElement).style.backgroundColor =
+        el.getAttribute("data-color") || "";
     });
   }, []);
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log("Theme selected:", event.target.value);
-    const newTheme = colorSchemes.find((scheme: ColorScheme) => scheme.name === event.target.value);
+    const newTheme = colorSchemes.find(
+      (scheme: ColorScheme) => scheme.name === event.target.value,
+    );
     if (newTheme) {
       setTheme({
         ...newTheme,
-        isColorblindMode: false, 
+        isColorblindMode: false,
         colorblindType: "none",
         isDarkMode: newTheme.name === "Black", // Set isDarkMode based on the theme name
         displayTextColor: theme.displayTextColor, // Preserve existing display colors
@@ -55,24 +58,30 @@ const Settings: React.FC = () => {
     setDisplayBackgroundColor(color);
   };
 
-  const handleColorblindModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleColorblindModeChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setColorblindMode(event.target.checked);
   };
 
-  const handleColorblindTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleColorblindTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     setColorblindType(event.target.value);
   };
 
   return (
-    <div className="pl-[250px] pt-[70px] p-5">
-      <h2 className="text-2xl font-bold mb-4">Settings</h2>
+    <div className="p-5 pl-[250px] pt-[70px]">
+      <h2 className="mb-4 text-2xl font-bold">Settings</h2>
       <div className="mb-4">
-        <label htmlFor="theme-select" className="font-bold mr-2">Theme:</label>
+        <label htmlFor="theme-select" className="mr-2 font-bold">
+          Theme:
+        </label>
         <select
           id="theme-select"
           value={theme.name}
           onChange={handleThemeChange}
-          className="p-2 bg-white text-black border border-gray-300 rounded font-caveat"
+          className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
         >
           {colorSchemes.map((scheme: ColorScheme) => (
             <option key={scheme.name} value={scheme.name}>
@@ -82,12 +91,14 @@ const Settings: React.FC = () => {
         </select>
       </div>
       <div className="mb-4">
-        <label className="font-bold block mb-2">Text Color for FullScreenDisplay:</label>
+        <label className="mb-2 block font-bold">
+          Text Color for FullScreenDisplay:
+        </label>
         <div className="flex flex-wrap">
           {colorOptions.map((color) => (
             <div
               key={color.name}
-              className={`size-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-2 border-black" : ""}`}
+              className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-2 border-black" : ""}`}
               style={{ backgroundColor: color.value }}
               onClick={() => handleTextColorChange(color.value)}
             />
@@ -95,12 +106,14 @@ const Settings: React.FC = () => {
         </div>
       </div>
       <div className="mb-4">
-        <label className="font-bold block mb-2">Background Color for FullScreenDisplay:</label>
+        <label className="mb-2 block font-bold">
+          Background Color for FullScreenDisplay:
+        </label>
         <div className="flex flex-wrap">
           {colorOptions.map((color) => (
             <div
               key={color.name}
-              className={`size-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-2 border-black" : ""}`}
+              className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-2 border-black" : ""}`}
               style={{ backgroundColor: color.value }}
               onClick={() => handleBackgroundColorChange(color.value)}
             />
@@ -120,14 +133,16 @@ const Settings: React.FC = () => {
       </div>
       {theme.isColorblindMode && (
         <div>
-          <label htmlFor="colorblind-type-select" className="font-bold mr-2">Colorblind Type:</label>
+          <label htmlFor="colorblind-type-select" className="mr-2 font-bold">
+            Colorblind Type:
+          </label>
           <select
             id="colorblind-type-select"
             value={theme.colorblindType}
             onChange={handleColorblindTypeChange}
-            className="p-2 bg-white text-black border border-gray-300 rounded font-caveat"
+            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
           >
-            {colorblindTypes.map(type => (
+            {colorblindTypes.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>

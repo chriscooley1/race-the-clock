@@ -42,8 +42,15 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 }) => {
   const location = useLocation();
   console.log("FullScreenDisplay state:", location.state);
-  const { sequence, speed, shuffle, category, type } = location.state as FullScreenDisplayState;
-  console.log("Destructured values:", { sequence, speed, shuffle, category, type });
+  const { sequence, speed, shuffle, category, type } =
+    location.state as FullScreenDisplayState;
+  console.log("Destructured values:", {
+    sequence,
+    speed,
+    shuffle,
+    category,
+    type,
+  });
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
   const [shuffledSequence, setShuffledSequence] = useState<SequenceItem[]>([]);
@@ -63,34 +70,62 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       let newShuffledSequence;
       if (shuffle) {
         console.log("Shuffling sequence...");
-        newShuffledSequence = shuffleArray(sequence.map((item, index) => ({ ...item, id: index })));
+        newShuffledSequence = shuffleArray(
+          sequence.map((item, index) => ({ ...item, id: index })),
+        );
       } else {
         newShuffledSequence = [...sequence];
       }
       console.log("New shuffled sequence:", newShuffledSequence);
-      setShuffledSequence(newShuffledSequence.map((item, index) => ({
-        ...item,
-        id: index, // Use the index as a number id
-        answer: item.name, // Use the name property instead of answer
-        svg: item.svg || "" // Provide a default empty string if svg is undefined
-      })));
+      setShuffledSequence(
+        newShuffledSequence.map((item, index) => ({
+          ...item,
+          id: index, // Use the index as a number id
+          answer: item.name, // Use the name property instead of answer
+          svg: item.svg || "", // Provide a default empty string if svg is undefined
+        })),
+      );
     } else {
       console.error("Sequence is empty or undefined");
     }
 
-    document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor || theme.textColor);
-    document.documentElement.style.setProperty("--background-color", theme.displayBackgroundColor || theme.backgroundColor);
+    document.documentElement.style.setProperty(
+      "--display-text-color",
+      theme.displayTextColor || theme.textColor,
+    );
+    document.documentElement.style.setProperty(
+      "--background-color",
+      theme.displayBackgroundColor || theme.backgroundColor,
+    );
 
     return () => {
       console.log("Exiting FullScreenDisplay");
-      document.documentElement.style.setProperty("--display-text-color", theme.textColor);
-      document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
+      document.documentElement.style.setProperty(
+        "--display-text-color",
+        theme.textColor,
+      );
+      document.documentElement.style.setProperty(
+        "--background-color",
+        theme.backgroundColor,
+      );
       onExitFullScreen(); // Ensure this is called to reset sidebar
     };
-  }, [onEnterFullScreen, onExitFullScreen, sequence, shuffle, theme, location.state]);
+  }, [
+    onEnterFullScreen,
+    onExitFullScreen,
+    sequence,
+    shuffle,
+    theme,
+    location.state,
+  ]);
 
   useEffect(() => {
-    if (shuffledSequence.length > 0 && !isPaused && (category !== "Math" || (type !== "mathProblems" && type !== "Math Problems"))) {
+    if (
+      shuffledSequence.length > 0 &&
+      !isPaused &&
+      (category !== "Math" ||
+        (type !== "mathProblems" && type !== "Math Problems"))
+    ) {
       const interval = setInterval(() => {
         setIndex((prevIndex) => {
           const newIndex = (prevIndex + 1) % shuffledSequence.length;
@@ -117,7 +152,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const handlePrevious = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIndex((prevIndex) => (prevIndex - 1 + shuffledSequence.length) % shuffledSequence.length);
+    setIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + shuffledSequence.length) % shuffledSequence.length,
+    );
   };
 
   const handleScreenClick = () => {
@@ -147,26 +185,32 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     if (category === "Science" && type === "periodicTable") {
       const [symbol, name, atomicNumber] = currentItem.name.split(" - ");
       return (
-        <div className="flex flex-col items-center justify-center h-full">
-          <h1 className={`text-[20vw] m-0 ${getTextClass(atomicNumber)}`}>{atomicNumber}</h1>
-          <h2 className={`text-[10vw] m-0 ${getTextClass(name)}`}>{name}</h2>
-          <h3 className={`text-[15vw] m-0 ${getTextClass(symbol)}`}>{symbol}</h3>
+        <div className="flex h-full flex-col items-center justify-center">
+          <h1 className={`m-0 text-[20vw] ${getTextClass(atomicNumber)}`}>
+            {atomicNumber}
+          </h1>
+          <h2 className={`m-0 text-[10vw] ${getTextClass(name)}`}>{name}</h2>
+          <h3 className={`m-0 text-[15vw] ${getTextClass(symbol)}`}>
+            {symbol}
+          </h3>
         </div>
       );
     } else if (category === "Math" && type === "mathProblems") {
       return (
-        <h1 className={`text-[15vw] leading-tight break-words max-w-[90vw] text-center transition-all duration-300 ${currentItem.isAnswer ? "text-green-500" : "text-red-500"} ${getTextClass(currentItem.name)}`}>
+        <h1
+          className={`max-w-[90vw] break-words text-center text-[15vw] leading-tight transition-all duration-300 ${currentItem.isAnswer ? "text-green-500" : "text-red-500"} ${getTextClass(currentItem.name)}`}
+        >
           {currentItem.name}
         </h1>
       );
     } else if (category === "Number Sense") {
       return (
-        <div className="size-full flex items-center justify-center">
+        <div className="flex size-full items-center justify-center">
           {currentItem?.svg ? (
-            <img 
-              src={currentItem.svg} 
-              alt={`Number sense ${currentItem.name}`} 
-              className="max-w-full max-h-full object-contain" 
+            <img
+              src={currentItem.svg}
+              alt={`Number sense ${currentItem.name}`}
+              className="max-h-full max-w-full object-contain"
             />
           ) : (
             <p>No image available for {currentItem.name}</p>
@@ -174,25 +218,53 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         </div>
       );
     } else {
-      return <h1 className={`text-[15vw] leading-tight break-words max-w-[90vw] text-center transition-all duration-300 ${getTextClass(currentItem.name)}`}>{currentItem.name}</h1>;
+      return (
+        <h1
+          className={`max-w-[90vw] break-words text-center text-[15vw] leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}
+        >
+          {currentItem.name}
+        </h1>
+      );
     }
   };
 
   return (
     <>
       <Navbar isPaused={isPaused} onPauseResume={handlePauseResume} />
-      <div 
-        className="flex items-center justify-center h-screen w-screen relative transition-colors duration-300 overflow-hidden m-0 p-0"
-        style={{ color: theme.displayTextColor || theme.textColor, backgroundColor: theme.displayBackgroundColor || theme.backgroundColor }}
+      <div
+        className="relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
+        style={{
+          color: theme.displayTextColor || theme.textColor,
+          backgroundColor:
+            theme.displayBackgroundColor || theme.backgroundColor,
+        }}
         onClick={handleScreenClick}
       >
         {renderContent()}
-        <button type="button" className="absolute top-1/2 left-5 -translate-y-1/2 bg-black bg-opacity-50 text-white text-5xl w-15 h-15 flex items-center justify-center rounded-full hover:bg-opacity-70 transition-colors duration-300" onClick={handlePrevious}>←</button>
-        <button type="button" className="absolute top-1/2 right-5 -translate-y-1/2 bg-black bg-opacity-50 text-white text-5xl w-15 h-15 flex items-center justify-center rounded-full hover:bg-opacity-70 transition-colors duration-300" onClick={handleNext}>→</button>
-        <div className="fixed bottom-2.5 inset-x-2.5 h-2.5 bg-white bg-opacity-30 rounded-full">
-          <div className="h-full bg-green-500 rounded-full transition-all duration-300 ease-in-out" style={{ width: `${progress}%` }}></div>
+        <button
+          type="button"
+          className="w-15 h-15 absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black bg-opacity-50 text-5xl text-white transition-colors duration-300 hover:bg-opacity-70"
+          onClick={handlePrevious}
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          className="w-15 h-15 absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black bg-opacity-50 text-5xl text-white transition-colors duration-300 hover:bg-opacity-70"
+          onClick={handleNext}
+        >
+          →
+        </button>
+        <div className="fixed inset-x-2.5 bottom-2.5 h-2.5 rounded-full bg-white bg-opacity-30">
+          <div
+            className="h-full rounded-full bg-green-500 transition-all duration-300 ease-in-out"
+            style={{ width: `${progress}%` }}
+          ></div>
         </div>
-        <div className="fixed bottom-7 left-2.5 text-xs" style={{ color: theme.displayTextColor || theme.textColor }}>
+        <div
+          className="fixed bottom-7 left-2.5 text-xs"
+          style={{ color: theme.displayTextColor || theme.textColor }}
+        >
           {Math.round(progress)}% Complete
         </div>
       </div>

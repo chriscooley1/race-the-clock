@@ -19,8 +19,8 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
 
   if (isLoading || isRedirecting) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full size-32 border-y-2 border-blue-500"></div>
+      <div className="flex h-screen items-center justify-center">
+        <div className="size-32 animate-spin rounded-full border-y-2 border-blue-500"></div>
       </div>
     );
   }

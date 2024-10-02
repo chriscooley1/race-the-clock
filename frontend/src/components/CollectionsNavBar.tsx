@@ -9,24 +9,26 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   onSelectCategory,
   selectedCategory,
 }) => {
-  const categories = ["All Collections", "Math", "Language Arts", "Number Sense", "Science", "Nursing"];
+  const categories = [
+    "All Collections",
+    "Math",
+    "Language Arts",
+    "Number Sense",
+    "Science",
+    "Nursing",
+  ];
 
   return (
-    <div className="fixed top-[50px] left-[250px] w-[calc(100%-250px)] z-30 bg-white shadow-md p-2 flex flex-wrap justify-center">
+    <div className="fixed left-[250px] top-[50px] z-30 flex w-[calc(100%-250px)] flex-wrap justify-center bg-white p-2 shadow-md">
       {categories.map((category) => (
         <button
           type="button"
           key={category}
-          className={`
-            m-1 px-4 py-2 text-sm md:text-base font-bold rounded-md
-            transition duration-300 ease-in-out hover:scale-105
-            border-2 border-blue-500 shadow-sm
-            ${selectedCategory === category 
-              ? "bg-blue-500 text-white" 
+          className={`m-1 rounded-md border-2 border-blue-500 px-4 py-2 text-sm font-bold shadow-sm transition duration-300 ease-in-out hover:scale-105 md:text-base ${
+            selectedCategory === category
+              ? "bg-blue-500 text-white"
               : "bg-white text-blue-500 hover:bg-blue-500 hover:text-white"
-            }
-            grow md:grow-0 min-w-[120px]
-          `}
+          } min-w-[120px] grow md:grow-0`}
           onClick={() => {
             console.log("Category selected:", category);
             onSelectCategory(category);

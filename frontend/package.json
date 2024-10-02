@@ -54,6 +54,7 @@
     "globals": "^15.9.0",
     "nodemon": "^3.1.7",
     "postcss": "^8.4.47",
+    "prettier-plugin-tailwindcss": "^0.6.8",
     "rimraf": "^4.4.1",
     "tailwindcss": "^3.4.13",
     "ts-node-dev": "^2.0.0",

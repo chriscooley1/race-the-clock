@@ -38,10 +38,14 @@ export default [
         { allowConstantExport: true },
       ],
       ...reactHooksPlugin.configs.recommended.rules,
-      "react/boolean-prop-naming": ["error", {
-        rule: "^(is|has)[A-Z]([A-Za-z0-9]?)+",
-        message: "Boolean prop '{{propName}}' should start with 'is' or 'has'"
-      }],
+      "react/boolean-prop-naming": [
+        "error",
+        {
+          rule: "^(is|has)[A-Z]([A-Za-z0-9]?)+",
+          message:
+            "Boolean prop '{{propName}}' should start with 'is' or 'has'",
+        },
+      ],
       // Add Tailwind CSS rules
       ...tailwindcssPlugin.configs.recommended.rules,
     },

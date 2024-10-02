@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "plugin:tailwindcss/recommended"
+  ],
+  "plugins": ["tailwindcss"],
+  "rules": {
+    "tailwindcss/no-custom-classname": ["error"]
+  }
+}

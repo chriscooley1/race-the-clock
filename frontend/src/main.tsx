@@ -9,5 +9,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ThemeProvider>
       <App />
     </ThemeProvider>
-  </Router>
+  </Router>,
 );
