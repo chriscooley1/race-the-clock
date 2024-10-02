@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { fetchPublicCollections, searchPublicCollections } from "../../api";  
-import CollectionPreviewModal from "../../components/CollectionPreviewModal/CollectionPreviewModal";
+import { fetchPublicCollections, searchPublicCollections } from "../api";  
+import CollectionPreviewModal from "../components/CollectionPreviewModal";
 import { AxiosError } from "axios"; 
 import { useAuth0 } from "@auth0/auth0-react";
-import { Collection as APICollection } from "../../api";
+import { Collection as APICollection } from "../api";
 import axios from "axios";
-import { lightenColor } from "../../utils/colorUtils";
-import { collectionColorSchemes } from "../../constants/colorSchemes";
+import { lightenColor } from "../utils/colorUtils";
+import { collectionColorSchemes } from "../constants/colorSchemes";
 
 interface Item {
   id: number;

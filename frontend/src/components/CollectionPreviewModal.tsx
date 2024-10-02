@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { subscribeToCollection, Collection } from "../../api";
+import { subscribeToCollection, Collection } from "../api";
 
 interface CollectionPreviewModalProps {
   collection: Collection;

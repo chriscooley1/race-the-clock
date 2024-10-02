@@ -2,25 +2,25 @@ import React, { Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useTheme } from "./context/ThemeContext";
 import PrivateRoute from "./components/PrivateRoute";
-import Navbar from "./components/Navbar/Navbar";
-import Sidebar from "./components/Sidebar/Sidebar";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 import "./App.css";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 // Import your page components here
-import LandingPage from "./pages/LandingPage/LandingPage";
-import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
+import LandingPage from "./pages/LandingPage";
+import FullScreenDisplay from "./pages/FullScreenDisplay";
 import YourCollections from "./pages/YourCollections/YourCollections";
-import NewCollection from "./pages/NewCollection/NewCollection";
-import DiscoverCollections from "./pages/DiscoverCollections/DiscoverCollections";
+import NewCollection from "./pages/NewCollection";
+import DiscoverCollections from "./pages/DiscoverCollections";
 import CollectionSetup from "./pages/CollectionSetup/CollectionSetup";
-import CollectionFinalStep from "./pages/CollectionFinalStep/CollectionFinalStep";
+import CollectionFinalStep from "./pages/CollectionFinalStep";
 import NameGenerator from "./pages/NameGenerator/NameGenerator";
 import Resources from "./pages/Resources";
 import Settings from "./pages/Settings/Settings";
-import MyAccount from "./pages/MyAccount/MyAccount";
-import MathCollectionPage from "./pages/MathCollectionPage/MathCollectionPage";
+import MyAccount from "./pages/MyAccount";
+import MathCollectionPage from "./pages/MathCollectionPage";
 
 const App: React.FC = () => {
   const { theme } = useTheme();

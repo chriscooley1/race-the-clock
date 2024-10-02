@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { saveCollection, getCurrentUser } from "../../api";
-import { periodicTable, PeriodicElement } from "../../utils/periodicTable";
-import { User } from "../../types/user";
+import { saveCollection, getCurrentUser } from "../api";
+import { periodicTable, PeriodicElement } from "../utils/periodicTable";
+import { User } from "../types/user";
 
 // Export the function to avoid the "unused" error
 export function generateId(): string {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useTheme } from "../../context/ThemeContext"; // Add this import
-import Navbar from "../../components/Navbar/Navbar";
+import { useTheme } from "../context/ThemeContext"; // Add this import
+import Navbar from "../components/Navbar";
 
 interface MathProblem {
   id: number;
