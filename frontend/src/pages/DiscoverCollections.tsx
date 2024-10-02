@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { fetchPublicCollections, searchPublicCollections } from "../api";  
+import { fetchPublicCollections, searchPublicCollections } from "../api";
 import CollectionPreviewModal from "../components/CollectionPreviewModal";
-import { AxiosError } from "axios"; 
+import { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Collection as APICollection } from "../api";
 import axios from "axios";
@@ -21,7 +21,9 @@ interface Collection extends Omit<APICollection, "items"> {
 const DiscoverCollections: React.FC = () => {
   const { user } = useAuth0();
   const [collections, setCollections] = useState<Collection[]>([]);
-  const [activeCollection, setActiveCollection] = useState<Collection | null>(null);
+  const [activeCollection, setActiveCollection] = useState<Collection | null>(
+    null,
+  );
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const fetchCollections = useCallback(async () => {
@@ -30,10 +32,12 @@ const DiscoverCollections: React.FC = () => {
       console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
       const fetchedCollections = await fetchPublicCollections();
       console.log("Fetched collections:", fetchedCollections);
-      setCollections(fetchedCollections?.map(collection => ({
-        ...collection,
-        items: parseDescription(collection.description)
-      })) || []);
+      setCollections(
+        fetchedCollections?.map((collection) => ({
+          ...collection,
+          items: parseDescription(collection.description),
+        })) || [],
+      );
     } catch (error) {
       console.error("Error fetching public collections:", error);
       if (axios.isAxiosError(error)) {
@@ -53,10 +57,12 @@ const DiscoverCollections: React.FC = () => {
 
   const parseDescription = (description: string): Item[] => {
     try {
-      return JSON.parse(description).map((item: { name: string }, index: number) => ({
-        id: index,
-        name: item.name
-      }));
+      return JSON.parse(description).map(
+        (item: { name: string }, index: number) => ({
+          id: index,
+          name: item.name,
+        }),
+      );
     } catch {
       // If parsing fails, treat the description as a single item
       return [{ id: 0, name: description }];
@@ -73,10 +79,12 @@ const DiscoverCollections: React.FC = () => {
       console.log("Searching collections with query:", searchQuery);
       const searchResults = await searchPublicCollections(searchQuery);
       console.log("Search results:", searchResults);
-      setCollections(searchResults?.map(collection => ({
-        ...collection,
-        items: JSON.parse(collection.description)
-      })) || []);
+      setCollections(
+        searchResults?.map((collection) => ({
+          ...collection,
+          items: JSON.parse(collection.description),
+        })) || [],
+      );
     } catch (err) {
       const error = err as AxiosError;
       console.error("Error searching collections:", error);
@@ -93,7 +101,7 @@ const DiscoverCollections: React.FC = () => {
     console.log("Opening modal for collection:", collection);
     const parsedCollection: Collection = {
       ...collection,
-      items: parseDescription(collection.description)
+      items: parseDescription(collection.description),
     };
     setActiveCollection(parsedCollection);
   };
@@ -101,10 +109,10 @@ const DiscoverCollections: React.FC = () => {
   const closeModal = () => setActiveCollection(null);
 
   return (
-    <div className="pl-[250px] pt-[70px] flex flex-col items-center w-full min-h-screen bg-theme-bg text-theme-text">
-      <h1 className="text-3xl font-bold mb-4">Discover Public Collections</h1>
+    <div className="bg-theme-bg text-theme-text flex min-h-screen w-full flex-col items-center pl-[250px] pt-[70px]">
+      <h1 className="mb-4 text-3xl font-bold">Discover Public Collections</h1>
       {user && <p className="mb-4">Welcome, {user.name}</p>}
-      <div className="w-full max-w-2xl mb-6">
+      <div className="mb-6 w-full max-w-2xl">
         <div className="flex">
           <input
             type="text"
@@ -112,37 +120,47 @@ const DiscoverCollections: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by collection name or username"
-            className="grow p-2 border-5 border-black rounded-l-md font-['Patrick_Hand']"
+            className="border-5 grow rounded-l-md border-black p-2 font-['Patrick_Hand']"
           />
-          <button 
-            type="button" 
-            onClick={handleSearch} 
-            className="bg-green-500 text-white px-4 py-2 border-5 border-black rounded-r-md font-['Patrick_Hand'] font-bold hover:bg-green-600 transition duration-300"
+          <button
+            type="button"
+            onClick={handleSearch}
+            className="border-5 rounded-r-md border-black bg-green-500 px-4 py-2 font-['Patrick_Hand'] font-bold text-white transition duration-300 hover:bg-green-600"
           >
             Search
           </button>
         </div>
       </div>
-      <div className="flex flex-wrap justify-around p-5 w-full">
+      <div className="flex w-full flex-wrap justify-around p-5">
         {collections.map((collection, index) => {
-          const baseColor = collectionColorSchemes[index % collectionColorSchemes.length].backgroundColor;
+          const baseColor =
+            collectionColorSchemes[index % collectionColorSchemes.length]
+              .backgroundColor;
           const lightColor = lightenColor(baseColor, 0.7);
-          const itemCount = collection.item_count ?? collection.items?.length ?? 0;
+          const itemCount =
+            collection.item_count ?? collection.items?.length ?? 0;
           return (
-            <div 
-              key={collection.collection_id} 
-              className="p-5 mb-5 flex-[0_0_calc(33.33%-20px)] m-2.5 flex flex-col items-center justify-start relative h-[300px] border-5 border-black"
-              style={{backgroundColor: lightColor}}
+            <div
+              key={collection.collection_id}
+              className="border-5 relative m-2.5 mb-5 flex h-[300px] flex-[0_0_calc(33.33%-20px)] flex-col items-center justify-start border-black p-5"
+              style={{ backgroundColor: lightColor }}
             >
-              <h1 className="w-full text-black text-center text-xl font-bold border-5 border-black p-2.5 mb-2.5" style={{backgroundColor: baseColor}}>
+              <h1
+                className="border-5 mb-2.5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
+                style={{ backgroundColor: baseColor }}
+              >
                 {collection.name}
               </h1>
-              <p className="text-black text-lg mb-1">Created by: {collection.creator_username}</p>
-              <p className="text-black text-lg mb-4">{itemCount} items in collection</p>
-              <button 
-                type="button" 
-                className="text-black px-4 py-2 rounded-md font-bold transition duration-300 hover:scale-105 active:scale-95"
-                style={{backgroundColor: baseColor}}
+              <p className="mb-1 text-lg text-black">
+                Created by: {collection.creator_username}
+              </p>
+              <p className="mb-4 text-lg text-black">
+                {itemCount} items in collection
+              </p>
+              <button
+                type="button"
+                className="rounded-md px-4 py-2 font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
+                style={{ backgroundColor: baseColor }}
                 onClick={() => openModal(collection)}
               >
                 Preview Collection
@@ -152,7 +170,10 @@ const DiscoverCollections: React.FC = () => {
         })}
       </div>
       {activeCollection && (
-        <CollectionPreviewModal collection={activeCollection} onClose={closeModal} />
+        <CollectionPreviewModal
+          collection={activeCollection}
+          onClose={closeModal}
+        />
       )}
     </div>
   );

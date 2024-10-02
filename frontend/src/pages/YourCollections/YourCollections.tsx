@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchCollections, deleteCollectionById, duplicateCollection, updateCollection } from "../../api";
+import {
+  fetchCollections,
+  deleteCollectionById,
+  duplicateCollection,
+  updateCollection,
+} from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import SessionSettingsModal from "../../components/SessionSettingsModal";
 import CollectionsNavBar from "../../components/CollectionsNavBar";
 import EditCollectionModal from "../../components/EditCollectionModal";
 import "../../App.css";
 import axios from "axios";
-import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
 import { collectionColorSchemes } from "../../constants/colorSchemes";
 import { lightenColor } from "../../utils/colorUtils";
 
@@ -38,13 +48,21 @@ const getItemsCount = (description: string | undefined): number => {
   }
 };
 
-const parseDescription = (description: string): { name: string; id?: number }[] => {
+const parseDescription = (
+  description: string,
+): { name: string; id?: number }[] => {
   try {
     const parsed = JSON.parse(description);
     return Array.isArray(parsed)
       ? parsed.map((item, index) => ({
-          name: typeof item === "object" && item !== null ? item.name : String(item),
-          id: typeof item === "object" && item !== null && "id" in item ? item.id : index,
+          name:
+            typeof item === "object" && item !== null
+              ? item.name
+              : String(item),
+          id:
+            typeof item === "object" && item !== null && "id" in item
+              ? item.id
+              : index,
         }))
       : [];
   } catch {
@@ -55,15 +73,23 @@ const parseDescription = (description: string): { name: string; id?: number }[] 
 const YourCollections: React.FC = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
-  const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
-  const [sortOption, setSortOption] = useState<string>(localStorage.getItem("sortPreference") || "date");
-  const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
-  const [selectedCollectionToDuplicate, setSelectedCollectionToDuplicate] = useState<number | null>(null);
+  const [filteredCollections, setFilteredCollections] = useState<Collection[]>(
+    [],
+  );
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>("All Collections");
+  const [sortOption, setSortOption] = useState<string>(
+    localStorage.getItem("sortPreference") || "date",
+  );
+  const [isDuplicateModalOpen, setDuplicateModalOpen] =
+    useState<boolean>(false);
+  const [selectedCollectionToDuplicate, setSelectedCollectionToDuplicate] =
+    useState<number | null>(null);
   const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
+  const [selectedCollection, setSelectedCollection] =
+    useState<Collection | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -71,11 +97,21 @@ const YourCollections: React.FC = () => {
     const loadCollections = async () => {
       try {
         console.log("Fetching user collections...");
-        const fetchedCollections = await fetchCollections(getAccessTokenSilently);
+        const fetchedCollections = await fetchCollections(
+          getAccessTokenSilently,
+        );
         console.log("Loaded collections:", fetchedCollections);
         if (Array.isArray(fetchedCollections)) {
-          setCollections(fetchedCollections.filter(collection => collection.collection_id != null));
-          filterAndSortCollections(fetchedCollections, selectedCategory, sortOption);
+          setCollections(
+            fetchedCollections.filter(
+              (collection) => collection.collection_id != null,
+            ),
+          );
+          filterAndSortCollections(
+            fetchedCollections,
+            selectedCategory,
+            sortOption,
+          );
         } else {
           console.error("Unexpected data format:", fetchedCollections);
         }
@@ -97,7 +133,10 @@ const YourCollections: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         setDuplicateModalOpen(false);
       }
     };
@@ -114,27 +153,34 @@ const YourCollections: React.FC = () => {
   const filterAndSortCollections = (
     collections: Collection[],
     category: string,
-    sortOption: string
+    sortOption: string,
   ) => {
     let filtered = collections;
 
     if (category !== "All Collections") {
-      filtered = collections.filter((collection) => collection.category === category);
+      filtered = collections.filter(
+        (collection) => collection.category === category,
+      );
     }
 
     if (sortOption === "date") {
-      filtered.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      filtered.sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+      );
     } else if (sortOption === "alphabetical") {
       filtered.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortOption === "category") {
       filtered.sort((a, b) => a.category.localeCompare(b.category));
-    } 
+    }
     // No sorting for "custom", maintain the order based on drag-and-drop
-  
-    setFilteredCollections(filtered);
-  };  
 
-  const handleSaveUpdatedItems = async (newItems: { name: string; id?: number }[]) => {
+    setFilteredCollections(filtered);
+  };
+
+  const handleSaveUpdatedItems = async (
+    newItems: { name: string; id?: number }[],
+  ) => {
     setIsLoading(true);
     try {
       if (selectedCollection) {
@@ -152,15 +198,21 @@ const YourCollections: React.FC = () => {
           selectedCollection.name,
           updatedDescription,
           selectedCollection.category,
-          getAccessTokenSilently
+          getAccessTokenSilently,
         );
 
         setCollections((prevCollections) =>
-          prevCollections.map((col) => (col.collection_id === updatedCollection.collection_id ? updatedCollection : col))
+          prevCollections.map((col) =>
+            col.collection_id === updatedCollection.collection_id
+              ? updatedCollection
+              : col,
+          ),
         );
         setSelectedCollection(updatedCollection);
 
-        const refreshedCollections = await fetchCollections(getAccessTokenSilently);
+        const refreshedCollections = await fetchCollections(
+          getAccessTokenSilently,
+        );
         setCollections(refreshedCollections);
       }
     } catch (error) {
@@ -171,7 +223,9 @@ const YourCollections: React.FC = () => {
   };
 
   const handleStartCollection = (collectionId: number) => {
-    const collection = collections.find((col) => col.collection_id === collectionId);
+    const collection = collections.find(
+      (col) => col.collection_id === collectionId,
+    );
     if (collection) {
       setSelectedCollection(collection);
       setShowModal(true);
@@ -190,14 +244,26 @@ const YourCollections: React.FC = () => {
   const handleDuplicateConfirm = async () => {
     if (!selectedCollectionToDuplicate) return;
     try {
-      const collectionToDuplicate = collections.find(col => col.collection_id === selectedCollectionToDuplicate);
+      const collectionToDuplicate = collections.find(
+        (col) => col.collection_id === selectedCollectionToDuplicate,
+      );
       if (!collectionToDuplicate) {
         console.error("Selected collection not found");
         return;
       }
-      const duplicatedCollection = await duplicateCollection(collectionToDuplicate, getAccessTokenSilently);
-      setCollections((prevCollections) => [...prevCollections, duplicatedCollection]);
-      filterAndSortCollections([...collections, duplicatedCollection], selectedCategory, sortOption);
+      const duplicatedCollection = await duplicateCollection(
+        collectionToDuplicate,
+        getAccessTokenSilently,
+      );
+      setCollections((prevCollections) => [
+        ...prevCollections,
+        duplicatedCollection,
+      ]);
+      filterAndSortCollections(
+        [...collections, duplicatedCollection],
+        selectedCategory,
+        sortOption,
+      );
       setDuplicateModalOpen(false);
     } catch (error) {
       console.error("Error duplicating collection:", error);
@@ -207,9 +273,15 @@ const YourCollections: React.FC = () => {
   const handleDeleteCollection = async (collectionId: number) => {
     try {
       await deleteCollectionById(collectionId, getAccessTokenSilently);
-      const updatedCollections = collections.filter((collection) => collection.collection_id !== collectionId);
+      const updatedCollections = collections.filter(
+        (collection) => collection.collection_id !== collectionId,
+      );
       setCollections(updatedCollections);
-      filterAndSortCollections(updatedCollections, selectedCategory, sortOption);
+      filterAndSortCollections(
+        updatedCollections,
+        selectedCategory,
+        sortOption,
+      );
     } catch (error) {
       console.error("Error deleting collection:", error);
     }
@@ -220,16 +292,22 @@ const YourCollections: React.FC = () => {
     sec: number,
     shuffle: boolean,
     speed: number,
-    textColor: string
+    textColor: string,
   ) => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
-      const sequence = sequenceItems.map((item: { name: string; svg?: string; count?: number } | string, index: number) => ({
-        name: typeof item === "object" ? item.name : item,
-        svg: typeof item === "object" ? item.svg : undefined,
-        count: typeof item === "object" ? item.count : undefined,
-        isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0,
-      }));
+      const sequence = sequenceItems.map(
+        (
+          item: { name: string; svg?: string; count?: number } | string,
+          index: number,
+        ) => ({
+          name: typeof item === "object" ? item.name : item,
+          svg: typeof item === "object" ? item.svg : undefined,
+          count: typeof item === "object" ? item.count : undefined,
+          isAnswer:
+            selectedCollection.type === "mathProblems" && index % 2 !== 0,
+        }),
+      );
 
       const duration = min * 60 + sec;
       navigate("/fullscreen-display", {
@@ -256,7 +334,7 @@ const YourCollections: React.FC = () => {
     setSortOption(newSortOption);
     localStorage.setItem("sortPreference", newSortOption);
     filterAndSortCollections(collections, selectedCategory, newSortOption);
-  };  
+  };
 
   const formatDate = (dateString: string): string => {
     if (!dateString) return "Unknown Date";
@@ -278,40 +356,45 @@ const YourCollections: React.FC = () => {
       // If there's no destination or the sort mode is not "custom", do nothing
       return;
     }
-  
+
     // Perform reordering in "custom" sort mode
     const updatedCollections = Array.from(filteredCollections);
     const [reorderedItem] = updatedCollections.splice(result.source.index, 1);
     updatedCollections.splice(result.destination.index, 0, reorderedItem);
-  
+
     // Update state with new order
     setFilteredCollections(updatedCollections);
     setCollections((prevCollections) =>
-      prevCollections.map((col) =>
-        updatedCollections.find((item) => item.collection_id === col.collection_id) || col
-      )
+      prevCollections.map(
+        (col) =>
+          updatedCollections.find(
+            (item) => item.collection_id === col.collection_id,
+          ) || col,
+      ),
     );
-  
+
     // Save the "custom" sort preference in localStorage
     setSortOption("custom");
     localStorage.setItem("sortPreference", "custom");
-  };  
+  };
 
   return (
-    <div className="pl-[250px] pt-[70px] flex flex-col items-center w-full min-h-screen bg-theme-bg text-theme-text dark:bg-gray-800 dark:text-white">
-      <CollectionsNavBar 
-        onSelectCategory={handleSelectCategory} 
+    <div className="bg-theme-bg text-theme-text flex min-h-screen w-full flex-col items-center pl-[250px] pt-[70px] dark:bg-gray-800 dark:text-white">
+      <CollectionsNavBar
+        onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}
       />
-      
-      <div className="flex items-center justify-center w-full mb-5 px-4">
-        <div className="flex items-center mr-5">
-          <label htmlFor="sortSelect" className="mr-2">Sort by:</label>
+
+      <div className="mb-5 flex w-full items-center justify-center px-4">
+        <div className="mr-5 flex items-center">
+          <label htmlFor="sortSelect" className="mr-2">
+            Sort by:
+          </label>
           <select
             id="sortSelect"
             value={sortOption}
             onChange={handleSortChange}
-            className="bg-white text-black border border-gray-300 rounded p-2 text-base font-caveat w-40"
+            className="font-caveat w-40 rounded border border-gray-300 bg-white p-2 text-base text-black"
           >
             <option value="name">Name</option>
             <option value="date">Date</option>
@@ -321,7 +404,7 @@ const YourCollections: React.FC = () => {
         <button
           type="button"
           onClick={handleDuplicateCollection}
-          className="bg-blue-500 text-white px-4 py-2 rounded font-bold uppercase transition duration-300 hover:bg-blue-600 hover:scale-105 active:bg-blue-700 active:scale-95"
+          className="rounded bg-blue-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
         >
           Duplicate Collection
         </button>
@@ -333,51 +416,69 @@ const YourCollections: React.FC = () => {
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="flex flex-wrap justify-around p-0 w-full overflow-y-auto max-h-[calc(100vh-170px)]"
+              className="flex max-h-[calc(100vh-170px)] w-full flex-wrap justify-around overflow-y-auto p-0"
             >
               {filteredCollections.map((collection, index) => {
-                const baseColor = collectionColorSchemes[index % collectionColorSchemes.length].backgroundColor;
+                const baseColor =
+                  collectionColorSchemes[index % collectionColorSchemes.length]
+                    .backgroundColor;
                 const lightColor = lightenColor(baseColor, 0.7);
                 return (
-                  <Draggable key={collection.collection_id} draggableId={collection.collection_id.toString()} index={index}>
+                  <Draggable
+                    key={collection.collection_id}
+                    draggableId={collection.collection_id.toString()}
+                    index={index}
+                  >
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden" 
+                        className="border-5 relative mb-5 box-border flex h-[300px] flex-[0_0_30%] flex-col items-center justify-start overflow-hidden border-black p-5"
                         style={{
                           ...provided.draggableProps.style,
-                          backgroundColor: lightColor
+                          backgroundColor: lightColor,
                         }}
                       >
-                        <h1 className="w-full text-black text-center text-xl font-bold p-2.5 border-5 border-black mb-2.5" style={{backgroundColor: baseColor}}>
+                        <h1
+                          className="border-5 mb-2.5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
+                          style={{ backgroundColor: baseColor }}
+                        >
                           {collection.name}
                         </h1>
-                        <p className="text-black text-base font-bold mb-1">{getItemsCount(collection.description)} items in collection</p>
-                        <p className="text-black text-base font-bold mb-2.5">Created by you on {formatDate(collection.created_at)}</p>
+                        <p className="mb-1 text-base font-bold text-black">
+                          {getItemsCount(collection.description)} items in
+                          collection
+                        </p>
+                        <p className="mb-2.5 text-base font-bold text-black">
+                          Created by you on {formatDate(collection.created_at)}
+                        </p>
                         <button
                           type="button"
-                          className="text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105 active:opacity-70 active:scale-95 mb-2.5"
-                          style={{backgroundColor: baseColor}}
-                          onClick={() => handleStartCollection(collection.collection_id)}
+                          className="mb-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                          style={{ backgroundColor: baseColor }}
+                          onClick={() =>
+                            handleStartCollection(collection.collection_id)
+                          }
                         >
                           Start
                         </button>
                         <div className="flex justify-center">
                           <button
                             type="button"
-                            className="text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105 active:opacity-70 active:scale-95 mr-2.5"
-                            style={{backgroundColor: baseColor}}
+                            className="mr-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                            style={{ backgroundColor: baseColor }}
                             onClick={() => handleEditButtonClick(collection)}
                           >
                             Edit
                           </button>
                           <button
                             type="button"
-                            className="text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105 active:opacity-70 active:scale-95"
-                            style={{backgroundColor: baseColor}}
-                            onClick={() => handleDeleteCollection(collection.collection_id)}
+                            className="cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                            style={{ backgroundColor: baseColor }}
+                            onClick={() =>
+                              handleDeleteCollection(collection.collection_id)
+                            }
                           >
                             Delete
                           </button>
@@ -414,20 +515,30 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center z-[1001] overflow-hidden">
-          <div ref={modalRef} className="relative z-[1002] bg-white dark:bg-gray-800 p-5 font-caveat rounded-lg w-1/2 max-w-[600px] shadow-lg text-center">
-            <h2 className="text-2xl font-bold mb-4">Duplicate Collection</h2>
+        <div className="fixed left-0 top-0 z-[1001] flex size-full items-center justify-center overflow-hidden bg-black bg-opacity-70">
+          <div
+            ref={modalRef}
+            className="font-caveat relative z-[1002] w-1/2 max-w-[600px] rounded-lg bg-white p-5 text-center shadow-lg dark:bg-gray-800"
+          >
+            <h2 className="mb-4 text-2xl font-bold">Duplicate Collection</h2>
             <div className="mb-4">
-              <label htmlFor="duplicate-collection-select" className="mr-2">Select a collection to duplicate:</label>
+              <label htmlFor="duplicate-collection-select" className="mr-2">
+                Select a collection to duplicate:
+              </label>
               <select
                 id="duplicate-collection-select"
                 value={selectedCollectionToDuplicate || ""}
-                onChange={(e) => setSelectedCollectionToDuplicate(Number(e.target.value))}
-                className="bg-white text-black border border-gray-300 rounded p-2 text-base font-caveat w-full"
+                onChange={(e) =>
+                  setSelectedCollectionToDuplicate(Number(e.target.value))
+                }
+                className="font-caveat w-full rounded border border-gray-300 bg-white p-2 text-base text-black"
               >
                 <option value="">Select a collection</option>
                 {collections.map((collection) => (
-                  <option key={collection.collection_id} value={collection.collection_id}>
+                  <option
+                    key={collection.collection_id}
+                    value={collection.collection_id}
+                  >
                     {collection.name}
                   </option>
                 ))}
@@ -437,14 +548,14 @@ const YourCollections: React.FC = () => {
               <button
                 type="button"
                 onClick={handleDuplicateConfirm}
-                className="bg-green-500 text-white px-4 py-2 rounded font-bold uppercase transition duration-300 hover:bg-green-600 hover:scale-105 active:bg-green-700 active:scale-95"
+                className="rounded bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-green-600 active:scale-95 active:bg-green-700"
               >
                 Duplicate
               </button>
               <button
                 type="button"
                 onClick={() => setDuplicateModalOpen(false)}
-                className="bg-red-500 text-white px-4 py-2 rounded font-bold uppercase transition duration-300 hover:bg-red-600 hover:scale-105 active:bg-red-700 active:scale-95"
+                className="rounded bg-red-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-red-600 active:scale-95 active:bg-red-700"
               >
                 Cancel
               </button>

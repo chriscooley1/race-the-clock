@@ -40,19 +40,19 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full text-center p-5 box-border">
+    <div className="box-border flex h-screen w-full flex-col items-center justify-center p-5 text-center">
       <h1 className="mb-5 text-2xl md:text-3xl">Welcome to Race The Clock</h1>
       <button
         type="button"
         onClick={handleSignup}
-        className="mb-2.5 py-2.5 w-landing-button text-base bg-light-blue text-black border border-gray-300 rounded cursor-pointer uppercase font-bold transition-background-transform hover:bg-hover-blue hover:scale-105 active:bg-active-blue active:scale-95"
+        className="w-landing-button bg-light-blue transition-background-transform hover:bg-hover-blue active:bg-active-blue mb-2.5 cursor-pointer rounded border border-gray-300 py-2.5 text-base font-bold uppercase text-black hover:scale-105 active:scale-95"
       >
         Register
       </button>
       <button
         type="button"
         onClick={handleLogin}
-        className="mb-2.5 py-2.5 w-landing-button text-base bg-light-blue text-black border border-gray-300 rounded cursor-pointer uppercase font-bold transition-background-transform hover:bg-hover-blue hover:scale-105 active:bg-active-blue active:scale-95"
+        className="w-landing-button bg-light-blue transition-background-transform hover:bg-hover-blue active:bg-active-blue mb-2.5 cursor-pointer rounded border border-gray-300 py-2.5 text-base font-bold uppercase text-black hover:scale-105 active:scale-95"
       >
         Already Registered
       </button>

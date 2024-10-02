@@ -10,7 +10,12 @@ interface NavbarProps {
   hasBackButton?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBackButton }) => {
+const Navbar: React.FC<NavbarProps> = ({
+  isPaused,
+  onPauseResume,
+  onBack,
+  hasBackButton,
+}) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,12 +63,12 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
   }, []);
 
   return (
-    <div className="fixed top-0 inset-x-0 h-[50px] flex justify-between items-center bg-light-blue dark:bg-gray-800 shadow-md px-2 md:px-5 z-50">
+    <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
       {/* Dark mode toggle */}
       <button
         type="button"
         onClick={toggleDarkMode}
-        className="p-2 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white"
+        className="rounded-full bg-gray-200 p-2 text-gray-800 dark:bg-gray-600 dark:text-white"
       >
         {theme.isDarkMode ? "☀️" : "🌙"}
       </button>
@@ -72,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
         <>
           <button
             type="button"
-            className="bg-custom-red hover:bg-custom-red-dark text-white font-bold py-2 px-4 rounded transition-colors duration-300 mr-2"
+            className="bg-custom-red hover:bg-custom-red-dark mr-2 rounded px-4 py-2 font-bold text-white transition-colors duration-300"
             onClick={onBack || handleBack}
           >
             Back
@@ -80,7 +85,7 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
           {onPauseResume && (
             <button
               type="button"
-              className="bg-custom-green hover:bg-custom-green-dark text-white font-bold py-2 px-4 rounded transition-colors duration-300 ml-2"
+              className="bg-custom-green hover:bg-custom-green-dark ml-2 rounded px-4 py-2 font-bold text-white transition-colors duration-300"
               onClick={onPauseResume}
             >
               {isPaused ? "Resume" : "Pause"}
@@ -88,23 +93,44 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
           )}
         </>
       )}
-      <div className="grow text-center text-lg md:text-xl font-bold text-gray-800 dark:text-white cursor-pointer" onClick={handleTitleClick}>
+      <div
+        className="grow cursor-pointer text-center text-lg font-bold text-gray-800 md:text-xl dark:text-white"
+        onClick={handleTitleClick}
+      >
         Race The Clock
       </div>
-      <div className="cursor-pointer flex flex-col justify-between w-[30px] h-[25px]" onClick={handleMenuToggle}>
+      <div
+        className="flex h-[25px] w-[30px] cursor-pointer flex-col justify-between"
+        onClick={handleMenuToggle}
+      >
         <div className="h-[3px] bg-gray-800 dark:bg-white"></div>
         <div className="h-[3px] bg-gray-800 dark:bg-white"></div>
         <div className="h-[3px] bg-gray-800 dark:bg-white"></div>
       </div>
       {menuOpen && (
-        <div ref={menuRef} className="absolute top-[50px] right-0 w-full md:w-auto bg-white dark:bg-gray-700 shadow-md rounded-b md:rounded z-[1001] p-2">
-          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 dark:text-white hover:text-blue-500 transition-colors duration-300" onClick={() => handleNavigate("/my-account")}>
+        <div
+          ref={menuRef}
+          className="absolute right-0 top-[50px] z-[1001] w-full rounded-b bg-white p-2 shadow-md md:w-auto md:rounded dark:bg-gray-700"
+        >
+          <button
+            type="button"
+            className="w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 hover:text-blue-500 dark:text-white"
+            onClick={() => handleNavigate("/my-account")}
+          >
             My Account
           </button>
-          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 dark:text-white hover:text-blue-500 transition-colors duration-300" onClick={() => handleNavigate("/settings")}>
+          <button
+            type="button"
+            className="w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 hover:text-blue-500 dark:text-white"
+            onClick={() => handleNavigate("/settings")}
+          >
             Settings
           </button>
-          <button type="button" className="w-full text-left py-3 px-4 text-gray-800 dark:text-white hover:text-blue-500 transition-colors duration-300" onClick={handleLogout}>
+          <button
+            type="button"
+            className="w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 hover:text-blue-500 dark:text-white"
+            onClick={handleLogout}
+          >
             Logout
           </button>
         </div>

@@ -6,7 +6,9 @@ interface Auth0ProviderWithHistoryProps {
   children: React.ReactNode;
 }
 
-const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ children }) => {
+const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({
+  children,
+}) => {
   const navigate = useNavigate();
 
   console.log("All environment variables:", import.meta.env);
@@ -21,8 +23,11 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
   }
 
   const onRedirectCallback = (appState?: AppState) => {
-    let redirectTo = appState?.returnTo || localStorage.getItem("preLoginPath") || "/your-collections";
-  
+    let redirectTo =
+      appState?.returnTo ||
+      localStorage.getItem("preLoginPath") ||
+      "/your-collections";
+
     // Check if the redirectTo path is valid
     const validRoutes = [
       "/your-collections",
@@ -34,24 +39,33 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({ chi
       "/name-generator",
       "/resources",
       "/settings",
-      "/my-account"
+      "/my-account",
     ];
-  
+
     if (!validRoutes.includes(redirectTo)) {
       redirectTo = "/";
     }
-  
+
     navigate(redirectTo);
     localStorage.removeItem("preLoginPath");
   };
 
   return (
     <Auth0Provider
-      domain={import.meta.env.VITE_AUTH0_DOMAIN || "dev-kooql0161qbynbss.us.auth0.com"}
-      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID || "ujXLWixZB1n2MQwqHiSRNMQMMGMOD7bQ"}
+      domain={
+        import.meta.env.VITE_AUTH0_DOMAIN || "dev-kooql0161qbynbss.us.auth0.com"
+      }
+      clientId={
+        import.meta.env.VITE_AUTH0_CLIENT_ID ||
+        "ujXLWixZB1n2MQwqHiSRNMQMMGMOD7bQ"
+      }
       authorizationParams={{
-        redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL || "https://race-the-clock-frontend-production.up.railway.app/callback",
-        audience: import.meta.env.VITE_AUTH0_AUDIENCE || "https://dev-kooql0161qbynbss.us.auth0.com/api/v2/",
+        redirect_uri:
+          import.meta.env.VITE_AUTH0_CALLBACK_URL ||
+          "https://race-the-clock-frontend-production.up.railway.app/callback",
+        audience:
+          import.meta.env.VITE_AUTH0_AUDIENCE ||
+          "https://dev-kooql0161qbynbss.us.auth0.com/api/v2/",
         scope: "openid profile email",
       }}
       onRedirectCallback={onRedirectCallback}

@@ -8,7 +8,10 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
@@ -27,7 +30,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <h1 className="text-red-600 text-2xl font-bold p-4">Something went wrong.</h1>;
+      return (
+        <h1 className="p-4 text-2xl font-bold text-red-600">
+          Something went wrong.
+        </h1>
+      );
     }
 
     return this.props.children;

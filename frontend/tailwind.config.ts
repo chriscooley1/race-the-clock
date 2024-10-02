@@ -1,5 +1,5 @@
-import type { Config } from "tailwindcss"
-import { colorSchemes } from "./src/constants/colorSchemes"
+import type { Config } from "tailwindcss";
+import { colorSchemes } from "./src/constants/colorSchemes";
 
 const config: Config = {
   content: [
@@ -34,21 +34,26 @@ const config: Config = {
         "theme-text": "var(--text-color)",
         "theme-display-bg": "var(--display-background-color)",
         "theme-display-text": "var(--display-text-color)",
-        ...Object.fromEntries(colorSchemes.map(scheme => [scheme.name.toLowerCase().replace(/\s+/g, "-"), scheme.backgroundColor])),
+        ...Object.fromEntries(
+          colorSchemes.map((scheme) => [
+            scheme.name.toLowerCase().replace(/\s+/g, "-"),
+            scheme.backgroundColor,
+          ]),
+        ),
       },
       fontFamily: {
-        "caveat": ["Caveat", "cursive"],
+        caveat: ["Caveat", "cursive"],
         "patrick-hand": ["'Patrick Hand'", "cursive"],
-        "chewy": ["Chewy", "cursive"],
+        chewy: ["Chewy", "cursive"],
         "comic-neue": ["Comic Neue", "cursive"],
         "baloo-2": ["Baloo 2", "cursive"],
       },
       spacing: {
-        "sidebar": "250px",
-        "navbar": "50px",
+        sidebar: "250px",
+        navbar: "50px",
       },
       zIndex: {
-        "modal": "1000",
+        modal: "1000",
       },
       transitionProperty: {
         "background-transform": "background-color, transform",
@@ -65,7 +70,7 @@ const config: Config = {
         "collection-setup": "600px",
       },
       minHeight: {
-        "screen": "100vh",
+        screen: "100vh",
       },
       borderWidth: {
         "5": "5px",
@@ -79,10 +84,10 @@ const config: Config = {
     },
   },
   safelist: [
-    ...colorSchemes.map(scheme => `bg-[${scheme.backgroundColor}]`),
-    ...colorSchemes.map(scheme => `text-[${scheme.textColor}]`),
+    ...colorSchemes.map((scheme) => `bg-[${scheme.backgroundColor}]`),
+    ...colorSchemes.map((scheme) => `text-[${scheme.textColor}]`),
   ],
   plugins: [],
-}
+};
 
-export default config
+export default config;

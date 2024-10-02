@@ -36,23 +36,29 @@ const App: React.FC = () => {
   return (
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
-        <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
+        <div
+          className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
+        >
           <Navbar />
           <div className="flex pt-[70px]">
             {!hideSidebar && <Sidebar />}
-            <div className={`flex-grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area`}>
+            <div
+              className={`grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area`}
+            >
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route
                   path="/fullscreen-display"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={
-                        <FullScreenDisplay 
-                          onEnterFullScreen={() => setIsFullScreen(true)}
-                          onExitFullScreen={() => setIsFullScreen(false)}
-                        />
-                      } />
+                      <PrivateRoute
+                        element={
+                          <FullScreenDisplay
+                            onEnterFullScreen={() => setIsFullScreen(true)}
+                            onExitFullScreen={() => setIsFullScreen(false)}
+                          />
+                        }
+                      />
                     </Suspense>
                   }
                 />

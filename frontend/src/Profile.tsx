@@ -38,21 +38,27 @@ const Profile = () => {
         console.log("Error fetching user metadata:", error.message);
       }
     };
-  
+
     getUserMetadata();
   }, [getAccessTokenSilently, user?.sub]);
 
   return (
     isAuthenticated && (
       <div className="mx-auto mt-8 max-w-md rounded-lg bg-white p-6 shadow-lg">
-        <img src={user?.picture} alt={user?.name} className="mx-auto mb-4 h-24 w-24 rounded-full" />
+        <img
+          src={user?.picture}
+          alt={user?.name}
+          className="mx-auto mb-4 size-24 rounded-full"
+        />
         <h2 className="mb-2 text-center text-2xl font-bold">{user?.name}</h2>
-        <p className="text-gray-600 text-center mb-4">{user?.email}</p>
-        <h3 className="text-xl font-semibold mb-2">User Metadata</h3>
+        <p className="mb-4 text-center text-gray-600">{user?.email}</p>
+        <h3 className="mb-2 text-xl font-semibold">User Metadata</h3>
         {userMetadata ? (
-          <pre className="bg-gray-100 p-4 rounded overflow-x-auto">{JSON.stringify(userMetadata, null, 2)}</pre>
+          <pre className="overflow-x-auto rounded bg-gray-100 p-4">
+            {JSON.stringify(userMetadata, null, 2)}
+          </pre>
         ) : (
-          <p className="text-gray-600 italic">No user metadata defined</p>
+          <p className="italic text-gray-600">No user metadata defined</p>
         )}
       </div>
     )

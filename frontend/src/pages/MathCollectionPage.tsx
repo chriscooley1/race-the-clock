@@ -30,12 +30,24 @@ const MathCollectionPage: React.FC = () => {
   }, [collection]);
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor || theme.textColor);
-    document.documentElement.style.setProperty("--background-color", theme.displayBackgroundColor || theme.backgroundColor);
+    document.documentElement.style.setProperty(
+      "--display-text-color",
+      theme.displayTextColor || theme.textColor,
+    );
+    document.documentElement.style.setProperty(
+      "--background-color",
+      theme.displayBackgroundColor || theme.backgroundColor,
+    );
 
     return () => {
-      document.documentElement.style.setProperty("--display-text-color", theme.textColor);
-      document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
+      document.documentElement.style.setProperty(
+        "--display-text-color",
+        theme.textColor,
+      );
+      document.documentElement.style.setProperty(
+        "--background-color",
+        theme.backgroundColor,
+      );
     };
   }, [theme]);
 
@@ -49,7 +61,9 @@ const MathCollectionPage: React.FC = () => {
   };
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + problems.length) % problems.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + problems.length) % problems.length,
+    );
     setShowAnswer(false);
   };
 
@@ -72,28 +86,31 @@ const MathCollectionPage: React.FC = () => {
 
   return (
     <>
-      <Navbar 
-        onBack={handleBack}
-        hasBackButton={true}
-      />
-      <div 
-        className="flex flex-col justify-center items-center h-[calc(100vh-50px)] w-screen p-0 relative mt-[50px] transition-colors duration-300 overflow-hidden m-0 text-[var(--display-text-color,var(--text-color))] bg-[var(--background-color)]"
+      <Navbar onBack={handleBack} hasBackButton={true} />
+      <div
+        className="relative m-0 mt-[50px] flex h-[calc(100vh-50px)] w-screen flex-col items-center justify-center overflow-hidden bg-[var(--background-color)] p-0 text-[var(--display-text-color,var(--text-color))] transition-colors duration-300"
         onClick={handleScreenClick}
       >
-        <h1 className="text-[10vw] md:text-[20vw] leading-none text-center m-0 px-5 text-inherit">
+        <h1 className="m-0 px-5 text-center text-[10vw] leading-none text-inherit md:text-[20vw]">
           {showAnswer ? getAnswer(currentProblem.name) : currentProblem.name}
         </h1>
-        <button 
-          type="button" 
-          className="absolute left-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 size-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70"
-          onClick={(e) => { e.stopPropagation(); handlePrevious(); }}
+        <button
+          type="button"
+          className="md:w-15 md:h-15 absolute left-2.5 top-1/2 z-10 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black bg-opacity-50 text-3xl text-white hover:bg-opacity-70 md:text-5xl"
+          onClick={(e) => {
+            e.stopPropagation();
+            handlePrevious();
+          }}
         >
           ←
         </button>
-        <button 
-          type="button" 
-          className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 size-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70"
-          onClick={(e) => { e.stopPropagation(); handleNext(); }}
+        <button
+          type="button"
+          className="md:w-15 md:h-15 absolute right-2.5 top-1/2 z-10 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black bg-opacity-50 text-3xl text-white hover:bg-opacity-70 md:text-5xl"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleNext();
+          }}
         >
           →
         </button>

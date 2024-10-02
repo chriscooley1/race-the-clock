@@ -3,31 +3,46 @@ import { Link } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="w-[250px] bg-light-pink dark:bg-gray-700 shadow-md h-[calc(100vh-50px)] fixed top-[50px] left-0 overflow-y-auto z-40">
+    <div className="bg-light-pink fixed left-0 top-[50px] z-40 h-[calc(100vh-50px)] w-[250px] overflow-y-auto shadow-md dark:bg-gray-700">
       <nav className="p-4">
         <ul className="space-y-2">
           <li>
-            <Link to="/your-collections" className="block py-2 px-4 text-gray-700 dark:text-white hover:bg-pink-200 dark:hover:bg-gray-600 rounded transition-colors duration-200">
+            <Link
+              to="/your-collections"
+              className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+            >
               Your Collections
             </Link>
           </li>
           <li>
-            <Link to="/new-collection" className="block py-2 px-4 text-gray-700 dark:text-white hover:bg-pink-200 dark:hover:bg-gray-600 rounded transition-colors duration-200">
+            <Link
+              to="/new-collection"
+              className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+            >
               New Collection
             </Link>
           </li>
           <li>
-            <Link to="/discover-collections" className="block py-2 px-4 text-gray-700 dark:text-white hover:bg-pink-200 dark:hover:bg-gray-600 rounded transition-colors duration-200">
+            <Link
+              to="/discover-collections"
+              className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+            >
               Discover Collections
             </Link>
           </li>
           <li>
-            <Link to="/name-generator" className="block py-2 px-4 text-gray-700 dark:text-white hover:bg-pink-200 dark:hover:bg-gray-600 rounded transition-colors duration-200">
+            <Link
+              to="/name-generator"
+              className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+            >
               Name Generator
             </Link>
           </li>
           <li>
-            <Link to="/resources" className="block py-2 px-4 text-gray-700 dark:text-white hover:bg-pink-200 dark:hover:bg-gray-600 rounded transition-colors duration-200">
+            <Link
+              to="/resources"
+              className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+            >
               Resources
             </Link>
           </li>

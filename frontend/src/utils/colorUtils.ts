@@ -1,7 +1,7 @@
 export function lightenColor(color: string, amount: number): string {
   // Remove the "#"" if it exists
   color = color.replace(/^#/, "");
-  
+
   // Parse the color
   let r = parseInt(color.slice(0, 2), 16);
   let g = parseInt(color.slice(2, 4), 16);

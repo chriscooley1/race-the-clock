@@ -9,13 +9,18 @@ import {
   generateNumberSenseImages,
   generatePeriodicTableElements,
   generateScienceTerms,
-  generateNursingTerms
+  generateNursingTerms,
 } from "../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { User } from "../types/user";
 
-type Operation = "multiplication" | "addition" | "subtraction" | "division" | "PeriodicElement";
+type Operation =
+  | "multiplication"
+  | "addition"
+  | "subtraction"
+  | "division"
+  | "PeriodicElement";
 
 const CollectionSetup: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -29,8 +34,10 @@ const CollectionSetup: React.FC = () => {
   const [type, setType] = useState<string>("letters");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [operation, setOperation] = useState<Operation | null>(null);
-  const [numberSenseItems, setNumberSenseItems] = useState<{ url?: string; svg?: string; count: number }[]>([]);
-  
+  const [numberSenseItems, setNumberSenseItems] = useState<
+    { url?: string; svg?: string; count: number }[]
+  >([]);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -43,11 +50,14 @@ const CollectionSetup: React.FC = () => {
             id: fetchedUser.id || generateId(),
             name: fetchedUser.name || "Default Name",
             username: fetchedUser.username || "defaultUsername",
-            email: fetchedUser.email || "default@example.com"
+            email: fetchedUser.email || "default@example.com",
           };
           setCurrentUser(userWithDefaults);
         } else {
-          console.error("Fetched user is missing required properties:", fetchedUser);
+          console.error(
+            "Fetched user is missing required properties:",
+            fetchedUser,
+          );
         }
       } catch (error) {
         console.error("Error fetching current user:", error);
@@ -56,7 +66,7 @@ const CollectionSetup: React.FC = () => {
 
     fetchUser();
   }, [getAccessTokenSilently]);
-  
+
   useEffect(() => {
     console.log("User data in state:", currentUser);
   }, [currentUser]);
@@ -116,13 +126,18 @@ const CollectionSetup: React.FC = () => {
           const problems = generateMathProblems(itemCount, operation);
           generatedSequence = problems.map((item) => item);
         } else {
-          console.error("Math Problems selected but operation is not set or is PeriodicElement");
+          console.error(
+            "Math Problems selected but operation is not set or is PeriodicElement",
+          );
         }
         break;
       case "numberSense": {
         const images = generateNumberSenseImages(itemCount);
         setNumberSenseItems(images);
-        generatedSequence = images.map((image, index) => `Number Sense Image ${index + 1} (Count: ${image.count})`);
+        generatedSequence = images.map(
+          (image, index) =>
+            `Number Sense Image ${index + 1} (Count: ${image.count})`,
+        );
         break;
       }
       case "periodicTable":
@@ -164,7 +179,8 @@ const CollectionSetup: React.FC = () => {
         id: index + 1,
         name,
         svg: type === "numberSense" ? numberSenseItems[index]?.svg : undefined,
-        count: type === "numberSense" ? numberSenseItems[index]?.count : undefined,
+        count:
+          type === "numberSense" ? numberSenseItems[index]?.count : undefined,
       }));
 
       console.log("Saving collection with data:", {
@@ -182,7 +198,7 @@ const CollectionSetup: React.FC = () => {
         isPublic ? "public" : "private",
         category,
         type,
-        getAccessTokenSilently
+        getAccessTokenSilently,
       );
       navigate("/your-collections");
     } catch (error) {
@@ -192,28 +208,32 @@ const CollectionSetup: React.FC = () => {
   };
 
   if (!currentUser) {
-    return <div className="text-center p-4">Loading user information...</div>;
+    return <div className="p-4 text-center">Loading user information...</div>;
   }
 
   return (
-    <div className="flex flex-col items-center p-5 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Create a New Collection</h1>
+    <div className="mx-auto flex max-w-2xl flex-col items-center p-5">
+      <h1 className="mb-6 text-3xl font-bold">Create a New Collection</h1>
       <div className="w-full space-y-4">
         <div>
-          <label htmlFor="nameInput" className="block mb-2 font-bold">Name:</label>
+          <label htmlFor="nameInput" className="mb-2 block font-bold">
+            Name:
+          </label>
           <input
             type="text"
             id="nameInput"
-            className="w-full p-2 border border-gray-300 rounded-md font-['Caveat']"
+            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             value={collectionName}
             readOnly
           />
         </div>
         <div>
-          <label htmlFor="categorySelect" className="block mb-2 font-bold">Category:</label>
+          <label htmlFor="categorySelect" className="mb-2 block font-bold">
+            Category:
+          </label>
           <select
             id="categorySelect"
-            className="w-full p-2 border border-gray-300 rounded-md font-['Caveat']"
+            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             value={category}
             disabled
           >
@@ -226,10 +246,12 @@ const CollectionSetup: React.FC = () => {
           </select>
         </div>
         <div>
-          <label htmlFor="typeSelect" className="block mb-2 font-bold">Type:</label>
+          <label htmlFor="typeSelect" className="mb-2 block font-bold">
+            Type:
+          </label>
           <select
             id="typeSelect"
-            className="w-full p-2 border border-gray-300 rounded-md font-['Caveat']"
+            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             value={type}
             onChange={(e) => setType(e.target.value)}
           >
@@ -261,11 +283,13 @@ const CollectionSetup: React.FC = () => {
           </select>
         </div>
         <div>
-          <label htmlFor="itemCount" className="block mb-2 font-bold">Quantity #:</label>
+          <label htmlFor="itemCount" className="mb-2 block font-bold">
+            Quantity #:
+          </label>
           <input
             type="number"
             id="itemCount"
-            className="w-full p-2 border border-gray-300 rounded-md font-['Caveat']"
+            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             value={itemCount}
             min={1}
             onChange={(e) => {
@@ -276,24 +300,26 @@ const CollectionSetup: React.FC = () => {
         </div>
         <button
           type="button"
-          className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 font-bold uppercase"
+          className="w-full rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
           onClick={generateRandomSequence}
         >
           Generate Random Sequence
         </button>
         <p className="text-center">- OR -</p>
         <div>
-          <label htmlFor="fileUpload" className="block mb-2 font-bold">Choose File:</label>
+          <label htmlFor="fileUpload" className="mb-2 block font-bold">
+            Choose File:
+          </label>
           <input
             type="file"
             id="fileUpload"
-            className="w-full p-2 border border-gray-300 rounded-md font-['Caveat']"
+            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             onChange={handleFileChange}
           />
         </div>
         <button
           type="button"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 font-bold uppercase"
+          className="w-full rounded-md bg-blue-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-blue-600"
           onClick={sequence.length > 0 ? handleSaveCollection : handleNext}
         >
           {sequence.length > 0 ? "Save Collection" : "Next"}
@@ -301,18 +327,27 @@ const CollectionSetup: React.FC = () => {
       </div>
       {sequence.length > 0 && (
         <div className="mt-6">
-          <h3 className="text-xl font-bold mb-2">Generated Sequence:</h3>
+          <h3 className="mb-2 text-xl font-bold">Generated Sequence:</h3>
           <p className="text-lg">{sequence.join(", ")}</p>
         </div>
       )}
       {category === "Number Sense" && numberSenseItems.length > 0 && (
         <div className="mt-6">
-          <h3 className="text-xl font-bold mb-2">Generated Number Sense Images:</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <h3 className="mb-2 text-xl font-bold">
+            Generated Number Sense Images:
+          </h3>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {numberSenseItems.map((image, index) => (
-              <div key={index} className="border border-gray-300 rounded-md p-2">
-                <img src={image.url || image.svg} alt={`Number Sense Image ${index + 1}`} className="w-full h-auto" />
-                <p className="text-center mt-2">Count: {image.count}</p>
+              <div
+                key={index}
+                className="rounded-md border border-gray-300 p-2"
+              >
+                <img
+                  src={image.url || image.svg}
+                  alt={`Number Sense Image ${index + 1}`}
+                  className="h-auto w-full"
+                />
+                <p className="mt-2 text-center">Count: {image.count}</p>
               </div>
             ))}
           </div>
@@ -326,7 +361,11 @@ export default CollectionSetup;
 
 // Define the type guard function
 function isUser(user: unknown): user is User {
-  return typeof user === "object" && user !== null && typeof (user as User).username === "string";
+  return (
+    typeof user === "object" &&
+    user !== null &&
+    typeof (user as User).username === "string"
+  );
 }
 
 // Define the function to generate a unique ID

@@ -4,22 +4,31 @@
 body {
   font-family: "Caveat", cursive;
   background-color: var(--background-color);
-  background-image: var(--background-image); /* Add this to handle background images */
+  background-image: var(
+    --background-image
+  ); /* Add this to handle background images */
   background-size: cover; /* Ensure the background image covers the entire area */
   background-position: center; /* Center the background image */
   background-repeat: no-repeat; /* Prevent the image from repeating */
   color: var(--text-color);
 }
 
-h1, h2, h3, p, button {
+h1,
+h2,
+h3,
+p,
+button {
   color: inherit; /* Use the color from the theme */
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: "Chewy", cursive;
 }
 
-p, button {
+p,
+button {
   font-family: "Patrick Hand", cursive;
 }
 
@@ -45,16 +54,25 @@ li {
   font-size: 1.2em; /* Larger text for better readability */
 }
 
-body, .your-collections, .control-panel, .collections-list, .collection-item {
+body,
+.your-collections,
+.control-panel,
+.collections-list,
+.collection-item {
   color: var(--text-color);
 }
 
-h1, p, label, button {
-  color: var(--text-color);  /* Ensure text elements use the theme's text color */
+h1,
+p,
+label,
+button {
+  color: var(
+    --text-color
+  ); /* Ensure text elements use the theme's text color */
 }
 
 input {
-  color: var(--text-color);  /* Ensure input text uses the theme's text color */
+  color: var(--text-color); /* Ensure input text uses the theme's text color */
   background-color: var(--background-color);
 }
 
@@ -68,7 +86,10 @@ input {
   overflow-x: hidden;
 }
 
-.button, .styled-button, .start-session-button, .cancel-button {
+.button,
+.styled-button,
+.start-session-button,
+.cancel-button {
   background-color: var(--color);
   color: var(--text-color);
 }
@@ -80,83 +101,83 @@ input {
 
 /* Define the color schemes */
 .color-1 {
-  background-color: #FFEBEE; /* Light Red */
+  background-color: #ffebee; /* Light Red */
 }
 
 .color-1 h1 {
-  background-color: #D32F2F; /* Dark Red */
+  background-color: #d32f2f; /* Dark Red */
 }
 
 .color-2 {
-  background-color: #FFF3E0; /* Light Orange */
+  background-color: #fff3e0; /* Light Orange */
 }
 
 .color-2 h1 {
-  background-color: #F57C00; /* Dark Orange */
+  background-color: #f57c00; /* Dark Orange */
 }
 
 .color-3 {
-  background-color: #FFFDE7; /* Light Yellow */
+  background-color: #fffde7; /* Light Yellow */
 }
 
 .color-3 h1 {
-  background-color: #FBC02D; /* Dark Yellow */
+  background-color: #fbc02d; /* Dark Yellow */
 }
 
 .color-4 {
-  background-color: #E8F5E9; /* Light Green */
+  background-color: #e8f5e9; /* Light Green */
 }
 
 .color-4 h1 {
-  background-color: #388E3C; /* Dark Green */
+  background-color: #388e3c; /* Dark Green */
 }
 
 .color-5 {
-  background-color: #E3F2FD; /* Light Blue */
+  background-color: #e3f2fd; /* Light Blue */
 }
 
 .color-5 h1 {
-  background-color: #1976D2; /* Dark Blue */
+  background-color: #1976d2; /* Dark Blue */
 }
 
 .color-6 {
-  background-color: #EDE7F6; /* Light Purple */
+  background-color: #ede7f6; /* Light Purple */
 }
 
 .color-6 h1 {
-  background-color: #7B1FA2; /* Dark Purple */
+  background-color: #7b1fa2; /* Dark Purple */
 }
 
 .color-7 {
-  background-color: #F3E5F5; /* Light Pink */
+  background-color: #f3e5f5; /* Light Pink */
 }
 
 .color-7 h1 {
-  background-color: #C2185B; /* Dark Pink */
+  background-color: #c2185b; /* Dark Pink */
 }
 
 .color-8 {
-  background-color: #FFF8E1; /* Light Amber */
+  background-color: #fff8e1; /* Light Amber */
 }
 
 .color-8 h1 {
-  background-color: #FF8F00; /* Dark Amber */
+  background-color: #ff8f00; /* Dark Amber */
 }
 
 .color-9 {
-  background-color: #F1F8E9; /* Light Lime */
+  background-color: #f1f8e9; /* Light Lime */
 }
 
 .color-9 h1 {
-  background-color: #AFB42B; /* Dark Lime */
+  background-color: #afb42b; /* Dark Lime */
 }
 
 .color-10 {
-  background-color: #ECEFF1; /* Light Gray */
+  background-color: #eceff1; /* Light Gray */
 }
 
 .color-10 h1 {
-  background-color: #455A64; /* Dark Gray */
+  background-color: #455a64; /* Dark Gray */
 }
 
 /* Responsive typography */

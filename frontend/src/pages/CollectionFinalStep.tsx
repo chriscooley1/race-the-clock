@@ -21,9 +21,17 @@ interface LocationState {
 const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { collectionName, isPublic, category, sequence, type: initialType } = location.state as LocationState;
+  const {
+    collectionName,
+    isPublic,
+    category,
+    sequence,
+    type: initialType,
+  } = location.state as LocationState;
   const { getAccessTokenSilently } = useAuth0();
-  const [items, setItems] = useState<{ id: number; name: string }[]>(sequence.map((name, index) => ({ id: index + 1, name })));
+  const [items, setItems] = useState<{ id: number; name: string }[]>(
+    sequence.map((name, index) => ({ id: index + 1, name })),
+  );
   const [newItem, setNewItem] = useState<string>("");
   const [selectedElement, setSelectedElement] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -45,7 +53,9 @@ const CollectionFinalStep: React.FC = () => {
     const selectedValue = event.target.value;
     if (selectedValue) {
       const element = JSON.parse(selectedValue) as PeriodicElement;
-      setNewItem(`${element.symbol} - ${element.name} - ${element.atomicNumber}`);
+      setNewItem(
+        `${element.symbol} - ${element.name} - ${element.atomicNumber}`,
+      );
       setSelectedElement(selectedValue);
     }
   };
@@ -73,7 +83,7 @@ const CollectionFinalStep: React.FC = () => {
         status: isPublic ? "public" : "private",
         category: category,
         type: initialType || "default",
-        items: items.map(item => ({ name: item.name })) // Convert to object array
+        items: items.map((item) => ({ name: item.name })), // Convert to object array
       };
 
       await saveCollection(
@@ -83,7 +93,7 @@ const CollectionFinalStep: React.FC = () => {
         collectionData.status,
         collectionData.category,
         collectionData.type,
-        getAccessTokenSilently
+        getAccessTokenSilently,
       );
       navigate("/your-collections");
     } catch (error) {
@@ -96,23 +106,30 @@ const CollectionFinalStep: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center p-4 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Collection: {collectionName}</h1>
-      <h2 className="text-xl mb-2">Step 3 - Fill Out Collection Body</h2>
-      <p className="mb-4">To add another item to this Collection, click the add button below.</p>
-      <div className="w-full flex flex-col items-center mb-4">
+    <div className="mx-auto flex max-w-2xl flex-col items-center p-4">
+      <h1 className="mb-4 text-2xl font-bold">Collection: {collectionName}</h1>
+      <h2 className="mb-2 text-xl">Step 3 - Fill Out Collection Body</h2>
+      <p className="mb-4">
+        To add another item to this Collection, click the add button below.
+      </p>
+      <div className="mb-4 flex w-full flex-col items-center">
         {category === "Science" ? (
           <>
-            <label htmlFor="element-select" className="mb-2">Select an element:</label>
+            <label htmlFor="element-select" className="mb-2">
+              Select an element:
+            </label>
             <select
               id="element-select"
               value={selectedElement}
               onChange={handleElementSelect}
-              className="w-full p-2 border border-gray-300 rounded-md font-['Caveat'] mb-4"
+              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             >
               <option value="">Select an element</option>
               {Object.values(periodicTable).map((element) => (
-                <option key={element.atomicNumber} value={JSON.stringify(element)}>
+                <option
+                  key={element.atomicNumber}
+                  value={JSON.stringify(element)}
+                >
                   {element.symbol} - {element.name} - {element.atomicNumber}
                 </option>
               ))}
@@ -120,13 +137,15 @@ const CollectionFinalStep: React.FC = () => {
           </>
         ) : (
           <>
-            <label htmlFor="new-item-input" className="sr-only">New Item</label>
+            <label htmlFor="new-item-input" className="sr-only">
+              New Item
+            </label>
             <input
               type="text"
               id="new-item-input"
               value={newItem}
               onChange={(e) => setNewItem(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md font-['Caveat'] mb-2"
+              className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
               placeholder="Enter new item"
             />
           </>
@@ -134,23 +153,23 @@ const CollectionFinalStep: React.FC = () => {
         <button
           type="button"
           onClick={handleAddItem}
-          className="bg-green-500 text-white rounded-full size-10 flex items-center justify-center text-2xl hover:bg-green-600 transition duration-300"
+          className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
           title="Add Item"
         >
           +
         </button>
       </div>
       {items.map((item) => (
-        <div key={item.id} className="flex items-center w-full mb-2">
+        <div key={item.id} className="mb-2 flex w-full items-center">
           <input
             type="text"
-            className="grow p-2 border border-gray-300 rounded-md font-['Caveat'] mr-2"
+            className="mr-2 grow rounded-md border border-gray-300 p-2 font-['Caveat']"
             value={item.name}
             readOnly
             title={`Item ${item.id}: ${item.name}`}
           />
           <button
-            className="bg-red-500 text-white rounded-md px-2 py-1 hover:bg-red-600 transition duration-300"
+            className="rounded-md bg-red-500 px-2 py-1 text-white transition duration-300 hover:bg-red-600"
             type="button"
             onClick={() => handleRemoveItem(item.id)}
             title="Remove Item"
@@ -160,7 +179,7 @@ const CollectionFinalStep: React.FC = () => {
         </div>
       ))}
       <button
-        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 mt-4"
+        className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
         type="button"
         onClick={handleSaveCollection}
         title="Save Collection"

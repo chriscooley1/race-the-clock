@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { adjustColorForColorblindness } from "../utils/colorAdjustment";
 import { colorSchemes } from "../constants/colorSchemes";
 
@@ -27,17 +33,21 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const getInitialTheme = (): Theme => {
     const savedTheme = localStorage.getItem("app-theme");
-    return savedTheme ? JSON.parse(savedTheme) : {
-      ...colorSchemes[0],
-      isColorblindMode: false,
-      colorblindType: "",
-      displayTextColor: undefined,
-      displayBackgroundColor: undefined,
-      isDarkMode: false,
-    };
+    return savedTheme
+      ? JSON.parse(savedTheme)
+      : {
+          ...colorSchemes[0],
+          isColorblindMode: false,
+          colorblindType: "",
+          displayTextColor: undefined,
+          displayBackgroundColor: undefined,
+          isDarkMode: false,
+        };
   };
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
@@ -59,38 +69,78 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   };
 
   const toggleDarkMode = () => {
-    setTheme((prevTheme) => ({ ...prevTheme, isDarkMode: !prevTheme.isDarkMode }));
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      isDarkMode: !prevTheme.isDarkMode,
+    }));
   };
 
   useEffect(() => {
     localStorage.setItem("app-theme", JSON.stringify(theme));
-  
+
     const backgroundColor = theme.backgroundColor;
     const backgroundImage = theme.backgroundImage || "none"; // Make sure this is set to a valid CSS URL
     const textColor = theme.textColor;
     const displayTextColor = theme.displayTextColor || theme.textColor;
-    const displayBackgroundColor = theme.displayBackgroundColor || theme.backgroundColor;
-  
+    const displayBackgroundColor =
+      theme.displayBackgroundColor || theme.backgroundColor;
+
     if (theme.isColorblindMode && theme.colorblindType) {
-      const adjustedBackgroundColor = adjustColorForColorblindness(backgroundColor, theme.colorblindType);
-      const adjustedTextColor = adjustColorForColorblindness(textColor, theme.colorblindType);
-      const adjustedDisplayTextColor = adjustColorForColorblindness(displayTextColor, theme.colorblindType);
-      const adjustedDisplayBackgroundColor = adjustColorForColorblindness(displayBackgroundColor, theme.colorblindType);
-  
-      document.documentElement.style.setProperty("--background-color", adjustedBackgroundColor);
-      document.documentElement.style.setProperty("--text-color", adjustedTextColor);
-      document.documentElement.style.setProperty("--display-text-color", adjustedDisplayTextColor);
-      document.documentElement.style.setProperty("--display-background-color", adjustedDisplayBackgroundColor);
+      const adjustedBackgroundColor = adjustColorForColorblindness(
+        backgroundColor,
+        theme.colorblindType,
+      );
+      const adjustedTextColor = adjustColorForColorblindness(
+        textColor,
+        theme.colorblindType,
+      );
+      const adjustedDisplayTextColor = adjustColorForColorblindness(
+        displayTextColor,
+        theme.colorblindType,
+      );
+      const adjustedDisplayBackgroundColor = adjustColorForColorblindness(
+        displayBackgroundColor,
+        theme.colorblindType,
+      );
+
+      document.documentElement.style.setProperty(
+        "--background-color",
+        adjustedBackgroundColor,
+      );
+      document.documentElement.style.setProperty(
+        "--text-color",
+        adjustedTextColor,
+      );
+      document.documentElement.style.setProperty(
+        "--display-text-color",
+        adjustedDisplayTextColor,
+      );
+      document.documentElement.style.setProperty(
+        "--display-background-color",
+        adjustedDisplayBackgroundColor,
+      );
     } else {
-      document.documentElement.style.setProperty("--background-color", backgroundColor);
+      document.documentElement.style.setProperty(
+        "--background-color",
+        backgroundColor,
+      );
       document.documentElement.style.setProperty("--text-color", textColor);
-      document.documentElement.style.setProperty("--display-text-color", displayTextColor);
-      document.documentElement.style.setProperty("--display-background-color", displayBackgroundColor);
+      document.documentElement.style.setProperty(
+        "--display-text-color",
+        displayTextColor,
+      );
+      document.documentElement.style.setProperty(
+        "--display-background-color",
+        displayBackgroundColor,
+      );
     }
-  
+
     // Ensure that the URL is wrapped in a proper CSS function
     if (backgroundImage !== "none") {
-      document.documentElement.style.setProperty("--background-image", `url(${backgroundImage})`);
+      document.documentElement.style.setProperty(
+        "--background-image",
+        `url(${backgroundImage})`,
+      );
     } else {
       document.documentElement.style.setProperty("--background-image", "none");
     }
@@ -103,7 +153,17 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, setDisplayTextColor, setDisplayBackgroundColor, setColorblindMode, setColorblindType, toggleDarkMode }}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        setTheme,
+        setDisplayTextColor,
+        setDisplayBackgroundColor,
+        setColorblindMode,
+        setColorblindType,
+        toggleDarkMode,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

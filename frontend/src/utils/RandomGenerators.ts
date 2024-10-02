@@ -4,7 +4,9 @@ export const generateRandomLetters = (quantity: number): string[] => {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   const result: string[] = [];
   for (let i = 0; i < quantity; i++) {
-    const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
+    const randomLetter = letters.charAt(
+      Math.floor(Math.random() * letters.length),
+    );
     result.push(randomLetter);
   }
   return result;
@@ -20,8 +22,12 @@ export const generateRandomNumbers = (quantity: number): string[] => {
 };
 
 export const generateFullAlphabet = (): string[] => {
-  const uppercase = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)); // A-Z
-  const lowercase = Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)); // a-z
+  const uppercase = Array.from({ length: 26 }, (_, i) =>
+    String.fromCharCode(65 + i),
+  ); // A-Z
+  const lowercase = Array.from({ length: 26 }, (_, i) =>
+    String.fromCharCode(97 + i),
+  ); // a-z
   return [...uppercase, ...lowercase];
 };
 
@@ -33,10 +39,13 @@ const operationSymbol = {
   multiplication: "×",
   addition: "+",
   subtraction: "−",
-  division: "÷"
+  division: "÷",
 } as const;
 
-export const generateMathProblems = (count: number, operation: keyof typeof operationSymbol): string[] => {
+export const generateMathProblems = (
+  count: number,
+  operation: keyof typeof operationSymbol,
+): string[] => {
   const problems: string[] = [];
   for (let i = 0; i < count; i++) {
     const num1 = Math.floor(Math.random() * 10) + 1;
@@ -64,13 +73,15 @@ export const generateMathProblems = (count: number, operation: keyof typeof oper
   return problems;
 };
 
-export function generateNumberSenseImages(count: number): { url: string; svg: string; count: number }[] {
+export function generateNumberSenseImages(
+  count: number,
+): { url: string; svg: string; count: number }[] {
   return Array.from({ length: count }, () => {
     const randomCount = Math.floor(Math.random() * count) + 1;
     return {
       url: generateCountingSvg(randomCount),
       svg: generateCountingSvg(randomCount),
-      count: randomCount
+      count: randomCount,
     };
   });
 }
@@ -101,27 +112,62 @@ function generateCountingSvg(count: number): string {
 export const generatePeriodicTableElements = (count: number): string[] => {
   const elements = Object.values(periodicTable);
   const shuffled = elements.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count).map(element => `${element.symbol} - ${element.name} - ${element.atomicNumber}`);
+  return shuffled
+    .slice(0, count)
+    .map(
+      (element) =>
+        `${element.symbol} - ${element.name} - ${element.atomicNumber}`,
+    );
 };
 
 export const generateScienceTerms = (count: number): string[] => {
   const scienceTerms = [
-    "Atom", "Molecule", "Cell", "DNA", "Evolution", "Gravity", "Photosynthesis",
-    "Ecosystem", "Energy", "Force", "Hypothesis", "Experiment", "Theory", "Velocity",
-    "Acceleration", "Mass", "Volume", "Density", "Pressure", "Temperature"
+    "Atom",
+    "Molecule",
+    "Cell",
+    "DNA",
+    "Evolution",
+    "Gravity",
+    "Photosynthesis",
+    "Ecosystem",
+    "Energy",
+    "Force",
+    "Hypothesis",
+    "Experiment",
+    "Theory",
+    "Velocity",
+    "Acceleration",
+    "Mass",
+    "Volume",
+    "Density",
+    "Pressure",
+    "Temperature",
   ];
   return shuffleArray(scienceTerms).slice(0, count);
 };
 
 export const generateNursingTerms = (count: number): string[] => {
   const nursingTerms = [
-    "Vital Signs", "Blood Pressure", "Heart Rate", "Respiratory Rate",
-    "Temperature", "Oxygen Saturation", "Medication Administration",
-    "Intravenous Therapy", "Patient Assessment", "Wound Care",
-    "Infection Control", "Pain Management", "Patient Education",
-    "Documentation", "Cardiopulmonary Resuscitation (CPR)",
-    "Electrocardiogram (ECG)", "Catheterization", "Diabetes Management",
-    "Fall Prevention", "Palliative Care"
+    "Vital Signs",
+    "Blood Pressure",
+    "Heart Rate",
+    "Respiratory Rate",
+    "Temperature",
+    "Oxygen Saturation",
+    "Medication Administration",
+    "Intravenous Therapy",
+    "Patient Assessment",
+    "Wound Care",
+    "Infection Control",
+    "Pain Management",
+    "Patient Education",
+    "Documentation",
+    "Cardiopulmonary Resuscitation (CPR)",
+    "Electrocardiogram (ECG)",
+    "Catheterization",
+    "Diabetes Management",
+    "Fall Prevention",
+    "Palliative Care",
   ];
 
   const shuffled = nursingTerms.sort(() => 0.5 - Math.random());

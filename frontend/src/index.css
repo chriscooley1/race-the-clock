@@ -13,16 +13,19 @@
     background-repeat: no-repeat;
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     @apply font-chewy;
   }
 
-  p, button {
+  p,
+  button {
     @apply font-patrick-hand;
   }
 
   h1 {
-    @apply text-3xl m-0;
+    @apply m-0 text-3xl;
   }
 
   ul {
@@ -39,7 +42,10 @@
 }
 
 @layer components {
-  .button, .styled-button, .start-session-button, .cancel-button {
+  .button,
+  .styled-button,
+  .start-session-button,
+  .cancel-button {
     @apply bg-theme-bg text-theme-text;
   }
 }
