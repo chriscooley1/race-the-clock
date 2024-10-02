@@ -38,9 +38,9 @@ const App: React.FC = () => {
       <ErrorBoundary>
         <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
           <Navbar />
-          <div className="flex pt-[50px]"> {/* Add padding-top to account for Navbar */}
+          <div className="flex pt-[70px]">
             {!hideSidebar && <Sidebar />}
-            <div className={`flex-grow ${hideSidebar ? "ml-0" : "ml-[250px]"}`}>
+            <div className={`flex-grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area`}>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route
