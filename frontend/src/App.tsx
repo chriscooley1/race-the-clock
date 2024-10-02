@@ -14,11 +14,11 @@ import FullScreenDisplay from "./pages/FullScreenDisplay";
 import YourCollections from "./pages/YourCollections/YourCollections";
 import NewCollection from "./pages/NewCollection";
 import DiscoverCollections from "./pages/DiscoverCollections";
-import CollectionSetup from "./pages/CollectionSetup/CollectionSetup";
+import CollectionSetup from "./pages/CollectionSetup";
 import CollectionFinalStep from "./pages/CollectionFinalStep";
-import NameGenerator from "./pages/NameGenerator/NameGenerator";
+import NameGenerator from "./pages/NameGenerator";
 import Resources from "./pages/Resources";
-import Settings from "./pages/Settings/Settings";
+import Settings from "./pages/Settings";
 import MyAccount from "./pages/MyAccount";
 import MathCollectionPage from "./pages/MathCollectionPage";
 

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./CollectionSetup.css";
-import "../../App.css"; 
 import {
   generateRandomLetters,
   generateRandomNumbers,
@@ -12,10 +10,10 @@ import {
   generatePeriodicTableElements,
   generateScienceTerms,
   generateNursingTerms
-} from "../../utils/RandomGenerators";
-import { saveCollection, getCurrentUser } from "../../api";
+} from "../utils/RandomGenerators";
+import { saveCollection, getCurrentUser } from "../api";
 import { useAuth0 } from "@auth0/auth0-react";
-import { User } from "../../types/user";
+import { User } from "../types/user";
 
 type Operation = "multiplication" | "addition" | "subtraction" | "division" | "PeriodicElement";
 

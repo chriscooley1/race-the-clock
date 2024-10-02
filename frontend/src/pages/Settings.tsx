@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { useTheme } from "../../context/ThemeContext";
-import { colorSchemes, ColorScheme } from "../../constants/colorSchemes";
-import "../../App.css";
+import { useTheme } from "../context/ThemeContext";
+import { colorSchemes, ColorScheme } from "../constants/colorSchemes";
 
 const colorOptions = colorSchemes.map(scheme => ({
   name: scheme.name,
