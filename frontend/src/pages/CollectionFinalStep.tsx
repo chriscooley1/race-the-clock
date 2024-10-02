@@ -106,13 +106,13 @@ const CollectionFinalStep: React.FC = () => {
   }
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col items-center p-4">
-      <h1 className="mb-4 text-2xl font-bold">Collection: {collectionName}</h1>
-      <h2 className="mb-2 text-xl">Step 3 - Fill Out Collection Body</h2>
+    <div className="mx-auto flex max-w-2xl flex-col items-center">
+      <h1 className="text-4xl font-bold">Step 3 - Custom</h1>
+      <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <p className="mb-4">
         To add another item to this Collection, click the add button below.
       </p>
-      <div className="mb-4 flex w-full flex-col items-center">
+      <div className="mb-4 flex flex-col items-center">
         {category === "Science" ? (
           <>
             <label htmlFor="element-select" className="mb-2">
@@ -179,7 +179,7 @@ const CollectionFinalStep: React.FC = () => {
         </div>
       ))}
       <button
-        className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+        className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
         type="button"
         onClick={handleSaveCollection}
         title="Save Collection"

@@ -4,7 +4,6 @@ import { useTheme } from "./context/ThemeContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import "./App.css";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 

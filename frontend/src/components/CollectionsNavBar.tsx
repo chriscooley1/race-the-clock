@@ -19,7 +19,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   ];
 
   return (
-    <div className="fixed left-[250px] top-[50px] z-30 flex w-[calc(100%-250px)] flex-wrap justify-center bg-white p-2 shadow-md">
+    <div className="fixed left-[250px] top-[50px] z-30 flex w-[calc(100%-250px)] flex-wrap justify-center bg-light-blue p-2 shadow-md">
       {categories.map((category) => (
         <button
           type="button"

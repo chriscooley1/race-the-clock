@@ -444,29 +444,32 @@ const YourCollections: React.FC = () => {
                         }}
                       >
                         <h1
-                          className="border-5 mb-2.5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
+                          className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
                           style={{ backgroundColor: baseColor }}
                         >
                           {collection.name}
                         </h1>
+                        <div
+                          className="flex flex-col items-center w-full p-4 border-5 border-black"
+                        >
                         <p className="mb-1 text-base font-bold text-black">
                           {getItemsCount(collection.description)} items in collection
                         </p>
                         <p className="mb-2.5 text-base font-bold text-black">
                           Created by you on {formatDate(collection.created_at)}
                         </p>
-                        <button
-                          type="button"
-                          className="mb-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                          style={{ backgroundColor: "green" }}
-                          onClick={() => handleStartCollection(collection.collection_id)}
-                        >
-                          Start
-                        </button>
-                        <div className="flex justify-center">
+                        <div className="flex justify-center space-x-4 w-full">
                           <button
                             type="button"
-                            className="mr-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                            className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                            style={{ backgroundColor: "green" }}
+                            onClick={() => handleStartCollection(collection.collection_id)}
+                          >
+                            Start
+                          </button>
+                          <button
+                            type="button"
+                            className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
                             style={{ backgroundColor: "yellow" }}
                             onClick={() => handleEditButtonClick(collection)}
                           >
@@ -474,7 +477,7 @@ const YourCollections: React.FC = () => {
                           </button>
                           <button
                             type="button"
-                            className="cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                            className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
                             style={{ backgroundColor: "red" }}
                             onClick={() => handleDeleteCollection(collection.collection_id)}
                           >
@@ -482,6 +485,7 @@ const YourCollections: React.FC = () => {
                           </button>
                         </div>
                       </div>
+                    </div>
                     )}
                   </Draggable>
                 ) : (
@@ -493,42 +497,46 @@ const YourCollections: React.FC = () => {
                     }}
                   >
                     <h1
-                      className="border-5 mb-2.5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
+                      className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
                       style={{ backgroundColor: baseColor }}
                     >
                       {collection.name}
                     </h1>
+                    <div
+                      className="flex flex-col items-center w-full p-4 border-5 border-black"
+                    >
                     <p className="mb-1 text-base font-bold text-black">
                       {getItemsCount(collection.description)} items in collection
                     </p>
                     <p className="mb-2.5 text-base font-bold text-black">
                       Created by you on {formatDate(collection.created_at)}
                     </p>
-                    <button
-                      type="button"
-                      className="mb-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                      style={{ backgroundColor: "green" }}
-                      onClick={() => handleStartCollection(collection.collection_id)}
-                    >
-                      Start
-                    </button>
-                    <div className="flex justify-center">
-                      <button
-                        type="button"
-                        className="mr-2.5 cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                        style={{ backgroundColor: "yellow" }}
-                        onClick={() => handleEditButtonClick(collection)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        className="cursor-pointer rounded border-none p-2.5 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                        style={{ backgroundColor: "red" }}
-                        onClick={() => handleDeleteCollection(collection.collection_id)}
-                      >
-                        Delete
-                      </button>
+                      <div className="flex justify-center space-x-4 w-full">
+                        <button
+                          type="button"
+                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                          style={{ backgroundColor: "green" }}
+                          onClick={() => handleStartCollection(collection.collection_id)}
+                        >
+                          Start
+                        </button>
+                        <button
+                          type="button"
+                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                          style={{ backgroundColor: "yellow" }}
+                          onClick={() => handleEditButtonClick(collection)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                          style={{ backgroundColor: "red" }}
+                          onClick={() => handleDeleteCollection(collection.collection_id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );

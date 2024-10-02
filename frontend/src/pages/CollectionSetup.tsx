@@ -212,21 +212,10 @@ const CollectionSetup: React.FC = () => {
   }
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col items-center p-5">
-      <h1 className="mb-6 text-3xl font-bold">Create a New Collection</h1>
-      <div className="w-full space-y-4">
-        <div>
-          <label htmlFor="nameInput" className="mb-2 block font-bold">
-            Name:
-          </label>
-          <input
-            type="text"
-            id="nameInput"
-            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
-            value={collectionName}
-            readOnly
-          />
-        </div>
+    <div className="mx-auto flex max-w-[600px] flex-col items-center">
+      <h1 className="text-4xl font-bold">Step 2 - Setup</h1>
+      <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
+      <div className="mb-4 flex flex-col items-center space-y-2">
         <div>
           <label htmlFor="categorySelect" className="mb-2 block font-bold">
             Category:
@@ -319,7 +308,7 @@ const CollectionSetup: React.FC = () => {
         </div>
         <button
           type="button"
-          className="w-full rounded-md bg-blue-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-blue-600"
+          className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
           onClick={sequence.length > 0 ? handleSaveCollection : handleNext}
         >
           {sequence.length > 0 ? "Save Collection" : "Next"}
