@@ -85,14 +85,14 @@ const MathCollectionPage: React.FC = () => {
         </h1>
         <button 
           type="button" 
-          className="absolute left-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 w-10 h-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70"
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 size-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70"
           onClick={(e) => { e.stopPropagation(); handlePrevious(); }}
         >
           ←
         </button>
         <button 
           type="button" 
-          className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 w-10 h-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70"
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 size-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70"
           onClick={(e) => { e.stopPropagation(); handleNext(); }}
         >
           →

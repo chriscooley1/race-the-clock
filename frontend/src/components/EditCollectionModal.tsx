@@ -88,7 +88,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
           <p className="mb-2">Click the add button to create a new item in the collection</p>
           <button
             type="button"
-            className="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-2xl hover:bg-green-600 transition duration-300"
+            className="bg-green-500 text-white rounded-full size-10 flex items-center justify-center text-2xl hover:bg-green-600 transition duration-300"
             onClick={handleAddItem}
           >
             +
@@ -97,7 +97,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
         <div className="w-full">
           {editedItems.map((item, index) => (
             <div key={index} className="flex items-center mb-4">
-              <div className="flex-grow mr-2">
+              <div className="grow mr-2">
                 <label htmlFor={`item-${index}`} className="block mb-1">Item {index + 1}</label>
                 <input
                   type="text"
@@ -111,7 +111,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
               </div>
               <button
                 type="button"
-                className="bg-red-500 text-white rounded w-10 h-10 flex items-center justify-center hover:bg-red-600 transition duration-300"
+                className="bg-red-500 text-white rounded size-10 flex items-center justify-center hover:bg-red-600 transition duration-300"
                 onClick={() => handleRemoveItem(index)}
               >
                 &times;

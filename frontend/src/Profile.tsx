@@ -44,9 +44,9 @@ const Profile = () => {
 
   return (
     isAuthenticated && (
-      <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
-        <img src={user?.picture} alt={user?.name} className="w-24 h-24 rounded-full mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-center mb-2">{user?.name}</h2>
+      <div className="mx-auto mt-8 max-w-md rounded-lg bg-white p-6 shadow-lg">
+        <img src={user?.picture} alt={user?.name} className="mx-auto mb-4 h-24 w-24 rounded-full" />
+        <h2 className="mb-2 text-center text-2xl font-bold">{user?.name}</h2>
         <p className="text-gray-600 text-center mb-4">{user?.email}</p>
         <h3 className="text-xl font-semibold mb-2">User Metadata</h3>
         {userMetadata ? (

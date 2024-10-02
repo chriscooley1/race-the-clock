@@ -21,7 +21,7 @@ const WheelSegment: React.FC<WheelSegmentProps> = ({ name, index, onRemove, onEd
         type="text"
         value={name}
         onChange={handleEdit}
-        className="flex-grow mr-2 bg-white text-black border border-current rounded p-2 text-base font-caveat"
+        className="grow mr-2 bg-white text-black border border-current rounded p-2 text-base font-caveat"
         placeholder="Edit name"
         title={`Edit name ${index + 1}`}
       />

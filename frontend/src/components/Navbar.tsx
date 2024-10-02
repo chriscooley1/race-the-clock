@@ -58,7 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-[50px] flex justify-between items-center bg-light-blue dark:bg-gray-800 shadow-md px-2 md:px-5 z-50">
+    <div className="fixed top-0 inset-x-0 h-[50px] flex justify-between items-center bg-light-blue dark:bg-gray-800 shadow-md px-2 md:px-5 z-50">
       {/* Dark mode toggle */}
       <button
         type="button"
@@ -88,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
           )}
         </>
       )}
-      <div className="flex-grow text-center text-lg md:text-xl font-bold text-gray-800 dark:text-white cursor-pointer" onClick={handleTitleClick}>
+      <div className="grow text-center text-lg md:text-xl font-bold text-gray-800 dark:text-white cursor-pointer" onClick={handleTitleClick}>
         Race The Clock
       </div>
       <div className="cursor-pointer flex flex-col justify-between w-[30px] h-[25px]" onClick={handleMenuToggle}>

@@ -112,7 +112,7 @@ const DiscoverCollections: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by collection name or username"
-            className="flex-grow p-2 border-5 border-black rounded-l-md font-['Patrick_Hand']"
+            className="grow p-2 border-5 border-black rounded-l-md font-['Patrick_Hand']"
           />
           <button 
             type="button" 
@@ -141,7 +141,7 @@ const DiscoverCollections: React.FC = () => {
               <p className="text-black text-lg mb-4">{itemCount} items in collection</p>
               <button 
                 type="button" 
-                className="text-black px-4 py-2 rounded-md font-bold transition duration-300 transform hover:scale-105 active:scale-95"
+                className="text-black px-4 py-2 rounded-md font-bold transition duration-300 hover:scale-105 active:scale-95"
                 style={{backgroundColor: baseColor}}
                 onClick={() => openModal(collection)}
               >

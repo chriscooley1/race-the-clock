@@ -134,7 +134,7 @@ const CollectionFinalStep: React.FC = () => {
         <button
           type="button"
           onClick={handleAddItem}
-          className="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-2xl hover:bg-green-600 transition duration-300"
+          className="bg-green-500 text-white rounded-full size-10 flex items-center justify-center text-2xl hover:bg-green-600 transition duration-300"
           title="Add Item"
         >
           +
@@ -144,7 +144,7 @@ const CollectionFinalStep: React.FC = () => {
         <div key={item.id} className="flex items-center w-full mb-2">
           <input
             type="text"
-            className="flex-grow p-2 border border-gray-300 rounded-md font-['Caveat'] mr-2"
+            className="grow p-2 border border-gray-300 rounded-md font-['Caveat'] mr-2"
             value={item.name}
             readOnly
             title={`Item ${item.id}: ${item.name}`}

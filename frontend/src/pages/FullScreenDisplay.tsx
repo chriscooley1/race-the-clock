@@ -161,7 +161,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       );
     } else if (category === "Number Sense") {
       return (
-        <div className="w-full h-full flex items-center justify-center">
+        <div className="size-full flex items-center justify-center">
           {currentItem?.svg ? (
             <img 
               src={currentItem.svg} 
@@ -187,9 +187,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         onClick={handleScreenClick}
       >
         {renderContent()}
-        <button type="button" className="absolute top-1/2 left-5 transform -translate-y-1/2 bg-black bg-opacity-50 text-white text-5xl w-15 h-15 flex items-center justify-center rounded-full hover:bg-opacity-70 transition-colors duration-300" onClick={handlePrevious}>←</button>
-        <button type="button" className="absolute top-1/2 right-5 transform -translate-y-1/2 bg-black bg-opacity-50 text-white text-5xl w-15 h-15 flex items-center justify-center rounded-full hover:bg-opacity-70 transition-colors duration-300" onClick={handleNext}>→</button>
-        <div className="fixed bottom-2.5 left-2.5 right-2.5 h-2.5 bg-white bg-opacity-30 rounded-full">
+        <button type="button" className="absolute top-1/2 left-5 -translate-y-1/2 bg-black bg-opacity-50 text-white text-5xl w-15 h-15 flex items-center justify-center rounded-full hover:bg-opacity-70 transition-colors duration-300" onClick={handlePrevious}>←</button>
+        <button type="button" className="absolute top-1/2 right-5 -translate-y-1/2 bg-black bg-opacity-50 text-white text-5xl w-15 h-15 flex items-center justify-center rounded-full hover:bg-opacity-70 transition-colors duration-300" onClick={handleNext}>→</button>
+        <div className="fixed bottom-2.5 inset-x-2.5 h-2.5 bg-white bg-opacity-30 rounded-full">
           <div className="h-full bg-green-500 rounded-full transition-all duration-300 ease-in-out" style={{ width: `${progress}%` }}></div>
         </div>
         <div className="fixed bottom-7 left-2.5 text-xs" style={{ color: theme.displayTextColor || theme.textColor }}>

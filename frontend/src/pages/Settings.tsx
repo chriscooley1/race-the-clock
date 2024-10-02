@@ -87,7 +87,7 @@ const Settings: React.FC = () => {
           {colorOptions.map((color) => (
             <div
               key={color.name}
-              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-2 border-black" : ""}`}
+              className={`size-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-2 border-black" : ""}`}
               style={{ backgroundColor: color.value }}
               onClick={() => handleTextColorChange(color.value)}
             />
@@ -100,7 +100,7 @@ const Settings: React.FC = () => {
           {colorOptions.map((color) => (
             <div
               key={color.name}
-              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-2 border-black" : ""}`}
+              className={`size-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-2 border-black" : ""}`}
               style={{ backgroundColor: color.value }}
               onClick={() => handleBackgroundColorChange(color.value)}
             />

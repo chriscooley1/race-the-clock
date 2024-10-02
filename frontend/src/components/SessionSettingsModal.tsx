@@ -52,7 +52,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50" onClick={handleBackgroundClick}>
       <div className="bg-white p-6 rounded-lg w-full max-w-md text-gray-800 shadow-lg">
-        <button type="button" className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 transition duration-300" onClick={onClose}>
+        <button type="button" className="absolute top-2 right-2 bg-red-500 text-white rounded-full size-8 flex items-center justify-center hover:bg-red-600 transition duration-300" onClick={onClose}>
           X
         </button>
         <h1 className="text-2xl font-bold mb-4">{collectionName}</h1>
@@ -95,7 +95,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               id="shuffle"
               checked={shuffle}
               onChange={() => setShuffle(!shuffle)}
-              className="mr-2 h-5 w-5"
+              className="mr-2 size-5"
               title="Shuffle Collection"
             />
             <label htmlFor="shuffle">Shuffle Collection</label>

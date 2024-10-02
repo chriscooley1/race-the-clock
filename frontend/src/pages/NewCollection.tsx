@@ -69,7 +69,7 @@ const NewCollection: React.FC = () => {
           checked={isPublic}
           onChange={() => setIsPublic(!isPublic)}
           title="Share collection publicly"
-          className="w-5 h-5 bg-white border-2 border-gray-300 rounded cursor-pointer mr-2.5 appearance-none checked:bg-white checked:after:content-['✓'] checked:after:absolute checked:after:top-1/2 checked:after:left-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:text-black checked:after:text-sm relative"
+          className="size-5 bg-white border-2 border-gray-300 rounded cursor-pointer mr-2.5 appearance-none checked:bg-white checked:after:content-['✓'] checked:after:absolute checked:after:top-1/2 checked:after:left-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:text-black checked:after:text-sm relative"
         />
         <label htmlFor="publicCheckbox">
           I want to share my collection publicly

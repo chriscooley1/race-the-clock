@@ -55,7 +55,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({ collect
           <button
             type="button"
             onClick={onClose}
-            className="px-6 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+            className="px-6 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-600 transition duration-300 ease-in-out hover:scale-105 active:scale-95"
           >
             Close Preview
           </button>
@@ -63,7 +63,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({ collect
             <button
               type="button"
               onClick={handleSubscribe}
-              className="px-6 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+              className="px-6 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 transition duration-300 ease-in-out hover:scale-105 active:scale-95"
             >
               Subscribe to Collection
             </button>
