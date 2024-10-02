@@ -35,7 +35,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   }, [currentSettings.speed]);
 
   const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if ((event.target as HTMLElement).classList.contains("bg-black")) {
+    if (event.target === event.currentTarget) {
       onClose();
     }
   };
