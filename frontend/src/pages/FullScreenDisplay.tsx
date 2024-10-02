@@ -243,19 +243,19 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         {renderContent()}
         <button
           type="button"
-          className="w-15 h-15 absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black bg-opacity-50 text-5xl text-white transition-colors duration-300 hover:bg-opacity-70"
+          className="w-15 h-15 absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-opacity-70"
           onClick={handlePrevious}
         >
           ←
         </button>
         <button
           type="button"
-          className="w-15 h-15 absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black bg-opacity-50 text-5xl text-white transition-colors duration-300 hover:bg-opacity-70"
+          className="w-15 h-15 absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-opacity-70"
           onClick={handleNext}
         >
           →
         </button>
-        <div className="fixed inset-x-2.5 bottom-2.5 h-2.5 rounded-full bg-white bg-opacity-30">
+        <div className="fixed inset-x-2.5 bottom-2.5 h-2.5 rounded-full bg-white/30">
           <div
             className="h-full rounded-full bg-green-500 transition-all duration-300 ease-in-out"
             style={{ width: `${progress}%` }}

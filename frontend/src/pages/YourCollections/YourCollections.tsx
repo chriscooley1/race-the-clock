@@ -515,7 +515,7 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div className="fixed left-0 top-0 z-[1001] flex size-full items-center justify-center overflow-hidden bg-black bg-opacity-70">
+        <div className="fixed left-0 top-0 z-[1001] flex size-full items-center justify-center overflow-hidden bg-black/70">
           <div
             ref={modalRef}
             className="font-caveat relative z-[1002] w-1/2 max-w-[600px] rounded-lg bg-white p-5 text-center shadow-lg dark:bg-gray-800"

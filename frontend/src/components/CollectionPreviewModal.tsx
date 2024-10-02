@@ -52,7 +52,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black bg-opacity-70">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/70">
       <div
         ref={modalRef}
         className="flex max-h-[90vh] w-11/12 flex-col items-center justify-center overflow-y-auto rounded-lg bg-white p-4 text-center text-gray-800 shadow-lg md:w-3/4 md:p-6 lg:w-1/2"

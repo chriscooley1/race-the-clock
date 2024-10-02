@@ -77,7 +77,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
       <div
         ref={modalRef}
         className="flex max-h-[90vh] w-full max-w-2xl flex-col items-center overflow-y-auto rounded-lg bg-gray-800 p-6 text-white shadow-lg"
