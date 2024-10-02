@@ -1,4 +1,3 @@
-// colorSchemes.ts
 export interface ColorScheme {
   name: string;
   backgroundColor: string;
@@ -10,146 +9,93 @@ export interface ColorScheme {
 export const colorSchemes: ColorScheme[] = [
   {
     name: "White",
-    backgroundColor: "#ffffff",
-    textColor: "#000000",
+    backgroundColor: "#FFFFFF",
+    textColor: "#333333",
   },
   {
     name: "Black",
     backgroundColor: "#000000",
-    textColor: "#ffffff",
+    textColor: "#FFFFFF",
   },
   {
-    name: "Ocean Waves",
-    backgroundColor: "#2e8b57",
-    textColor: "#f0f8ff",
-    backgroundImage: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')",
-  },
-  {
-    name: "Sunny Meadow",
-    backgroundColor: "#fff700",
-    textColor: "#333333",
-    backgroundImage: "url('https://images.unsplash.com/photo-1493106641515-6b5631de4bb9')",
-  },
-  {
-    name: "Calming Mountains",
-    backgroundColor: "#a8dadc",
-    textColor: "#333333",
-    backgroundImage: "url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0')",
-  },
-  {
-    name: "Dreamy Sunset",
-    backgroundColor: "#ffb347",
-    textColor: "#333333",
-    backgroundImage: "url('https://images.unsplash.com/photo-1497034825429-c343d7c6a68f')",
-  },
-  {
-    name: "Pastel",
-    backgroundColor: "#fdfd96",
-    textColor: "#034f84",
-  },
-  {
-    name: "Bright Red",
-    backgroundColor: "#ff0000",
-    textColor: "#ffffff",
-  },
-  {
-    name: "Bright Orange",
-    backgroundColor: "#ff7f00",
-    textColor: "#ffffff",
-  },
-  {
-    name: "Bright Green",
-    backgroundColor: "#00ff00",
-    textColor: "#000000",
-  },
-  {
-    name: "Bright Blue",
-    backgroundColor: "#0000ff",
-    textColor: "#ffffff",
-  },
-  {
-    name: "Bright Indigo",
-    backgroundColor: "#4b0082",
-    textColor: "#ffffff",
-  },
-  {
-    name: "Bright Violet",
-    backgroundColor: "#9400d3",
-    textColor: "#ffffff",
-  },
-  {
-    name: "Sunshine",
-    backgroundColor: "#fff700",
+    name: "Soft Peach",
+    backgroundColor: "#FFDAB9",
     textColor: "#333333",
   },
   {
-    name: "Sky Blue",
-    backgroundColor: "#87ceeb",
-    textColor: "#000000",
-  },
-  {
-    name: "Lime Green",
-    backgroundColor: "#32cd32",
-    textColor: "#000000",
-  },
-  {
-    name: "Hot Pink",
-    backgroundColor: "#ff69b4",
-    textColor: "#000000",
-  },
-  {
-    name: "Electric Purple",
-    backgroundColor: "#8a2be2",
-    textColor: "#ffffff",
-  },
-  {
-    name: "Coral",
-    backgroundColor: "#ff6f61",
-    textColor: "#ffffff",
-  },
-  {
-    name: "Teal",
-    backgroundColor: "#008080",
-    textColor: "#ffffff",
-  },
-  {
-    name: "Amber",
-    backgroundColor: "#ffc107",
+    name: "Mint Green",
+    backgroundColor: "#C5E1A5",
     textColor: "#333333",
   },
   {
-    name: "Slate",
-    backgroundColor: "#708090",
-    textColor: "#ffffff",
-  },
-  {
-    name: "Magenta",
-    backgroundColor: "#ff00ff",
-    textColor: "#000000",
+    name: "Baby Blue",
+    backgroundColor: "#AEC6CF",
+    textColor: "#333333",
   },
   {
     name: "Lavender",
-    backgroundColor: "#e6e6fa",
-    textColor: "#4b0082",
+    backgroundColor: "#E6E6FA",
+    textColor: "#333333",
   },
   {
-    name: "Mint",
-    backgroundColor: "#98ff98",
-    textColor: "#2f4f4f",
+    name: "Pale Yellow",
+    backgroundColor: "#FFFACD",
+    textColor: "#333333",
   },
   {
-    name: "Cyan",
-    backgroundColor: "#00ffff",
-    textColor: "#000000",
+    name: "Soft Coral",
+    backgroundColor: "#FFB6C1",
+    textColor: "#333333",
   },
   {
-    name: "Apricot",
-    backgroundColor: "#fbceb1",
-    textColor: "#8b4513",
+    name: "Powder Blue",
+    backgroundColor: "#B0E0E6",
+    textColor: "#333333",
   },
   {
-    name: "Jade",
-    backgroundColor: "#00a86b",
-    textColor: "#ffffff",
+    name: "Pale Green",
+    backgroundColor: "#98FB98",
+    textColor: "#333333",
+  },
+  {
+    name: "Soft Orange",
+    backgroundColor: "#FFD8B1",
+    textColor: "#333333",
+  },
+  {
+    name: "Light Pink",
+    backgroundColor: "#FFB6C1",
+    textColor: "#333333",
+  },
+  {
+    name: "Pastel Turquoise",
+    backgroundColor: "#AFEEEE",
+    textColor: "#333333",
+  },
+  {
+    name: "Pale Lilac",
+    backgroundColor: "#D8BFD8",
+    textColor: "#333333",
+  },
+  {
+    name: "Soft Lime",
+    backgroundColor: "#E0F2A0",
+    textColor: "#333333",
+  },
+  {
+    name: "Pastel Mauve",
+    backgroundColor: "#D8A2BE",
+    textColor: "#333333",
+  },
+  {
+    name: "Light Cyan",
+    backgroundColor: "#E0FFFF",
+    textColor: "#333333",
   },
 ];
+
+export const collectionColorSchemes = colorSchemes.slice(2); // Exclude White and Black
+
+export const appBackgroundColors = {
+  // Define your app background colors here
+};

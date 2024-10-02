@@ -2,25 +2,25 @@ import React, { Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useTheme } from "./context/ThemeContext";
 import PrivateRoute from "./components/PrivateRoute";
-import Navbar from "./components/Navbar/Navbar";
-import Sidebar from "./components/Sidebar/Sidebar";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 import "./App.css";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 // Import your page components here
-import LandingPage from "./pages/LandingPage/LandingPage";
-import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
+import LandingPage from "./pages/LandingPage";
+import FullScreenDisplay from "./pages/FullScreenDisplay";
 import YourCollections from "./pages/YourCollections/YourCollections";
-import NewCollection from "./pages/NewCollection/NewCollection";
-import DiscoverCollections from "./pages/DiscoverCollections/DiscoverCollections";
-import CollectionSetup from "./pages/CollectionSetup/CollectionSetup";
-import CollectionFinalStep from "./pages/CollectionFinalStep/CollectionFinalStep";
-import NameGenerator from "./pages/NameGenerator/NameGenerator";
+import NewCollection from "./pages/NewCollection";
+import DiscoverCollections from "./pages/DiscoverCollections";
+import CollectionSetup from "./pages/CollectionSetup";
+import CollectionFinalStep from "./pages/CollectionFinalStep";
+import NameGenerator from "./pages/NameGenerator";
 import Resources from "./pages/Resources";
-import Settings from "./pages/Settings/Settings";
-import MyAccount from "./pages/MyAccount/MyAccount";
-import MathCollectionPage from "./pages/MathCollectionPage/MathCollectionPage";
+import Settings from "./pages/Settings";
+import MyAccount from "./pages/MyAccount";
+import MathCollectionPage from "./pages/MathCollectionPage";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
@@ -36,11 +36,11 @@ const App: React.FC = () => {
   return (
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
-        <div className={`app-container ${theme.className} ${isFullScreen ? "fullscreen" : ""}`}>
+        <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
           <Navbar />
-          <div className="layout">
+          <div className="flex pt-[70px]">
             {!hideSidebar && <Sidebar />}
-            <div className={`main-content ${hideSidebar ? "without-sidebar" : "with-sidebar"}`}>
+            <div className={`flex-grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area`}>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route

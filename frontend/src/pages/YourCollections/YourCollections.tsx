@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchCollections, deleteCollectionById, duplicateCollection, updateCollection } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
-import SessionSettingsModal from "../../components/SessionSettingsModal/SessionSettingsModal";
-import CollectionsNavBar from "../../components/CollectionsNavBar/CollectionsNavBar";
-import EditCollectionModal from "../../components/EditCollectionModal/EditCollectionModal";
-import "./YourCollections.css";
+import SessionSettingsModal from "../../components/SessionSettingsModal";
+import CollectionsNavBar from "../../components/CollectionsNavBar";
+import EditCollectionModal from "../../components/EditCollectionModal";
 import "../../App.css";
 import axios from "axios";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
+import { collectionColorSchemes } from "../../constants/colorSchemes";
+import { lightenColor } from "../../utils/colorUtils";
 
 interface Collection {
   collection_id: number;
@@ -58,7 +59,7 @@ const YourCollections: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
   const [sortOption, setSortOption] = useState<string>(localStorage.getItem("sortPreference") || "date");
   const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
-  const [collectionToDuplicate, setCollectionToDuplicate] = useState<Collection | null>(null);
+  const [selectedCollectionToDuplicate, setSelectedCollectionToDuplicate] = useState<number | null>(null);
   const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -93,6 +94,22 @@ const YourCollections: React.FC = () => {
 
     loadCollections();
   }, [selectedCategory, sortOption, getAccessTokenSilently]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setDuplicateModalOpen(false);
+      }
+    };
+
+    if (isDuplicateModalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDuplicateModalOpen]);
 
   const filterAndSortCollections = (
     collections: Collection[],
@@ -166,9 +183,18 @@ const YourCollections: React.FC = () => {
     setEditModalOpen(true);
   };
 
-  const handleDuplicateCollection = async () => {
-    if (!collectionToDuplicate) return;
+  const handleDuplicateCollection = () => {
+    setDuplicateModalOpen(true);
+  };
+
+  const handleDuplicateConfirm = async () => {
+    if (!selectedCollectionToDuplicate) return;
     try {
+      const collectionToDuplicate = collections.find(col => col.collection_id === selectedCollectionToDuplicate);
+      if (!collectionToDuplicate) {
+        console.error("Selected collection not found");
+        return;
+      }
       const duplicatedCollection = await duplicateCollection(collectionToDuplicate, getAccessTokenSilently);
       setCollections((prevCollections) => [...prevCollections, duplicatedCollection]);
       filterAndSortCollections([...collections, duplicatedCollection], selectedCategory, sortOption);
@@ -221,7 +247,7 @@ const YourCollections: React.FC = () => {
     }
   };
 
-  const handleCategorySelect = (category: string) => {
+  const handleSelectCategory = (category: string) => {
     setSelectedCategory(category);
   };
 
@@ -272,62 +298,85 @@ const YourCollections: React.FC = () => {
   };  
 
   return (
-    <div className="your-collections">
-      <CollectionsNavBar selectedCategory={selectedCategory} onSelectCategory={handleCategorySelect} />
-      <div className="control-panel">
-        <div className="sort-options">
-          <label htmlFor="sort">Sort by:</label>
-          <select id="sort" value={sortOption} onChange={handleSortChange}>
-            <option value="date">Date Created</option>
-            <option value="alphabetical">Alphabetical</option>
-            <option value="category">Category</option>
+    <div className="pl-[250px] pt-[70px] flex flex-col items-center w-full min-h-screen bg-theme-bg text-theme-text dark:bg-gray-800 dark:text-white">
+      <CollectionsNavBar 
+        onSelectCategory={handleSelectCategory} 
+        selectedCategory={selectedCategory}
+      />
+      
+      <div className="flex items-center justify-center w-full mb-5 px-4">
+        <div className="flex items-center mr-5">
+          <label htmlFor="sortSelect" className="mr-2">Sort by:</label>
+          <select
+            id="sortSelect"
+            value={sortOption}
+            onChange={handleSortChange}
+            className="bg-white text-black border border-gray-300 rounded p-2 text-base font-caveat w-40"
+          >
+            <option value="name">Name</option>
+            <option value="date">Date</option>
             <option value="custom">Custom</option>
           </select>
         </div>
-        <button type="button" className="duplicate-collection-button your-styled-button" onClick={() => setDuplicateModalOpen(true)}>
+        <button
+          type="button"
+          onClick={handleDuplicateCollection}
+          className="bg-blue-500 text-white px-4 py-2 rounded font-bold uppercase transition duration-300 hover:bg-blue-600 hover:scale-105 active:bg-blue-700 active:scale-95"
+        >
           Duplicate Collection
         </button>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        {sortOption === "custom" ? (
-          <Droppable droppableId="collections-droppable">
-            {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef} className="your-collections-list">
-                {filteredCollections.map((collection, index) => (
-                  <Draggable
-                    key={collection.collection_id.toString()}
-                    draggableId={collection.collection_id.toString()}
-                    index={index}
-                  >
+        <Droppable droppableId="collections">
+          {(provided) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className="flex flex-wrap justify-around p-0 w-full overflow-y-auto max-h-[calc(100vh-170px)]"
+            >
+              {filteredCollections.map((collection, index) => {
+                const baseColor = collectionColorSchemes[index % collectionColorSchemes.length].backgroundColor;
+                const lightColor = lightenColor(baseColor, 0.7);
+                return (
+                  <Draggable key={collection.collection_id} draggableId={collection.collection_id.toString()} index={index}>
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className={`your-collection-item color-${(index % 10) + 1}`}
+                        className="flex-[0_0_30%] flex flex-col items-center justify-start relative h-[300px] p-5 mb-5 box-border border-5 border-black overflow-hidden" 
+                        style={{
+                          ...provided.draggableProps.style,
+                          backgroundColor: lightColor
+                        }}
                       >
-                        <h1>{collection.name}</h1>
-                        <p>{getItemsCount(collection.description)} items</p>
-                        <p>Created by you on {formatDate(collection.created_at)}</p>
+                        <h1 className="w-full text-black text-center text-xl font-bold p-2.5 border-5 border-black mb-2.5" style={{backgroundColor: baseColor}}>
+                          {collection.name}
+                        </h1>
+                        <p className="text-black text-base font-bold mb-1">{getItemsCount(collection.description)} items in collection</p>
+                        <p className="text-black text-base font-bold mb-2.5">Created by you on {formatDate(collection.created_at)}</p>
                         <button
                           type="button"
-                          className="start-button"
+                          className="text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105 active:opacity-70 active:scale-95 mb-2.5"
+                          style={{backgroundColor: baseColor}}
                           onClick={() => handleStartCollection(collection.collection_id)}
                         >
                           Start
                         </button>
-                        <div className="your-button-group">
+                        <div className="flex justify-center">
                           <button
                             type="button"
-                            className="your-edit-button"
+                            className="text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105 active:opacity-70 active:scale-95 mr-2.5"
+                            style={{backgroundColor: baseColor}}
                             onClick={() => handleEditButtonClick(collection)}
                           >
                             Edit
                           </button>
                           <button
                             type="button"
-                            className="delete-button"
+                            className="text-black border-none rounded p-2.5 text-base font-bold cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105 active:opacity-70 active:scale-95"
+                            style={{backgroundColor: baseColor}}
                             onClick={() => handleDeleteCollection(collection.collection_id)}
                           >
                             Delete
@@ -336,46 +385,12 @@ const YourCollections: React.FC = () => {
                       </div>
                     )}
                   </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ) : (
-          // Render static list when not in custom sort mode
-          <div className={`your-collections-list ${sortOption === "custom" ? "sort-custom" : ""}`}>
-            {filteredCollections.map((collection, index) => (
-              <div key={collection.collection_id} className={`your-collection-item color-${(index % 10) + 1}`}>
-                <h1>{collection.name}</h1>
-                <p>{getItemsCount(collection.description)} items</p>
-                <p>Created by you on {formatDate(collection.created_at)}</p>
-                <button
-                  type="button"
-                  className="start-button"
-                  onClick={() => handleStartCollection(collection.collection_id)}
-                >
-                  Start
-                </button>
-                <div className="your-button-group">
-                  <button
-                    type="button"
-                    className="your-edit-button"
-                    onClick={() => handleEditButtonClick(collection)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="delete-button"
-                    onClick={() => handleDeleteCollection(collection.collection_id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
 
       {showModal && selectedCollection && (
@@ -399,48 +414,37 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div
-          className="your-modal-background"
-          onClick={() => setDuplicateModalOpen(false)} // Close modal when clicking on the background
-        >
-          <div
-            className="your-modal-content"
-            ref={modalRef}
-            onClick={(e) => e.stopPropagation()} // Prevent clicks inside the modal from closing it
-          >
-            <h2>Duplicate Collection</h2>
-            <label htmlFor="duplicate-collection-select">Select a collection to duplicate</label>
-            <select
-              id="duplicate-collection-select"
-              value={collectionToDuplicate?.collection_id || ""}
-              onChange={(e) => {
-                const selectedId = parseInt(e.target.value);
-                const selectedCollection = collections.find((col) => col.collection_id === selectedId);
-                setCollectionToDuplicate(selectedCollection || null);
-              }}
-            >
-              <option value="" disabled>
-                Select a collection to duplicate
-              </option>
-              {collections.map((collection) => (
-                <option key={collection.collection_id} value={collection.collection_id}>
-                  {collection.name}
-                </option>
-              ))}
-            </select>
-            <div className="your-button-group">
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center z-[1001] overflow-hidden">
+          <div ref={modalRef} className="relative z-[1002] bg-white dark:bg-gray-800 p-5 font-caveat rounded-lg w-1/2 max-w-[600px] shadow-lg text-center">
+            <h2 className="text-2xl font-bold mb-4">Duplicate Collection</h2>
+            <div className="mb-4">
+              <label htmlFor="duplicate-collection-select" className="mr-2">Select a collection to duplicate:</label>
+              <select
+                id="duplicate-collection-select"
+                value={selectedCollectionToDuplicate || ""}
+                onChange={(e) => setSelectedCollectionToDuplicate(Number(e.target.value))}
+                className="bg-white text-black border border-gray-300 rounded p-2 text-base font-caveat w-full"
+              >
+                <option value="">Select a collection</option>
+                {collections.map((collection) => (
+                  <option key={collection.collection_id} value={collection.collection_id}>
+                    {collection.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex justify-center space-x-4">
               <button
                 type="button"
-                className="duplicate-button your-styled-button"
-                disabled={!collectionToDuplicate}
-                onClick={handleDuplicateCollection}
+                onClick={handleDuplicateConfirm}
+                className="bg-green-500 text-white px-4 py-2 rounded font-bold uppercase transition duration-300 hover:bg-green-600 hover:scale-105 active:bg-green-700 active:scale-95"
               >
                 Duplicate
               </button>
               <button
                 type="button"
-                className="your-cancel-button"
                 onClick={() => setDuplicateModalOpen(false)}
+                className="bg-red-500 text-white px-4 py-2 rounded font-bold uppercase transition duration-300 hover:bg-red-600 hover:scale-105 active:bg-red-700 active:scale-95"
               >
                 Cancel
               </button>

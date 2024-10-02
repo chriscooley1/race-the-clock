@@ -44,15 +44,15 @@ const Profile = () => {
 
   return (
     isAuthenticated && (
-      <div>
-        <img src={user?.picture} alt={user?.name} />
-        <h2>{user?.name}</h2>
-        <p>{user?.email}</p>
-        <h3>User Metadata</h3>
+      <div className="mx-auto mt-8 max-w-md rounded-lg bg-white p-6 shadow-lg">
+        <img src={user?.picture} alt={user?.name} className="mx-auto mb-4 h-24 w-24 rounded-full" />
+        <h2 className="mb-2 text-center text-2xl font-bold">{user?.name}</h2>
+        <p className="text-gray-600 text-center mb-4">{user?.email}</p>
+        <h3 className="text-xl font-semibold mb-2">User Metadata</h3>
         {userMetadata ? (
-          <pre>{JSON.stringify(userMetadata, null, 2)}</pre>
+          <pre className="bg-gray-100 p-4 rounded overflow-x-auto">{JSON.stringify(userMetadata, null, 2)}</pre>
         ) : (
-          "No user metadata defined"
+          <p className="text-gray-600 italic">No user metadata defined</p>
         )}
       </div>
     )

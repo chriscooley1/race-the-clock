@@ -4,6 +4,7 @@ import tseslint from "typescript-eslint";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import reactRefreshPlugin from "eslint-plugin-react-refresh";
+import tailwindcssPlugin from "eslint-plugin-tailwindcss";
 
 export default [
   {
@@ -29,6 +30,7 @@ export default [
       react: reactPlugin,
       "react-hooks": reactHooksPlugin,
       "react-refresh": reactRefreshPlugin,
+      tailwindcss: tailwindcssPlugin, // Add this line
     },
     rules: {
       "react-refresh/only-export-components": [
@@ -40,10 +42,28 @@ export default [
         rule: "^(is|has)[A-Z]([A-Za-z0-9]?)+",
         message: "Boolean prop '{{propName}}' should start with 'is' or 'has'"
       }],
+      // Add Tailwind CSS rules
+      ...tailwindcssPlugin.configs.recommended.rules,
     },
     settings: {
       react: {
         version: "detect",
+      },
+      tailwindcss: {
+        // These are the default values but can be customized if needed
+        callees: ["classnames", "clsx", "ctl"],
+        config: "tailwind.config.js",
+        cssFiles: [
+          "**/*.css",
+          "!**/node_modules",
+          "!**/.*",
+          "!**/dist",
+          "!**/build",
+        ],
+        groupByResponsive: true,
+        prependCustom: true,
+        removeDuplicates: true,
+        whitelist: [],
       },
     },
   },

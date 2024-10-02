@@ -7,27 +7,28 @@ interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
   const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
-  const [isRedirecting, setIsRedirecting] = useState(false); // Track redirection state
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated && !isLoading && !isRedirecting) {
       console.log("User not authenticated. Redirecting to login.");
-      setIsRedirecting(true); // Prevent multiple redirects
-      loginWithRedirect(); // Trigger redirect
+      setIsRedirecting(true);
+      loginWithRedirect();
     }
   }, [isAuthenticated, isLoading, isRedirecting, loginWithRedirect]);
 
   if (isLoading || isRedirecting) {
-    // Show a loading spinner while checking auth or redirecting
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full size-32 border-y-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
-    // If not authenticated, we return null since the user is being redirected
     return null;
   }
 
-  // Render the protected component once the user is authenticated
   return element;
 };
 
