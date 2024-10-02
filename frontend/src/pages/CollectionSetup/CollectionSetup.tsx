@@ -15,15 +15,9 @@ import {
 } from "../../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
+import { User } from "../../types/user";
 
 type Operation = "multiplication" | "addition" | "subtraction" | "division" | "PeriodicElement";
-
-interface User {
-  username: string;
-  id: string;
-  name: string;
-  email: string;
-}
 
 const CollectionSetup: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -200,7 +194,7 @@ const CollectionSetup: React.FC = () => {
   };
 
   if (!currentUser) {
-    return <div>Loading user information...</div>;
+    return <div className="text-center p-4">Loading user information...</div>;
   }
 
   return (

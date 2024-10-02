@@ -76,12 +76,27 @@ const MathCollectionPage: React.FC = () => {
         onBack={handleBack}
         hasBackButton={true}
       />
-      <div className="flex flex-col justify-center items-center h-[calc(100vh-50px)] w-screen p-0 relative mt-[50px] transition-colors duration-300 overflow-hidden m-0 text-[var(--display-text-color,var(--text-color))] bg-[var(--background-color)]" onClick={handleScreenClick}>
+      <div 
+        className="flex flex-col justify-center items-center h-[calc(100vh-50px)] w-screen p-0 relative mt-[50px] transition-colors duration-300 overflow-hidden m-0 text-[var(--display-text-color,var(--text-color))] bg-[var(--background-color)]"
+        onClick={handleScreenClick}
+      >
         <h1 className="text-[10vw] md:text-[20vw] leading-none text-center m-0 px-5 text-inherit">
           {showAnswer ? getAnswer(currentProblem.name) : currentProblem.name}
         </h1>
-        <button type="button" className="absolute left-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 w-10 h-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70" onClick={(e) => { e.stopPropagation(); handlePrevious(); }}>←</button>
-        <button type="button" className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 w-10 h-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70" onClick={(e) => { e.stopPropagation(); handleNext(); }}>→</button>
+        <button 
+          type="button" 
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 w-10 h-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70"
+          onClick={(e) => { e.stopPropagation(); handlePrevious(); }}
+        >
+          ←
+        </button>
+        <button 
+          type="button" 
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-3xl md:text-5xl text-white cursor-pointer z-10 w-10 h-10 md:w-15 md:h-15 flex items-center justify-center rounded-full hover:bg-opacity-70"
+          onClick={(e) => { e.stopPropagation(); handleNext(); }}
+        >
+          →
+        </button>
       </div>
     </>
   );

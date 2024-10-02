@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./SessionSettingsModal.css";
-import "../../App.css";
 
 interface SessionSettingsModalProps {
   collectionName: string;
@@ -26,34 +24,22 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
     const totalSeconds = currentSettings.speed / 1000;
     const mins = Math.floor(totalSeconds / 60);
     const secs = totalSeconds % 60;
-    console.log("Current settings speed:", currentSettings.speed);
-    console.log("Calculated minutes:", mins, "Calculated seconds:", secs);
     setMinutes(mins);
     setSeconds(secs);
   }, [currentSettings.speed]);
 
   const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if ((event.target as HTMLElement).classList.contains("sess-modal-background")) {
-      console.log("Background clicked, closing modal...");
+    if ((event.target as HTMLElement).classList.contains("bg-black")) {
       onClose();
     }
   };
 
   const calculateSpeed = () => {
-    const speed = (minutes * 60 + seconds) * 1000;
-    console.log("Calculated speed in ms:", speed);
-    return speed;
+    return (minutes * 60 + seconds) * 1000;
   };
 
   const handleStartClick = () => {
     const calculatedSpeed = calculateSpeed();
-    console.log("Starting session with:", {
-      minutes,
-      seconds,
-      shuffle,
-      calculatedSpeed,
-      textColor: currentSettings.textColor,
-    });
     onStart(minutes, seconds, shuffle, calculatedSpeed, currentSettings.textColor);
   };
 
@@ -64,25 +50,27 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   };
 
   return (
-    <div className="sess-modal-background" onClick={handleBackgroundClick}>
-      <div className="sess-modal-container">
-        <button type="button" className="sess-close-button" onClick={onClose}>X</button>
-        <h1>{collectionName}</h1>
-        <p>Please select settings for the session</p>
-        <div className="sess-modal-content">
-          <div className="time-setting">
-            <div className="time-labels">
-              <label htmlFor="minutes">Minutes:</label>
+    <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50" onClick={handleBackgroundClick}>
+      <div className="bg-white p-6 rounded-lg w-full max-w-md text-gray-800 shadow-lg">
+        <button type="button" className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 transition duration-300" onClick={onClose}>
+          X
+        </button>
+        <h1 className="text-2xl font-bold mb-4">{collectionName}</h1>
+        <p className="mb-4">Please select settings for the session</p>
+        <div className="space-y-4">
+          <div className="flex flex-col items-center">
+            <div className="flex justify-between w-full mb-2">
+              <label htmlFor="minutes" className="mr-2">Minutes:</label>
               <label htmlFor="seconds">Seconds:</label>
             </div>
-            <div className="time-inputs">
+            <div className="flex justify-between w-full">
               <input
                 type="number"
                 id="minutes"
                 value={minutes}
                 onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
-                className="sess-custom-input"
-                placeholder="Enter minutes"
+                className="w-24 p-2 border border-gray-300 rounded"
+                placeholder="Minutes"
                 title="Minutes"
                 min={0}
                 onKeyDown={handleKeyDown}
@@ -92,34 +80,33 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 id="seconds"
                 value={seconds}
                 onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
-                className="sess-custom-input"
-                placeholder="Enter seconds"
+                className="w-24 p-2 border border-gray-300 rounded"
+                placeholder="Seconds"
                 title="Seconds"
                 min={0}
                 max={59}
                 onKeyDown={handleKeyDown}
               />
             </div>
-            <div className="sess-checkbox-container">
-              <input
-                type="checkbox"
-                id="shuffle"
-                checked={shuffle}
-                onChange={() => setShuffle(!shuffle)}
-                title="Shuffle Collection"
-              />
-              <label htmlFor="shuffle">Shuffle Collection</label>
-            </div>
           </div>
-          <div className="modal-actions">
-            <button
-              type="button"
-              className="start-session-button"
-              onClick={handleStartClick}
-            >
-              Start Session
-            </button>
+          <div className="flex items-center justify-center">
+            <input
+              type="checkbox"
+              id="shuffle"
+              checked={shuffle}
+              onChange={() => setShuffle(!shuffle)}
+              className="mr-2 h-5 w-5"
+              title="Shuffle Collection"
+            />
+            <label htmlFor="shuffle">Shuffle Collection</label>
           </div>
+          <button
+            type="button"
+            className="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300"
+            onClick={handleStartClick}
+          >
+            Start Session
+          </button>
         </div>
       </div>
     </div>

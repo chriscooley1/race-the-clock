@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTheme } from "../../context/ThemeContext";
-import "./Navbar.css";
-import "../../App.css";
 
 interface NavbarProps {
   isPaused?: boolean;
@@ -60,7 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
   }, []);
 
   return (
-    <div className="fixed top-0 w-full h-[50px] flex justify-between items-center bg-[#cceeff] dark:bg-gray-800 shadow-md px-2 md:px-5 z-50">
+    <div className="fixed top-0 left-0 right-0 h-[50px] flex justify-between items-center bg-light-blue dark:bg-gray-800 shadow-md px-2 md:px-5 z-50">
       {/* Dark mode toggle */}
       <button
         type="button"
@@ -74,7 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
         <>
           <button
             type="button"
-            className="bg-red-400 text-white border-none py-2 px-4 rounded cursor-pointer text-base transition-colors duration-300 hover:bg-red-600 mr-5"
+            className="bg-custom-red hover:bg-custom-red-dark text-white font-bold py-2 px-4 rounded transition-colors duration-300 mr-2"
             onClick={onBack || handleBack}
           >
             Back
@@ -82,7 +80,7 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
           {onPauseResume && (
             <button
               type="button"
-              className="bg-green-500 text-white border-none py-2 px-4 rounded cursor-pointer text-base transition-colors duration-300 hover:bg-green-600 ml-2"
+              className="bg-custom-green hover:bg-custom-green-dark text-white font-bold py-2 px-4 rounded transition-colors duration-300 ml-2"
               onClick={onPauseResume}
             >
               {isPaused ? "Resume" : "Pause"}
@@ -94,9 +92,9 @@ const Navbar: React.FC<NavbarProps> = ({ isPaused, onPauseResume, onBack, hasBac
         Race The Clock
       </div>
       <div className="cursor-pointer flex flex-col justify-between w-[30px] h-[25px]" onClick={handleMenuToggle}>
-        <div className="h-[3px] bg-gray-800 transition-all duration-300"></div>
-        <div className="h-[3px] bg-gray-800 transition-all duration-300"></div>
-        <div className="h-[3px] bg-gray-800 transition-all duration-300"></div>
+        <div className="h-[3px] bg-gray-800 dark:bg-white"></div>
+        <div className="h-[3px] bg-gray-800 dark:bg-white"></div>
+        <div className="h-[3px] bg-gray-800 dark:bg-white"></div>
       </div>
       {menuOpen && (
         <div ref={menuRef} className="absolute top-[50px] right-0 w-full md:w-auto bg-white dark:bg-gray-700 shadow-md rounded-b md:rounded z-[1001] p-2">

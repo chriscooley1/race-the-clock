@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
-import "./FullScreenDisplay.css";
-import "../../App.css";
 import Navbar from "../../components/Navbar/Navbar";
 
 interface CollectionItem {
@@ -149,28 +147,26 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     if (category === "Science" && type === "periodicTable") {
       const [symbol, name, atomicNumber] = currentItem.name.split(" - ");
       return (
-        <div className="periodic-element">
-          <h1 className={`fullscreen-text ${getTextClass(atomicNumber)}`}>{atomicNumber}</h1>
-          <h2 className={`fullscreen-text ${getTextClass(name)}`}>{name}</h2>
-          <h3 className={`fullscreen-text ${getTextClass(symbol)}`}>{symbol}</h3>
+        <div className="flex flex-col items-center justify-center h-full">
+          <h1 className={`text-[20vw] m-0 ${getTextClass(atomicNumber)}`}>{atomicNumber}</h1>
+          <h2 className={`text-[10vw] m-0 ${getTextClass(name)}`}>{name}</h2>
+          <h3 className={`text-[15vw] m-0 ${getTextClass(symbol)}`}>{symbol}</h3>
         </div>
       );
     } else if (category === "Math" && type === "mathProblems") {
       return (
-        <>
-          <h1 className={`fullscreen-text ${currentItem.isAnswer ? "answer" : "problem"} ${getTextClass(currentItem.name)}`}>
-            {currentItem.name}
-          </h1>
-        </>
+        <h1 className={`text-[15vw] leading-tight break-words max-w-[90vw] text-center transition-all duration-300 ${currentItem.isAnswer ? "text-green-500" : "text-red-500"} ${getTextClass(currentItem.name)}`}>
+          {currentItem.name}
+        </h1>
       );
     } else if (category === "Number Sense") {
       return (
-        <div className="number-sense-container">
+        <div className="w-full h-full flex items-center justify-center">
           {currentItem?.svg ? (
             <img 
               src={currentItem.svg} 
               alt={`Number sense ${currentItem.name}`} 
-              className="fullscreen-image" 
+              className="max-w-full max-h-full object-contain" 
             />
           ) : (
             <p>No image available for {currentItem.name}</p>
@@ -178,21 +174,25 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         </div>
       );
     } else {
-      return <h1 className={`fullscreen-text ${getTextClass(currentItem.name)}`}>{currentItem.name}</h1>;
+      return <h1 className={`text-[15vw] leading-tight break-words max-w-[90vw] text-center transition-all duration-300 ${getTextClass(currentItem.name)}`}>{currentItem.name}</h1>;
     }
   };
 
   return (
     <>
       <Navbar isPaused={isPaused} onPauseResume={handlePauseResume} />
-      <div className="fullscreen-container" onClick={handleScreenClick}>
+      <div 
+        className="flex items-center justify-center h-screen w-screen relative transition-colors duration-300 overflow-hidden m-0 p-0"
+        style={{ color: theme.displayTextColor || theme.textColor, backgroundColor: theme.displayBackgroundColor || theme.backgroundColor }}
+        onClick={handleScreenClick}
+      >
         {renderContent()}
-        <button type="button" className="nav-button left" onClick={handlePrevious}>←</button>
-        <button type="button" className="nav-button right" onClick={handleNext}>→</button>
-        <div className="progress-bar-container">
-          <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+        <button type="button" className="absolute top-1/2 left-5 transform -translate-y-1/2 bg-black bg-opacity-50 text-white text-5xl w-15 h-15 flex items-center justify-center rounded-full hover:bg-opacity-70 transition-colors duration-300" onClick={handlePrevious}>←</button>
+        <button type="button" className="absolute top-1/2 right-5 transform -translate-y-1/2 bg-black bg-opacity-50 text-white text-5xl w-15 h-15 flex items-center justify-center rounded-full hover:bg-opacity-70 transition-colors duration-300" onClick={handleNext}>→</button>
+        <div className="fixed bottom-2.5 left-2.5 right-2.5 h-2.5 bg-white bg-opacity-30 rounded-full">
+          <div className="h-full bg-green-500 rounded-full transition-all duration-300 ease-in-out" style={{ width: `${progress}%` }}></div>
         </div>
-        <div className="progress-text">
+        <div className="fixed bottom-7 left-2.5 text-xs" style={{ color: theme.displayTextColor || theme.textColor }}>
           {Math.round(progress)}% Complete
         </div>
       </div>

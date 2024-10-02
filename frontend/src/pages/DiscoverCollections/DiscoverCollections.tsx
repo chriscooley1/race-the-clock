@@ -126,7 +126,7 @@ const DiscoverCollections: React.FC = () => {
       <div className="flex flex-wrap justify-around p-5 w-full">
         {collections.map((collection, index) => {
           const baseColor = collectionColorSchemes[index % collectionColorSchemes.length].backgroundColor;
-          const lightColor = lightenColor(baseColor, 0.7); // 70% lighter
+          const lightColor = lightenColor(baseColor, 0.7);
           const itemCount = collection.item_count ?? collection.items?.length ?? 0;
           return (
             <div 

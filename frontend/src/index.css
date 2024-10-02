@@ -1,32 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Chewy&family=Comic+Neue:wght@400;700&family=Patrick+Hand&family=Baloo+2:wght@400;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Reset margins and paddings for all elements */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  body {
+    @apply font-caveat bg-theme-bg text-theme-text;
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  h1, h2, h3 {
+    @apply font-chewy;
+  }
+
+  p, button {
+    @apply font-patrick-hand;
+  }
+
+  h1 {
+    @apply text-3xl m-0;
+  }
+
+  ul {
+    @apply list-none p-0;
+  }
+
+  li {
+    @apply py-1 text-lg;
+  }
+
+  input {
+    @apply text-theme-text bg-theme-bg;
+  }
 }
 
-/* Root level styles */
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark; /* Enable color-scheme detection */
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  --background-color: #ffffff;
-  --text-color: #000000;
-  --display-background-color: #ffffff;
-  --display-text-color: #000000;
-}
-
-/* Optional: If you still want to include font-synthesis for browsers that support it, use this */
-@supports (font-synthesis: none) {
-  :root {
-    font-synthesis: none;
+@layer components {
+  .button, .styled-button, .start-session-button, .cancel-button {
+    @apply bg-theme-bg text-theme-text;
   }
 }

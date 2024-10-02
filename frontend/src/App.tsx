@@ -36,11 +36,11 @@ const App: React.FC = () => {
   return (
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
-        <div className={`app-container ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
+        <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
           <Navbar />
-          <div className="layout">
+          <div className="flex pt-[50px]"> {/* Add padding-top to account for Navbar */}
             {!hideSidebar && <Sidebar />}
-            <div className={`main-content ${hideSidebar ? "without-sidebar" : "with-sidebar"}`}>
+            <div className={`flex-grow ${hideSidebar ? "ml-0" : "ml-[250px]"}`}>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route

@@ -39,6 +39,9 @@ const config: Config = {
       fontFamily: {
         "caveat": ["Caveat", "cursive"],
         "patrick-hand": ["'Patrick Hand'", "cursive"],
+        "chewy": ["Chewy", "cursive"],
+        "comic-neue": ["Comic Neue", "cursive"],
+        "baloo-2": ["Baloo 2", "cursive"],
       },
       spacing: {
         "sidebar": "250px",
@@ -56,6 +59,7 @@ const config: Config = {
         "vw-10": "10vw",
         "vw-15": "15vw",
         "vw-20": "20vw",
+        "3xl": "3em",
       },
       maxWidth: {
         "collection-setup": "600px",

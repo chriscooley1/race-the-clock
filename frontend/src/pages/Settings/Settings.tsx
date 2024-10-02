@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { colorSchemes, ColorScheme } from "../../constants/colorSchemes";
-import "./Settings.css";
 import "../../App.css";
 
 const colorOptions = colorSchemes.map(scheme => ({
@@ -39,7 +38,10 @@ const Settings: React.FC = () => {
       setTheme({
         ...newTheme,
         isColorblindMode: false, 
-        colorblindType: "none", 
+        colorblindType: "none",
+        isDarkMode: newTheme.name === "Black", // Set isDarkMode based on the theme name
+        displayTextColor: theme.displayTextColor, // Preserve existing display colors
+        displayBackgroundColor: theme.displayBackgroundColor,
       });
     }
   };
@@ -71,7 +73,7 @@ const Settings: React.FC = () => {
           id="theme-select"
           value={theme.name}
           onChange={handleThemeChange}
-          className="p-2 bg-white text-black border border-gray-300 rounded"
+          className="p-2 bg-white text-black border border-gray-300 rounded font-caveat"
         >
           {colorSchemes.map((scheme: ColorScheme) => (
             <option key={scheme.name} value={scheme.name}>
@@ -86,7 +88,8 @@ const Settings: React.FC = () => {
           {colorOptions.map((color) => (
             <div
               key={color.name}
-              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 bg-[${color.value}] ${theme.displayTextColor === color.value ? "border-2 border-black" : ""}`}
+              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-2 border-black" : ""}`}
+              style={{ backgroundColor: color.value }}
               onClick={() => handleTextColorChange(color.value)}
             />
           ))}
@@ -98,7 +101,8 @@ const Settings: React.FC = () => {
           {colorOptions.map((color) => (
             <div
               key={color.name}
-              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 bg-[${color.value}] ${theme.displayBackgroundColor === color.value ? "border-2 border-black" : ""}`}
+              className={`w-8 h-8 inline-block m-1 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-2 border-black" : ""}`}
+              style={{ backgroundColor: color.value }}
               onClick={() => handleBackgroundColorChange(color.value)}
             />
           ))}
@@ -122,7 +126,7 @@ const Settings: React.FC = () => {
             id="colorblind-type-select"
             value={theme.colorblindType}
             onChange={handleColorblindTypeChange}
-            className="p-2 bg-white text-black border border-gray-300 rounded"
+            className="p-2 bg-white text-black border border-gray-300 rounded font-caveat"
           >
             {colorblindTypes.map(type => (
               <option key={type} value={type}>

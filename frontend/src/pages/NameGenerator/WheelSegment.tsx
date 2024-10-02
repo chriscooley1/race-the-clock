@@ -16,16 +16,20 @@ const WheelSegment: React.FC<WheelSegmentProps> = ({ name, index, onRemove, onEd
   };
 
   return (
-    <li className="wheel-segment-item">
+    <li className="flex items-center mb-2">
       <input
         type="text"
         value={name}
         onChange={handleEdit}
-        className="gen-custom-input"
+        className="flex-grow mr-2 bg-white text-black border border-current rounded p-2 text-base font-caveat"
         placeholder="Edit name"
         title={`Edit name ${index + 1}`}
       />
-      <button type="button" onClick={onRemove} className="name-remove-button">
+      <button 
+        type="button" 
+        onClick={onRemove} 
+        className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition duration-300"
+      >
         Remove
       </button>
     </li>
