@@ -11,7 +11,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 // Import your page components here
 import LandingPage from "./pages/LandingPage";
 import FullScreenDisplay from "./pages/FullScreenDisplay";
-import YourCollections from "./pages/YourCollections/YourCollections";
+import YourCollections from "./pages/YourCollections";
 import NewCollection from "./pages/NewCollection";
 import DiscoverCollections from "./pages/DiscoverCollections";
 import CollectionSetup from "./pages/CollectionSetup";

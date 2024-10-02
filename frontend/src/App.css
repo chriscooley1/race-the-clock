@@ -180,6 +180,34 @@ input {
   background-color: #455a64; /* Dark Gray */
 }
 
+.bg-light-blue {
+  background-color: #cceeff;
+}
+
+.bg-custom-red {
+  background-color: #ff6666;
+}
+
+.bg-custom-green {
+  background-color: #4caf50;
+}
+
+.bg-light-pink {
+  background-color: #ffe4e1;
+}
+
+.hover\:bg-custom-red-dark:hover {
+  background-color: #cc0000;
+}
+
+.hover\:bg-custom-green-dark:hover {
+  background-color: #45a049;
+}
+
+.hover\:text-hover-blue:hover {
+  color: #1e90ff;
+}
+
 /* Responsive typography */
 @media (max-width: 768px) {
   body {
