@@ -29,6 +29,7 @@ interface ThemeContextType {
   setColorblindMode: (isEnabled: boolean) => void;
   setColorblindType: (type: string) => void;
   toggleDarkMode: () => void;
+  adjustColorForColorblindness: (color: string) => string;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -162,6 +163,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
         setColorblindMode,
         setColorblindType,
         toggleDarkMode,
+        adjustColorForColorblindness: (color: string) =>
+          adjustColorForColorblindness(color, theme.colorblindType),
       }}
     >
       {children}

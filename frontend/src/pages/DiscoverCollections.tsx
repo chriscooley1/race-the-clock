@@ -7,6 +7,7 @@ import { Collection as APICollection } from "../api";
 import axios from "axios";
 import { lightenColor } from "../utils/colorUtils";
 import { collectionColorSchemes } from "../constants/colorSchemes";
+import { useTheme } from "../context/ThemeContext";
 
 interface Item {
   id: number;
@@ -20,6 +21,7 @@ interface Collection extends Omit<APICollection, "items"> {
 
 const DiscoverCollections: React.FC = () => {
   const { user } = useAuth0();
+  const { adjustColorForColorblindness } = useTheme();
   const [collections, setCollections] = useState<Collection[]>([]);
   const [activeCollection, setActiveCollection] = useState<Collection | null>(
     null,
@@ -133,10 +135,13 @@ const DiscoverCollections: React.FC = () => {
       </div>
       <div className="flex w-full flex-wrap justify-around p-5">
         {collections.map((collection, index) => {
-          const baseColor =
+          const baseColor = adjustColorForColorblindness(
             collectionColorSchemes[index % collectionColorSchemes.length]
-              .backgroundColor;
-          const lightColor = lightenColor(baseColor, 0.7);
+              .backgroundColor,
+          );
+          const lightColor = adjustColorForColorblindness(
+            lightenColor(baseColor, 0.7),
+          );
           const itemCount =
             collection.item_count ?? collection.items?.length ?? 0;
           return (

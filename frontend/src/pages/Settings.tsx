@@ -9,9 +9,13 @@ const colorOptions = colorSchemes.map((scheme) => ({
 
 const colorblindTypes = [
   "Protanopia",
+  "Protanomaly",
   "Deuteranopia",
+  "Deuteranomaly",
   "Tritanopia",
+  "Tritanomaly",
   "Achromatopsia",
+  "Anomalous Trichromacy",
 ];
 
 const Settings: React.FC = () => {
