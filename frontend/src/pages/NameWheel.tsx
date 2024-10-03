@@ -97,7 +97,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
 
   return (
     <div className="relative">
-      <div className="absolute left-1/2 top-0 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-black"></div>
+      <div className="absolute left-1/2 top-0 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500"></div>
       <div className="relative">
         <motion.div animate={controls} className="inline-block">
           <canvas ref={canvasRef} />

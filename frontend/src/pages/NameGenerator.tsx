@@ -99,11 +99,39 @@ const NameGenerator: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center pt-20">
-      <div className="flex w-full max-w-md flex-col items-center">
-        <div className="mb-5 w-full">
-          <div className="mb-5 flex items-center justify-center">
-            <label htmlFor="nameInput" className="mr-2">
+    <div className="flex min-h-screen flex-col items-center pt-[50px] pl-[250px]">
+      <div className="flex w-full max-w-5xl justify-between px-4"> {/* Changed max-w-6xl to max-w-5xl */}
+        {/* Left side */}
+        <div className="flex flex-col items-center">
+          <div className="relative w-full">
+            <div className="absolute left-1/2 top-0 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500 z-10"></div> {/* Moved arrow here and added z-10 */}
+            <NameWheel
+              names={nameList}
+              isSpinning={isSpinning}
+              onSpin={handleSpin}
+              onNameSelected={handleNameSelected}
+              stopSpinning={() => setIsSpinning(false)}
+            />
+          </div>
+          <button
+            type="button"
+            onClick={handleSpin}
+            className="bg-light-blue hover:bg-hover-blue active:bg-active-blue max-w-md rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+          >
+            Spin the Wheel
+          </button>
+          {generatedName && (
+            <div className="mt-5 text-center">
+              <h2 className="text-xl font-bold">Generated Name:</h2>
+              <p className="text-2xl">{generatedName}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Right side */}
+        <div className="flex flex-col ml-8"> {/* Added ml-8 for left margin */}
+          <div className="mb-5 flex items-center">
+            <label htmlFor="nameInput" className="mr-2 whitespace-nowrap">
               Add a Name:
             </label>
             <input
@@ -112,56 +140,34 @@ const NameGenerator: React.FC = () => {
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="font-caveat rounded border border-current bg-white p-2 text-base text-black"
+              className="font-caveat mr-2 grow rounded border border-current bg-white p-2 text-base text-black"
               placeholder="Enter a name"
             />
             <button
               type="button"
               onClick={handleAddName}
-              className="bg-light-blue hover:bg-hover-blue active:bg-active-blue ml-2 rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+              className="bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
             >
               Add
             </button>
           </div>
-          <button
-            type="button"
-            onClick={handleSpin}
-            className="bg-light-blue hover:bg-hover-blue active:bg-active-blue w-full rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
-          >
-            Spin the Wheel
-          </button>
-        </div>
-        <div className="w-full">
-          <NameWheel
-            names={nameList}
-            isSpinning={isSpinning}
-            onSpin={handleSpin}
-            onNameSelected={handleNameSelected}
-            stopSpinning={() => setIsSpinning(false)}
-          />
-        </div>
-        <div className="mt-5 w-full">
-          <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
-          <ul className="list-none p-0">
-            {nameList.map((name, index) => (
-              <WheelSegment
-                key={index}
-                name={name}
-                index={index}
-                angle={0}
-                radius={150}
-                onRemove={() => handleRemoveName(index)}
-                onEdit={(newName) => handleEditName(index, newName)}
-              />
-            ))}
-          </ul>
-        </div>
-        {generatedName && (
-          <div className="mt-5 text-center">
-            <h2 className="text-xl font-bold">Generated Name:</h2>
-            <p className="text-2xl">{generatedName}</p>
+          <div className="w-full">
+            <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
+            <ul className="list-none p-0">
+              {nameList.map((name, index) => (
+                <WheelSegment
+                  key={index}
+                  name={name}
+                  index={index}
+                  angle={0}
+                  radius={150}
+                  onRemove={() => handleRemoveName(index)}
+                  onEdit={(newName) => handleEditName(index, newName)}
+                />
+              ))}
+            </ul>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

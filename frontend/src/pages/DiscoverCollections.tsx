@@ -109,10 +109,10 @@ const DiscoverCollections: React.FC = () => {
   const closeModal = () => setActiveCollection(null);
 
   return (
-    <div className="bg-theme-bg text-theme-text flex min-h-screen w-full flex-col items-center pl-[250px] pt-[70px]">
-      <h1 className="mb-4 text-3xl font-bold">Discover Public Collections</h1>
+    <div className="bg-theme-bg text-theme-text flex min-h-screen w-full flex-col items-center pl-[250px]">
+      <h1 className="text-3xl font-bold">Discover Public Collections</h1>
       {user && <p className="mb-4">Welcome, {user.name}</p>}
-      <div className="mb-6 w-full max-w-2xl">
+      <div>
         <div className="flex">
           <input
             type="text"
