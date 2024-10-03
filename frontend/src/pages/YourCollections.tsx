@@ -418,13 +418,66 @@ const YourCollections: React.FC = () => {
               className="flex max-h-[calc(100vh-170px)] w-full flex-wrap justify-around overflow-y-auto p-0"
             >
               {filteredCollections.map((collection, index) => {
-                const baseColor =
-                  collectionColorSchemes[index % collectionColorSchemes.length]
-                    .backgroundColor;
-                const lightColor = lightenColor(baseColor, 0.7);
+                const colorScheme =
+                  collectionColorSchemes[index % collectionColorSchemes.length];
+                const baseColor = colorScheme.backgroundColor;
+                const textColor = colorScheme.textColor;
 
                 // Only allow dragging when in "custom" sort mode
                 const isDraggable = sortOption === "custom";
+
+                const CollectionCard = (
+                  <div
+                    className="border-5 relative mb-5 box-border flex h-[300px] w-[300px] flex-col items-center justify-start overflow-hidden rounded-lg border-black p-5 shadow-lg transition-all duration-300 hover:scale-105"
+                    style={{
+                      backgroundColor: baseColor,
+                    }}
+                  >
+                    <h1
+                      className="border-5 w-full rounded-t-lg border-black p-2.5 text-center text-xl font-bold"
+                      style={{ backgroundColor: lightenColor(baseColor, 0.2), color: textColor }}
+                    >
+                      {collection.name}
+                    </h1>
+                    <div
+                      className="flex flex-col items-center w-full p-4 rounded-b-lg"
+                      style={{ backgroundColor: lightenColor(baseColor, 0.1) }}
+                    >
+                      <p className="mb-1 text-base font-bold" style={{ color: textColor }}>
+                        {getItemsCount(collection.description)} items in collection
+                      </p>
+                      <p className="mb-2.5 text-base font-bold" style={{ color: textColor }}>
+                        Created by you on {formatDate(collection.created_at)}
+                      </p>
+                      <div className="flex justify-center space-x-4 w-full">
+                        <button
+                          type="button"
+                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                          style={{ backgroundColor: lightenColor(baseColor, 0.3), color: textColor }}
+                          onClick={() => handleStartCollection(collection.collection_id)}
+                        >
+                          Start
+                        </button>
+                        <button
+                          type="button"
+                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                          style={{ backgroundColor: lightenColor(baseColor, 0.3), color: textColor }}
+                          onClick={() => handleEditButtonClick(collection)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+                          style={{ backgroundColor: lightenColor(baseColor, 0.3), color: textColor }}
+                          onClick={() => handleDeleteCollection(collection.collection_id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
 
                 return isDraggable ? (
                   <Draggable
@@ -437,108 +490,13 @@ const YourCollections: React.FC = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="border-5 relative mb-5 box-border flex h-[300px] flex-[0_0_30%] flex-col items-center justify-start overflow-hidden border-black p-5"
-                        style={{
-                          ...provided.draggableProps.style,
-                          backgroundColor: lightColor,
-                        }}
                       >
-                        <h1
-                          className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
-                          style={{ backgroundColor: baseColor }}
-                        >
-                          {collection.name}
-                        </h1>
-                        <div
-                          className="flex flex-col items-center w-full p-4 border-5 border-black"
-                        >
-                        <p className="mb-1 text-base font-bold text-black">
-                          {getItemsCount(collection.description)} items in collection
-                        </p>
-                        <p className="mb-2.5 text-base font-bold text-black">
-                          Created by you on {formatDate(collection.created_at)}
-                        </p>
-                        <div className="flex justify-center space-x-4 w-full">
-                          <button
-                            type="button"
-                            className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                            style={{ backgroundColor: "green" }}
-                            onClick={() => handleStartCollection(collection.collection_id)}
-                          >
-                            Start
-                          </button>
-                          <button
-                            type="button"
-                            className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                            style={{ backgroundColor: "yellow" }}
-                            onClick={() => handleEditButtonClick(collection)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            type="button"
-                            className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                            style={{ backgroundColor: "red" }}
-                            onClick={() => handleDeleteCollection(collection.collection_id)}
-                          >
-                            Delete
-                          </button>
-                        </div>
+                        {CollectionCard}
                       </div>
-                    </div>
                     )}
                   </Draggable>
                 ) : (
-                  <div
-                    key={collection.collection_id}
-                    className="border-5 relative mb-5 box-border flex h-[300px] flex-[0_0_30%] flex-col items-center justify-start overflow-hidden border-black p-5"
-                    style={{
-                      backgroundColor: lightColor,
-                    }}
-                  >
-                    <h1
-                      className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
-                      style={{ backgroundColor: baseColor }}
-                    >
-                      {collection.name}
-                    </h1>
-                    <div
-                      className="flex flex-col items-center w-full p-4 border-5 border-black"
-                    >
-                    <p className="mb-1 text-base font-bold text-black">
-                      {getItemsCount(collection.description)} items in collection
-                    </p>
-                    <p className="mb-2.5 text-base font-bold text-black">
-                      Created by you on {formatDate(collection.created_at)}
-                    </p>
-                      <div className="flex justify-center space-x-4 w-full">
-                        <button
-                          type="button"
-                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                          style={{ backgroundColor: "green" }}
-                          onClick={() => handleStartCollection(collection.collection_id)}
-                        >
-                          Start
-                        </button>
-                        <button
-                          type="button"
-                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                          style={{ backgroundColor: "yellow" }}
-                          onClick={() => handleEditButtonClick(collection)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          type="button"
-                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                          style={{ backgroundColor: "red" }}
-                          onClick={() => handleDeleteCollection(collection.collection_id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  <div key={collection.collection_id}>{CollectionCard}</div>
                 );
               })}
               {provided.placeholder}
