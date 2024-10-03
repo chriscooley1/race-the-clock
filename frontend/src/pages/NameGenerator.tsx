@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import NameWheel from "./NameWheel";
@@ -10,7 +10,9 @@ const NameGenerator: React.FC = () => {
   const [generatedName, setGeneratedName] = useState<string | null>(null);
   const [nameListId, setNameListId] = useState<number | null>(null);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
+  const [showRightSide, setShowRightSide] = useState<boolean>(false);
   const { getAccessTokenSilently } = useAuth0();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const loadNameList = useCallback(async () => {
     try {
@@ -98,13 +100,20 @@ const NameGenerator: React.FC = () => {
     }
   };
 
+  const handleToggleRightSide = () => {
+    setShowRightSide(!showRightSide);
+  };
+
   return (
-    <div className="flex min-h-screen flex-col items-center pt-[50px] pl-[250px]">
-      <div className="flex w-full max-w-5xl justify-between px-4"> {/* Changed max-w-6xl to max-w-5xl */}
-        {/* Left side */}
-        <div className="flex flex-col items-center">
-          <div className="relative w-full">
-            <div className="absolute left-1/2 top-0 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500 z-10"></div> {/* Moved arrow here and added z-10 */}
+    <div 
+      ref={containerRef}
+      className="flex min-h-screen flex-col items-center pt-[50px] pl-[250px]"
+    >
+      <div className={`flex w-full max-w-5xl justify-between px-4 ${showRightSide ? '' : 'justify-center'}`}>
+        {/* Left side (centered when right side is hidden) */}
+        <div className={`flex flex-col items-center ${showRightSide ? 'w-1/2' : 'w-full'}`}>
+          <div className="relative w-full max-w-[500px]">
+            <div className="absolute left-1/2 top-0 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500 z-10"></div>
             <NameWheel
               names={nameList}
               isSpinning={isSpinning}
@@ -116,7 +125,7 @@ const NameGenerator: React.FC = () => {
           <button
             type="button"
             onClick={handleSpin}
-            className="bg-light-blue hover:bg-hover-blue active:bg-active-blue max-w-md rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+            className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-4 max-w-md rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
           >
             Spin the Wheel
           </button>
@@ -128,8 +137,12 @@ const NameGenerator: React.FC = () => {
           )}
         </div>
 
-        {/* Right side */}
-        <div className="flex flex-col ml-8"> {/* Added ml-8 for left margin */}
+        {/* Right side (hidden by default, shown when triggered) */}
+        <div 
+          className={`flex flex-col ml-8 transition-all duration-300 ${
+            showRightSide ? 'opacity-100 w-1/2' : 'opacity-0 w-0 overflow-hidden'
+          }`}
+        >
           <div className="mb-5 flex items-center">
             <label htmlFor="nameInput" className="mr-2 whitespace-nowrap">
               Add a Name:
@@ -169,6 +182,15 @@ const NameGenerator: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Toggle button (always visible) */}
+      <button
+        type="button"
+        className="fixed right-4 top-[70px] bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded-full p-4 font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
+        onClick={handleToggleRightSide}
+      >
+        {showRightSide ? '-' : '+'}
+      </button>
     </div>
   );
 };

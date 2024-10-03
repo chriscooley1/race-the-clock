@@ -173,11 +173,11 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   console.log("Current item:", shuffledSequence[index]);
 
   const getTextClass = (text: string) => {
-    if (text.length <= 5) return "short-text";
-    if (text.length <= 10) return "medium-text";
-    if (text.length <= 15) return "long-text";
-    if (text.length <= 20) return "very-long-text";
-    return "extremely-long-text";
+    if (text.length <= 5) return "text-[clamp(25vw,30vw,35vw)]";
+    if (text.length <= 10) return "text-[clamp(15vw,19vw,23vw)]";
+    if (text.length <= 15) return "text-[clamp(8vw,12vw,16vw)]";
+    if (text.length <= 20) return "text-[clamp(5vw,9vw,13vw)]";
+    return "text-[clamp(3vw,7vw,11vw)]"; // For very long text
   };
 
   const renderContent = () => {
@@ -186,19 +186,17 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       const [symbol, name, atomicNumber] = currentItem.name.split(" - ");
       return (
         <div className="flex h-full flex-col items-center justify-center">
-          <h1 className={`m-0 text-[20vw] ${getTextClass(atomicNumber)}`}>
+          <h1 className={`m-0 ${getTextClass(atomicNumber)}`}>
             {atomicNumber}
           </h1>
-          <h2 className={`m-0 text-[10vw] ${getTextClass(name)}`}>{name}</h2>
-          <h3 className={`m-0 text-[15vw] ${getTextClass(symbol)}`}>
-            {symbol}
-          </h3>
+          <h2 className={`m-0 ${getTextClass(name)}`}>{name}</h2>
+          <h3 className={`m-0 ${getTextClass(symbol)}`}>{symbol}</h3>
         </div>
       );
     } else if (category === "Math" && type === "mathProblems") {
       return (
         <h1
-          className={`max-w-[90vw] break-words text-center text-[15vw] leading-tight transition-all duration-300 ${currentItem.isAnswer ? "text-green-500" : "text-red-500"} ${getTextClass(currentItem.name)}`}
+          className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}
         >
           {currentItem.name}
         </h1>
@@ -220,7 +218,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     } else {
       return (
         <h1
-          className={`max-w-[90vw] break-words text-center text-[15vw] leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}
+          className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}
         >
           {currentItem.name}
         </h1>
