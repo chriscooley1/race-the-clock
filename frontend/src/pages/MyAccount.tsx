@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getCurrentUser } from "../api";
 import UpdateDisplayNameForm from "../components/UpdateDisplayNameForm";
+import { useTheme } from "../context/ThemeContext";
 
 interface UserData {
   display_name?: string;
@@ -11,6 +12,7 @@ interface UserData {
 const MyAccount: React.FC = () => {
   const { user, getAccessTokenSilently } = useAuth0();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -28,7 +30,7 @@ const MyAccount: React.FC = () => {
   }, [getAccessTokenSilently]);
 
   return (
-    <div className="fixed left-[250px] p-3">
+    <div className={`fixed left-[250px] p-3 ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <h2 className="mb-4 text-2xl md:text-3xl">My Account</h2>
       {userData ? (
         <>

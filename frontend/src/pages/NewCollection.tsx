@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("Math");
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { theme } = useTheme();
 
   const categories = [
     "Math",
@@ -38,7 +40,7 @@ const NewCollection: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className={`min-h-screen ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
         <h1 className="text-4xl font-bold">Step 1 - Create</h1>
         <h1 className="text-3xl font-bold">New Collection</h1>
@@ -46,7 +48,7 @@ const NewCollection: React.FC = () => {
           <input
             type="text"
             id="collectionName"
-            className="font-caveat rounded border border-[var(--text-color)] bg-white p-2 text-base text-black"
+            className={`font-caveat rounded border border-[var(--text-color)] p-2 text-base ${theme.isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Collection Name"
@@ -60,7 +62,7 @@ const NewCollection: React.FC = () => {
           </label>
           <select
             id="categorySelect"
-            className="font-caveat w-full rounded border border-[var(--text-color)] bg-white p-2 text-base text-black"
+            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-base ${theme.isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -78,7 +80,7 @@ const NewCollection: React.FC = () => {
             checked={isPublic}
             onChange={() => setIsPublic(!isPublic)}
             title="Share collection publicly"
-            className="relative mr-2.5 size-5 cursor-pointer appearance-none rounded border-2 border-gray-300 bg-white checked:bg-white checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:text-sm checked:after:text-black checked:after:content-['✓']"
+            className={`relative mr-2.5 size-5 cursor-pointer appearance-none rounded border-2 ${theme.isDarkMode ? 'border-gray-600 bg-gray-700' : 'border-gray-300 bg-white'} checked:bg-blue-500 checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:text-sm checked:after:text-white checked:after:content-['✓']`}
           />
           <label htmlFor="publicCheckbox">
             I want to share my collection publicly

@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { saveCollection, getCurrentUser } from "../api";
 import { periodicTable, PeriodicElement } from "../utils/periodicTable";
 import { User } from "../types/user";
+import { useTheme } from "../context/ThemeContext";
 
 // Export the function to avoid the "unused" error
 export function generateId(): string {
@@ -35,6 +36,7 @@ const CollectionFinalStep: React.FC = () => {
   const [newItem, setNewItem] = useState<string>("");
   const [selectedElement, setSelectedElement] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -106,7 +108,7 @@ const CollectionFinalStep: React.FC = () => {
   }
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col items-center">
+    <div className={`mx-auto flex max-w-2xl flex-col items-center ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <h1 className="text-4xl font-bold">Step 3 - Custom</h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <p className="mb-4">

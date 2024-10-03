@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useTheme } from "../context/ThemeContext";
 
 // Define a custom type that includes screen_hint and appState
 interface CustomRedirectLoginOptions {
@@ -11,6 +12,7 @@ interface CustomRedirectLoginOptions {
 
 const LandingPage: React.FC = () => {
   const { loginWithRedirect } = useAuth0();
+  const { theme } = useTheme();
 
   const handleSignup = () => {
     console.log("Signup button clicked");
@@ -40,7 +42,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="box-border flex h-screen w-full flex-col items-center justify-center p-5 text-center">
+    <div className={`box-border flex h-screen w-full flex-col items-center justify-center p-5 text-center ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <h1 className="mb-5 text-2xl md:text-3xl">Welcome to Race The Clock</h1>
       <button
         type="button"

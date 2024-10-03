@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { subscribeToCollection, Collection } from "../api";
+import { useTheme } from "../context/ThemeContext";
 
 interface CollectionPreviewModalProps {
   collection: Collection;
@@ -14,6 +15,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   const { getAccessTokenSilently } = useAuth0();
   const [isSubscribed, setIsSubscribed] = React.useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   const handleSubscribe = async () => {
     try {
@@ -55,7 +57,9 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div
         ref={modalRef}
-        className="relative max-h-[90vh] w-11/12 overflow-hidden rounded-lg bg-white p-4 shadow-lg md:w-3/4 lg:w-1/2"
+        className={`relative max-h-[90vh] w-11/12 overflow-hidden rounded-lg p-4 shadow-lg md:w-3/4 lg:w-1/2 ${
+          theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'
+        }`}
       >
         <h2 className="mb-4 text-center text-2xl font-bold">
           {collection.name}

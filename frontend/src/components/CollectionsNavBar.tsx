@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "../context/ThemeContext";
 
 interface CollectionsNavBarProps {
   onSelectCategory: (category: string) => void;
@@ -9,6 +10,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   onSelectCategory,
   selectedCategory,
 }) => {
+  const { theme } = useTheme();
   const categories = [
     "All Collections",
     "Math",
@@ -19,7 +21,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   ];
 
   return (
-    <div className="bg-light-blue fixed left-[250px] top-[50px] z-30 flex w-[calc(100%-250px)] flex-wrap justify-center p-2 shadow-md">
+    <div className={`fixed left-[250px] top-[50px] z-30 flex w-[calc(100%-250px)] flex-wrap justify-center p-2 shadow-md ${theme.isDarkMode ? 'bg-gray-700' : 'bg-light-blue'}`}>
       {categories.map((category) => (
         <button
           type="button"

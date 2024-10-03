@@ -14,6 +14,7 @@ import {
 import { saveCollection, getCurrentUser } from "../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { User } from "../types/user";
+import { useTheme } from "../context/ThemeContext";
 
 type Operation =
   | "multiplication"
@@ -27,6 +28,7 @@ const CollectionSetup: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { collectionName, isPublic, category } = location.state || {};
+  const { theme } = useTheme();
 
   const [file, setFile] = useState<File | null>(null);
   const [itemCount, setItemCount] = useState<number>(1);
@@ -212,7 +214,7 @@ const CollectionSetup: React.FC = () => {
   }
 
   return (
-    <div className="mx-auto flex max-w-[600px] flex-col items-center">
+    <div className={`mx-auto flex max-w-[600px] flex-col items-center ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <h1 className="text-4xl font-bold">Step 2 - Setup</h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <div className="mb-4 flex flex-col items-center space-y-2">

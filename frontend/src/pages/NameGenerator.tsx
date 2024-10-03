@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import NameWheel from "./NameWheel";
 import WheelSegment from "./WheelSegment";
+import { useTheme } from "../context/ThemeContext";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
@@ -13,6 +14,7 @@ const NameGenerator: React.FC = () => {
   const [showRightSide, setShowRightSide] = useState<boolean>(false);
   const { getAccessTokenSilently } = useAuth0();
   const containerRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   const loadNameList = useCallback(async () => {
     try {
@@ -107,7 +109,7 @@ const NameGenerator: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="flex min-h-screen flex-col items-center pl-[250px] pt-[50px]"
+      className={`flex min-h-screen flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
     >
       <div
         className={`flex w-full max-w-5xl justify-between px-4 ${showRightSide ? "" : "justify-center"}`}

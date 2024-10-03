@@ -27,6 +27,7 @@ const DiscoverCollections: React.FC = () => {
     null,
   );
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const { theme } = useTheme();
 
   const fetchCollections = useCallback(async () => {
     try {
@@ -111,7 +112,7 @@ const DiscoverCollections: React.FC = () => {
   const closeModal = () => setActiveCollection(null);
 
   return (
-    <div className="bg-theme-bg text-theme-text flex min-h-screen w-full flex-col items-center pl-[250px]">
+    <div className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <h1 className="text-3xl font-bold">Discover Public Collections</h1>
       {user && <p className="mb-4">Welcome, {user.name}</p>}
       <div>
