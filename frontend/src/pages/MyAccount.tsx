@@ -30,7 +30,7 @@ const MyAccount: React.FC = () => {
   }, [getAccessTokenSilently]);
 
   return (
-    <div className={`fixed left-[250px] p-3 ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+    <div className={`fixed left-[250px] h-screen w-full p-3 ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <h2 className="mb-4 text-2xl md:text-3xl">My Account</h2>
       {userData ? (
         <>

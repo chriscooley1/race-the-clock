@@ -108,7 +108,7 @@ const CollectionFinalStep: React.FC = () => {
   }
 
   return (
-    <div className={`mx-auto flex max-w-2xl flex-col items-center ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+    <div className={`mx-auto flex h-screen w-full flex-col items-center ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <h1 className="text-4xl font-bold">Step 3 - Custom</h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <p className="mb-4">
