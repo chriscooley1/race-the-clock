@@ -58,7 +58,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
       <div
         ref={modalRef}
         className={`relative max-h-[90vh] w-11/12 overflow-hidden rounded-lg p-4 shadow-lg md:w-3/4 lg:w-1/2 ${
-          theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'
+          theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
         }`}
       >
         <h2 className="mb-4 text-center text-2xl font-bold">

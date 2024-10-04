@@ -102,7 +102,7 @@ function generateCountingSvg(count: number): string {
         const x = pos.x * cellSize + cellSize / 2;
         const y = pos.y * cellSize + cellSize / 2;
         const color = colors[Math.floor(Math.random() * colors.length)];
-        let shapeElement = '';
+        let shapeElement = "";
         switch (randomShape) {
           case "circle":
             shapeElement = `<circle cx="${x}" cy="${y}" r="${cellSize / 3}" fill="${color}" />`;

@@ -75,7 +75,7 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className={`fixed left-[250px] h-screen w-full p-3 ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+    <div className={`fixed left-[250px] h-screen w-full p-3 ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
       <h2 className="mb-4 text-3xl font-bold">Settings</h2>
       <div className="mb-4">
         <label htmlFor="theme-select" className="mr-2 font-bold">

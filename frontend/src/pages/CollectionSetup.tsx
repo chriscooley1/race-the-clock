@@ -214,7 +214,7 @@ const CollectionSetup: React.FC = () => {
   }
 
   return (
-    <div className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+    <div className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
       <h1 className="text-4xl font-bold">Step 2 - Setup</h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <div className="mb-4 flex flex-col items-center space-y-2">
