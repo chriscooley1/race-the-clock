@@ -77,7 +77,7 @@ export function generateNumberSenseImages(
   count: number,
 ): { url: string; svg: string; count: number }[] {
   return Array.from({ length: count }, () => {
-    const randomCount = Math.floor(Math.random() * count) + 1;
+    const randomCount = Math.floor(Math.random() * 10) + 1; // Increased max count to 10
     return {
       url: generateCountingSvg(randomCount),
       svg: generateCountingSvg(randomCount),
@@ -88,25 +88,56 @@ export function generateNumberSenseImages(
 
 function generateCountingSvg(count: number): string {
   const shapes = ["circle", "square", "triangle"];
+  const colors = ["blue", "green", "red", "purple", "orange"];
+  const gridSize = 5; // 5x5 grid
+  const cellSize = 40;
+  const svgSize = gridSize * cellSize;
+
   const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+  const positions = getRandomPositions(count, gridSize);
 
   const svgContent = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
-      ${Array.from({ length: count }, (_, i) => {
-        const x = 30 + (i % 3) * 70;
-        const y = 30 + Math.floor(i / 3) * 70;
+    <svg xmlns="http://www.w3.org/2000/svg" width="${svgSize}" height="${svgSize}" viewBox="0 0 ${svgSize} ${svgSize}">
+      ${positions.map((pos) => {
+        const x = pos.x * cellSize + cellSize / 2;
+        const y = pos.y * cellSize + cellSize / 2;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        let shapeElement = '';
         switch (randomShape) {
           case "circle":
-            return `<circle cx="${x}" cy="${y}" r="20" fill="blue" />`;
+            shapeElement = `<circle cx="${x}" cy="${y}" r="${cellSize / 3}" fill="${color}" />`;
+            break;
           case "square":
-            return `<rect x="${x - 20}" y="${y - 20}" width="40" height="40" fill="green" />`;
-          case "triangle":
-            return `<polygon points="${x},${y - 20} ${x - 20},${y + 20} ${x + 20},${y + 20}" fill="red" />`;
+            shapeElement = `<rect x="${x - cellSize / 3}" y="${y - cellSize / 3}" width="${cellSize * 2 / 3}" height="${cellSize * 2 / 3}" fill="${color}" />`;
+            break;
+          case "triangle": {
+            const size = cellSize * 2 / 3;
+            shapeElement = `<polygon points="${x},${y - size / 2} ${x - size / 2},${y + size / 2} ${x + size / 2},${y + size / 2}" fill="${color}" />`;
+            break;
+          }
         }
+        return shapeElement;
       }).join("")}
     </svg>
   `;
   return `data:image/svg+xml,${encodeURIComponent(svgContent)}`;
+}
+
+function getRandomPositions(count: number, gridSize: number): { x: number; y: number }[] {
+  const positions: { x: number; y: number }[] = [];
+  const allPositions = Array.from({ length: gridSize * gridSize }, (_, i) => ({
+    x: i % gridSize,
+    y: Math.floor(i / gridSize),
+  }));
+
+  for (let i = 0; i < count; i++) {
+    if (allPositions.length === 0) break;
+    const index = Math.floor(Math.random() * allPositions.length);
+    positions.push(allPositions[index]);
+    allPositions.splice(index, 1);
+  }
+
+  return positions;
 }
 
 export const generatePeriodicTableElements = (count: number): string[] => {
