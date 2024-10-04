@@ -75,25 +75,25 @@ export const generateMathProblems = (
 
 export function generateNumberSenseImages(
   count: number,
+  color: string = "blue",
+  shape: string = "circle"
 ): { url: string; svg: string; count: number }[] {
   return Array.from({ length: count }, () => {
-    const randomCount = Math.floor(Math.random() * 10) + 1; // Increased max count to 10
+    const randomCount = Math.floor(Math.random() * 10) + 1;
+    const svg = generateCountingSvg(randomCount, color, shape);
     return {
-      url: generateCountingSvg(randomCount),
-      svg: generateCountingSvg(randomCount),
+      url: svg,
+      svg: svg,
       count: randomCount,
     };
   });
 }
 
-function generateCountingSvg(count: number): string {
-  const shapes = ["circle", "square", "triangle"];
-  const colors = ["blue", "green", "red", "purple", "orange"];
+export function generateCountingSvg(count: number, color: string = "blue", shape: string = "circle"): string {
   const gridSize = 5; // 5x5 grid
   const cellSize = 40;
   const svgSize = gridSize * cellSize;
 
-  const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
   const positions = getRandomPositions(count, gridSize);
 
   const svgContent = `
@@ -101,9 +101,8 @@ function generateCountingSvg(count: number): string {
       ${positions.map((pos) => {
         const x = pos.x * cellSize + cellSize / 2;
         const y = pos.y * cellSize + cellSize / 2;
-        const color = colors[Math.floor(Math.random() * colors.length)];
         let shapeElement = "";
-        switch (randomShape) {
+        switch (shape) {
           case "circle":
             shapeElement = `<circle cx="${x}" cy="${y}" r="${cellSize / 3}" fill="${color}" />`;
             break;

@@ -5,6 +5,7 @@ import { saveCollection, getCurrentUser } from "../api";
 import { periodicTable, PeriodicElement } from "../utils/periodicTable";
 import { User } from "../types/user";
 import { useTheme } from "../context/ThemeContext";
+import { generateCountingSvg } from "../utils/RandomGenerators";
 
 // Export the function to avoid the "unused" error
 export function generateId(): string {
@@ -30,13 +31,17 @@ const CollectionFinalStep: React.FC = () => {
     type: initialType,
   } = location.state as LocationState;
   const { getAccessTokenSilently } = useAuth0();
-  const [items, setItems] = useState<{ id: number; name: string }[]>(
+  const [items, setItems] = useState<{ id: number; name: string; svg?: string; count?: number }[]>(
     sequence.map((name, index) => ({ id: index + 1, name })),
   );
   const [newItem, setNewItem] = useState<string>("");
   const [selectedElement, setSelectedElement] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const { theme } = useTheme();
+
+  const [dotPosition, setDotPosition] = useState<string>("1");
+  const [dotColor, setDotColor] = useState<string>("blue");
+  const [dotShape, setDotShape] = useState<string>("circle");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -66,6 +71,17 @@ const CollectionFinalStep: React.FC = () => {
     setItems([...items, { id: items.length + 1, name: newItem }]);
     setNewItem("");
     setSelectedElement("");
+  };
+
+  const handleAddNumberSenseItem = () => {
+    const svg = generateCountingSvg(parseInt(dotPosition), dotColor, dotShape);
+    const newItem = {
+      id: items.length + 1,
+      name: `Number Sense: ${dotPosition} ${dotShape}s`,
+      svg: svg,
+      count: parseInt(dotPosition),
+    };
+    setItems([...items, newItem]);
   };
 
   const handleRemoveItem = (id: number) => {
@@ -115,7 +131,63 @@ const CollectionFinalStep: React.FC = () => {
         To add another item to this Collection, click the add button below.
       </p>
       <div className="mb-4 flex flex-col items-center">
-        {category === "Science" ? (
+        {category === "Number Sense" ? (
+          <>
+            <label htmlFor="dot-position" className="mb-2">
+              Select number of dots:
+            </label>
+            <select
+              id="dot-position"
+              value={dotPosition}
+              onChange={(e) => setDotPosition(e.target.value)}
+              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+            >
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                <option key={num} value={num.toString()}>
+                  {num}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="dot-color" className="mb-2">
+              Select dot color:
+            </label>
+            <select
+              id="dot-color"
+              value={dotColor}
+              onChange={(e) => setDotColor(e.target.value)}
+              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+            >
+              {["blue", "green", "red", "purple", "orange"].map((color) => (
+                <option key={color} value={color}>
+                  {color}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="dot-shape" className="mb-2">
+              Select dot shape:
+            </label>
+            <select
+              id="dot-shape"
+              value={dotShape}
+              onChange={(e) => setDotShape(e.target.value)}
+              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+            >
+              {["circle", "square", "triangle"].map((shape) => (
+                <option key={shape} value={shape}>
+                  {shape}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={handleAddNumberSenseItem}
+              className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+              title="Add Number Sense Item"
+            >
+              +
+            </button>
+          </>
+        ) : category === "Science" ? (
           <>
             <label htmlFor="element-select" className="mb-2">
               Select an element:
@@ -152,24 +224,37 @@ const CollectionFinalStep: React.FC = () => {
             />
           </>
         )}
-        <button
-          type="button"
-          onClick={handleAddItem}
-          className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
-          title="Add Item"
-        >
-          +
-        </button>
+        {category !== "Number Sense" && (
+          <button
+            type="button"
+            onClick={handleAddItem}
+            className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+            title="Add Item"
+          >
+            +
+          </button>
+        )}
       </div>
       {items.map((item) => (
         <div key={item.id} className="mb-2 flex w-full items-center">
-          <input
-            type="text"
-            className="mr-2 grow rounded-md border border-gray-300 p-2 font-['Caveat']"
-            value={item.name}
-            readOnly
-            title={`Item ${item.id}: ${item.name}`}
-          />
+          {item.svg ? (
+            <div className="mr-2 flex grow items-center">
+              <img
+                src={item.svg}
+                alt={item.name}
+                className="mr-2 size-12"
+              />
+              <span>{item.name}</span>
+            </div>
+          ) : (
+            <input
+              type="text"
+              className="mr-2 grow rounded-md border border-gray-300 p-2 font-['Caveat']"
+              value={item.name}
+              readOnly
+              title={`Item ${item.id}: ${item.name}`}
+            />
+          )}
           <button
             className="rounded-md bg-red-500 px-2 py-1 text-white transition duration-300 hover:bg-red-600"
             type="button"

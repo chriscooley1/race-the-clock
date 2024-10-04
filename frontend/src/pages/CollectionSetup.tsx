@@ -39,6 +39,8 @@ const CollectionSetup: React.FC = () => {
   const [numberSenseItems, setNumberSenseItems] = useState<
     { url?: string; svg?: string; count: number }[]
   >([]);
+  const [dotColor, setDotColor] = useState<string>("blue");
+  const [dotShape, setDotShape] = useState<string>("circle");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -134,7 +136,7 @@ const CollectionSetup: React.FC = () => {
         }
         break;
       case "numberSense": {
-        const images = generateNumberSenseImages(itemCount);
+        const images = generateNumberSenseImages(itemCount, dotColor, dotShape);
         setNumberSenseItems(images);
         generatedSequence = images.map(
           (image, index) =>
@@ -289,6 +291,44 @@ const CollectionSetup: React.FC = () => {
             }}
           />
         </div>
+        {category === "Number Sense" && (
+        <>
+          <div>
+            <label htmlFor="dot-color" className="mb-2 block font-bold">
+              Dot Color:
+            </label>
+            <select
+              id="dot-color"
+              className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+              value={dotColor}
+              onChange={(e) => setDotColor(e.target.value)}
+            >
+              {["blue", "green", "red", "purple", "orange"].map((color) => (
+                <option key={color} value={color}>
+                  {color}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="dot-shape" className="mb-2 block font-bold">
+              Dot Shape:
+            </label>
+            <select
+              id="dot-shape"
+              className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+              value={dotShape}
+              onChange={(e) => setDotShape(e.target.value)}
+            >
+              {["circle", "square", "triangle"].map((shape) => (
+                <option key={shape} value={shape}>
+                  {shape}
+                </option>
+              ))}
+            </select>
+          </div>
+        </>
+      )}
         <button
           type="button"
           className="w-full rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
