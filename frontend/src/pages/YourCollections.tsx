@@ -398,6 +398,8 @@ const YourCollections: React.FC = () => {
             className="font-caveat w-40 rounded border border-gray-300 bg-white p-2 text-base text-black"
           >
             <option value="name">Name</option>
+            <option value="alphabetical">Alphabetical</option>
+            <option value="category">Category</option>
             <option value="date">Date</option>
             <option value="custom">Custom</option>
           </select>
