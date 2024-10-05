@@ -11,13 +11,6 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  console.log("All environment variables:", import.meta.env);
-  console.log("Auth0 Domain:", import.meta.env.VITE_AUTH0_DOMAIN);
-  console.log("Auth0 Client ID:", import.meta.env.VITE_AUTH0_CLIENT_ID);
-  console.log("Auth0 Callback URL:", import.meta.env.VITE_AUTH0_CALLBACK_URL);
-  console.log("Auth0 Audience:", import.meta.env.VITE_AUTH0_AUDIENCE);
-  console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
-
   interface AppState {
     returnTo?: string;
   }

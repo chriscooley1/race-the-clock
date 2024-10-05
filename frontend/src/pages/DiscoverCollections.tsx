@@ -31,8 +31,6 @@ const DiscoverCollections: React.FC = () => {
 
   const fetchCollections = useCallback(async () => {
     try {
-      console.log("Fetching public collections...");
-      console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
       const fetchedCollections = await fetchPublicCollections();
       console.log("Fetched collections:", fetchedCollections);
       setCollections(

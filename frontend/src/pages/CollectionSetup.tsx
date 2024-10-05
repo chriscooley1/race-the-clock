@@ -45,9 +45,7 @@ const CollectionSetup: React.FC = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        console.log("Fetching current user...");
         const fetchedUser = await getCurrentUser(getAccessTokenSilently);
-        console.log("Fetched user:", fetchedUser);
         if (isUser(fetchedUser)) {
           const userWithDefaults: User = {
             ...fetchedUser,

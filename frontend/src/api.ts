@@ -3,10 +3,7 @@ import { User } from "@auth0/auth0-react";
 import { AxiosError } from "axios";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://race-the-clock-backend-production.up.railway.app";
-console.log("Environment variables:", import.meta.env);
-console.log("API_BASE_URL:", API_BASE_URL);
+  import.meta.env.VITE_API_BASE_URL
 
 if (!API_BASE_URL) {
   console.error("VITE_API_BASE_URL is not set in the environment variables");
@@ -45,15 +42,13 @@ export const getCurrentUser = async (
   getAccessTokenSilently: () => Promise<string>,
 ): Promise<User> => {
   try {
-    console.log("Fetching access token for current user...");
     const token = await getAccessTokenSilently();
     const response = await axios.get(`${API_BASE_URL}/users/me/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("Current user data:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching user data:", error);
+    console.error("Error fetching user data");
     handleApiError(error);
     throw new Error("Could not fetch current user.");
   }
