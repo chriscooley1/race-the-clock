@@ -31,9 +31,9 @@ const CollectionFinalStep: React.FC = () => {
     type: initialType,
   } = location.state as LocationState;
   const { getAccessTokenSilently } = useAuth0();
-  const [items, setItems] = useState<{ id: number; name: string; svg?: string; count?: number }[]>(
-    sequence.map((name, index) => ({ id: index + 1, name })),
-  );
+  const [items, setItems] = useState<
+    { id: number; name: string; svg?: string; count?: number }[]
+  >(sequence.map((name, index) => ({ id: index + 1, name })));
   const [newItem, setNewItem] = useState<string>("");
   const [selectedElement, setSelectedElement] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -124,7 +124,9 @@ const CollectionFinalStep: React.FC = () => {
   }
 
   return (
-    <div className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+    <div
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+    >
       <h1 className="text-4xl font-bold">Step 3 - Custom</h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <p className="mb-4">
@@ -239,11 +241,7 @@ const CollectionFinalStep: React.FC = () => {
         <div key={item.id} className="mb-2 flex w-full items-center">
           {item.svg ? (
             <div className="mr-2 flex grow items-center">
-              <img
-                src={item.svg}
-                alt={item.name}
-                className="mr-2 size-12"
-              />
+              <img src={item.svg} alt={item.name} className="mr-2 size-12" />
               <span>{item.name}</span>
             </div>
           ) : (

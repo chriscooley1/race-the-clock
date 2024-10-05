@@ -214,7 +214,9 @@ const CollectionSetup: React.FC = () => {
   }
 
   return (
-    <div className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+    <div
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+    >
       <h1 className="text-4xl font-bold">Step 2 - Setup</h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <div className="mb-4 flex flex-col items-center space-y-2">
@@ -290,43 +292,43 @@ const CollectionSetup: React.FC = () => {
           />
         </div>
         {category === "Number Sense" && (
-        <>
-          <div>
-            <label htmlFor="dot-color" className="mb-2 block font-bold">
-              Dot Color:
-            </label>
-            <select
-              id="dot-color"
-              className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
-              value={dotColor}
-              onChange={(e) => setDotColor(e.target.value)}
-            >
-              {["blue", "green", "red", "purple", "orange"].map((color) => (
-                <option key={color} value={color}>
-                  {color}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="dot-shape" className="mb-2 block font-bold">
-              Dot Shape:
-            </label>
-            <select
-              id="dot-shape"
-              className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
-              value={dotShape}
-              onChange={(e) => setDotShape(e.target.value)}
-            >
-              {["circle", "square", "triangle"].map((shape) => (
-                <option key={shape} value={shape}>
-                  {shape}
-                </option>
-              ))}
-            </select>
-          </div>
-        </>
-      )}
+          <>
+            <div>
+              <label htmlFor="dot-color" className="mb-2 block font-bold">
+                Dot Color:
+              </label>
+              <select
+                id="dot-color"
+                className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+                value={dotColor}
+                onChange={(e) => setDotColor(e.target.value)}
+              >
+                {["blue", "green", "red", "purple", "orange"].map((color) => (
+                  <option key={color} value={color}>
+                    {color}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="dot-shape" className="mb-2 block font-bold">
+                Dot Shape:
+              </label>
+              <select
+                id="dot-shape"
+                className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+                value={dotShape}
+                onChange={(e) => setDotShape(e.target.value)}
+              >
+                {["circle", "square", "triangle"].map((shape) => (
+                  <option key={shape} value={shape}>
+                    {shape}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        )}
         <button
           type="button"
           className="w-full rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"

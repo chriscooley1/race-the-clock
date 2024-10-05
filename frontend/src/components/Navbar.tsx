@@ -64,37 +64,37 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
-      {/* Dark mode toggle */}
-      <button
-        type="button"
-        onClick={toggleDarkMode}
-        className="rounded-full bg-gray-200 p-2 text-gray-800 dark:bg-gray-600 dark:text-white"
-      >
-        {theme.isDarkMode ? "☀️" : "🌙"}
-      </button>
+      <div className="flex items-center">
+        {/* Dark mode toggle */}
+        <button
+          type="button"
+          onClick={toggleDarkMode}
+          className="mr-2 rounded-full bg-gray-200 p-2 text-gray-800 dark:bg-gray-600 dark:text-white"
+        >
+          {theme.isDarkMode ? "☀️" : "🌙"}
+        </button>
 
-      {(location.pathname === "/fullscreen-display" || hasBackButton) && (
-        <>
+        {(location.pathname === "/fullscreen-display" || hasBackButton) && (
           <button
             type="button"
-            className="bg-custom-red hover:bg-custom-red-dark mr-2 rounded px-4 py-2 font-bold text-white transition-colors duration-300"
+            className="bg-custom-red hover:bg-custom-red-dark mr-2 rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
             onClick={onBack || handleBack}
           >
             Back
           </button>
-          {onPauseResume && (
-            <button
-              type="button"
-              className="bg-custom-green hover:bg-custom-green-dark ml-2 rounded px-4 py-2 font-bold text-white transition-colors duration-300"
-              onClick={onPauseResume}
-            >
-              {isPaused ? "Resume" : "Pause"}
-            </button>
-          )}
-        </>
-      )}
+        )}
+        {onPauseResume && (
+          <button
+            type="button"
+            className="bg-custom-green hover:bg-custom-green-dark rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
+            onClick={onPauseResume}
+          >
+            {isPaused ? "Resume" : "Pause"}
+          </button>
+        )}
+      </div>
       <div
-        className="grow cursor-pointer text-center text-lg font-bold text-gray-800 md:text-xl dark:text-white"
+        className="grow cursor-pointer text-center text-base font-bold text-gray-800 md:text-xl dark:text-white"
         onClick={handleTitleClick}
       >
         Race The Clock
@@ -110,7 +110,7 @@ const Navbar: React.FC<NavbarProps> = ({
       {menuOpen && (
         <div
           ref={menuRef}
-          className="absolute right-0 top-[50px] z-[1001] w-full rounded-b bg-white p-2 shadow-md md:w-auto md:rounded dark:bg-gray-700"
+          className="absolute right-0 top-[50px] z-[1001] w-full rounded-b bg-white p-2 shadow-md md:w-48 dark:bg-gray-700"
         >
           <button
             type="button"

@@ -2,8 +2,7 @@ import axios from "axios";
 import { User } from "@auth0/auth0-react";
 import { AxiosError } from "axios";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 if (!API_BASE_URL) {
   console.error("VITE_API_BASE_URL is not set in the environment variables");

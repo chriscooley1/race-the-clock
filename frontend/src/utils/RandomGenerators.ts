@@ -76,7 +76,7 @@ export const generateMathProblems = (
 export function generateNumberSenseImages(
   count: number,
   color: string = "blue",
-  shape: string = "circle"
+  shape: string = "circle",
 ): { url: string; svg: string; count: number }[] {
   return Array.from({ length: count }, () => {
     const randomCount = Math.floor(Math.random() * 10) + 1;
@@ -89,7 +89,11 @@ export function generateNumberSenseImages(
   });
 }
 
-export function generateCountingSvg(count: number, color: string = "blue", shape: string = "circle"): string {
+export function generateCountingSvg(
+  count: number,
+  color: string = "blue",
+  shape: string = "circle",
+): string {
   const gridSize = 5; // 5x5 grid
   const cellSize = 40;
   const svgSize = gridSize * cellSize;
@@ -98,31 +102,36 @@ export function generateCountingSvg(count: number, color: string = "blue", shape
 
   const svgContent = `
     <svg xmlns="http://www.w3.org/2000/svg" width="${svgSize}" height="${svgSize}" viewBox="0 0 ${svgSize} ${svgSize}">
-      ${positions.map((pos) => {
-        const x = pos.x * cellSize + cellSize / 2;
-        const y = pos.y * cellSize + cellSize / 2;
-        let shapeElement = "";
-        switch (shape) {
-          case "circle":
-            shapeElement = `<circle cx="${x}" cy="${y}" r="${cellSize / 3}" fill="${color}" />`;
-            break;
-          case "square":
-            shapeElement = `<rect x="${x - cellSize / 3}" y="${y - cellSize / 3}" width="${cellSize * 2 / 3}" height="${cellSize * 2 / 3}" fill="${color}" />`;
-            break;
-          case "triangle": {
-            const size = cellSize * 2 / 3;
-            shapeElement = `<polygon points="${x},${y - size / 2} ${x - size / 2},${y + size / 2} ${x + size / 2},${y + size / 2}" fill="${color}" />`;
-            break;
+      ${positions
+        .map((pos) => {
+          const x = pos.x * cellSize + cellSize / 2;
+          const y = pos.y * cellSize + cellSize / 2;
+          let shapeElement = "";
+          switch (shape) {
+            case "circle":
+              shapeElement = `<circle cx="${x}" cy="${y}" r="${cellSize / 3}" fill="${color}" />`;
+              break;
+            case "square":
+              shapeElement = `<rect x="${x - cellSize / 3}" y="${y - cellSize / 3}" width="${(cellSize * 2) / 3}" height="${(cellSize * 2) / 3}" fill="${color}" />`;
+              break;
+            case "triangle": {
+              const size = (cellSize * 2) / 3;
+              shapeElement = `<polygon points="${x},${y - size / 2} ${x - size / 2},${y + size / 2} ${x + size / 2},${y + size / 2}" fill="${color}" />`;
+              break;
+            }
           }
-        }
-        return shapeElement;
-      }).join("")}
+          return shapeElement;
+        })
+        .join("")}
     </svg>
   `;
   return `data:image/svg+xml,${encodeURIComponent(svgContent)}`;
 }
 
-function getRandomPositions(count: number, gridSize: number): { x: number; y: number }[] {
+function getRandomPositions(
+  count: number,
+  gridSize: number,
+): { x: number; y: number }[] {
   const positions: { x: number; y: number }[] = [];
   const allPositions = Array.from({ length: gridSize * gridSize }, (_, i) => ({
     x: i % gridSize,

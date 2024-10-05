@@ -380,14 +380,14 @@ const YourCollections: React.FC = () => {
   };
 
   return (
-    <div className="bg-theme-bg text-theme-text flex min-h-screen w-full flex-col items-center pl-[250px] pt-[70px] dark:bg-gray-800 dark:text-white">
+    <div className="bg-theme-bg text-theme-text flex min-h-screen w-full flex-col items-center px-4 pt-[70px] md:pl-[250px] dark:bg-gray-800 dark:text-white">
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}
       />
 
-      <div className="mb-5 flex w-full items-center justify-center px-4">
-        <div className="mr-5 flex items-center">
+      <div className="mb-5 flex w-full flex-col items-center justify-center sm:flex-row">
+        <div className="mb-4 flex items-center sm:mb-0 sm:mr-5">
           <label htmlFor="sortSelect" className="mr-2">
             Sort by:
           </label>
@@ -422,7 +422,7 @@ const YourCollections: React.FC = () => {
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="flex max-h-[calc(100vh-170px)] w-full flex-wrap justify-around overflow-y-auto p-0"
+              className="grid max-h-[calc(100vh-170px)] w-full grid-cols-1 gap-4 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3"
             >
               {filteredCollections.map((collection, index) => {
                 const baseColor = adjustColorForColorblindness(
@@ -433,7 +433,6 @@ const YourCollections: React.FC = () => {
                   lightenColor(baseColor, 0.7),
                 );
 
-                // Only allow dragging when in "custom" sort mode
                 const isDraggable = sortOption === "custom";
 
                 return isDraggable ? (
@@ -447,115 +446,39 @@ const YourCollections: React.FC = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="border-5 relative mb-5 box-border flex h-[300px] flex-[0_0_30%] flex-col items-center justify-start overflow-hidden border-black p-5"
+                        className="border-5 relative flex h-[300px] flex-col items-center justify-start overflow-hidden border-black p-5"
                         style={{
                           ...provided.draggableProps.style,
                           backgroundColor: lightColor,
                         }}
                       >
-                        <h1
-                          className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
-                          style={{ backgroundColor: baseColor }}
-                        >
-                          {collection.name}
-                        </h1>
-                        <div className="border-5 flex w-full flex-col items-center border-black p-4">
-                          <p className="mb-1 text-base font-bold text-black">
-                            {getItemsCount(collection.description)} items in
-                            collection
-                          </p>
-                          <p className="mb-2.5 text-base font-bold text-black">
-                            Created by you on{" "}
-                            {formatDate(collection.created_at)}
-                          </p>
-                          <div className="flex w-full justify-center space-x-4">
-                            <button
-                              type="button"
-                              className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                              style={{ backgroundColor: "green" }}
-                              onClick={() =>
-                                handleStartCollection(collection.collection_id)
-                              }
-                            >
-                              Start
-                            </button>
-                            <button
-                              type="button"
-                              className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                              style={{ backgroundColor: "yellow" }}
-                              onClick={() => handleEditButtonClick(collection)}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              type="button"
-                              className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                              style={{ backgroundColor: "red" }}
-                              onClick={() =>
-                                handleDeleteCollection(collection.collection_id)
-                              }
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </div>
+                        <CollectionContent
+                          collection={collection}
+                          baseColor={baseColor}
+                          handleStartCollection={handleStartCollection}
+                          handleEditButtonClick={handleEditButtonClick}
+                          handleDeleteCollection={handleDeleteCollection}
+                          formatDate={formatDate}
+                        />
                       </div>
                     )}
                   </Draggable>
                 ) : (
                   <div
                     key={collection.collection_id}
-                    className="border-5 relative mb-5 box-border flex h-[300px] flex-[0_0_30%] flex-col items-center justify-start overflow-hidden border-black p-5"
+                    className="border-5 relative flex h-[300px] flex-col items-center justify-start overflow-hidden border-black p-5"
                     style={{
                       backgroundColor: lightColor,
                     }}
                   >
-                    <h1
-                      className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
-                      style={{ backgroundColor: baseColor }}
-                    >
-                      {" "}
-                      {collection.name}
-                    </h1>
-                    <div className="border-5 flex w-full flex-col items-center border-black p-4">
-                      <p className="mb-1 text-base font-bold text-black">
-                        {getItemsCount(collection.description)} items in
-                        collection
-                      </p>
-                      <p className="mb-2.5 text-base font-bold text-black">
-                        Created by you on {formatDate(collection.created_at)}
-                      </p>
-                      <div className="flex w-full justify-center space-x-4">
-                        <button
-                          type="button"
-                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                          style={{ backgroundColor: "green" }}
-                          onClick={() =>
-                            handleStartCollection(collection.collection_id)
-                          }
-                        >
-                          Start
-                        </button>
-                        <button
-                          type="button"
-                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                          style={{ backgroundColor: "yellow" }}
-                          onClick={() => handleEditButtonClick(collection)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          type="button"
-                          className="mb-2.5 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
-                          style={{ backgroundColor: "red" }}
-                          onClick={() =>
-                            handleDeleteCollection(collection.collection_id)
-                          }
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
+                    <CollectionContent
+                      collection={collection}
+                      baseColor={baseColor}
+                      handleStartCollection={handleStartCollection}
+                      handleEditButtonClick={handleEditButtonClick}
+                      handleDeleteCollection={handleDeleteCollection}
+                      formatDate={formatDate}
+                    />
                   </div>
                 );
               })}
@@ -638,5 +561,70 @@ const YourCollections: React.FC = () => {
     </div>
   );
 };
+
+interface CollectionContentProps {
+  collection: Collection;
+  baseColor: string;
+  handleStartCollection: (id: number) => void;
+  handleEditButtonClick: (collection: Collection) => void;
+  handleDeleteCollection: (id: number) => void;
+  formatDate: (dateString: string) => string;
+}
+
+const CollectionContent: React.FC<CollectionContentProps> = ({
+  collection,
+  baseColor,
+  handleStartCollection,
+  handleEditButtonClick,
+  handleDeleteCollection,
+  formatDate,
+}) => (
+  <>
+    <h1
+      className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
+      style={{ backgroundColor: baseColor }}
+    >
+      {collection.name}
+    </h1>
+    <div className="border-5 flex w-full grow flex-col items-center justify-between border-black p-4">
+      <div>
+        <p className="mb-1 text-base font-bold text-black">
+          {getItemsCount(collection.description)} items in collection
+        </p>
+        <p className="mb-2.5 text-base font-bold text-black">
+          Created by you on {formatDate(collection.created_at)}
+        </p>
+      </div>
+      <div className="flex w-full flex-col items-center justify-end">
+        <button
+          type="button"
+          className="mb-2.5 w-full cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+          style={{ backgroundColor: "green" }}
+          onClick={() => handleStartCollection(collection.collection_id)}
+        >
+          Start
+        </button>
+        <div className="flex w-full justify-between space-x-2">
+          <button
+            type="button"
+            className="w-1/2 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+            style={{ backgroundColor: "yellow" }}
+            onClick={() => handleEditButtonClick(collection)}
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            className="w-1/2 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+            style={{ backgroundColor: "red" }}
+            onClick={() => handleDeleteCollection(collection.collection_id)}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </>
+);
 
 export default YourCollections;

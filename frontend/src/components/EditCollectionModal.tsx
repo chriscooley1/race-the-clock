@@ -80,9 +80,11 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
       <div
         ref={modalRef}
-        className="flex max-h-[90vh] w-full max-w-2xl flex-col items-center overflow-y-auto rounded-lg bg-gray-800 p-6 text-white shadow-lg"
+        className="flex max-h-[90vh] w-full max-w-2xl flex-col items-center overflow-y-auto rounded-lg bg-gray-800 p-4 text-white shadow-lg sm:p-6"
       >
-        <h1 className="mb-6 text-2xl font-bold">Edit Collection</h1>
+        <h1 className="mb-4 text-xl font-bold sm:mb-6 sm:text-2xl">
+          Edit Collection
+        </h1>
         <div className="mb-4 w-full">
           <label htmlFor="collectionName" className="mb-2 block">
             Collection Name
