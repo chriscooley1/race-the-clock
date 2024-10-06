@@ -49,7 +49,7 @@ const Settings: React.FC = () => {
         isDarkMode: newTheme.name === "Black", // Set isDarkMode based on the theme name
         displayTextColor: theme.displayTextColor, // Preserve existing display colors
         displayBackgroundColor: theme.displayBackgroundColor,
-        font: theme.font, // Add this line to include the font property
+        font: theme.font,
       });
     }
   };
@@ -90,7 +90,6 @@ const Settings: React.FC = () => {
     { name: "Nature Scene", value: "/images/nature-background.jpg" },
     { name: "Abstract Design", value: "/images/abstract-background.jpg" },
     { name: "Calming Visuals", value: "/images/calming-background.jpg" },
-    // Add more themes as needed
   ];
 
   const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -105,7 +104,7 @@ const Settings: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen w-full px-4 pt-[70px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+      className={`min-h-screen w-full px-4 md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
     >
       <h1 className="mb-8 text-3xl font-bold">Settings</h1>
 

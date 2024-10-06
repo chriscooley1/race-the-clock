@@ -147,7 +147,7 @@ const DiscoverCollections: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[70px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+      className={`flex min-h-screen w-full flex-col items-center px-4 md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
     >
       <h1 className="mb-4 text-2xl font-bold sm:text-3xl">
         Discover Public Collections
@@ -184,7 +184,6 @@ const DiscoverCollections: React.FC = () => {
         >
           <option value="date">Date</option>
           <option value="alphabetical">Alphabetical</option>
-          <option value="itemCount">Item Count</option>
         </select>
       </div>
       <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

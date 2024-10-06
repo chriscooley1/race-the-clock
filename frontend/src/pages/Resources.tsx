@@ -6,7 +6,7 @@ const Resources: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[70px] md:pl-[250px] ${
+      className={`flex min-h-screen w-full flex-col items-center px-4 md:pl-[250px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
       }`}
     >
@@ -26,7 +26,6 @@ const Resources: React.FC = () => {
             <h3 className="mb-2 text-xl font-medium">Question 2</h3>
             <p>Answer to question 2</p>
           </div>
-          {/* Add more FAQ items as needed */}
         </div>
       </section>
 
