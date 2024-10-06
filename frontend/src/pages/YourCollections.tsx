@@ -73,23 +73,17 @@ const parseDescription = (
 const YourCollections: React.FC = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
-  const [filteredCollections, setFilteredCollections] = useState<Collection[]>(
-    [],
-  );
-  const [selectedCategory, setSelectedCategory] =
-    useState<string>("All Collections");
+  const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
   const [sortOption, setSortOption] = useState<string>(
     localStorage.getItem("sortPreference") || "date",
   );
-  const [isDuplicateModalOpen, setDuplicateModalOpen] =
-    useState<boolean>(false);
-  const [selectedCollectionToDuplicate, setSelectedCollectionToDuplicate] =
-    useState<number | null>(null);
+  const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
+  const [selectedCollectionToDuplicate, setSelectedCollectionToDuplicate] = useState<number | null>(null);
   const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [selectedCollection, setSelectedCollection] =
-    useState<Collection | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { adjustColorForColorblindness, theme } = useTheme();
@@ -381,39 +375,15 @@ const YourCollections: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen w-full px-4 pt-[70px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+      className={`min-h-screen w-full px-4 pt-[80px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
     >
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}
+        sortOption={sortOption}
+        onSortChange={handleSortChange}
+        onDuplicateCollection={handleDuplicateCollection}
       />
-
-      <div className="mb-5 flex w-full flex-col items-center justify-center sm:flex-row">
-        <div className="mb-4 flex items-center sm:mb-0 sm:mr-5">
-          <label htmlFor="sortSelect" className="mr-2">
-            Sort by:
-          </label>
-          <select
-            id="sortSelect"
-            value={sortOption}
-            onChange={handleSortChange}
-            className="font-caveat w-40 rounded border border-gray-300 bg-white p-2 text-base text-black"
-          >
-            <option value="name">Name</option>
-            <option value="alphabetical">Alphabetical</option>
-            <option value="category">Category</option>
-            <option value="date">Date</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-        <button
-          type="button"
-          onClick={handleDuplicateCollection}
-          className="rounded bg-blue-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
-        >
-          Duplicate Collection
-        </button>
-      </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
