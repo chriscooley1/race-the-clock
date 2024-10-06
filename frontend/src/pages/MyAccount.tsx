@@ -28,8 +28,12 @@ const MyAccount: React.FC = () => {
   }, [getAccessTokenSilently]);
 
   return (
-    <div className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black"}`}>
-      <div className={`w-full max-w-md rounded-lg p-6 shadow-md ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`}>
+    <div
+      className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black"}`}
+    >
+      <div
+        className={`w-full max-w-md rounded-lg p-6 shadow-md ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`}
+      >
         <h1 className="mb-6 text-center text-2xl font-bold">My Account</h1>
         {user ? (
           <div className="space-y-4">
@@ -39,13 +43,25 @@ const MyAccount: React.FC = () => {
                 alt={user.name}
                 className="mb-4 size-24 rounded-full"
               />
-              <h2 className="text-xl font-semibold">{userData?.display_name || user.name}</h2>
-              <p className={`${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}>{user.email}</p>
+              <h2 className="text-xl font-semibold">
+                {userData?.display_name || user.name}
+              </h2>
+              <p
+                className={`${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}
+              >
+                {user.email}
+              </p>
             </div>
             <div className="space-y-2">
               <h3 className="text-lg font-semibold">Account Details</h3>
-              <p className={`text-sm ${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}>Email: {user.email}</p>
-              <p className={`text-sm ${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
+              <p
+                className={`text-sm ${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}
+              >
+                Email: {user.email}
+              </p>
+              <p
+                className={`text-sm ${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}
+              >
                 Email Verified: {user.email_verified ? "Yes" : "No"}
               </p>
             </div>

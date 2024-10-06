@@ -156,7 +156,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     document.documentElement.style.setProperty("--font-family", theme.font);
-    document.documentElement.style.setProperty("--background-image", `url(${theme.backgroundImage})`);
+    document.documentElement.style.setProperty(
+      "--background-image",
+      `url(${theme.backgroundImage})`,
+    );
   }, [theme]);
 
   return (

@@ -64,7 +64,9 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
-      <div className="flex items-center space-x-2"> {/* Added space-x-2 for gap */}
+      <div className="flex items-center space-x-2">
+        {" "}
+        {/* Added space-x-2 for gap */}
         {/* Dark mode toggle */}
         <button
           type="button"
@@ -73,7 +75,6 @@ const Navbar: React.FC<NavbarProps> = ({
         >
           {theme.isDarkMode ? "☀️" : "🌙"}
         </button>
-
         {(location.pathname === "/fullscreen-display" || hasBackButton) && (
           <button
             type="button"

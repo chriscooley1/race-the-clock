@@ -11,9 +11,11 @@ const Resources: React.FC = () => {
       }`}
     >
       <h1 className="mb-8 text-3xl font-bold">Resources</h1>
-      
+
       <section className="mb-8 w-full max-w-3xl">
-        <h2 className="mb-4 text-2xl font-semibold">Frequently Asked Questions</h2>
+        <h2 className="mb-4 text-2xl font-semibold">
+          Frequently Asked Questions
+        </h2>
         <div className="space-y-4">
           {/* Add FAQ items here */}
           <div>
@@ -38,7 +40,9 @@ const Resources: React.FC = () => {
           </div>
           <div>
             <h3 className="mb-2 text-xl font-medium">Discover Collections</h3>
-            <p>Description of the Discover Collections page and how to use it.</p>
+            <p>
+              Description of the Discover Collections page and how to use it.
+            </p>
             {/* Add video or link to video here */}
           </div>
           <div>

@@ -25,6 +25,7 @@ const ThemeSelector: React.FC = () => {
         isColorblindMode: false,
         colorblindType: "none",
         isDarkMode: selectedScheme.name === "Black",
+        font: theme.font,
       });
     }
   };

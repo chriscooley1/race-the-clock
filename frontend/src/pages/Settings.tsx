@@ -97,12 +97,16 @@ const Settings: React.FC = () => {
     setTheme({ ...theme, font: e.target.value });
   };
 
-  const handleBackgroundThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleBackgroundThemeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     setTheme({ ...theme, backgroundImage: e.target.value });
   };
 
   return (
-    <div className={`min-h-screen w-full pt-[70px] px-4 md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+    <div
+      className={`min-h-screen w-full px-4 pt-[70px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+    >
       <h1 className="mb-8 text-3xl font-bold">Settings</h1>
 
       <div className="space-y-6">

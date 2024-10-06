@@ -62,13 +62,27 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={handleBackgroundClick}>
-      <div className="w-full max-w-sm rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800"> {/* Reduced max-width and padding */}
-        <h2 className="mb-2 text-xl font-bold text-center">{collectionName}</h2> {/* Reduced margin-bottom */}
-        <div className="space-y-3"> {/* Reduced space between items */}
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      onClick={handleBackgroundClick}
+    >
+      <div className="w-full max-w-sm rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800">
+        {" "}
+        {/* Reduced max-width and padding */}
+        <h2 className="mb-2 text-center text-xl font-bold">
+          {collectionName}
+        </h2>{" "}
+        {/* Reduced margin-bottom */}
+        <div className="space-y-3">
+          {" "}
+          {/* Reduced space between items */}
           <div className="flex flex-col items-center">
-            <div className="mb-1 flex w-full justify-between"> {/* Reduced margin-bottom */}
-              <label htmlFor="minutes" className="mr-2">Minutes:</label>
+            <div className="mb-1 flex w-full justify-between">
+              {" "}
+              {/* Reduced margin-bottom */}
+              <label htmlFor="minutes" className="mr-2">
+                Minutes:
+              </label>
               <label htmlFor="seconds">Seconds:</label>
             </div>
             <div className="flex w-full justify-between">
@@ -106,7 +120,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               className="mr-2 size-4"
               title="Shuffle Collection"
             />
-            <label htmlFor="shuffle" className="text-sm">Shuffle Collection</label>
+            <label htmlFor="shuffle" className="text-sm">
+              Shuffle Collection
+            </label>
           </div>
           <button
             type="button"

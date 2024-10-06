@@ -380,7 +380,9 @@ const YourCollections: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen w-full pt-[120px] px-4 md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+    <div
+      className={`min-h-screen w-full px-4 pt-[120px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+    >
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}
@@ -521,7 +523,8 @@ const YourCollections: React.FC = () => {
               </label>
               <select
                 id="duplicate-collection-select"
-                value={selectedCollectionToDuplicate || ""}                onChange={(e) =>
+                value={selectedCollectionToDuplicate || ""}
+                onChange={(e) =>
                   setSelectedCollectionToDuplicate(Number(e.target.value))
                 }
                 className="font-caveat w-full rounded border border-gray-300 bg-white p-2 text-base text-black"

@@ -40,7 +40,9 @@ const NewCollection: React.FC = () => {
   };
 
   return (
-    <div className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+    <div
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+    >
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
         <h1 className="text-4xl font-bold">Step 1 - Create</h1>
         <h1 className="text-3xl font-bold">New Collection</h1>

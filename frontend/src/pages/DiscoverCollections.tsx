@@ -114,18 +114,29 @@ const DiscoverCollections: React.FC = () => {
     setSortOption(event.target.value);
   };
 
-  const sortCollections = useCallback((collectionsToSort: Collection[]) => {
-    switch (sortOption) {
-      case "date":
-        return [...collectionsToSort].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-      case "alphabetical":
-        return [...collectionsToSort].sort((a, b) => a.name.localeCompare(b.name));
-      case "itemCount":
-        return [...collectionsToSort].sort((a, b) => (b.item_count || 0) - (a.item_count || 0));
-      default:
-        return collectionsToSort;
-    }
-  }, [sortOption]);
+  const sortCollections = useCallback(
+    (collectionsToSort: Collection[]) => {
+      switch (sortOption) {
+        case "date":
+          return [...collectionsToSort].sort(
+            (a, b) =>
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime(),
+          );
+        case "alphabetical":
+          return [...collectionsToSort].sort((a, b) =>
+            a.name.localeCompare(b.name),
+          );
+        case "itemCount":
+          return [...collectionsToSort].sort(
+            (a, b) => (b.item_count || 0) - (a.item_count || 0),
+          );
+        default:
+          return collectionsToSort;
+      }
+    },
+    [sortOption],
+  );
 
   useEffect(() => {
     const sortedCollections = sortCollections(collections);
@@ -135,8 +146,12 @@ const DiscoverCollections: React.FC = () => {
   }, [sortOption, collections, sortCollections]);
 
   return (
-    <div className={`flex min-h-screen w-full flex-col items-center px-4 pt-[70px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
-      <h1 className="mb-4 text-2xl font-bold sm:text-3xl">Discover Public Collections</h1>
+    <div
+      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[70px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+    >
+      <h1 className="mb-4 text-2xl font-bold sm:text-3xl">
+        Discover Public Collections
+      </h1>
       {user && <p className="mb-4">Welcome, {user.name}</p>}
       <div className="mb-4 w-full max-w-md">
         <div className="flex flex-col sm:flex-row sm:items-center">
@@ -175,10 +190,14 @@ const DiscoverCollections: React.FC = () => {
       <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {collections.map((collection, index) => {
           const baseColor = adjustColorForColorblindness(
-            collectionColorSchemes[index % collectionColorSchemes.length].backgroundColor
+            collectionColorSchemes[index % collectionColorSchemes.length]
+              .backgroundColor,
           );
-          const lightColor = adjustColorForColorblindness(lightenColor(baseColor, 0.7));
-          const itemCount = collection.item_count ?? collection.items?.length ?? 0;
+          const lightColor = adjustColorForColorblindness(
+            lightenColor(baseColor, 0.7),
+          );
+          const itemCount =
+            collection.item_count ?? collection.items?.length ?? 0;
           return (
             <div
               key={collection.collection_id}
@@ -191,8 +210,12 @@ const DiscoverCollections: React.FC = () => {
               >
                 {collection.name}
               </h2>
-              <p className="mb-1 text-sm text-black">Created by: {collection.creator_username}</p>
-              <p className="mb-2 text-sm text-black">{itemCount} items in collection</p>
+              <p className="mb-1 text-sm text-black">
+                Created by: {collection.creator_username}
+              </p>
+              <p className="mb-2 text-sm text-black">
+                {itemCount} items in collection
+              </p>
               <button
                 type="button"
                 className="rounded-md px-4 py-2 text-sm font-bold text-black transition duration-300 hover:scale-105 active:scale-95"

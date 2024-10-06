@@ -20,7 +20,10 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   useEffect(() => {
     const checkIfSubscribed = async () => {
       try {
-        const subscribed = await checkSubscription(collection.collection_id, getAccessTokenSilently);
+        const subscribed = await checkSubscription(
+          collection.collection_id,
+          getAccessTokenSilently,
+        );
         setIsSubscribed(subscribed);
       } catch (error) {
         console.error("Error checking subscription:", error);
@@ -31,7 +34,10 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
 
   const handleSubscribe = async () => {
     try {
-      await subscribeToCollection(collection.collection_id, getAccessTokenSilently);
+      await subscribeToCollection(
+        collection.collection_id,
+        getAccessTokenSilently,
+      );
       setIsSubscribed(true);
       alert("You have subscribed to this collection!");
     } catch (error) {
@@ -91,7 +97,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
             disabled={isSubscribed}
             className={`rounded px-6 py-2 font-bold text-white transition-all ${
               isSubscribed
-                ? "bg-gray-400 cursor-not-allowed"
+                ? "cursor-not-allowed bg-gray-400"
                 : "bg-blue-500 hover:scale-105 hover:bg-blue-600 active:scale-95"
             }`}
           >
