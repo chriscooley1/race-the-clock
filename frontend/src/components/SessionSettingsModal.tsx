@@ -62,26 +62,13 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
-      onClick={handleBackgroundClick}
-    >
-      <div className="w-full max-w-md rounded-lg bg-white p-6 text-gray-800 shadow-lg">
-        <button
-          type="button"
-          className="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-red-500 text-white transition duration-300 hover:bg-red-600"
-          onClick={onClose}
-        >
-          X
-        </button>
-        <h1 className="mb-4 text-2xl font-bold">{collectionName}</h1>
-        <p className="mb-4">Please select settings for the session</p>
-        <div className="space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={handleBackgroundClick}>
+      <div className="w-full max-w-sm rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800"> {/* Reduced max-width and padding */}
+        <h2 className="mb-2 text-xl font-bold text-center">{collectionName}</h2> {/* Reduced margin-bottom */}
+        <div className="space-y-3"> {/* Reduced space between items */}
           <div className="flex flex-col items-center">
-            <div className="mb-2 flex w-full justify-between">
-              <label htmlFor="minutes" className="mr-2">
-                Minutes:
-              </label>
+            <div className="mb-1 flex w-full justify-between"> {/* Reduced margin-bottom */}
+              <label htmlFor="minutes" className="mr-2">Minutes:</label>
               <label htmlFor="seconds">Seconds:</label>
             </div>
             <div className="flex w-full justify-between">
@@ -90,8 +77,8 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 id="minutes"
                 value={minutes}
                 onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
-                className="w-24 rounded border border-gray-300 p-2"
-                placeholder="Minutes"
+                className="w-20 rounded border border-gray-300 p-1 text-sm"
+                placeholder="Min"
                 title="Minutes"
                 min={0}
                 onKeyDown={handleKeyDown}
@@ -101,8 +88,8 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 id="seconds"
                 value={seconds}
                 onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
-                className="w-24 rounded border border-gray-300 p-2"
-                placeholder="Seconds"
+                className="w-20 rounded border border-gray-300 p-1 text-sm"
+                placeholder="Sec"
                 title="Seconds"
                 min={0}
                 max={59}
@@ -116,14 +103,14 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               id="shuffle"
               checked={shuffle}
               onChange={() => setShuffle(!shuffle)}
-              className="mr-2 size-5"
+              className="mr-2 size-4"
               title="Shuffle Collection"
             />
-            <label htmlFor="shuffle">Shuffle Collection</label>
+            <label htmlFor="shuffle" className="text-sm">Shuffle Collection</label>
           </div>
           <button
             type="button"
-            className="w-full rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+            className="w-full rounded bg-green-500 px-4 py-2 text-sm font-bold text-white transition duration-300 hover:bg-green-600"
             onClick={handleStartClick}
           >
             Start Session

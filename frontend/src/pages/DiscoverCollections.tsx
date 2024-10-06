@@ -28,6 +28,7 @@ const DiscoverCollections: React.FC = () => {
   );
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { theme } = useTheme();
+  const [sortOption, setSortOption] = useState<string>("date");
 
   const fetchCollections = useCallback(async () => {
     try {
@@ -109,63 +110,92 @@ const DiscoverCollections: React.FC = () => {
 
   const closeModal = () => setActiveCollection(null);
 
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOption(event.target.value);
+  };
+
+  const sortCollections = useCallback((collectionsToSort: Collection[]) => {
+    switch (sortOption) {
+      case "date":
+        return [...collectionsToSort].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      case "alphabetical":
+        return [...collectionsToSort].sort((a, b) => a.name.localeCompare(b.name));
+      case "itemCount":
+        return [...collectionsToSort].sort((a, b) => (b.item_count || 0) - (a.item_count || 0));
+      default:
+        return collectionsToSort;
+    }
+  }, [sortOption]);
+
+  useEffect(() => {
+    const sortedCollections = sortCollections(collections);
+    if (JSON.stringify(sortedCollections) !== JSON.stringify(collections)) {
+      setCollections(sortedCollections);
+    }
+  }, [sortOption, collections, sortCollections]);
+
   return (
-    <div
-      className={`flex min-h-screen w-full flex-col items-center pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
-    >
-      <h1 className="text-3xl font-bold">Discover Public Collections</h1>
+    <div className={`flex min-h-screen w-full flex-col items-center px-4 pt-[70px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+      <h1 className="mb-4 text-2xl font-bold sm:text-3xl">Discover Public Collections</h1>
       {user && <p className="mb-4">Welcome, {user.name}</p>}
-      <div>
-        <div className="flex">
+      <div className="mb-4 w-full max-w-md">
+        <div className="flex flex-col sm:flex-row sm:items-center">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by collection name or username"
-            className="border-5 grow rounded-l-md border-black p-2 font-['Patrick_Hand']"
+            className="mb-2 w-full rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2"
           />
           <button
             type="button"
             onClick={handleSearch}
-            className="border-5 rounded-r-md border-black bg-green-500 px-4 py-2 font-['Patrick_Hand'] font-bold text-white transition duration-300 hover:bg-green-600"
+            className="rounded-md bg-green-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-green-600"
           >
             Search
           </button>
         </div>
       </div>
-      <div className="flex w-full flex-wrap justify-around p-5">
+      <div className="mb-4 w-full max-w-md">
+        <label htmlFor="sortSelect" className="mb-2 block text-sm font-bold">
+          Sort collections by:
+        </label>
+        <select
+          id="sortSelect"
+          value={sortOption}
+          onChange={handleSortChange}
+          className="w-full rounded-md border border-gray-300 p-2"
+        >
+          <option value="date">Date</option>
+          <option value="alphabetical">Alphabetical</option>
+          <option value="itemCount">Item Count</option>
+        </select>
+      </div>
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {collections.map((collection, index) => {
           const baseColor = adjustColorForColorblindness(
-            collectionColorSchemes[index % collectionColorSchemes.length]
-              .backgroundColor,
+            collectionColorSchemes[index % collectionColorSchemes.length].backgroundColor
           );
-          const lightColor = adjustColorForColorblindness(
-            lightenColor(baseColor, 0.7),
-          );
-          const itemCount =
-            collection.item_count ?? collection.items?.length ?? 0;
+          const lightColor = adjustColorForColorblindness(lightenColor(baseColor, 0.7));
+          const itemCount = collection.item_count ?? collection.items?.length ?? 0;
           return (
             <div
               key={collection.collection_id}
-              className="border-5 relative m-2.5 mb-5 flex h-[300px] flex-[0_0_calc(33.33%-20px)] flex-col items-center justify-start border-black p-5"
+              className="flex flex-col items-center justify-start rounded-lg border border-gray-300 p-4"
               style={{ backgroundColor: lightColor }}
             >
-              <h1
-                className="border-5 mb-2.5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
+              <h2
+                className="mb-2 w-full rounded-md p-2 text-center text-lg font-bold text-black"
                 style={{ backgroundColor: baseColor }}
               >
                 {collection.name}
-              </h1>
-              <p className="mb-1 text-lg text-black">
-                Created by: {collection.creator_username}
-              </p>
-              <p className="mb-4 text-lg text-black">
-                {itemCount} items in collection
-              </p>
+              </h2>
+              <p className="mb-1 text-sm text-black">Created by: {collection.creator_username}</p>
+              <p className="mb-2 text-sm text-black">{itemCount} items in collection</p>
               <button
                 type="button"
-                className="rounded-md px-4 py-2 font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
+                className="rounded-md px-4 py-2 text-sm font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
                 style={{ backgroundColor: baseColor }}
                 onClick={() => openModal(collection)}
               >

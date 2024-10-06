@@ -92,7 +92,7 @@ const YourCollections: React.FC = () => {
     useState<Collection | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
-  const { adjustColorForColorblindness } = useTheme();
+  const { adjustColorForColorblindness, theme } = useTheme();
 
   useEffect(() => {
     const loadCollections = async () => {
@@ -380,7 +380,7 @@ const YourCollections: React.FC = () => {
   };
 
   return (
-    <div className="bg-theme-bg text-theme-text flex min-h-screen w-full flex-col items-center px-4 pt-[70px] md:pl-[250px] dark:bg-gray-800 dark:text-white">
+    <div className={`min-h-screen w-full pt-[120px] px-4 md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}
@@ -521,8 +521,7 @@ const YourCollections: React.FC = () => {
               </label>
               <select
                 id="duplicate-collection-select"
-                value={selectedCollectionToDuplicate || ""}
-                onChange={(e) =>
+                value={selectedCollectionToDuplicate || ""}                onChange={(e) =>
                   setSelectedCollectionToDuplicate(Number(e.target.value))
                 }
                 className="font-caveat w-full rounded border border-gray-300 bg-white p-2 text-base text-black"
@@ -598,7 +597,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
       <div className="flex w-full flex-col items-center justify-end">
         <button
           type="button"
-          className="mb-2.5 w-full cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+          className="mb-2.5 w-3/4 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
           style={{ backgroundColor: "green" }}
           onClick={() => handleStartCollection(collection.collection_id)}
         >
@@ -607,7 +606,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
         <div className="flex w-full justify-between space-x-2">
           <button
             type="button"
-            className="w-1/2 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+            className="w-1/2 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
             style={{ backgroundColor: "yellow" }}
             onClick={() => handleEditButtonClick(collection)}
           >
@@ -615,7 +614,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
           </button>
           <button
             type="button"
-            className="w-1/2 cursor-pointer rounded-lg border-none p-3 text-lg font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+            className="w-1/2 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
             style={{ backgroundColor: "red" }}
             onClick={() => handleDeleteCollection(collection.collection_id)}
           >

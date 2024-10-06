@@ -1,5 +1,4 @@
 import React from "react";
-import { useTheme } from "../context/ThemeContext";
 
 interface CollectionsNavBarProps {
   onSelectCategory: (category: string) => void;
@@ -10,7 +9,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   onSelectCategory,
   selectedCategory,
 }) => {
-  const { theme } = useTheme();
   const categories = [
     "All Collections",
     "Math",
@@ -21,26 +19,22 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   ];
 
   return (
-    <div
-      className={`fixed left-[250px] top-[50px] z-30 flex w-[calc(100%-250px)] flex-wrap justify-center p-2 shadow-md ${theme.isDarkMode ? "dark:bg-gray-800" : "bg-light-blue"}`}
-    >
-      {categories.map((category) => (
-        <button
-          type="button"
-          key={category}
-          className={`m-1 rounded-md border-2 border-blue-500 px-4 py-2 text-sm font-bold shadow-sm transition duration-300 ease-in-out hover:scale-105 md:text-base ${
-            selectedCategory === category
-              ? "bg-blue-500 text-white"
-              : "bg-white text-blue-500 hover:bg-blue-500 hover:text-white"
-          } min-w-[120px] grow md:grow-0`}
-          onClick={() => {
-            console.log("Category selected:", category);
-            onSelectCategory(category);
-          }}
-        >
-          {category}
-        </button>
-      ))}
+    <div className="fixed top-[50px] left-0 right-0 z-40 bg-white shadow-md dark:bg-gray-800 md:left-[250px]">
+      <div className="flex w-full overflow-x-auto px-4 py-2">
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => onSelectCategory(category)}
+            className={`mr-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
+              selectedCategory === category
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
