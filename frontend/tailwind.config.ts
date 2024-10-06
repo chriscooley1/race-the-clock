@@ -47,6 +47,7 @@ const config: Config = {
         chewy: ["Chewy", "cursive"],
         "comic-neue": ["Comic Neue", "cursive"],
         "baloo-2": ["Baloo 2", "cursive"],
+        custom: "var(--font-family, 'Comic Neue', sans-serif)",
       },
       spacing: {
         sidebar: "250px",

@@ -19,6 +19,7 @@ interface Theme {
   isColorblindMode: boolean;
   colorblindType: string;
   isDarkMode: boolean;
+  font: string;
 }
 
 interface ThemeContextType {
@@ -48,10 +49,12 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
           displayTextColor: undefined,
           displayBackgroundColor: undefined,
           isDarkMode: false,
+          font: "Comic Neue",
+          backgroundImage: "none",
         };
   };
 
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const [theme, setTheme] = useState<Theme>(getInitialTheme());
 
   const setDisplayTextColor = (color: string) => {
     setTheme((prevTheme) => ({ ...prevTheme, displayTextColor: color }));
@@ -151,6 +154,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     } else {
       document.documentElement.classList.remove("dark");
     }
+
+    document.documentElement.style.setProperty("--font-family", theme.font);
+    document.documentElement.style.setProperty("--background-image", `url(${theme.backgroundImage})`);
   }, [theme]);
 
   return (

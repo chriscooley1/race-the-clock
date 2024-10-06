@@ -474,3 +474,22 @@ export const checkBackendHealth = async () => {
     throw error;
   }
 };
+
+export const checkSubscription = async (
+  collectionId: number,
+  getAccessTokenSilently: () => Promise<string>
+): Promise<boolean> => {
+  try {
+    const token = await getAccessTokenSilently();
+    const response = await axios.get(
+      `${API_BASE_URL}/collections/check-subscription/${collectionId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data.isSubscribed;
+  } catch (error) {
+    handleApiError(error);
+    return false;
+  }
+};

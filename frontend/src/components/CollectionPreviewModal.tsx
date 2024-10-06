@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { subscribeToCollection, Collection } from "../api";
+import { subscribeToCollection, Collection, checkSubscription } from "../api";
 import { useTheme } from "../context/ThemeContext";
 
 interface CollectionPreviewModalProps {
@@ -13,20 +13,25 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   onClose,
 }) => {
   const { getAccessTokenSilently } = useAuth0();
-  const [isSubscribed, setIsSubscribed] = React.useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
+  useEffect(() => {
+    const checkIfSubscribed = async () => {
+      try {
+        const subscribed = await checkSubscription(collection.collection_id, getAccessTokenSilently);
+        setIsSubscribed(subscribed);
+      } catch (error) {
+        console.error("Error checking subscription:", error);
+      }
+    };
+    checkIfSubscribed();
+  }, [collection.collection_id, getAccessTokenSilently]);
+
   const handleSubscribe = async () => {
     try {
-      console.log(
-        "Attempting to subscribe to collection:",
-        collection.collection_id,
-      );
-      await subscribeToCollection(
-        collection.collection_id,
-        getAccessTokenSilently,
-      );
+      await subscribeToCollection(collection.collection_id, getAccessTokenSilently);
       setIsSubscribed(true);
       alert("You have subscribed to this collection!");
     } catch (error) {
@@ -80,15 +85,18 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
         </div>
 
         <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-          {!isSubscribed && (
-            <button
-              type="button"
-              onClick={handleSubscribe}
-              className="rounded bg-blue-500 px-6 py-2 font-bold text-white hover:scale-105 hover:bg-blue-600 active:scale-95"
-            >
-              Subscribe to Collection
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={handleSubscribe}
+            disabled={isSubscribed}
+            className={`rounded px-6 py-2 font-bold text-white transition-all ${
+              isSubscribed
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-500 hover:scale-105 hover:bg-blue-600 active:scale-95"
+            }`}
+          >
+            {isSubscribed ? "Already Subscribed" : "Subscribe to Collection"}
+          </button>
           <button
             type="button"
             onClick={onClose}
