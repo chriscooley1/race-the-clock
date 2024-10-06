@@ -2,7 +2,9 @@ import axios from "axios";
 import { User } from "@auth0/auth0-react";
 import { AxiosError } from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://race-the-clock-backend-production.up.railway.app";
 
 if (!API_BASE_URL) {
   console.error("VITE_API_BASE_URL is not set in the environment variables");
@@ -47,7 +49,6 @@ export const getCurrentUser = async (
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching user data");
     handleApiError(error);
     throw new Error("Could not fetch current user.");
   }
@@ -472,24 +473,5 @@ export const checkBackendHealth = async () => {
   } catch (error) {
     console.error("Error checking backend health:", error);
     throw error;
-  }
-};
-
-export const checkSubscription = async (
-  collectionId: number,
-  getAccessTokenSilently: () => Promise<string>,
-): Promise<boolean> => {
-  try {
-    const token = await getAccessTokenSilently();
-    const response = await axios.get(
-      `${API_BASE_URL}/collections/check-subscription/${collectionId}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    );
-    return response.data.isSubscribed;
-  } catch (error) {
-    handleApiError(error);
-    return false;
   }
 };
