@@ -4,7 +4,7 @@ import { motion, useAnimation } from "framer-motion";
 interface NameWheelProps {
   names: string[];
   isSpinning: boolean;
-  onSpin: () => number;
+  spinData: { targetDegrees: number; spinRevolutions: number } | null;
   onNameSelected: (name: string) => void;
   stopSpinning: () => void;
 }
@@ -12,14 +12,14 @@ interface NameWheelProps {
 const NameWheel: React.FC<NameWheelProps> = ({
   names,
   isSpinning,
-  onSpin,
+  spinData,
   onNameSelected,
   stopSpinning,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const controls = useAnimation();
   const canvasSize = 500;
-  const radius = canvasSize / 2 - 30; // Radius calculation
+  const radius = canvasSize / 2 - 30;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -34,66 +34,68 @@ const NameWheel: React.FC<NameWheelProps> = ({
     const drawWheel = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const segmentAngle = (2 * Math.PI) / names.length;
+      const segmentAngle = 360 / names.length;
 
       names.forEach((name, index) => {
         const startAngle = index * segmentAngle;
         const endAngle = (index + 1) * segmentAngle;
+        console.log(`${name} startAngle: ${startAngle} endAngle: ${endAngle}`);
 
         // Draw wheel segment
         ctx.beginPath();
         ctx.moveTo(canvasSize / 2, canvasSize / 2);
-        ctx.arc(canvasSize / 2, canvasSize / 2, radius, startAngle, endAngle);
+        ctx.arc(canvasSize / 2, canvasSize / 2, radius, (startAngle * Math.PI) / 180, (endAngle * Math.PI) / 180);
         ctx.closePath();
 
         // Set segment color
         ctx.fillStyle = `hsl(${(index * 360) / names.length}, 70%, 70%)`;
         ctx.fill();
 
-        // Draw name text in the middle of each segment
+        // Draw name text
         ctx.save();
-        ctx.translate(canvasSize / 2, canvasSize / 2); // Move to center
-        const textAngle = (startAngle + endAngle) / 2; // Middle of the segment
-        ctx.rotate(textAngle); // Rotate to the correct angle
-        ctx.textAlign = "right"; // Align text properly
-        ctx.fillStyle = "black"; // Set text color
-        ctx.font = "16px Arial"; // Set font
-        ctx.fillText(name, radius - 10, 0); // Position the text
-        ctx.restore(); // Restore the canvas context state
+        ctx.translate(canvasSize / 2, canvasSize / 2);
+        const textAngle = ((startAngle + endAngle) / 2) * (Math.PI / 180);
+        ctx.rotate(textAngle);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "black";
+        ctx.font = "16px Arial";
+        ctx.fillText(name, radius - 10, 0);
+        ctx.restore();
       });
     };
 
     drawWheel();
-  }, [names, radius]); // Add "radius" to the dependency array
+  }, [names, radius]);
 
   useEffect(() => {
-    if (isSpinning) {
-      const targetAngle = onSpin();
-      const totalSlices = names.length;
+    if (isSpinning && spinData) {
+      const { targetDegrees, spinRevolutions } = spinData;
+      const totalRotation = spinRevolutions * 360 + targetDegrees;
 
-      // Use Framer Motion to animate the rotation
       controls.start({
-        rotate: [0, targetAngle * (180 / Math.PI)], // Convert radians to degrees
+        rotate: [0, totalRotation],
         transition: {
-          duration: 5, // Animation duration in seconds
-          ease: "easeInOut", // Easing function for smooth start and stop
+          duration: 5,
+          ease: "easeInOut",
         },
       });
 
-      // Stop spinning after the animation ends
       setTimeout(() => {
+        const degreesPerSlice = 360 / names.length;
+        // Adjust for the starting position (top of the wheel is 270 degrees)
+        const adjustedDegrees = (targetDegrees + 270) % 360;
+        const selectedIndex = Math.floor(adjustedDegrees / degreesPerSlice);
+
+        console.log(`Total Rotation: ${totalRotation}`);
+        console.log(`Target Degrees: ${targetDegrees}`);
+        console.log(`Adjusted Degrees: ${adjustedDegrees}`);
+        console.log(`Selected Index: ${selectedIndex}`);
+
+        onNameSelected(names[selectedIndex]);
         stopSpinning();
-
-        const normalizedRotation = (targetAngle + Math.PI) % (2 * Math.PI);
-        const sliceAngle = (2 * Math.PI) / totalSlices;
-
-        const selectedIndex =
-          Math.floor(normalizedRotation / sliceAngle) % totalSlices;
-
-        onNameSelected(names[selectedIndex]); // Set the selected name
       }, 5000);
     }
-  }, [isSpinning, controls, onSpin, names, onNameSelected, stopSpinning]);
+  }, [isSpinning, spinData, controls, names, onNameSelected, stopSpinning]);
 
   return (
     <div className="relative">

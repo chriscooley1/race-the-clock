@@ -15,6 +15,7 @@ const NameGenerator: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
+  const [spinData, setSpinData] = useState<{ targetDegrees: number; spinRevolutions: number } | null>(null);
 
   const loadNameList = useCallback(async () => {
     try {
@@ -82,16 +83,17 @@ const NameGenerator: React.FC = () => {
   };
 
   const handleSpin = () => {
-    if (nameList.length > 0) {
+    if (nameList.length > 0 && !isSpinning) {
       setIsSpinning(true);
       const spinRevolutions = 2 + Math.random() * 3; // 2 to 5 full rotations
-      const targetAngle = spinRevolutions * 2 * Math.PI;
-      return targetAngle;
+      const targetDegrees = (spinRevolutions * 360) % 360; // Final position in degrees
+      console.log(`spinRev: ${spinRevolutions} targetDegrees: ${targetDegrees}`);
+      setSpinData({ targetDegrees, spinRevolutions });
     }
-    return 0;
   };
 
   const handleNameSelected = (name: string) => {
+    console.log(`nameSelected: ${name}`)
     setGeneratedName(name);
     setIsSpinning(false);
   };
@@ -139,9 +141,12 @@ const NameGenerator: React.FC = () => {
             <NameWheel
               names={nameList}
               isSpinning={isSpinning}
-              onSpin={handleSpin}
+              spinData={spinData}
               onNameSelected={handleNameSelected}
-              stopSpinning={() => setIsSpinning(false)}
+              stopSpinning={() => {
+                setIsSpinning(false);
+                setSpinData(null);
+              }}
             />
           </div>
           <button
