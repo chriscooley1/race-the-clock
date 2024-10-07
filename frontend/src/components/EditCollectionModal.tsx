@@ -85,7 +85,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
         <h1 className="mb-4 text-xl font-bold sm:mb-6 sm:text-2xl">
           Edit Collection
         </h1>
-        <div className="mb-4 w-full">
+        <div className="mb-4">
           <label htmlFor="collectionName" className="mb-2 block">
             Collection Name
           </label>
@@ -98,9 +98,9 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
             title="Collection Name"
           />
         </div>
-        <div className="mb-4 w-full">
-          <label className="mb-2 block">Collection Body</label>
-          <p className="mb-2">
+        <div className="mb-4 flex flex-col items-center justify-center">
+          <label className="mb-2 block"></label>
+          <p className="flex justify-center">
             Click the add button to create a new item in the collection
           </p>
           <button
@@ -111,7 +111,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
             +
           </button>
         </div>
-        <div className="w-full">
+        <div>
           {editedItems.map((item, index) => (
             <div key={index} className="mb-4 flex items-center">
               <div className="mr-2 grow">
@@ -130,7 +130,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
               </div>
               <button
                 type="button"
-                className="flex size-10 items-center justify-center rounded bg-red-500 text-white transition duration-300 hover:bg-red-600"
+                className="flex size-10 items-center justify-center rounded bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600"
                 onClick={() => handleRemoveItem(index)}
               >
                 &times;
@@ -138,7 +138,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
             </div>
           ))}
         </div>
-        <div className="mt-6 flex w-full justify-between">
+        <div className="mt-6 flex w-full justify-around">
           <button
             type="button"
             className="rounded bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"

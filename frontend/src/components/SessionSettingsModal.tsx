@@ -77,7 +77,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
           {" "}
           {/* Reduced space between items */}
           <div className="flex flex-col items-center">
-            <div className="mb-1 flex w-full justify-between">
+            <div className="mb-1 flex w-full justify-around">
               {" "}
               {/* Reduced margin-bottom */}
               <label htmlFor="minutes" className="mr-2">
@@ -85,7 +85,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               </label>
               <label htmlFor="seconds">Seconds:</label>
             </div>
-            <div className="flex w-full justify-between">
+            <div className="flex w-full justify-around">
               <input
                 type="number"
                 id="minutes"
@@ -126,7 +126,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
           </div>
           <button
             type="button"
-            className="w-full rounded bg-green-500 px-4 py-2 text-sm font-bold text-white transition duration-300 hover:bg-green-600"
+            className="rounded bg-green-500 px-4 py-2 text-sm font-bold text-white transition duration-300 hover:bg-green-600"
             onClick={handleStartClick}
           >
             Start Session

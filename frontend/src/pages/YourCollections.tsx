@@ -489,7 +489,7 @@ const YourCollections: React.FC = () => {
             <h2 className="mb-4 text-2xl font-bold">Duplicate Collection</h2>
             <div className="mb-4">
               <label htmlFor="duplicate-collection-select" className="mr-2">
-                Select a collection to duplicate:
+                {/* Select a collection to duplicate: */}
               </label>
               <select
                 id="duplicate-collection-select"
@@ -497,9 +497,9 @@ const YourCollections: React.FC = () => {
                 onChange={(e) =>
                   setSelectedCollectionToDuplicate(Number(e.target.value))
                 }
-                className="font-caveat w-full rounded border border-gray-300 bg-white p-2 text-base text-black"
+                className="font-caveat rounded border border-gray-300 bg-white p-2 text-base text-black"
               >
-                <option value="">Select a collection</option>
+                <option value="">Select a collection to duplicate</option>
                 {collections.map((collection) => (
                   <option
                     key={collection.collection_id}
