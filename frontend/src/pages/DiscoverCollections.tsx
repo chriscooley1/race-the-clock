@@ -154,14 +154,14 @@ const DiscoverCollections: React.FC = () => {
       </h1>
       {user && <p className="mb-4">Welcome, {user.name}</p>}
       <div className="mb-4 w-full max-w-md">
-        <div className="flex flex-col sm:flex-row sm:items-center">
+        <div className="flex flex-col items-center justify-center sm:flex-row sm:items-center">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by collection name or username"
-            className="mb-2 w-full rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2"
+            className="mb-2 rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2"
           />
           <button
             type="button"
@@ -172,7 +172,7 @@ const DiscoverCollections: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="mb-4 w-full max-w-md">
+      <div className="flex items-center justify-center font-caveat rounded border border-gray-300 bg-white p-2 text-black">
         <label htmlFor="sortSelect" className="mb-2 block text-sm font-bold">
           Sort collections by:
         </label>
@@ -180,7 +180,7 @@ const DiscoverCollections: React.FC = () => {
           id="sortSelect"
           value={sortOption}
           onChange={handleSortChange}
-          className="w-full rounded-md border border-gray-300 p-2"
+          className="rounded-md border border-gray-300"
         >
           <option value="date">Date</option>
           <option value="alphabetical">Alphabetical</option>

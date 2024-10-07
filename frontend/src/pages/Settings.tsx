@@ -26,7 +26,6 @@ const Settings: React.FC = () => {
     setDisplayBackgroundColor,
     setColorblindMode,
     setColorblindType,
-    toggleDarkMode,
   } = useTheme();
 
   useEffect(() => {
@@ -111,23 +110,13 @@ const Settings: React.FC = () => {
       <h1 className="mb-8 text-3xl font-bold">Settings</h1>
   
       <div className="space-y-6 w-full px-4 md:px-8">
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">Theme</h2>
-          <button
-            type="button"
-            onClick={toggleDarkMode}
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-          >
-            {theme.isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          </button>
-        </div>
 
         <div>
           <h2 className="mb-2 text-xl font-semibold">Font</h2>
           <select
             value={theme.font}
             onChange={handleFontChange}
-            className="w-full max-w-xs rounded border p-2"
+            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
             title="Select font"
           >
             {fonts.map((font) => (
@@ -143,7 +132,7 @@ const Settings: React.FC = () => {
           <select
             value={theme.backgroundImage}
             onChange={handleBackgroundThemeChange}
-            className="w-full max-w-xs rounded border p-2"
+            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
             title="Select background theme"
           >
             {backgroundThemes.map((bgTheme) => (

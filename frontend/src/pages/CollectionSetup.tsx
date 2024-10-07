@@ -226,7 +226,7 @@ const CollectionSetup: React.FC = () => {
           </label>
           <select
             id="categorySelect"
-            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
             value={category}
             disabled
           >
@@ -244,7 +244,7 @@ const CollectionSetup: React.FC = () => {
           </label>
           <select
             id="typeSelect"
-            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
             value={type}
             onChange={(e) => setType(e.target.value)}
           >
