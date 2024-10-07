@@ -218,33 +218,16 @@ const CollectionSetup: React.FC = () => {
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
     >
       <h1 className="text-4xl font-bold">Step 2 - Setup</h1>
-      <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
-      <div className="mb-4 flex flex-col items-center space-y-2">
-        <div>
-          <label htmlFor="categorySelect" className="mb-2 block font-bold">
-            Category:
-          </label>
-          <select
-            id="categorySelect"
-            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
-            value={category}
-            disabled
-          >
-            <option value="">Select a category</option>
-            <option value="Math">Math</option>
-            <option value="Language Arts">Language Arts</option>
-            <option value="Number Sense">Number Sense</option>
-            <option value="Science">Science</option>
-            <option value="Nursing">Nursing</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="typeSelect" className="mb-2 block font-bold">
+      <h2 className="text-3xl font-bold">Collection: {collectionName}</h2>
+      <h3 className="mb-4 text-2xl font-semibold">Category: {category}</h3>
+      <div className="mb-4 flex flex-col items-center space-y-4 w-full max-w-3xl">
+        <div className="flex items-center space-x-4">
+          <label htmlFor="typeSelect" className="font-bold whitespace-nowrap">
             Type:
           </label>
           <select
             id="typeSelect"
-            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
+            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black text-center"
             value={type}
             onChange={(e) => setType(e.target.value)}
           >
@@ -275,14 +258,14 @@ const CollectionSetup: React.FC = () => {
             )}
           </select>
         </div>
-        <div>
-          <label htmlFor="itemCount" className="mb-2 block font-bold">
+        <div className="flex items-center space-x-4">
+          <label htmlFor="itemCount" className="font-bold whitespace-nowrap">
             Quantity #:
           </label>
           <input
             type="number"
             id="itemCount"
-            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+            className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
             value={itemCount}
             min={1}
             onChange={(e) => {
@@ -293,13 +276,13 @@ const CollectionSetup: React.FC = () => {
         </div>
         {category === "Number Sense" && (
           <>
-            <div>
-              <label htmlFor="dot-color" className="mb-2 block font-bold">
+            <div className="flex w-full items-center space-x-4">
+              <label htmlFor="dot-color" className="font-bold whitespace-nowrap">
                 Dot Color:
               </label>
               <select
                 id="dot-color"
-                className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center flex-grow"
                 value={dotColor}
                 onChange={(e) => setDotColor(e.target.value)}
               >
@@ -310,13 +293,13 @@ const CollectionSetup: React.FC = () => {
                 ))}
               </select>
             </div>
-            <div>
-              <label htmlFor="dot-shape" className="mb-2 block font-bold">
+            <div className="flex w-full items-center space-x-4">
+              <label htmlFor="dot-shape" className="font-bold whitespace-nowrap">
                 Dot Shape:
               </label>
               <select
                 id="dot-shape"
-                className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center flex-grow"
                 value={dotShape}
                 onChange={(e) => setDotShape(e.target.value)}
               >
@@ -331,7 +314,7 @@ const CollectionSetup: React.FC = () => {
         )}
         <button
           type="button"
-          className="w-full rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
+          className="rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
           onClick={generateRandomSequence}
         >
           Generate Random Sequence
@@ -339,7 +322,7 @@ const CollectionSetup: React.FC = () => {
         <p className="text-center">- OR -</p>
         <div>
           <label htmlFor="fileUpload" className="mb-2 block font-bold">
-            Choose File:
+            {/* Choose File: */}
           </label>
           <input
             type="file"
@@ -358,7 +341,7 @@ const CollectionSetup: React.FC = () => {
       </div>
       {sequence.length > 0 && (
         <div className="mt-6">
-          <h3 className="mb-2 text-xl font-bold">Generated Sequence:</h3>
+          <h3 className="mb-2 text-xl font-bold text-center">Generated Sequence:</h3>
           <p className="text-lg">{sequence.join(", ")}</p>
         </div>
       )}
