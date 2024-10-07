@@ -39,7 +39,7 @@ const CollectionFinalStep: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const { theme } = useTheme();
 
-  const [dotPosition, setDotPosition] = useState<string>("1");
+  const [dotPosition, setDotPosition] = useState<string>("random");
   const [dotColor, setDotColor] = useState<string>("blue");
   const [dotShape, setDotShape] = useState<string>("circle");
 
@@ -138,7 +138,7 @@ const CollectionFinalStep: React.FC = () => {
         {category === "Number Sense" ? (
           <>
             <label htmlFor="dot-position" className="mb-2">
-              Select number of dots:
+              Select dot position:
             </label>
             <select
               id="dot-position"
@@ -146,11 +146,12 @@ const CollectionFinalStep: React.FC = () => {
               onChange={(e) => setDotPosition(e.target.value)}
               className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             >
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                <option key={num} value={num.toString()}>
-                  {num}
-                </option>
-              ))}
+              <option value="random">Random</option>
+              <option value="1">Top Left</option>
+              <option value="2">Top Right</option>
+              <option value="3">Center</option>
+              <option value="4">Bottom Left</option>
+              <option value="5">Bottom Right</option>
             </select>
             <label htmlFor="dot-color" className="mb-2">
               Select dot color:

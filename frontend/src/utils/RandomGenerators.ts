@@ -93,12 +93,18 @@ export function generateCountingSvg(
   count: number,
   color: string = "blue",
   shape: string = "circle",
+  position: string = "random"
 ): string {
   const gridSize = 5; // 5x5 grid
   const cellSize = 40;
   const svgSize = gridSize * cellSize;
 
-  const positions = getRandomPositions(count, gridSize);
+  let positions: { x: number; y: number }[];
+  if (position === "random") {
+    positions = getRandomPositions(count, gridSize);
+  } else {
+    positions = getPositionsByPreference(count, gridSize, position);
+  }
 
   const svgContent = `
     <svg xmlns="http://www.w3.org/2000/svg" width="${svgSize}" height="${svgSize}" viewBox="0 0 ${svgSize} ${svgSize}">
@@ -143,6 +149,52 @@ function getRandomPositions(
     const index = Math.floor(Math.random() * allPositions.length);
     positions.push(allPositions[index]);
     allPositions.splice(index, 1);
+  }
+
+  return positions;
+}
+
+function getPositionsByPreference(
+  count: number,
+  gridSize: number,
+  preference: string
+): { x: number; y: number }[] {
+  const positions: { x: number; y: number }[] = [];
+  let startX: number, startY: number;
+
+  switch (preference) {
+    case "1": // Top Left
+      startX = 0;
+      startY = 0;
+      break;
+    case "2": // Top Right
+      startX = gridSize - 1;
+      startY = 0;
+      break;
+    case "3": // Center
+      startX = Math.floor(gridSize / 2);
+      startY = Math.floor(gridSize / 2);
+      break;
+    case "4": // Bottom Left
+      startX = 0;
+      startY = gridSize - 1;
+      break;
+    case "5": // Bottom Right
+      startX = gridSize - 1;
+      startY = gridSize - 1;
+      break;
+    default:
+      return getRandomPositions(count, gridSize);
+  }
+
+  for (let i = 0; i < count; i++) {
+    positions.push({ x: startX, y: startY });
+    if (startX < gridSize - 1) {
+      startX++;
+    } else {
+      startX = 0;
+      startY = (startY + 1) % gridSize;
+    }
   }
 
   return positions;

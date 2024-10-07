@@ -84,7 +84,15 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
           <ul className="space-y-2">
             {collection.items.map((item, index) => (
               <li key={index} className="py-2 text-center text-lg">
-                {item.name}
+                {collection.category === "Number Sense" && item.svg ? (
+                  <div>
+                    <div dangerouslySetInnerHTML={{ __html: item.svg }} />
+                    <p>{item.name}</p>
+                    {item.count !== undefined && <p>Count: {item.count}</p>}
+                  </div>
+                ) : (
+                  item.name
+                )}
               </li>
             ))}
           </ul>

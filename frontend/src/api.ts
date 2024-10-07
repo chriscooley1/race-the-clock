@@ -169,13 +169,20 @@ export interface Collection {
   collection_id: number;
   name: string;
   description: string;
-  creator_username: string;
-  creator_display_name?: string;
   created_at: string;
   category: string;
   user_id: number;
-  items: { name: string }[];
-  item_count?: number;
+  creator_username: string;
+  creator_display_name?: string; // Add this line
+  items: CollectionItem[];
+  type: string;
+  item_count?: number; // Add this line if it's not already present
+}
+
+interface CollectionItem {
+  name: string;
+  svg?: string;
+  count?: number;
 }
 
 export const getCollections = async (

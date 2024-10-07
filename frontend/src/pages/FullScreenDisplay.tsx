@@ -4,7 +4,6 @@ import { useTheme } from "../context/ThemeContext";
 import Navbar from "../components/Navbar";
 
 interface CollectionItem {
-  id: number;
   name: string;
   svg?: string;
   count?: number;
@@ -182,7 +181,17 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
-    if (category === "Science" && type === "periodicTable") {
+    if (category === "Number Sense") {
+      return (
+        <div className="flex size-full items-center justify-center">
+          {currentItem?.svg ? (
+            <div dangerouslySetInnerHTML={{ __html: currentItem.svg }} />
+          ) : (
+            <p>No image available for {currentItem.name}</p>
+          )}
+        </div>
+      );
+    } else if (category === "Science" && type === "periodicTable") {
       const [symbol, name, atomicNumber] = currentItem.name.split(" - ");
       return (
         <div className="flex h-full flex-col items-center justify-center">
@@ -200,20 +209,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         >
           {currentItem.name}
         </h1>
-      );
-    } else if (category === "Number Sense") {
-      return (
-        <div className="flex size-full items-center justify-center">
-          {currentItem?.svg ? (
-            <img
-              src={currentItem.svg}
-              alt={`Number sense ${currentItem.name}`}
-              className="max-h-full max-w-full object-contain"
-            />
-          ) : (
-            <p>No image available for {currentItem.name}</p>
-          )}
-        </div>
       );
     } else {
       return (
