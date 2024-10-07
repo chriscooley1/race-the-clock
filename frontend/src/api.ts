@@ -170,10 +170,12 @@ export interface Collection {
   name: string;
   description: string;
   creator_username: string;
+  creator_display_name?: string;
   created_at: string;
   category: string;
   user_id: number;
-  items: { name: string }[]; // Adjust based on your actual item structure
+  items: { name: string }[];
+  item_count?: number;
 }
 
 export const getCollections = async (

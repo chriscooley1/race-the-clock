@@ -131,6 +131,10 @@ const DiscoverCollections: React.FC = () => {
           return [...collectionsToSort].sort(
             (a, b) => (b.item_count || 0) - (a.item_count || 0),
           );
+        case "category":
+          return [...collectionsToSort].sort((a, b) =>
+            a.category.localeCompare(b.category),
+          );
         default:
           return collectionsToSort;
       }
@@ -172,8 +176,8 @@ const DiscoverCollections: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex items-center justify-center font-caveat rounded border border-gray-300 bg-white p-2 text-black">
-        <label htmlFor="sortSelect" className="mb-2 block text-sm font-bold">
+      <div className="mb-4 flex items-center justify-center font-caveat rounded border border-gray-300 bg-white p-2 text-black">
+        <label htmlFor="sortSelect" className="text-sm font-bold">
           Sort collections by:
         </label>
         <select
@@ -184,6 +188,8 @@ const DiscoverCollections: React.FC = () => {
         >
           <option value="date">Date</option>
           <option value="alphabetical">Alphabetical</option>
+          <option value="itemCount">Item Count</option>
+          <option value="category">Category</option>
         </select>
       </div>
       <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -210,7 +216,10 @@ const DiscoverCollections: React.FC = () => {
                 {collection.name}
               </h2>
               <p className="mb-1 text-sm text-black">
-                Created by: {collection.creator_username}
+                Created by: {collection.creator_display_name || collection.creator_username}
+              </p>
+              <p className="mb-1 text-sm text-black">
+                Category: {collection.category}
               </p>
               <p className="mb-2 text-sm text-black">
                 {itemCount} items in collection
