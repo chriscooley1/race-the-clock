@@ -104,11 +104,13 @@ const Settings: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen w-full px-4 md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${
+        theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+      }`}
     >
       <h1 className="mb-8 text-3xl font-bold">Settings</h1>
-
-      <div className="space-y-6">
+  
+      <div className="space-y-6 w-full px-4 md:px-8">
         <div>
           <h2 className="mb-2 text-xl font-semibold">Theme</h2>
           <button

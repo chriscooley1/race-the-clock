@@ -127,7 +127,7 @@ const NameGenerator: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`flex min-h-screen flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+      className={`flex min-h-screen flex-col items-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
     >
       <div
         className={`flex w-full max-w-5xl justify-between px-4 ${showRightSide ? "" : "justify-center"}`}
