@@ -52,6 +52,7 @@ const config: Config = {
       spacing: {
         sidebar: "250px",
         navbar: "50px",
+        "15": "3.75rem",
       },
       zIndex: {
         modal: "1000",
@@ -87,6 +88,25 @@ const config: Config = {
   safelist: [
     ...colorSchemes.map((scheme) => `bg-[${scheme.backgroundColor}]`),
     ...colorSchemes.map((scheme) => `text-[${scheme.textColor}]`),
+    // Add the custom classes to the safelist
+    "font-caveat",
+    "bg-light-blue",
+    "bg-custom-red",
+    "hover:bg-custom-red-dark",
+    "bg-custom-green",
+    "hover:bg-custom-green-dark",
+    "hover:text-hover-blue",
+    "bg-light-pink",
+    "bg-theme-bg",
+    "text-theme-text",
+    "active:bg-active-blue",
+    "w-15",
+    "h-15",
+    "transition-background-transform",
+    "border-5",
+    "fullscreen",
+    "dark",
+    "main-content-area",
   ],
   plugins: [],
 };

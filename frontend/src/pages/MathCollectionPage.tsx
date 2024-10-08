@@ -96,7 +96,7 @@ const MathCollectionPage: React.FC = () => {
         </h1>
         <button
           type="button"
-          className="md:w-15 md:h-15 absolute left-2.5 top-1/2 z-10 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-3xl text-white hover:bg-opacity-70 md:text-5xl"
+          className="md:w-15 md:h-15 absolute left-2.5 top-1/2 z-10 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-3xl text-white hover:bg-black/70 md:text-5xl"
           onClick={(e) => {
             e.stopPropagation();
             handlePrevious();
@@ -106,7 +106,7 @@ const MathCollectionPage: React.FC = () => {
         </button>
         <button
           type="button"
-          className="md:w-15 md:h-15 absolute right-2.5 top-1/2 z-10 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-3xl text-white hover:bg-opacity-70 md:text-5xl"
+          className="md:w-15 md:h-15 absolute right-2.5 top-1/2 z-10 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-3xl text-white hover:bg-black/70 md:text-5xl"
           onClick={(e) => {
             e.stopPropagation();
             handleNext();
