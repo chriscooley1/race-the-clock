@@ -42,6 +42,9 @@ const CollectionSetup: React.FC = () => {
   >([]);
   const [dotColor, setDotColor] = useState<string>("blue");
   const [dotShape, setDotShape] = useState<string>("circle");
+  const [dotCountType, setDotCountType] = useState<"fixed" | "random">("fixed");
+  const [minDots, setMinDots] = useState<number>(1);
+  const [maxDots, setMaxDots] = useState<number>(10);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -136,7 +139,13 @@ const CollectionSetup: React.FC = () => {
       case "numberSense": {
         const generatedItems = [];
         for (let i = 0; i < collectionItemCount; i++) {
-          const image = generateNumberSenseImages(itemCount, dotColor, dotShape);
+          let dotCount;
+          if (dotCountType === "fixed") {
+            dotCount = itemCount;
+          } else {
+            dotCount = Math.floor(Math.random() * (maxDots - minDots + 1)) + minDots;
+          }
+          const image = generateNumberSenseImages(dotCount, dotColor, dotShape);
           setNumberSenseItems(prev => [...prev, image]);
           generatedItems.push({
             name: `Number Sense Image (Count: ${image.count})`,
@@ -265,21 +274,72 @@ const CollectionSetup: React.FC = () => {
         {category === "Number Sense" && (
           <>
             <div className="flex items-center space-x-4">
-              <label htmlFor="itemCount" className="font-bold whitespace-nowrap">
-                Number of Dots:
+              <label htmlFor="dotCountType" className="font-bold whitespace-nowrap">
+                Dot Count Type:
               </label>
-              <input
-                type="number"
-                id="itemCount"
-                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
-                value={itemCount}
-                min={1}
-                onChange={(e) => {
-                  const count = parseInt(e.target.value, 10);
-                  setItemCount(count);
-                }}
-              />
+              <select
+                id="dotCountType"
+                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-black text-center"
+                value={dotCountType}
+                onChange={(e) => setDotCountType(e.target.value as "fixed" | "random")}
+              >
+                <option value="fixed">Fixed</option>
+                <option value="random">Random</option>
+              </select>
             </div>
+            {dotCountType === "fixed" ? (
+              <div className="flex items-center space-x-4">
+                <label htmlFor="itemCount" className="font-bold whitespace-nowrap">
+                  Number of Dots:
+                </label>
+                <input
+                  type="number"
+                  id="itemCount"
+                  className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                  value={itemCount}
+                  min={1}
+                  onChange={(e) => {
+                    const count = parseInt(e.target.value, 10);
+                    setItemCount(count);
+                  }}
+                />
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center space-x-4">
+                  <label htmlFor="minDots" className="font-bold whitespace-nowrap">
+                    Minimum Dots:
+                  </label>
+                  <input
+                    type="number"
+                    id="minDots"
+                    className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                    value={minDots}
+                    min={1}
+                    onChange={(e) => {
+                      const count = parseInt(e.target.value, 10);
+                      setMinDots(count);
+                    }}
+                  />
+                </div>
+                <div className="flex items-center space-x-4">
+                  <label htmlFor="maxDots" className="font-bold whitespace-nowrap">
+                    Maximum Dots:
+                  </label>
+                  <input
+                    type="number"
+                    id="maxDots"
+                    className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                    value={maxDots}
+                    min={minDots}
+                    onChange={(e) => {
+                      const count = parseInt(e.target.value, 10);
+                      setMaxDots(count);
+                    }}
+                  />
+                </div>
+              </>
+            )}
             <div className="flex items-center space-x-4">
               <label htmlFor="collectionItemCount" className="font-bold whitespace-nowrap">
                 Number of Items in Collection:
@@ -363,8 +423,7 @@ const CollectionSetup: React.FC = () => {
         <div className="mt-6">
           <h3 className="mb-2 text-xl font-bold text-center">Generated Sequence:</h3>
           <p className="text-lg">{sequence.map(item => item.name).join(", ")}</p>
-        </div>
-      )}
+        </div> )}
       {category === "Number Sense" && numberSenseItems.length > 0 && (
         <div className="mt-6">
           <h3 className="mb-2 text-xl font-bold">
