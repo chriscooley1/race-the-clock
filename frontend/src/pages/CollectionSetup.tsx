@@ -276,13 +276,13 @@ const CollectionSetup: React.FC = () => {
         </div>
         {category === "Number Sense" && (
           <>
-            <div className="flex w-full items-center space-x-4">
+            <div className="flex items-center space-x-4">
               <label htmlFor="dot-color" className="font-bold whitespace-nowrap">
                 Dot Color:
               </label>
               <select
                 id="dot-color"
-                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center flex-grow"
+                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-black text-center"
                 value={dotColor}
                 onChange={(e) => setDotColor(e.target.value)}
               >
@@ -293,13 +293,13 @@ const CollectionSetup: React.FC = () => {
                 ))}
               </select>
             </div>
-            <div className="flex w-full items-center space-x-4">
+            <div className="flex items-center space-x-4">
               <label htmlFor="dot-shape" className="font-bold whitespace-nowrap">
                 Dot Shape:
               </label>
               <select
                 id="dot-shape"
-                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center flex-grow"
+                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-black text-center"
                 value={dotShape}
                 onChange={(e) => setDotShape(e.target.value)}
               >

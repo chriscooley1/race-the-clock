@@ -144,7 +144,7 @@ const CollectionFinalStep: React.FC = () => {
               id="dot-position"
               value={dotPosition}
               onChange={(e) => setDotPosition(e.target.value)}
-              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
             >
               <option value="random">Random</option>
               <option value="1">Top Left</option>
@@ -160,7 +160,7 @@ const CollectionFinalStep: React.FC = () => {
               id="dot-color"
               value={dotColor}
               onChange={(e) => setDotColor(e.target.value)}
-              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
             >
               {["blue", "green", "red", "purple", "orange"].map((color) => (
                 <option key={color} value={color}>
@@ -175,7 +175,7 @@ const CollectionFinalStep: React.FC = () => {
               id="dot-shape"
               value={dotShape}
               onChange={(e) => setDotShape(e.target.value)}
-              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
             >
               {["circle", "square", "triangle"].map((shape) => (
                 <option key={shape} value={shape}>
