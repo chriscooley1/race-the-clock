@@ -186,13 +186,15 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
     console.log("Current item SVG:", currentItem.svg); // Log the SVG data
+
+    // Decode the SVG if it exists
+    const decodedSvg = currentItem.svg ? decodeSvg(currentItem.svg) : null;
+
     if (category === "Number Sense") {
       return (
         <div className="flex size-full items-center justify-center">
-          {currentItem?.svg ? (
-            <div 
-              dangerouslySetInnerHTML={{ __html: decodeSvg(currentItem.svg) }} 
-            />
+          {decodedSvg ? (
+            <img src={decodedSvg} alt={currentItem.name} style={{ maxWidth: '100%', maxHeight: '100%' }} />
           ) : (
             <p>No image available for {currentItem.name}</p>
           )}
@@ -243,14 +245,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         {renderContent()}
         <button
           type="button"
-          className="w-15 h-15 absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-opacity-70"
+          className="w-15 h-15 absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
           onClick={handlePrevious}
         >
           ←
         </button>
         <button
           type="button"
-          className="w-15 h-15 absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-opacity-70"
+          className="w-15 h-15 absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
           onClick={handleNext}
         >
           →

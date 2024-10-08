@@ -112,7 +112,7 @@ const CollectionSetup: React.FC = () => {
       // Create a sequence item based on the uploaded file
       const newItem = {
         name: selectedFile.name,
-        svg: URL.createObjectURL(selectedFile), // Assuming the file is an image
+        svg: URL.createObjectURL(selectedFile), // This should create a valid Blob URL
         count: 1 // You can adjust this as needed
       };
       setSequence([newItem]); // Set the sequence to the new item
