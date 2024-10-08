@@ -32,7 +32,13 @@ const CollectionFinalStep: React.FC = () => {
   } = location.state as LocationState;
   const { getAccessTokenSilently } = useAuth0();
   const [items, setItems] = useState<
-    { id: number; name: string; svg?: string; count?: number; answer?: number }[]
+    {
+      id: number;
+      name: string;
+      svg?: string;
+      count?: number;
+      answer?: number;
+    }[]
   >(sequence.map((name, index) => ({ id: index + 1, name })));
   const [newItem, setNewItem] = useState<string>("");
   const [selectedElement, setSelectedElement] = useState<string>("");
@@ -45,7 +51,9 @@ const CollectionFinalStep: React.FC = () => {
     shape: string;
   }
 
-  const [dots, setDots] = useState<Dot[]>([{ position: "1", color: "blue", shape: "circle" }]);
+  const [dots, setDots] = useState<Dot[]>([
+    { position: "1", color: "blue", shape: "circle" },
+  ]);
 
   const [firstNumber, setFirstNumber] = useState<number>(1);
   const [operator, setOperator] = useState<string>("addition");
@@ -96,8 +104,8 @@ const CollectionFinalStep: React.FC = () => {
   };
 
   const handleAddNumberSenseItem = () => {
-    const svgs = dots.map(dot => 
-      generateCountingSvg(1, dot.color, dot.shape, dot.position)
+    const svgs = dots.map((dot) =>
+      generateCountingSvg(1, dot.color, dot.shape, dot.position),
     );
     const encodedSvg = encodeURIComponent(svgs.join("")); // This is the encoding step
     const decodedSvg = decodeURIComponent(encodedSvg); // Decode the SVG here
@@ -124,20 +132,22 @@ const CollectionFinalStep: React.FC = () => {
     try {
       const collectionData = {
         name: collectionName,
-        description: JSON.stringify(items.map(item => ({
-          name: item.name,
-          svg: item.svg,
-          count: item.count,
-          answer: item.answer
-        }))),
+        description: JSON.stringify(
+          items.map((item) => ({
+            name: item.name,
+            svg: item.svg,
+            count: item.count,
+            answer: item.answer,
+          })),
+        ),
         status: isPublic ? "public" : "private",
         category: category,
         type: initialType || "default",
-        items: items.map((item) => ({ 
+        items: items.map((item) => ({
           name: item.name,
           svg: item.svg,
           count: item.count,
-          answer: item.answer
+          answer: item.answer,
         })),
       };
 
@@ -183,7 +193,11 @@ const CollectionFinalStep: React.FC = () => {
     const problemString = `${firstNumber} ${operator} ${secondNumber}`; // Format as "1 + 1"
 
     // Add the equation and answer as separate items
-    setItems([...items, { id: items.length + 1, name: problemString }, { id: items.length + 2, name: answer.toString() }]);
+    setItems([
+      ...items,
+      { id: items.length + 1, name: problemString },
+      { id: items.length + 2, name: answer.toString() },
+    ]);
   };
 
   if (!currentUser) {
@@ -191,11 +205,11 @@ const CollectionFinalStep: React.FC = () => {
   }
 
   return (
-      <div
-        className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${
-          theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-        }`}
-      >
+    <div
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${
+        theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+      }`}
+    >
       <h1 className="text-4xl font-bold">Step 3 - Custom</h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <p className="mb-4">
@@ -213,7 +227,9 @@ const CollectionFinalStep: React.FC = () => {
                 <select
                   id={`dot-position-${index}`}
                   value={dot.position}
-                  onChange={(e) => handleDotChange(index, "position", e.target.value)}
+                  onChange={(e) =>
+                    handleDotChange(index, "position", e.target.value)
+                  }
                   className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
                 >
                   {Array.from({ length: 25 }, (_, i) => (
@@ -228,7 +244,9 @@ const CollectionFinalStep: React.FC = () => {
                 <select
                   id={`dot-color-${index}`}
                   value={dot.color}
-                  onChange={(e) => handleDotChange(index, "color", e.target.value)}
+                  onChange={(e) =>
+                    handleDotChange(index, "color", e.target.value)
+                  }
                   className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
                 >
                   {["blue", "green", "red", "purple", "orange"].map((color) => (
@@ -243,7 +261,9 @@ const CollectionFinalStep: React.FC = () => {
                 <select
                   id={`dot-shape-${index}`}
                   value={dot.shape}
-                  onChange={(e) => handleDotChange(index, "shape", e.target.value)}
+                  onChange={(e) =>
+                    handleDotChange(index, "shape", e.target.value)
+                  }
                   className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
                 >
                   {["circle", "square", "triangle"].map((shape) => (
@@ -304,29 +324,47 @@ const CollectionFinalStep: React.FC = () => {
         ) : category === "Math" ? (
           <>
             <label htmlFor="first-number-select">First Number:</label>
-            <select id="first-number-select" value={firstNumber} onChange={(e) => setFirstNumber(Number(e.target.value))}
-                    className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black">
+            <select
+              id="first-number-select"
+              value={firstNumber}
+              onChange={(e) => setFirstNumber(Number(e.target.value))}
+              className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+            >
               {Array.from({ length: 10 }, (_, i) => (
-                <option key={i} value={i + 1}>{i + 1}</option>
+                <option key={i} value={i + 1}>
+                  {i + 1}
+                </option>
               ))}
             </select>
             <label htmlFor="operator-select">Operator:</label>
-            <select id="operator-select" value={operator} onChange={(e) => setOperator(e.target.value)}
-                    className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black">
+            <select
+              id="operator-select"
+              value={operator}
+              onChange={(e) => setOperator(e.target.value)}
+              className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+            >
               <option value="addition">+</option>
               <option value="subtraction">-</option>
               <option value="multiplication">×</option>
               <option value="division">÷</option>
             </select>
             <label htmlFor="second-number-select">Second Number:</label>
-            <select id="second-number-select" value={secondNumber} onChange={(e) => setSecondNumber(Number(e.target.value))}
-                    className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black">
+            <select
+              id="second-number-select"
+              value={secondNumber}
+              onChange={(e) => setSecondNumber(Number(e.target.value))}
+              className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+            >
               {Array.from({ length: 10 }, (_, i) => (
-                <option key={i} value={i + 1}>{i + 1}</option>
+                <option key={i} value={i + 1}>
+                  {i + 1}
+                </option>
               ))}
             </select>
-            <button onClick={handleAddMathProblem}
-                    className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white">
+            <button
+              onClick={handleAddMathProblem}
+              className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
+            >
               Add Math Problem
             </button>
           </>

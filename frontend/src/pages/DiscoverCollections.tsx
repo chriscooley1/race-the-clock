@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { fetchPublicCollections, searchPublicCollections, checkSubscription } from "../api";
+import {
+  fetchPublicCollections,
+  searchPublicCollections,
+  checkSubscription,
+} from "../api";
 import CollectionPreviewModal from "../components/CollectionPreviewModal";
 import { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -63,7 +67,10 @@ const DiscoverCollections: React.FC = () => {
   const parseDescription = (description: string): Item[] => {
     try {
       return JSON.parse(description).map(
-        (item: { name: string; svg?: string; count?: number }, index: number) => ({
+        (
+          item: { name: string; svg?: string; count?: number },
+          index: number,
+        ) => ({
           id: index,
           name: item.name,
           svg: item.svg,
@@ -110,10 +117,13 @@ const DiscoverCollections: React.FC = () => {
       ...collection,
       items: parseDescription(collection.description),
     };
-    
+
     // Check if the user is subscribed to this collection
     try {
-      const isSubscribed = await checkSubscription(collection.collection_id, getAccessTokenSilently);
+      const isSubscribed = await checkSubscription(
+        collection.collection_id,
+        getAccessTokenSilently,
+      );
       setActiveCollection({ ...parsedCollection, isSubscribed });
     } catch (error) {
       console.error("Error checking subscription:", error);
@@ -189,7 +199,7 @@ const DiscoverCollections: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="mb-4 flex items-center justify-center font-caveat rounded border border-gray-300 bg-white p-2 text-black">
+      <div className="font-caveat mb-4 flex items-center justify-center rounded border border-gray-300 bg-white p-2 text-black">
         <label htmlFor="sortSelect" className="text-sm font-bold">
           Sort collections by:
         </label>
@@ -229,7 +239,8 @@ const DiscoverCollections: React.FC = () => {
                 {collection.name}
               </h2>
               <p className="mb-1 text-sm text-black">
-                Created by: {collection.creator_display_name || collection.creator_username}
+                Created by:{" "}
+                {collection.creator_display_name || collection.creator_username}
               </p>
               <p className="mb-1 text-sm text-black">
                 Category: {collection.category}

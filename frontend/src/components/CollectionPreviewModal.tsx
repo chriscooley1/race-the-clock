@@ -13,7 +13,9 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   onClose,
 }) => {
   const { getAccessTokenSilently } = useAuth0();
-  const [isSubscribed, setIsSubscribed] = useState(collection.isSubscribed || false);
+  const [isSubscribed, setIsSubscribed] = useState(
+    collection.isSubscribed || false,
+  );
   const modalRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
@@ -38,7 +40,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
 
   const handleSubscribe = async () => {
     if (isSubscribed) return;
-    
+
     try {
       await subscribeToCollection(
         collection.collection_id,
@@ -47,7 +49,10 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
       setIsSubscribed(true);
       alert("You have subscribed to this collection!");
     } catch (error) {
-      if (error instanceof Error && error.message.includes("already subscribed")) {
+      if (
+        error instanceof Error &&
+        error.message.includes("already subscribed")
+      ) {
         setIsSubscribed(true);
         alert("You are already subscribed to this collection.");
       } else {
@@ -99,14 +104,19 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
           {collection.category === "Number Sense" ? (
             <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {collection.items.map((item, index) => (
-                <li key={index} className="flex flex-col items-center justify-between p-4 border rounded h-64">
-                  <div className="flex-grow flex items-center justify-center w-full h-40">
-                    <div 
-                      dangerouslySetInnerHTML={{ __html: decodeSvg(item.svg || '') }} 
-                      className="max-w-full max-h-full"
+                <li
+                  key={index}
+                  className="flex h-64 flex-col items-center justify-between rounded border p-4"
+                >
+                  <div className="flex h-40 w-full grow items-center justify-center">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: decodeSvg(item.svg || ""),
+                      }}
+                      className="max-h-full max-w-full"
                     />
                   </div>
-                  <div className="text-center mt-4">
+                  <div className="mt-4 text-center">
                     <p className="text-lg font-semibold">{item.name}</p>
                   </div>
                 </li>

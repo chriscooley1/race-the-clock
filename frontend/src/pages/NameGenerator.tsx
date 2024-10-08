@@ -15,7 +15,10 @@ const NameGenerator: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
-  const [spinData, setSpinData] = useState<{ targetDegrees: number; spinRevolutions: number } | null>(null);
+  const [spinData, setSpinData] = useState<{
+    targetDegrees: number;
+    spinRevolutions: number;
+  } | null>(null);
 
   const loadNameList = useCallback(async () => {
     try {
@@ -87,13 +90,15 @@ const NameGenerator: React.FC = () => {
       setIsSpinning(true);
       const spinRevolutions = 2 + Math.random() * 3; // 2 to 5 full rotations
       const targetDegrees = (spinRevolutions * 360) % 360; // Final position in degrees
-      console.log(`spinRev: ${spinRevolutions} targetDegrees: ${targetDegrees}`);
+      console.log(
+        `spinRev: ${spinRevolutions} targetDegrees: ${targetDegrees}`,
+      );
       setSpinData({ targetDegrees, spinRevolutions });
     }
   };
 
   const handleNameSelected = (name: string) => {
-    console.log(`nameSelected: ${name}`)
+    console.log(`nameSelected: ${name}`);
     setGeneratedName(name);
     setIsSpinning(false);
   };

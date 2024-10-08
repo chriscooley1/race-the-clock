@@ -33,7 +33,9 @@ const CollectionSetup: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [itemCount, setItemCount] = useState<number>(1);
   const [collectionItemCount, setCollectionItemCount] = useState<number>(1);
-  const [sequence, setSequence] = useState<Array<{ name: string; svg?: string; count?: number }>>([]);
+  const [sequence, setSequence] = useState<
+    Array<{ name: string; svg?: string; count?: number }>
+  >([]);
   const [type, setType] = useState<string>("letters");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [operation, setOperation] = useState<Operation | null>(null);
@@ -113,30 +115,44 @@ const CollectionSetup: React.FC = () => {
       const newItem = {
         name: selectedFile.name,
         svg: URL.createObjectURL(selectedFile), // This should create a valid Blob URL
-        count: 1 // You can adjust this as needed
+        count: 1, // You can adjust this as needed
       };
       setSequence([newItem]); // Set the sequence to the new item
     }
   };
 
   const generateRandomSequence = () => {
-    let generatedSequence: Array<{ name: string; svg?: string; count?: number }> = [];
+    let generatedSequence: Array<{
+      name: string;
+      svg?: string;
+      count?: number;
+    }> = [];
     switch (type) {
       case "numbers":
-        generatedSequence = generateRandomNumbers(itemCount).map(num => ({ name: num.toString() }));
+        generatedSequence = generateRandomNumbers(itemCount).map((num) => ({
+          name: num.toString(),
+        }));
         break;
       case "letters":
-        generatedSequence = generateRandomLetters(itemCount).map(letter => ({ name: letter }));
+        generatedSequence = generateRandomLetters(itemCount).map((letter) => ({
+          name: letter,
+        }));
         break;
       case "alphabet":
-        generatedSequence = generateFullAlphabet().map(letter => ({ name: letter }));
+        generatedSequence = generateFullAlphabet().map((letter) => ({
+          name: letter,
+        }));
         break;
       case "numbersOneToHundred":
-        generatedSequence = generateNumbersOneToHundred().map(num => ({ name: num.toString() }));
+        generatedSequence = generateNumbersOneToHundred().map((num) => ({
+          name: num.toString(),
+        }));
         break;
       case "mathProblems":
         if (operation && operation !== "PeriodicElement") {
-          generatedSequence = generateMathProblems(itemCount, operation).map(problem => ({ name: problem }));
+          generatedSequence = generateMathProblems(itemCount, operation).map(
+            (problem) => ({ name: problem }),
+          );
         } else {
           console.error(
             "Math Problems selected but operation is not set or is PeriodicElement",
@@ -150,27 +166,34 @@ const CollectionSetup: React.FC = () => {
           if (dotCountType === "fixed") {
             dotCount = itemCount;
           } else {
-            dotCount = Math.floor(Math.random() * (maxDots - minDots + 1)) + minDots;
+            dotCount =
+              Math.floor(Math.random() * (maxDots - minDots + 1)) + minDots;
           }
           const image = generateNumberSenseImages(dotCount, dotColor, dotShape);
-          setNumberSenseItems(prev => [...prev, image]);
+          setNumberSenseItems((prev) => [...prev, image]);
           generatedItems.push({
             name: `Number Sense Image (Count: ${image.count})`,
             svg: image.svg,
-            count: image.count
+            count: image.count,
           });
         }
         generatedSequence = generatedItems;
         break;
       }
       case "periodicTable":
-        generatedSequence = generatePeriodicTableElements(itemCount).map(element => ({ name: element }));
+        generatedSequence = generatePeriodicTableElements(itemCount).map(
+          (element) => ({ name: element }),
+        );
         break;
       case "scienceTerms":
-        generatedSequence = generateScienceTerms(itemCount).map(term => ({ name: term }));
+        generatedSequence = generateScienceTerms(itemCount).map((term) => ({
+          name: term,
+        }));
         break;
       case "nursingTerms":
-        generatedSequence = generateNursingTerms(itemCount).map(term => ({ name: term }));
+        generatedSequence = generateNursingTerms(itemCount).map((term) => ({
+          name: term,
+        }));
         break;
       default:
         console.error("Invalid type selected");
@@ -202,7 +225,7 @@ const CollectionSetup: React.FC = () => {
         id: index + 1,
         name: item.name,
         svg: item.svg,
-        count: item.count
+        count: item.count,
       }));
 
       console.log("Saving collection with data:", {
@@ -240,16 +263,19 @@ const CollectionSetup: React.FC = () => {
       <h1 className="text-4xl font-bold">Step 2 - Setup</h1>
       <h2 className="text-3xl font-bold">Collection: {collectionName}</h2>
       <h3 className="mb-4 text-2xl font-semibold">Category: {category}</h3>
-      <div className="mb-4 flex flex-col items-center space-y-4 w-full max-w-3xl">
+      <div className="mb-4 flex w-full max-w-3xl flex-col items-center space-y-4">
         {category !== "Number Sense" ? (
           <>
             <div className="flex items-center space-x-4">
-              <label htmlFor="typeSelect" className="font-bold whitespace-nowrap">
+              <label
+                htmlFor="typeSelect"
+                className="whitespace-nowrap font-bold"
+              >
                 Type:
               </label>
               <select
                 id="typeSelect"
-                className="font-caveat rounded border border-gray-300 bg-white p-2 text-black text-center"
+                className="font-caveat rounded border border-gray-300 bg-white p-2 text-center text-black"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
@@ -278,13 +304,16 @@ const CollectionSetup: React.FC = () => {
               </select>
             </div>
             <div className="flex items-center space-x-4">
-              <label htmlFor="itemCount" className="font-bold whitespace-nowrap">
+              <label
+                htmlFor="itemCount"
+                className="whitespace-nowrap font-bold"
+              >
                 Quantity:
               </label>
               <input
                 type="number"
                 id="itemCount"
-                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                 value={itemCount}
                 min={1}
                 onChange={(e) => {
@@ -297,14 +326,19 @@ const CollectionSetup: React.FC = () => {
         ) : (
           <>
             <div className="flex items-center space-x-4">
-              <label htmlFor="dotCountType" className="font-bold whitespace-nowrap">
+              <label
+                htmlFor="dotCountType"
+                className="whitespace-nowrap font-bold"
+              >
                 Dot Count Type:
               </label>
               <select
                 id="dotCountType"
-                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-black text-center"
+                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotCountType}
-                onChange={(e) => setDotCountType(e.target.value as "fixed" | "random")}
+                onChange={(e) =>
+                  setDotCountType(e.target.value as "fixed" | "random")
+                }
               >
                 <option value="fixed">Fixed</option>
                 <option value="random">Random</option>
@@ -312,13 +346,16 @@ const CollectionSetup: React.FC = () => {
             </div>
             {dotCountType === "fixed" ? (
               <div className="flex items-center space-x-4">
-                <label htmlFor="itemCount" className="font-bold whitespace-nowrap">
+                <label
+                  htmlFor="itemCount"
+                  className="whitespace-nowrap font-bold"
+                >
                   Number of Dots:
                 </label>
                 <input
                   type="number"
                   id="itemCount"
-                  className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                  className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                   value={itemCount}
                   min={1}
                   onChange={(e) => {
@@ -330,13 +367,16 @@ const CollectionSetup: React.FC = () => {
             ) : (
               <>
                 <div className="flex items-center space-x-4">
-                  <label htmlFor="minDots" className="font-bold whitespace-nowrap">
+                  <label
+                    htmlFor="minDots"
+                    className="whitespace-nowrap font-bold"
+                  >
                     Minimum Dots:
                   </label>
                   <input
                     type="number"
                     id="minDots"
-                    className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                    className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                     value={minDots}
                     min={1}
                     onChange={(e) => {
@@ -346,13 +386,16 @@ const CollectionSetup: React.FC = () => {
                   />
                 </div>
                 <div className="flex items-center space-x-4">
-                  <label htmlFor="maxDots" className="font-bold whitespace-nowrap">
+                  <label
+                    htmlFor="maxDots"
+                    className="whitespace-nowrap font-bold"
+                  >
                     Maximum Dots:
                   </label>
                   <input
                     type="number"
                     id="maxDots"
-                    className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                    className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                     value={maxDots}
                     min={minDots}
                     onChange={(e) => {
@@ -364,13 +407,16 @@ const CollectionSetup: React.FC = () => {
               </>
             )}
             <div className="flex items-center space-x-4">
-              <label htmlFor="collectionItemCount" className="font-bold whitespace-nowrap">
+              <label
+                htmlFor="collectionItemCount"
+                className="whitespace-nowrap font-bold"
+              >
                 Number of Items in Collection:
               </label>
               <input
                 type="number"
                 id="collectionItemCount"
-                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                 value={collectionItemCount}
                 min={1}
                 onChange={(e) => {
@@ -380,12 +426,15 @@ const CollectionSetup: React.FC = () => {
               />
             </div>
             <div className="flex items-center space-x-4">
-              <label htmlFor="dot-color" className="font-bold whitespace-nowrap">
+              <label
+                htmlFor="dot-color"
+                className="whitespace-nowrap font-bold"
+              >
                 Dot Color:
               </label>
               <select
                 id="dot-color"
-                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-black text-center"
+                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotColor}
                 onChange={(e) => setDotColor(e.target.value)}
               >
@@ -397,12 +446,15 @@ const CollectionSetup: React.FC = () => {
               </select>
             </div>
             <div className="flex items-center space-x-4">
-              <label htmlFor="dot-shape" className="font-bold whitespace-nowrap">
+              <label
+                htmlFor="dot-shape"
+                className="whitespace-nowrap font-bold"
+              >
                 Dot Shape:
               </label>
               <select
                 id="dot-shape"
-                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-black text-center"
+                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotShape}
                 onChange={(e) => setDotShape(e.target.value)}
               >
@@ -444,9 +496,14 @@ const CollectionSetup: React.FC = () => {
       </div>
       {sequence.length > 0 && (
         <div className="mt-6">
-          <h3 className="mb-2 text-xl font-bold text-center">Generated Sequence:</h3>
-          <p className="text-lg">{sequence.map(item => item.name).join(", ")}</p>
-        </div> )}
+          <h3 className="mb-2 text-center text-xl font-bold">
+            Generated Sequence:
+          </h3>
+          <p className="text-lg">
+            {sequence.map((item) => item.name).join(", ")}
+          </p>
+        </div>
+      )}
       {category === "Number Sense" && numberSenseItems.length > 0 && (
         <div className="mt-6">
           <h3 className="mb-2 text-xl font-bold">

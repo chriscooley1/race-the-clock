@@ -90,7 +90,7 @@ export function generateCountingSvg(
   count: number,
   color: string = "blue",
   shape: string = "circle",
-  position: string = "random"
+  position: string = "random",
 ): string {
   const gridSize = 5; // 5x5 grid
   const cellSize = 40;
@@ -154,7 +154,7 @@ function getRandomPositions(
 function getPositionsByPreference(
   count: number,
   gridSize: number,
-  preference: string
+  preference: string,
 ): { x: number; y: number }[] {
   const positions: { x: number; y: number }[] = [];
   let startX: number, startY: number;

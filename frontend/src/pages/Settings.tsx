@@ -108,9 +108,8 @@ const Settings: React.FC = () => {
       }`}
     >
       <h1 className="mb-8 text-3xl font-bold">Settings</h1>
-  
-      <div className="space-y-6 w-full px-4 md:px-8">
 
+      <div className="w-full space-y-6 px-4 md:px-8">
         <div>
           <h2 className="mb-2 text-xl font-semibold">Font</h2>
           <select

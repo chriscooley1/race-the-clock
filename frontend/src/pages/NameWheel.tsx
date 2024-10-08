@@ -44,7 +44,13 @@ const NameWheel: React.FC<NameWheelProps> = ({
         // Draw wheel segment
         ctx.beginPath();
         ctx.moveTo(canvasSize / 2, canvasSize / 2);
-        ctx.arc(canvasSize / 2, canvasSize / 2, radius, (startAngle * Math.PI) / 180, (endAngle * Math.PI) / 180);
+        ctx.arc(
+          canvasSize / 2,
+          canvasSize / 2,
+          radius,
+          (startAngle * Math.PI) / 180,
+          (endAngle * Math.PI) / 180,
+        );
         ctx.closePath();
 
         // Set segment color

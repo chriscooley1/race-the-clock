@@ -194,7 +194,11 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       return (
         <div className="flex size-full items-center justify-center">
           {decodedSvg ? (
-            <img src={decodedSvg} alt={currentItem.name} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+            <img
+              src={decodedSvg}
+              alt={currentItem.name}
+              style={{ maxWidth: "100%", maxHeight: "100%" }}
+            />
           ) : (
             <p>No image available for {currentItem.name}</p>
           )}

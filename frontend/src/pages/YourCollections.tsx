@@ -55,10 +55,17 @@ const parseDescription = (
     const parsed = JSON.parse(description);
     return Array.isArray(parsed)
       ? parsed.map((item, index) => ({
-          name: typeof item === "object" && item !== null ? item.name : String(item),
-          id: typeof item === "object" && item !== null && "id" in item ? item.id : index,
+          name:
+            typeof item === "object" && item !== null
+              ? item.name
+              : String(item),
+          id:
+            typeof item === "object" && item !== null && "id" in item
+              ? item.id
+              : index,
           svg: typeof item === "object" && item !== null ? item.svg : undefined,
-          count: typeof item === "object" && item !== null ? item.count : undefined,
+          count:
+            typeof item === "object" && item !== null ? item.count : undefined,
         }))
       : [];
   } catch {
@@ -69,17 +76,23 @@ const parseDescription = (
 const YourCollections: React.FC = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
-  const [filteredCollections, setFilteredCollections] = useState<Collection[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
+  const [filteredCollections, setFilteredCollections] = useState<Collection[]>(
+    [],
+  );
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>("All Collections");
   const [sortOption, setSortOption] = useState<string>(
     localStorage.getItem("sortPreference") || "date",
   );
-  const [isDuplicateModalOpen, setDuplicateModalOpen] = useState<boolean>(false);
-  const [selectedCollectionToDuplicate, setSelectedCollectionToDuplicate] = useState<number | null>(null);
+  const [isDuplicateModalOpen, setDuplicateModalOpen] =
+    useState<boolean>(false);
+  const [selectedCollectionToDuplicate, setSelectedCollectionToDuplicate] =
+    useState<number | null>(null);
   const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
+  const [selectedCollection, setSelectedCollection] =
+    useState<Collection | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { adjustColorForColorblindness, theme } = useTheme();
@@ -288,11 +301,15 @@ const YourCollections: React.FC = () => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
       const sequence = sequenceItems.map(
-        (item: { name: string; svg?: string; count?: number } | string, index: number) => ({
+        (
+          item: { name: string; svg?: string; count?: number } | string,
+          index: number,
+        ) => ({
           name: typeof item === "object" ? item.name : item,
           svg: typeof item === "object" ? item.svg : undefined,
           count: typeof item === "object" ? item.count : undefined,
-          isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0,
+          isAnswer:
+            selectedCollection.type === "mathProblems" && index % 2 !== 0,
         }),
       );
 
