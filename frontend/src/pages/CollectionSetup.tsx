@@ -234,44 +234,60 @@ const CollectionSetup: React.FC = () => {
       <h2 className="text-3xl font-bold">Collection: {collectionName}</h2>
       <h3 className="mb-4 text-2xl font-semibold">Category: {category}</h3>
       <div className="mb-4 flex flex-col items-center space-y-4 w-full max-w-3xl">
-        <div className="flex items-center space-x-4">
-          <label htmlFor="typeSelect" className="font-bold whitespace-nowrap">
-            Type:
-          </label>
-          <select
-            id="typeSelect"
-            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black text-center"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          >
-            {category === "Math" && (
-              <>
-                <option value="numbers">Numbers</option>
-                <option value="numbersOneToHundred">Numbers 1-100</option>
-                <option value="mathProblems">Math Problems</option>
-              </>
-            )}
-            {category === "Language Arts" && (
-              <>
-                <option value="letters">Letters</option>
-                <option value="alphabet">Full Alphabet</option>
-              </>
-            )}
-            {category === "Number Sense" && (
-              <option value="numberSense">Random Pictures</option>
-            )}
-            {category === "Science" && (
-              <>
-                <option value="periodicTable">Periodic Table</option>
-                <option value="scienceTerms">Science Terms</option>
-              </>
-            )}
-            {category === "Nursing" && (
-              <option value="nursingTerms">Nursing Terms</option>
-            )}
-          </select>
-        </div>
-        {category === "Number Sense" && (
+        {category !== "Number Sense" ? (
+          <>
+            <div className="flex items-center space-x-4">
+              <label htmlFor="typeSelect" className="font-bold whitespace-nowrap">
+                Type:
+              </label>
+              <select
+                id="typeSelect"
+                className="font-caveat rounded border border-gray-300 bg-white p-2 text-black text-center"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+              >
+                {category === "Math" && (
+                  <>
+                    <option value="numbers">Numbers</option>
+                    <option value="numbersOneToHundred">Numbers 1-100</option>
+                    <option value="mathProblems">Math Problems</option>
+                  </>
+                )}
+                {category === "Language Arts" && (
+                  <>
+                    <option value="letters">Letters</option>
+                    <option value="alphabet">Full Alphabet</option>
+                  </>
+                )}
+                {category === "Science" && (
+                  <>
+                    <option value="periodicTable">Periodic Table</option>
+                    <option value="scienceTerms">Science Terms</option>
+                  </>
+                )}
+                {category === "Nursing" && (
+                  <option value="nursingTerms">Nursing Terms</option>
+                )}
+              </select>
+            </div>
+            <div className="flex items-center space-x-4">
+              <label htmlFor="itemCount" className="font-bold whitespace-nowrap">
+                Quantity:
+              </label>
+              <input
+                type="number"
+                id="itemCount"
+                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                value={itemCount}
+                min={1}
+                onChange={(e) => {
+                  const count = parseInt(e.target.value, 10);
+                  setItemCount(count);
+                }}
+              />
+            </div>
+          </>
+        ) : (
           <>
             <div className="flex items-center space-x-4">
               <label htmlFor="dotCountType" className="font-bold whitespace-nowrap">
