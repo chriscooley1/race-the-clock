@@ -107,8 +107,15 @@ const CollectionSetup: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
-      setSequence([]); // Clear any existing sequence
+      const selectedFile = e.target.files[0];
+      setFile(selectedFile);
+      // Create a sequence item based on the uploaded file
+      const newItem = {
+        name: selectedFile.name,
+        svg: URL.createObjectURL(selectedFile), // Assuming the file is an image
+        count: 1 // You can adjust this as needed
+      };
+      setSequence([newItem]); // Set the sequence to the new item
     }
   };
 
@@ -430,9 +437,9 @@ const CollectionSetup: React.FC = () => {
         <button
           type="button"
           className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
-          onClick={sequence.length > 0 ? handleSaveCollection : handleNext}
+          onClick={file ? handleSaveCollection : handleNext} // Adjusted to save if a file is selected
         >
-          {sequence.length > 0 ? "Save Collection" : "Next"}
+          {file ? "Save Collection" : "Next"}
         </button>
       </div>
       {sequence.length > 0 && (
