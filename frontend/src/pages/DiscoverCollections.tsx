@@ -12,8 +12,8 @@ import { useTheme } from "../context/ThemeContext";
 interface Item {
   id: number;
   name: string;
-  svg?: string;  // Add this line
-  count?: number;  // Add this line if you need it for Number Sense items
+  svg?: string;
+  count?: number;
 }
 
 interface Collection extends Omit<APICollection, "items"> {
@@ -31,7 +31,7 @@ const DiscoverCollections: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { theme } = useTheme();
   const [sortOption, setSortOption] = useState<string>("date");
-  const { getAccessTokenSilently } = useAuth0();  // Add this line
+  const { getAccessTokenSilently } = useAuth0();
 
   const fetchCollections = useCallback(async () => {
     try {

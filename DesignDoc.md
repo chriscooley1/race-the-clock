@@ -9,9 +9,15 @@ Key Features:
 - Adjustable speed settings for personalized learning experiences
 - Fullscreen, timed practice sessions
 - Sharing capabilities for collections
-- Themes and color customization options
+- Themes and color customization options, including options for different age groups
 - Support for various content types: letters, numbers, words, images, and more
-- Potential for gamification and competitive features
+- Flashcards creation and study
+- Stages for mastery: beginner, intermediate, and advanced levels
+- Interactive elements such as animations, sounds, and feedback to reinforce learning
+- Image verification to maintain a safe learning environment
+- Matching games for enhanced engagement
+- Session reports that can be attached to individual students
+- Potential for gamification and competitive features (badges, achievements)
 
 Tech Stack:
 - Backend: Python with FastAPI, SQLModel, and Alembic
@@ -34,6 +40,11 @@ Target Audience:
 - As a teacher, I want to share my collections with other teachers to collaborate and save time.
 - As a student, I want to create flashcards with images to study number sense and object recognition.
 - As a competitive learner, I want to compare my performance with friends to motivate myself to improve.
+- As a teacher, I want to assign stages of mastery (beginner, intermediate, advanced) to collections based on student progress.
+- As a user, I want to experience interactive elements such as animations, sounds, and visual feedback to make learning more engaging.
+- As a teacher, I want to verify user-uploaded images to ensure they are appropriate for a learning environment.
+- As a student, I want to play matching games that associate words, letters, or images.
+- As a user, I want detailed session reports, including the ability to attach reports to individual students.
 
 [Add more user stories as needed]
 
@@ -72,6 +83,7 @@ Target Audience:
   - name
   - description
   - is_public
+  - stage (beginner/intermediate/advanced)
 
 - Items
   - id (PK)
@@ -88,6 +100,7 @@ Target Audience:
   - end_time
   - items_completed
   - speed_setting
+  - report_id (optional reference to specific student ID)
 
 [Add more tables and relationships as needed]
 
@@ -101,26 +114,26 @@ Target Audience:
 - GET /api/collections/{id}/items - Retrieve items in a collection
 - POST /api/practice-sessions - Start a new practice session
 - PUT /api/practice-sessions/{id} - Update practice session results
+- GET /api/practice-sessions/{id}/report - Retrieve session report
 
 [Add more endpoints as needed]
 
 ## 6. UI/UX Design
 
-- Home Dashboard: Overview of user's collections and recent practice sessions
-- Collection Creator: Interface for creating and editing collections
-- Practice Mode: Fullscreen interface for timed practice sessions
-- Results Screen: Display of practice session results and progress over time
-- Settings Page: Customization options for themes, colors, and user preferences
+- Home Dashboard: Overview of user's collections, recent practice sessions, and mastery levels.
+- Collection Creator: Interface for creating, editing, and customizing collections. Allows for flashcards creation and assigning stages.
+- Practice Mode: Fullscreen interface for timed practice sessions with interactive elements (animations, sounds, etc.).
+- Results Screen: Display of practice session results, progress over time, and session reports attached to individual students.
+- Matching Game Interface: Provides a fun matching game to reinforce learning.
+- Settings Page: Customization options for themes, colors, and user preferences, including options for age-based themes (kid, teen, adult).
 
 [Consider adding wireframes or mockups for key screens]
 
 ## 7. Security Considerations
 
 - Auth0 for user authentication and authorization
-- HTTPS for all communications
-- Input validation and sanitization to prevent injection attacks
-- Rate limiting to prevent abuse of API endpoints
 - Secure storage of sensitive information (e.g., Auth0 credentials, database connection strings) using Railway's environment variables
+- Image verification to ensure appropriateness of user-uploaded content
 
 ## 8. Testing Strategy
 
@@ -144,3 +157,9 @@ Target Audience:
 - Integration with learning management systems (LMS)
 - AI-powered recommendations for personalized learning paths
 - Collaborative features for group study sessions
+- Real-time updates using WebSockets for collaborative editing of collections
+- Confetti explosions when students achieve a learning goal
+- Multiple themes based on mastery levels (beginner, intermediate, advanced)
+- Drag-and-drop word or card matching
+- Instructional videos or information on each page to guide users
+- Dropdown terms for easy selection in flashcards and math problems

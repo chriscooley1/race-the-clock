@@ -79,7 +79,11 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div
         ref={modalRef}
-        className={`relative max-h-[90vh] w-11/12 overflow-hidden rounded-lg p-4 shadow-lg md:w-3/4 lg:w-2/3 ${
+        className={`relative max-h-[90vh] overflow-hidden rounded-lg p-4 shadow-lg ${
+          collection.category === "Number Sense"
+            ? "w-11/12 md:w-3/4 lg:w-2/3"
+            : "w-11/12 max-w-md"
+        } ${
           theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
         }`}
       >
@@ -109,7 +113,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
               ))}
             </ul>
           ) : (
-            <ul className="space-y-2">
+            <ul className="space-y-2 text-center">
               {collection.items.map((item, index) => (
                 <li key={index} className="text-lg">
                   {item.name}
