@@ -61,6 +61,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     return [...array].sort(() => Math.random() - 0.5);
   };
 
+  const decodeSvg = (encodedSvg: string) => {
+    return decodeURIComponent(encodedSvg.replace(/^data:image\/svg\+xml,/, ""));
+  };
+
   useEffect(() => {
     console.log("Entering FullScreenDisplay with state:", location.state);
     onEnterFullScreen();
@@ -185,7 +189,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       return (
         <div className="flex size-full items-center justify-center">
           {currentItem?.svg ? (
-            <div dangerouslySetInnerHTML={{ __html: decodeURIComponent(currentItem.svg) }} />
+            <div 
+              dangerouslySetInnerHTML={{ __html: decodeSvg(currentItem.svg) }} 
+            />
           ) : (
             <p>No image available for {currentItem.name}</p>
           )}

@@ -95,10 +95,11 @@ const CollectionFinalStep: React.FC = () => {
     const svgs = dots.map(dot => 
       generateCountingSvg(1, dot.color, dot.shape, dot.position)
     );
+    const encodedSvg = encodeURIComponent(svgs.join(""));
     const newItem = {
       id: items.length + 1,
       name: `Number Sense: ${dots.length} dot(s)`,
-      svg: encodeURIComponent(svgs.join("")),
+      svg: encodedSvg,
       count: dots.length,
     };
     setItems([...items, newItem]);
