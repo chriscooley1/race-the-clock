@@ -185,7 +185,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       return (
         <div className="flex size-full items-center justify-center">
           {currentItem?.svg ? (
-            <div dangerouslySetInnerHTML={{ __html: currentItem.svg }} />
+            <div dangerouslySetInnerHTML={{ __html: decodeURIComponent(currentItem.svg) }} />
           ) : (
             <p>No image available for {currentItem.name}</p>
           )}

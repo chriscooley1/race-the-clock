@@ -32,7 +32,7 @@ const CollectionSetup: React.FC = () => {
 
   const [file, setFile] = useState<File | null>(null);
   const [itemCount, setItemCount] = useState<number>(1);
-  const [sequence, setSequence] = useState<string[]>([]);
+  const [sequence, setSequence] = useState<Array<{ name: string; svg?: string; count?: number }>>([]);
   const [type, setType] = useState<string>("letters");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [operation, setOperation] = useState<Operation | null>(null);
@@ -109,24 +109,23 @@ const CollectionSetup: React.FC = () => {
   };
 
   const generateRandomSequence = () => {
-    let generatedSequence: string[] = [];
+    let generatedSequence: Array<{ name: string; svg?: string; count?: number }> = [];
     switch (type) {
       case "numbers":
-        generatedSequence = generateRandomNumbers(itemCount);
+        generatedSequence = generateRandomNumbers(itemCount).map(num => ({ name: num.toString() }));
         break;
       case "letters":
-        generatedSequence = generateRandomLetters(itemCount);
+        generatedSequence = generateRandomLetters(itemCount).map(letter => ({ name: letter }));
         break;
       case "alphabet":
-        generatedSequence = generateFullAlphabet();
+        generatedSequence = generateFullAlphabet().map(letter => ({ name: letter }));
         break;
       case "numbersOneToHundred":
-        generatedSequence = generateNumbersOneToHundred();
+        generatedSequence = generateNumbersOneToHundred().map(num => ({ name: num.toString() }));
         break;
       case "mathProblems":
         if (operation && operation !== "PeriodicElement") {
-          const problems = generateMathProblems(itemCount, operation);
-          generatedSequence = problems.map((item) => item);
+          generatedSequence = generateMathProblems(itemCount, operation).map(problem => ({ name: problem }));
         } else {
           console.error(
             "Math Problems selected but operation is not set or is PeriodicElement",
@@ -134,22 +133,23 @@ const CollectionSetup: React.FC = () => {
         }
         break;
       case "numberSense": {
-        const images = generateNumberSenseImages(itemCount, dotColor, dotShape);
-        setNumberSenseItems(images);
-        generatedSequence = images.map(
-          (image, index) =>
-            `Number Sense Image ${index + 1} (Count: ${image.count})`,
-        );
+        const image = generateNumberSenseImages(itemCount, dotColor, dotShape);
+        setNumberSenseItems([image]);
+        generatedSequence = [{
+          name: `Number Sense Image (Count: ${image.count})`,
+          svg: image.svg,
+          count: image.count
+        }];
         break;
       }
       case "periodicTable":
-        generatedSequence = generatePeriodicTableElements(itemCount);
+        generatedSequence = generatePeriodicTableElements(itemCount).map(element => ({ name: element }));
         break;
       case "scienceTerms":
-        generatedSequence = generateScienceTerms(itemCount);
+        generatedSequence = generateScienceTerms(itemCount).map(term => ({ name: term }));
         break;
       case "nursingTerms":
-        generatedSequence = generateNursingTerms(itemCount);
+        generatedSequence = generateNursingTerms(itemCount).map(term => ({ name: term }));
         break;
       default:
         console.error("Invalid type selected");
@@ -177,12 +177,11 @@ const CollectionSetup: React.FC = () => {
         throw new Error("Current user is undefined");
       }
 
-      const collectionData = sequence.map((name, index) => ({
+      const collectionData = sequence.map((item, index) => ({
         id: index + 1,
-        name,
-        svg: type === "numberSense" ? numberSenseItems[index]?.svg : undefined,
-        count:
-          type === "numberSense" ? numberSenseItems[index]?.count : undefined,
+        name: item.name,
+        svg: item.svg,
+        count: item.count
       }));
 
       console.log("Saving collection with data:", {
@@ -342,7 +341,7 @@ const CollectionSetup: React.FC = () => {
       {sequence.length > 0 && (
         <div className="mt-6">
           <h3 className="mb-2 text-xl font-bold text-center">Generated Sequence:</h3>
-          <p className="text-lg">{sequence.join(", ")}</p>
+          <p className="text-lg">{sequence.map(item => item.name).join(", ")}</p>
         </div>
       )}
       {category === "Number Sense" && numberSenseItems.length > 0 && (

@@ -50,19 +50,15 @@ const getItemsCount = (description: string | undefined): number => {
 
 const parseDescription = (
   description: string,
-): { name: string; id?: number }[] => {
+): { name: string; id?: number; svg?: string; count?: number }[] => {
   try {
     const parsed = JSON.parse(description);
     return Array.isArray(parsed)
       ? parsed.map((item, index) => ({
-          name:
-            typeof item === "object" && item !== null
-              ? item.name
-              : String(item),
-          id:
-            typeof item === "object" && item !== null && "id" in item
-              ? item.id
-              : index,
+          name: typeof item === "object" && item !== null ? item.name : String(item),
+          id: typeof item === "object" && item !== null && "id" in item ? item.id : index,
+          svg: typeof item === "object" && item !== null ? item.svg : undefined,
+          count: typeof item === "object" && item !== null ? item.count : undefined,
         }))
       : [];
   } catch {

@@ -77,16 +77,13 @@ export function generateNumberSenseImages(
   count: number,
   color: string = "blue",
   shape: string = "circle",
-): { url: string; svg: string; count: number }[] {
-  return Array.from({ length: count }, () => {
-    const randomCount = Math.floor(Math.random() * 10) + 1;
-    const svg = generateCountingSvg(randomCount, color, shape);
-    return {
-      url: svg,
-      svg: svg,
-      count: randomCount,
-    };
-  });
+): { url: string; svg: string; count: number } {
+  const svg = generateCountingSvg(count, color, shape);
+  return {
+    url: svg,
+    svg: svg,
+    count: count,
+  };
 }
 
 export function generateCountingSvg(

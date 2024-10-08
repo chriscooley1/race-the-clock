@@ -39,9 +39,13 @@ const CollectionFinalStep: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const { theme } = useTheme();
 
-  const [dotPosition, setDotPosition] = useState<string>("random");
-  const [dotColor, setDotColor] = useState<string>("blue");
-  const [dotShape, setDotShape] = useState<string>("circle");
+  interface Dot {
+    position: string;
+    color: string;
+    shape: string;
+  }
+
+  const [dots, setDots] = useState<Dot[]>([{ position: "1", color: "blue", shape: "circle" }]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -73,15 +77,32 @@ const CollectionFinalStep: React.FC = () => {
     setSelectedElement("");
   };
 
+  const handleAddDot = () => {
+    setDots([...dots, { position: "1", color: "blue", shape: "circle" }]);
+  };
+
+  const handleRemoveDot = (index: number) => {
+    setDots(dots.filter((_, i) => i !== index));
+  };
+
+  const handleDotChange = (index: number, field: keyof Dot, value: string) => {
+    const newDots = [...dots];
+    newDots[index][field] = value;
+    setDots(newDots);
+  };
+
   const handleAddNumberSenseItem = () => {
-    const svg = generateCountingSvg(parseInt(dotPosition), dotColor, dotShape);
+    const svgs = dots.map(dot => 
+      generateCountingSvg(1, dot.color, dot.shape, dot.position)
+    );
     const newItem = {
       id: items.length + 1,
-      name: `Number Sense: ${dotPosition} ${dotShape}s`,
-      svg: svg,
-      count: parseInt(dotPosition),
+      name: `Number Sense: ${dots.length} dot(s)`,
+      svg: encodeURIComponent(svgs.join("")),
+      count: dots.length,
     };
     setItems([...items, newItem]);
+    setDots([{ position: "1", color: "blue", shape: "circle" }]);
   };
 
   const handleRemoveItem = (id: number) => {
@@ -97,11 +118,19 @@ const CollectionFinalStep: React.FC = () => {
     try {
       const collectionData = {
         name: collectionName,
-        description: "Collection description", // Add a description or use a state variable
+        description: JSON.stringify(items.map(item => ({
+          name: item.name,
+          svg: item.svg,
+          count: item.count
+        }))),
         status: isPublic ? "public" : "private",
         category: category,
         type: initialType || "default",
-        items: items.map((item) => ({ name: item.name })), // Convert to object array
+        items: items.map((item) => ({ 
+          name: item.name,
+          svg: item.svg,
+          count: item.count
+        })),
       };
 
       await saveCollection(
@@ -137,52 +166,72 @@ const CollectionFinalStep: React.FC = () => {
       <div className="mb-4 flex flex-col items-center">
         {category === "Number Sense" ? (
           <>
-            <label htmlFor="dot-position" className="mb-2">
-              Select dot position:
-            </label>
-            <select
-              id="dot-position"
-              value={dotPosition}
-              onChange={(e) => setDotPosition(e.target.value)}
-              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+            {dots.map((dot, index) => (
+              <div key={index} className="mb-4 w-full">
+                <h4 className="mb-2 text-lg font-bold">Dot {index + 1}</h4>
+                <label htmlFor={`dot-position-${index}`} className="mb-2 block">
+                  Select dot position:
+                </label>
+                <select
+                  id={`dot-position-${index}`}
+                  value={dot.position}
+                  onChange={(e) => handleDotChange(index, "position", e.target.value)}
+                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                >
+                  {Array.from({ length: 25 }, (_, i) => (
+                    <option key={i + 1} value={(i + 1).toString()}>
+                      Position {i + 1}
+                    </option>
+                  ))}
+                </select>
+                <label htmlFor={`dot-color-${index}`} className="mb-2 block">
+                  Select dot color:
+                </label>
+                <select
+                  id={`dot-color-${index}`}
+                  value={dot.color}
+                  onChange={(e) => handleDotChange(index, "color", e.target.value)}
+                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                >
+                  {["blue", "green", "red", "purple", "orange"].map((color) => (
+                    <option key={color} value={color}>
+                      {color}
+                    </option>
+                  ))}
+                </select>
+                <label htmlFor={`dot-shape-${index}`} className="mb-2 block">
+                  Select dot shape:
+                </label>
+                <select
+                  id={`dot-shape-${index}`}
+                  value={dot.shape}
+                  onChange={(e) => handleDotChange(index, "shape", e.target.value)}
+                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                >
+                  {["circle", "square", "triangle"].map((shape) => (
+                    <option key={shape} value={shape}>
+                      {shape}
+                    </option>
+                  ))}
+                </select>
+                {dots.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveDot(index)}
+                    className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white"
+                  >
+                    Remove Dot
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={handleAddDot}
+              className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
             >
-              <option value="random">Random</option>
-              <option value="1">Top Left</option>
-              <option value="2">Top Right</option>
-              <option value="3">Center</option>
-              <option value="4">Bottom Left</option>
-              <option value="5">Bottom Right</option>
-            </select>
-            <label htmlFor="dot-color" className="mb-2">
-              Select dot color:
-            </label>
-            <select
-              id="dot-color"
-              value={dotColor}
-              onChange={(e) => setDotColor(e.target.value)}
-              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
-            >
-              {["blue", "green", "red", "purple", "orange"].map((color) => (
-                <option key={color} value={color}>
-                  {color}
-                </option>
-              ))}
-            </select>
-            <label htmlFor="dot-shape" className="mb-2">
-              Select dot shape:
-            </label>
-            <select
-              id="dot-shape"
-              value={dotShape}
-              onChange={(e) => setDotShape(e.target.value)}
-              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
-            >
-              {["circle", "square", "triangle"].map((shape) => (
-                <option key={shape} value={shape}>
-                  {shape}
-                </option>
-              ))}
-            </select>
+              Add Another Dot
+            </button>
             <button
               type="button"
               onClick={handleAddNumberSenseItem}
