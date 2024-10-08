@@ -185,6 +185,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
+    console.log("Current item SVG:", currentItem.svg); // Log the SVG data
     if (category === "Number Sense") {
       return (
         <div className="flex size-full items-center justify-center">
