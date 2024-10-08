@@ -13,7 +13,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   onClose,
 }) => {
   const { getAccessTokenSilently } = useAuth0();
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(collection.isSubscribed || false);
   const modalRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
@@ -37,6 +37,8 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   }, [collection.collection_id, getAccessTokenSilently]);
 
   const handleSubscribe = async () => {
+    if (isSubscribed) return;
+    
     try {
       await subscribeToCollection(
         collection.collection_id,
@@ -45,7 +47,13 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
       setIsSubscribed(true);
       alert("You have subscribed to this collection!");
     } catch (error) {
-      console.error("Error subscribing to collection:", error);
+      if (error instanceof Error && error.message.includes("already subscribed")) {
+        setIsSubscribed(true);
+        alert("You are already subscribed to this collection.");
+      } else {
+        console.error("Error subscribing to collection:", error);
+        alert("An error occurred while subscribing to the collection.");
+      }
     }
   };
 
@@ -84,27 +92,31 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
 
         {/* Scrollable section */}
         <div className="max-h-[50vh] w-full overflow-y-auto px-4">
-          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {collection.items.map((item, index) => (
-              <li key={index} className="flex flex-col items-center justify-between p-4 border rounded h-64">
-                {collection.category === "Number Sense" && item.svg ? (
-                  <>
-                    <div className="flex-grow flex items-center justify-center w-full h-40">
-                      <div 
-                        dangerouslySetInnerHTML={{ __html: decodeSvg(item.svg) }} 
-                        className="max-w-full max-h-full"
-                      />
-                    </div>
-                    <div className="text-center mt-10">
-                      <p className="text-lg font-semibold">{item.name}</p>
-                    </div>
-                  </>
-                ) : (
-                  <p className="text-lg self-center">{item.name}</p>
-                )}
-              </li>
-            ))}
-          </ul>
+          {collection.category === "Number Sense" ? (
+            <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {collection.items.map((item, index) => (
+                <li key={index} className="flex flex-col items-center justify-between p-4 border rounded h-64">
+                  <div className="flex-grow flex items-center justify-center w-full h-40">
+                    <div 
+                      dangerouslySetInnerHTML={{ __html: decodeSvg(item.svg || '') }} 
+                      className="max-w-full max-h-full"
+                    />
+                  </div>
+                  <div className="text-center mt-4">
+                    <p className="text-lg font-semibold">{item.name}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <ul className="space-y-2">
+              {collection.items.map((item, index) => (
+                <li key={index} className="text-lg">
+                  {item.name}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div className="mt-4 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">

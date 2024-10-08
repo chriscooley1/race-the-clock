@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { fetchPublicCollections, searchPublicCollections } from "../api";
+import { fetchPublicCollections, searchPublicCollections, checkSubscription } from "../api";
 import CollectionPreviewModal from "../components/CollectionPreviewModal";
 import { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -31,6 +31,7 @@ const DiscoverCollections: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { theme } = useTheme();
   const [sortOption, setSortOption] = useState<string>("date");
+  const { getAccessTokenSilently } = useAuth0();  // Add this line
 
   const fetchCollections = useCallback(async () => {
     try {
@@ -103,13 +104,21 @@ const DiscoverCollections: React.FC = () => {
     }
   };
 
-  const openModal = (collection: APICollection) => {
+  const openModal = async (collection: APICollection) => {
     console.log("Opening modal for collection:", collection);
     const parsedCollection: Collection = {
       ...collection,
       items: parseDescription(collection.description),
     };
-    setActiveCollection(parsedCollection);
+    
+    // Check if the user is subscribed to this collection
+    try {
+      const isSubscribed = await checkSubscription(collection.collection_id, getAccessTokenSilently);
+      setActiveCollection({ ...parsedCollection, isSubscribed });
+    } catch (error) {
+      console.error("Error checking subscription:", error);
+      setActiveCollection({ ...parsedCollection, isSubscribed: false });
+    }
   };
 
   const closeModal = () => setActiveCollection(null);

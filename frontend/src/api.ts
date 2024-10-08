@@ -177,6 +177,7 @@ export interface Collection {
   items: CollectionItem[];
   type: string;
   item_count?: number; // Add this line if it's not already present
+  isSubscribed?: boolean; // Add this line
 }
 
 interface CollectionItem {
@@ -456,6 +457,9 @@ export const subscribeToCollection = async (
     );
     return response.data;
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 400) {
+      throw new Error("You are already subscribed to this collection.");
+    }
     handleApiError(error);
     throw new Error("Could not subscribe to the collection.");
   }
