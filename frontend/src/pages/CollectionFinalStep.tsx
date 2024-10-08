@@ -241,9 +241,9 @@ const CollectionFinalStep: React.FC = () => {
         )}
       </div>
       {items.map((item) => (
-        <div key={item.id} className="mb-2 flex w-full items-center">
+        <div key={item.id} className="mb-2 flex items-center">
           {item.svg ? (
-            <div className="mr-2 flex grow items-center">
+            <div className="mr-2 items-center">
               <img src={item.svg} alt={item.name} className="mr-2 size-12" />
               <span>{item.name}</span>
             </div>
