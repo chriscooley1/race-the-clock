@@ -17,6 +17,10 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   const modalRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
+  const decodeSvg = (encodedSvg: string) => {
+    return decodeURIComponent(encodedSvg.replace(/^data:image\/svg\+xml,/, ""));
+  };
+
   useEffect(() => {
     const checkIfSubscribed = async () => {
       try {
@@ -42,7 +46,6 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
       alert("You have subscribed to this collection!");
     } catch (error) {
       console.error("Error subscribing to collection:", error);
-      alert("Failed to subscribe to this collection.");
     }
   };
 
@@ -68,7 +71,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div
         ref={modalRef}
-        className={`relative max-h-[90vh] w-11/12 overflow-hidden rounded-lg p-4 shadow-lg md:w-3/4 lg:w-1/2 ${
+        className={`relative max-h-[90vh] w-11/12 overflow-hidden rounded-lg p-4 shadow-lg md:w-3/4 lg:w-2/3 ${
           theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
         }`}
       >
@@ -81,24 +84,30 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
 
         {/* Scrollable section */}
         <div className="max-h-[50vh] w-full overflow-y-auto px-4">
-          <ul className="space-y-2">
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {collection.items.map((item, index) => (
-              <li key={index} className="py-2 text-center text-lg">
+              <li key={index} className="flex flex-col items-center justify-between p-4 border rounded h-64">
                 {collection.category === "Number Sense" && item.svg ? (
-                  <div>
-                    <div dangerouslySetInnerHTML={{ __html: item.svg }} />
-                    <p>{item.name}</p>
-                    {item.count !== undefined && <p>Count: {item.count}</p>}
-                  </div>
+                  <>
+                    <div className="flex-grow flex items-center justify-center w-full h-40">
+                      <div 
+                        dangerouslySetInnerHTML={{ __html: decodeSvg(item.svg) }} 
+                        className="max-w-full max-h-full"
+                      />
+                    </div>
+                    <div className="text-center mt-10">
+                      <p className="text-lg font-semibold">{item.name}</p>
+                    </div>
+                  </>
                 ) : (
-                  item.name
+                  <p className="text-lg self-center">{item.name}</p>
                 )}
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+        <div className="mt-4 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
           <button
             type="button"
             onClick={handleSubscribe}
@@ -106,7 +115,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
             className={`rounded px-6 py-2 font-bold text-white transition-all ${
               isSubscribed
                 ? "cursor-not-allowed bg-gray-400"
-                : "bg-blue-500 hover:scale-105 hover:bg-blue-600 active:scale-95"
+                : "bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
             }`}
           >
             {isSubscribed ? "Already Subscribed" : "Subscribe to Collection"}
@@ -114,7 +123,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="rounded bg-red-500 px-6 py-2 font-bold text-white hover:scale-105 hover:bg-red-600 active:scale-95"
+            className="rounded bg-red-500 px-6 py-2 font-bold text-white hover:bg-red-600 active:bg-red-700"
           >
             Close Preview
           </button>

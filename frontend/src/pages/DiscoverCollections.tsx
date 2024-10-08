@@ -12,6 +12,8 @@ import { useTheme } from "../context/ThemeContext";
 interface Item {
   id: number;
   name: string;
+  svg?: string;  // Add this line
+  count?: number;  // Add this line if you need it for Number Sense items
 }
 
 interface Collection extends Omit<APICollection, "items"> {
@@ -60,9 +62,11 @@ const DiscoverCollections: React.FC = () => {
   const parseDescription = (description: string): Item[] => {
     try {
       return JSON.parse(description).map(
-        (item: { name: string }, index: number) => ({
+        (item: { name: string; svg?: string; count?: number }, index: number) => ({
           id: index,
           name: item.name,
+          svg: item.svg,
+          count: item.count,
         }),
       );
     } catch {
