@@ -32,6 +32,7 @@ const CollectionSetup: React.FC = () => {
 
   const [file, setFile] = useState<File | null>(null);
   const [itemCount, setItemCount] = useState<number>(1);
+  const [collectionItemCount, setCollectionItemCount] = useState<number>(1);
   const [sequence, setSequence] = useState<Array<{ name: string; svg?: string; count?: number }>>([]);
   const [type, setType] = useState<string>("letters");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -133,13 +134,17 @@ const CollectionSetup: React.FC = () => {
         }
         break;
       case "numberSense": {
-        const image = generateNumberSenseImages(itemCount, dotColor, dotShape);
-        setNumberSenseItems([image]);
-        generatedSequence = [{
-          name: `Number Sense Image (Count: ${image.count})`,
-          svg: image.svg,
-          count: image.count
-        }];
+        const generatedItems = [];
+        for (let i = 0; i < collectionItemCount; i++) {
+          const image = generateNumberSenseImages(itemCount, dotColor, dotShape);
+          setNumberSenseItems(prev => [...prev, image]);
+          generatedItems.push({
+            name: `Number Sense Image (Count: ${image.count})`,
+            svg: image.svg,
+            count: image.count
+          });
+        }
+        generatedSequence = generatedItems;
         break;
       }
       case "periodicTable":
@@ -257,24 +262,40 @@ const CollectionSetup: React.FC = () => {
             )}
           </select>
         </div>
-        <div className="flex items-center space-x-4">
-          <label htmlFor="itemCount" className="font-bold whitespace-nowrap">
-            Quantity #:
-          </label>
-          <input
-            type="number"
-            id="itemCount"
-            className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
-            value={itemCount}
-            min={1}
-            onChange={(e) => {
-              const count = parseInt(e.target.value, 10);
-              setItemCount(count);
-            }}
-          />
-        </div>
         {category === "Number Sense" && (
           <>
+            <div className="flex items-center space-x-4">
+              <label htmlFor="itemCount" className="font-bold whitespace-nowrap">
+                Number of Dots:
+              </label>
+              <input
+                type="number"
+                id="itemCount"
+                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                value={itemCount}
+                min={1}
+                onChange={(e) => {
+                  const count = parseInt(e.target.value, 10);
+                  setItemCount(count);
+                }}
+              />
+            </div>
+            <div className="flex items-center space-x-4">
+              <label htmlFor="collectionItemCount" className="font-bold whitespace-nowrap">
+                Number of Items in Collection:
+              </label>
+              <input
+                type="number"
+                id="collectionItemCount"
+                className="rounded-md border border-gray-300 p-2 font-['Caveat'] text-center"
+                value={collectionItemCount}
+                min={1}
+                onChange={(e) => {
+                  const count = parseInt(e.target.value, 10);
+                  setCollectionItemCount(count);
+                }}
+              />
+            </div>
             <div className="flex items-center space-x-4">
               <label htmlFor="dot-color" className="font-bold whitespace-nowrap">
                 Dot Color:
