@@ -32,7 +32,7 @@ const CollectionFinalStep: React.FC = () => {
   } = location.state as LocationState;
   const { getAccessTokenSilently } = useAuth0();
   const [items, setItems] = useState<
-    { id: number; name: string; svg?: string; count?: number }[]
+    { id: number; name: string; svg?: string; count?: number; answer?: number }[]
   >(sequence.map((name, index) => ({ id: index + 1, name })));
   const [newItem, setNewItem] = useState<string>("");
   const [selectedElement, setSelectedElement] = useState<string>("");
@@ -46,6 +46,10 @@ const CollectionFinalStep: React.FC = () => {
   }
 
   const [dots, setDots] = useState<Dot[]>([{ position: "1", color: "blue", shape: "circle" }]);
+
+  const [firstNumber, setFirstNumber] = useState<number>(1);
+  const [operator, setOperator] = useState<string>("addition");
+  const [secondNumber, setSecondNumber] = useState<number>(1);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -123,7 +127,8 @@ const CollectionFinalStep: React.FC = () => {
         description: JSON.stringify(items.map(item => ({
           name: item.name,
           svg: item.svg,
-          count: item.count
+          count: item.count,
+          answer: item.answer
         }))),
         status: isPublic ? "public" : "private",
         category: category,
@@ -131,7 +136,8 @@ const CollectionFinalStep: React.FC = () => {
         items: items.map((item) => ({ 
           name: item.name,
           svg: item.svg,
-          count: item.count
+          count: item.count,
+          answer: item.answer
         })),
       };
 
@@ -148,6 +154,36 @@ const CollectionFinalStep: React.FC = () => {
     } catch (error) {
       console.error("Error saving collection:", error);
     }
+  };
+
+  // Function to calculate the answer based on selected values
+  const calculateAnswer = () => {
+    let answer: number;
+    switch (operator) {
+      case "addition":
+        answer = firstNumber + secondNumber;
+        break;
+      case "subtraction":
+        answer = firstNumber - secondNumber;
+        break;
+      case "multiplication":
+        answer = firstNumber * secondNumber;
+        break;
+      case "division":
+        answer = firstNumber / secondNumber;
+        break;
+      default:
+        answer = 0;
+    }
+    return answer;
+  };
+
+  const handleAddMathProblem = () => {
+    const answer = calculateAnswer();
+    const problemString = `${firstNumber} ${operator} ${secondNumber}`; // Format as "1 + 1"
+
+    // Add the equation and answer as separate items
+    setItems([...items, { id: items.length + 1, name: problemString }, { id: items.length + 2, name: answer.toString() }]);
   };
 
   if (!currentUser) {
@@ -265,6 +301,35 @@ const CollectionFinalStep: React.FC = () => {
               ))}
             </select>
           </>
+        ) : category === "Math" ? (
+          <>
+            <label htmlFor="first-number-select">First Number:</label>
+            <select id="first-number-select" value={firstNumber} onChange={(e) => setFirstNumber(Number(e.target.value))}
+                    className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black">
+              {Array.from({ length: 10 }, (_, i) => (
+                <option key={i} value={i + 1}>{i + 1}</option>
+              ))}
+            </select>
+            <label htmlFor="operator-select">Operator:</label>
+            <select id="operator-select" value={operator} onChange={(e) => setOperator(e.target.value)}
+                    className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black">
+              <option value="addition">+</option>
+              <option value="subtraction">-</option>
+              <option value="multiplication">×</option>
+              <option value="division">÷</option>
+            </select>
+            <label htmlFor="second-number-select">Second Number:</label>
+            <select id="second-number-select" value={secondNumber} onChange={(e) => setSecondNumber(Number(e.target.value))}
+                    className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black">
+              {Array.from({ length: 10 }, (_, i) => (
+                <option key={i} value={i + 1}>{i + 1}</option>
+              ))}
+            </select>
+            <button onClick={handleAddMathProblem}
+                    className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white">
+              Add Math Problem
+            </button>
+          </>
         ) : (
           <>
             <label htmlFor="new-item-input" className="sr-only">
@@ -280,7 +345,7 @@ const CollectionFinalStep: React.FC = () => {
             />
           </>
         )}
-        {category !== "Number Sense" && (
+        {category !== "Number Sense" && category !== "Math" && (
           <button
             type="button"
             onClick={handleAddItem}
