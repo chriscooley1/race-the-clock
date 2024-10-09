@@ -111,13 +111,21 @@ const CollectionSetup: React.FC = () => {
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0];
       setFile(selectedFile);
-      // Create a sequence item based on the uploaded file
-      const newItem = {
-        name: selectedFile.name,
-        svg: URL.createObjectURL(selectedFile), // This should create a valid Blob URL
-        count: 1, // You can adjust this as needed
+
+      // Create a FileReader to read the file
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // Create a sequence item based on the uploaded file
+        const newItem = {
+          name: selectedFile.name,
+          svg: reader.result as string, // Use the result from FileReader
+          count: 1, // You can adjust this as needed
+        };
+        setSequence([newItem]); // Set the sequence to the new item
       };
-      setSequence([newItem]); // Set the sequence to the new item
+
+      // Read the file as a data URL
+      reader.readAsDataURL(selectedFile);
     }
   };
 
@@ -499,9 +507,20 @@ const CollectionSetup: React.FC = () => {
           <h3 className="mb-2 text-center text-xl font-bold">
             Generated Sequence:
           </h3>
-          <p className="text-lg">
-            {sequence.map((item) => item.name).join(", ")}
-          </p>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+            {sequence.map((item, index) => (
+              <div key={index} className="rounded-md border border-gray-300 p-2">
+                {item.svg && (
+                  <img
+                    src={item.svg} // Use the base64-encoded image data
+                    alt={item.name}
+                    className="h-auto w-full"
+                  />
+                )}
+                <p className="mt-2 text-center">{item.name}</p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {category === "Number Sense" && numberSenseItems.length > 0 && (
