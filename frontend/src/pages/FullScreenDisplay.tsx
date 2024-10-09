@@ -195,7 +195,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         <div className="flex size-full items-center justify-center">
           {decodedSvg ? (
             <img
-              src={decodedSvg}
+              src={`data:image/svg+xml;utf8,${encodeURIComponent(decodedSvg)}`} // Ensure proper encoding
               alt={currentItem.name}
               style={{ maxWidth: "100%", maxHeight: "100%" }}
             />
