@@ -45,7 +45,7 @@ const Settings: React.FC = () => {
         ...newTheme,
         isColorblindMode: false,
         colorblindType: "none",
-        isDarkMode: newTheme.name === "Black", // Set isDarkMode based on the theme name
+        isDarkMode: theme.isDarkMode, // Preserve existing dark mode state
         displayTextColor: theme.displayTextColor, // Preserve existing display colors
         displayBackgroundColor: theme.displayBackgroundColor,
         font: theme.font,
@@ -150,7 +150,7 @@ const Settings: React.FC = () => {
             {colorOptions.map((color) => (
               <div
                 key={color.name}
-                className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.name === color.name ? "border-2 border-black" : ""}`}
+                className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
                 style={{ backgroundColor: color.value }}
                 onClick={() => handleThemeChange({ target: { value: color.name } } as React.ChangeEvent<HTMLSelectElement>)} // Cast to the correct type
               />
@@ -166,7 +166,7 @@ const Settings: React.FC = () => {
             {colorOptions.map((color) => (
               <div
                 key={color.name}
-                className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-2 border-black" : ""}`}
+                className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}`}
                 style={{ backgroundColor: color.value }}
                 onClick={() => handleTextColorChange(color.value)}
               />
@@ -182,7 +182,7 @@ const Settings: React.FC = () => {
             {colorOptions.map((color) => (
               <div
                 key={color.name}
-                className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-2 border-black" : ""}`}
+                className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-4 border-black" : ""}`}
                 style={{ backgroundColor: color.value }}
                 onClick={() => handleBackgroundColorChange(color.value)}
               />
