@@ -216,7 +216,7 @@ const CollectionSetup: React.FC = () => {
       return;
     }
 
-    navigate("/collection-final-step", {
+    navigate("/full-screen-display", {
       state: { collectionName, isPublic, category, itemCount, file, sequence },
     });
   };

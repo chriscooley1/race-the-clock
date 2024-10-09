@@ -20,6 +20,11 @@ import Resources from "./pages/Resources";
 import Settings from "./pages/Settings";
 import MyAccount from "./pages/MyAccount";
 import MathCollectionPage from "./pages/MathCollectionPage";
+import Games from "./pages/Games";
+import TimedChallenges from "./pages/TimedChallenges";
+import Reports from "./pages/Reports";
+import BadgesAchievements from "./pages/BadgesAchievements";
+import Milestones from "./pages/Milestones";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
@@ -138,6 +143,46 @@ const App: React.FC = () => {
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
                       <PrivateRoute element={<MathCollectionPage />} />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/games"
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <PrivateRoute element={<Games />} />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/timed-challenges"
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <PrivateRoute element={<TimedChallenges />} />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/reports"
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <PrivateRoute element={<Reports />} />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/badges-achievements"
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <PrivateRoute element={<BadgesAchievements />} />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/milestones"
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <PrivateRoute element={<Milestones />} />
                     </Suspense>
                   }
                 />

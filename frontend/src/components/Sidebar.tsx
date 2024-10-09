@@ -55,6 +55,46 @@ const Sidebar: React.FC = () => {
             </li>
             <li>
               <Link
+                to="/games"
+                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+              >
+                Games
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/timed-challenges"
+                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+              >
+                Timed Challenges
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/reports"
+                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+              >
+                Reports
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/badges-achievements"
+                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+              >
+                Badges & Achievements
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/milestones"
+                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+              >
+                Milestones
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/resources"
                 className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >
