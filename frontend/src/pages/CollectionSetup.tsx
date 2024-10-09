@@ -47,6 +47,7 @@ const CollectionSetup: React.FC = () => {
   const [dotCountType, setDotCountType] = useState<"fixed" | "random">("fixed");
   const [minDots, setMinDots] = useState<number>(1);
   const [maxDots, setMaxDots] = useState<number>(10);
+  const [isGenerated, setIsGenerated] = useState<boolean>(false); // New state to track if a sequence is generated
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -208,6 +209,7 @@ const CollectionSetup: React.FC = () => {
     }
     setSequence(generatedSequence);
     setFile(null);
+    setIsGenerated(true); // Set to true when a random sequence is generated
   };
 
   const handleNext = () => {
@@ -216,9 +218,15 @@ const CollectionSetup: React.FC = () => {
       return;
     }
 
-    navigate("/full-screen-display", {
-      state: { collectionName, isPublic, category, itemCount, file, sequence },
-    });
+    // Check if a random sequence was generated or a file was uploaded
+    if (isGenerated || file) { // Check if file is also present
+      handleSaveCollection(); // Call the save function directly
+    } else {
+      // Navigate to CollectionFinalStep if no sequence or file
+      navigate("/collection-final-step", {
+        state: { collectionName, isPublic, category, sequence, type },
+      });
+    }
   };
 
   const handleSaveCollection = async () => {
@@ -234,6 +242,7 @@ const CollectionSetup: React.FC = () => {
         name: item.name,
         svg: item.svg,
         count: item.count,
+        file: file ? file.name : null, // Include file name if it exists
       }));
 
       console.log("Saving collection with data:", {
@@ -497,9 +506,9 @@ const CollectionSetup: React.FC = () => {
         <button
           type="button"
           className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
-          onClick={file ? handleSaveCollection : handleNext} // Adjusted to save if a file is selected
+          onClick={handleNext} // Adjusted to save if a sequence is generated
         >
-          {file ? "Save Collection" : "Next"}
+          {isGenerated ? "Save Collection" : "Next"}
         </button>
       </div>
       {sequence.length > 0 && (

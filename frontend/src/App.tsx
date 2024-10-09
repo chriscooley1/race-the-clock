@@ -19,7 +19,6 @@ import NameGenerator from "./pages/NameGenerator";
 import Resources from "./pages/Resources";
 import Settings from "./pages/Settings";
 import MyAccount from "./pages/MyAccount";
-import MathCollectionPage from "./pages/MathCollectionPage";
 import Games from "./pages/Games";
 import TimedChallenges from "./pages/TimedChallenges";
 import Reports from "./pages/Reports";
@@ -135,14 +134,6 @@ const App: React.FC = () => {
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
                       <PrivateRoute element={<MyAccount />} />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="/math-collection"
-                  element={
-                    <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={<MathCollectionPage />} />
                     </Suspense>
                   }
                 />
