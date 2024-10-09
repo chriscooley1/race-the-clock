@@ -11,7 +11,7 @@ const Milestones: React.FC = () => {
       }`}
     >
       <h1 className="mb-8 text-3xl font-bold">Milestones</h1>
-
+      <p>Milestones for Teachers: Teachers can set milestones for their students, rewarding them as they improve, fostering motivation.</p>
     </div>
   );
 };

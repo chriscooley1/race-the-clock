@@ -11,7 +11,7 @@ const BadgesAchievements: React.FC = () => {
       }`}
     >
       <h1 className="mb-8 text-3xl font-bold">Badges & Achievements</h1>
-
+      <p>Badges and Achievements: Create badges for students who achieve specific goals, like "Read 60 Letters in a Minute" or "Complete an Advanced Session."</p>
     </div>
   );
 };
