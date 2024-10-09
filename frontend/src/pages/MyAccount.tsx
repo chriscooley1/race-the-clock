@@ -29,7 +29,7 @@ const MyAccount: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black"}`}
+      className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <div
         className={`w-full max-w-md rounded-lg p-6 shadow-md ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`}

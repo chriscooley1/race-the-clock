@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import NameWheel from "./NameWheel";
-import WheelSegment from "./WheelSegment";
+import NameWheel from "../components/NameWheel";
+import WheelSegment from "../components/WheelSegment";
 import { useTheme } from "../context/ThemeContext";
 
 const NameGenerator: React.FC = () => {
@@ -132,7 +132,7 @@ const NameGenerator: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`flex min-h-screen flex-col items-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+      className={`flex min-h-screen flex-col items-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <div
         className={`flex w-full max-w-5xl justify-between px-4 ${showRightSide ? "" : "justify-center"}`}
