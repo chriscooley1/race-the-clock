@@ -10,6 +10,7 @@ import {
   generatePeriodicTableElements,
   generateScienceTerms,
   generateNursingTerms,
+  generateFullPeriodicTable,
 } from "../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../api";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -204,6 +205,11 @@ const CollectionSetup: React.FC = () => {
           name: term,
         }));
         break;
+      case "fullPeriodicTable":
+        generatedSequence = generateFullPeriodicTable().map((element) => ({
+          name: element,
+        }));
+        break;
       default:
         console.error("Invalid type selected");
     }
@@ -313,6 +319,7 @@ const CollectionSetup: React.FC = () => {
                 {category === "Science" && (
                   <>
                     <option value="periodicTable">Periodic Table</option>
+                    <option value="fullPeriodicTable">Full Periodic Table</option>
                     <option value="scienceTerms">Science Terms</option>
                   </>
                 )}

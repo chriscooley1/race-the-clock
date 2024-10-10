@@ -269,3 +269,9 @@ function shuffleArray<T>(array: T[]): T[] {
   }
   return array;
 }
+
+export const generateFullPeriodicTable = (): string[] => {
+  return Object.values(periodicTable).map(
+    (element) => `${element.symbol} - ${element.name} - ${element.atomicNumber}`
+  );
+};
