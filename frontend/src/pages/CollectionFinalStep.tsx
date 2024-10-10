@@ -206,7 +206,7 @@ const CollectionFinalStep: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
@@ -215,7 +215,7 @@ const CollectionFinalStep: React.FC = () => {
       <p className="mb-4">
         To add another item to this Collection, click the add button below.
       </p>
-      <div className="mb-4 flex flex-col items-center">
+      <div className="mb-4 flex flex-col text-center items-center">
         {category === "Number Sense" ? (
           <>
             {dots.map((dot, index) => (
@@ -230,7 +230,7 @@ const CollectionFinalStep: React.FC = () => {
                   onChange={(e) =>
                     handleDotChange(index, "position", e.target.value)
                   }
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                  className="mb-2 text-center w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
                 >
                   {Array.from({ length: 25 }, (_, i) => (
                     <option key={i + 1} value={(i + 1).toString()}>
@@ -247,7 +247,7 @@ const CollectionFinalStep: React.FC = () => {
                   onChange={(e) =>
                     handleDotChange(index, "color", e.target.value)
                   }
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                  className="mb-2 text-center w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
                 >
                   {["blue", "green", "red", "purple", "orange"].map((color) => (
                     <option key={color} value={color}>
@@ -264,7 +264,7 @@ const CollectionFinalStep: React.FC = () => {
                   onChange={(e) =>
                     handleDotChange(index, "shape", e.target.value)
                   }
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                  className="mb-2 text-center w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
                 >
                   {["circle", "square", "triangle"].map((shape) => (
                     <option key={shape} value={shape}>
@@ -328,7 +328,7 @@ const CollectionFinalStep: React.FC = () => {
               id="first-number-select"
               value={firstNumber}
               onChange={(e) => setFirstNumber(Number(e.target.value))}
-              className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+              className="mb-2 text-center w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
             >
               {Array.from({ length: 10 }, (_, i) => (
                 <option key={i} value={i + 1}>
@@ -341,7 +341,7 @@ const CollectionFinalStep: React.FC = () => {
               id="operator-select"
               value={operator}
               onChange={(e) => setOperator(e.target.value)}
-              className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+              className="mb-2 text-center w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
             >
               <option value="addition">+</option>
               <option value="subtraction">-</option>
@@ -353,7 +353,7 @@ const CollectionFinalStep: React.FC = () => {
               id="second-number-select"
               value={secondNumber}
               onChange={(e) => setSecondNumber(Number(e.target.value))}
-              className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+              className="mb-2 text-center w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
             >
               {Array.from({ length: 10 }, (_, i) => (
                 <option key={i} value={i + 1}>

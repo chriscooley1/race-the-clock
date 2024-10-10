@@ -384,7 +384,7 @@ const YourCollections: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen w-full px-4 pt-[150px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`min-h-screen w-full px-4 pt-[170px] md:pl-[270px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
@@ -493,7 +493,7 @@ const YourCollections: React.FC = () => {
         <div className="fixed left-0 top-0 z-[1001] flex size-full items-center justify-center overflow-hidden bg-black/70">
           <div
             ref={modalRef}
-            className="font-caveat relative z-[1002] w-1/2 max-w-[600px] rounded-lg bg-white p-5 text-center shadow-lg dark:bg-gray-800"
+            className="font-caveat relative z-[1002] w-1/4 max-w-[600px] rounded-lg bg-white p-5 text-center shadow-lg dark:bg-gray-800"
           >
             <h2 className="mb-4 text-2xl font-bold">Duplicate Collection</h2>
             <div className="mb-4">
@@ -576,7 +576,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
           Created by you on {formatDate(collection.created_at)}
         </p>
       </div>
-      <div className="flex w-full flex-col items-center justify-end">
+      <div className="flex flex-col items-center justify-end">
         <button
           type="button"
           className="mb-2.5 w-3/4 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
@@ -585,7 +585,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
         >
           Start
         </button>
-        <div className="flex w-full justify-between space-x-2">
+        <div className="flex w-full justify-between space-x-4">
           <button
             type="button"
             className="w-1/2 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"

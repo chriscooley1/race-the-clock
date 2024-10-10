@@ -199,7 +199,7 @@ const DiscoverCollections: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="font-caveat mb-4 flex items-center justify-center rounded border border-gray-300 bg-white p-2 text-black">
+      <div className="font-caveat mb-4 flex items-center rounded border border-gray-300 bg-white p-2 text-black">
         <label htmlFor="sortSelect" className="text-sm font-bold">
           Sort collections by:
         </label>

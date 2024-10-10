@@ -92,7 +92,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
           <input
             type="text"
             id="collectionName"
-            className="w-full rounded border border-gray-300 bg-white p-2 text-black"
+            className="w-full text-center rounded border border-gray-300 bg-white p-2 text-black"
             value={collectionName}
             readOnly
             title="Collection Name"
@@ -121,7 +121,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
                 <input
                   type="text"
                   id={`item-${index}`}
-                  className="w-full rounded border border-gray-300 bg-white p-2 text-black"
+                  className="w-full text-center rounded border border-gray-300 bg-white p-2 text-black"
                   value={item.name}
                   onChange={(e) => handleChangeItem(index, e.target.value)}
                   placeholder={`Enter item ${index + 1}`}

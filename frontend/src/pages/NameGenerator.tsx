@@ -132,10 +132,10 @@ const NameGenerator: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`flex min-h-screen flex-col items-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`flex min-h-screen flex-col justify-center items-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <div
-        className={`flex w-full max-w-5xl justify-between px-4 ${showRightSide ? "" : "justify-center"}`}
+        className={`flex w-full max-w-5xl justify-between px-2 ${showRightSide ? "" : "justify-center"}`}
       >
         {/* Left side (centered when right side is hidden) */}
         <div
@@ -177,7 +177,7 @@ const NameGenerator: React.FC = () => {
               : "w-0 overflow-hidden opacity-0"
           }`}
         >
-          <div className="mb-5 flex items-center">
+          <div className="mb-5 flex items-center justify-center">
             <label htmlFor="nameInput" className="mr-2 whitespace-nowrap">
               Add a Name:
             </label>
@@ -187,7 +187,7 @@ const NameGenerator: React.FC = () => {
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="font-caveat mr-2 grow rounded border border-current bg-white p-2 text-base text-black"
+              className="font-caveat mr-2 text-center rounded border border-current bg-white p-2 text-base text-black"
               placeholder="Enter a name"
             />
             <button
@@ -198,9 +198,9 @@ const NameGenerator: React.FC = () => {
               Add
             </button>
           </div>
-          <div className="w-full">
+          <div className="flex flex-col w-full items-center">
             <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
-            <ul className="list-none p-0">
+            <ul className="list-none p-0 text-center">
               {nameList.map((name, index) => (
                 <WheelSegment
                   key={index}

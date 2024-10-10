@@ -41,7 +41,7 @@ const NewCollection: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full min-w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`flex min-h-screen w-full min-w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
         <h1 className="text-4xl font-bold">Step 1 - Create</h1>
@@ -50,7 +50,7 @@ const NewCollection: React.FC = () => {
           <input
             type="text"
             id="collectionName"
-            className={`font-caveat rounded border border-[var(--text-color)] p-2 text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`font-caveat text-center rounded border border-[var(--text-color)] p-2 text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Collection Name"
@@ -64,7 +64,7 @@ const NewCollection: React.FC = () => {
           </label>
           <select
             id="categorySelect"
-            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`font-caveat text-center w-full rounded border border-[var(--text-color)] p-2 text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
