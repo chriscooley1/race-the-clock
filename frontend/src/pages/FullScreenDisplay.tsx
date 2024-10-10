@@ -204,7 +204,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           )}
         </div>
       );
-    } else if (category === "Choose File") { // Add condition for "Choose file" category
+    } else if (category === "Choose File") {
+      // Add condition for "Choose file" category
       return (
         <div className="flex size-full items-center justify-center">
           {decodedSvg ? (

@@ -219,7 +219,8 @@ const CollectionSetup: React.FC = () => {
     }
 
     // Check if a random sequence was generated or a file was uploaded
-    if (isGenerated || file) { // Check if file is also present
+    if (isGenerated || file) {
+      // Check if file is also present
       handleSaveCollection(); // Call the save function directly
     } else {
       // Navigate to CollectionFinalStep if no sequence or file
@@ -518,7 +519,10 @@ const CollectionSetup: React.FC = () => {
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {sequence.map((item, index) => (
-              <div key={index} className="rounded-md border border-gray-300 p-2">
+              <div
+                key={index}
+                className="rounded-md border border-gray-300 p-2"
+              >
                 {item.svg && (
                   <img
                     src={item.svg} // Use the base64-encoded image data

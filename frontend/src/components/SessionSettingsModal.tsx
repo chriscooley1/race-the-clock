@@ -77,7 +77,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
           {" "}
           {/* Reduced space between items */}
           <div className="flex flex-col items-center">
-            <div className="p-2 flex w-full justify-around">
+            <div className="flex w-full justify-around p-2">
               {" "}
               {/* Reduced margin-bottom */}
               <label htmlFor="minutes" className="mr-2">
@@ -85,7 +85,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               </label>
               <label htmlFor="seconds">Seconds:</label>
             </div>
-            <div className="flex p-1 w-full justify-around">
+            <div className="flex w-full justify-around p-1">
               <input
                 type="number"
                 id="minutes"

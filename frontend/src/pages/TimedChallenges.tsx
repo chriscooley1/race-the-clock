@@ -11,7 +11,11 @@ const TimedChallenges: React.FC = () => {
       }`}
     >
       <h1 className="mb-8 text-3xl font-bold">Timed Challenges</h1>
-      <p>Timed Challenges: The goal remains to help kids (or adult learners) read 60 items in a minute. Users can measure how many items they correctly identify within a session.</p>
+      <p>
+        Timed Challenges: The goal remains to help kids (or adult learners) read
+        60 items in a minute. Users can measure how many items they correctly
+        identify within a session.
+      </p>
     </div>
   );
 };

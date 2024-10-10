@@ -50,7 +50,7 @@ const NewCollection: React.FC = () => {
           <input
             type="text"
             id="collectionName"
-            className={`font-caveat text-center rounded border border-[var(--text-color)] p-2 text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`font-caveat rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Collection Name"
@@ -64,7 +64,7 @@ const NewCollection: React.FC = () => {
           </label>
           <select
             id="categorySelect"
-            className={`font-caveat text-center w-full rounded border border-[var(--text-color)] p-2 text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >

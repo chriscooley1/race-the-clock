@@ -132,7 +132,7 @@ const NameGenerator: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`flex min-h-screen flex-col justify-center items-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`flex min-h-screen flex-col items-center justify-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <div
         className={`flex w-full max-w-5xl justify-between px-2 ${showRightSide ? "" : "justify-center"}`}
@@ -187,7 +187,7 @@ const NameGenerator: React.FC = () => {
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="font-caveat mr-2 text-center rounded border border-current bg-white p-2 text-base text-black"
+              className="font-caveat mr-2 rounded border border-current bg-white p-2 text-center text-base text-black"
               placeholder="Enter a name"
             />
             <button
@@ -198,7 +198,7 @@ const NameGenerator: React.FC = () => {
               Add
             </button>
           </div>
-          <div className="flex flex-col w-full items-center">
+          <div className="flex w-full flex-col items-center">
             <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
             <ul className="list-none p-0 text-center">
               {nameList.map((name, index) => (

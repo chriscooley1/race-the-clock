@@ -143,16 +143,18 @@ const Settings: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label className="mb-2 block font-bold">
-            Color Theme:
-          </label>
+          <label className="mb-2 block font-bold">Color Theme:</label>
           <div className="flex flex-wrap">
             {colorOptions.map((color) => (
               <div
                 key={color.name}
                 className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
                 style={{ backgroundColor: color.value }}
-                onClick={() => handleThemeChange({ target: { value: color.name } } as React.ChangeEvent<HTMLSelectElement>)} // Cast to the correct type
+                onClick={() =>
+                  handleThemeChange({
+                    target: { value: color.name },
+                  } as React.ChangeEvent<HTMLSelectElement>)
+                } // Cast to the correct type
               />
             ))}
           </div>

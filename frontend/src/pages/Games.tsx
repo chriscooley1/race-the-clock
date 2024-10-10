@@ -11,7 +11,10 @@ const Games: React.FC = () => {
       }`}
     >
       <h1 className="mb-8 text-3xl font-bold">Games</h1>
-      <p>Matching Games: Develop a matching game where students associate letters or words with images, enhancing engagement.</p>
+      <p>
+        Matching Games: Develop a matching game where students associate letters
+        or words with images, enhancing engagement.
+      </p>
       <p>Multiple words, drag and connect to a different word or card</p>
     </div>
   );
