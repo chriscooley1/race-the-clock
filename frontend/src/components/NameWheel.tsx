@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 
 interface NameWheelProps {
@@ -20,6 +20,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
   const controls = useAnimation();
   const canvasSize = 500;
   const radius = canvasSize / 2 - 30;
+  const [lastLandedDegrees, setLastLandedDegrees] = useState<number>(0); // Store last landed position
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -79,7 +80,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
       const totalRotation = spinRevolutions * 360 + targetDegrees;
 
       controls.start({
-        rotate: [0, totalRotation],
+        rotate: [lastLandedDegrees, totalRotation], // Start from last landed position
         transition: {
           duration: 5,
           ease: "easeInOut",
@@ -89,19 +90,17 @@ const NameWheel: React.FC<NameWheelProps> = ({
       setTimeout(() => {
         const degreesPerSlice = 360 / names.length;
         // Adjust for the starting position (top of the wheel is 270 degrees)
-        const adjustedDegrees = (targetDegrees + 270) % 360;
+        const adjustedDegrees = (totalRotation + 270) % 360; // Use totalRotation here
         const selectedIndex = Math.floor(adjustedDegrees / degreesPerSlice);
 
-        console.log(`Total Rotation: ${totalRotation}`);
-        console.log(`Target Degrees: ${targetDegrees}`);
-        console.log(`Adjusted Degrees: ${adjustedDegrees}`);
-        console.log(`Selected Index: ${selectedIndex}`);
+        // Update last landed degrees for the next spin
+        setLastLandedDegrees(totalRotation % 360);
 
         onNameSelected(names[selectedIndex]);
         stopSpinning();
       }, 5000);
     }
-  }, [isSpinning, spinData, controls, names, onNameSelected, stopSpinning]);
+  }, [isSpinning, spinData, controls, names, onNameSelected, stopSpinning, lastLandedDegrees]);
 
   return (
     <div className="relative">

@@ -89,7 +89,9 @@ const NameGenerator: React.FC = () => {
     if (nameList.length > 0 && !isSpinning) {
       setIsSpinning(true);
       const spinRevolutions = 2 + Math.random() * 3; // 2 to 5 full rotations
-      const targetDegrees = (spinRevolutions * 360) % 360; // Final position in degrees
+      const degreesPerSlice = 360 / nameList.length; // Calculate degrees per slice
+      const centerAngle = (Math.floor(Math.random() * nameList.length) + 0.5) * degreesPerSlice; // Random center angle
+      const targetDegrees = (spinRevolutions * 360 + centerAngle) % 360; // Final position in degrees
       console.log(
         `spinRev: ${spinRevolutions} targetDegrees: ${targetDegrees}`,
       );
