@@ -6,6 +6,7 @@ const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("Math");
   const [isPublic, setIsPublic] = useState<boolean>(false);
+  const [stage, setStage] = useState<string>("beginner"); // Added stage state
   const navigate = useNavigate();
   const { theme } = useTheme();
 
@@ -17,6 +18,8 @@ const NewCollection: React.FC = () => {
     "Nursing",
   ];
 
+  const stages = ["beginner", "intermediate", "advanced"]; // Added stages array
+
   const handleNext = () => {
     if (!name.trim()) {
       alert("Please enter a collection name.");
@@ -27,9 +30,10 @@ const NewCollection: React.FC = () => {
       name,
       category,
       isPublic,
+      stage, // Added stage to the log
     });
     navigate("/collection-setup", {
-      state: { collectionName: name, isPublic, category },
+      state: { collectionName: name, isPublic, category, stage }, // Added stage to the state
     });
   };
 
@@ -71,6 +75,21 @@ const NewCollection: React.FC = () => {
             {categories.map((cat) => (
               <option key={cat} value={cat}>
                 {cat}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4 flex max-w-[300px] items-center justify-center">
+          <label htmlFor="stageSelect">Stage:</label>
+          <select
+            id="stageSelect"
+            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            value={stage}
+            onChange={(e) => setStage(e.target.value)}
+          >
+            {stages.map((stage) => (
+              <option key={stage} value={stage}>
+                {stage.charAt(0).toUpperCase() + stage.slice(1)}
               </option>
             ))}
           </select>

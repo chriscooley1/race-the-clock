@@ -19,6 +19,7 @@ export function adjustColorForColorblindness(
   color: string,
   type: string,
 ): string {
+  console.log("Adjusting color:", color, "for type:", type); // Debugging line
   const rgb = hexToRgb(color);
   let adjusted: RGB;
 
@@ -82,6 +83,9 @@ export function adjustColorForColorblindness(
     default:
       return color;
   }
+
+  console.log("Original RGB:", rgb);
+  console.log("Adjusted RGB:", adjusted);
 
   return rgbToHex(
     Math.round(adjusted[0]),
