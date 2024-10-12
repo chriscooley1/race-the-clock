@@ -37,7 +37,6 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({
       "/timed-challenges",
       "/reports",
       "/badges-achievements",
-      "/milestones",
     ];
 
     if (!validRoutes.includes(redirectTo)) {

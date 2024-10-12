@@ -23,7 +23,6 @@ import Games from "./pages/Games";
 import TimedChallenges from "./pages/TimedChallenges";
 import Reports from "./pages/Reports";
 import BadgesAchievements from "./pages/BadgesAchievements";
-import Milestones from "./pages/Milestones";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
@@ -166,14 +165,6 @@ const App: React.FC = () => {
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
                       <PrivateRoute element={<BadgesAchievements />} />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="/milestones"
-                  element={
-                    <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={<Milestones />} />
                     </Suspense>
                   }
                 />

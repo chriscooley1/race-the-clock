@@ -16,6 +16,10 @@ const BadgesAchievements: React.FC = () => {
         goals, like "Read 60 Letters in a Minute" or "Complete an Advanced
         Session."
       </p>
+      <p>
+        Milestones for Teachers: Teachers can set milestones for their students,
+        rewarding them as they improve, fostering motivation.
+      </p>
     </div>
   );
 };
