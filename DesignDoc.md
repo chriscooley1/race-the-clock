@@ -163,3 +163,19 @@ Target Audience:
 - Drag-and-drop word or card matching
 - Instructional videos or information on each page to guide users
 - Dropdown terms for easy selection in flashcards and math problems
+
+## 11. Monetization Strategy
+
+1. Subscription Model (Primary: Schools/Teachers)
+- Target Market: Schools, districts, and individual teachers.
+- Pricing Tiers:
+  - Free Tier: Basic functionality, limited number of collections and practice sessions, access to pre-made collections.
+  - Pro Tier (for Teachers): Monthly or annual subscription for advanced features, including custom collections, detailed session reports, mastery tracking, flashcard creation, and interactive elements (animations, sounds, etc.).
+  - School/District Plans: Bulk pricing for institutions that includes unlimited teacher accounts, administrative oversight, analytics, and support for student accounts.
+2. Freemium Model (Secondary: Broader Audience)
+- Target Market: Students of all ages, adult learners, and professionals.
+- Offer free access to a limited version of the app (basic collections and practice modes) to individual users.
+- Paid options for unlocking advanced features such as:
+- Customizable themes and gamified elements.
+- Advanced analytics for tracking learning progress.
+- Custom flashcard and collection creation, suited for specialized fields (e.g., nursing terms, periodic table elements).
