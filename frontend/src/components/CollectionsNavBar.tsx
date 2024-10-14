@@ -64,7 +64,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           <button
             type="button"
             onClick={onDuplicateCollection}
-            className="rounded bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
+            className="ml-4 rounded bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
           >
             Duplicate Collection
           </button>

@@ -80,7 +80,9 @@ const NewCollection: React.FC = () => {
           </select>
         </div>
         <div className="mb-4 flex max-w-[300px] items-center justify-center">
-          <label htmlFor="stageSelect">Stage:</label>
+          <label htmlFor="stageSelect" className="mr-2">
+            Stage: {/* Added space here */}
+          </label>
           <select
             id="stageSelect"
             className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
