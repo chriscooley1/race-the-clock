@@ -216,112 +216,7 @@ const CollectionFinalStep: React.FC = () => {
         To add another item to this Collection, click the add button below.
       </p>
       <div className="mb-4 flex flex-col items-center text-center">
-        {category === "Number Sense" ? (
-          <>
-            {dots.map((dot, index) => (
-              <div key={index} className="mb-4 w-full">
-                <h4 className="mb-2 text-lg font-bold">Dot {index + 1}</h4>
-                <label htmlFor={`dot-position-${index}`} className="mb-2 block">
-                  Select dot position:
-                </label>
-                <select
-                  id={`dot-position-${index}`}
-                  value={dot.position}
-                  onChange={(e) =>
-                    handleDotChange(index, "position", e.target.value)
-                  }
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
-                >
-                  {Array.from({ length: 25 }, (_, i) => (
-                    <option key={i + 1} value={(i + 1).toString()}>
-                      Position {i + 1}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor={`dot-color-${index}`} className="mb-2 block">
-                  Select dot color:
-                </label>
-                <select
-                  id={`dot-color-${index}`}
-                  value={dot.color}
-                  onChange={(e) =>
-                    handleDotChange(index, "color", e.target.value)
-                  }
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
-                >
-                  {["blue", "green", "red", "purple", "orange"].map((color) => (
-                    <option key={color} value={color}>
-                      {color}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor={`dot-shape-${index}`} className="mb-2 block">
-                  Select dot shape:
-                </label>
-                <select
-                  id={`dot-shape-${index}`}
-                  value={dot.shape}
-                  onChange={(e) =>
-                    handleDotChange(index, "shape", e.target.value)
-                  }
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
-                >
-                  {["circle", "square", "triangle"].map((shape) => (
-                    <option key={shape} value={shape}>
-                      {shape}
-                    </option>
-                  ))}
-                </select>
-                {dots.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveDot(index)}
-                    className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white"
-                  >
-                    Remove Dot
-                  </button>
-                )}
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={handleAddDot}
-              className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
-            >
-              Add Another Dot
-            </button>
-            <button
-              type="button"
-              onClick={handleAddNumberSenseItem}
-              className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
-              title="Add Number Sense Item"
-            >
-              +
-            </button>
-          </>
-        ) : category === "Science" ? (
-          <>
-            <label htmlFor="element-select" className="mb-2">
-              Select an element:
-            </label>
-            <select
-              id="element-select"
-              value={selectedElement}
-              onChange={handleElementSelect}
-              className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
-            >
-              <option value="">Select an element</option>
-              {Object.values(periodicTable).map((element) => (
-                <option
-                  key={element.atomicNumber}
-                  value={JSON.stringify(element)}
-                >
-                  {element.symbol} - {element.name} - {element.atomicNumber}
-                </option>
-              ))}
-            </select>
-          </>
-        ) : category === "Math" ? (
+        {category === "Math" && initialType === "mathProblems" ? ( // Check for Math category and mathProblems type
           <>
             <label htmlFor="first-number-select">First Number:</label>
             <select
@@ -368,30 +263,140 @@ const CollectionFinalStep: React.FC = () => {
               Add Math Problem
             </button>
           </>
-        ) : (
+        ) : ( // For all other categories including Math with other types
           <>
-            <label htmlFor="new-item-input" className="sr-only">
-              New Item
-            </label>
-            <input
-              type="text"
-              id="new-item-input"
-              value={newItem}
-              onChange={(e) => setNewItem(e.target.value)}
-              className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
-              placeholder="Enter new item"
-            />
+            {category === "Number Sense" ? (
+              <>
+                {dots.map((dot, index) => (
+                  <div key={index} className="mb-4 w-full">
+                    <h4 className="mb-2 text-lg font-bold">Dot {index + 1}</h4>
+                    <label htmlFor={`dot-position-${index}`} className="mb-2 block">
+                      Select dot position:
+                    </label>
+                    <select
+                      id={`dot-position-${index}`}
+                      value={dot.position}
+                      onChange={(e) =>
+                        handleDotChange(index, "position", e.target.value)
+                      }
+                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+                    >
+                      {Array.from({ length: 25 }, (_, i) => (
+                        <option key={i + 1} value={(i + 1).toString()}>
+                          Position {i + 1}
+                        </option>
+                      ))}
+                    </select>
+                    <label htmlFor={`dot-color-${index}`} className="mb-2 block">
+                      Select dot color:
+                    </label>
+                    <select
+                      id={`dot-color-${index}`}
+                      value={dot.color}
+                      onChange={(e) =>
+                        handleDotChange(index, "color", e.target.value)
+                      }
+                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+                    >
+                      {["blue", "green", "red", "purple", "orange"].map((color) => (
+                        <option key={color} value={color}>
+                          {color}
+                        </option>
+                      ))}
+                    </select>
+                    <label htmlFor={`dot-shape-${index}`} className="mb-2 block">
+                      Select dot shape:
+                    </label>
+                    <select
+                      id={`dot-shape-${index}`}
+                      value={dot.shape}
+                      onChange={(e) =>
+                        handleDotChange(index, "shape", e.target.value)
+                      }
+                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+                    >
+                      {["circle", "square", "triangle"].map((shape) => (
+                        <option key={shape} value={shape}>
+                          {shape}
+                        </option>
+                      ))}
+                    </select>
+                    {dots.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveDot(index)}
+                        className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white"
+                      >
+                        Remove Dot
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={handleAddDot}
+                  className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
+                >
+                  Add Another Dot
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAddNumberSenseItem}
+                  className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+                  title="Add Number Sense Item"
+                >
+                  +
+                </button>
+              </>
+            ) : category === "Science" ? (
+              <>
+                <label htmlFor="element-select" className="mb-2">
+                  Select an element:
+                </label>
+                <select
+                  id="element-select"
+                  value={selectedElement}
+                  onChange={handleElementSelect}
+                  className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+                >
+                  <option value="">Select an element</option>
+                  {Object.values(periodicTable).map((element) => (
+                    <option
+                      key={element.atomicNumber}
+                      value={JSON.stringify(element)}
+                    >
+                      {element.symbol} - {element.name} - {element.atomicNumber}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : category === "Nursing" ? (
+              // Add any specific UI for Nursing if needed
+              <div> {/* Placeholder for Nursing terms UI */} </div>
+            ) : (
+              <>
+                <label htmlFor="new-item-input" className="sr-only">
+                  New Item
+                </label>
+                <input
+                  type="text"
+                  id="new-item-input"
+                  value={newItem}
+                  onChange={(e) => setNewItem(e.target.value)}
+                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+                  placeholder="Enter new item"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddItem}
+                  className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+                  title="Add Item"
+                >
+                  +
+                </button>
+              </>
+            )}
           </>
-        )}
-        {category !== "Number Sense" && category !== "Math" && (
-          <button
-            type="button"
-            onClick={handleAddItem}
-            className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
-            title="Add Item"
-          >
-            +
-          </button>
         )}
       </div>
       {items.map((item) => (
@@ -426,8 +431,7 @@ const CollectionFinalStep: React.FC = () => {
         onClick={handleSaveCollection}
         title="Save Collection"
       >
-        Save Collection
-      </button>
+        Save Collection      </button>
     </div>
   );
 };
