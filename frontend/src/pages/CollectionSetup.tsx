@@ -114,19 +114,16 @@ const CollectionSetup: React.FC = () => {
       const selectedFile = e.target.files[0];
       setFile(selectedFile);
 
-      // Create a FileReader to read the file
       const reader = new FileReader();
       reader.onloadend = () => {
-        // Create a sequence item based on the uploaded file
         const newItem = {
           name: selectedFile.name,
-          svg: reader.result as string, // Use the result from FileReader
-          count: 1, // You can adjust this as needed
+          svg: reader.result as string,
+          count: 1,
         };
-        setSequence([newItem]); // Set the sequence to the new item
+        setSequence([newItem]);
       };
 
-      // Read the file as a data URL
       reader.readAsDataURL(selectedFile);
     }
   };
@@ -249,7 +246,7 @@ const CollectionSetup: React.FC = () => {
         name: item.name,
         svg: item.svg,
         count: item.count,
-        file: file ? file.name : null, // Include file name if it exists
+        file: file ? file.name : null,
       }));
 
       console.log("Saving collection with data:", {

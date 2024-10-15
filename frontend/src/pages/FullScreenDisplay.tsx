@@ -61,10 +61,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     return [...array].sort(() => Math.random() - 0.5);
   };
 
-  const decodeSvg = (encodedSvg: string) => {
-    return decodeURIComponent(encodedSvg.replace(/^data:image\/svg\+xml,/, ""));
-  };
-
   useEffect(() => {
     console.log("Entering FullScreenDisplay with state:", location.state);
     onEnterFullScreen();
@@ -185,32 +181,23 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
-    console.log("Current item SVG:", currentItem.svg); // Log the SVG data
 
-    // Decode the SVG if it exists
-    const decodedSvg = currentItem.svg ? decodeSvg(currentItem.svg) : null;
-
-    if (category === "Number Sense") {
+    if (category === "Choose File" || currentItem.svg) {
       return (
         <div className="flex size-full items-center justify-center">
-          {decodedSvg ? (
-            <img
-              src={`data:image/svg+xml;utf8,${encodeURIComponent(decodedSvg)}`} // Ensure proper encoding
-              alt={currentItem.name}
-              style={{ maxWidth: "100%", maxHeight: "100%" }}
-            />
-          ) : (
-            <p>No image available for {currentItem.name}</p>
-          )}
+          <img
+            src={currentItem.svg}
+            alt={currentItem.name}
+            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+          />
         </div>
       );
-    } else if (category === "Choose File") {
-      // Add condition for "Choose file" category
+    } else if (category === "Number Sense") {
       return (
         <div className="flex size-full items-center justify-center">
-          {decodedSvg ? (
+          {currentItem.svg ? (
             <img
-              src={`data:image/svg+xml;utf8,${encodeURIComponent(decodedSvg)}`} // Ensure proper encoding
+              src={`data:image/svg+xml;utf8,${encodeURIComponent(currentItem.svg)}`} // Ensure proper encoding
               alt={currentItem.name}
               style={{ maxWidth: "100%", maxHeight: "100%" }}
             />
