@@ -190,9 +190,25 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleAddMathProblem = () => {
     const answer = calculateAnswer();
-    const problemString = `${firstNumber} ${operator} ${secondNumber}`; // Format as "1 + 1"
+    let operatorSymbol;
+    switch (operator) {
+      case "addition":
+        operatorSymbol = "+";
+        break;
+      case "subtraction":
+        operatorSymbol = "-";
+        break;
+      case "multiplication":
+        operatorSymbol = "×";
+        break;
+      case "division":
+        operatorSymbol = "÷";
+        break;
+      default:
+        operatorSymbol = "+";
+    }
+    const problemString = `${firstNumber} ${operatorSymbol} ${secondNumber}`;
 
-    // Add the equation and answer as separate items
     setItems([
       ...items,
       { id: items.length + 1, name: problemString },
