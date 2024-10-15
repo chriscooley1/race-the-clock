@@ -216,7 +216,7 @@ const CollectionFinalStep: React.FC = () => {
         To add another item to this Collection, click the add button below.
       </p>
       <div className="mb-4 flex flex-col items-center text-center">
-        {category === "Math" && initialType === "mathProblems" ? ( // Check for Math category and mathProblems type
+        {category === "Math" && initialType === "mathProblems" ? (
           <>
             <label htmlFor="first-number-select">First Number:</label>
             <select
@@ -263,7 +263,7 @@ const CollectionFinalStep: React.FC = () => {
               Add Math Problem
             </button>
           </>
-        ) : ( // For all other categories including Math with other types
+        ) : (
           <>
             {category === "Number Sense" ? (
               <>
@@ -348,7 +348,7 @@ const CollectionFinalStep: React.FC = () => {
                   +
                 </button>
               </>
-            ) : category === "Science" ? (
+            ) : category === "Science" && initialType === "periodicTable" ? (
               <>
                 <label htmlFor="element-select" className="mb-2">
                   Select an element:
@@ -370,9 +370,6 @@ const CollectionFinalStep: React.FC = () => {
                   ))}
                 </select>
               </>
-            ) : category === "Nursing" ? (
-              // Add any specific UI for Nursing if needed
-              <div> {/* Placeholder for Nursing terms UI */} </div>
             ) : (
               <>
                 <label htmlFor="new-item-input" className="sr-only">
@@ -384,7 +381,13 @@ const CollectionFinalStep: React.FC = () => {
                   value={newItem}
                   onChange={(e) => setNewItem(e.target.value)}
                   className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
-                  placeholder="Enter new item"
+                  placeholder={`Enter new ${
+                    category === "Science"
+                      ? "science term"
+                      : category === "Nursing"
+                      ? "nursing term"
+                      : "item"
+                  }`}
                 />
                 <button
                   type="button"
@@ -431,8 +434,9 @@ const CollectionFinalStep: React.FC = () => {
         onClick={handleSaveCollection}
         title="Save Collection"
       >
-        Save Collection      </button>
-    </div>
+        Save Collection
+      </button>
+    </div> 
   );
 };
 
