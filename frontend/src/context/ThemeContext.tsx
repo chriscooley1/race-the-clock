@@ -4,6 +4,8 @@ import React, {
   useState,
   useEffect,
   ReactNode,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { adjustColorForColorblindness } from "../utils/colorAdjustment";
 import { colorSchemes } from "../constants/colorSchemes";
@@ -24,7 +26,7 @@ interface Theme {
 
 interface ThemeContextType {
   theme: Theme;
-  setTheme: (theme: Theme) => void;
+  setTheme: Dispatch<SetStateAction<Theme>>;
   setDisplayTextColor: (color: string) => void;
   setDisplayBackgroundColor: (color: string) => void;
   setColorblindMode: (isEnabled: boolean) => void;
@@ -82,69 +84,24 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     localStorage.setItem("app-theme", JSON.stringify(theme));
 
-    const backgroundColor = theme.backgroundColor;
-    const backgroundImage = theme.backgroundImage || "none"; // Make sure this is set to a valid CSS URL
-    const textColor = theme.textColor;
-    const displayTextColor = theme.displayTextColor || theme.textColor;
-    const displayBackgroundColor =
-      theme.displayBackgroundColor || theme.backgroundColor;
+    const applyColor = (color: string) => {
+      return theme.isColorblindMode && theme.colorblindType
+        ? adjustColorForColorblindness(color, theme.colorblindType)
+        : color;
+    };
 
-    if (theme.isColorblindMode && theme.colorblindType) {
-      const adjustedBackgroundColor = adjustColorForColorblindness(
-        backgroundColor,
-        theme.colorblindType,
-      );
-      const adjustedTextColor = adjustColorForColorblindness(
-        textColor,
-        theme.colorblindType,
-      );
-      const adjustedDisplayTextColor = adjustColorForColorblindness(
-        displayTextColor,
-        theme.colorblindType,
-      );
-      const adjustedDisplayBackgroundColor = adjustColorForColorblindness(
-        displayBackgroundColor,
-        theme.colorblindType,
-      );
+    const backgroundColor = applyColor(theme.backgroundColor);
+    const textColor = applyColor(theme.textColor);
+    const displayTextColor = applyColor(theme.displayTextColor || theme.textColor);
+    const displayBackgroundColor = applyColor(theme.displayBackgroundColor || theme.backgroundColor);
 
-      document.documentElement.style.setProperty(
-        "--background-color",
-        adjustedBackgroundColor,
-      );
-      document.documentElement.style.setProperty(
-        "--text-color",
-        adjustedTextColor,
-      );
-      document.documentElement.style.setProperty(
-        "--display-text-color",
-        adjustedDisplayTextColor,
-      );
-      document.documentElement.style.setProperty(
-        "--display-background-color",
-        adjustedDisplayBackgroundColor,
-      );
-    } else {
-      document.documentElement.style.setProperty(
-        "--background-color",
-        backgroundColor,
-      );
-      document.documentElement.style.setProperty("--text-color", textColor);
-      document.documentElement.style.setProperty(
-        "--display-text-color",
-        displayTextColor,
-      );
-      document.documentElement.style.setProperty(
-        "--display-background-color",
-        displayBackgroundColor,
-      );
-    }
+    document.documentElement.style.setProperty("--background-color", backgroundColor);
+    document.documentElement.style.setProperty("--text-color", textColor);
+    document.documentElement.style.setProperty("--display-text-color", displayTextColor);
+    document.documentElement.style.setProperty("--display-background-color", displayBackgroundColor);
 
-    // Ensure that the URL is wrapped in a proper CSS function
-    if (backgroundImage !== "none") {
-      document.documentElement.style.setProperty(
-        "--background-image",
-        `url(${backgroundImage})`,
-      );
+    if (theme.backgroundImage && theme.backgroundImage !== "none") {
+      document.documentElement.style.setProperty("--background-image", `url(${theme.backgroundImage})`);
     } else {
       document.documentElement.style.setProperty("--background-image", "none");
     }
@@ -156,10 +113,6 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     document.documentElement.style.setProperty("--font-family", theme.font);
-    document.documentElement.style.setProperty(
-      "--background-image",
-      `url(${theme.backgroundImage})`,
-    );
   }, [theme]);
 
   return (

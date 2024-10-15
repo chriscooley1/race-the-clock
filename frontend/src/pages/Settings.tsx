@@ -67,12 +67,20 @@ const Settings: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setColorblindMode(event.target.checked);
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      isColorblindMode: event.target.checked,
+    }));
   };
 
   const handleColorblindTypeChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setColorblindType(event.target.value);
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      colorblindType: event.target.value,
+    }));
   };
 
   const fonts = [

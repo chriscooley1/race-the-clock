@@ -151,6 +151,8 @@ const CollectionFinalStep: React.FC = () => {
         })),
       };
 
+      console.log("Saving collection with data:", collectionData);
+
       await saveCollection(
         currentUser.username,
         collectionName,
