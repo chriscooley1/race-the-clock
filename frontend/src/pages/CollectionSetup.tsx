@@ -49,6 +49,7 @@ const CollectionSetup: React.FC = () => {
   const [minDots, setMinDots] = useState<number>(1);
   const [maxDots, setMaxDots] = useState<number>(10);
   const [isGenerated, setIsGenerated] = useState<boolean>(false); // New state to track if a sequence is generated
+  const [previewSequence, setPreviewSequence] = useState<Array<{ name: string; svg?: string; count?: number }>>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -134,6 +135,10 @@ const CollectionSetup: React.FC = () => {
       svg?: string;
       count?: number;
     }> = [];
+
+    // Clear previous number sense items
+    setNumberSenseItems([]);
+
     switch (type) {
       case "numbers":
         generatedSequence = generateRandomNumbers(itemCount).map((num) => ({
@@ -177,13 +182,13 @@ const CollectionSetup: React.FC = () => {
               Math.floor(Math.random() * (maxDots - minDots + 1)) + minDots;
           }
           const image = generateNumberSenseImages(dotCount, dotColor, dotShape);
-          setNumberSenseItems((prev) => [...prev, image]);
           generatedItems.push({
             name: `Number Sense Image (Count: ${image.count})`,
             svg: image.svg,
             count: image.count,
           });
         }
+        setNumberSenseItems(generatedItems);
         generatedSequence = generatedItems;
         break;
       }
@@ -211,8 +216,9 @@ const CollectionSetup: React.FC = () => {
         console.error("Invalid type selected");
     }
     setSequence(generatedSequence);
+    setPreviewSequence(generatedSequence);
     setFile(null);
-    setIsGenerated(true); // Set to true when a random sequence is generated
+    setIsGenerated(true);
   };
 
   const handleNext = () => {
@@ -516,25 +522,16 @@ const CollectionSetup: React.FC = () => {
           {isGenerated ? "Save Collection" : "Next"}
         </button>
       </div>
-      {sequence.length > 0 && (
+      {isGenerated && category !== "Number Sense" && (
         <div className="mt-6">
           <h3 className="mb-2 text-center text-xl font-bold">
-            Generated Sequence:
+            Generated Sequence Preview:
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-            {sequence.map((item, index) => (
-              <div
-                key={index}
-                className="rounded-md border border-gray-300 p-2"
-              >
-                {item.svg && (
-                  <img
-                    src={item.svg} // Use the base64-encoded image data
-                    alt={item.name}
-                    className="h-auto w-full"
-                  />
-                )}
-                <p className="mt-2 text-center">{item.name}</p>
+            {previewSequence.map((item, index) => (
+              <div key={index} className="rounded-md border border-gray-300 p-2">
+                <p className="text-center">{item.name}</p>
+                {item.svg && <img src={item.svg} alt={item.name} className="h-auto w-full" />}
               </div>
             ))}
           </div>
@@ -542,8 +539,8 @@ const CollectionSetup: React.FC = () => {
       )}
       {category === "Number Sense" && numberSenseItems.length > 0 && (
         <div className="mt-6">
-          <h3 className="mb-2 text-xl font-bold">
-            Generated Number Sense Images:
+          <h3 className="mb-2 text-center text-xl font-bold">
+            Generated Sequence:
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {numberSenseItems.map((image, index) => (
