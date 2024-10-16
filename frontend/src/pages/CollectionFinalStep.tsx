@@ -336,17 +336,6 @@ const CollectionFinalStep: React.FC = () => {
                         </option>
                       ))}
                     </select>
-                    <label htmlFor={`dot-count-${index}`} className="mb-2 block">
-                      Dot count:
-                    </label>
-                    <input
-                      type="number"
-                      id={`dot-count-${index}`}
-                      value={dot.count}
-                      onChange={(e) => handleDotChange(index, "count", parseInt(e.target.value, 10))}
-                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
-                      min="1"
-                    />
                     {dots.length > 1 && (
                       <button
                         type="button"
