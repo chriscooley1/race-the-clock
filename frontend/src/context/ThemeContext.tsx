@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { adjustColorForColorblindness } from "../utils/colorAdjustment";
 import { colorSchemes } from "../constants/colorSchemes";
+import { darkenColor, lightenColor } from "../utils/colorUtils";
 
 interface Theme {
   name: string;
@@ -75,19 +76,31 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const toggleDarkMode = () => {
-    setTheme((prevTheme) => ({
-      ...prevTheme,
-      isDarkMode: !prevTheme.isDarkMode,
-    }));
+    setTheme((prevTheme) => {
+      const newIsDarkMode = !prevTheme.isDarkMode;
+      return {
+        ...prevTheme,
+        isDarkMode: newIsDarkMode,
+        backgroundColor: newIsDarkMode ? darkenColor(prevTheme.backgroundColor, 0.5) : lightenColor(prevTheme.backgroundColor, 0.5),
+        textColor: newIsDarkMode ? lightenColor(prevTheme.textColor, 0.5) : darkenColor(prevTheme.textColor, 0.5),
+        displayBackgroundColor: newIsDarkMode ? darkenColor(prevTheme.displayBackgroundColor || prevTheme.backgroundColor, 0.5) : lightenColor(prevTheme.displayBackgroundColor || prevTheme.backgroundColor, 0.5),
+        displayTextColor: newIsDarkMode ? lightenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5) : darkenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5),
+      };
+    });
   };
 
   useEffect(() => {
     localStorage.setItem("app-theme", JSON.stringify(theme));
 
     const applyColor = (color: string) => {
-      return theme.isColorblindMode && theme.colorblindType
-        ? adjustColorForColorblindness(color, theme.colorblindType)
-        : color;
+      let adjustedColor = color;
+      if (theme.isColorblindMode && theme.colorblindType) {
+        adjustedColor = adjustColorForColorblindness(adjustedColor, theme.colorblindType);
+      }
+      if (theme.isDarkMode) {
+        adjustedColor = darkenColor(adjustedColor, 0.3);
+      }
+      return adjustedColor;
     };
 
     const backgroundColor = applyColor(theme.backgroundColor);
