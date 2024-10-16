@@ -179,4 +179,3 @@ Target Audience:
 - Customizable themes and gamified elements.
 - Advanced analytics for tracking learning progress.
 - Custom flashcard and collection creation, suited for specialized fields (e.g., nursing terms, periodic table elements).
-
