@@ -562,12 +562,12 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
 }) => (
   <>
     <h1
-      className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black"
+      className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black rounded-t-lg border-b-0"
       style={{ backgroundColor: baseColor }}
     >
       {collection.name}
     </h1>
-    <div className="border-5 flex w-full grow flex-col items-center justify-between border-black p-4">
+    <div className="border-5 flex w-full grow flex-col items-center justify-between border-black p-4 rounded-b-lg border-t-5">
       <div>
         <p className="mb-1 text-base font-bold text-black">
           {getItemsCount(collection.description)} items in collection
