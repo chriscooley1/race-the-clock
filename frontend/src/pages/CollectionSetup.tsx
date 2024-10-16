@@ -48,7 +48,7 @@ const CollectionSetup: React.FC = () => {
   const [dotCountType, setDotCountType] = useState<"fixed" | "random">("fixed");
   const [minDots, setMinDots] = useState<number>(1);
   const [maxDots, setMaxDots] = useState<number>(10);
-  const [isGenerated, setIsGenerated] = useState<boolean>(false); // New state to track if a sequence is generated
+  const [isGenerated, setIsGenerated] = useState<boolean>(false);
   const [previewSequence, setPreviewSequence] = useState<Array<{ name: string; svg?: string; count?: number }>>([]);
 
   useEffect(() => {
@@ -229,7 +229,6 @@ const CollectionSetup: React.FC = () => {
 
     // Check if a random sequence was generated or a file was uploaded
     if (isGenerated || file) {
-      // Check if file is also present
       handleSaveCollection(); // Call the save function directly
     } else {
       // Navigate to CollectionFinalStep if no sequence or file
@@ -237,6 +236,14 @@ const CollectionSetup: React.FC = () => {
         state: { collectionName, isPublic, category, sequence, type },
       });
     }
+  };
+
+  const handleClear = () => {
+    setIsGenerated(false);
+    setSequence([]);
+    setPreviewSequence([]);
+    setFile(null);
+    setNumberSenseItems([]);
   };
 
   const handleSaveCollection = async () => {
@@ -514,13 +521,32 @@ const CollectionSetup: React.FC = () => {
             onChange={handleFileChange}
           />
         </div>
-        <button
-          type="button"
-          className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
-          onClick={handleNext} // Adjusted to save if a sequence is generated
-        >
-          {isGenerated ? "Save Collection" : "Next"}
-        </button>
+        {isGenerated ? (
+          <div className="flex flex-col items-center space-y-2">
+            <button
+              type="button"
+              className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+              onClick={handleNext}
+            >
+              Save Collection
+            </button>
+            <button
+              type="button"
+              className="mt-2 rounded-md bg-yellow-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-yellow-600"
+              onClick={handleClear}
+            >
+              Clear
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+            onClick={handleNext}
+          >
+            Next
+          </button>
+        )}
       </div>
       {isGenerated && category !== "Number Sense" && (
         <div className="mt-6">
