@@ -79,10 +79,12 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       setShuffledSequence(
         newShuffledSequence.map((item, index) => ({
           ...item,
-          id: index, // Use the index as a number id
-          answer: item.name, // Use the name property instead of answer
-          svg: item.svg || "", // Provide a default empty string if svg is undefined
-        })),
+          id: index,
+          name: item.name,
+          svg: item.svg || "",
+          count: item.count || 0,
+          isAnswer: false,
+        }))
       );
     } else {
       console.error("Sequence is empty or undefined");
@@ -182,7 +184,21 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
 
-    if (category === "Choose File" || currentItem.svg) {
+    if (category === "Number Sense") {
+      return (
+        <div className="flex size-full items-center justify-center">
+          {currentItem.svg ? (
+            <img
+              src={currentItem.svg}
+              alt={currentItem.name}
+              style={{ maxWidth: "100%", maxHeight: "100%" }}
+            />
+          ) : (
+            <p>No image available for {currentItem.name}</p>
+          )}
+        </div>
+      );
+    } else if (category === "Choose File" || currentItem.svg) {
       return (
         <div className="flex size-full items-center justify-center">
           <img
@@ -190,20 +206,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
             alt={currentItem.name}
             style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
           />
-        </div>
-      );
-    } else if (category === "Number Sense") {
-      return (
-        <div className="flex size-full items-center justify-center">
-          {currentItem.svg ? (
-            <img
-              src={`data:image/svg+xml;utf8,${encodeURIComponent(currentItem.svg)}`} // Ensure proper encoding
-              alt={currentItem.name}
-              style={{ maxWidth: "100%", maxHeight: "100%" }}
-            />
-          ) : (
-            <p>No image available for {currentItem.name}</p>
-          )}
         </div>
       );
     } else if (category === "Science" && type === "periodicTable") {

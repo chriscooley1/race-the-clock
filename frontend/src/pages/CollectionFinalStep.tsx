@@ -49,10 +49,11 @@ const CollectionFinalStep: React.FC = () => {
     position: string;
     color: string;
     shape: string;
+    count: number;
   }
 
   const [dots, setDots] = useState<Dot[]>([
-    { position: "1", color: "blue", shape: "circle" },
+    { position: "1", color: "blue", shape: "circle", count: 1 },
   ]);
 
   const [firstNumber, setFirstNumber] = useState<number>(1);
@@ -90,33 +91,36 @@ const CollectionFinalStep: React.FC = () => {
   };
 
   const handleAddDot = () => {
-    setDots([...dots, { position: "1", color: "blue", shape: "circle" }]);
+    setDots([...dots, { position: "1", color: "blue", shape: "circle", count: 1 }]);
   };
 
   const handleRemoveDot = (index: number) => {
     setDots(dots.filter((_, i) => i !== index));
   };
 
-  const handleDotChange = (index: number, field: keyof Dot, value: string) => {
+  const handleDotChange = (index: number, field: keyof Dot, value: string | number) => {
     const newDots = [...dots];
-    newDots[index][field] = value;
+    if (field === 'count') {
+      newDots[index][field] = value as number;
+    } else {
+      newDots[index][field] = value as string;
+    }
     setDots(newDots);
   };
 
   const handleAddNumberSenseItem = () => {
     const svgs = dots.map((dot) =>
-      generateCountingSvg(1, dot.color, dot.shape, dot.position),
+      generateCountingSvg(dot.count, dot.color, dot.shape, dot.position)
     );
-    const encodedSvg = encodeURIComponent(svgs.join("")); // This is the encoding step
-    const decodedSvg = decodeURIComponent(encodedSvg); // Decode the SVG here
+    const encodedSvg = svgs[0]; // We only need one SVG for the item
     const newItem = {
       id: items.length + 1,
-      name: `Number Sense: ${dots.length} dot(s)`,
-      svg: decodedSvg, // Use the decoded SVG
-      count: dots.length,
+      name: `Number Sense: ${dots.reduce((sum, dot) => sum + dot.count, 0)} dot(s)`,
+      svg: encodedSvg,
+      count: dots.reduce((sum, dot) => sum + dot.count, 0),
     };
     setItems([...items, newItem]);
-    setDots([{ position: "1", color: "blue", shape: "circle" }]);
+    setDots([{ position: "1", color: "blue", shape: "circle", count: 1 }]);
   };
 
   const handleRemoveItem = (id: number) => {
@@ -130,41 +134,34 @@ const CollectionFinalStep: React.FC = () => {
     }
 
     try {
-      const collectionData = {
-        name: collectionName,
-        description: JSON.stringify(
-          items.map((item) => ({
-            name: item.name,
-            svg: item.svg,
-            count: item.count,
-            answer: item.answer,
-          })),
-        ),
-        status: isPublic ? "public" : "private",
-        category: category,
-        type: initialType || "default",
-        items: items.map((item) => ({
-          name: item.name,
-          svg: item.svg,
-          count: item.count,
-          answer: item.answer,
-        })),
-      };
+      const collectionData = items.map((item) => ({
+        name: item.name,
+        svg: item.svg,
+        count: item.count,
+      }));
 
-      console.log("Saving collection with data:", collectionData);
+      console.log("Saving collection with data:", {
+        username: currentUser.username,
+        collectionName,
+        collectionData,
+        isPublic,
+        category,
+        type: "numberSense",
+      });
 
       await saveCollection(
         currentUser.username,
         collectionName,
-        collectionData.items,
-        collectionData.status,
-        collectionData.category,
-        collectionData.type,
+        collectionData,
+        isPublic ? "public" : "private",
+        category,
+        "numberSense",
         getAccessTokenSilently,
       );
       navigate("/your-collections");
     } catch (error) {
       console.error("Error saving collection:", error);
+      alert("There was an error saving your collection. Please try again.");
     }
   };
 
@@ -339,6 +336,17 @@ const CollectionFinalStep: React.FC = () => {
                         </option>
                       ))}
                     </select>
+                    <label htmlFor={`dot-count-${index}`} className="mb-2 block">
+                      Dot count:
+                    </label>
+                    <input
+                      type="number"
+                      id={`dot-count-${index}`}
+                      value={dot.count}
+                      onChange={(e) => handleDotChange(index, "count", parseInt(e.target.value, 10))}
+                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
+                      min="1"
+                    />
                     {dots.length > 1 && (
                       <button
                         type="button"
