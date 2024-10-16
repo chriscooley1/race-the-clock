@@ -5,7 +5,7 @@ import { saveCollection, getCurrentUser } from "../api";
 import { periodicTable, PeriodicElement } from "../utils/periodicTable";
 import { User } from "../types/user";
 import { useTheme } from "../context/ThemeContext";
-import { generateCountingSvg } from "../utils/RandomGenerators";
+import { generateCountingSvg, generateScienceTerms, generateNursingTerms } from "../utils/RandomGenerators";
 
 // Export the function to avoid the "unused" error
 export function generateId(): string {
@@ -60,6 +60,10 @@ const CollectionFinalStep: React.FC = () => {
   const [operator, setOperator] = useState<string>("addition");
   const [secondNumber, setSecondNumber] = useState<number>(1);
 
+  const [selectedTerm, setSelectedTerm] = useState<string>("");
+  const [customTerm, setCustomTerm] = useState<string>("");
+  const [terms, setTerms] = useState<string[]>([]);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -72,6 +76,14 @@ const CollectionFinalStep: React.FC = () => {
 
     fetchUser();
   }, [getAccessTokenSilently]);
+
+  useEffect(() => {
+    if (category === "Science") {
+      setTerms(generateScienceTerms(20)); // Generate 20 science terms
+    } else if (category === "Nursing") {
+      setTerms(generateNursingTerms(20)); // Generate 20 nursing terms
+    }
+  }, [category]);
 
   const handleElementSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
@@ -215,6 +227,25 @@ const CollectionFinalStep: React.FC = () => {
     ]);
   };
 
+  const handleTermSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTerm(event.target.value);
+    setCustomTerm("");
+  };
+
+  const handleCustomTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomTerm(event.target.value);
+    setSelectedTerm("");
+  };
+
+  const handleAddTerm = () => {
+    const termToAdd = selectedTerm || customTerm;
+    if (termToAdd) {
+      setItems([...items, { id: items.length + 1, name: termToAdd }]);
+      setSelectedTerm("");
+      setCustomTerm("");
+    }
+  };
+
   if (!currentUser) {
     return <div>Loading user information...</div>;
   }
@@ -272,6 +303,7 @@ const CollectionFinalStep: React.FC = () => {
               ))}
             </select>
             <button
+              type="button"
               onClick={handleAddMathProblem}
               className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
             >
@@ -384,6 +416,43 @@ const CollectionFinalStep: React.FC = () => {
                     </option>
                   ))}
                 </select>
+              </>
+            ) : (category === "Science" || category === "Nursing") ? (
+              <>
+                <label htmlFor="term-select" className="mb-2">
+                  Select a {category.toLowerCase()} term:
+                </label>
+                <select
+                  id="term-select"
+                  value={selectedTerm}
+                  onChange={handleTermSelect}
+                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                >
+                  <option value="">Select a term</option>
+                  {terms.map((term, index) => (
+                    <option key={index} value={term}>
+                      {term}
+                    </option>
+                  ))}
+                </select>
+                <label htmlFor="custom-term-input" className="mb-2">
+                  Or enter a custom {category.toLowerCase()} term:
+                </label>
+                <input
+                  type="text"
+                  id="custom-term-input"
+                  value={customTerm}
+                  onChange={handleCustomTermChange}
+                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                  placeholder={`Enter custom ${category.toLowerCase()} term`}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddTerm}
+                  className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
+                >
+                  Add Term
+                </button>
               </>
             ) : (
               <>
