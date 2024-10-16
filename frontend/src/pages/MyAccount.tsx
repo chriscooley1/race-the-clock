@@ -52,19 +52,6 @@ const MyAccount: React.FC = () => {
                 {user.email}
               </p>
             </div>
-            <div className="space-y-2">
-              <h3 className="text-lg font-semibold">Account Details</h3>
-              <p
-                className={`text-sm ${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}
-              >
-                Email: {user.email}
-              </p>
-              <p
-                className={`text-sm ${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}
-              >
-                Email Verified: {user.email_verified ? "Yes" : "No"}
-              </p>
-            </div>
             <UpdateDisplayNameForm />
           </div>
         ) : (
