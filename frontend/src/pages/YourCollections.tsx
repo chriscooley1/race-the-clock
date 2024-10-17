@@ -184,6 +184,7 @@ const YourCollections: React.FC = () => {
 
   const handleSaveUpdatedItems = async (
     newItems: { name: string; id?: number }[],
+    newCollectionName: string
   ) => {
     setIsLoading(true);
     try {
@@ -199,7 +200,7 @@ const YourCollections: React.FC = () => {
 
         const updatedCollection = await updateCollection(
           selectedCollection.collection_id,
-          selectedCollection.name,
+          newCollectionName,  // Use the new collection name here
           updatedDescription,
           selectedCollection.category,
           getAccessTokenSilently,
