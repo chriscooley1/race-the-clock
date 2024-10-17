@@ -20,13 +20,15 @@ const ThemeSelector: React.FC = () => {
       appBackgroundColors as ColorScheme[]
     ).find((scheme: ColorScheme) => scheme.name === event.target.value);
     if (selectedScheme) {
-      setTheme({
+      setTheme((prevTheme) => ({
         ...selectedScheme,
-        isColorblindMode: false,
-        colorblindType: "none",
-        isDarkMode: selectedScheme.name === "Black",
-        font: theme.font,
-      });
+        isColorblindMode: prevTheme.isColorblindMode,
+        colorblindType: prevTheme.colorblindType,
+        isDarkMode: prevTheme.isDarkMode,
+        font: prevTheme.font,
+        displayTextColor: prevTheme.displayTextColor,
+        displayBackgroundColor: prevTheme.displayBackgroundColor,
+      }));
     }
   };
 

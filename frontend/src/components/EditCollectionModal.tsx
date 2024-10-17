@@ -5,7 +5,7 @@ interface EditCollectionModalProps {
   onClose: () => void;
   collectionName: string;
   items: { name: string; id?: number }[];
-  onSave: (items: { name: string; id?: number }[]) => void;
+  onSave: (items: { name: string; id?: number }[], collectionName: string) => void;
 }
 
 const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
@@ -18,6 +18,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   const [editedItems, setEditedItems] = useState<
     { name: string; id?: number }[]
   >([]);
+  const [editedCollectionName, setEditedCollectionName] = useState(collectionName);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -70,7 +71,8 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
 
   const handleSave = () => {
     console.log("Saving collection with items:", editedItems);
-    onSave(editedItems);
+    console.log("New collection name:", editedCollectionName);
+    onSave(editedItems, editedCollectionName);
     onClose();
   };
 
@@ -80,7 +82,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
       <div
         ref={modalRef}
-        className="flex max-h-[90vh] w-full max-w-2xl flex-col items-center overflow-y-auto rounded-lg bg-gray-800 p-4 text-white shadow-lg sm:p-6"
+        className="flex max-h-[90vh] w-full max-w-md flex-col items-center overflow-y-auto rounded-lg bg-gray-800 p-4 text-white shadow-lg sm:p-6"
       >
         <h1 className="mb-4 text-xl font-bold sm:mb-6 sm:text-2xl">
           Edit Collection
@@ -93,8 +95,8 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
             type="text"
             id="collectionName"
             className="w-full rounded border border-gray-300 bg-white p-2 text-center text-black"
-            value={collectionName}
-            readOnly
+            value={editedCollectionName}
+            onChange={(e) => setEditedCollectionName(e.target.value)}
             title="Collection Name"
           />
         </div>
@@ -118,23 +120,25 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
                 <label htmlFor={`item-${index}`} className="mb-1 block">
                   Item {index + 1}
                 </label>
-                <input
-                  type="text"
-                  id={`item-${index}`}
-                  className="w-full rounded border border-gray-300 bg-white p-2 text-center text-black"
-                  value={item.name}
-                  onChange={(e) => handleChangeItem(index, e.target.value)}
-                  placeholder={`Enter item ${index + 1}`}
-                  title={`Item ${index + 1}`}
-                />
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    id={`item-${index}`}
+                    className="w-full rounded-l border border-gray-300 bg-white p-2 text-center text-black"
+                    value={item.name}
+                    onChange={(e) => handleChangeItem(index, e.target.value)}
+                    placeholder={`Enter item ${index + 1}`}
+                    title={`Item ${index + 1}`}
+                  />
+                  <button
+                    type="button"
+                    className="flex h-[42px] w-[42px] items-center justify-center rounded-r bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600"
+                    onClick={() => handleRemoveItem(index)}
+                  >
+                    &times;
+                  </button>
+                </div>
               </div>
-              <button
-                type="button"
-                className="flex size-10 items-center justify-center rounded bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600"
-                onClick={() => handleRemoveItem(index)}
-              >
-                &times;
-              </button>
             </div>
           ))}
         </div>

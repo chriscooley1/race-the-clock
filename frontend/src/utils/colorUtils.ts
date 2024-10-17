@@ -6,3 +6,12 @@ export const lightenColor = (color: string, amount: number): string => {
   const b = Math.min(255, (rgb & 0xff) + 255 * amount);
   return `#${(((1 << 24) + (r << 16) + (g << 8) + b) | 0).toString(16).slice(1)}`;
 };
+
+export const darkenColor = (color: string, amount: number): string => {
+  const hex = color.replace("#", "");
+  const rgb = parseInt(hex, 16);
+  const r = Math.max(0, ((rgb >> 16) & 0xff) - 255 * amount);
+  const g = Math.max(0, ((rgb >> 8) & 0xff) - 255 * amount);
+  const b = Math.max(0, (rgb & 0xff) - 255 * amount);
+  return `#${(((1 << 24) + (r << 16) + (g << 8) + b) | 0).toString(16).slice(1)}`;
+};
