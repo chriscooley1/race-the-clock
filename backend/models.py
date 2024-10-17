@@ -105,6 +105,7 @@ class CollectionCreate(SQLModel):
     description: str
     status: Optional[str] = "private"
     category: str
+    stage: Optional[str] = "beginner"  # Add this line
 
 class CollectionRead(CollectionBase):
     collection_id: int
