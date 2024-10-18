@@ -9,7 +9,7 @@ import { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Collection as APICollection } from "../api";
 import axios from "axios";
-import { lightenColor } from "../utils/colorUtils";
+import { lightenColor, darkenColor } from "../utils/colorUtils";
 import { collectionColorSchemes } from "../constants/colorSchemes";
 import { useTheme } from "../context/ThemeContext";
 
@@ -27,13 +27,12 @@ interface Collection extends Omit<APICollection, "items"> {
 
 const DiscoverCollections: React.FC = () => {
   const { user } = useAuth0();
-  const { adjustColorForColorblindness } = useTheme();
+  const { adjustColorForColorblindness, theme } = useTheme();
   const [collections, setCollections] = useState<Collection[]>([]);
   const [activeCollection, setActiveCollection] = useState<Collection | null>(
     null,
   );
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const { theme } = useTheme();
   const [sortOption, setSortOption] = useState<string>("date");
   const { getAccessTokenSilently } = useAuth0();
 
@@ -172,9 +171,19 @@ const DiscoverCollections: React.FC = () => {
     }
   }, [sortOption, collections, sortCollections]);
 
+  const adjustColorForTheme = (color: string) => {
+    let adjustedColor = adjustColorForColorblindness(color);
+    if (theme.isDarkMode) {
+      adjustedColor = darkenColor(adjustedColor, 0.3);
+    }
+    return adjustedColor;
+  };
+
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
+        theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
+      }`}
     >
       <h1 className="mb-4 text-2xl font-bold sm:text-3xl">
         Discover Public Collections
@@ -217,13 +226,11 @@ const DiscoverCollections: React.FC = () => {
       </div>
       <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {collections.map((collection, index) => {
-          const baseColor = adjustColorForColorblindness(
+          const baseColor = adjustColorForTheme(
             collectionColorSchemes[index % collectionColorSchemes.length]
-              .backgroundColor,
+              .backgroundColor
           );
-          const lightColor = adjustColorForColorblindness(
-            lightenColor(baseColor, 0.7),
-          );
+          const lightColor = lightenColor(baseColor, 0.7);
           const itemCount =
             collection.item_count ?? collection.items?.length ?? 0;
           return (
@@ -238,14 +245,14 @@ const DiscoverCollections: React.FC = () => {
               >
                 {collection.name}
               </h2>
-              <p className="mb-1 text-sm text-black">
+              <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
                 Created by:{" "}
                 {collection.creator_display_name || collection.creator_username}
               </p>
-              <p className="mb-1 text-sm text-black">
+              <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
                 Category: {collection.category}
               </p>
-              <p className="mb-2 text-sm text-black">
+              <p className={`mb-2 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
                 {itemCount} items in collection
               </p>
               <button
