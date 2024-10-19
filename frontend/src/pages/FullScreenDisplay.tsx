@@ -183,7 +183,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
-    console.log('Rendering item:', currentItem);
+    console.log("Rendering item:", currentItem);
 
     if (category === "Number Sense") {
       return (
@@ -193,7 +193,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
               src={currentItem.svg}
               alt={currentItem.name}
               style={{ maxWidth: "100%", maxHeight: "100%" }}
-              onError={(e) => console.error('Error loading image:', e)}
+              onError={(e) => console.error("Error loading image:", e)}
             />
           ) : (
             <p>No image available for {currentItem.name}</p>

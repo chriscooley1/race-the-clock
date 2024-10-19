@@ -125,7 +125,7 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleDotChange = (index: number, field: keyof Dot, value: string | number) => {
     const newDots = [...dots];
-    if (field === 'position') {
+    if (field === "position") {
       const oldPosition = parseInt(newDots[index].position);
       const newPosition = parseInt(value as string);
       
@@ -144,7 +144,7 @@ const CollectionFinalStep: React.FC = () => {
       
       // Update the position in the dots state
       newDots[index].position = newPosition.toString();
-    } else if (field === 'count') {
+    } else if (field === "count") {
       newDots[index][field] = value as number;
     } else {
       newDots[index][field] = value as string;
@@ -153,13 +153,13 @@ const CollectionFinalStep: React.FC = () => {
   };
 
   const combineSvgs = (svgs: string[]): string => {
-    console.log('SVGs to combine:', svgs);
+    console.log("SVGs to combine:", svgs);
     const svgWidth = 200;
     const svgHeight = 200;
-    const decodedSvgs = svgs.map(svg => decodeURIComponent(svg.split(',')[1]));
-    const combinedSvgContent = decodedSvgs.join('');
+    const decodedSvgs = svgs.map(svg => decodeURIComponent(svg.split(",")[1]));
+    const combinedSvgContent = decodedSvgs.join("");
     const result = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">${combinedSvgContent}</svg>`;
-    console.log('Combined SVG:', result);
+    console.log("Combined SVG:", result);
     return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(result)}`;
   };
 
@@ -176,7 +176,7 @@ const CollectionFinalStep: React.FC = () => {
       svg: combinedSvg,
       count: dots.reduce((sum, dot) => sum + dot.count, 0),
     };
-    console.log('New item SVG:', newItem.svg);
+    console.log("New item SVG:", newItem.svg);
     setItems([...items, newItem]);
     
     // Reset available positions after adding the item
@@ -544,7 +544,7 @@ const CollectionFinalStep: React.FC = () => {
                 src={item.svg} 
                 alt={item.name} 
                 className="mr-2 size-12" 
-                onError={(e) => console.error('Error loading image:', e)}
+                onError={(e) => console.error("Error loading image:", e)}
               />
               <span>{item.name}</span>
             </div>
