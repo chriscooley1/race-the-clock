@@ -136,7 +136,9 @@ const CollectionFinalStep: React.FC = () => {
       
       // Update availablePositions
       setAvailablePositions(prev => {
-        const updated = [...prev, oldPosition].filter(pos => !newSelectedPositions.includes(pos));
+        const updated = [...prev, oldPosition].filter(pos => 
+          !newSelectedPositions.includes(pos) && pos !== newPosition
+        );
         return updated.sort((a, b) => a - b);
       });
       
@@ -150,21 +152,37 @@ const CollectionFinalStep: React.FC = () => {
     setDots(newDots);
   };
 
+  const combineSvgs = (svgs: string[]): string => {
+    console.log('SVGs to combine:', svgs);
+    const svgWidth = 200;
+    const svgHeight = 200;
+    const decodedSvgs = svgs.map(svg => decodeURIComponent(svg.split(',')[1]));
+    const combinedSvgContent = decodedSvgs.join('');
+    const result = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">${combinedSvgContent}</svg>`;
+    console.log('Combined SVG:', result);
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(result)}`;
+  };
+
   const handleAddNumberSenseItem = () => {
     const svgs = dots.map((dot) =>
       generateCountingSvg(dot.count, dot.color, dot.shape, dot.position)
     );
-    const encodedSvg = svgs[0]; // We only need one SVG for the item
+
+    const combinedSvg = combineSvgs(svgs);
+
     const newItem = {
       id: items.length + 1,
       name: `Number Sense: ${dots.reduce((sum, dot) => sum + dot.count, 0)} dot(s)`,
-      svg: encodedSvg,
+      svg: combinedSvg,
       count: dots.reduce((sum, dot) => sum + dot.count, 0),
     };
+    console.log('New item SVG:', newItem.svg);
     setItems([...items, newItem]);
+    
     // Reset available positions after adding the item
     setAvailablePositions(Array.from({ length: 25 }, (_, i) => i + 1));
     setDots([{ position: "1", color: "blue", shape: "circle", count: 1 }]);
+    setSelectedPositions([1]);
   };
 
   const handleRemoveItem = (id: number) => {
@@ -358,12 +376,13 @@ const CollectionFinalStep: React.FC = () => {
                       onChange={(e) => handleDotChange(index, "position", e.target.value)}
                       className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                     >
-                      <option value={dot.position}>Position {dot.position}</option>
-                      {availablePositions.map((pos) => (
-                        <option key={pos} value={pos.toString()}>
-                          Position {pos}
-                        </option>
-                      ))}
+                      {[...new Set([parseInt(dot.position), ...availablePositions])]
+                        .sort((a, b) => a - b)
+                        .map((pos) => (
+                          <option key={`pos-${pos}`} value={pos.toString()}>
+                            Position {pos}
+                          </option>
+                        ))}
                     </select>
                     <label htmlFor={`dot-color-${index}`} className="mb-2 block">
                       Select dot color:
@@ -521,7 +540,12 @@ const CollectionFinalStep: React.FC = () => {
         <div key={item.id} className="mb-2 flex items-center">
           {item.svg ? (
             <div className="mr-2 items-center">
-              <img src={item.svg} alt={item.name} className="mr-2 size-12" />
+              <img 
+                src={item.svg} 
+                alt={item.name} 
+                className="mr-2 size-12" 
+                onError={(e) => console.error('Error loading image:', e)}
+              />
               <span>{item.name}</span>
             </div>
           ) : (
