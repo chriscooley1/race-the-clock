@@ -18,7 +18,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { collectionColorSchemes } from "../constants/colorSchemes";
-import { lightenColor } from "../utils/colorUtils";
+import { darkenColor, lightenColor } from "../utils/colorUtils";
 import { useTheme } from "../context/ThemeContext";
 
 interface Collection {
@@ -383,6 +383,14 @@ const YourCollections: React.FC = () => {
     localStorage.setItem("sortPreference", "custom");
   };
 
+  const adjustColorForTheme = (color: string) => {
+    let adjustedColor = adjustColorForColorblindness(color);
+    if (theme.isDarkMode) {
+      adjustedColor = darkenColor(adjustedColor, 0.3);
+    }
+    return adjustedColor;
+  };
+
   return (
     <div
       className={`min-h-screen w-full px-4 pt-[170px] md:pl-[270px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
@@ -407,13 +415,11 @@ const YourCollections: React.FC = () => {
               className="grid max-h-[calc(100vh-170px)] w-full grid-cols-1 gap-4 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3"
             >
               {filteredCollections.map((collection, index) => {
-                const baseColor = adjustColorForColorblindness(
+                const baseColor = adjustColorForTheme(
                   collectionColorSchemes[index % collectionColorSchemes.length]
                     .backgroundColor,
                 );
-                const lightColor = adjustColorForColorblindness(
-                  lightenColor(baseColor, 0.7),
-                );
+                const lightColor = lightenColor(baseColor, 0.7);
 
                 const isDraggable = sortOption === "custom";
 
