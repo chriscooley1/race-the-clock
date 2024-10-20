@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   fetchCollections,
@@ -18,7 +18,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { collectionColorSchemes } from "../constants/colorSchemes";
-import { darkenColor, lightenColor } from "../utils/colorUtils";
+import { lightenColor } from "../utils/colorUtils";
 import { useTheme } from "../context/ThemeContext";
 
 interface Collection {
@@ -95,7 +95,7 @@ const YourCollections: React.FC = () => {
     useState<Collection | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
-  const { adjustColorForColorblindness, theme } = useTheme();
+  const { theme, adjustColorForColorblindness } = useTheme();
 
   useEffect(() => {
     const loadCollections = async () => {
@@ -383,13 +383,9 @@ const YourCollections: React.FC = () => {
     localStorage.setItem("sortPreference", "custom");
   };
 
-  const adjustColorForTheme = (color: string) => {
-    let adjustedColor = adjustColorForColorblindness(color);
-    if (theme.isDarkMode) {
-      adjustedColor = darkenColor(adjustedColor, 0.3);
-    }
-    return adjustedColor;
-  };
+  const adjustColorForTheme = useCallback((color: string) => {
+    return adjustColorForColorblindness(color);
+  }, [adjustColorForColorblindness]);
 
   return (
     <div
@@ -419,7 +415,7 @@ const YourCollections: React.FC = () => {
                   collectionColorSchemes[index % collectionColorSchemes.length]
                     .backgroundColor,
                 );
-                const lightColor = lightenColor(baseColor, 0.7);
+                const lightColor = baseColor ? lightenColor(baseColor, 0.7) : '';
 
                 const isDraggable = sortOption === "custom";
 

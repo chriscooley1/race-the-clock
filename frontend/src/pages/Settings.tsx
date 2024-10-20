@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { colorSchemes, ColorScheme } from "../constants/colorSchemes";
-import { lightenColor, darkenColor } from "../utils/colorUtils";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -53,6 +52,7 @@ const Settings: React.FC = () => {
         displayTextColor: newTextColor,
         displayBackgroundColor: newTheme.backgroundColor,
         font: theme.font,
+        adjustColorForColorblindness: theme.adjustColorForColorblindness, // Add this line
       });
     }
   };
