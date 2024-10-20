@@ -415,7 +415,7 @@ const YourCollections: React.FC = () => {
                   collectionColorSchemes[index % collectionColorSchemes.length]
                     .backgroundColor,
                 );
-                const lightColor = baseColor ? lightenColor(baseColor, 0.7) : '';
+                const lightColor = baseColor ? lightenColor(baseColor, 0.7) : "";
 
                 const isDraggable = sortOption === "custom";
 

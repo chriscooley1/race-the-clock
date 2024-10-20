@@ -226,7 +226,7 @@ const DiscoverCollections: React.FC = () => {
             collectionColorSchemes[index % collectionColorSchemes.length]
               .backgroundColor
           );
-          const lightColor = baseColor ? lightenColor(baseColor, 0.7) : '';
+          const lightColor = baseColor ? lightenColor(baseColor, 0.7) : "";
           const itemCount =
             collection.item_count ?? collection.items?.length ?? 0;
           return (

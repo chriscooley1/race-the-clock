@@ -96,7 +96,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
   const applyColorAdjustments = (currentTheme: Theme): Theme => {
     const adjustThemeColor = (color: string | undefined): string => {
-      if (!color) return '';
+      if (!color) return "";
       let adjustedColor = color;
       if (currentTheme.isColorblindMode && currentTheme.colorblindType) {
         adjustedColor = adjustColor(adjustedColor, currentTheme.colorblindType);
@@ -122,9 +122,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     const adjustedTheme = applyColorAdjustments(theme);
 
     document.documentElement.style.setProperty("--background-color", adjustedTheme.backgroundColor);
-    document.documentElement.style.setProperty("--text-color", adjustedTheme.textColor ?? '');
-    document.documentElement.style.setProperty("--display-text-color", adjustedTheme.displayTextColor ?? '');
-    document.documentElement.style.setProperty("--display-background-color", adjustedTheme.displayBackgroundColor ?? '');
+    document.documentElement.style.setProperty("--text-color", adjustedTheme.textColor ?? "");
+    document.documentElement.style.setProperty("--display-text-color", adjustedTheme.displayTextColor ?? "");
+    document.documentElement.style.setProperty("--display-background-color", adjustedTheme.displayBackgroundColor ?? "");
 
     if (theme.backgroundImage && theme.backgroundImage !== "none") {
       document.documentElement.style.setProperty("--background-image", `url(${theme.backgroundImage})`);
