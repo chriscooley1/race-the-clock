@@ -41,14 +41,18 @@ const Settings: React.FC = () => {
       (scheme: ColorScheme) => scheme.name === event.target.value,
     );
     if (newTheme) {
+      const isDark = newTheme.backgroundColor.toLowerCase() === "#000000";
+      const newTextColor = isDark ? "#FFFFFF" : "#000000";
       setTheme({
         ...newTheme,
         isColorblindMode: false,
         colorblindType: "none",
-        isDarkMode: theme.isDarkMode, // Preserve existing dark mode state
-        displayTextColor: theme.displayTextColor, // Preserve existing display colors
-        displayBackgroundColor: theme.displayBackgroundColor,
+        isDarkMode: isDark,
+        textColor: newTextColor,
+        displayTextColor: newTextColor,
+        displayBackgroundColor: newTheme.backgroundColor,
         font: theme.font,
+        adjustColorForColorblindness: theme.adjustColorForColorblindness, // Add this line
       });
     }
   };

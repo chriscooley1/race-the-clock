@@ -4,6 +4,7 @@ import {
   appBackgroundColors,
   collectionColorSchemes,
   ColorScheme,
+  colorSchemes,
 } from "../constants/colorSchemes";
 
 const ThemeSelector: React.FC = () => {
@@ -16,9 +17,7 @@ const ThemeSelector: React.FC = () => {
   } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedScheme: ColorScheme | undefined = (
-      appBackgroundColors as ColorScheme[]
-    ).find((scheme: ColorScheme) => scheme.name === event.target.value);
+    const selectedScheme = colorSchemes.find((scheme: ColorScheme) => scheme.name === event.target.value);
     if (selectedScheme) {
       setTheme((prevTheme) => ({
         ...selectedScheme,
@@ -28,6 +27,7 @@ const ThemeSelector: React.FC = () => {
         font: prevTheme.font,
         displayTextColor: prevTheme.displayTextColor,
         displayBackgroundColor: prevTheme.displayBackgroundColor,
+        adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
       }));
     }
   };

@@ -9,7 +9,7 @@ import { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Collection as APICollection } from "../api";
 import axios from "axios";
-import { lightenColor, darkenColor } from "../utils/colorUtils";
+import { lightenColor } from "../utils/colorUtils";
 import { collectionColorSchemes } from "../constants/colorSchemes";
 import { useTheme } from "../context/ThemeContext";
 
@@ -27,7 +27,7 @@ interface Collection extends Omit<APICollection, "items"> {
 
 const DiscoverCollections: React.FC = () => {
   const { user } = useAuth0();
-  const { adjustColorForColorblindness, theme } = useTheme();
+  const { theme, adjustColorForColorblindness } = useTheme();
   const [collections, setCollections] = useState<Collection[]>([]);
   const [activeCollection, setActiveCollection] = useState<Collection | null>(
     null,
@@ -171,13 +171,9 @@ const DiscoverCollections: React.FC = () => {
     }
   }, [sortOption, collections, sortCollections]);
 
-  const adjustColorForTheme = (color: string) => {
-    let adjustedColor = adjustColorForColorblindness(color);
-    if (theme.isDarkMode) {
-      adjustedColor = darkenColor(adjustedColor, 0.3);
-    }
-    return adjustedColor;
-  };
+  const adjustColorForTheme = useCallback((color: string) => {
+    return adjustColorForColorblindness(color);
+  }, [adjustColorForColorblindness]);
 
   return (
     <div
@@ -230,7 +226,7 @@ const DiscoverCollections: React.FC = () => {
             collectionColorSchemes[index % collectionColorSchemes.length]
               .backgroundColor
           );
-          const lightColor = lightenColor(baseColor, 0.7);
+          const lightColor = baseColor ? lightenColor(baseColor, 0.7) : "";
           const itemCount =
             collection.item_count ?? collection.items?.length ?? 0;
           return (
