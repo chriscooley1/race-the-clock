@@ -25,11 +25,13 @@
   h2,
   h3 {
     @apply font-chewy;
+    font-family: var(--heading-font-family, "Chewy", cursive);
   }
 
   p,
   button {
     @apply font-patrick-hand;
+    font-family: var(--button-font-family, "Patrick Hand", cursive);
   }
 
   h1 {

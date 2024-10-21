@@ -26,6 +26,9 @@ const Settings: React.FC = () => {
     setDisplayBackgroundColor,
     setColorblindMode,
     setColorblindType,
+    setFont,
+    setHeadingFont,
+    setButtonFont,
   } = useTheme();
 
   useEffect(() => {
@@ -100,12 +103,15 @@ const Settings: React.FC = () => {
   ];
 
   const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newFont = e.target.value;
-    setTheme((prevTheme) => ({ 
-      ...prevTheme, 
-      font: newFont,
-      className: `font-${newFont.toLowerCase().replace(/\s+/g, "-")}`
-    }));
+    setFont(e.target.value);
+  };
+
+  const handleHeadingFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setHeadingFont(e.target.value);
+  };
+
+  const handleButtonFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setButtonFont(e.target.value);
   };
 
   const handleBackgroundThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -122,25 +128,15 @@ const Settings: React.FC = () => {
 
       <div className="w-full space-y-6 px-4 md:px-8">
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Font</h2>
+          <h2 className="mb-2 text-xl font-semibold">Main Font</h2>
           <select
             value={theme.font}
             onChange={handleFontChange}
             className="rounded border border-gray-300 bg-white p-2 text-black"
-            title="Select font"
+            title="Select main font"
           >
             {fonts.map((font) => (
-              <option 
-                key={font} 
-                value={font}
-                className={`
-                  ${font === "Caveat" ? "font-caveat" : ""}
-                  ${font === "Patrick Hand" ? "font-patrick-hand" : ""}
-                  ${font === "Chewy" ? "font-chewy" : ""}
-                  ${font === "Comic Neue" ? "font-comic-neue" : ""}
-                  ${font === "Baloo 2" ? "font-baloo-2" : ""}
-                `}
-              >
+              <option key={font} value={font} className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}>
                 {font}
               </option>
             ))}
@@ -148,16 +144,32 @@ const Settings: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Background Theme</h2>
+          <h2 className="mb-2 text-xl font-semibold">Heading Font</h2>
           <select
-            value={theme.backgroundImage}
-            onChange={handleBackgroundThemeChange}
-            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
-            title="Select background theme"
+            value={theme.headingFont}
+            onChange={handleHeadingFontChange}
+            className="rounded border border-gray-300 bg-white p-2 text-black"
+            title="Select heading font"
           >
-            {backgroundThemes.map((bgTheme) => (
-              <option key={bgTheme.name} value={bgTheme.value}>
-                {bgTheme.name}
+            {fonts.map((font) => (
+              <option key={font} value={font} className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}>
+                {font}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <h2 className="mb-2 text-xl font-semibold">Button Font</h2>
+          <select
+            value={theme.buttonFont}
+            onChange={handleButtonFontChange}
+            className="rounded border border-gray-300 bg-white p-2 text-black"
+            title="Select button font"
+          >
+            {fonts.map((font) => (
+              <option key={font} value={font} className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}>
+                {font}
               </option>
             ))}
           </select>
@@ -180,6 +192,8 @@ const Settings: React.FC = () => {
                       colorblindType: prevTheme.colorblindType,
                       isDarkMode: prevTheme.isDarkMode,
                       font: prevTheme.font,
+                      headingFont: prevTheme.headingFont,
+                      buttonFont: prevTheme.buttonFont,
                       backgroundImage: prevTheme.backgroundImage,
                       adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
                     }));
@@ -249,6 +263,21 @@ const Settings: React.FC = () => {
               </select>
             )}
           </div>
+        </div>
+        <div>
+          <h2 className="mb-2 text-xl font-semibold">Background Theme</h2>
+          <select
+            value={theme.backgroundImage}
+            onChange={handleBackgroundThemeChange}
+            className="rounded border border-gray-300 bg-white p-2 text-black"
+            title="Select background theme"
+          >
+            {backgroundThemes.map((theme) => (
+              <option key={theme.name} value={theme.value}>
+                {theme.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </div>
