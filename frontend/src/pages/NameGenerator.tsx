@@ -42,13 +42,17 @@ const NameGenerator: React.FC = () => {
 
   const saveNameList = async (updatedList: string[] = nameList) => {
     try {
+      console.log("Saving name list:", updatedList);
       const token = await getAccessTokenSilently();
       const data = { name: "My Name List", names: updatedList };
       if (nameListId) {
-        await axios.put(`http://localhost:8000/namelists/${nameListId}`, data, {
+        console.log("Updating existing list with ID:", nameListId);
+        const response = await axios.put(`http://localhost:8000/namelists/${nameListId}`, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log("Update response:", response.data);
       } else {
+        console.log("Creating new list");
         const response = await axios.post(
           "http://localhost:8000/namelists/",
           data,
@@ -56,6 +60,7 @@ const NameGenerator: React.FC = () => {
             headers: { Authorization: `Bearer ${token}` },
           },
         );
+        console.log("Create response:", response.data);
         setNameListId(response.data.namelist_id);
       }
     } catch (error) {
