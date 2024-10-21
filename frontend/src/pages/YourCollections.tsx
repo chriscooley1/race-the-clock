@@ -630,4 +630,3 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
 );
 
 export default YourCollections;
-
