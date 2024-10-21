@@ -22,8 +22,8 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       "import.meta.env.VITE_API_BASE_URL": JSON.stringify(
         env.VITE_API_BASE_URL,
       ),
-      "import.meta.env.VITE_AUTH0_CALLBACK_URL": JSON.stringify(
-        env.VITE_AUTH0_CALLBACK_URL,
+      "import.meta.env.VITE_AUTH0_REDIRECT_URI": JSON.stringify(
+        env.VITE_AUTH0_REDIRECT_URI,
       ),
     },
     build: {
