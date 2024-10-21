@@ -23,7 +23,7 @@ const Sidebar: React.FC = () => {
             <li>
               <Link
                 to="/your-collections"
-                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+                className="your-collections-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
                 onClick={() => setIsOpen(false)}
               >
                 Your Collections
@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
             <li>
               <Link
                 to="/new-collection"
-                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+                className="new-collection-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >
                 New Collection
               </Link>
@@ -40,7 +40,7 @@ const Sidebar: React.FC = () => {
             <li>
               <Link
                 to="/discover-collections"
-                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+                className="discover-collections-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >
                 Discover Collections
               </Link>
@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
             <li>
               <Link
                 to="/name-generator"
-                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+                className="name-generator-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >
                 Name Generator
               </Link>
@@ -56,7 +56,7 @@ const Sidebar: React.FC = () => {
             <li>
               <Link
                 to="/games"
-                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+                className="games-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >
                 Games
               </Link>
@@ -64,7 +64,7 @@ const Sidebar: React.FC = () => {
             <li>
               <Link
                 to="/timed-challenges"
-                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+                className="timed-challenges-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >
                 Timed Challenges
               </Link>
@@ -72,7 +72,7 @@ const Sidebar: React.FC = () => {
             <li>
               <Link
                 to="/reports"
-                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+                className="reports-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >
                 Reports
               </Link>
@@ -80,7 +80,7 @@ const Sidebar: React.FC = () => {
             <li>
               <Link
                 to="/badges-achievements"
-                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+                className="badges-achievements-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >
                 Badges & Achievements
               </Link>
@@ -88,7 +88,7 @@ const Sidebar: React.FC = () => {
             <li>
               <Link
                 to="/resources"
-                className="block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
+                className="resources-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >
                 Resources
               </Link>

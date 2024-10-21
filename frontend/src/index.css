@@ -6,11 +6,12 @@
 
 @layer base {
   body {
-    @apply font-caveat bg-theme-bg text-theme-text;
+    @apply bg-theme-bg text-theme-text;
     background-image: var(--background-image);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    font-family: var(--font-family, "Comic Neue", sans-serif);
   }
 
   html,
@@ -24,11 +25,13 @@
   h2,
   h3 {
     @apply font-chewy;
+    font-family: var(--heading-font-family, "Chewy", cursive);
   }
 
   p,
   button {
     @apply font-patrick-hand;
+    font-family: var(--button-font-family, "Patrick Hand", cursive);
   }
 
   h1 {

@@ -23,6 +23,8 @@ interface Theme {
   colorblindType: string;
   isDarkMode: boolean;
   font: string;
+  headingFont: string;
+  buttonFont: string;
   adjustColorForColorblindness: (color: string) => string;
 }
 
@@ -35,6 +37,9 @@ interface ThemeContextType {
   setColorblindType: (type: string) => void;
   toggleDarkMode: () => void;
   adjustColorForColorblindness: (color: string) => string;
+  setFont: (font: string) => void;
+  setHeadingFont: (font: string) => void;
+  setButtonFont: (font: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -42,6 +47,28 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const applyColorAdjustments = (currentTheme: Theme): Theme => {
+    const adjustThemeColor = (color: string | undefined): string => {
+      if (!color) return "";
+      let adjustedColor = color;
+      if (currentTheme.isColorblindMode && currentTheme.colorblindType) {
+        adjustedColor = adjustColor(adjustedColor, currentTheme.colorblindType);
+      }
+      if (currentTheme.isDarkMode) {
+        adjustedColor = darkenColor(adjustedColor, 0.3);
+      }
+      return adjustedColor;
+    };
+
+    return {
+      ...currentTheme,
+      backgroundColor: adjustThemeColor(currentTheme.backgroundColor),
+      textColor: adjustThemeColor(currentTheme.textColor),
+      displayBackgroundColor: adjustThemeColor(currentTheme.displayBackgroundColor || currentTheme.backgroundColor),
+      displayTextColor: adjustThemeColor(currentTheme.displayTextColor || currentTheme.textColor),
+    };
+  };
+
   const getInitialTheme = (): Theme => {
     const savedTheme = localStorage.getItem("app-theme");
     return savedTheme
@@ -54,7 +81,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
           displayBackgroundColor: undefined,
           isDarkMode: false,
           font: "Comic Neue",
+          headingFont: "Chewy",
+          buttonFont: "Patrick Hand",
           backgroundImage: "none",
+          adjustColorForColorblindness: (color: string) => color,
         };
   };
 
@@ -94,26 +124,16 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     });
   };
 
-  const applyColorAdjustments = (currentTheme: Theme): Theme => {
-    const adjustThemeColor = (color: string | undefined): string => {
-      if (!color) return "";
-      let adjustedColor = color;
-      if (currentTheme.isColorblindMode && currentTheme.colorblindType) {
-        adjustedColor = adjustColor(adjustedColor, currentTheme.colorblindType);
-      }
-      if (currentTheme.isDarkMode) {
-        adjustedColor = darkenColor(adjustedColor, 0.3);
-      }
-      return adjustedColor;
-    };
+  const setFont = (font: string) => {
+    setTheme((prevTheme) => ({ ...prevTheme, font }));
+  };
 
-    return {
-      ...currentTheme,
-      backgroundColor: adjustThemeColor(currentTheme.backgroundColor),
-      textColor: adjustThemeColor(currentTheme.textColor),
-      displayBackgroundColor: adjustThemeColor(currentTheme.displayBackgroundColor || currentTheme.backgroundColor),
-      displayTextColor: adjustThemeColor(currentTheme.displayTextColor || currentTheme.textColor),
-    };
+  const setHeadingFont = (font: string) => {
+    setTheme((prevTheme) => ({ ...prevTheme, headingFont: font }));
+  };
+
+  const setButtonFont = (font: string) => {
+    setTheme((prevTheme) => ({ ...prevTheme, buttonFont: font }));
   };
 
   useEffect(() => {
@@ -139,6 +159,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     document.documentElement.style.setProperty("--font-family", theme.font);
+    document.documentElement.style.setProperty("--heading-font-family", theme.headingFont);
+    document.documentElement.style.setProperty("--button-font-family", theme.buttonFont);
   }, [theme]);
 
   const themeContextValue: ThemeContextType = {
@@ -151,6 +173,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     toggleDarkMode,
     adjustColorForColorblindness: (color: string) =>
       theme.isColorblindMode ? adjustColor(color, theme.colorblindType) : color,
+    setFont,
+    setHeadingFont,
+    setButtonFont,
   };
 
   return (

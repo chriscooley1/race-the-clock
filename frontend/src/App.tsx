@@ -6,6 +6,8 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
+import GuidedTour from "./components/GuidedTour";
+import { tourSteps } from "./tourSteps";
 
 // Import your page components here
 import LandingPage from "./pages/LandingPage";
@@ -29,11 +31,26 @@ const App: React.FC = () => {
   const location = useLocation();
   const [hideSidebar, setHideSidebar] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isTourRunning, setIsTourRunning] = useState(false);
 
   useEffect(() => {
     const hiddenRoutes = ["/", "/fullscreen-display", "/math-collection"];
     setHideSidebar(hiddenRoutes.includes(location.pathname));
   }, [location.pathname]);
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false);
+    // You might want to save a flag in localStorage to prevent the tour from running again
+    localStorage.setItem("tourCompleted", "true");
+  };
+
+  useEffect(() => {
+    // Check if the tour has been completed before
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+    }
+  }, []);
 
   return (
     <Auth0ProviderWithHistory>
@@ -171,6 +188,7 @@ const App: React.FC = () => {
               </Routes>
             </div>
           </div>
+          <GuidedTour steps={tourSteps} isRunning={isTourRunning} onComplete={handleTourComplete} />
         </div>
       </ErrorBoundary>
     </Auth0ProviderWithHistory>
