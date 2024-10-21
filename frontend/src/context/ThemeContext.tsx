@@ -137,11 +137,32 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
+    console.log("Applying theme:", theme);
+
     localStorage.setItem("app-theme", JSON.stringify(theme));
 
     const adjustedTheme = applyColorAdjustments(theme);
 
-    document.documentElement.style.setProperty("--background-color", adjustedTheme.backgroundColor);
+    if (theme.backgroundImage && theme.backgroundImage !== "none") {
+      console.log("Setting background image:", theme.backgroundImage);
+      const img = new Image();
+      img.onload = () => console.log("Background image loaded successfully");
+      img.onerror = (e) => {
+        console.error("Failed to load background image", e);
+        console.error("Image src:", theme.backgroundImage);
+      };
+      img.src = theme.backgroundImage;
+      document.body.style.backgroundImage = `url(${theme.backgroundImage})`;
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundRepeat = "no-repeat";
+      document.body.style.backgroundColor = "transparent";
+    } else {
+      console.log("Removing background image");
+      document.body.style.backgroundImage = "none";
+      document.body.style.backgroundColor = theme.backgroundColor;
+    }
+
     document.documentElement.style.setProperty("--text-color", adjustedTheme.textColor ?? "");
     document.documentElement.style.setProperty("--display-text-color", adjustedTheme.displayTextColor ?? "");
     document.documentElement.style.setProperty("--display-background-color", adjustedTheme.displayBackgroundColor ?? "");
@@ -161,6 +182,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     document.documentElement.style.setProperty("--font-family", theme.font);
     document.documentElement.style.setProperty("--heading-font-family", theme.headingFont);
     document.documentElement.style.setProperty("--button-font-family", theme.buttonFont);
+
+    console.log("Theme applied");
   }, [theme]);
 
   const themeContextValue: ThemeContextType = {
