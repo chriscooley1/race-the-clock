@@ -6,6 +6,7 @@ import { periodicTable, PeriodicElement } from "../utils/periodicTable";
 import { User } from "../types/user";
 import { useTheme } from "../context/ThemeContext";
 import { generateCountingSvg, generateScienceTerms, generateNursingTerms } from "../utils/RandomGenerators";
+import { v4 as uuidv4 } from 'uuid'; // Add this import for generating unique IDs
 
 // Export the function to avoid the "unused" error
 export function generateId(): string {
@@ -70,6 +71,8 @@ const CollectionFinalStep: React.FC = () => {
 
   // Add this new state
   const [selectedPositions, setSelectedPositions] = useState<number[]>([1]);
+
+  const [images, setImages] = useState<{ id: string; file: File; preview: string }[]>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -208,7 +211,7 @@ const CollectionFinalStep: React.FC = () => {
         collectionData,
         isPublic,
         category,
-        type: "numberSense",
+        type: initialType || "custom", // Changed from type to initialType
       });
 
       await saveCollection(
@@ -217,7 +220,7 @@ const CollectionFinalStep: React.FC = () => {
         collectionData,
         isPublic ? "public" : "private",
         category,
-        "numberSense",
+        initialType || "custom", // Changed from type to initialType
         getAccessTokenSilently,
       );
       navigate("/your-collections");
@@ -294,6 +297,31 @@ const CollectionFinalStep: React.FC = () => {
       setSelectedTerm("");
       setCustomTerm("");
     }
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const newImages = Array.from(event.target.files).map(file => ({
+        id: uuidv4(),
+        file,
+        preview: URL.createObjectURL(file)
+      }));
+      setImages(prevImages => [...prevImages, ...newImages]);
+    }
+  };
+
+  const handleRemoveImage = (id: string) => {
+    setImages(prevImages => prevImages.filter(image => image.id !== id));
+  };
+
+  const handleAddImageItem = () => {
+    const newItems = images.map(image => ({
+      id: items.length + 1,
+      name: image.file.name,
+      svg: image.preview,
+    }));
+    setItems([...items, ...newItems]);
+    setImages([]);
   };
 
   if (!currentUser) {
@@ -575,6 +603,42 @@ const CollectionFinalStep: React.FC = () => {
       >
         Save Collection
       </button>
+      <div className="mb-4 flex flex-col items-center text-center">
+        <label htmlFor="image-upload" className="mb-2 cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600">
+          Upload Images
+        </label>
+        <input
+          id="image-upload"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageUpload}
+          className="hidden"
+        />
+        {images.length > 0 && (
+          <div className="mt-4 grid grid-cols-3 gap-4">
+            {images.map((image) => (
+              <div key={image.id} className="relative">
+                <img src={image.preview} alt={image.file.name} className="h-24 w-24 object-cover" />
+                <button
+                  onClick={() => handleRemoveImage(image.id)}
+                  className="absolute -right-2 -top-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white"
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        {images.length > 0 && (
+          <button
+            onClick={handleAddImageItem}
+            className="mt-4 rounded-md bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+          >
+            Add Images to Collection
+          </button>
+        )}
+      </div>
     </div> 
   );
 };
