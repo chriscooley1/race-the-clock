@@ -496,12 +496,16 @@ const YourCollections: React.FC = () => {
         <div className="fixed left-0 top-0 z-[1001] flex size-full items-center justify-center overflow-hidden bg-black/70">
           <div
             ref={modalRef}
-            className="font-caveat relative z-[1002] w-1/4 max-w-[600px] rounded-lg bg-white p-5 text-center shadow-lg dark:bg-gray-800"
+            className="font-caveat relative z-[1002] w-1/4 max-w-[600px] rounded-lg p-5 text-center shadow-lg"
+            style={{
+              backgroundColor: adjustColorForColorblindness(theme.backgroundColor),
+              color: adjustColorForColorblindness(theme.textColor),
+            }}
           >
             <h2 className="mb-4 text-2xl font-bold">Duplicate Collection</h2>
             <div className="mb-4">
-              <label htmlFor="duplicate-collection-select" className="mr-2">
-                {/* Select a collection to duplicate: */}
+              <label htmlFor="duplicate-collection-select" className="sr-only">
+                Select a collection to duplicate
               </label>
               <select
                 id="duplicate-collection-select"
@@ -509,7 +513,13 @@ const YourCollections: React.FC = () => {
                 onChange={(e) =>
                   setSelectedCollectionToDuplicate(Number(e.target.value))
                 }
-                className="font-caveat rounded border border-gray-300 bg-white p-2 text-base text-black"
+                className="font-caveat rounded border p-2 text-base w-full"
+                style={{
+                  backgroundColor: adjustColorForColorblindness(theme.backgroundColor),
+                  color: adjustColorForColorblindness(theme.textColor),
+                  borderColor: adjustColorForColorblindness(theme.textColor),
+                }}
+                aria-label="Select a collection to duplicate"
               >
                 <option value="">Select a collection to duplicate</option>
                 {collections.map((collection) => (
@@ -526,14 +536,22 @@ const YourCollections: React.FC = () => {
               <button
                 type="button"
                 onClick={handleDuplicateConfirm}
-                className="rounded bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-green-600 active:scale-95 active:bg-green-700"
+                className="rounded px-4 py-2 font-bold uppercase transition duration-300 hover:scale-105 active:scale-95"
+                style={{
+                  backgroundColor: adjustColorForColorblindness(theme.isDarkMode ? "#4CAF50" : "#45a049"),
+                  color: adjustColorForColorblindness(theme.backgroundColor),
+                }}
               >
                 Duplicate
               </button>
               <button
                 type="button"
                 onClick={() => setDuplicateModalOpen(false)}
-                className="rounded bg-red-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-red-600 active:scale-95 active:bg-red-700"
+                className="rounded px-4 py-2 font-bold uppercase transition duration-300 hover:scale-105 active:scale-95"
+                style={{
+                  backgroundColor: adjustColorForColorblindness(theme.isDarkMode ? "#f44336" : "#d32f2f"),
+                  color: adjustColorForColorblindness(theme.backgroundColor),
+                }}
               >
                 Cancel
               </button>
