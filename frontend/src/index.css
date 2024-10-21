@@ -6,11 +6,12 @@
 
 @layer base {
   body {
-    @apply font-caveat bg-theme-bg text-theme-text;
+    @apply bg-theme-bg text-theme-text;
     background-image: var(--background-image);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    font-family: var(--font-family, "Comic Neue", sans-serif);
   }
 
   html,

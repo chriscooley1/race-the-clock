@@ -42,6 +42,28 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const applyColorAdjustments = (currentTheme: Theme): Theme => {
+    const adjustThemeColor = (color: string | undefined): string => {
+      if (!color) return "";
+      let adjustedColor = color;
+      if (currentTheme.isColorblindMode && currentTheme.colorblindType) {
+        adjustedColor = adjustColor(adjustedColor, currentTheme.colorblindType);
+      }
+      if (currentTheme.isDarkMode) {
+        adjustedColor = darkenColor(adjustedColor, 0.3);
+      }
+      return adjustedColor;
+    };
+
+    return {
+      ...currentTheme,
+      backgroundColor: adjustThemeColor(currentTheme.backgroundColor),
+      textColor: adjustThemeColor(currentTheme.textColor),
+      displayBackgroundColor: adjustThemeColor(currentTheme.displayBackgroundColor || currentTheme.backgroundColor),
+      displayTextColor: adjustThemeColor(currentTheme.displayTextColor || currentTheme.textColor),
+    };
+  };
+
   const getInitialTheme = (): Theme => {
     const savedTheme = localStorage.getItem("app-theme");
     return savedTheme
@@ -55,6 +77,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
           isDarkMode: false,
           font: "Comic Neue",
           backgroundImage: "none",
+          adjustColorForColorblindness: (color: string) => color,
         };
   };
 
@@ -92,28 +115,6 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
         displayTextColor: newIsDarkMode ? lightenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5) : darkenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5),
       };
     });
-  };
-
-  const applyColorAdjustments = (currentTheme: Theme): Theme => {
-    const adjustThemeColor = (color: string | undefined): string => {
-      if (!color) return "";
-      let adjustedColor = color;
-      if (currentTheme.isColorblindMode && currentTheme.colorblindType) {
-        adjustedColor = adjustColor(adjustedColor, currentTheme.colorblindType);
-      }
-      if (currentTheme.isDarkMode) {
-        adjustedColor = darkenColor(adjustedColor, 0.3);
-      }
-      return adjustedColor;
-    };
-
-    return {
-      ...currentTheme,
-      backgroundColor: adjustThemeColor(currentTheme.backgroundColor),
-      textColor: adjustThemeColor(currentTheme.textColor),
-      displayBackgroundColor: adjustThemeColor(currentTheme.displayBackgroundColor || currentTheme.backgroundColor),
-      displayTextColor: adjustThemeColor(currentTheme.displayTextColor || currentTheme.textColor),
-    };
   };
 
   useEffect(() => {

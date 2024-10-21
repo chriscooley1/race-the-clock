@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { colorSchemes, ColorScheme } from "../constants/colorSchemes";
+import { colorSchemes } from "../constants/colorSchemes";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -29,33 +29,29 @@ const Settings: React.FC = () => {
   } = useTheme();
 
   useEffect(() => {
-    document.querySelectorAll(".color-option").forEach((el) => {
-      (el as HTMLElement).style.backgroundColor =
-        el.getAttribute("data-color") || "";
-    });
-  }, []);
+    localStorage.setItem("app-theme", JSON.stringify(theme));
 
-  const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("Theme selected:", event.target.value);
-    const newTheme = colorSchemes.find(
-      (scheme: ColorScheme) => scheme.name === event.target.value,
-    );
-    if (newTheme) {
-      const isDark = newTheme.backgroundColor.toLowerCase() === "#000000";
-      const newTextColor = isDark ? "#FFFFFF" : "#000000";
-      setTheme({
-        ...newTheme,
-        isColorblindMode: false,
-        colorblindType: "none",
-        isDarkMode: isDark,
-        textColor: newTextColor,
-        displayTextColor: newTextColor,
-        displayBackgroundColor: newTheme.backgroundColor,
-        font: theme.font,
-        adjustColorForColorblindness: theme.adjustColorForColorblindness, // Add this line
-      });
+    document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
+    document.documentElement.style.setProperty("--text-color", theme.textColor ?? "");
+    document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor ?? "");
+    document.documentElement.style.setProperty("--display-background-color", theme.displayBackgroundColor ?? "");
+
+    if (theme.backgroundImage && theme.backgroundImage !== "none") {
+      document.documentElement.style.setProperty("--background-image", `url(${theme.backgroundImage})`);
+      document.documentElement.style.setProperty("--background-color", "transparent");
+    } else {
+      document.documentElement.style.setProperty("--background-image", "none");
     }
-  };
+
+    if (theme.isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    document.documentElement.style.setProperty("--font-family", theme.font);
+    document.body.style.fontFamily = theme.font;
+  }, [theme]);
 
   const handleTextColorChange = (color: string) => {
     console.log("Text color selected:", color);
@@ -67,9 +63,7 @@ const Settings: React.FC = () => {
     setDisplayBackgroundColor(color);
   };
 
-  const handleColorblindModeChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleColorblindModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setColorblindMode(event.target.checked);
     setTheme((prevTheme) => ({
       ...prevTheme,
@@ -77,9 +71,7 @@ const Settings: React.FC = () => {
     }));
   };
 
-  const handleColorblindTypeChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handleColorblindTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setColorblindType(event.target.value);
     setTheme((prevTheme) => ({
       ...prevTheme,
@@ -94,6 +86,10 @@ const Settings: React.FC = () => {
     "Helvetica",
     "Times New Roman",
     "Courier New",
+    "Caveat",
+    "Patrick Hand",
+    "Chewy",
+    "Baloo 2"
   ];
 
   const backgroundThemes = [
@@ -104,13 +100,16 @@ const Settings: React.FC = () => {
   ];
 
   const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTheme({ ...theme, font: e.target.value });
+    const newFont = e.target.value;
+    setTheme((prevTheme) => ({ 
+      ...prevTheme, 
+      font: newFont,
+      className: `font-${newFont.toLowerCase().replace(/\s+/g, "-")}`
+    }));
   };
 
-  const handleBackgroundThemeChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setTheme({ ...theme, backgroundImage: e.target.value });
+  const handleBackgroundThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTheme((prevTheme) => ({ ...prevTheme, backgroundImage: e.target.value }));
   };
 
   return (
@@ -127,11 +126,21 @@ const Settings: React.FC = () => {
           <select
             value={theme.font}
             onChange={handleFontChange}
-            className="font-caveat rounded border border-gray-300 bg-white p-2 text-black"
+            className="rounded border border-gray-300 bg-white p-2 text-black"
             title="Select font"
           >
             {fonts.map((font) => (
-              <option key={font} value={font}>
+              <option 
+                key={font} 
+                value={font}
+                className={`
+                  ${font === "Caveat" ? "font-caveat" : ""}
+                  ${font === "Patrick Hand" ? "font-patrick-hand" : ""}
+                  ${font === "Chewy" ? "font-chewy" : ""}
+                  ${font === "Comic Neue" ? "font-comic-neue" : ""}
+                  ${font === "Baloo 2" ? "font-baloo-2" : ""}
+                `}
+              >
                 {font}
               </option>
             ))}
@@ -162,11 +171,20 @@ const Settings: React.FC = () => {
                 key={color.name}
                 className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
                 style={{ backgroundColor: color.value }}
-                onClick={() =>
-                  handleThemeChange({
-                    target: { value: color.name },
-                  } as React.ChangeEvent<HTMLSelectElement>)
-                } // Cast to the correct type
+                onClick={() => {
+                  const newTheme = colorSchemes.find((scheme) => scheme.name === color.name);
+                  if (newTheme) {
+                    setTheme((prevTheme) => ({
+                      ...newTheme,
+                      isColorblindMode: prevTheme.isColorblindMode,
+                      colorblindType: prevTheme.colorblindType,
+                      isDarkMode: prevTheme.isDarkMode,
+                      font: prevTheme.font,
+                      backgroundImage: prevTheme.backgroundImage,
+                      adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
+                    }));
+                  }
+                }}
               />
             ))}
           </div>
