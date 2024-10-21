@@ -13,6 +13,9 @@ RUN npm ci
 # Copy the rest of the application code
 COPY . .
 
+# Install additional dependencies (including uuid)
+RUN npm install uuid @types/uuid
+
 # Build the app
 RUN npm run build
 
