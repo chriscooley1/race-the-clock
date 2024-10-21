@@ -32,6 +32,7 @@ const Settings: React.FC = () => {
   } = useTheme();
 
   useEffect(() => {
+    console.log("Theme changed:", theme); // New log
     localStorage.setItem("app-theme", JSON.stringify(theme));
 
     document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
@@ -96,10 +97,15 @@ const Settings: React.FC = () => {
   ];
 
   const backgroundThemes = [
-    { name: "Default", value: "none" },
+    { name: "None", value: "none" },
+    { name: "Ultimate Frisbee", value: "/images/ultimate-frisbee-bg.jpg" },
     { name: "Nature Scene", value: "/images/nature-background.jpg" },
     { name: "Abstract Design", value: "/images/abstract-background.jpg" },
     { name: "Calming Visuals", value: "/images/calming-background.jpg" },
+    { name: "City Skyline", value: "/images/city-skyline-bg.jpg" },
+    { name: "Beach Sunset", value: "/images/beach-sunset-bg.jpg" },
+    { name: "Mountain View", value: "/images/mountain-view-bg.jpg" },
+    { name: "Space Exploration", value: "/images/space-exploration-bg.jpg" },
   ];
 
   const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -115,15 +121,46 @@ const Settings: React.FC = () => {
   };
 
   const handleBackgroundThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTheme((prevTheme) => ({ ...prevTheme, backgroundImage: e.target.value }));
+    const selectedValue = e.target.value;
+    console.log("Background theme selected:", selectedValue); // New log
+
+    setTheme((prevTheme) => {
+      const newTheme = {
+        ...prevTheme,
+        backgroundImage: selectedValue,
+        backgroundColor: selectedValue === "none" ? prevTheme.backgroundColor : "transparent",
+        textColor: selectedValue === "none" ? prevTheme.textColor : "#000000",
+      };
+      console.log("New theme after background change:", newTheme); // New log
+      return newTheme;
+    });
   };
 
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${
-        theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
+        theme.isDarkMode ? "text-white" : "text-black"
       }`}
+      style={{
+        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+      }}
     >
+      {theme.backgroundImage && theme.backgroundImage !== "none" && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundImage: `url(${theme.backgroundImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            zIndex: -1,
+          }}
+        />
+      )}
       <h1 className="mb-8 text-3xl font-bold">Settings</h1>
 
       <div className="w-full space-y-6 px-4 md:px-8">
@@ -278,6 +315,7 @@ const Settings: React.FC = () => {
               </option>
             ))}
           </select>
+          <p>Current background image: {theme.backgroundImage}</p> {/* New debug line */}
         </div>
       </div>
     </div>
