@@ -98,14 +98,14 @@ const Settings: React.FC = () => {
 
   const backgroundThemes = [
     { name: "None", value: "none" },
-    { name: "Ultimate Frisbee", value: `${import.meta.env.BASE_URL}images/ultimate-frisbee-bg.jpg` },
-    { name: "Nature Scene", value: `${import.meta.env.BASE_URL}images/nature-background.jpg` },
-    { name: "Abstract Design", value: `${import.meta.env.BASE_URL}images/abstract-background.jpg` },
-    { name: "Calming Visuals", value: `${import.meta.env.BASE_URL}images/calming-background.jpg` },
-    { name: "City Skyline", value: `${import.meta.env.BASE_URL}images/city-skyline-bg.jpg` },
-    { name: "Beach Sunset", value: `${import.meta.env.BASE_URL}images/beach-sunset-bg.jpg` },
-    { name: "Mountain View", value: `${import.meta.env.BASE_URL}images/mountain-view-bg.jpg` },
-    { name: "Space Exploration", value: `${import.meta.env.BASE_URL}images/space-exploration-bg.jpg` },
+    { name: "Ultimate Frisbee", value: "/images/ultimate-frisbee-bg.jpg" },
+    { name: "Nature Scene", value: "/images/nature-background.jpg" },
+    { name: "Abstract Design", value: "/images/abstract-background.jpg" },
+    { name: "Calming Visuals", value: "/images/calming-background.jpg" },
+    { name: "City Skyline", value: "/images/city-skyline-bg.jpg" },
+    { name: "Beach Sunset", value: "/images/beach-sunset-bg.jpg" },
+    { name: "Mountain View", value: "/images/mountain-view-bg.jpg" },
+    { name: "Space Exploration", value: "/images/space-exploration-bg.jpg" },
   ];
 
   const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

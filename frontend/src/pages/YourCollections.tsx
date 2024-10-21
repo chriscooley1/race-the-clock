@@ -16,7 +16,7 @@ import {
   Droppable,
   Draggable,
   DropResult,
-} from "react-beautiful-dnd";
+} from "@hello-pangea/dnd";
 import { collectionColorSchemes } from "../constants/colorSchemes";
 import { lightenColor } from "../utils/colorUtils";
 import { useTheme } from "../context/ThemeContext";

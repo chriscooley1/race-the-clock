@@ -151,8 +151,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
         console.error("Failed to load background image", e);
         console.error("Image src:", theme.backgroundImage);
       };
-      img.src = theme.backgroundImage;
-      document.body.style.backgroundImage = `url(${theme.backgroundImage})`;
+      const imagePath = theme.backgroundImage.startsWith("/") ? theme.backgroundImage : `/${theme.backgroundImage}`;
+      img.src = imagePath;
+      document.body.style.backgroundImage = `url(${imagePath})`;
       document.body.style.backgroundSize = "cover";
       document.body.style.backgroundPosition = "center";
       document.body.style.backgroundRepeat = "no-repeat";

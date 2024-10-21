@@ -10,11 +10,11 @@ COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm ci
 
+# Install additional dependencies (including @hello-pangea/dnd)
+RUN npm install uuid @types/uuid @hello-pangea/dnd
+
 # Copy the rest of the application code
 COPY . .
-
-# Install additional dependencies (including uuid)
-RUN npm install uuid @types/uuid
 
 # Build the app
 RUN npm run build
