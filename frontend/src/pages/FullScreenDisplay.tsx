@@ -250,16 +250,31 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         );
       }
     } else if (category === "Math" && type === "mathProblems") {
+      const [problem, answer] = currentItem.name.split("|");
       if (showAnswer) {
         return (
-          <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
-            {currentItem.isAnswer ? currentItem.name : ""}
-          </h1>
+          <div className="flex size-full items-center justify-center">
+            <div className="relative">
+              <svg viewBox="0 0 200 200" className="size-64">
+                <polygon
+                  points="100,10 40,180 190,60 10,60 160,180"
+                  fill="yellow"
+                  stroke="orange"
+                  strokeWidth="5"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-6xl font-bold text-orange-600">
+                  {answer}
+                </span>
+              </div>
+            </div>
+          </div>
         );
       } else {
         return (
-          <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
-            {currentItem.isAnswer ? "" : currentItem.name}
+          <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(problem)}`}>
+            {problem}
           </h1>
         );
       }
