@@ -288,6 +288,10 @@ const CollectionSetup: React.FC = () => {
     }
   };
 
+  const shouldHideQuantity = (selectedType: string): boolean => {
+    return ["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(selectedType);
+  };
+
   if (!currentUser) {
     return <div className="p-4 text-center">Loading user information...</div>;
   }
@@ -342,25 +346,27 @@ const CollectionSetup: React.FC = () => {
                 )}
               </select>
             </div>
-            <div className="flex items-center space-x-4">
-              <label
-                htmlFor="itemCount"
-                className="whitespace-nowrap font-bold"
-              >
-                Quantity:
-              </label>
-              <input
-                type="number"
-                id="itemCount"
-                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
-                value={itemCount}
-                min={1}
-                onChange={(e) => {
-                  const count = parseInt(e.target.value, 10);
-                  setItemCount(count);
-                }}
-              />
-            </div>
+            {!shouldHideQuantity(type) && (
+              <div className="flex items-center space-x-4">
+                <label
+                  htmlFor="itemCount"
+                  className="whitespace-nowrap font-bold"
+                >
+                  Quantity:
+                </label>
+                <input
+                  type="number"
+                  id="itemCount"
+                  className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
+                  value={itemCount}
+                  min={1}
+                  onChange={(e) => {
+                    const count = parseInt(e.target.value, 10);
+                    setItemCount(count);
+                  }}
+                />
+              </div>
+            )}
           </>
         ) : (
           <>
