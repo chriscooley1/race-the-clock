@@ -17,7 +17,9 @@ const ThemeSelector: React.FC = () => {
   } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedScheme = colorSchemes.find((scheme: ColorScheme) => scheme.name === event.target.value);
+    const selectedScheme = colorSchemes.find(
+      (scheme: ColorScheme) => scheme.name === event.target.value,
+    );
     if (selectedScheme) {
       setTheme((prevTheme) => ({
         ...selectedScheme,

@@ -24,11 +24,13 @@ export const tourSteps: Step[] = [
   },
   {
     target: ".timed-challenges-link",
-    content: "Test your skills with timed challenges based on your collections.",
+    content:
+      "Test your skills with timed challenges based on your collections.",
   },
   {
     target: ".reports-link",
-    content: "View detailed reports and analytics about your progress and usage.",
+    content:
+      "View detailed reports and analytics about your progress and usage.",
   },
   {
     target: ".badges-achievements-link",
@@ -40,4 +42,3 @@ export const tourSteps: Step[] = [
   },
   // Add more steps as needed
 ];
-

@@ -60,7 +60,8 @@ const Auth0ProviderWithHistory: React.FC<Auth0ProviderWithHistoryProps> = ({
         redirect_uri:
           import.meta.env.MODE === "development"
             ? "http://localhost:5173/callback"
-            : (import.meta.env.VITE_AUTH0_REDIRECT_URI || "https://race-the-clock-frontend-production.up.railway.app/callback"),
+            : import.meta.env.VITE_AUTH0_REDIRECT_URI ||
+              "https://race-the-clock-frontend-production.up.railway.app/callback",
         audience:
           import.meta.env.VITE_AUTH0_AUDIENCE ||
           "https://dev-kooql0161qbynbss.us.auth0.com/api/v2/",

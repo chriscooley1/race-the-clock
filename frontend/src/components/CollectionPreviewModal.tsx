@@ -90,7 +90,8 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
             : "w-11/12 max-w-md"
         }`}
         style={{
-          backgroundColor: theme.displayBackgroundColor || theme.backgroundColor,
+          backgroundColor:
+            theme.displayBackgroundColor || theme.backgroundColor,
           color: theme.displayTextColor || theme.textColor,
         }}
       >

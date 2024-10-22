@@ -271,6 +271,7 @@ function shuffleArray<T>(array: T[]): T[] {
 
 export const generateFullPeriodicTable = (): string[] => {
   return Object.values(periodicTable).map(
-    (element) => `${element.symbol} - ${element.name} - ${element.atomicNumber}`
+    (element) =>
+      `${element.symbol} - ${element.name} - ${element.atomicNumber}`,
   );
 };

@@ -5,7 +5,10 @@ interface EditCollectionModalProps {
   onClose: () => void;
   collectionName: string;
   items: { name: string; id?: number }[];
-  onSave: (items: { name: string; id?: number }[], collectionName: string) => void;
+  onSave: (
+    items: { name: string; id?: number }[],
+    collectionName: string,
+  ) => void;
 }
 
 const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
@@ -18,7 +21,8 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   const [editedItems, setEditedItems] = useState<
     { name: string; id?: number }[]
   >([]);
-  const [editedCollectionName, setEditedCollectionName] = useState(collectionName);
+  const [editedCollectionName, setEditedCollectionName] =
+    useState(collectionName);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -132,7 +136,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
                   />
                   <button
                     type="button"
-                    className="flex h-[42px] w-[42px] items-center justify-center rounded-r bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600"
+                    className="flex size-[42px] items-center justify-center rounded-r bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600"
                     onClick={() => handleRemoveItem(index)}
                   >
                     &times;

@@ -188,7 +188,11 @@ const App: React.FC = () => {
               </Routes>
             </div>
           </div>
-          <GuidedTour steps={tourSteps} isRunning={isTourRunning} onComplete={handleTourComplete} />
+          <GuidedTour
+            steps={tourSteps}
+            isRunning={isTourRunning}
+            onComplete={handleTourComplete}
+          />
         </div>
       </ErrorBoundary>
     </Auth0ProviderWithHistory>

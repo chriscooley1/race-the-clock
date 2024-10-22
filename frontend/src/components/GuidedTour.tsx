@@ -7,7 +7,11 @@ interface GuidedTourProps {
   onComplete: () => void;
 }
 
-const GuidedTour: React.FC<GuidedTourProps> = ({ steps, isRunning, onComplete }) => {
+const GuidedTour: React.FC<GuidedTourProps> = ({
+  steps,
+  isRunning,
+  onComplete,
+}) => {
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { status } = data;
     if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {

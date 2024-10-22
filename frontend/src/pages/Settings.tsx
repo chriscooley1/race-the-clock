@@ -35,14 +35,32 @@ const Settings: React.FC = () => {
     console.log("Theme changed:", theme); // New log
     localStorage.setItem("app-theme", JSON.stringify(theme));
 
-    document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
-    document.documentElement.style.setProperty("--text-color", theme.textColor ?? "");
-    document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor ?? "");
-    document.documentElement.style.setProperty("--display-background-color", theme.displayBackgroundColor ?? "");
+    document.documentElement.style.setProperty(
+      "--background-color",
+      theme.backgroundColor,
+    );
+    document.documentElement.style.setProperty(
+      "--text-color",
+      theme.textColor ?? "",
+    );
+    document.documentElement.style.setProperty(
+      "--display-text-color",
+      theme.displayTextColor ?? "",
+    );
+    document.documentElement.style.setProperty(
+      "--display-background-color",
+      theme.displayBackgroundColor ?? "",
+    );
 
     if (theme.backgroundImage && theme.backgroundImage !== "none") {
-      document.documentElement.style.setProperty("--background-image", `url(${theme.backgroundImage})`);
-      document.documentElement.style.setProperty("--background-color", "transparent");
+      document.documentElement.style.setProperty(
+        "--background-image",
+        `url(${theme.backgroundImage})`,
+      );
+      document.documentElement.style.setProperty(
+        "--background-color",
+        "transparent",
+      );
     } else {
       document.documentElement.style.setProperty("--background-image", "none");
     }
@@ -67,7 +85,9 @@ const Settings: React.FC = () => {
     setDisplayBackgroundColor(color);
   };
 
-  const handleColorblindModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleColorblindModeChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setColorblindMode(event.target.checked);
     setTheme((prevTheme) => ({
       ...prevTheme,
@@ -75,7 +95,9 @@ const Settings: React.FC = () => {
     }));
   };
 
-  const handleColorblindTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleColorblindTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     setColorblindType(event.target.value);
     setTheme((prevTheme) => ({
       ...prevTheme,
@@ -93,7 +115,7 @@ const Settings: React.FC = () => {
     "Caveat",
     "Patrick Hand",
     "Chewy",
-    "Baloo 2"
+    "Baloo 2",
   ];
 
   const backgroundThemes = [
@@ -120,7 +142,9 @@ const Settings: React.FC = () => {
     setButtonFont(e.target.value);
   };
 
-  const handleBackgroundThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleBackgroundThemeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     const selectedValue = e.target.value;
     console.log("Background theme selected:", selectedValue); // New log
 
@@ -128,7 +152,8 @@ const Settings: React.FC = () => {
       const newTheme = {
         ...prevTheme,
         backgroundImage: selectedValue,
-        backgroundColor: selectedValue === "none" ? prevTheme.backgroundColor : "transparent",
+        backgroundColor:
+          selectedValue === "none" ? prevTheme.backgroundColor : "transparent",
         textColor: selectedValue === "none" ? prevTheme.textColor : "#000000",
       };
       console.log("New theme after background change:", newTheme); // New log
@@ -142,7 +167,10 @@ const Settings: React.FC = () => {
         theme.isDarkMode ? "text-white" : "text-black"
       }`}
       style={{
-        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+        backgroundColor:
+          theme.backgroundImage === "none"
+            ? theme.backgroundColor
+            : "transparent",
       }}
     >
       {theme.backgroundImage && theme.backgroundImage !== "none" && (
@@ -173,7 +201,11 @@ const Settings: React.FC = () => {
             title="Select main font"
           >
             {fonts.map((font) => (
-              <option key={font} value={font} className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}>
+              <option
+                key={font}
+                value={font}
+                className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
+              >
                 {font}
               </option>
             ))}
@@ -189,7 +221,11 @@ const Settings: React.FC = () => {
             title="Select heading font"
           >
             {fonts.map((font) => (
-              <option key={font} value={font} className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}>
+              <option
+                key={font}
+                value={font}
+                className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
+              >
                 {font}
               </option>
             ))}
@@ -205,7 +241,11 @@ const Settings: React.FC = () => {
             title="Select button font"
           >
             {fonts.map((font) => (
-              <option key={font} value={font} className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}>
+              <option
+                key={font}
+                value={font}
+                className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
+              >
                 {font}
               </option>
             ))}
@@ -221,7 +261,9 @@ const Settings: React.FC = () => {
                 className={`m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
                 style={{ backgroundColor: color.value }}
                 onClick={() => {
-                  const newTheme = colorSchemes.find((scheme) => scheme.name === color.name);
+                  const newTheme = colorSchemes.find(
+                    (scheme) => scheme.name === color.name,
+                  );
                   if (newTheme) {
                     setTheme((prevTheme) => ({
                       ...newTheme,
@@ -232,7 +274,8 @@ const Settings: React.FC = () => {
                       headingFont: prevTheme.headingFont,
                       buttonFont: prevTheme.buttonFont,
                       backgroundImage: prevTheme.backgroundImage,
-                      adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
+                      adjustColorForColorblindness:
+                        prevTheme.adjustColorForColorblindness,
                     }));
                   }
                 }}
@@ -315,7 +358,8 @@ const Settings: React.FC = () => {
               </option>
             ))}
           </select>
-          <p>Current background image: {theme.backgroundImage}</p> {/* New debug line */}
+          <p>Current background image: {theme.backgroundImage}</p>{" "}
+          {/* New debug line */}
         </div>
       </div>
     </div>

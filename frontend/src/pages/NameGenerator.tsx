@@ -47,9 +47,13 @@ const NameGenerator: React.FC = () => {
       const data = { name: "My Name List", names: updatedList };
       if (nameListId) {
         console.log("Updating existing list with ID:", nameListId);
-        const response = await axios.put(`http://localhost:8000/namelists/${nameListId}`, data, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.put(
+          `http://localhost:8000/namelists/${nameListId}`,
+          data,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         console.log("Update response:", response.data);
       } else {
         console.log("Creating new list");
@@ -95,7 +99,8 @@ const NameGenerator: React.FC = () => {
       setIsSpinning(true);
       const spinRevolutions = 2 + Math.random() * 3; // 2 to 5 full rotations
       const degreesPerSlice = 360 / nameList.length; // Calculate degrees per slice
-      const centerAngle = (Math.floor(Math.random() * nameList.length) + 0.5) * degreesPerSlice; // Random center angle
+      const centerAngle =
+        (Math.floor(Math.random() * nameList.length) + 0.5) * degreesPerSlice; // Random center angle
       const targetDegrees = (spinRevolutions * 360 + centerAngle) % 360; // Final position in degrees
       console.log(
         `spinRev: ${spinRevolutions} targetDegrees: ${targetDegrees}`,

@@ -184,7 +184,7 @@ const YourCollections: React.FC = () => {
 
   const handleSaveUpdatedItems = async (
     newItems: { name: string; id?: number }[],
-    newCollectionName: string
+    newCollectionName: string,
   ) => {
     setIsLoading(true);
     try {
@@ -200,7 +200,7 @@ const YourCollections: React.FC = () => {
 
         const updatedCollection = await updateCollection(
           selectedCollection.collection_id,
-          newCollectionName,  // Use the new collection name here
+          newCollectionName, // Use the new collection name here
           updatedDescription,
           selectedCollection.category,
           getAccessTokenSilently,
@@ -298,7 +298,7 @@ const YourCollections: React.FC = () => {
     shuffle: boolean,
     speed: number,
     textColor: string,
-    answerDisplayTime: number
+    answerDisplayTime: number,
   ) => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
@@ -382,9 +382,12 @@ const YourCollections: React.FC = () => {
     localStorage.setItem("sortPreference", "custom");
   };
 
-  const adjustColorForTheme = useCallback((color: string) => {
-    return adjustColorForColorblindness(color);
-  }, [adjustColorForColorblindness]);
+  const adjustColorForTheme = useCallback(
+    (color: string) => {
+      return adjustColorForColorblindness(color);
+    },
+    [adjustColorForColorblindness],
+  );
 
   return (
     <div
@@ -414,7 +417,9 @@ const YourCollections: React.FC = () => {
                   collectionColorSchemes[index % collectionColorSchemes.length]
                     .backgroundColor,
                 );
-                const lightColor = baseColor ? lightenColor(baseColor, 0.7) : "";
+                const lightColor = baseColor
+                  ? lightenColor(baseColor, 0.7)
+                  : "";
 
                 const isDraggable = sortOption === "custom";
 
@@ -499,7 +504,9 @@ const YourCollections: React.FC = () => {
             ref={modalRef}
             className="font-caveat relative z-[1002] w-1/4 max-w-[600px] rounded-lg p-5 text-center shadow-lg"
             style={{
-              backgroundColor: adjustColorForColorblindness(theme.backgroundColor),
+              backgroundColor: adjustColorForColorblindness(
+                theme.backgroundColor,
+              ),
               color: adjustColorForColorblindness(theme.textColor),
             }}
           >
@@ -514,9 +521,11 @@ const YourCollections: React.FC = () => {
                 onChange={(e) =>
                   setSelectedCollectionToDuplicate(Number(e.target.value))
                 }
-                className="font-caveat rounded border p-2 text-base w-full"
+                className="font-caveat w-full rounded border p-2 text-base"
                 style={{
-                  backgroundColor: adjustColorForColorblindness(theme.backgroundColor),
+                  backgroundColor: adjustColorForColorblindness(
+                    theme.backgroundColor,
+                  ),
                   color: adjustColorForColorblindness(theme.textColor),
                   borderColor: adjustColorForColorblindness(theme.textColor),
                 }}
@@ -539,7 +548,9 @@ const YourCollections: React.FC = () => {
                 onClick={handleDuplicateConfirm}
                 className="rounded px-4 py-2 font-bold uppercase transition duration-300 hover:scale-105 active:scale-95"
                 style={{
-                  backgroundColor: adjustColorForColorblindness(theme.isDarkMode ? "#4CAF50" : "#45a049"),
+                  backgroundColor: adjustColorForColorblindness(
+                    theme.isDarkMode ? "#4CAF50" : "#45a049",
+                  ),
                   color: adjustColorForColorblindness(theme.backgroundColor),
                 }}
               >
@@ -550,7 +561,9 @@ const YourCollections: React.FC = () => {
                 onClick={() => setDuplicateModalOpen(false)}
                 className="rounded px-4 py-2 font-bold uppercase transition duration-300 hover:scale-105 active:scale-95"
                 style={{
-                  backgroundColor: adjustColorForColorblindness(theme.isDarkMode ? "#f44336" : "#d32f2f"),
+                  backgroundColor: adjustColorForColorblindness(
+                    theme.isDarkMode ? "#f44336" : "#d32f2f",
+                  ),
                   color: adjustColorForColorblindness(theme.backgroundColor),
                 }}
               >
@@ -584,12 +597,12 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
 }) => (
   <>
     <h1
-      className="border-5 w-full border-black p-2.5 text-center text-xl font-bold text-black rounded-t-lg border-b-0"
+      className="border-5 w-full rounded-t-lg border-b-0 border-black p-2.5 text-center text-xl font-bold text-black"
       style={{ backgroundColor: baseColor }}
     >
       {collection.name}
     </h1>
-    <div className="border-5 flex w-full grow flex-col items-center justify-between border-black p-4 rounded-b-lg border-t-5">
+    <div className="border-5 border-t-5 flex w-full grow flex-col items-center justify-between rounded-b-lg border-black p-4">
       <div>
         <p className="mb-1 text-base font-bold text-black">
           {getItemsCount(collection.description)} items in collection

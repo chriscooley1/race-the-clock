@@ -171,9 +171,12 @@ const DiscoverCollections: React.FC = () => {
     }
   }, [sortOption, collections, sortCollections]);
 
-  const adjustColorForTheme = useCallback((color: string) => {
-    return adjustColorForColorblindness(color);
-  }, [adjustColorForColorblindness]);
+  const adjustColorForTheme = useCallback(
+    (color: string) => {
+      return adjustColorForColorblindness(color);
+    },
+    [adjustColorForColorblindness],
+  );
 
   return (
     <div
@@ -224,7 +227,7 @@ const DiscoverCollections: React.FC = () => {
         {collections.map((collection, index) => {
           const baseColor = adjustColorForTheme(
             collectionColorSchemes[index % collectionColorSchemes.length]
-              .backgroundColor
+              .backgroundColor,
           );
           const lightColor = baseColor ? lightenColor(baseColor, 0.7) : "";
           const itemCount =
@@ -241,14 +244,20 @@ const DiscoverCollections: React.FC = () => {
               >
                 {collection.name}
               </h2>
-              <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+              <p
+                className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
+              >
                 Created by:{" "}
                 {collection.creator_display_name || collection.creator_username}
               </p>
-              <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+              <p
+                className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
+              >
                 Category: {collection.category}
               </p>
-              <p className={`mb-2 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+              <p
+                className={`mb-2 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
+              >
                 {itemCount} items in collection
               </p>
               <button

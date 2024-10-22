@@ -10,7 +10,7 @@ interface SessionSettingsModalProps {
     shuffle: boolean,
     speed: number,
     textColor: string,
-    answerDisplayTime: number
+    answerDisplayTime: number,
   ) => void;
   currentSettings: {
     speed: number;
@@ -33,7 +33,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   const [shuffle, setShuffle] = useState(false);
   const [answerDisplayTime, setAnswerDisplayTime] = useState(3);
 
-  const showAnswerDisplayTime = category === "Number Sense" || (category === "Math" && type === "mathProblems");
+  const showAnswerDisplayTime =
+    category === "Number Sense" ||
+    (category === "Math" && type === "mathProblems");
 
   const { theme } = useTheme();
 
@@ -63,7 +65,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       shuffle,
       calculatedSpeed,
       currentSettings.textColor,
-      answerDisplayTime * 1000 // Convert to milliseconds
+      answerDisplayTime * 1000, // Convert to milliseconds
     );
   };
 
@@ -78,16 +80,15 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
       onClick={handleBackgroundClick}
     >
-      <div 
+      <div
         className="w-full max-w-sm rounded-lg p-4 shadow-xl"
         style={{
-          backgroundColor: theme.displayBackgroundColor || theme.backgroundColor,
+          backgroundColor:
+            theme.displayBackgroundColor || theme.backgroundColor,
           color: theme.displayTextColor || theme.textColor,
         }}
       >
-        <h2 className="mb-2 text-center text-xl font-bold">
-          {collectionName}
-        </h2>
+        <h2 className="mb-2 text-center text-xl font-bold">{collectionName}</h2>
         <div className="space-y-3">
           <div className="flex flex-col items-center">
             <div className="flex w-full justify-around p-2">
@@ -144,7 +145,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 type="number"
                 id="answerDisplayTime"
                 value={answerDisplayTime}
-                onChange={(e) => setAnswerDisplayTime(parseInt(e.target.value) || 3)}
+                onChange={(e) =>
+                  setAnswerDisplayTime(parseInt(e.target.value) || 3)
+                }
                 className="w-20 rounded border border-gray-300 p-1 text-sm"
                 placeholder="Seconds"
                 title="Answer Display Time"
