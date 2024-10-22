@@ -100,7 +100,15 @@ const NameWheel: React.FC<NameWheelProps> = ({
         stopSpinning();
       }, 5000);
     }
-  }, [isSpinning, spinData, controls, names, onNameSelected, stopSpinning, lastLandedDegrees]);
+  }, [
+    isSpinning,
+    spinData,
+    controls,
+    names,
+    onNameSelected,
+    stopSpinning,
+    lastLandedDegrees,
+  ]);
 
   return (
     <div className="relative">

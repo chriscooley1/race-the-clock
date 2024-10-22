@@ -32,6 +32,7 @@ const App: React.FC = () => {
   const [hideSidebar, setHideSidebar] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isTourRunning, setIsTourRunning] = useState(false);
+  const [currentTourStep, setCurrentTourStep] = useState(0);
 
   useEffect(() => {
     const hiddenRoutes = ["/", "/fullscreen-display", "/math-collection"];
@@ -40,12 +41,19 @@ const App: React.FC = () => {
 
   const handleTourComplete = () => {
     setIsTourRunning(false);
-    // You might want to save a flag in localStorage to prevent the tour from running again
     localStorage.setItem("tourCompleted", "true");
   };
 
+  const handleTourStart = () => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0);
+  };
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
+
   useEffect(() => {
-    // Check if the tour has been completed before
     const tourCompleted = localStorage.getItem("tourCompleted");
     if (!tourCompleted) {
       setIsTourRunning(true);
@@ -58,7 +66,7 @@ const App: React.FC = () => {
         <div
           className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
         >
-          <Navbar />
+          <Navbar onStartTour={handleTourStart} />
           <div className="flex pt-[70px]">
             {!hideSidebar && <Sidebar />}
             <div
@@ -188,7 +196,13 @@ const App: React.FC = () => {
               </Routes>
             </div>
           </div>
-          <GuidedTour steps={tourSteps} isRunning={isTourRunning} onComplete={handleTourComplete} />
+          <GuidedTour
+            steps={tourSteps}
+            isRunning={isTourRunning}
+            onComplete={handleTourComplete}
+            currentStep={currentTourStep}
+            onStepChange={handleTourStepChange}
+          />
         </div>
       </ErrorBoundary>
     </Auth0ProviderWithHistory>

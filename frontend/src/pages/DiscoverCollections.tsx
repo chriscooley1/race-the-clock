@@ -35,17 +35,27 @@ const DiscoverCollections: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("date");
   const { getAccessTokenSilently } = useAuth0();
+  const [subscriptionStatus, setSubscriptionStatus] = useState<Record<string, boolean>>({});
 
   const fetchCollections = useCallback(async () => {
     try {
       const fetchedCollections = await fetchPublicCollections();
       console.log("Fetched collections:", fetchedCollections);
-      setCollections(
-        fetchedCollections?.map((collection) => ({
-          ...collection,
-          items: parseDescription(collection.description),
-        })) || [],
-      );
+      const collectionsWithItems = fetchedCollections?.map((collection) => ({
+        ...collection,
+        items: parseDescription(collection.description),
+      })) || [];
+
+      // Check subscription status for all collections
+      const subscriptionChecks = collectionsWithItems.map(async (collection) => {
+        const isSubscribed = await checkSubscription(collection.collection_id, getAccessTokenSilently);
+        return { [collection.collection_id]: isSubscribed };
+      });
+      const subscriptionResults = await Promise.all(subscriptionChecks);
+      const newSubscriptionStatus = Object.assign({}, ...subscriptionResults);
+      setSubscriptionStatus(newSubscriptionStatus);
+
+      setCollections(collectionsWithItems);
     } catch (error) {
       console.error("Error fetching public collections:", error);
       if (axios.isAxiosError(error)) {
@@ -57,7 +67,7 @@ const DiscoverCollections: React.FC = () => {
         });
       }
     }
-  }, []);
+  }, [getAccessTokenSilently]);
 
   useEffect(() => {
     fetchCollections();
@@ -117,17 +127,9 @@ const DiscoverCollections: React.FC = () => {
       items: parseDescription(collection.description),
     };
 
-    // Check if the user is subscribed to this collection
-    try {
-      const isSubscribed = await checkSubscription(
-        collection.collection_id,
-        getAccessTokenSilently,
-      );
-      setActiveCollection({ ...parsedCollection, isSubscribed });
-    } catch (error) {
-      console.error("Error checking subscription:", error);
-      setActiveCollection({ ...parsedCollection, isSubscribed: false });
-    }
+    // Use the subscription status from the state
+    const isSubscribed = subscriptionStatus[collection.collection_id] || false;
+    setActiveCollection({ ...parsedCollection, isSubscribed });
   };
 
   const closeModal = () => setActiveCollection(null);
@@ -171,13 +173,16 @@ const DiscoverCollections: React.FC = () => {
     }
   }, [sortOption, collections, sortCollections]);
 
-  const adjustColorForTheme = useCallback((color: string) => {
-    return adjustColorForColorblindness(color);
-  }, [adjustColorForColorblindness]);
+  const adjustColorForTheme = useCallback(
+    (color: string) => {
+      return adjustColorForColorblindness(color);
+    },
+    [adjustColorForColorblindness],
+  );
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
+      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] discover-collections-page ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
@@ -193,7 +198,7 @@ const DiscoverCollections: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by collection name or username"
-            className="mb-2 rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2"
+            className="mb-2 rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2 search-collections-input"
           />
           <button
             type="button"
@@ -212,7 +217,7 @@ const DiscoverCollections: React.FC = () => {
           id="sortSelect"
           value={sortOption}
           onChange={handleSortChange}
-          className="rounded-md border border-gray-300"
+          className="rounded-md border border-gray-300 sort-collections-select"
         >
           <option value="date">Date</option>
           <option value="alphabetical">Alphabetical</option>
@@ -224,7 +229,7 @@ const DiscoverCollections: React.FC = () => {
         {collections.map((collection, index) => {
           const baseColor = adjustColorForTheme(
             collectionColorSchemes[index % collectionColorSchemes.length]
-              .backgroundColor
+              .backgroundColor,
           );
           const lightColor = baseColor ? lightenColor(baseColor, 0.7) : "";
           const itemCount =
@@ -241,23 +246,29 @@ const DiscoverCollections: React.FC = () => {
               >
                 {collection.name}
               </h2>
-              <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+              <p
+                className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
+              >
                 Created by:{" "}
                 {collection.creator_display_name || collection.creator_username}
               </p>
-              <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+              <p
+                className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
+              >
                 Category: {collection.category}
               </p>
-              <p className={`mb-2 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+              <p
+                className={`mb-2 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
+              >
                 {itemCount} items in collection
               </p>
               <button
                 type="button"
-                className="rounded-md px-4 py-2 text-sm font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
+                className="rounded-md px-4 py-2 text-sm font-bold text-black transition duration-300 hover:scale-105 active:scale-95 preview-collection-button"
                 style={{ backgroundColor: baseColor }}
                 onClick={() => openModal(collection)}
               >
-                Preview Collection
+                {subscriptionStatus[collection.collection_id] ? "Already Subscribed" : "Preview Collection"}
               </button>
             </div>
           );
@@ -267,6 +278,7 @@ const DiscoverCollections: React.FC = () => {
         <CollectionPreviewModal
           collection={activeCollection}
           onClose={closeModal}
+          isSubscribed={activeCollection.isSubscribed || false}
         />
       )}
     </div>

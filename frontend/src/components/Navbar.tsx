@@ -8,6 +8,7 @@ interface NavbarProps {
   onPauseResume?: () => void;
   onBack?: () => void;
   hasBackButton?: boolean;
+  onStartTour: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -15,6 +16,7 @@ const Navbar: React.FC<NavbarProps> = ({
   onPauseResume,
   onBack,
   hasBackButton,
+  onStartTour,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -93,6 +95,13 @@ const Navbar: React.FC<NavbarProps> = ({
             {isPaused ? "Resume" : "Pause"}
           </button>
         )}
+        <button
+          type="button"
+          onClick={onStartTour}
+          className="rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
+        >
+          Start Tour
+        </button>
       </div>
       <div
         className="grow cursor-pointer text-center text-base font-bold text-gray-800 md:text-xl dark:text-white"

@@ -86,7 +86,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           svg: item.svg || "",
           count: item.count || 0,
           isAnswer: false,
-        }))
+        })),
       );
     } else {
       console.error("Sequence is empty or undefined");
@@ -126,7 +126,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   useEffect(() => {
     if (
       shuffledSequence.length > 0 &&
-      (category === "Number Sense" || (category === "Math" && type === "mathProblems"))
+      (category === "Number Sense" ||
+        (category === "Math" && type === "mathProblems"))
     ) {
       setShowAnswer(false);
       const timer = setTimeout(() => {
@@ -140,7 +141,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     if (
       shuffledSequence.length > 0 &&
       !isPaused &&
-      (category === "Number Sense" || (category === "Math" && type === "mathProblems"))
+      (category === "Number Sense" ||
+        (category === "Math" && type === "mathProblems"))
     ) {
       const interval = setInterval(() => {
         setIndex((prevIndex) => {
@@ -188,7 +190,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   const handleScreenClick = () => {
-    if (category === "Number Sense" || (category === "Math" && type === "mathProblems")) {
+    if (
+      category === "Number Sense" ||
+      (category === "Math" && type === "mathProblems")
+    ) {
       setShowAnswer(!showAnswer);
     }
   };
@@ -244,7 +249,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
                 onError={(e) => console.error("Error loading image:", e)}
               />
             ) : (
-              <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
+              <h1
+                className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}
+              >
                 {currentItem.name}
               </h1>
             )}
@@ -276,7 +283,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       } else {
         return (
           <div className="flex size-full items-center justify-center">
-            <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(problem)}`}>
+            <h1
+              className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(problem)}`}
+            >
               {problem}
             </h1>
           </div>
@@ -288,7 +297,11 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           <img
             src={currentItem.svg}
             alt={currentItem.name}
-            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              objectFit: "contain",
+            }}
           />
         </div>
       );
@@ -296,7 +309,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       const [symbol, name, atomicNumber] = currentItem.name.split(" - ");
       return (
         <div className="flex h-full flex-col items-center justify-center">
-          <h1 className={`m-0 ${getTextClass(atomicNumber)}`}>{atomicNumber}</h1>
+          <h1 className={`m-0 ${getTextClass(atomicNumber)}`}>
+            {atomicNumber}
+          </h1>
           <h2 className={`m-0 ${getTextClass(name)}`}>{name}</h2>
           <h3 className={`m-0 ${getTextClass(symbol)}`}>{symbol}</h3>
         </div>
@@ -312,9 +327,18 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     }
   };
 
+  const handleStartTour = () => {
+    // Implement tour start logic here, or leave it empty if not needed
+    console.log("Tour started");
+  };
+
   return (
     <>
-      <Navbar isPaused={isPaused} onPauseResume={handlePauseResume} />
+      <Navbar 
+        isPaused={isPaused} 
+        onPauseResume={handlePauseResume} 
+        onStartTour={handleStartTour} 
+      />
       <div
         className="relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
         style={{

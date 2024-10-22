@@ -427,6 +427,21 @@ def wait_for_db(db_url, max_retries=5, retry_interval=5):
     
     raise Exception("Could not connect to the database after multiple attempts")
 
+# Add this new endpoint
+@app.get("/collections/check-subscription/{collection_id}")
+async def check_subscription(
+    collection_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    # Check if the user has a private copy of this collection
+    subscription = db.query(Collection).filter(
+        Collection.user_id == current_user.user_id,
+        Collection.collection_id == collection_id
+    ).first()
+    
+    return {"isSubscribed": subscription is not None}
+
 if __name__ == "__main__":
     wait_for_db(DATABASE_URL)
     create_db_and_tables()

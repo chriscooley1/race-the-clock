@@ -49,7 +49,9 @@ const CollectionSetup: React.FC = () => {
   const [minDots, setMinDots] = useState<number>(1);
   const [maxDots, setMaxDots] = useState<number>(10);
   const [isGenerated, setIsGenerated] = useState<boolean>(false);
-  const [previewSequence, setPreviewSequence] = useState<Array<{ name: string; svg?: string; count?: number }>>([]);
+  const [previewSequence, setPreviewSequence] = useState<
+    Array<{ name: string; svg?: string; count?: number }>
+  >([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -286,6 +288,10 @@ const CollectionSetup: React.FC = () => {
     }
   };
 
+  const shouldHideQuantity = (selectedType: string): boolean => {
+    return ["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(selectedType);
+  };
+
   if (!currentUser) {
     return <div className="p-4 text-center">Loading user information...</div>;
   }
@@ -329,7 +335,9 @@ const CollectionSetup: React.FC = () => {
                 {category === "Science" && (
                   <>
                     <option value="periodicTable">Periodic Table</option>
-                    <option value="fullPeriodicTable">Full Periodic Table</option>
+                    <option value="fullPeriodicTable">
+                      Full Periodic Table
+                    </option>
                     <option value="scienceTerms">Science Terms</option>
                   </>
                 )}
@@ -338,25 +346,27 @@ const CollectionSetup: React.FC = () => {
                 )}
               </select>
             </div>
-            <div className="flex items-center space-x-4">
-              <label
-                htmlFor="itemCount"
-                className="whitespace-nowrap font-bold"
-              >
-                Quantity:
-              </label>
-              <input
-                type="number"
-                id="itemCount"
-                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
-                value={itemCount}
-                min={1}
-                onChange={(e) => {
-                  const count = parseInt(e.target.value, 10);
-                  setItemCount(count);
-                }}
-              />
-            </div>
+            {!shouldHideQuantity(type) && (
+              <div className="flex items-center space-x-4">
+                <label
+                  htmlFor="itemCount"
+                  className="whitespace-nowrap font-bold"
+                >
+                  Quantity:
+                </label>
+                <input
+                  type="number"
+                  id="itemCount"
+                  className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
+                  value={itemCount}
+                  min={1}
+                  onChange={(e) => {
+                    const count = parseInt(e.target.value, 10);
+                    setItemCount(count);
+                  }}
+                />
+              </div>
+            )}
           </>
         ) : (
           <>
@@ -555,13 +565,22 @@ const CollectionSetup: React.FC = () => {
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {previewSequence.map((item, index) => (
-              <div key={index} className="rounded-md border border-gray-300 p-2">
+              <div
+                key={index}
+                className="rounded-md border border-gray-300 p-2"
+              >
                 {category === "Math" && type === "mathProblems" ? (
                   <p className="text-center">{item.name.split("|")[0]}</p>
                 ) : (
                   <p className="text-center">{item.name}</p>
                 )}
-                {item.svg && <img src={item.svg} alt={item.name} className="h-auto w-full" />}
+                {item.svg && (
+                  <img
+                    src={item.svg}
+                    alt={item.name}
+                    className="h-auto w-full"
+                  />
+                )}
               </div>
             ))}
           </div>

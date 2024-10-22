@@ -64,8 +64,12 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       ...currentTheme,
       backgroundColor: adjustThemeColor(currentTheme.backgroundColor),
       textColor: adjustThemeColor(currentTheme.textColor),
-      displayBackgroundColor: adjustThemeColor(currentTheme.displayBackgroundColor || currentTheme.backgroundColor),
-      displayTextColor: adjustThemeColor(currentTheme.displayTextColor || currentTheme.textColor),
+      displayBackgroundColor: adjustThemeColor(
+        currentTheme.displayBackgroundColor || currentTheme.backgroundColor,
+      ),
+      displayTextColor: adjustThemeColor(
+        currentTheme.displayTextColor || currentTheme.textColor,
+      ),
     };
   };
 
@@ -116,10 +120,24 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       return {
         ...prevTheme,
         isDarkMode: newIsDarkMode,
-        backgroundColor: newIsDarkMode ? darkenColor(prevTheme.backgroundColor, 0.5) : lightenColor(prevTheme.backgroundColor, 0.5),
-        textColor: newIsDarkMode ? lightenColor(prevTheme.textColor, 0.5) : darkenColor(prevTheme.textColor, 0.5),
-        displayBackgroundColor: newIsDarkMode ? darkenColor(prevTheme.displayBackgroundColor || prevTheme.backgroundColor, 0.5) : lightenColor(prevTheme.displayBackgroundColor || prevTheme.backgroundColor, 0.5),
-        displayTextColor: newIsDarkMode ? lightenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5) : darkenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5),
+        backgroundColor: newIsDarkMode
+          ? darkenColor(prevTheme.backgroundColor, 0.5)
+          : lightenColor(prevTheme.backgroundColor, 0.5),
+        textColor: newIsDarkMode
+          ? lightenColor(prevTheme.textColor, 0.5)
+          : darkenColor(prevTheme.textColor, 0.5),
+        displayBackgroundColor: newIsDarkMode
+          ? darkenColor(
+              prevTheme.displayBackgroundColor || prevTheme.backgroundColor,
+              0.5,
+            )
+          : lightenColor(
+              prevTheme.displayBackgroundColor || prevTheme.backgroundColor,
+              0.5,
+            ),
+        displayTextColor: newIsDarkMode
+          ? lightenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5)
+          : darkenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5),
       };
     });
   };
@@ -151,7 +169,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
         console.error("Failed to load background image", e);
         console.error("Image src:", theme.backgroundImage);
       };
-      const imagePath = theme.backgroundImage.startsWith("/") ? theme.backgroundImage : `/${theme.backgroundImage}`;
+      const imagePath = theme.backgroundImage.startsWith("/")
+        ? theme.backgroundImage
+        : `/${theme.backgroundImage}`;
       img.src = imagePath;
       document.body.style.backgroundImage = `url(${imagePath})`;
       document.body.style.backgroundSize = "cover";
@@ -164,12 +184,24 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       document.body.style.backgroundColor = theme.backgroundColor;
     }
 
-    document.documentElement.style.setProperty("--text-color", adjustedTheme.textColor ?? "");
-    document.documentElement.style.setProperty("--display-text-color", adjustedTheme.displayTextColor ?? "");
-    document.documentElement.style.setProperty("--display-background-color", adjustedTheme.displayBackgroundColor ?? "");
+    document.documentElement.style.setProperty(
+      "--text-color",
+      adjustedTheme.textColor ?? "",
+    );
+    document.documentElement.style.setProperty(
+      "--display-text-color",
+      adjustedTheme.displayTextColor ?? "",
+    );
+    document.documentElement.style.setProperty(
+      "--display-background-color",
+      adjustedTheme.displayBackgroundColor ?? "",
+    );
 
     if (theme.backgroundImage && theme.backgroundImage !== "none") {
-      document.documentElement.style.setProperty("--background-image", `url(${theme.backgroundImage})`);
+      document.documentElement.style.setProperty(
+        "--background-image",
+        `url(${theme.backgroundImage})`,
+      );
     } else {
       document.documentElement.style.setProperty("--background-image", "none");
     }
@@ -181,8 +213,14 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     document.documentElement.style.setProperty("--font-family", theme.font);
-    document.documentElement.style.setProperty("--heading-font-family", theme.headingFont);
-    document.documentElement.style.setProperty("--button-font-family", theme.buttonFont);
+    document.documentElement.style.setProperty(
+      "--heading-font-family",
+      theme.headingFont,
+    );
+    document.documentElement.style.setProperty(
+      "--button-font-family",
+      theme.buttonFont,
+    );
 
     console.log("Theme applied");
   }, [theme]);

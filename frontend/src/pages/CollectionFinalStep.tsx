@@ -5,8 +5,12 @@ import { saveCollection, getCurrentUser } from "../api";
 import { periodicTable, PeriodicElement } from "../utils/periodicTable";
 import { User } from "../types/user";
 import { useTheme } from "../context/ThemeContext";
-import { generateCountingSvg, generateScienceTerms, generateNursingTerms } from "../utils/RandomGenerators";
-import { v4 as uuidv4 } from 'uuid'; // Add this import for generating unique IDs
+import {
+  generateCountingSvg,
+  generateScienceTerms,
+  generateNursingTerms,
+} from "../utils/RandomGenerators";
+import { v4 as uuidv4 } from "uuid"; // Add this import for generating unique IDs
 
 // Export the function to avoid the "unused" error
 export function generateId(): string {
@@ -66,13 +70,15 @@ const CollectionFinalStep: React.FC = () => {
   const [terms, setTerms] = useState<string[]>([]);
 
   const [availablePositions, setAvailablePositions] = useState<number[]>(
-    Array.from({ length: 25 }, (_, i) => i + 1)
+    Array.from({ length: 25 }, (_, i) => i + 1),
   );
 
   // Add this new state
   const [selectedPositions, setSelectedPositions] = useState<number[]>([1]);
 
-  const [images, setImages] = useState<{ id: string; file: File; preview: string }[]>([]);
+  const [images, setImages] = useState<
+    { id: string; file: File; preview: string }[]
+  >([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -114,37 +120,51 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleAddDot = () => {
     const newPosition = availablePositions[0] || 1;
-    setDots([...dots, { position: newPosition.toString(), color: "blue", shape: "circle", count: 1 }]);
+    setDots([
+      ...dots,
+      {
+        position: newPosition.toString(),
+        color: "blue",
+        shape: "circle",
+        count: 1,
+      },
+    ]);
     setSelectedPositions([...selectedPositions, newPosition]);
-    setAvailablePositions(prev => prev.filter(pos => pos !== newPosition));
+    setAvailablePositions((prev) => prev.filter((pos) => pos !== newPosition));
   };
 
   const handleRemoveDot = (index: number) => {
     const removedPosition = parseInt(dots[index].position);
     setDots(dots.filter((_, i) => i !== index));
     setSelectedPositions(selectedPositions.filter((_, i) => i !== index));
-    setAvailablePositions(prev => [...prev, removedPosition].sort((a, b) => a - b));
+    setAvailablePositions((prev) =>
+      [...prev, removedPosition].sort((a, b) => a - b),
+    );
   };
 
-  const handleDotChange = (index: number, field: keyof Dot, value: string | number) => {
+  const handleDotChange = (
+    index: number,
+    field: keyof Dot,
+    value: string | number,
+  ) => {
     const newDots = [...dots];
     if (field === "position") {
       const oldPosition = parseInt(newDots[index].position);
       const newPosition = parseInt(value as string);
-      
+
       // Update selectedPositions
       const newSelectedPositions = [...selectedPositions];
       newSelectedPositions[index] = newPosition;
       setSelectedPositions(newSelectedPositions);
-      
+
       // Update availablePositions
-      setAvailablePositions(prev => {
-        const updated = [...prev, oldPosition].filter(pos => 
-          !newSelectedPositions.includes(pos) && pos !== newPosition
+      setAvailablePositions((prev) => {
+        const updated = [...prev, oldPosition].filter(
+          (pos) => !newSelectedPositions.includes(pos) && pos !== newPosition,
         );
         return updated.sort((a, b) => a - b);
       });
-      
+
       // Update the position in the dots state
       newDots[index].position = newPosition.toString();
     } else if (field === "count") {
@@ -159,7 +179,9 @@ const CollectionFinalStep: React.FC = () => {
     console.log("SVGs to combine:", svgs);
     const svgWidth = 200;
     const svgHeight = 200;
-    const decodedSvgs = svgs.map(svg => decodeURIComponent(svg.split(",")[1]));
+    const decodedSvgs = svgs.map((svg) =>
+      decodeURIComponent(svg.split(",")[1]),
+    );
     const combinedSvgContent = decodedSvgs.join("");
     const result = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">${combinedSvgContent}</svg>`;
     console.log("Combined SVG:", result);
@@ -168,7 +190,7 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleAddNumberSenseItem = () => {
     const svgs = dots.map((dot) =>
-      generateCountingSvg(dot.count, dot.color, dot.shape, dot.position)
+      generateCountingSvg(dot.count, dot.color, dot.shape, dot.position),
     );
 
     const combinedSvg = combineSvgs(svgs);
@@ -181,7 +203,7 @@ const CollectionFinalStep: React.FC = () => {
     };
     console.log("New item SVG:", newItem.svg);
     setItems([...items, newItem]);
-    
+
     // Reset available positions after adding the item
     setAvailablePositions(Array.from({ length: 25 }, (_, i) => i + 1));
     setDots([{ position: "1", color: "blue", shape: "circle", count: 1 }]);
@@ -282,7 +304,9 @@ const CollectionFinalStep: React.FC = () => {
     setCustomTerm("");
   };
 
-  const handleCustomTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCustomTermChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setCustomTerm(event.target.value);
     setSelectedTerm("");
   };
@@ -298,21 +322,21 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      const newImages = Array.from(event.target.files).map(file => ({
+      const newImages = Array.from(event.target.files).map((file) => ({
         id: uuidv4(),
         file,
-        preview: URL.createObjectURL(file)
+        preview: URL.createObjectURL(file),
       }));
-      setImages(prevImages => [...prevImages, ...newImages]);
+      setImages((prevImages) => [...prevImages, ...newImages]);
     }
   };
 
   const handleRemoveImage = (id: string) => {
-    setImages(prevImages => prevImages.filter(image => image.id !== id));
+    setImages((prevImages) => prevImages.filter((image) => image.id !== id));
   };
 
   const handleAddImageItem = () => {
-    const newItems = images.map(image => ({
+    const newItems = images.map((image) => ({
       id: items.length + 1,
       name: image.file.name,
       svg: image.preview,
@@ -392,16 +416,26 @@ const CollectionFinalStep: React.FC = () => {
                 {dots.map((dot, index) => (
                   <div key={index} className="mb-4 w-full">
                     <h4 className="mb-2 text-lg font-bold">Dot {index + 1}</h4>
-                    <label htmlFor={`dot-position-${index}`} className="mb-2 block">
+                    <label
+                      htmlFor={`dot-position-${index}`}
+                      className="mb-2 block"
+                    >
                       Select dot position:
                     </label>
                     <select
                       id={`dot-position-${index}`}
                       value={dot.position}
-                      onChange={(e) => handleDotChange(index, "position", e.target.value)}
+                      onChange={(e) =>
+                        handleDotChange(index, "position", e.target.value)
+                      }
                       className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                     >
-                      {[...new Set([parseInt(dot.position), ...availablePositions])]
+                      {[
+                        ...new Set([
+                          parseInt(dot.position),
+                          ...availablePositions,
+                        ]),
+                      ]
                         .sort((a, b) => a - b)
                         .map((pos) => (
                           <option key={`pos-${pos}`} value={pos.toString()}>
@@ -409,7 +443,10 @@ const CollectionFinalStep: React.FC = () => {
                           </option>
                         ))}
                     </select>
-                    <label htmlFor={`dot-color-${index}`} className="mb-2 block">
+                    <label
+                      htmlFor={`dot-color-${index}`}
+                      className="mb-2 block"
+                    >
                       Select dot color:
                     </label>
                     <select
@@ -420,13 +457,18 @@ const CollectionFinalStep: React.FC = () => {
                       }
                       className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                     >
-                      {["blue", "green", "red", "purple", "orange"].map((color) => (
-                        <option key={color} value={color}>
-                          {color}
-                        </option>
-                      ))}
+                      {["blue", "green", "red", "purple", "orange"].map(
+                        (color) => (
+                          <option key={color} value={color}>
+                            {color}
+                          </option>
+                        ),
+                      )}
                     </select>
-                    <label htmlFor={`dot-shape-${index}`} className="mb-2 block">
+                    <label
+                      htmlFor={`dot-shape-${index}`}
+                      className="mb-2 block"
+                    >
                       Select dot shape:
                     </label>
                     <select
@@ -500,7 +542,7 @@ const CollectionFinalStep: React.FC = () => {
                   +
                 </button>
               </>
-            ) : (category === "Science" || category === "Nursing") ? (
+            ) : category === "Science" || category === "Nursing" ? (
               <>
                 <label htmlFor="term-select" className="mb-2">
                   Select a {category.toLowerCase()} term:
@@ -552,8 +594,8 @@ const CollectionFinalStep: React.FC = () => {
                     category === "Science"
                       ? "science term"
                       : category === "Nursing"
-                      ? "nursing term"
-                      : "item"
+                        ? "nursing term"
+                        : "item"
                   }`}
                 />
                 <button
@@ -607,7 +649,10 @@ const CollectionFinalStep: React.FC = () => {
         Save Collection
       </button>
       <div className="mb-4 flex flex-col items-center text-center">
-        <label htmlFor="image-upload" className="mt-4 mb-2 cursor-pointer rounded-md bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600">
+        <label
+          htmlFor="image-upload"
+          className="mb-2 mt-4 cursor-pointer rounded-md bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
+        >
           Upload Images
         </label>
         <input
@@ -622,7 +667,11 @@ const CollectionFinalStep: React.FC = () => {
           <div className="mt-4 grid grid-cols-3 gap-4">
             {images.map((image) => (
               <div key={image.id} className="relative">
-                <img src={image.preview} alt={image.file.name} className="h-24 w-24 object-cover" />
+                <img
+                  src={image.preview}
+                  alt={image.file.name}
+                  className="size-24 object-cover"
+                />
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(image.id)}
@@ -644,7 +693,7 @@ const CollectionFinalStep: React.FC = () => {
           </button>
         )}
       </div>
-    </div> 
+    </div>
   );
 };
 
