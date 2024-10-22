@@ -35,17 +35,27 @@ const DiscoverCollections: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("date");
   const { getAccessTokenSilently } = useAuth0();
+  const [subscriptionStatus, setSubscriptionStatus] = useState<Record<string, boolean>>({});
 
   const fetchCollections = useCallback(async () => {
     try {
       const fetchedCollections = await fetchPublicCollections();
       console.log("Fetched collections:", fetchedCollections);
-      setCollections(
-        fetchedCollections?.map((collection) => ({
-          ...collection,
-          items: parseDescription(collection.description),
-        })) || [],
-      );
+      const collectionsWithItems = fetchedCollections?.map((collection) => ({
+        ...collection,
+        items: parseDescription(collection.description),
+      })) || [];
+
+      // Check subscription status for all collections
+      const subscriptionChecks = collectionsWithItems.map(async (collection) => {
+        const isSubscribed = await checkSubscription(collection.collection_id, getAccessTokenSilently);
+        return { [collection.collection_id]: isSubscribed };
+      });
+      const subscriptionResults = await Promise.all(subscriptionChecks);
+      const newSubscriptionStatus = Object.assign({}, ...subscriptionResults);
+      setSubscriptionStatus(newSubscriptionStatus);
+
+      setCollections(collectionsWithItems);
     } catch (error) {
       console.error("Error fetching public collections:", error);
       if (axios.isAxiosError(error)) {
@@ -57,7 +67,7 @@ const DiscoverCollections: React.FC = () => {
         });
       }
     }
-  }, []);
+  }, [getAccessTokenSilently]);
 
   useEffect(() => {
     fetchCollections();
@@ -117,17 +127,9 @@ const DiscoverCollections: React.FC = () => {
       items: parseDescription(collection.description),
     };
 
-    // Check if the user is subscribed to this collection
-    try {
-      const isSubscribed = await checkSubscription(
-        collection.collection_id,
-        getAccessTokenSilently,
-      );
-      setActiveCollection({ ...parsedCollection, isSubscribed });
-    } catch (error) {
-      console.error("Error checking subscription:", error);
-      setActiveCollection({ ...parsedCollection, isSubscribed: false });
-    }
+    // Use the subscription status from the state
+    const isSubscribed = subscriptionStatus[collection.collection_id] || false;
+    setActiveCollection({ ...parsedCollection, isSubscribed });
   };
 
   const closeModal = () => setActiveCollection(null);
@@ -266,7 +268,7 @@ const DiscoverCollections: React.FC = () => {
                 style={{ backgroundColor: baseColor }}
                 onClick={() => openModal(collection)}
               >
-                Preview Collection
+                {subscriptionStatus[collection.collection_id] ? "Already Subscribed" : "Preview Collection"}
               </button>
             </div>
           );
@@ -276,6 +278,7 @@ const DiscoverCollections: React.FC = () => {
         <CollectionPreviewModal
           collection={activeCollection}
           onClose={closeModal}
+          isSubscribed={activeCollection.isSubscribed || false}
         />
       )}
     </div>

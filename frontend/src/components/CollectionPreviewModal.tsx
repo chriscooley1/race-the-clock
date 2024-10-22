@@ -1,42 +1,27 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { subscribeToCollection, Collection, checkSubscription } from "../api";
+import { subscribeToCollection, Collection } from "../api";
 import { useTheme } from "../context/ThemeContext";
 
 interface CollectionPreviewModalProps {
   collection: Collection;
   onClose: () => void;
+  isSubscribed: boolean;
 }
 
 const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   collection,
   onClose,
+  isSubscribed: initialIsSubscribed,
 }) => {
   const { getAccessTokenSilently } = useAuth0();
-  const [isSubscribed, setIsSubscribed] = useState(
-    collection.isSubscribed || false,
-  );
+  const [isSubscribed, setIsSubscribed] = useState(initialIsSubscribed);
   const modalRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
   const decodeSvg = (encodedSvg: string) => {
     return decodeURIComponent(encodedSvg.replace(/^data:image\/svg\+xml,/, ""));
   };
-
-  useEffect(() => {
-    const checkIfSubscribed = async () => {
-      try {
-        const subscribed = await checkSubscription(
-          collection.collection_id,
-          getAccessTokenSilently,
-        );
-        setIsSubscribed(subscribed);
-      } catch (error) {
-        console.error("Error checking subscription:", error);
-      }
-    };
-    checkIfSubscribed();
-  }, [collection.collection_id, getAccessTokenSilently]);
 
   const handleSubscribe = async () => {
     if (isSubscribed) return;
