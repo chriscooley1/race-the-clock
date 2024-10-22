@@ -9,11 +9,14 @@ interface SessionSettingsModalProps {
     shuffle: boolean,
     speed: number,
     textColor: string,
+    answerDisplayTime: number
   ) => void;
   currentSettings: {
     speed: number;
     textColor: string;
   };
+  category: string;
+  type: string;
 }
 
 const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
@@ -21,10 +24,15 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   onClose,
   onStart,
   currentSettings,
+  category,
+  type,
 }) => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [shuffle, setShuffle] = useState(false);
+  const [answerDisplayTime, setAnswerDisplayTime] = useState(3);
+
+  const showAnswerDisplayTime = category === "Number Sense" || (category === "Math" && type === "mathProblems");
 
   useEffect(() => {
     const totalSeconds = currentSettings.speed / 1000;
@@ -52,6 +60,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       shuffle,
       calculatedSpeed,
       currentSettings.textColor,
+      answerDisplayTime * 1000 // Convert to milliseconds
     );
   };
 
@@ -67,19 +76,12 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       onClick={handleBackgroundClick}
     >
       <div className="w-full max-w-sm rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800">
-        {" "}
-        {/* Reduced max-width and padding */}
         <h2 className="mb-2 text-center text-xl font-bold">
           {collectionName}
-        </h2>{" "}
-        {/* Reduced margin-bottom */}
+        </h2>
         <div className="space-y-3">
-          {" "}
-          {/* Reduced space between items */}
           <div className="flex flex-col items-center">
             <div className="flex w-full justify-around p-2">
-              {" "}
-              {/* Reduced margin-bottom */}
               <label htmlFor="minutes" className="mr-2">
                 Minutes:
               </label>
@@ -124,6 +126,24 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               Shuffle Collection
             </label>
           </div>
+          {showAnswerDisplayTime && (
+            <div className="flex flex-col items-center">
+              <label htmlFor="answerDisplayTime" className="mb-1">
+                Answer Display Time (seconds):
+              </label>
+              <input
+                type="number"
+                id="answerDisplayTime"
+                value={answerDisplayTime}
+                onChange={(e) => setAnswerDisplayTime(parseInt(e.target.value) || 3)}
+                className="w-20 rounded border border-gray-300 p-1 text-sm"
+                placeholder="Seconds"
+                title="Answer Display Time"
+                min={1}
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+          )}
           <button
             type="button"
             className="rounded bg-green-500 px-4 py-2 text-sm font-bold text-white transition duration-300 hover:bg-green-600"

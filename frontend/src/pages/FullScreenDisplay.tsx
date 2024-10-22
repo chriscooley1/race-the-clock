@@ -26,6 +26,7 @@ interface FullScreenDisplayState {
   shuffle: boolean;
   category: string;
   type: string;
+  answerDisplayTime: number;
 }
 
 interface SequenceItem {
@@ -41,7 +42,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 }) => {
   const location = useLocation();
   console.log("FullScreenDisplay state:", location.state);
-  const { sequence, speed, shuffle, category, type } =
+  const { sequence, speed, shuffle, category, type, answerDisplayTime } =
     location.state as FullScreenDisplayState;
   console.log("Destructured values:", {
     sequence,
@@ -56,6 +57,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [isPaused, setIsPaused] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   const shuffleArray = (array: CollectionItem[]): CollectionItem[] => {
     return [...array].sort(() => Math.random() - 0.5);
@@ -124,9 +126,21 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     if (
       shuffledSequence.length > 0 &&
       !isPaused &&
-      (category !== "Math" ||
-        (type !== "mathProblems" && type !== "Math Problems"))
+      (category === "Number Sense" || (category === "Math" && type === "mathProblems"))
     ) {
+      const interval = setInterval(() => {
+        setIndex((prevIndex) => {
+          const newIndex = (prevIndex + 1) % shuffledSequence.length;
+          setProgress((newIndex / shuffledSequence.length) * 100);
+          setShowAnswer(false);
+          setTimeout(() => setShowAnswer(true), speed);
+          return newIndex;
+        });
+      }, speed + answerDisplayTime);
+      setIntervalId(interval as unknown as number);
+      return () => clearInterval(interval);
+    } else if (shuffledSequence.length > 0 && !isPaused) {
+      // For other categories, just cycle through items without showing answers
       const interval = setInterval(() => {
         setIndex((prevIndex) => {
           const newIndex = (prevIndex + 1) % shuffledSequence.length;
@@ -137,7 +151,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       setIntervalId(interval as unknown as number);
       return () => clearInterval(interval);
     }
-  }, [shuffledSequence, speed, isPaused, category, type]);
+  }, [shuffledSequence, speed, isPaused, category, type, answerDisplayTime]);
 
   const handlePauseResume = () => {
     setIsPaused(!isPaused);
@@ -183,23 +197,58 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
-    console.log("Rendering item:", currentItem);
 
     if (category === "Number Sense") {
-      return (
-        <div className="flex size-full items-center justify-center">
-          {currentItem.svg ? (
-            <img
-              src={currentItem.svg}
-              alt={currentItem.name}
-              style={{ maxWidth: "100%", maxHeight: "100%" }}
-              onError={(e) => console.error("Error loading image:", e)}
-            />
-          ) : (
-            <p>No image available for {currentItem.name}</p>
-          )}
-        </div>
-      );
+      if (showAnswer) {
+        return (
+          <div className="flex size-full items-center justify-center">
+            <div className="relative">
+              <svg viewBox="0 0 200 200" className="size-64">
+                <polygon
+                  points="100,10 40,180 190,60 10,60 160,180"
+                  fill="yellow"
+                  stroke="orange"
+                  strokeWidth="5"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-6xl font-bold text-orange-600">
+                  {currentItem.count}
+                </span>
+              </div>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="flex size-full items-center justify-center">
+            {currentItem.svg ? (
+              <img
+                src={currentItem.svg}
+                alt={currentItem.name}
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+                onError={(e) => console.error("Error loading image:", e)}
+              />
+            ) : (
+              <p>No image available for {currentItem.name}</p>
+            )}
+          </div>
+        );
+      }
+    } else if (category === "Math" && type === "mathProblems") {
+      if (showAnswer) {
+        return (
+          <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
+            {currentItem.isAnswer ? currentItem.name : ""}
+          </h1>
+        );
+      } else {
+        return (
+          <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
+            {currentItem.isAnswer ? "" : currentItem.name}
+          </h1>
+        );
+      }
     } else if (category === "Choose File" || currentItem.svg) {
       return (
         <div className="flex size-full items-center justify-center">
@@ -214,20 +263,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       const [symbol, name, atomicNumber] = currentItem.name.split(" - ");
       return (
         <div className="flex h-full flex-col items-center justify-center">
-          <h1 className={`m-0 ${getTextClass(atomicNumber)}`}>
-            {atomicNumber}
-          </h1>
+          <h1 className={`m-0 ${getTextClass(atomicNumber)}`}>{atomicNumber}</h1>
           <h2 className={`m-0 ${getTextClass(name)}`}>{name}</h2>
           <h3 className={`m-0 ${getTextClass(symbol)}`}>{symbol}</h3>
         </div>
-      );
-    } else if (category === "Math" && type === "mathProblems") {
-      return (
-        <h1
-          className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}
-        >
-          {currentItem.name}
-        </h1>
       );
     } else {
       return (

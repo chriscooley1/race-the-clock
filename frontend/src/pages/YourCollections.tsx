@@ -298,6 +298,7 @@ const YourCollections: React.FC = () => {
     shuffle: boolean,
     speed: number,
     textColor: string,
+    answerDisplayTime: number
   ) => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
@@ -314,16 +315,14 @@ const YourCollections: React.FC = () => {
         }),
       );
 
-      const duration = min * 60 + sec;
       navigate("/fullscreen-display", {
         state: {
           sequence,
-          duration,
           speed,
-          textColor,
           shuffle,
           category: selectedCollection.category,
           type: selectedCollection.type,
+          answerDisplayTime,
         },
       });
       setShowModal(false);
@@ -481,6 +480,8 @@ const YourCollections: React.FC = () => {
             speed: 500,
             textColor: "#000000",
           }}
+          category={selectedCollection.category}
+          type={selectedCollection.type}
         />
       )}
       {isEditModalOpen && selectedCollection && (
