@@ -122,6 +122,20 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     location.state,
   ]);
 
+  // Add this new effect to handle the initial display
+  useEffect(() => {
+    if (
+      shuffledSequence.length > 0 &&
+      (category === "Number Sense" || (category === "Math" && type === "mathProblems"))
+    ) {
+      setShowAnswer(false);
+      const timer = setTimeout(() => {
+        setShowAnswer(true);
+      }, speed);
+      return () => clearTimeout(timer);
+    }
+  }, [shuffledSequence, category, type, speed]);
+
   useEffect(() => {
     if (
       shuffledSequence.length > 0 &&
