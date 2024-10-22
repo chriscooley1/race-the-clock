@@ -11,4 +11,3 @@ const MultipleWordsGame: React.FC = () => {
 };
 
 export default MultipleWordsGame;
-

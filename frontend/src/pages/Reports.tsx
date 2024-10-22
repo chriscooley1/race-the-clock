@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
+import ReportsOverview from "../components/ReportsOverview"; // Import the reports overview component
 
 const Reports: React.FC = () => {
   const { theme } = useTheme();
@@ -19,10 +20,11 @@ const Reports: React.FC = () => {
       </p>
       <p>
         Just like the Session Reports feature, but I want to make it so that you
-        have the ability to attach these reports to individual id's. I want it
+        have the ability to attach these reports to individual IDs. I want it
         to be added to names that you choose, even though it's not the person
-        signed in. That way teachers can track individual students progress.
+        signed in. That way teachers can track individual students' progress.
       </p>
+      <ReportsOverview /> {/* Add the reports overview component here */}
     </div>
   );
 };

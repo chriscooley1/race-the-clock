@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
+import BadgesAchievementsOverview from "../components/BadgesAchievementsOverview"; // Import the badges achievements overview component
 
 const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
@@ -20,6 +21,7 @@ const BadgesAchievements: React.FC = () => {
         Milestones for Teachers: Teachers can set milestones for their students,
         rewarding them as they improve, fostering motivation.
       </p>
+      <BadgesAchievementsOverview /> {/* Add the badges achievements overview component here */}
     </div>
   );
 };

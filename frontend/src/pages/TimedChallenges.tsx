@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
+import TimedChallengeGame from "../components/TimedChallengeGame";
 
 const TimedChallenges: React.FC = () => {
   const { theme } = useTheme();
@@ -16,6 +17,7 @@ const TimedChallenges: React.FC = () => {
         60 items in a minute. Users can measure how many items they correctly
         identify within a session.
       </p>
+      <TimedChallengeGame /> {/* Add the timed challenge game component here */}
     </div>
   );
 };

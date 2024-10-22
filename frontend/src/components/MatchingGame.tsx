@@ -11,4 +11,3 @@ const MatchingGame: React.FC = () => {
 };
 
 export default MatchingGame;
-
