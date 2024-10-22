@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 interface SessionSettingsModalProps {
   collectionName: string;
@@ -33,6 +34,8 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   const [answerDisplayTime, setAnswerDisplayTime] = useState(3);
 
   const showAnswerDisplayTime = category === "Number Sense" || (category === "Math" && type === "mathProblems");
+
+  const { theme } = useTheme();
 
   useEffect(() => {
     const totalSeconds = currentSettings.speed / 1000;
@@ -75,7 +78,13 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
       onClick={handleBackgroundClick}
     >
-      <div className="w-full max-w-sm rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800">
+      <div 
+        className="w-full max-w-sm rounded-lg p-4 shadow-xl"
+        style={{
+          backgroundColor: theme.displayBackgroundColor || theme.backgroundColor,
+          color: theme.displayTextColor || theme.textColor,
+        }}
+      >
         <h2 className="mb-2 text-center text-xl font-bold">
           {collectionName}
         </h2>

@@ -25,8 +25,10 @@ const ThemeSelector: React.FC = () => {
         colorblindType: prevTheme.colorblindType,
         isDarkMode: prevTheme.isDarkMode,
         font: prevTheme.font,
-        displayTextColor: prevTheme.displayTextColor,
-        displayBackgroundColor: prevTheme.displayBackgroundColor,
+        headingFont: prevTheme.headingFont,
+        buttonFont: prevTheme.buttonFont,
+        displayTextColor: selectedScheme.textColor,
+        displayBackgroundColor: selectedScheme.backgroundColor,
         adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
       }));
     }

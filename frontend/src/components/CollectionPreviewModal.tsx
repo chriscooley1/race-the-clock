@@ -88,9 +88,11 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
           collection.category === "Number Sense"
             ? "w-11/12 md:w-3/4 lg:w-2/3"
             : "w-11/12 max-w-md"
-        } ${
-          theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
         }`}
+        style={{
+          backgroundColor: theme.displayBackgroundColor || theme.backgroundColor,
+          color: theme.displayTextColor || theme.textColor,
+        }}
       >
         <h2 className="mb-4 text-center text-2xl font-bold">
           {collection.name}
