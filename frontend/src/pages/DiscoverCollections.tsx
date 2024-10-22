@@ -182,7 +182,7 @@ const DiscoverCollections: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
+      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] discover-collections-page ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
@@ -198,7 +198,7 @@ const DiscoverCollections: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by collection name or username"
-            className="mb-2 rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2"
+            className="mb-2 rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2 search-collections-input"
           />
           <button
             type="button"
@@ -217,7 +217,7 @@ const DiscoverCollections: React.FC = () => {
           id="sortSelect"
           value={sortOption}
           onChange={handleSortChange}
-          className="rounded-md border border-gray-300"
+          className="rounded-md border border-gray-300 sort-collections-select"
         >
           <option value="date">Date</option>
           <option value="alphabetical">Alphabetical</option>
@@ -264,7 +264,7 @@ const DiscoverCollections: React.FC = () => {
               </p>
               <button
                 type="button"
-                className="rounded-md px-4 py-2 text-sm font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
+                className="rounded-md px-4 py-2 text-sm font-bold text-black transition duration-300 hover:scale-105 active:scale-95 preview-collection-button"
                 style={{ backgroundColor: baseColor }}
                 onClick={() => openModal(collection)}
               >

@@ -391,7 +391,7 @@ const YourCollections: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen w-full px-4 pt-[170px] md:pl-[270px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`min-h-screen w-full px-4 pt-[170px] md:pl-[270px] your-collections-page ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
@@ -454,7 +454,7 @@ const YourCollections: React.FC = () => {
                 ) : (
                   <div
                     key={collection.collection_id}
-                    className="border-5 relative flex h-[300px] flex-col items-center justify-start overflow-hidden border-black p-5"
+                    className="border-5 relative flex h-[300px] flex-col items-center justify-start overflow-hidden border-black p-5 collection-card"
                     style={{
                       backgroundColor: lightColor,
                     }}
@@ -614,7 +614,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
       <div className="flex flex-col items-center justify-end">
         <button
           type="button"
-          className="mb-2.5 w-3/4 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+          className="mb-2.5 w-3/4 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70 start-collection-button"
           style={{ backgroundColor: "green" }}
           onClick={() => handleStartCollection(collection.collection_id)}
         >
@@ -623,7 +623,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
         <div className="flex w-full justify-between space-x-4">
           <button
             type="button"
-            className="w-1/2 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+            className="w-1/2 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70 edit-collection-button"
             style={{ backgroundColor: "yellow" }}
             onClick={() => handleEditButtonClick(collection)}
           >
@@ -631,7 +631,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
           </button>
           <button
             type="button"
-            className="w-1/2 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+            className="w-1/2 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70 delete-collection-button"
             style={{ backgroundColor: "red" }}
             onClick={() => handleDeleteCollection(collection.collection_id)}
           >

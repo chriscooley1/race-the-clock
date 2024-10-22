@@ -327,9 +327,18 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     }
   };
 
+  const handleStartTour = () => {
+    // Implement tour start logic here, or leave it empty if not needed
+    console.log("Tour started");
+  };
+
   return (
     <>
-      <Navbar isPaused={isPaused} onPauseResume={handlePauseResume} />
+      <Navbar 
+        isPaused={isPaused} 
+        onPauseResume={handlePauseResume} 
+        onStartTour={handleStartTour} 
+      />
       <div
         className="relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
         style={{
