@@ -188,8 +188,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   const handleScreenClick = () => {
-    if (category === "Math" && type === "mathProblems") {
-      handleNext({ stopPropagation: () => {} } as React.MouseEvent);
+    if (category === "Number Sense" || (category === "Math" && type === "mathProblems")) {
+      setShowAnswer(!showAnswer);
     }
   };
 
@@ -244,7 +244,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
                 onError={(e) => console.error("Error loading image:", e)}
               />
             ) : (
-              <p>No image available for {currentItem.name}</p>
+              <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
+                {currentItem.name}
+              </h1>
             )}
           </div>
         );
@@ -273,9 +275,11 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         );
       } else {
         return (
-          <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(problem)}`}>
-            {problem}
-          </h1>
+          <div className="flex size-full items-center justify-center">
+            <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(problem)}`}>
+              {problem}
+            </h1>
+          </div>
         );
       }
     } else if (category === "Choose File" || currentItem.svg) {
