@@ -491,6 +491,14 @@ const CollectionFinalStep: React.FC = () => {
                     </option>
                   ))}
                 </select>
+                <button
+                  type="button"
+                  onClick={handleAddItem}
+                  className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+                  title="Add Item"
+                >
+                  +
+                </button>
               </>
             ) : (category === "Science" || category === "Nursing") ? (
               <>
@@ -599,7 +607,7 @@ const CollectionFinalStep: React.FC = () => {
         Save Collection
       </button>
       <div className="mb-4 flex flex-col items-center text-center">
-        <label htmlFor="image-upload" className="mb-2 cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600">
+        <label htmlFor="image-upload" className="mt-4 mb-2 cursor-pointer rounded-md bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600">
           Upload Images
         </label>
         <input
@@ -616,6 +624,7 @@ const CollectionFinalStep: React.FC = () => {
               <div key={image.id} className="relative">
                 <img src={image.preview} alt={image.file.name} className="h-24 w-24 object-cover" />
                 <button
+                  type="button"
                   onClick={() => handleRemoveImage(image.id)}
                   className="absolute -right-2 -top-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white"
                 >
@@ -627,6 +636,7 @@ const CollectionFinalStep: React.FC = () => {
         )}
         {images.length > 0 && (
           <button
+            type="button"
             onClick={handleAddImageItem}
             className="mt-4 rounded-md bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
           >
