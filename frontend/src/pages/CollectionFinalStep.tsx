@@ -272,12 +272,9 @@ const CollectionFinalStep: React.FC = () => {
         operatorSymbol = "+";
     }
     const problemString = `${firstNumber} ${operatorSymbol} ${secondNumber}`;
+    const newItem = `${problemString}|${answer}`;
 
-    setItems([
-      ...items,
-      { id: items.length + 1, name: problemString },
-      { id: items.length + 2, name: answer.toString() },
-    ]);
+    setItems([...items, { id: items.length + 1, name: newItem }]);
   };
 
   const handleTermSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -566,16 +563,14 @@ const CollectionFinalStep: React.FC = () => {
       </div>
       {items.map((item) => (
         <div key={item.id} className="mb-2 flex items-center">
-          {item.svg ? (
-            <div className="mr-2 items-center">
-              <img 
-                src={item.svg} 
-                alt={item.name} 
-                className="mr-2 size-12" 
-                onError={(e) => console.error("Error loading image:", e)}
-              />
-              <span>{item.name}</span>
-            </div>
+          {category === "Math" && initialType === "mathProblems" ? (
+            <input
+              type="text"
+              className="mr-2 grow rounded-md border border-gray-300 p-2 font-['Caveat']"
+              value={item.name.split("|")[0]}
+              readOnly
+              title={`Item ${item.id}: ${item.name.split("|")[0]}`}
+            />
           ) : (
             <input
               type="text"

@@ -556,7 +556,11 @@ const CollectionSetup: React.FC = () => {
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {previewSequence.map((item, index) => (
               <div key={index} className="rounded-md border border-gray-300 p-2">
-                <p className="text-center">{item.name}</p>
+                {category === "Math" && type === "mathProblems" ? (
+                  <p className="text-center">{item.name.split("|")[0]}</p>
+                ) : (
+                  <p className="text-center">{item.name}</p>
+                )}
                 {item.svg && <img src={item.svg} alt={item.name} className="h-auto w-full" />}
               </div>
             ))}
