@@ -367,7 +367,7 @@ const CollectionSetup: React.FC = () => {
                 Type:
               </label>
               <select
-                id="typeSelect"
+                id="typeSelect" // Added ID for targeting
                 className="font-caveat rounded border border-gray-300 bg-white p-2 text-center text-black"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
@@ -411,7 +411,7 @@ const CollectionSetup: React.FC = () => {
                 </label>
                 <input
                   type="number"
-                  id="itemCount"
+                  id="itemCount" // Added ID for targeting
                   className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                   value={itemCount}
                   min={1}
@@ -433,7 +433,7 @@ const CollectionSetup: React.FC = () => {
                 Dot Count Type:
               </label>
               <select
-                id="dotCountType"
+                id="dotCountType" // Added ID for targeting
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotCountType}
                 onChange={(e) =>
@@ -454,7 +454,7 @@ const CollectionSetup: React.FC = () => {
                 </label>
                 <input
                   type="number"
-                  id="itemCount"
+                  id="itemCount" // Added ID for targeting
                   className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                   value={itemCount}
                   min={1}
@@ -475,7 +475,7 @@ const CollectionSetup: React.FC = () => {
                   </label>
                   <input
                     type="number"
-                    id="minDots"
+                    id="minDots" // Added ID for targeting
                     className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                     value={minDots}
                     min={1}
@@ -494,7 +494,7 @@ const CollectionSetup: React.FC = () => {
                   </label>
                   <input
                     type="number"
-                    id="maxDots"
+                    id="maxDots" // Added ID for targeting
                     className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                     value={maxDots}
                     min={minDots}
@@ -515,7 +515,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <input
                 type="number"
-                id="collectionItemCount"
+                id="collectionItemCount" // Added ID for targeting
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                 value={collectionItemCount}
                 min={1}
@@ -533,7 +533,7 @@ const CollectionSetup: React.FC = () => {
                 Dot Color:
               </label>
               <select
-                id="dot-color"
+                id="dot-color" // Added ID for targeting
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotColor}
                 onChange={(e) => setDotColor(e.target.value)}
@@ -553,7 +553,7 @@ const CollectionSetup: React.FC = () => {
                 Dot Shape:
               </label>
               <select
-                id="dot-shape"
+                id="dot-shape" // Added ID for targeting
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotShape}
                 onChange={(e) => setDotShape(e.target.value)}
@@ -581,7 +581,7 @@ const CollectionSetup: React.FC = () => {
           </label>
           <input
             type="file"
-            id="fileUpload"
+            id="fileUpload" // Added ID for targeting
             className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             onChange={handleFileChange}
           />

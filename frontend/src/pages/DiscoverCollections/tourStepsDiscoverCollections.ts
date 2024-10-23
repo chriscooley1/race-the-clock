@@ -15,8 +15,16 @@ export const tourSteps: Step[] = [
     content: "Change how the collections are sorted using this dropdown.",
   },
   {
+    target: ".grid", // Target the collections grid
+    content: "Here are the collections available for you to explore.",
+  },
+  {
     target: ".preview-collection-button", // Target the preview button
     content: "Click to see more details about a collection and subscribe to it.",
+  },
+  {
+    target: ".collection-preview-modal", // Target the collection preview modal
+    content: "This modal shows detailed information about the selected collection.",
   },
   // Add more steps as needed
 ];

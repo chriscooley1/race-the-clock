@@ -18,5 +18,13 @@ export const tourSteps: Step[] = [
     target: ".pause-button", // Target the pause button (if applicable)
     content: "Use this button to pause the display.",
   },
+  {
+    target: ".previous-button", // Target the previous button
+    content: "Click here to go back to the previous item.",
+  },
+  {
+    target: ".screen-click-area", // Target the main screen click area
+    content: "Click anywhere on the screen to toggle the answer display.",
+  },
   // Add more steps as needed
 ];

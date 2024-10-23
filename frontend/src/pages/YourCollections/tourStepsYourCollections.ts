@@ -22,5 +22,9 @@ export const tourSteps: Step[] = [
     target: ".delete-collection-button", // Target the delete button
     content: "Remove a collection you no longer need.",
   },
+  {
+    target: ".duplicate-collection-button", // Target the duplicate button
+    content: "Click here to create a duplicate of this collection.",
+  },
   // Add more steps as needed
 ];
