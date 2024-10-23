@@ -20,10 +20,12 @@ const NameGenerator: React.FC = () => {
     spinRevolutions: number;
   } | null>(null);
 
+  const API_URL = import.meta.env.VITE_API_BASE_URL; // Use VITE_API_BASE_URL directly
+
   const loadNameList = useCallback(async () => {
     try {
       const token = await getAccessTokenSilently();
-      const response = await axios.get("http://localhost:8000/namelists/", {
+      const response = await axios.get(`${API_URL}/namelists/`, { // Use the API_URL variable
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.length > 0) {
@@ -48,7 +50,7 @@ const NameGenerator: React.FC = () => {
       if (nameListId) {
         console.log("Updating existing list with ID:", nameListId);
         const response = await axios.put(
-          `http://localhost:8000/namelists/${nameListId}`,
+          `${API_URL}/namelists/${nameListId}`,
           data,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -58,7 +60,7 @@ const NameGenerator: React.FC = () => {
       } else {
         console.log("Creating new list");
         const response = await axios.post(
-          "http://localhost:8000/namelists/",
+          `${API_URL}/namelists/`,
           data,
           {
             headers: { Authorization: `Bearer ${token}` },
