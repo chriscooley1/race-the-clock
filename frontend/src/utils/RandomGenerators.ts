@@ -275,3 +275,34 @@ export const generateFullPeriodicTable = (): string[] => {
       `${element.symbol} - ${element.name} - ${element.atomicNumber}`,
   );
 };
+
+export const generateRandomLowercaseLetters = (quantity: number): string[] => {
+  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const result: string[] = [];
+  for (let i = 0; i < quantity; i++) {
+    const randomLetter = letters.charAt(
+      Math.floor(Math.random() * letters.length),
+    );
+    result.push(randomLetter);
+  }
+  return result;
+};
+
+export const generateRandomMixedCaseLetters = (quantity: number): string[] => {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  const result: string[] = [];
+  for (let i = 0; i < quantity; i++) {
+    const randomLetter = letters.charAt(
+      Math.floor(Math.random() * letters.length),
+    );
+    result.push(randomLetter);
+  }
+  return result;
+};
+
+// Initialize the alertShown property if it doesn't exist
+if (typeof window.alertShown === 'undefined') {
+  window.alertShown = false;
+}
+
+// ... existing code ...

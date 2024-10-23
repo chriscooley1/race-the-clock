@@ -1,5 +1,7 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
+import MatchingGame from "../components/MatchingGame";
+import MultipleWordsGame from "../components/MultipleWordsGame";
 
 const Games: React.FC = () => {
   const { theme } = useTheme();
@@ -16,6 +18,8 @@ const Games: React.FC = () => {
         or words with images, enhancing engagement.
       </p>
       <p>Multiple words, drag and connect to a different word or card</p>
+      <MatchingGame />
+      <MultipleWordsGame />
     </div>
   );
 };
