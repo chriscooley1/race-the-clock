@@ -146,6 +146,18 @@ const CollectionSetup: React.FC = () => {
     // Determine the maximum quantity based on the type
     const maxQuantity = (type === "randomLowercase" || type === "randomMixedCase") ? 26 : itemCount;
 
+    // New validation check for itemCount
+    if (itemCount > maxQuantity) {
+      // Use a debounce mechanism to prevent multiple alerts
+      if (!window.alertShown) {
+        alert(`The maximum allowed quantity for this sequence is ${maxQuantity}.`);
+        window.alertShown = true; // Set a flag to indicate an alert has been shown
+        setTimeout(() => {
+          window.alertShown = false; // Reset the flag after a timeout
+        }, 2000); // Adjust the timeout as needed
+      }
+      return; // Exit the function if the count is invalid
+    }
     switch (type) {
       case "numbers":
         while (generatedSequence.length < maxQuantity) {

@@ -299,3 +299,10 @@ export const generateRandomMixedCaseLetters = (quantity: number): string[] => {
   }
   return result;
 };
+
+// Initialize the alertShown property if it doesn't exist
+if (typeof window.alertShown === 'undefined') {
+  window.alertShown = false;
+}
+
+// ... existing code ...
