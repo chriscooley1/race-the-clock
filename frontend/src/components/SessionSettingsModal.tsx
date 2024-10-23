@@ -11,6 +11,9 @@ interface SessionSettingsModalProps {
     speed: number,
     textColor: string,
     answerDisplayTime: number,
+    stopCondition: string,
+    timerMinutes: number,
+    timerSeconds: number
   ) => void;
   currentSettings: {
     speed: number;
@@ -32,6 +35,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   const [seconds, setSeconds] = useState(0);
   const [shuffle, setShuffle] = useState(false);
   const [answerDisplayTime, setAnswerDisplayTime] = useState(3);
+  const [stopCondition, setStopCondition] = useState("collection");
+  const [timerMinutes, setTimerMinutes] = useState(0);
+  const [timerSeconds, setTimerSeconds] = useState(0);
 
   const showAnswerDisplayTime =
     category === "Number Sense" ||
@@ -66,6 +72,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       calculatedSpeed,
       currentSettings.textColor,
       answerDisplayTime * 1000, // Convert to milliseconds
+      stopCondition,
+      timerMinutes,
+      timerSeconds
     );
   };
 
@@ -154,6 +163,57 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 min={1}
                 onKeyDown={handleKeyDown}
               />
+            </div>
+          )}
+          <div className="flex flex-col items-center">
+            <label className="mb-1">Stop Condition:</label>
+            <select
+              aria-label="Select stop condition"
+              value={stopCondition}
+              onChange={(e) => {
+                setStopCondition(e.target.value);
+                if (e.target.value === "timer") {
+                  setTimerMinutes(0); // Reset timer minutes when switching to timer
+                  setTimerSeconds(0); // Reset timer seconds when switching to timer
+                }
+              }}
+              className="rounded border border-gray-300 p-1 text-sm"
+            >
+              <option value="collection">End on Collection</option>
+              <option value="timer">End on Timer</option>
+            </select>
+          </div>
+          {stopCondition === "timer" && (
+            <div className="flex flex-col items-center">
+              <div className="flex w-full justify-around p-2">
+                <label htmlFor="timerMinutes" className="mr-2">
+                  Timer Minutes:
+                </label>
+                <label htmlFor="timerSeconds">Timer Seconds:</label>
+              </div>
+              <div className="flex w-full justify-around p-1">
+                <input
+                  type="number"
+                  id="timerMinutes"
+                  value={timerMinutes}
+                  onChange={(e) => setTimerMinutes(parseInt(e.target.value) || 0)}
+                  className="w-20 rounded border border-gray-300 p-1 text-sm"
+                  placeholder="Min"
+                  title="Timer Minutes"
+                  min={0}
+                />
+                <input
+                  type="number"
+                  id="timerSeconds"
+                  value={timerSeconds}
+                  onChange={(e) => setTimerSeconds(parseInt(e.target.value) || 0)}
+                  className="w-20 rounded border border-gray-300 p-1 text-sm"
+                  placeholder="Sec"
+                  title="Timer Seconds"
+                  min={0}
+                  max={59}
+                />
+              </div>
             </div>
           )}
           <button
