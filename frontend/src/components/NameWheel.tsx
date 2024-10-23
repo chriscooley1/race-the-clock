@@ -114,13 +114,14 @@ const NameWheel: React.FC<NameWheelProps> = ({
     <div className="relative">
       <div className="absolute left-1/2 top-0 z-10 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500"></div>
       <div className="relative">
-        <motion.div animate={controls} className="inline-block">
-          <canvas ref={canvasRef} />
-        </motion.div>
-        {names.length === 0 && ( // Check if names array is empty
+        {names.length === 0 ? (
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <p className="text-gray-500">No names added yet. Please click the + button to add names.</p>
           </div>
+        ) : (
+          <motion.div animate={controls} className="inline-block">
+            <canvas ref={canvasRef} />
+          </motion.div>
         )}
       </div>
     </div>

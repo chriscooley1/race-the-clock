@@ -22,12 +22,15 @@ const NameGenerator: React.FC = () => {
 
   const API_URL = import.meta.env.VITE_API_BASE_URL; // Use VITE_API_BASE_URL directly
 
+  console.log("API_URL:", API_URL); // Add this line to check the value
+
   const loadNameList = useCallback(async () => {
     try {
       const token = await getAccessTokenSilently();
-      const response = await axios.get(`${API_URL}/namelists/`, { // Use the API_URL variable
+      const response = await axios.get(`${API_URL}/namelists/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log("API Response:", response.data); // Log the response data
       if (response.data.length > 0) {
         const latestNameList = response.data[0];
         setNameListId(latestNameList.namelist_id);
