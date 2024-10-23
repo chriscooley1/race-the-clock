@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
+import { useTour } from '../../context/TourContext';
+import { tourStepsNavbar } from './tourStepsNavbar';
 
 interface NavbarProps {
   isPaused?: boolean;
@@ -24,6 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
   const { theme, toggleDarkMode } = useTheme();
+  const { toursCompleted, completeTour, startTour } = useTour();
 
   const handleMenuToggle = () => {
     console.log("Toggling menu. Current state:", menuOpen);
@@ -64,11 +67,17 @@ const Navbar: React.FC<NavbarProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (!toursCompleted.navbar) {
+      // Start the tour for the navbar
+      startTour(tourStepsNavbar);
+      completeTour('navbar'); // Mark as completed
+    }
+  }, [toursCompleted, startTour, completeTour]);
+
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
       <div className="flex items-center space-x-2">
-        {" "}
-        {/* Added space-x-2 for gap */}
         {/* Dark mode toggle */}
         <button
           type="button"
