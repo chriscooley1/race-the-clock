@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
+import { tourSteps } from './tourStepsNewCollection'; // Ensure this import is present
+import GuidedTour from "../../components/GuidedTour"; // Import the guided tour component
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("Math");
   const [isPublic, setIsPublic] = useState<boolean>(false);
-  const [stage, setStage] = useState<string>("beginner"); // Added stage state
+  const [stage, setStage] = useState<string>("beginner");
   const navigate = useNavigate();
   const { theme } = useTheme();
+  const [isTourRunning, setIsTourRunning] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const categories = [
     "Math",
@@ -18,7 +22,7 @@ const NewCollection: React.FC = () => {
     "Nursing",
   ];
 
-  const stages = ["beginner", "intermediate", "advanced"]; // Added stages array
+  const stages = ["beginner", "intermediate", "advanced"];
 
   const handleNext = () => {
     if (!name.trim()) {
@@ -30,10 +34,10 @@ const NewCollection: React.FC = () => {
       name,
       category,
       isPublic,
-      stage, // Added stage to the log
+      stage,
     });
     navigate("/collection-setup", {
-      state: { collectionName: name, isPublic, category, stage }, // Added stage to the state
+      state: { collectionName: name, isPublic, category, stage },
     });
   };
 
@@ -43,10 +47,23 @@ const NewCollection: React.FC = () => {
     }
   };
 
+  console.log("Tour Steps:", tourSteps);
+
   return (
     <div
-      className={`flex min-h-screen w-full min-w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`new-collection-page flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
+      <GuidedTour
+        steps={tourSteps}
+        isRunning={isTourRunning}
+        onComplete={() => setIsTourRunning(false)}
+        currentStep={currentStep}
+        onStepChange={setCurrentStep}
+      />
+      <button type="button" onClick={() => {
+          console.log("Starting tour...");
+          setIsTourRunning(true);
+      }}>Start Tour</button>
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
         <h1 className="text-4xl font-bold">Step 1 - Create</h1>
         <h1 className="text-3xl font-bold">New Collection</h1>
@@ -54,7 +71,7 @@ const NewCollection: React.FC = () => {
           <input
             type="text"
             id="collectionName"
-            className={`font-caveat rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`font-caveat rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"} collection-name-input`}
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Collection Name"
@@ -81,7 +98,7 @@ const NewCollection: React.FC = () => {
         </div>
         <div className="mb-4 flex max-w-[300px] items-center justify-center">
           <label htmlFor="stageSelect" className="mr-2">
-            Stage: {/* Added space here */}
+            Stage:
           </label>
           <select
             id="stageSelect"

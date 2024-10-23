@@ -8,6 +8,7 @@ import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
 
+// Import your tour steps here
 import { tourSteps as landingPageSteps } from "./pages/LandingPage/tourStepsLandingPage";
 import { tourSteps as yourCollectionsSteps } from "./pages/YourCollections/tourStepsYourCollections";
 import { tourSteps as newCollectionSteps } from "./pages/NewCollection/tourStepsNewCollection";

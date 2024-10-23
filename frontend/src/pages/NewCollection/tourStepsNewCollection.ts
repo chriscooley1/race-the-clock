@@ -7,7 +7,7 @@ export const tourSteps: Step[] = [
     disableBeacon: true,
   },
   {
-    target: ".collection-name-input", // Target the collection name input
+    target: ".collection-name-input", // Ensure this class exists in your component
     content: "Enter the name of your new collection here.",
   },
   {
