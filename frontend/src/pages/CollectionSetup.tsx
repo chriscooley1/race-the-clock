@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  generateRandomLetters,
-  generateRandomNumbers,
   generateFullAlphabet,
   generateNumbersOneToHundred,
   generateMathProblems,
@@ -11,6 +9,8 @@ import {
   generateScienceTerms,
   generateNursingTerms,
   generateFullPeriodicTable,
+  generateRandomLowercaseLetters,
+  generateRandomMixedCaseLetters,
 } from "../utils/RandomGenerators";
 import { saveCollection, getCurrentUser } from "../api";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -141,16 +141,47 @@ const CollectionSetup: React.FC = () => {
     // Clear previous number sense items
     setNumberSenseItems([]);
 
+    const usedItems = new Set<string>(); // Track used items to avoid duplicates
+
+    // Determine the maximum quantity based on the type
+    const maxQuantity = (type === "randomLowercase" || type === "randomMixedCase") ? 26 : itemCount;
+
     switch (type) {
       case "numbers":
-        generatedSequence = generateRandomNumbers(itemCount).map((num) => ({
-          name: num.toString(),
-        }));
+        while (generatedSequence.length < maxQuantity) {
+          const num = Math.floor(Math.random() * 100) + 1; // Random numbers from 1 to 100
+          if (!usedItems.has(num.toString())) {
+            generatedSequence.push({ name: num.toString() });
+            usedItems.add(num.toString());
+          }
+        }
         break;
       case "letters":
-        generatedSequence = generateRandomLetters(itemCount).map((letter) => ({
-          name: letter,
-        }));
+        while (generatedSequence.length < maxQuantity) {
+          const letter = String.fromCharCode(Math.floor(Math.random() * 26) + 65); // Random uppercase letters
+          if (!usedItems.has(letter)) {
+            generatedSequence.push({ name: letter });
+            usedItems.add(letter);
+          }
+        }
+        break;
+      case "randomLowercase": // New case for random lowercase letters
+        while (generatedSequence.length < maxQuantity) {
+          const letter = generateRandomLowercaseLetters(1)[0]; // Generate one random lowercase letter
+          if (!usedItems.has(letter)) {
+            generatedSequence.push({ name: letter });
+            usedItems.add(letter);
+          }
+        }
+        break;
+      case "randomMixedCase": // New case for random mixed case letters
+        while (generatedSequence.length < maxQuantity) {
+          const letter = generateRandomMixedCaseLetters(1)[0]; // Generate one random mixed case letter
+          if (!usedItems.has(letter)) {
+            generatedSequence.push({ name: letter });
+            usedItems.add(letter);
+          }
+        }
         break;
       case "alphabet":
         generatedSequence = generateFullAlphabet().map((letter) => ({
@@ -328,7 +359,9 @@ const CollectionSetup: React.FC = () => {
                 )}
                 {category === "Language Arts" && (
                   <>
-                    <option value="letters">Letters</option>
+                    <option value="letters">Uppercase Letters</option>
+                    <option value="randomLowercase">Lowercase Letters</option>
+                    <option value="randomMixedCase">Mixed Case Letters</option>
                     <option value="alphabet">Full Alphabet</option>
                   </>
                 )}
