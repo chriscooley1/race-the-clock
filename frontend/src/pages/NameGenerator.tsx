@@ -20,9 +20,10 @@ const NameGenerator: React.FC = () => {
     spinRevolutions: number;
   } | null>(null);
 
-  const API_URL = import.meta.env.VITE_API_BASE_URL; // Use VITE_API_BASE_URL directly
+  const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"; // Fallback to localhost for development
 
   console.log("API_URL:", API_URL); // Add this line to check the value
+  console.log("Environment Variables:", import.meta.env);
 
   const loadNameList = useCallback(async () => {
     try {
@@ -30,11 +31,13 @@ const NameGenerator: React.FC = () => {
       const response = await axios.get(`${API_URL}/namelists/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("API Response:", response.data); // Log the response data
+      console.log("API Response:", response.data);
       if (response.data.length > 0) {
         const latestNameList = response.data[0];
         setNameListId(latestNameList.namelist_id);
         setNameList(latestNameList.names);
+      } else {
+        console.warn("No name lists found.");
       }
     } catch (error) {
       console.error("Error loading name list:", error);
