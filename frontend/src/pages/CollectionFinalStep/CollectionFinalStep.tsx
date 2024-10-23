@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { saveCollection, getCurrentUser } from "../api";
-import { periodicTable, PeriodicElement } from "../utils/periodicTable";
-import { User } from "../types/user";
-import { useTheme } from "../context/ThemeContext";
+import { saveCollection, getCurrentUser } from "../../api";
+import { periodicTable, PeriodicElement } from "../../utils/periodicTable";
+import { User } from "../../types/user";
+import { useTheme } from "../../context/ThemeContext";
 import {
   generateCountingSvg,
   generateScienceTerms,
   generateNursingTerms,
-} from "../utils/RandomGenerators";
+} from "../../utils/RandomGenerators";
 import { v4 as uuidv4 } from "uuid"; // Add this import for generating unique IDs
 
 // Export the function to avoid the "unused" error

@@ -1,6 +1,6 @@
 import React from "react";
-import { useTheme } from "../context/ThemeContext";
-import TimedChallengeGame from "../components/TimedChallengeGame";
+import { useTheme } from "../../context/ThemeContext";
+import TimedChallengeGame from "../../components/TimedChallengeGame";
 
 const TimedChallenges: React.FC = () => {
   const { theme } = useTheme();

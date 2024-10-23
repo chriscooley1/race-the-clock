@@ -5,11 +5,11 @@ import {
   deleteCollectionById,
   duplicateCollection,
   updateCollection,
-} from "../api";
+} from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
-import SessionSettingsModal from "../components/SessionSettingsModal";
-import CollectionsNavBar from "../components/CollectionsNavBar";
-import EditCollectionModal from "../components/EditCollectionModal";
+import SessionSettingsModal from "../../components/SessionSettingsModal";
+import CollectionsNavBar from "../../components/CollectionsNavBar";
+import EditCollectionModal from "../../components/EditCollectionModal";
 import axios from "axios";
 import {
   DragDropContext,
@@ -17,9 +17,9 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { collectionColorSchemes } from "../constants/colorSchemes";
-import { lightenColor } from "../utils/colorUtils";
-import { useTheme } from "../context/ThemeContext";
+import { collectionColorSchemes } from "../../constants/colorSchemes";
+import { lightenColor } from "../../utils/colorUtils";
+import { useTheme } from "../../context/ThemeContext";
 
 interface Collection {
   collection_id: number;

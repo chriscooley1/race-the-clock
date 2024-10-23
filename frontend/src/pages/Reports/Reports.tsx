@@ -1,6 +1,6 @@
 import React from "react";
-import { useTheme } from "../context/ThemeContext";
-import ReportsOverview from "../components/ReportsOverview"; // Import the reports overview component
+import { useTheme } from "../../context/ThemeContext";
+import ReportsOverview from "../../components/ReportsOverview"; // Import the reports overview component
 
 const Reports: React.FC = () => {
   const { theme } = useTheme();

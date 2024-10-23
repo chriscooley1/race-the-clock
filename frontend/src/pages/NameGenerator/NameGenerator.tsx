@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import NameWheel from "../components/NameWheel";
-import WheelSegment from "../components/WheelSegment";
-import { useTheme } from "../context/ThemeContext";
+import NameWheel from "../../components/NameWheel";
+import WheelSegment from "../../components/WheelSegment";
+import { useTheme } from "../../context/ThemeContext";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");

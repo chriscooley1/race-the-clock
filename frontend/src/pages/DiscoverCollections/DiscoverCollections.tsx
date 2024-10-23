@@ -3,15 +3,15 @@ import {
   fetchPublicCollections,
   searchPublicCollections,
   checkSubscription,
-} from "../api";
-import CollectionPreviewModal from "../components/CollectionPreviewModal";
+} from "../../api";
+import CollectionPreviewModal from "../../components/CollectionPreviewModal";
 import { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Collection as APICollection } from "../api";
+import { Collection as APICollection } from "../../api";
 import axios from "axios";
-import { lightenColor } from "../utils/colorUtils";
-import { collectionColorSchemes } from "../constants/colorSchemes";
-import { useTheme } from "../context/ThemeContext";
+import { lightenColor } from "../../utils/colorUtils";
+import { collectionColorSchemes } from "../../constants/colorSchemes";
+import { useTheme } from "../../context/ThemeContext";
 
 interface Item {
   id: number;

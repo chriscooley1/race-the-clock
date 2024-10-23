@@ -11,11 +11,11 @@ import {
   generateFullPeriodicTable,
   generateRandomLowercaseLetters,
   generateRandomMixedCaseLetters,
-} from "../utils/RandomGenerators";
-import { saveCollection, getCurrentUser } from "../api";
+} from "../../utils/RandomGenerators";
+import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
-import { User } from "../types/user";
-import { useTheme } from "../context/ThemeContext";
+import { User } from "../../types/user";
+import { useTheme } from "../../context/ThemeContext";
 
 type Operation =
   | "multiplication"

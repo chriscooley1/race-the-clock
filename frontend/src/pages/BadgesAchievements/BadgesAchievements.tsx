@@ -1,6 +1,6 @@
 import React from "react";
-import { useTheme } from "../context/ThemeContext";
-import BadgesAchievementsOverview from "../components/BadgesAchievementsOverview"; // Import the badges achievements overview component
+import { useTheme } from "../../context/ThemeContext";
+import BadgesAchievementsOverview from "../../components/BadgesAchievementsOverview"; // Import the badges achievements overview component
 
 const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
