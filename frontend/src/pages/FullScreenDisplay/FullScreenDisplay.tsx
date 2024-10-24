@@ -164,7 +164,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           setTimeout(() => setShowAnswer(true), speed);
 
           // Check if we are about to wrap around to the first item
-          if (newIndex === 0) {
+          if (newIndex === 0 && stopCondition === "collection") {
             handleEndSession(); // Call the function to handle session end
           }
 
@@ -180,7 +180,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           const newIndex = (prevIndex + 1) % shuffledSequence.length;
           setProgress((newIndex / shuffledSequence.length) * 100);
           // Check if we are about to wrap around to the first item
-          if (newIndex === 0) {
+          if (newIndex === 0 && stopCondition === "collection") {
             handleEndSession(); // Call the function to handle session end
           }
           return newIndex;
@@ -189,12 +189,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       setIntervalId(interval as unknown as number);
       return () => clearInterval(interval);
     }
-  }, [shuffledSequence, speed, isPaused, category, type, answerDisplayTime]);
+  }, [shuffledSequence, speed, isPaused, category, type, answerDisplayTime, stopCondition]);
 
   useEffect(() => {
     if (stopCondition === "timer") {
       const totalTimerSeconds = timerMinutes * 60 + timerSeconds; // Calculate total timer seconds
+      console.log(`Timer set for ${totalTimerSeconds} seconds`); // Debug log
       const timer = setTimeout(() => {
+        console.log("Timer expired, ending session."); // Debug log
         handleEndSession(); // Call the function to handle session end
       }, totalTimerSeconds * 1000); // Convert to milliseconds
       return () => clearTimeout(timer);
@@ -231,9 +233,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   const handleEndSession = () => {
-    // Logic to handle ending the session
-    console.log("Session ended. Redirecting to Your Collections...");
-    navigate("/your-collections"); // Use navigate instead of history.push
+    console.log("Ending session..."); // Debug log
+    if (stopCondition === "timer") {
+      console.log("Session ended due to timer. Redirecting to Your Collections...");
+      navigate("/your-collections"); // Use navigate instead of history.push
+    } else {
+      console.log("Session ended. Redirecting to Your Collections...");
+      navigate("/your-collections"); // Use navigate instead of history.push
+    }
   };
 
   // Add this check at the beginning of the component

@@ -1,9 +1,18 @@
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
-import ReportsOverview from "../../components/ReportsOverview"; // Import the reports overview component
 
 const Reports: React.FC = () => {
   const { theme } = useTheme();
+
+  const ReportsOverview: React.FC = () => {
+    return (
+      <div className="reports-overview">
+        <h2>Reports Overview</h2>
+        <p>View detailed reports of user performance after each session.</p>
+        {/* Add your report logic and UI here */}
+      </div>
+    );
+  };
 
   return (
     <div
