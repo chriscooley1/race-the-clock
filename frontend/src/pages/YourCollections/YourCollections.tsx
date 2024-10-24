@@ -391,7 +391,7 @@ const YourCollections: React.FC = () => {
 
   return (
     <div
-      className={`your-collections-page min-h-screen w-full px-4 pt-[170px] md:pl-[270px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`min-h-screen w-full px-4 pt-[170px] md:pl-[270px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
@@ -410,7 +410,7 @@ const YourCollections: React.FC = () => {
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="grid max-h-[calc(100vh-170px)] w-full grid-cols-1 gap-4 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3"
+              className="your-collections-page grid max-h-[calc(100vh-170px)] w-full grid-cols-1 gap-4 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3"
             >
               {filteredCollections.map((collection, index) => {
                 const baseColor = adjustColorForTheme(
@@ -454,7 +454,7 @@ const YourCollections: React.FC = () => {
                 ) : (
                   <div
                     key={collection.collection_id}
-                    className="border-5 collection-card relative flex h-[300px] flex-col items-center justify-start overflow-hidden border-black p-5"
+                    className="collection-card border-5 relative flex h-[300px] flex-col items-center justify-start overflow-hidden border-black p-5"
                     style={{
                       backgroundColor: lightColor,
                     }}
