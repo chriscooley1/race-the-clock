@@ -13,7 +13,7 @@ interface SessionSettingsModalProps {
     answerDisplayTime: number,
     stopCondition: string,
     timerMinutes: number,
-    timerSeconds: number
+    timerSeconds: number,
   ) => void;
   currentSettings: {
     speed: number;
@@ -74,7 +74,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       answerDisplayTime * 1000, // Convert to milliseconds
       stopCondition,
       timerMinutes,
-      timerSeconds
+      timerSeconds,
     );
   };
 
@@ -196,7 +196,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   type="number"
                   id="timerMinutes"
                   value={timerMinutes}
-                  onChange={(e) => setTimerMinutes(parseInt(e.target.value) || 0)}
+                  onChange={(e) =>
+                    setTimerMinutes(parseInt(e.target.value) || 0)
+                  }
                   className="w-20 rounded border border-gray-300 p-1 text-sm"
                   placeholder="Min"
                   title="Timer Minutes"
@@ -206,7 +208,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   type="number"
                   id="timerSeconds"
                   value={timerSeconds}
-                  onChange={(e) => setTimerSeconds(parseInt(e.target.value) || 0)}
+                  onChange={(e) =>
+                    setTimerSeconds(parseInt(e.target.value) || 0)
+                  }
                   className="w-20 rounded border border-gray-300 p-1 text-sm"
                   placeholder="Sec"
                   title="Timer Seconds"

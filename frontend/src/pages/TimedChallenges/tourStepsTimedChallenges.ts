@@ -8,7 +8,8 @@ export const tourSteps: Step[] = [
   },
   {
     target: "h1.mb-8", // Target the main title
-    content: "This is the Timed Challenges page where you can test your skills.",
+    content:
+      "This is the Timed Challenges page where you can test your skills.",
   },
   {
     target: ".timed-challenge-game", // Target the Timed Challenge Game component

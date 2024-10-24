@@ -8,7 +8,8 @@ export const tourSteps: Step[] = [
   },
   {
     target: ".collection-card", // Target a collection card
-    content: "Each card represents one of your collections. You can start, edit, or delete a collection from here.",
+    content:
+      "Each card represents one of your collections. You can start, edit, or delete a collection from here.",
   },
   {
     target: ".start-collection-button", // Target the start button

@@ -65,13 +65,9 @@ const NameGenerator: React.FC = () => {
         console.log("Update response:", response.data);
       } else {
         console.log("Creating new list");
-        const response = await axios.post(
-          `${API_URL}/namelists/`,
-          data,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        const response = await axios.post(`${API_URL}/namelists/`, data, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         console.log("Create response:", response.data);
         setNameListId(response.data.namelist_id);
       }

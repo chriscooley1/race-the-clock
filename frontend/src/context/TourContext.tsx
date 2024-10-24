@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { Step } from "react-joyride"; // Import the Step type
 
 // Define the type for the context value
@@ -11,8 +17,12 @@ interface TourContextType {
 // Create the context with a default value of null
 const TourContext = createContext<TourContextType | null>(null);
 
-export const TourProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [toursCompleted, setToursCompleted] = useState<Record<string, boolean>>({});
+export const TourProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [toursCompleted, setToursCompleted] = useState<Record<string, boolean>>(
+    {},
+  );
 
   useEffect(() => {
     const storedTours = localStorage.getItem("toursCompleted");
@@ -23,10 +33,14 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const completeTour = (tourName: string) => {
     setToursCompleted((prev) => ({ ...prev, [tourName]: true }));
-    localStorage.setItem("toursCompleted", JSON.stringify({ ...toursCompleted, [tourName]: true }));
+    localStorage.setItem(
+      "toursCompleted",
+      JSON.stringify({ ...toursCompleted, [tourName]: true }),
+    );
   };
 
-  const startTour = (steps: Step[]) => { // Use Step[] as the type for steps
+  const startTour = (steps: Step[]) => {
+    // Use Step[] as the type for steps
     // Placeholder for starting the tour
     console.log("Starting tour with steps:", steps);
     // Here you would typically call a function from a library like react-joyride

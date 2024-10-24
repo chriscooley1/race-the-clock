@@ -79,7 +79,9 @@ export const generateRandomMixedCaseLetters = (quantity: number): string[] => {
 };
 
 export const generateRandomNumbers = (quantity: number): string[] => {
-  const uniqueNumbers = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
+  const uniqueNumbers = Array.from({ length: 100 }, (_, i) =>
+    (i + 1).toString(),
+  );
   const result: string[] = [];
 
   for (let i = 0; i < Math.min(quantity, uniqueNumbers.length); i++) {

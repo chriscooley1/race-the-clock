@@ -3,7 +3,8 @@ import { Step } from "react-joyride";
 export const tourSteps: Step[] = [
   {
     target: ".collection-final-step", // Target the main container
-    content: "This is the final step for your collection. Review your items before saving.",
+    content:
+      "This is the final step for your collection. Review your items before saving.",
     disableBeacon: true,
   },
   {

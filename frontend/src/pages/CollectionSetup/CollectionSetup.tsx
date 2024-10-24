@@ -136,30 +136,30 @@ const CollectionSetup: React.FC = () => {
     let maxQuantity = 0;
 
     switch (type) {
-        case "randomLowercase":
-        case "randomMixedCase":
-            maxQuantity = 52; // 26 lowercase + 26 uppercase
-            break;
-        case "letters":
-            maxQuantity = 26; // Uppercase letters
-            break;
-        case "numbers":
-            maxQuantity = 100; // Numbers from 1 to 100
-            break;
-        // Add other cases as needed
-        default:
-            maxQuantity = itemCount; // Default to current itemCount if type is not recognized
+      case "randomLowercase":
+      case "randomMixedCase":
+        maxQuantity = 52; // 26 lowercase + 26 uppercase
+        break;
+      case "letters":
+        maxQuantity = 26; // Uppercase letters
+        break;
+      case "numbers":
+        maxQuantity = 100; // Numbers from 1 to 100
+        break;
+      // Add other cases as needed
+      default:
+        maxQuantity = itemCount; // Default to current itemCount if type is not recognized
     }
 
     // Adjust itemCount if it exceeds maxQuantity
     if (itemCount > maxQuantity) {
-        setItemCount(maxQuantity); // Set itemCount to maxQuantity
+      setItemCount(maxQuantity); // Set itemCount to maxQuantity
     }
 
     let generatedSequence: Array<{
-        name: string;
-        svg?: string;
-        count?: number;
+      name: string;
+      svg?: string;
+      count?: number;
     }> = [];
 
     // Clear previous number sense items
@@ -169,106 +169,108 @@ const CollectionSetup: React.FC = () => {
 
     // Generate the sequence based on the type
     switch (type) {
-        case "numbers":
-            while (generatedSequence.length < itemCount) {
-                const num = Math.floor(Math.random() * 100) + 1; // Random numbers from 1 to 100
-                if (!usedItems.has(num.toString())) {
-                    generatedSequence.push({ name: num.toString() });
-                    usedItems.add(num.toString());
-                }
-            }
-            break;
-        case "letters":
-            while (generatedSequence.length < itemCount) {
-                const letter = String.fromCharCode(Math.floor(Math.random() * 26) + 65); // Random uppercase letters
-                if (!usedItems.has(letter)) {
-                    generatedSequence.push({ name: letter });
-                    usedItems.add(letter);
-                }
-            }
-            break;
-        case "randomLowercase": // New case for random lowercase letters
-            while (generatedSequence.length < itemCount) {
-                const letter = generateRandomLowercaseLetters(1)[0]; // Generate one random lowercase letter
-                if (!usedItems.has(letter)) {
-                    generatedSequence.push({ name: letter });
-                    usedItems.add(letter);
-                }
-            }
-            break;
-        case "randomMixedCase": // New case for random mixed case letters
-            while (generatedSequence.length < itemCount) {
-                const letter = generateRandomMixedCaseLetters(1)[0]; // Generate one random mixed case letter
-                if (!usedItems.has(letter)) {
-                    generatedSequence.push({ name: letter });
-                    usedItems.add(letter);
-                }
-            }
-            break;
-        case "alphabet":
-            generatedSequence = generateFullAlphabet().map((letter) => ({
-                name: letter,
-            }));
-            break;
-        case "numbersOneToHundred":
-            generatedSequence = generateNumbersOneToHundred().map((num) => ({
-                name: num.toString(),
-            }));
-            break;
-        case "mathProblems":
-            if (operation && operation !== "PeriodicElement") {
-                generatedSequence = generateMathProblems(itemCount, operation).map(
-                (problem) => ({ name: problem }),
-                );
-            } else {
-                console.error(
-                "Math Problems selected but operation is not set or is PeriodicElement",
-                );
-            }
-            break;
-        case "numberSense": {
-            const generatedItems = [];
-            for (let i = 0; i < collectionItemCount; i++) {
-                let dotCount;
-                if (dotCountType === "fixed") {
-                    dotCount = itemCount;
-                } else {
-                    dotCount =
-                    Math.floor(Math.random() * (maxDots - minDots + 1)) + minDots;
-                }
-                const image = generateNumberSenseImages(dotCount, dotColor, dotShape);
-                generatedItems.push({
-                    name: `Number Sense Image (Count: ${image.count})`,
-                    svg: image.svg,
-                    count: image.count,
-                });
-            }
-            setNumberSenseItems(generatedItems);
-            generatedSequence = generatedItems;
-            break;
+      case "numbers":
+        while (generatedSequence.length < itemCount) {
+          const num = Math.floor(Math.random() * 100) + 1; // Random numbers from 1 to 100
+          if (!usedItems.has(num.toString())) {
+            generatedSequence.push({ name: num.toString() });
+            usedItems.add(num.toString());
+          }
         }
-        case "periodicTable":
-            generatedSequence = generatePeriodicTableElements(itemCount).map(
-            (element) => ({ name: element }),
-            );
-            break;
-        case "scienceTerms":
-            generatedSequence = generateScienceTerms(itemCount).map((term) => ({
-                name: term,
-            }));
-            break;
-        case "nursingTerms":
-            generatedSequence = generateNursingTerms(itemCount).map((term) => ({
-                name: term,
-            }));
-            break;
-        case "fullPeriodicTable":
-            generatedSequence = generateFullPeriodicTable().map((element) => ({
-                name: element,
-            }));
-            break;
-        default:
-            console.error("Invalid type selected");
+        break;
+      case "letters":
+        while (generatedSequence.length < itemCount) {
+          const letter = String.fromCharCode(
+            Math.floor(Math.random() * 26) + 65,
+          ); // Random uppercase letters
+          if (!usedItems.has(letter)) {
+            generatedSequence.push({ name: letter });
+            usedItems.add(letter);
+          }
+        }
+        break;
+      case "randomLowercase": // New case for random lowercase letters
+        while (generatedSequence.length < itemCount) {
+          const letter = generateRandomLowercaseLetters(1)[0]; // Generate one random lowercase letter
+          if (!usedItems.has(letter)) {
+            generatedSequence.push({ name: letter });
+            usedItems.add(letter);
+          }
+        }
+        break;
+      case "randomMixedCase": // New case for random mixed case letters
+        while (generatedSequence.length < itemCount) {
+          const letter = generateRandomMixedCaseLetters(1)[0]; // Generate one random mixed case letter
+          if (!usedItems.has(letter)) {
+            generatedSequence.push({ name: letter });
+            usedItems.add(letter);
+          }
+        }
+        break;
+      case "alphabet":
+        generatedSequence = generateFullAlphabet().map((letter) => ({
+          name: letter,
+        }));
+        break;
+      case "numbersOneToHundred":
+        generatedSequence = generateNumbersOneToHundred().map((num) => ({
+          name: num.toString(),
+        }));
+        break;
+      case "mathProblems":
+        if (operation && operation !== "PeriodicElement") {
+          generatedSequence = generateMathProblems(itemCount, operation).map(
+            (problem) => ({ name: problem }),
+          );
+        } else {
+          console.error(
+            "Math Problems selected but operation is not set or is PeriodicElement",
+          );
+        }
+        break;
+      case "numberSense": {
+        const generatedItems = [];
+        for (let i = 0; i < collectionItemCount; i++) {
+          let dotCount;
+          if (dotCountType === "fixed") {
+            dotCount = itemCount;
+          } else {
+            dotCount =
+              Math.floor(Math.random() * (maxDots - minDots + 1)) + minDots;
+          }
+          const image = generateNumberSenseImages(dotCount, dotColor, dotShape);
+          generatedItems.push({
+            name: `Number Sense Image (Count: ${image.count})`,
+            svg: image.svg,
+            count: image.count,
+          });
+        }
+        setNumberSenseItems(generatedItems);
+        generatedSequence = generatedItems;
+        break;
+      }
+      case "periodicTable":
+        generatedSequence = generatePeriodicTableElements(itemCount).map(
+          (element) => ({ name: element }),
+        );
+        break;
+      case "scienceTerms":
+        generatedSequence = generateScienceTerms(itemCount).map((term) => ({
+          name: term,
+        }));
+        break;
+      case "nursingTerms":
+        generatedSequence = generateNursingTerms(itemCount).map((term) => ({
+          name: term,
+        }));
+        break;
+      case "fullPeriodicTable":
+        generatedSequence = generateFullPeriodicTable().map((element) => ({
+          name: element,
+        }));
+        break;
+      default:
+        console.error("Invalid type selected");
     }
     setSequence(generatedSequence);
     setPreviewSequence(generatedSequence);
@@ -342,7 +344,9 @@ const CollectionSetup: React.FC = () => {
   };
 
   const shouldHideQuantity = (selectedType: string): boolean => {
-    return ["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(selectedType);
+    return ["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(
+      selectedType,
+    );
   };
 
   if (!currentUser) {

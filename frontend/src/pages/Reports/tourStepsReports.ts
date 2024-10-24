@@ -12,11 +12,13 @@ export const tourSteps: Step[] = [
   },
   {
     target: ".reports-overview", // Target the Reports Overview component
-    content: "This section provides an overview of user performance after each session.",
+    content:
+      "This section provides an overview of user performance after each session.",
   },
   {
     target: ".reports-overview p", // Target the description in the Reports Overview
-    content: "Detailed reports include total items shown, time taken, missed items, and skipped items.",
+    content:
+      "Detailed reports include total items shown, time taken, missed items, and skipped items.",
   },
   // Add more steps as needed
 ];

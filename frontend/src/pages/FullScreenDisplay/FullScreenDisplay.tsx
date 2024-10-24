@@ -45,8 +45,16 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const location = useLocation();
   const navigate = useNavigate(); // Use useNavigate instead of useHistory
   console.log("FullScreenDisplay state:", location.state);
-  const { sequence, speed, shuffle, category, type, answerDisplayTime, timerMinutes, timerSeconds } =
-    location.state as FullScreenDisplayState;
+  const {
+    sequence,
+    speed,
+    shuffle,
+    category,
+    type,
+    answerDisplayTime,
+    timerMinutes,
+    timerSeconds,
+  } = location.state as FullScreenDisplayState;
   console.log("Destructured values:", {
     sequence,
     speed,
@@ -364,10 +372,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   return (
     <>
-      <Navbar 
-        isPaused={isPaused} 
-        onPauseResume={handlePauseResume} 
-        onStartTour={handleStartTour} 
+      <Navbar
+        isPaused={isPaused}
+        onPauseResume={handlePauseResume}
+        onStartTour={handleStartTour}
       />
       <div
         className="relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"

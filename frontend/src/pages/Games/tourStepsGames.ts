@@ -8,7 +8,8 @@ export const tourSteps: Step[] = [
   },
   {
     target: "h1.mb-8", // Target the main title
-    content: "This is the Games page where you can find various educational games.",
+    content:
+      "This is the Games page where you can find various educational games.",
   },
   {
     target: ".matching-game", // Target the Matching Game component

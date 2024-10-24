@@ -117,7 +117,9 @@ const App: React.FC = () => {
   return (
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
-        <TourProvider> {/* Wrap your application with TourProvider */}
+        <TourProvider>
+          {" "}
+          {/* Wrap your application with TourProvider */}
           <div
             className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
           >
@@ -259,7 +261,8 @@ const App: React.FC = () => {
               onStepChange={handleTourStepChange}
             />
           </div>
-        </TourProvider> {/* Close TourProvider */}
+        </TourProvider>{" "}
+        {/* Close TourProvider */}
       </ErrorBoundary>
     </Auth0ProviderWithHistory>
   );

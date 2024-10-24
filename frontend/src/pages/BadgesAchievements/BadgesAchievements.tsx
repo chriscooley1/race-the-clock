@@ -21,7 +21,8 @@ const BadgesAchievements: React.FC = () => {
         Milestones for Teachers: Teachers can set milestones for their students,
         rewarding them as they improve, fostering motivation.
       </p>
-      <BadgesAchievementsOverview /> {/* Add the badges achievements overview component here */}
+      <BadgesAchievementsOverview />{" "}
+      {/* Add the badges achievements overview component here */}
     </div>
   );
 };
