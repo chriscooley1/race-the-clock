@@ -11,7 +11,7 @@ export const tourSteps: Step[] = [
     content: "Search for specific collections by name or creator.",
   },
   {
-    target: ".sort-collections-select", // Target the sort dropdown
+    target: "#sortSelect", // Target the sort dropdown
     content: "Change how the collections are sorted using this dropdown.",
   },
   {
@@ -22,11 +22,6 @@ export const tourSteps: Step[] = [
     target: ".preview-collection-button", // Target the preview button
     content:
       "Click to see more details about a collection and subscribe to it.",
-  },
-  {
-    target: ".collection-preview-modal", // Target the collection preview modal
-    content:
-      "This modal shows detailed information about the selected collection.",
   },
   // Add more steps as needed
 ];

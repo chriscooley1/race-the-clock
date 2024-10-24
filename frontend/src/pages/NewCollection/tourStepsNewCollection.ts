@@ -7,12 +7,8 @@ export const tourSteps: Step[] = [
     disableBeacon: true,
   },
   {
-    target: ".collection-name-input", // Target the collection name input
+    target: "#collectionName", // Target the collection name input
     content: "Enter the name of your new collection here.",
-  },
-  {
-    target: ".collection-description-input", // Target the description input
-    content: "Provide a brief description of your collection.",
   },
   {
     target: "#categorySelect", // Target the category selection dropdown

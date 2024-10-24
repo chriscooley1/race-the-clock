@@ -351,11 +351,11 @@ const CollectionFinalStep: React.FC = () => {
 
   return (
     <div
-      className={`collection-final-step flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
-      <h1 className="text-4xl font-bold">Step 3 - Custom</h1>
+      <h1 className="collection-final-step text-4xl font-bold">Step 3 - Custom</h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <p className="mb-4">
         To add another item to this Collection, click the add button below.

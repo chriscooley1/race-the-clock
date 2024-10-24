@@ -27,8 +27,8 @@ interface FullScreenDisplayState {
   category: string;
   type: string;
   answerDisplayTime: number;
-  timerMinutes: number; // New property for timer minutes
-  timerSeconds: number; // New property for timer seconds
+  timerMinutes: number;
+  timerSeconds: number;
 }
 
 interface SequenceItem {
@@ -43,7 +43,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onExitFullScreen,
 }) => {
   const location = useLocation();
-  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+  const navigate = useNavigate();
   console.log("FullScreenDisplay state:", location.state);
   const {
     sequence,
@@ -69,7 +69,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [stopCondition, setStopCondition] = useState("collection"); // Ensure this is set correctly
+  const [stopCondition, setStopCondition] = useState("collection");
 
   const shuffleArray = (array: CollectionItem[]): CollectionItem[] => {
     return [...array].sort(() => Math.random() - 0.5);

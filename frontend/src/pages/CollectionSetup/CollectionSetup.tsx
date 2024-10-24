@@ -357,7 +357,7 @@ const CollectionSetup: React.FC = () => {
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
-      <h1 className="text-4xl font-bold">Step 2 - Setup</h1>
+      <h1 className="collection-setup text-4xl font-bold">Step 2 - Setup</h1>
       <h2 className="text-3xl font-bold">Collection: {collectionName}</h2>
       <h3 className="mb-4 text-2xl font-semibold">Category: {category}</h3>
       <div className="mb-4 flex w-full max-w-3xl flex-col items-center space-y-4">
