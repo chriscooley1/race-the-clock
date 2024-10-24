@@ -1,10 +1,28 @@
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
-import MatchingGame from "../../components/MatchingGame";
-import MultipleWordsGame from "../../components/MultipleWordsGame";
 
 const Games: React.FC = () => {
   const { theme } = useTheme();
+
+  const MatchingGame: React.FC = () => {
+    return (
+      <div className="matching-game">
+        <h2>Matching Game Example</h2>
+        <p>Match the letters with the corresponding images!</p>
+        {/* Add your game logic and UI here */}
+      </div>
+    );
+  };
+
+  const MultipleWordsGame: React.FC = () => {
+    return (
+      <div className="multiple-words-game">
+        <h2>Multiple Words Game Example</h2>
+        <p>Drag and connect words to their corresponding cards!</p>
+        {/* Add your game logic and UI here */}
+      </div>
+    );
+  };
 
   return (
     <div

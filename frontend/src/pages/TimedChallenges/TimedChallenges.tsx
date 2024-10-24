@@ -1,9 +1,18 @@
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
-import TimedChallengeGame from "../../components/TimedChallengeGame";
 
 const TimedChallenges: React.FC = () => {
   const { theme } = useTheme();
+
+  const TimedChallengeGame: React.FC = () => {
+    return (
+      <div className="timed-challenge-game">
+        <h2>Timed Challenge Game Example</h2>
+        <p>Complete as many challenges as you can within the time limit!</p>
+        {/* Add your game logic and UI here */}
+      </div>
+    );
+  };
 
   return (
     <div
