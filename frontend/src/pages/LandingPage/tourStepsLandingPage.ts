@@ -8,11 +8,11 @@ export const tourSteps: Step[] = [
     disableBeacon: true,
   },
   {
-    target: ".bg-light-blue", // Target the Register button
+    target: ".register-button", // Target the Register button
     content: "Click here to register for a new account.",
   },
   {
-    target: ".bg-light-blue + .bg-light-blue", // Target the Already Registered button
+    target: ".already-registered-button", // Target the Already Registered button
     content: "If you already have an account, click here to log in.",
   },
   // Add more steps as needed

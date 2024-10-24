@@ -190,11 +190,11 @@ const DiscoverCollections: React.FC = () => {
 
   return (
     <div
-      className={`discover-collections-page flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
+      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
-      <h1 className="mb-4 text-2xl font-bold sm:text-3xl">
+      <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
         Discover Public Collections
       </h1>
       {user && <p className="mb-4">Welcome, {user.name}</p>}
@@ -211,7 +211,7 @@ const DiscoverCollections: React.FC = () => {
           <button
             type="button"
             onClick={handleSearch}
-            className="rounded-md bg-green-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-green-600"
+            className="search-collections-input rounded-md bg-green-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-green-600"
           >
             Search
           </button>
