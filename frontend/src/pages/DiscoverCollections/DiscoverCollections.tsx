@@ -3,15 +3,15 @@ import {
   fetchPublicCollections,
   searchPublicCollections,
   checkSubscription,
-} from "../api";
-import CollectionPreviewModal from "../components/CollectionPreviewModal";
+} from "../../api";
+import CollectionPreviewModal from "../../components/CollectionPreviewModal";
 import { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Collection as APICollection } from "../api";
+import { Collection as APICollection } from "../../api";
 import axios from "axios";
-import { lightenColor } from "../utils/colorUtils";
-import { collectionColorSchemes } from "../constants/colorSchemes";
-import { useTheme } from "../context/ThemeContext";
+import { lightenColor } from "../../utils/colorUtils";
+import { collectionColorSchemes } from "../../constants/colorSchemes";
+import { useTheme } from "../../context/ThemeContext";
 
 interface Item {
   id: number;
@@ -35,22 +35,30 @@ const DiscoverCollections: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("date");
   const { getAccessTokenSilently } = useAuth0();
-  const [subscriptionStatus, setSubscriptionStatus] = useState<Record<string, boolean>>({});
+  const [subscriptionStatus, setSubscriptionStatus] = useState<
+    Record<string, boolean>
+  >({});
 
   const fetchCollections = useCallback(async () => {
     try {
       const fetchedCollections = await fetchPublicCollections();
       console.log("Fetched collections:", fetchedCollections);
-      const collectionsWithItems = fetchedCollections?.map((collection) => ({
-        ...collection,
-        items: parseDescription(collection.description),
-      })) || [];
+      const collectionsWithItems =
+        fetchedCollections?.map((collection) => ({
+          ...collection,
+          items: parseDescription(collection.description),
+        })) || [];
 
       // Check subscription status for all collections
-      const subscriptionChecks = collectionsWithItems.map(async (collection) => {
-        const isSubscribed = await checkSubscription(collection.collection_id, getAccessTokenSilently);
-        return { [collection.collection_id]: isSubscribed };
-      });
+      const subscriptionChecks = collectionsWithItems.map(
+        async (collection) => {
+          const isSubscribed = await checkSubscription(
+            collection.collection_id,
+            getAccessTokenSilently,
+          );
+          return { [collection.collection_id]: isSubscribed };
+        },
+      );
       const subscriptionResults = await Promise.all(subscriptionChecks);
       const newSubscriptionStatus = Object.assign({}, ...subscriptionResults);
       setSubscriptionStatus(newSubscriptionStatus);
@@ -182,7 +190,7 @@ const DiscoverCollections: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] discover-collections-page ${
+      className={`discover-collections-page flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
@@ -198,7 +206,7 @@ const DiscoverCollections: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by collection name or username"
-            className="mb-2 rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2 search-collections-input"
+            className="search-collections-input mb-2 rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2"
           />
           <button
             type="button"
@@ -217,7 +225,7 @@ const DiscoverCollections: React.FC = () => {
           id="sortSelect"
           value={sortOption}
           onChange={handleSortChange}
-          className="rounded-md border border-gray-300 sort-collections-select"
+          className="sort-collections-select rounded-md border border-gray-300"
         >
           <option value="date">Date</option>
           <option value="alphabetical">Alphabetical</option>
@@ -264,11 +272,13 @@ const DiscoverCollections: React.FC = () => {
               </p>
               <button
                 type="button"
-                className="rounded-md px-4 py-2 text-sm font-bold text-black transition duration-300 hover:scale-105 active:scale-95 preview-collection-button"
+                className="preview-collection-button rounded-md px-4 py-2 text-sm font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
                 style={{ backgroundColor: baseColor }}
                 onClick={() => openModal(collection)}
               >
-                {subscriptionStatus[collection.collection_id] ? "Already Subscribed" : "Preview Collection"}
+                {subscriptionStatus[collection.collection_id]
+                  ? "Already Subscribed"
+                  : "Preview Collection"}
               </button>
             </div>
           );

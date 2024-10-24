@@ -17,6 +17,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   onStepChange,
 }) => {
   const handleJoyrideCallback = (data: CallBackProps) => {
+    console.log("Joyride callback data:", data); // Log the callback data
     const { status, index, type } = data;
     if (["finished", "skipped"].includes(status as string)) {
       onComplete();

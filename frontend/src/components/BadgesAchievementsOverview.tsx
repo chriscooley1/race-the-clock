@@ -11,4 +11,3 @@ const BadgesAchievementsOverview: React.FC = () => {
 };
 
 export default BadgesAchievementsOverview;
-

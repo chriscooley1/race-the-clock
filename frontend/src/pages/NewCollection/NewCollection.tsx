@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("Math");
   const [isPublic, setIsPublic] = useState<boolean>(false);
-  const [stage, setStage] = useState<string>("beginner"); // Added stage state
+  const [stage, setStage] = useState<string>("beginner");
   const navigate = useNavigate();
   const { theme } = useTheme();
 
@@ -18,7 +18,7 @@ const NewCollection: React.FC = () => {
     "Nursing",
   ];
 
-  const stages = ["beginner", "intermediate", "advanced"]; // Added stages array
+  const stages = ["beginner", "intermediate", "advanced"];
 
   const handleNext = () => {
     if (!name.trim()) {
@@ -30,10 +30,10 @@ const NewCollection: React.FC = () => {
       name,
       category,
       isPublic,
-      stage, // Added stage to the log
+      stage,
     });
     navigate("/collection-setup", {
-      state: { collectionName: name, isPublic, category, stage }, // Added stage to the state
+      state: { collectionName: name, isPublic, category, stage },
     });
   };
 
@@ -45,7 +45,7 @@ const NewCollection: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full min-w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`new-collection-page flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
         <h1 className="text-4xl font-bold">Step 1 - Create</h1>
@@ -54,7 +54,7 @@ const NewCollection: React.FC = () => {
           <input
             type="text"
             id="collectionName"
-            className={`font-caveat rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`collection-name-input font-caveat rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Collection Name"
@@ -68,7 +68,7 @@ const NewCollection: React.FC = () => {
           </label>
           <select
             id="categorySelect"
-            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`collection-description-input font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -81,11 +81,11 @@ const NewCollection: React.FC = () => {
         </div>
         <div className="mb-4 flex max-w-[300px] items-center justify-center">
           <label htmlFor="stageSelect" className="mr-2">
-            Stage: {/* Added space here */}
+            Stage:
           </label>
           <select
             id="stageSelect"
-            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`submit-collection-button font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             value={stage}
             onChange={(e) => setStage(e.target.value)}
           >

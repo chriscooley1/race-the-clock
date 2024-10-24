@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
-import Navbar from "../components/Navbar";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useTheme } from "../../context/ThemeContext";
+import Navbar from "../../components/Navbar/Navbar";
 
 interface CollectionItem {
   name: string;
@@ -27,6 +27,8 @@ interface FullScreenDisplayState {
   category: string;
   type: string;
   answerDisplayTime: number;
+  timerMinutes: number; // New property for timer minutes
+  timerSeconds: number; // New property for timer seconds
 }
 
 interface SequenceItem {
@@ -41,9 +43,18 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onExitFullScreen,
 }) => {
   const location = useLocation();
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
   console.log("FullScreenDisplay state:", location.state);
-  const { sequence, speed, shuffle, category, type, answerDisplayTime } =
-    location.state as FullScreenDisplayState;
+  const {
+    sequence,
+    speed,
+    shuffle,
+    category,
+    type,
+    answerDisplayTime,
+    timerMinutes,
+    timerSeconds,
+  } = location.state as FullScreenDisplayState;
   console.log("Destructured values:", {
     sequence,
     speed,
@@ -58,6 +69,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [stopCondition, setStopCondition] = useState("collection"); // Ensure this is set correctly
 
   const shuffleArray = (array: CollectionItem[]): CollectionItem[] => {
     return [...array].sort(() => Math.random() - 0.5);
@@ -150,6 +162,12 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           setProgress((newIndex / shuffledSequence.length) * 100);
           setShowAnswer(false);
           setTimeout(() => setShowAnswer(true), speed);
+
+          // Check if we are about to wrap around to the first item
+          if (newIndex === 0) {
+            handleEndSession(); // Call the function to handle session end
+          }
+
           return newIndex;
         });
       }, speed + answerDisplayTime);
@@ -161,6 +179,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         setIndex((prevIndex) => {
           const newIndex = (prevIndex + 1) % shuffledSequence.length;
           setProgress((newIndex / shuffledSequence.length) * 100);
+          // Check if we are about to wrap around to the first item
+          if (newIndex === 0) {
+            handleEndSession(); // Call the function to handle session end
+          }
           return newIndex;
         });
       }, speed);
@@ -168,6 +190,16 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       return () => clearInterval(interval);
     }
   }, [shuffledSequence, speed, isPaused, category, type, answerDisplayTime]);
+
+  useEffect(() => {
+    if (stopCondition === "timer") {
+      const totalTimerSeconds = timerMinutes * 60 + timerSeconds; // Calculate total timer seconds
+      const timer = setTimeout(() => {
+        handleEndSession(); // Call the function to handle session end
+      }, totalTimerSeconds * 1000); // Convert to milliseconds
+      return () => clearTimeout(timer);
+    }
+  }, [stopCondition, timerMinutes, timerSeconds]); // Add timer dependencies
 
   const handlePauseResume = () => {
     setIsPaused(!isPaused);
@@ -196,6 +228,12 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     ) {
       setShowAnswer(!showAnswer);
     }
+  };
+
+  const handleEndSession = () => {
+    // Logic to handle ending the session
+    console.log("Session ended. Redirecting to Your Collections...");
+    navigate("/your-collections"); // Use navigate instead of history.push
   };
 
   // Add this check at the beginning of the component
@@ -334,10 +372,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   return (
     <>
-      <Navbar 
-        isPaused={isPaused} 
-        onPauseResume={handlePauseResume} 
-        onStartTour={handleStartTour} 
+      <Navbar
+        isPaused={isPaused}
+        onPauseResume={handlePauseResume}
+        onStartTour={handleStartTour}
       />
       <div
         className="relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"

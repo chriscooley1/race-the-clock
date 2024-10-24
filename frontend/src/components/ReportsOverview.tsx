@@ -11,4 +11,3 @@ const ReportsOverview: React.FC = () => {
 };
 
 export default ReportsOverview;
-

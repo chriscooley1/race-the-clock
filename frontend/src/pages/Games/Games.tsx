@@ -1,7 +1,7 @@
 import React from "react";
-import { useTheme } from "../context/ThemeContext";
-import MatchingGame from "../components/MatchingGame";
-import MultipleWordsGame from "../components/MultipleWordsGame";
+import { useTheme } from "../../context/ThemeContext";
+import MatchingGame from "../../components/MatchingGame";
+import MultipleWordsGame from "../../components/MultipleWordsGame";
 
 const Games: React.FC = () => {
   const { theme } = useTheme();

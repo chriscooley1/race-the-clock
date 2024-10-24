@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { saveCollection, getCurrentUser } from "../api";
-import { periodicTable, PeriodicElement } from "../utils/periodicTable";
-import { User } from "../types/user";
-import { useTheme } from "../context/ThemeContext";
+import { saveCollection, getCurrentUser } from "../../api";
+import { periodicTable, PeriodicElement } from "../../utils/periodicTable";
+import { User } from "../../types/user";
+import { useTheme } from "../../context/ThemeContext";
 import {
   generateCountingSvg,
   generateScienceTerms,
   generateNursingTerms,
-} from "../utils/RandomGenerators";
+} from "../../utils/RandomGenerators";
 import { v4 as uuidv4 } from "uuid"; // Add this import for generating unique IDs
 
 // Export the function to avoid the "unused" error
@@ -351,7 +351,7 @@ const CollectionFinalStep: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${
+      className={`collection-final-step flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
@@ -404,7 +404,7 @@ const CollectionFinalStep: React.FC = () => {
             <button
               type="button"
               onClick={handleAddMathProblem}
-              className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
+              className="add-math-problem-button mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
             >
               Add Math Problem
             </button>
@@ -499,7 +499,7 @@ const CollectionFinalStep: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleAddDot}
-                  className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
+                  className="add-dot-button mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
                 >
                   Add Another Dot
                 </button>
@@ -641,7 +641,7 @@ const CollectionFinalStep: React.FC = () => {
         </div>
       ))}
       <button
-        className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+        className="save-collection-button rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
         type="button"
         onClick={handleSaveCollection}
         title="Save Collection"
@@ -651,7 +651,7 @@ const CollectionFinalStep: React.FC = () => {
       <div className="mb-4 flex flex-col items-center text-center">
         <label
           htmlFor="image-upload"
-          className="mb-2 mt-4 cursor-pointer rounded-md bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
+          className="add-image-button mb-2 mt-4 cursor-pointer rounded-md bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
         >
           Upload Images
         </label>
@@ -664,7 +664,7 @@ const CollectionFinalStep: React.FC = () => {
           className="hidden"
         />
         {images.length > 0 && (
-          <div className="mt-4 grid grid-cols-3 gap-4">
+          <div className="item-preview mt-4 grid grid-cols-3 gap-4">
             {images.map((image) => (
               <div key={image.id} className="relative">
                 <img

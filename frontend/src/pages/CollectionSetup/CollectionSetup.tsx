@@ -11,11 +11,11 @@ import {
   generateFullPeriodicTable,
   generateRandomLowercaseLetters,
   generateRandomMixedCaseLetters,
-} from "../utils/RandomGenerators";
-import { saveCollection, getCurrentUser } from "../api";
+} from "../../utils/RandomGenerators";
+import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
-import { User } from "../types/user";
-import { useTheme } from "../context/ThemeContext";
+import { User } from "../../types/user";
+import { useTheme } from "../../context/ThemeContext";
 
 type Operation =
   | "multiplication"
@@ -132,6 +132,30 @@ const CollectionSetup: React.FC = () => {
   };
 
   const generateRandomSequence = () => {
+    // Determine the maximum quantity based on the type
+    let maxQuantity = 0;
+
+    switch (type) {
+      case "randomLowercase":
+      case "randomMixedCase":
+        maxQuantity = 52; // 26 lowercase + 26 uppercase
+        break;
+      case "letters":
+        maxQuantity = 26; // Uppercase letters
+        break;
+      case "numbers":
+        maxQuantity = 100; // Numbers from 1 to 100
+        break;
+      // Add other cases as needed
+      default:
+        maxQuantity = itemCount; // Default to current itemCount if type is not recognized
+    }
+
+    // Adjust itemCount if it exceeds maxQuantity
+    if (itemCount > maxQuantity) {
+      setItemCount(maxQuantity); // Set itemCount to maxQuantity
+    }
+
     let generatedSequence: Array<{
       name: string;
       svg?: string;
@@ -143,24 +167,10 @@ const CollectionSetup: React.FC = () => {
 
     const usedItems = new Set<string>(); // Track used items to avoid duplicates
 
-    // Determine the maximum quantity based on the type
-    const maxQuantity = (type === "randomLowercase" || type === "randomMixedCase") ? 26 : itemCount;
-
-    // New validation check for itemCount
-    if (itemCount > maxQuantity) {
-      // Use a debounce mechanism to prevent multiple alerts
-      if (!window.alertShown) {
-        alert(`The maximum allowed quantity for this sequence is ${maxQuantity}.`);
-        window.alertShown = true; // Set a flag to indicate an alert has been shown
-        setTimeout(() => {
-          window.alertShown = false; // Reset the flag after a timeout
-        }, 2000); // Adjust the timeout as needed
-      }
-      return; // Exit the function if the count is invalid
-    }
+    // Generate the sequence based on the type
     switch (type) {
       case "numbers":
-        while (generatedSequence.length < maxQuantity) {
+        while (generatedSequence.length < itemCount) {
           const num = Math.floor(Math.random() * 100) + 1; // Random numbers from 1 to 100
           if (!usedItems.has(num.toString())) {
             generatedSequence.push({ name: num.toString() });
@@ -169,8 +179,10 @@ const CollectionSetup: React.FC = () => {
         }
         break;
       case "letters":
-        while (generatedSequence.length < maxQuantity) {
-          const letter = String.fromCharCode(Math.floor(Math.random() * 26) + 65); // Random uppercase letters
+        while (generatedSequence.length < itemCount) {
+          const letter = String.fromCharCode(
+            Math.floor(Math.random() * 26) + 65,
+          ); // Random uppercase letters
           if (!usedItems.has(letter)) {
             generatedSequence.push({ name: letter });
             usedItems.add(letter);
@@ -178,7 +190,7 @@ const CollectionSetup: React.FC = () => {
         }
         break;
       case "randomLowercase": // New case for random lowercase letters
-        while (generatedSequence.length < maxQuantity) {
+        while (generatedSequence.length < itemCount) {
           const letter = generateRandomLowercaseLetters(1)[0]; // Generate one random lowercase letter
           if (!usedItems.has(letter)) {
             generatedSequence.push({ name: letter });
@@ -187,7 +199,7 @@ const CollectionSetup: React.FC = () => {
         }
         break;
       case "randomMixedCase": // New case for random mixed case letters
-        while (generatedSequence.length < maxQuantity) {
+        while (generatedSequence.length < itemCount) {
           const letter = generateRandomMixedCaseLetters(1)[0]; // Generate one random mixed case letter
           if (!usedItems.has(letter)) {
             generatedSequence.push({ name: letter });
@@ -332,7 +344,9 @@ const CollectionSetup: React.FC = () => {
   };
 
   const shouldHideQuantity = (selectedType: string): boolean => {
-    return ["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(selectedType);
+    return ["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(
+      selectedType,
+    );
   };
 
   if (!currentUser) {
@@ -357,7 +371,7 @@ const CollectionSetup: React.FC = () => {
                 Type:
               </label>
               <select
-                id="typeSelect"
+                id="typeSelect" // Added ID for targeting
                 className="font-caveat rounded border border-gray-300 bg-white p-2 text-center text-black"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
@@ -401,7 +415,7 @@ const CollectionSetup: React.FC = () => {
                 </label>
                 <input
                   type="number"
-                  id="itemCount"
+                  id="itemCount" // Added ID for targeting
                   className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                   value={itemCount}
                   min={1}
@@ -423,7 +437,7 @@ const CollectionSetup: React.FC = () => {
                 Dot Count Type:
               </label>
               <select
-                id="dotCountType"
+                id="dotCountType" // Added ID for targeting
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotCountType}
                 onChange={(e) =>
@@ -444,7 +458,7 @@ const CollectionSetup: React.FC = () => {
                 </label>
                 <input
                   type="number"
-                  id="itemCount"
+                  id="itemCount" // Added ID for targeting
                   className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                   value={itemCount}
                   min={1}
@@ -465,7 +479,7 @@ const CollectionSetup: React.FC = () => {
                   </label>
                   <input
                     type="number"
-                    id="minDots"
+                    id="minDots" // Added ID for targeting
                     className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                     value={minDots}
                     min={1}
@@ -484,7 +498,7 @@ const CollectionSetup: React.FC = () => {
                   </label>
                   <input
                     type="number"
-                    id="maxDots"
+                    id="maxDots" // Added ID for targeting
                     className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                     value={maxDots}
                     min={minDots}
@@ -505,7 +519,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <input
                 type="number"
-                id="collectionItemCount"
+                id="collectionItemCount" // Added ID for targeting
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                 value={collectionItemCount}
                 min={1}
@@ -523,7 +537,7 @@ const CollectionSetup: React.FC = () => {
                 Dot Color:
               </label>
               <select
-                id="dot-color"
+                id="dot-color" // Added ID for targeting
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotColor}
                 onChange={(e) => setDotColor(e.target.value)}
@@ -543,7 +557,7 @@ const CollectionSetup: React.FC = () => {
                 Dot Shape:
               </label>
               <select
-                id="dot-shape"
+                id="dot-shape" // Added ID for targeting
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotShape}
                 onChange={(e) => setDotShape(e.target.value)}
@@ -571,7 +585,7 @@ const CollectionSetup: React.FC = () => {
           </label>
           <input
             type="file"
-            id="fileUpload"
+            id="fileUpload" // Added ID for targeting
             className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             onChange={handleFileChange}
           />
