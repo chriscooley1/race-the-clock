@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTheme } from "../../context/ThemeContext";
-import { useTour } from '../../context/TourContext';
-import { tourStepsNavbar } from './tourStepsNavbar';
+import { useTour } from "../../context/TourContext";
+import { tourStepsNavbar } from "./tourStepsNavbar";
 
 interface NavbarProps {
   isPaused?: boolean;
@@ -71,7 +71,7 @@ const Navbar: React.FC<NavbarProps> = ({
     if (!toursCompleted.navbar) {
       // Start the tour for the navbar
       startTour(tourStepsNavbar);
-      completeTour('navbar'); // Mark as completed
+      completeTour("navbar"); // Mark as completed
     }
   }, [toursCompleted, startTour, completeTour]);
 

@@ -12,12 +12,90 @@ export const generateRandomLetters = (quantity: number): string[] => {
   return result;
 };
 
-export const generateRandomNumbers = (quantity: number): string[] => {
+export const generateRandomUppercaseLetters = (quantity: number): string[] => {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const uniqueLetters = Array.from(letters);
   const result: string[] = [];
-  for (let i = 0; i < quantity; i++) {
-    const randomNumber = Math.floor(Math.random() * 100) + 1; // Random numbers from 1 to 100
-    result.push(randomNumber.toString());
+
+  for (let i = 0; i < Math.min(quantity, uniqueLetters.length); i++) {
+    const randomIndex = Math.floor(Math.random() * uniqueLetters.length);
+    result.push(uniqueLetters[randomIndex]);
+    uniqueLetters.splice(randomIndex, 1);
   }
+
+  if (quantity > result.length) {
+    const remainingCount = quantity - result.length;
+    for (let i = 0; i < remainingCount; i++) {
+      const randomIndex = Math.floor(Math.random() * letters.length);
+      result.push(letters[randomIndex]);
+    }
+  }
+
+  return result;
+};
+
+export const generateRandomLowercaseLetters = (quantity: number): string[] => {
+  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const uniqueLetters = Array.from(letters);
+  const result: string[] = [];
+
+  for (let i = 0; i < Math.min(quantity, uniqueLetters.length); i++) {
+    const randomIndex = Math.floor(Math.random() * uniqueLetters.length);
+    result.push(uniqueLetters[randomIndex]);
+    uniqueLetters.splice(randomIndex, 1);
+  }
+
+  if (quantity > result.length) {
+    const remainingCount = quantity - result.length;
+    for (let i = 0; i < remainingCount; i++) {
+      const randomIndex = Math.floor(Math.random() * letters.length);
+      result.push(letters[randomIndex]);
+    }
+  }
+
+  return result;
+};
+
+export const generateRandomMixedCaseLetters = (quantity: number): string[] => {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  const uniqueLetters = Array.from(letters);
+  const result: string[] = [];
+
+  for (let i = 0; i < Math.min(quantity, uniqueLetters.length); i++) {
+    const randomIndex = Math.floor(Math.random() * uniqueLetters.length);
+    result.push(uniqueLetters[randomIndex]);
+    uniqueLetters.splice(randomIndex, 1);
+  }
+
+  if (quantity > result.length) {
+    const remainingCount = quantity - result.length;
+    for (let i = 0; i < remainingCount; i++) {
+      const randomIndex = Math.floor(Math.random() * letters.length);
+      result.push(letters[randomIndex]);
+    }
+  }
+
+  return result;
+};
+
+export const generateRandomNumbers = (quantity: number): string[] => {
+  const uniqueNumbers = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
+  const result: string[] = [];
+
+  for (let i = 0; i < Math.min(quantity, uniqueNumbers.length); i++) {
+    const randomIndex = Math.floor(Math.random() * uniqueNumbers.length);
+    result.push(uniqueNumbers[randomIndex]);
+    uniqueNumbers.splice(randomIndex, 1);
+  }
+
+  if (quantity > result.length) {
+    const remainingCount = quantity - result.length;
+    for (let i = 0; i < remainingCount; i++) {
+      const randomIndex = Math.floor(Math.random() * 100) + 1; // Random numbers from 1 to 100
+      result.push(randomIndex.toString());
+    }
+  }
+
   return result;
 };
 
@@ -276,33 +354,7 @@ export const generateFullPeriodicTable = (): string[] => {
   );
 };
 
-export const generateRandomLowercaseLetters = (quantity: number): string[] => {
-  const letters = "abcdefghijklmnopqrstuvwxyz";
-  const result: string[] = [];
-  for (let i = 0; i < quantity; i++) {
-    const randomLetter = letters.charAt(
-      Math.floor(Math.random() * letters.length),
-    );
-    result.push(randomLetter);
-  }
-  return result;
-};
-
-export const generateRandomMixedCaseLetters = (quantity: number): string[] => {
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  const result: string[] = [];
-  for (let i = 0; i < quantity; i++) {
-    const randomLetter = letters.charAt(
-      Math.floor(Math.random() * letters.length),
-    );
-    result.push(randomLetter);
-  }
-  return result;
-};
-
 // Initialize the alertShown property if it doesn't exist
-if (typeof window.alertShown === 'undefined') {
+if (typeof window.alertShown === "undefined") {
   window.alertShown = false;
 }
-
-// ... existing code ...

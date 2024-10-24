@@ -7,7 +7,7 @@ import Sidebar from "./components/Sidebar";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
-import { TourProvider } from './context/TourContext'; // Import the TourProvider
+import { TourProvider } from "./context/TourContext";
 
 // Import your tour steps here
 import { tourSteps as landingPageSteps } from "./pages/LandingPage/tourStepsLandingPage";
