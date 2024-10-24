@@ -189,7 +189,15 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       setIntervalId(interval as unknown as number);
       return () => clearInterval(interval);
     }
-  }, [shuffledSequence, speed, isPaused, category, type, answerDisplayTime, stopCondition]);
+  }, [
+    shuffledSequence,
+    speed,
+    isPaused,
+    category,
+    type,
+    answerDisplayTime,
+    stopCondition,
+  ]);
 
   useEffect(() => {
     if (stopCondition === "timer") {
@@ -235,7 +243,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const handleEndSession = () => {
     console.log("Ending session..."); // Debug log
     if (stopCondition === "timer") {
-      console.log("Session ended due to timer. Redirecting to Your Collections...");
+      console.log(
+        "Session ended due to timer. Redirecting to Your Collections...",
+      );
       navigate("/your-collections"); // Use navigate instead of history.push
     } else {
       console.log("Session ended. Redirecting to Your Collections...");

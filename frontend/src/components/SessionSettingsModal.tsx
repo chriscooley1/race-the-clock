@@ -65,7 +65,11 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
 
   const handleStartClick = () => {
     const calculatedSpeed = calculateSpeed();
-    console.log("Starting session with timer values:", timerMinutes, timerSeconds); // Debug log
+    console.log(
+      "Starting session with timer values:",
+      timerMinutes,
+      timerSeconds,
+    ); // Debug log
     onStart(
       minutes,
       seconds,

@@ -355,7 +355,9 @@ const CollectionFinalStep: React.FC = () => {
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
-      <h1 className="collection-final-step text-4xl font-bold">Step 3 - Custom</h1>
+      <h1 className="collection-final-step text-4xl font-bold">
+        Step 3 - Custom
+      </h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <p className="mb-4">
         To add another item to this Collection, click the add button below.

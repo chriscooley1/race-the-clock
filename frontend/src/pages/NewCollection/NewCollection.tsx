@@ -48,7 +48,9 @@ const NewCollection: React.FC = () => {
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
-        <h1 className="new-collection-page text-4xl font-bold">Step 1 - Create</h1>
+        <h1 className="new-collection-page text-4xl font-bold">
+          Step 1 - Create
+        </h1>
         <h1 className="text-3xl font-bold">New Collection</h1>
         <div className="mb-4 max-w-[300px]">
           <input
