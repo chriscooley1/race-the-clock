@@ -45,10 +45,10 @@ const NewCollection: React.FC = () => {
 
   return (
     <div
-      className={`new-collection-page flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
-        <h1 className="text-4xl font-bold">Step 1 - Create</h1>
+        <h1 className="new-collection-page text-4xl font-bold">Step 1 - Create</h1>
         <h1 className="text-3xl font-bold">New Collection</h1>
         <div className="mb-4 max-w-[300px]">
           <input
@@ -68,7 +68,7 @@ const NewCollection: React.FC = () => {
           </label>
           <select
             id="categorySelect"
-            className={`collection-description-input font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -85,7 +85,7 @@ const NewCollection: React.FC = () => {
           </label>
           <select
             id="stageSelect"
-            className={`submit-collection-button font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             value={stage}
             onChange={(e) => setStage(e.target.value)}
           >
@@ -112,7 +112,7 @@ const NewCollection: React.FC = () => {
         <button
           type="button"
           onClick={handleNext}
-          className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+          className="submit-collection-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
         >
           Next
         </button>
