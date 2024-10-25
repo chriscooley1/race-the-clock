@@ -9,7 +9,7 @@ export interface VisibilityStates {
 
 // Function to create tour steps based on visibility states
 export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
-  return [
+  const steps: Step[] = [
     {
       target: ".collection-setup",
       content: "Set up your collection here. Fill in the necessary details.",
@@ -22,8 +22,7 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
     },
     {
       target: "#typeSelect",
-      content:
-        "Select the type of items you want to include in your collection.",
+      content: "Select the type of items you want to include in your collection.",
     },
     {
       target: "#itemCount",
@@ -71,8 +70,15 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
       target: ".generated-sequence-preview",
       content: "Preview the generated sequence of items before saving.",
     },
-    // Add more steps as needed
   ];
+
+  // Filter steps based on visibility states
+  return steps.filter(step => {
+    if (step.target === ".dot-count-type") return visibilityStates.isDotCountTypeVisible;
+    if (step.target === "#minDots") return visibilityStates.isMinDotsVisible;
+    if (step.target === "#maxDots") return visibilityStates.isMaxDotsVisible;
+    return true; // Include all other steps
+  });
 };
 
 // Export a constant that uses the function
