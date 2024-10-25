@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import Navbar from "../../components/Navbar/Navbar";
@@ -149,6 +149,21 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     }
   }, [shuffledSequence, category, type, speed]);
 
+  const handleEndSession = useCallback(() => {
+    // Wrap in useCallback
+    console.log("Ending session..."); // Debug log
+    if (stopCondition === "timer") {
+      console.log(
+        "Session ended due to timer. Redirecting to Your Collections...",
+      );
+      navigate("/your-collections");
+    } else {
+      console.log("Session ended. Redirecting to Your Collections...");
+      navigate("/your-collections");
+    }
+  }, [stopCondition, navigate]); // Include dependencies
+
+  // Move this useEffect below the handleEndSession declaration
   useEffect(() => {
     if (
       shuffledSequence.length > 0 &&
@@ -189,7 +204,16 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       setIntervalId(interval as unknown as number);
       return () => clearInterval(interval);
     }
-  }, [shuffledSequence, speed, isPaused, category, type, answerDisplayTime, stopCondition]);
+  }, [
+    shuffledSequence,
+    speed,
+    isPaused,
+    category,
+    type,
+    answerDisplayTime,
+    stopCondition,
+    handleEndSession, // Ensure this is included
+  ]);
 
   useEffect(() => {
     if (stopCondition === "timer") {
@@ -229,17 +253,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       (category === "Math" && type === "mathProblems")
     ) {
       setShowAnswer(!showAnswer);
-    }
-  };
-
-  const handleEndSession = () => {
-    console.log("Ending session..."); // Debug log
-    if (stopCondition === "timer") {
-      console.log("Session ended due to timer. Redirecting to Your Collections...");
-      navigate("/your-collections"); // Use navigate instead of history.push
-    } else {
-      console.log("Session ended. Redirecting to Your Collections...");
-      navigate("/your-collections"); // Use navigate instead of history.push
     }
   };
 

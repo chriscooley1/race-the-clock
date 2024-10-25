@@ -65,7 +65,11 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
 
   const handleStartClick = () => {
     const calculatedSpeed = calculateSpeed();
-    console.log("Starting session with timer values:", timerMinutes, timerSeconds); // Debug log
+    console.log(
+      "Starting session with timer values:",
+      timerMinutes,
+      timerSeconds,
+    ); // Debug log
     onStart(
       minutes,
       seconds,
@@ -172,8 +176,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               aria-label="Select stop condition"
               value={stopCondition}
               onChange={(e) => {
-                setStopCondition(e.target.value);
-                if (e.target.value === "timer") {
+                const selectedCondition = e.target.value;
+                setStopCondition(selectedCondition);
+                if (selectedCondition === "timer") {
                   setTimerMinutes(0); // Reset timer minutes when switching to timer
                   setTimerSeconds(0); // Reset timer seconds when switching to timer
                 }
