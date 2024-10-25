@@ -13,7 +13,10 @@ const BadgesAchievements: React.FC = () => {
       // Simulate a delay for loading
       await new Promise((resolve) => setTimeout(resolve, 1000));
       // Example data
-      setBadges(["Read 60 Letters in a Minute", "Complete an Advanced Session"]);
+      setBadges([
+        "Read 60 Letters in a Minute",
+        "Complete an Advanced Session",
+      ]);
       setAchievements(["First Login", "Completed 5 Sessions"]);
       setIsLoading(false);
     };
@@ -41,7 +44,7 @@ const BadgesAchievements: React.FC = () => {
       {isLoading ? (
         <p>Loading badges and achievements...</p>
       ) : (
-        <div className="w-full max-w-2xl mt-8">
+        <div className="mt-8 w-full max-w-2xl">
           <div className="badges-section">
             <h2 className="text-2xl font-semibold">Badges</h2>
             <ul className="list-disc pl-5">

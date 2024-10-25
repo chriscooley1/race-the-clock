@@ -42,9 +42,7 @@ const Reports: React.FC = () => {
       } reports`}
     >
       <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
-      <p>
-        View detailed reports of user performance after each session.
-      </p>
+      <p>View detailed reports of user performance after each session.</p>
       {isLoading ? (
         <p>Loading reports...</p>
       ) : (
@@ -57,7 +55,9 @@ const Reports: React.FC = () => {
                 <p>Time Taken: {report.time_taken} seconds</p>
                 <p>Missed Items: {report.missed_items}</p>
                 <p>Skipped Items: {report.skipped_items}</p>
-                <p>Created At: {new Date(report.created_at).toLocaleString()}</p>
+                <p>
+                  Created At: {new Date(report.created_at).toLocaleString()}
+                </p>
               </li>
             ))}
           </ul>

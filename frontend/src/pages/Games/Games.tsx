@@ -24,20 +24,21 @@ const Games: React.FC = () => {
     >
       <h1 className="mb-8 text-3xl font-bold">Games</h1>
       <p>
-        Welcome to the Games page! Here are some fun activities to enhance engagement.
+        Welcome to the Games page! Here are some fun activities to enhance
+        engagement.
       </p>
 
       {isLoading ? (
         <p>Loading games...</p>
       ) : (
         <div className="w-full max-w-2xl">
-          <div className="mt-8 matching-game">
+          <div className="matching-game mt-8">
             <h2 className="text-2xl font-semibold">Matching Game</h2>
             <p>Match the letters with the corresponding images!</p>
             {/* Add your game logic and UI here */}
           </div>
 
-          <div className="mt-8 multiple-words-game">
+          <div className="multiple-words-game mt-8">
             <h2 className="text-2xl font-semibold">Multiple Words Game</h2>
             <p>Drag and connect words to their corresponding cards!</p>
             {/* Add your game logic and UI here */}

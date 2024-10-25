@@ -651,12 +651,36 @@ const CollectionSetup: React.FC = () => {
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {previewSequence.map((item, index) => (
-              <div key={index} className="rounded-md border border-gray-300 p-2">
+              <div
+                key={index}
+                className="rounded-md border border-gray-300 p-2"
+              >
                 <p className="text-center">{item.name}</p>
-                {item.svg && <img src={item.svg} alt={item.name} className="h-auto w-full" />}
-                <div className="flex justify-between mt-2">
-                  <button onClick={() => editItem(index, prompt("Edit item name:", item.name) || item.name)} className="text-blue-500">Edit</button>
-                  <button onClick={() => deleteItem(index)} className="text-red-500">Delete</button>
+                {item.svg && (
+                  <img
+                    src={item.svg}
+                    alt={item.name}
+                    className="h-auto w-full"
+                  />
+                )}
+                <div className="mt-2 flex justify-between">
+                  <button
+                    onClick={() =>
+                      editItem(
+                        index,
+                        prompt("Edit item name:", item.name) || item.name,
+                      )
+                    }
+                    className="text-blue-500"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteItem(index)}
+                    className="text-red-500"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}

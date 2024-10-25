@@ -25,15 +25,33 @@ const Resources: React.FC = () => {
 
       // Example FAQs
       setFaqs([
-        { question: "What is the purpose of this platform?", answer: "To help students improve their reading skills." },
-        { question: "How can I track my progress?", answer: "You can view your progress in the dashboard." },
+        {
+          question: "What is the purpose of this platform?",
+          answer: "To help students improve their reading skills.",
+        },
+        {
+          question: "How can I track my progress?",
+          answer: "You can view your progress in the dashboard.",
+        },
       ]);
 
       // Example instructional videos
       setVideos([
-        { title: "Your Collections", description: "Overview of the Your Collections page.", videoUrl: "https://www.example.com/video1" },
-        { title: "Discover Collections", description: "How to use the Discover Collections page.", videoUrl: "https://www.example.com/video2" },
-        { title: "Name Generator", description: "Guide on how to use the Name Generator feature.", videoUrl: "https://www.example.com/video3" },
+        {
+          title: "Your Collections",
+          description: "Overview of the Your Collections page.",
+          videoUrl: "https://www.example.com/video1",
+        },
+        {
+          title: "Discover Collections",
+          description: "How to use the Discover Collections page.",
+          videoUrl: "https://www.example.com/video2",
+        },
+        {
+          title: "Name Generator",
+          description: "Guide on how to use the Name Generator feature.",
+          videoUrl: "https://www.example.com/video3",
+        },
       ]);
 
       setIsLoading(false);
@@ -55,7 +73,9 @@ const Resources: React.FC = () => {
       ) : (
         <>
           <section className="mb-8 w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">Frequently Asked Questions</h2>
+            <h2 className="mb-4 text-2xl font-semibold">
+              Frequently Asked Questions
+            </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
                 <div key={index}>
@@ -67,13 +87,20 @@ const Resources: React.FC = () => {
           </section>
 
           <section className="w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">Instructional Videos</h2>
+            <h2 className="mb-4 text-2xl font-semibold">
+              Instructional Videos
+            </h2>
             <div className="space-y-6">
               {videos.map((video, index) => (
                 <div key={index}>
                   <h3 className="mb-2 text-xl font-medium">{video.title}</h3>
                   <p>{video.description}</p>
-                  <a href={video.videoUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                  <a
+                    href={video.videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 underline"
+                  >
                     Watch Video
                   </a>
                 </div>

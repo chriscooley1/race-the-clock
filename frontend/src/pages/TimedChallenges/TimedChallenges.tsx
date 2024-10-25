@@ -29,8 +29,14 @@ const TimedChallenges: React.FC = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const fetchedCollections = await fetchCollections(getAccessTokenSilently);
-        setCollections(fetchedCollections.filter((collection: Collection) => collection.collection_id != null));
+        const fetchedCollections = await fetchCollections(
+          getAccessTokenSilently,
+        );
+        setCollections(
+          fetchedCollections.filter(
+            (collection: Collection) => collection.collection_id != null,
+          ),
+        );
       } catch (error) {
         console.error("Error loading collections:", error);
       } finally {
@@ -48,9 +54,7 @@ const TimedChallenges: React.FC = () => {
       } timed-challenges`}
     >
       <h1 className="mb-8 text-3xl font-bold">Timed Challenges</h1>
-      <p>
-        Complete as many challenges as you can within the time limit!
-      </p>
+      <p>Complete as many challenges as you can within the time limit!</p>
       {isLoading ? (
         <p>Loading collections...</p>
       ) : (
@@ -59,7 +63,8 @@ const TimedChallenges: React.FC = () => {
           <ul>
             {collections.map((collection: Collection) => (
               <li key={collection.collection_id}>
-                {collection.name} - {getItemsCount(collection.description)} items
+                {collection.name} - {getItemsCount(collection.description)}{" "}
+                items
               </li>
             ))}
           </ul>

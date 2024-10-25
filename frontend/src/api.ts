@@ -513,7 +513,7 @@ export const checkSubscription = async (
 
 // Function to fetch reports
 export const fetchReports = async (
-  getAccessTokenSilently: () => Promise<string>
+  getAccessTokenSilently: () => Promise<string>,
 ) => {
   try {
     const token = await getAccessTokenSilently();
