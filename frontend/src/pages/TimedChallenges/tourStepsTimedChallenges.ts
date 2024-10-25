@@ -12,8 +12,8 @@ export const tourSteps: Step[] = [
       "This is the Timed Challenges page where you can test your skills.",
   },
   {
-    target: ".timed-challenge-game", // Target the Timed Challenge Game component
-    content: "Complete as many challenges as you can within the time limit!",
+    target: ".collections-overview", // Target the collections overview component
+    content: "Here are your collections for the timed challenges.",
   },
   // Add more steps as needed
 ];

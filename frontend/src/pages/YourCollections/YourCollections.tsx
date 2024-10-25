@@ -496,6 +496,7 @@ const YourCollections: React.FC = () => {
           collectionName={selectedCollection.name}
           items={parseDescription(selectedCollection.description)}
           onSave={handleSaveUpdatedItems}
+          type={selectedCollection.type}
         />
       )}
       {isDuplicateModalOpen && (

@@ -1,39 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import { fetchReports } from "../../api";
+import { useAuth0 } from "@auth0/auth0-react";
+
+// Define the Report interface
+interface Report {
+  report_id: number;
+  user_id: number;
+  total_items: number;
+  time_taken: number; // in seconds
+  missed_items: number;
+  skipped_items: number;
+  created_at: string;
+}
 
 const Reports: React.FC = () => {
   const { theme } = useTheme();
+  const { getAccessTokenSilently } = useAuth0();
+  const [reports, setReports] = useState<Report[]>([]); // State to hold reports
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
 
-  const ReportsOverview: React.FC = () => {
-    return (
-      <div className="reports-overview">
-        <h2>Reports Overview</h2>
-        <p>View detailed reports of user performance after each session.</p>
-        {/* Add your report logic and UI here */}
-      </div>
-    );
-  };
+  useEffect(() => {
+    const loadReports = async () => {
+      try {
+        const fetchedReports = await fetchReports(getAccessTokenSilently);
+        setReports(fetchedReports);
+      } catch (error) {
+        console.error("Error loading reports:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadReports();
+  }, [getAccessTokenSilently]);
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] md:pl-[250px] ${
+      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-      }`}
+      } reports`}
     >
-      <h1 className="mb-8 text-3xl font-bold">Reports</h1>
+      <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
       <p>
-        Reports: After each session, a report will show the user's performance,
-        including total items shown, time taken, missed items, and skipped
-        items. These reports could help teachers monitor student progress and
-        adjust accordingly.
+        View detailed reports of user performance after each session.
       </p>
-      <p>
-        Just like the Session Reports feature, but I want to make it so that you
-        have the ability to attach these reports to individual IDs. I want it to
-        be added to names that you choose, even though it's not the person
-        signed in. That way teachers can track individual students' progress.
-      </p>
-      <ReportsOverview /> {/* Add the reports overview component here */}
+      {isLoading ? (
+        <p>Loading reports...</p>
+      ) : (
+        <div className="reports-overview">
+          <h2>Reports Overview</h2>
+          <ul>
+            {reports.map((report) => (
+              <li key={report.report_id}>
+                <p>Total Items: {report.total_items}</p>
+                <p>Time Taken: {report.time_taken} seconds</p>
+                <p>Missed Items: {report.missed_items}</p>
+                <p>Skipped Items: {report.skipped_items}</p>
+                <p>Created At: {new Date(report.created_at).toLocaleString()}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {/* Add your report logic and UI here */}
     </div>
   );
 };
