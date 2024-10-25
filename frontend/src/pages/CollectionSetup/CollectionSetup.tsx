@@ -324,7 +324,8 @@ const CollectionSetup: React.FC = () => {
         throw new Error("Current user is undefined");
       }
 
-      const collectionData = sequence.map((item, index) => ({
+      // Use previewSequence instead of sequence
+      const collectionData = previewSequence.map((item, index) => ({
         id: index + 1,
         name: item.name,
         svg: item.svg,
