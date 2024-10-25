@@ -1,57 +1,87 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface InstructionalVideo {
+  title: string;
+  description: string;
+  videoUrl: string; // URL to the instructional video
+}
 
 const Resources: React.FC = () => {
   const { theme } = useTheme();
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [videos, setVideos] = useState<InstructionalVideo[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      // Simulate fetching data
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Example FAQs
+      setFaqs([
+        { question: "What is the purpose of this platform?", answer: "To help students improve their reading skills." },
+        { question: "How can I track my progress?", answer: "You can view your progress in the dashboard." },
+      ]);
+
+      // Example instructional videos
+      setVideos([
+        { title: "Your Collections", description: "Overview of the Your Collections page.", videoUrl: "https://www.example.com/video1" },
+        { title: "Discover Collections", description: "How to use the Discover Collections page.", videoUrl: "https://www.example.com/video2" },
+        { title: "Name Generator", description: "Guide on how to use the Name Generator feature.", videoUrl: "https://www.example.com/video3" },
+      ]);
+
+      setIsLoading(false);
+    };
+
+    loadData();
+  }, []);
 
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] md:pl-[250px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-      }`}
+      } resources`}
     >
       <h1 className="mb-8 text-3xl font-bold">Resources</h1>
 
-      <section className="mb-8 w-full max-w-3xl">
-        <h2 className="mb-4 text-2xl font-semibold">
-          Frequently Asked Questions
-        </h2>
-        <div className="space-y-4">
-          {/* Add FAQ items here */}
-          <div>
-            <h3 className="mb-2 text-xl font-medium">Question 1</h3>
-            <p>Answer to question 1</p>
-          </div>
-          <div>
-            <h3 className="mb-2 text-xl font-medium">Question 2</h3>
-            <p>Answer to question 2</p>
-          </div>
-        </div>
-      </section>
+      {isLoading ? (
+        <p>Loading resources...</p>
+      ) : (
+        <>
+          <section className="mb-8 w-full max-w-3xl">
+            <h2 className="mb-4 text-2xl font-semibold">Frequently Asked Questions</h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index}>
+                  <h3 className="mb-2 text-xl font-medium">{faq.question}</h3>
+                  <p>{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-      <section className="w-full max-w-3xl">
-        <h2 className="mb-4 text-2xl font-semibold">Instructional Videos</h2>
-        <div className="space-y-6">
-          <div>
-            <h3 className="mb-2 text-xl font-medium">Your Collections</h3>
-            <p>Description of the Your Collections page and its features.</p>
-            {/* Add video or link to video here */}
-          </div>
-          <div>
-            <h3 className="mb-2 text-xl font-medium">Discover Collections</h3>
-            <p>
-              Description of the Discover Collections page and how to use it.
-            </p>
-            {/* Add video or link to video here */}
-          </div>
-          <div>
-            <h3 className="mb-2 text-xl font-medium">Name Generator</h3>
-            <p>Guide on how to use the Name Generator feature.</p>
-            {/* Add video or link to video here */}
-          </div>
-          {/* Add more instructional content for other pages */}
-        </div>
-      </section>
+          <section className="w-full max-w-3xl">
+            <h2 className="mb-4 text-2xl font-semibold">Instructional Videos</h2>
+            <div className="space-y-6">
+              {videos.map((video, index) => (
+                <div key={index}>
+                  <h3 className="mb-2 text-xl font-medium">{video.title}</h3>
+                  <p>{video.description}</p>
+                  <a href={video.videoUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                    Watch Video
+                  </a>
+                </div>
+              ))}
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 };
