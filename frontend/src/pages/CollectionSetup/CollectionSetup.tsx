@@ -324,7 +324,8 @@ const CollectionSetup: React.FC = () => {
         throw new Error("Current user is undefined");
       }
 
-      const collectionData = sequence.map((item, index) => ({
+      // Use previewSequence instead of sequence
+      const collectionData = previewSequence.map((item, index) => ({
         id: index + 1,
         name: item.name,
         svg: item.svg,
@@ -362,6 +363,19 @@ const CollectionSetup: React.FC = () => {
     );
   };
 
+  // Function to edit an item in the preview sequence
+  const editItem = (index: number, newName: string) => {
+    const updatedSequence = [...previewSequence];
+    updatedSequence[index].name = newName; // Update the name
+    setPreviewSequence(updatedSequence); // Set the updated sequence
+  };
+
+  // Function to delete an item from the preview sequence
+  const deleteItem = (index: number) => {
+    const updatedSequence = previewSequence.filter((_, i) => i !== index);
+    setPreviewSequence(updatedSequence); // Set the updated sequence
+  };
+
   if (!currentUser) {
     return <div className="p-4 text-center">Loading user information...</div>;
   }
@@ -384,7 +398,7 @@ const CollectionSetup: React.FC = () => {
                 Type:
               </label>
               <select
-                id="typeSelect" // Added ID for targeting
+                id="typeSelect"
                 className="font-caveat rounded border border-gray-300 bg-white p-2 text-center text-black"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
@@ -428,7 +442,7 @@ const CollectionSetup: React.FC = () => {
                 </label>
                 <input
                   type="number"
-                  id="itemCount" // Added ID for targeting
+                  id="itemCount"
                   className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                   value={itemCount}
                   min={1}
@@ -450,7 +464,7 @@ const CollectionSetup: React.FC = () => {
                 Dot Count Type:
               </label>
               <select
-                id="dotCountType" // Added ID for targeting
+                id="dotCountType"
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotCountType}
                 onChange={(e) =>
@@ -471,7 +485,7 @@ const CollectionSetup: React.FC = () => {
                 </label>
                 <input
                   type="number"
-                  id="itemCount" // Added ID for targeting
+                  id="itemCount"
                   className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                   value={itemCount}
                   min={1}
@@ -492,7 +506,7 @@ const CollectionSetup: React.FC = () => {
                   </label>
                   <input
                     type="number"
-                    id="minDots" // Added ID for targeting
+                    id="minDots"
                     className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                     value={minDots}
                     min={1}
@@ -511,7 +525,7 @@ const CollectionSetup: React.FC = () => {
                   </label>
                   <input
                     type="number"
-                    id="maxDots" // Added ID for targeting
+                    id="maxDots"
                     className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                     value={maxDots}
                     min={minDots}
@@ -532,7 +546,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <input
                 type="number"
-                id="collectionItemCount" // Added ID for targeting
+                id="collectionItemCount"
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
                 value={collectionItemCount}
                 min={1}
@@ -550,7 +564,7 @@ const CollectionSetup: React.FC = () => {
                 Dot Color:
               </label>
               <select
-                id="dot-color" // Added ID for targeting
+                id="dot-color"
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotColor}
                 onChange={(e) => setDotColor(e.target.value)}
@@ -570,7 +584,7 @@ const CollectionSetup: React.FC = () => {
                 Dot Shape:
               </label>
               <select
-                id="dot-shape" // Added ID for targeting
+                id="dot-shape"
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotShape}
                 onChange={(e) => setDotShape(e.target.value)}
@@ -598,7 +612,7 @@ const CollectionSetup: React.FC = () => {
           </label>
           <input
             type="file"
-            id="fileUpload" // Added ID for targeting
+            id="fileUpload"
             className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
             onChange={handleFileChange}
           />
@@ -637,22 +651,13 @@ const CollectionSetup: React.FC = () => {
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {previewSequence.map((item, index) => (
-              <div
-                key={index}
-                className="rounded-md border border-gray-300 p-2"
-              >
-                {category === "Math" && type === "mathProblems" ? (
-                  <p className="text-center">{item.name.split("|")[0]}</p>
-                ) : (
-                  <p className="text-center">{item.name}</p>
-                )}
-                {item.svg && (
-                  <img
-                    src={item.svg}
-                    alt={item.name}
-                    className="h-auto w-full"
-                  />
-                )}
+              <div key={index} className="rounded-md border border-gray-300 p-2">
+                <p className="text-center">{item.name}</p>
+                {item.svg && <img src={item.svg} alt={item.name} className="h-auto w-full" />}
+                <div className="flex justify-between mt-2">
+                  <button onClick={() => editItem(index, prompt("Edit item name:", item.name) || item.name)} className="text-blue-500">Edit</button>
+                  <button onClick={() => deleteItem(index)} className="text-red-500">Delete</button>
+                </div>
               </div>
             ))}
           </div>
@@ -681,11 +686,11 @@ const CollectionSetup: React.FC = () => {
         </div>
       )}
       <GuidedTour
-        steps={steps} // Pass the steps array
-        isRunning={true} // Set this based on your logic
-        onComplete={() => console.log("Tour completed")} // Handle completion
-        currentStep={0} // Set the current step
-        onStepChange={(step) => console.log("Step changed to:", step)} // Handle step change
+        steps={steps}
+        isRunning={true}
+        onComplete={() => console.log("Tour completed")}
+        currentStep={0}
+        onStepChange={(step) => console.log("Step changed to:", step)}
       />
     </div>
   );

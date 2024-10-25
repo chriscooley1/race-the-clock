@@ -9,6 +9,7 @@ interface EditCollectionModalProps {
     items: { name: string; id?: number }[],
     collectionName: string,
   ) => void;
+  type: string; // Added type prop
 }
 
 const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
@@ -17,6 +18,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   collectionName,
   items,
   onSave,
+  type, // Destructure type prop
 }) => {
   const [editedItems, setEditedItems] = useState<
     { name: string; id?: number }[]
@@ -56,8 +58,16 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   }, [isOpen, onClose]);
 
   const handleAddItem = () => {
-    console.log("Adding new item...");
-    setEditedItems([{ name: "" }, ...editedItems]);
+    if (type === "Number Sense") {
+      // Logic for adding a Number Sense item
+      setEditedItems([{ name: "New Number Sense Item" }, ...editedItems]);
+    } else if (type === "Periodic Table") {
+      // Logic for adding a Periodic Table item
+      setEditedItems([{ name: "New Periodic Table Item" }, ...editedItems]);
+    } else {
+      // Default logic for other types
+      setEditedItems([{ name: "" }, ...editedItems]);
+    }
   };
 
   const handleRemoveItem = (index: number) => {
