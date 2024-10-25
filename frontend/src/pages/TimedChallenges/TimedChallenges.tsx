@@ -45,7 +45,7 @@ const TimedChallenges: React.FC = () => {
     <div
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-      }`}
+      } timed-challenges`}
     >
       <h1 className="mb-8 text-3xl font-bold">Timed Challenges</h1>
       <p>
@@ -54,10 +54,10 @@ const TimedChallenges: React.FC = () => {
       {isLoading ? (
         <p>Loading collections...</p>
       ) : (
-        <div>
+        <div className="collections-overview">
           <h2>Your Collections</h2>
           <ul>
-            {collections.map((collection: Collection) => ( // Explicitly define the type here
+            {collections.map((collection: Collection) => (
               <li key={collection.collection_id}>
                 {collection.name} - {getItemsCount(collection.description)} items
               </li>

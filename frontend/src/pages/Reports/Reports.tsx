@@ -39,7 +39,7 @@ const Reports: React.FC = () => {
     <div
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-      }`}
+      } reports`}
     >
       <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
       <p>
@@ -48,7 +48,7 @@ const Reports: React.FC = () => {
       {isLoading ? (
         <p>Loading reports...</p>
       ) : (
-        <div>
+        <div className="reports-overview">
           <h2>Reports Overview</h2>
           <ul>
             {reports.map((report) => (
