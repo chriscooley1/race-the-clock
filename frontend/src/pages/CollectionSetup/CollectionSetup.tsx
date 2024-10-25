@@ -16,6 +16,9 @@ import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { User } from "../../types/user";
 import { useTheme } from "../../context/ThemeContext";
+import { VisibilityStates, createTourSteps } from "./tourStepsCollectionSetup";
+import { Step } from "react-joyride";
+import GuidedTour from "../../components/GuidedTour";
 
 type Operation =
   | "multiplication"
@@ -52,6 +55,16 @@ const CollectionSetup: React.FC = () => {
   const [previewSequence, setPreviewSequence] = useState<
     Array<{ name: string; svg?: string; count?: number }>
   >([]);
+
+  // Define visibility states
+  const visibilityStates: VisibilityStates = {
+    isDotCountTypeVisible: true,
+    isMinDotsVisible: true,
+    isMaxDotsVisible: true,
+  };
+
+  // Call createTourSteps with visibilityStates
+  const steps: Step[] = createTourSteps(visibilityStates); // Ensure this returns the correct type
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -667,6 +680,13 @@ const CollectionSetup: React.FC = () => {
           </div>
         </div>
       )}
+      <GuidedTour
+        steps={steps} // Pass the steps array
+        isRunning={true} // Set this based on your logic
+        onComplete={() => console.log("Tour completed")} // Handle completion
+        currentStep={0} // Set the current step
+        onStepChange={(step) => console.log("Step changed to:", step)} // Handle step change
+      />
     </div>
   );
 };

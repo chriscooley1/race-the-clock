@@ -4,13 +4,16 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useTheme } from "../../context/ThemeContext";
 import { useTour } from "../../context/TourContext";
 import { tourStepsNavbar } from "./tourStepsNavbar";
+import { tourSteps as collectionSetupSteps } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
+import { VisibilityStates } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
+import { Step } from "react-joyride";
 
 interface NavbarProps {
   isPaused?: boolean;
   onPauseResume?: () => void;
   onBack?: () => void;
   hasBackButton?: boolean;
-  onStartTour: () => void;
+  onStartTour?: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -67,13 +70,29 @@ const Navbar: React.FC<NavbarProps> = ({
     };
   }, []);
 
+  const handleStartTour = () => {
+    // Determine visibility states based on your application logic
+    const visibilityStates: VisibilityStates = {
+      isDotCountTypeVisible: true, // Set based on your conditions
+      isMinDotsVisible: true,
+      isMaxDotsVisible: true,
+    };
+
+    let steps: Step[];
+    if (location.pathname === "/collection-setup") {
+      steps = collectionSetupSteps(visibilityStates); // Ensure this returns Step[]
+    } else {
+      steps = tourStepsNavbar; // Default to navbar steps
+    }
+    startTour(steps);
+    completeTour("navbar"); // Mark navbar tour as completed
+  };
+
   useEffect(() => {
     if (!toursCompleted.navbar) {
-      // Start the tour for the navbar
-      startTour(tourStepsNavbar);
-      completeTour("navbar"); // Mark as completed
+      handleStartTour(); // Start the tour for the navbar
     }
-  }, [toursCompleted, startTour, completeTour]);
+  }, [toursCompleted]);
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
