@@ -59,6 +59,16 @@ const CollectionSetup: React.FC = () => {
     isDotCountTypeVisible: true,
     isMinDotsVisible: true,
     isMaxDotsVisible: true,
+    isTypeSelectVisible: true,
+    isItemCountVisible: true,
+    isCollectionItemCountVisible: true,
+    isDotColorVisible: true,
+    isDotShapeVisible: true,
+    isGenerateRandomSequenceButtonVisible: true,
+    isFileUploadVisible: true,
+    isNextButtonVisible: true,
+    isClearButtonVisible: true,
+    isGeneratedSequencePreviewVisible: true,
   });
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isTourReady, setIsTourReady] = useState(false);
@@ -67,14 +77,29 @@ const CollectionSetup: React.FC = () => {
   const steps: Step[] = createTourSteps(visibilityStates);
 
   // Example of updating visibility states based on some condition
-  useEffect(() => {
-    // Update visibility states based on your logic
-    setVisibilityStates({
-      isDotCountTypeVisible: true, // or false based on your logic
-      isMinDotsVisible: true, // or false based on your logic
-      isMaxDotsVisible: true, // or false based on your logic
-    });
-  }, [/* dependencies */]);
+  useEffect(
+    () => {
+      // Update visibility states based on your logic
+      setVisibilityStates({
+        isDotCountTypeVisible: true, // or false based on your logic
+        isMinDotsVisible: true, // or false based on your logic
+        isMaxDotsVisible: true, // or false based on your logic
+        isTypeSelectVisible: true, // or false based on your logic
+        isItemCountVisible: true, // or false based on your logic
+        isCollectionItemCountVisible: true, // or false based on your logic
+        isDotColorVisible: true, // or false based on your logic
+        isDotShapeVisible: true, // or false based on your logic
+        isGenerateRandomSequenceButtonVisible: true, // or false based on your logic
+        isFileUploadVisible: true, // or false based on your logic
+        isNextButtonVisible: true, // or false based on your logic
+        isClearButtonVisible: true, // or false based on your logic
+        isGeneratedSequencePreviewVisible: isGenerated, // Example condition
+      });
+    },
+    [
+      /* dependencies */
+    ],
+  );
 
   // Call createTourSteps with updated visibilityStates
   useEffect(() => {
@@ -144,10 +169,15 @@ const CollectionSetup: React.FC = () => {
     }
   }, [type, operation]);
 
-  useEffect(() => {
-    // Assuming you have logic to determine when the tour is ready
-    setIsTourReady(true);
-  }, [/* dependencies that indicate readiness */]);
+  useEffect(
+    () => {
+      // Assuming you have logic to determine when the tour is ready
+      setIsTourReady(true);
+    },
+    [
+      /* dependencies that indicate readiness */
+    ],
+  );
 
   useEffect(() => {
     // Update visibility states based on the selected type
@@ -155,9 +185,19 @@ const CollectionSetup: React.FC = () => {
       isDotCountTypeVisible: type === "numberSense", // Example condition
       isMinDotsVisible: dotCountType === "random", // Example condition
       isMaxDotsVisible: dotCountType === "random", // Example condition
+      isTypeSelectVisible: true, // or false based on your logic
+      isItemCountVisible: true, // or false based on your logic
+      isCollectionItemCountVisible: true, // or false based on your logic
+      isDotColorVisible: true, // or false based on your logic
+      isDotShapeVisible: true, // or false based on your logic
+      isGenerateRandomSequenceButtonVisible: true, // or false based on your logic
+      isFileUploadVisible: true, // or false based on your logic
+      isNextButtonVisible: true, // or false based on your logic
+      isClearButtonVisible: true, // or false based on your logic
+      isGeneratedSequencePreviewVisible: isGenerated, // Example condition
     };
     setVisibilityStates(newVisibilityStates);
-  }, [type, dotCountType]); // Add dependencies as needed
+  }, [type, dotCountType, isGenerated]); // Add dependencies as needed
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -656,7 +696,7 @@ const CollectionSetup: React.FC = () => {
         )}
         <button
           type="button"
-          className="rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
+          className="generate-random-sequence-button rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
           onClick={generateRandomSequence}
         >
           Generate Random Sequence
@@ -684,7 +724,7 @@ const CollectionSetup: React.FC = () => {
             </button>
             <button
               type="button"
-              className="mt-2 rounded-md bg-yellow-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-yellow-600"
+              className="clear-button mt-2 rounded-md bg-yellow-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-yellow-600"
               onClick={handleClear}
             >
               Clear
@@ -693,7 +733,7 @@ const CollectionSetup: React.FC = () => {
         ) : (
           <button
             type="button"
-            className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+            className="next-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
             onClick={handleNext}
           >
             Next
@@ -702,7 +742,7 @@ const CollectionSetup: React.FC = () => {
       </div>
       {isGenerated && category !== "Number Sense" && (
         <div className="mt-6">
-          <h3 className="mb-2 text-center text-xl font-bold">
+          <h3 className="generated-sequence-preview mb-2 text-center text-xl font-bold">
             Generated Sequence Preview:
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
