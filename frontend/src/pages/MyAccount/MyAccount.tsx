@@ -32,7 +32,7 @@ const MyAccount: React.FC = () => {
       className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
     >
       <div
-        className={`w-full max-w-md rounded-lg p-6 shadow-md ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`}
+        className={`w-full max-w-md rounded-lg p-16 shadow-md ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`}
       >
         <h1 className="mb-6 text-center text-2xl font-bold">My Account</h1>
         {user ? (
