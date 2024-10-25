@@ -42,7 +42,7 @@ const NameGenerator: React.FC = () => {
     } catch (error) {
       console.error("Error loading name list:", error);
     }
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, API_URL]); // Added API_URL to the dependency array
 
   useEffect(() => {
     loadNameList();

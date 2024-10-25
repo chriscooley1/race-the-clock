@@ -614,8 +614,9 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
       <div className="flex flex-col items-center justify-end">
         <button
           type="button"
-          className="start-collection-button mb-2.5 w-32 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+          className="start-collection-button mb-2.5 w-full cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
           style={{ backgroundColor: "green" }}
+          onClick={() => handleStartCollection(collection.collection_id)}
         >
           Start
         </button>
@@ -624,6 +625,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
             type="button"
             className="edit-collection-button flex-1 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
             style={{ backgroundColor: "yellow" }}
+            onClick={() => handleEditButtonClick(collection)}
           >
             Edit
           </button>
@@ -631,6 +633,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
             type="button"
             className="delete-collection-button flex-1 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
             style={{ backgroundColor: "red" }}
+            onClick={() => handleDeleteCollection(collection.collection_id)}
           >
             Delete
           </button>

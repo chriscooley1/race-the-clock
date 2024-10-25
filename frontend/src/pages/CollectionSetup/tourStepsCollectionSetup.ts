@@ -22,7 +22,8 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
     },
     {
       target: "#typeSelect",
-      content: "Select the type of items you want to include in your collection.",
+      content:
+        "Select the type of items you want to include in your collection.",
     },
     {
       target: "#itemCount",
@@ -75,7 +76,8 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
 };
 
 // Export a constant that uses the function
-export const tourSteps = (visibilityStates: VisibilityStates) => createTourSteps(visibilityStates);
+export const tourSteps = (visibilityStates: VisibilityStates) =>
+  createTourSteps(visibilityStates);
 
 // You may need to export a function to initialize the tour with the visibility states
 export const initializeTour = (visibilityStates: VisibilityStates) => {

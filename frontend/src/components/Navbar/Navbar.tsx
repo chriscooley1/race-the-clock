@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTheme } from "../../context/ThemeContext";
@@ -70,7 +70,7 @@ const Navbar: React.FC<NavbarProps> = ({
     };
   }, []);
 
-  const handleStartTour = () => {
+  const handleStartTour = useCallback(() => {
     // Determine visibility states based on your application logic
     const visibilityStates: VisibilityStates = {
       isDotCountTypeVisible: true, // Set based on your conditions
@@ -86,13 +86,13 @@ const Navbar: React.FC<NavbarProps> = ({
     }
     startTour(steps);
     completeTour("navbar"); // Mark navbar tour as completed
-  };
+  }, [location.pathname, startTour, completeTour]);
 
   useEffect(() => {
     if (!toursCompleted.navbar) {
       handleStartTour(); // Start the tour for the navbar
     }
-  }, [toursCompleted]);
+  }, [toursCompleted, handleStartTour]);
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
