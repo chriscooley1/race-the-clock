@@ -1,43 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 
 const Games: React.FC = () => {
   const { theme } = useTheme();
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
 
-  const MatchingGame: React.FC = () => {
-    return (
-      <div className="matching-game">
-        <h2>Matching Game Example</h2>
-        <p>Match the letters with the corresponding images!</p>
-        {/* Add your game logic and UI here */}
-      </div>
-    );
-  };
+  useEffect(() => {
+    // Simulate loading data or setup
+    const loadData = async () => {
+      // Simulate a delay for loading
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setIsLoading(false);
+    };
 
-  const MultipleWordsGame: React.FC = () => {
-    return (
-      <div className="multiple-words-game">
-        <h2>Multiple Words Game Example</h2>
-        <p>Drag and connect words to their corresponding cards!</p>
-        {/* Add your game logic and UI here */}
-      </div>
-    );
-  };
+    loadData();
+  }, []);
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] md:pl-[250px] ${
+      className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
       <h1 className="mb-8 text-3xl font-bold">Games</h1>
       <p>
-        Matching Games: Develop a matching game where students associate letters
-        or words with images, enhancing engagement.
+        Welcome to the Games page! Here are some fun activities to enhance engagement.
       </p>
-      <p>Multiple words, drag and connect to a different word or card</p>
-      <MatchingGame />
-      <MultipleWordsGame />
+
+      {isLoading ? (
+        <p>Loading games...</p>
+      ) : (
+        <div className="w-full max-w-2xl">
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold">Matching Game</h2>
+            <p>Match the letters with the corresponding images!</p>
+            {/* Add your game logic and UI here */}
+          </div>
+
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold">Multiple Words Game</h2>
+            <p>Drag and connect words to their corresponding cards!</p>
+            {/* Add your game logic and UI here */}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
