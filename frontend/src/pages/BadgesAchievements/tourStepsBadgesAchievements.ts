@@ -16,11 +16,13 @@ export const tourSteps: Step[] = [
   },
   {
     target: "h1.mb-8", // Target the main title
-    content: "This is the Badges & Achievements page where you can track progress.",
+    content:
+      "This is the Badges & Achievements page where you can track progress.",
   },
   {
     target: ".loading-message", // Target the loading message
-    content: "This message appears while your badges and achievements are loading.",
+    content:
+      "This message appears while your badges and achievements are loading.",
     placement: "bottom", // Optional: specify placement
   },
   // Add more steps as needed

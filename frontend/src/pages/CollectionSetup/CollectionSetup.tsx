@@ -55,16 +55,59 @@ const CollectionSetup: React.FC = () => {
   const [previewSequence, setPreviewSequence] = useState<
     Array<{ name: string; svg?: string; count?: number }>
   >([]);
-
-  // Define visibility states
-  const visibilityStates: VisibilityStates = {
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
     isDotCountTypeVisible: true,
     isMinDotsVisible: true,
     isMaxDotsVisible: true,
-  };
+    isTypeSelectVisible: true,
+    isItemCountVisible: true,
+    isCollectionItemCountVisible: true,
+    isDotColorVisible: true,
+    isDotShapeVisible: true,
+    isGenerateRandomSequenceButtonVisible: true,
+    isFileUploadVisible: true,
+    isNextButtonVisible: true,
+    isClearButtonVisible: true,
+    isGeneratedSequencePreviewVisible: true,
+  });
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [isTourReady, setIsTourReady] = useState(false);
 
-  // Call createTourSteps with visibilityStates
-  const steps: Step[] = createTourSteps(visibilityStates); // Ensure this returns the correct type
+  // Define the steps variable
+  const steps: Step[] = createTourSteps(visibilityStates);
+
+  // Example of updating visibility states based on some condition
+  useEffect(
+    () => {
+      // Update visibility states based on your logic
+      setVisibilityStates({
+        isDotCountTypeVisible: true, // or false based on your logic
+        isMinDotsVisible: true, // or false based on your logic
+        isMaxDotsVisible: true, // or false based on your logic
+        isTypeSelectVisible: true, // or false based on your logic
+        isItemCountVisible: true, // or false based on your logic
+        isCollectionItemCountVisible: true, // or false based on your logic
+        isDotColorVisible: true, // or false based on your logic
+        isDotShapeVisible: true, // or false based on your logic
+        isGenerateRandomSequenceButtonVisible: true, // or false based on your logic
+        isFileUploadVisible: true, // or false based on your logic
+        isNextButtonVisible: true, // or false based on your logic
+        isClearButtonVisible: true, // or false based on your logic
+        isGeneratedSequencePreviewVisible: isGenerated, // Example condition
+      });
+    },
+    [
+      /* dependencies */
+    ],
+  );
+
+  // Call createTourSteps with updated visibilityStates
+  useEffect(() => {
+    console.log("Generated tour steps:", steps); // Debugging log for steps
+    if (isTourReady) {
+      console.log("Tour is ready with steps:", steps);
+    }
+  }, [visibilityStates, isTourReady]); // Regenerate steps when visibility states change
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -94,7 +137,7 @@ const CollectionSetup: React.FC = () => {
   }, [getAccessTokenSilently]);
 
   useEffect(() => {
-    console.log("User data in state:", currentUser);
+    console.log("User data in state:", currentUser); // Debugging log for user data
   }, [currentUser]);
 
   useEffect(() => {
@@ -117,6 +160,7 @@ const CollectionSetup: React.FC = () => {
       default:
         setType("letters");
     }
+    console.log("Current type set to:", type); // Debugging log for type
   }, [category]);
 
   useEffect(() => {
@@ -124,6 +168,36 @@ const CollectionSetup: React.FC = () => {
       setOperation("addition"); // Set a default operation
     }
   }, [type, operation]);
+
+  useEffect(
+    () => {
+      // Assuming you have logic to determine when the tour is ready
+      setIsTourReady(true);
+    },
+    [
+      /* dependencies that indicate readiness */
+    ],
+  );
+
+  useEffect(() => {
+    // Update visibility states based on the selected type
+    const newVisibilityStates: VisibilityStates = {
+      isDotCountTypeVisible: type === "numberSense", // Example condition
+      isMinDotsVisible: dotCountType === "random", // Example condition
+      isMaxDotsVisible: dotCountType === "random", // Example condition
+      isTypeSelectVisible: true, // or false based on your logic
+      isItemCountVisible: true, // or false based on your logic
+      isCollectionItemCountVisible: true, // or false based on your logic
+      isDotColorVisible: true, // or false based on your logic
+      isDotShapeVisible: true, // or false based on your logic
+      isGenerateRandomSequenceButtonVisible: true, // or false based on your logic
+      isFileUploadVisible: true, // or false based on your logic
+      isNextButtonVisible: true, // or false based on your logic
+      isClearButtonVisible: true, // or false based on your logic
+      isGeneratedSequencePreviewVisible: isGenerated, // Example condition
+    };
+    setVisibilityStates(newVisibilityStates);
+  }, [type, dotCountType, isGenerated]); // Add dependencies as needed
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -285,6 +359,7 @@ const CollectionSetup: React.FC = () => {
       default:
         console.error("Invalid type selected");
     }
+    console.log("Generated sequence:", generatedSequence); // Debugging log for generated sequence
     setSequence(generatedSequence);
     setPreviewSequence(generatedSequence);
     setFile(null);
@@ -317,7 +392,7 @@ const CollectionSetup: React.FC = () => {
   };
 
   const handleSaveCollection = async () => {
-    console.log("User data before saving collection:", currentUser);
+    console.log("User data before saving collection:", currentUser); // Debugging log for user data
 
     try {
       if (!currentUser || !currentUser.username) {
@@ -376,6 +451,12 @@ const CollectionSetup: React.FC = () => {
     setPreviewSequence(updatedSequence); // Set the updated sequence
   };
 
+  // Update the onStepChange function
+  const handleStepChange = (step: number) => {
+    console.log("Step changed to:", step);
+    setCurrentStep(step);
+  };
+
   if (!currentUser) {
     return <div className="p-4 text-center">Loading user information...</div>;
   }
@@ -401,7 +482,10 @@ const CollectionSetup: React.FC = () => {
                 id="typeSelect"
                 className="font-caveat rounded border border-gray-300 bg-white p-2 text-center text-black"
                 value={type}
-                onChange={(e) => setType(e.target.value)}
+                onChange={(e) => {
+                  setType(e.target.value);
+                  console.log("Type changed to:", e.target.value); // Debugging log for type change
+                }}
               >
                 {category === "Math" && (
                   <>
@@ -449,6 +533,7 @@ const CollectionSetup: React.FC = () => {
                   onChange={(e) => {
                     const count = parseInt(e.target.value, 10);
                     setItemCount(count);
+                    console.log("Item count changed to:", count); // Debugging log for item count change
                   }}
                 />
               </div>
@@ -467,9 +552,10 @@ const CollectionSetup: React.FC = () => {
                 id="dotCountType"
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotCountType}
-                onChange={(e) =>
-                  setDotCountType(e.target.value as "fixed" | "random")
-                }
+                onChange={(e) => {
+                  setDotCountType(e.target.value as "fixed" | "random");
+                  console.log("Dot count type changed to:", e.target.value); // Debugging log for dot count type change
+                }}
               >
                 <option value="fixed">Fixed</option>
                 <option value="random">Random</option>
@@ -492,6 +578,7 @@ const CollectionSetup: React.FC = () => {
                   onChange={(e) => {
                     const count = parseInt(e.target.value, 10);
                     setItemCount(count);
+                    console.log("Item count changed to:", count); // Debugging log for item count change
                   }}
                 />
               </div>
@@ -513,6 +600,7 @@ const CollectionSetup: React.FC = () => {
                     onChange={(e) => {
                       const count = parseInt(e.target.value, 10);
                       setMinDots(count);
+                      console.log("Minimum dots changed to:", count); // Debugging log for min dots change
                     }}
                   />
                 </div>
@@ -532,6 +620,7 @@ const CollectionSetup: React.FC = () => {
                     onChange={(e) => {
                       const count = parseInt(e.target.value, 10);
                       setMaxDots(count);
+                      console.log("Maximum dots changed to:", count); // Debugging log for max dots change
                     }}
                   />
                 </div>
@@ -553,6 +642,7 @@ const CollectionSetup: React.FC = () => {
                 onChange={(e) => {
                   const count = parseInt(e.target.value, 10);
                   setCollectionItemCount(count);
+                  console.log("Collection item count changed to:", count); // Debugging log for collection item count change
                 }}
               />
             </div>
@@ -567,7 +657,10 @@ const CollectionSetup: React.FC = () => {
                 id="dot-color"
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotColor}
-                onChange={(e) => setDotColor(e.target.value)}
+                onChange={(e) => {
+                  setDotColor(e.target.value);
+                  console.log("Dot color changed to:", e.target.value); // Debugging log for dot color change
+                }}
               >
                 {["blue", "green", "red", "purple", "orange"].map((color) => (
                   <option key={color} value={color}>
@@ -587,7 +680,10 @@ const CollectionSetup: React.FC = () => {
                 id="dot-shape"
                 className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
                 value={dotShape}
-                onChange={(e) => setDotShape(e.target.value)}
+                onChange={(e) => {
+                  setDotShape(e.target.value);
+                  console.log("Dot shape changed to:", e.target.value); // Debugging log for dot shape change
+                }}
               >
                 {["circle", "square", "triangle"].map((shape) => (
                   <option key={shape} value={shape}>
@@ -600,7 +696,7 @@ const CollectionSetup: React.FC = () => {
         )}
         <button
           type="button"
-          className="rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
+          className="generate-random-sequence-button rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
           onClick={generateRandomSequence}
         >
           Generate Random Sequence
@@ -628,7 +724,7 @@ const CollectionSetup: React.FC = () => {
             </button>
             <button
               type="button"
-              className="mt-2 rounded-md bg-yellow-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-yellow-600"
+              className="clear-button mt-2 rounded-md bg-yellow-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-yellow-600"
               onClick={handleClear}
             >
               Clear
@@ -637,7 +733,7 @@ const CollectionSetup: React.FC = () => {
         ) : (
           <button
             type="button"
-            className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+            className="next-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
             onClick={handleNext}
           >
             Next
@@ -646,17 +742,41 @@ const CollectionSetup: React.FC = () => {
       </div>
       {isGenerated && category !== "Number Sense" && (
         <div className="mt-6">
-          <h3 className="mb-2 text-center text-xl font-bold">
+          <h3 className="generated-sequence-preview mb-2 text-center text-xl font-bold">
             Generated Sequence Preview:
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {previewSequence.map((item, index) => (
-              <div key={index} className="rounded-md border border-gray-300 p-2">
+              <div
+                key={index}
+                className="rounded-md border border-gray-300 p-2"
+              >
                 <p className="text-center">{item.name}</p>
-                {item.svg && <img src={item.svg} alt={item.name} className="h-auto w-full" />}
-                <div className="flex justify-between mt-2">
-                  <button onClick={() => editItem(index, prompt("Edit item name:", item.name) || item.name)} className="text-blue-500">Edit</button>
-                  <button onClick={() => deleteItem(index)} className="text-red-500">Delete</button>
+                {item.svg && (
+                  <img
+                    src={item.svg}
+                    alt={item.name}
+                    className="h-auto w-full"
+                  />
+                )}
+                <div className="mt-2 flex justify-between">
+                  <button
+                    onClick={() =>
+                      editItem(
+                        index,
+                        prompt("Edit item name:", item.name) || item.name,
+                      )
+                    }
+                    className="text-blue-500"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteItem(index)}
+                    className="text-red-500"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
@@ -685,13 +805,16 @@ const CollectionSetup: React.FC = () => {
           </div>
         </div>
       )}
-      <GuidedTour
-        steps={steps}
-        isRunning={true}
-        onComplete={() => console.log("Tour completed")}
-        currentStep={0}
-        onStepChange={(step) => console.log("Step changed to:", step)}
-      />
+      {isTourReady && (
+        <GuidedTour
+          steps={steps}
+          isRunning={true}
+          onComplete={() => console.log("Tour completed")}
+          currentStep={currentStep}
+          onStepChange={handleStepChange}
+          isScrollToEnabled={true}
+        />
+      )}
     </div>
   );
 };
