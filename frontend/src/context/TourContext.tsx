@@ -12,6 +12,8 @@ interface TourContextType {
   toursCompleted: Record<string, boolean>;
   completeTour: (tourName: string) => void;
   startTour: (steps: Step[]) => void; // Specify the type for steps
+  isTourRunning: boolean; // Add a state to track if the tour is running
+  setIsTourRunning: (isRunning: boolean) => void; // Function to set the tour running state
 }
 
 // Create the context with a default value of null
@@ -20,9 +22,8 @@ const TourContext = createContext<TourContextType | null>(null);
 export const TourProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [toursCompleted, setToursCompleted] = useState<Record<string, boolean>>(
-    {},
-  );
+  const [toursCompleted, setToursCompleted] = useState<Record<string, boolean>>({});
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false); // Track if the tour is running
 
   useEffect(() => {
     const storedTours = localStorage.getItem("toursCompleted");
@@ -40,14 +41,13 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const startTour = (steps: Step[]) => {
-    // Use Step[] as the type for steps
-    // Placeholder for starting the tour
+    setIsTourRunning(true); // Set the tour as running
     console.log("Starting tour with steps:", steps);
     // Here you would typically call a function from a library like react-joyride
   };
 
   return (
-    <TourContext.Provider value={{ toursCompleted, completeTour, startTour }}>
+    <TourContext.Provider value={{ toursCompleted, completeTour, startTour, isTourRunning, setIsTourRunning }}>
       {children}
     </TourContext.Provider>
   );

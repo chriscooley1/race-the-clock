@@ -71,12 +71,18 @@ const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const handleStartTour = useCallback(() => {
+    // Check if the navbar tour has already been completed
+    if (toursCompleted.navbar) {
+      console.log("Navbar tour has already been completed.");
+      return; // Exit if the tour has already been completed
+    }
+
     // Determine visibility states based on your application logic
     const visibilityStates: VisibilityStates = {
-      isDotCountTypeVisible: true, // Set based on your conditions
+      isDotCountTypeVisible: true,
       isMinDotsVisible: true,
       isMaxDotsVisible: true,
-      isTypeSelectVisible: false, // Add missing properties
+      isTypeSelectVisible: false,
       isItemCountVisible: false,
       isCollectionItemCountVisible: false,
       isDotColorVisible: false,
@@ -90,13 +96,12 @@ const Navbar: React.FC<NavbarProps> = ({
 
     let steps: Step[];
     if (location.pathname === "/collection-setup") {
-      steps = collectionSetupSteps(visibilityStates); // Ensure this returns Step[]
+      steps = collectionSetupSteps(visibilityStates);
     } else {
       steps = tourStepsNavbar; // Default to navbar steps
     }
-    startTour(steps);
-    completeTour("navbar"); // Mark navbar tour as completed
-  }, [location.pathname, startTour, completeTour]);
+    startTour(steps); // Start the tour with the steps
+  }, [location.pathname, startTour, completeTour, toursCompleted]);
 
   useEffect(() => {
     if (!toursCompleted.navbar) {

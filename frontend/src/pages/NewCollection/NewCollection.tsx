@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
+import { VisibilityStates, createTourSteps } from "./tourStepsNewCollection"; // Import the visibility states and createTourSteps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -19,6 +21,42 @@ const NewCollection: React.FC = () => {
   ];
 
   const stages = ["beginner", "intermediate", "advanced"];
+
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isCollectionNameVisible: true,
+    isCategorySelectVisible: true,
+    isStageSelectVisible: true,
+    isPublicCheckboxVisible: true,
+    isSubmitButtonVisible: true,
+  });
+
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  // Define the steps variable
+  const steps = createTourSteps(visibilityStates); // Create tour steps based on visibility states
+
+  // Add a function to start the tour
+  const startTour = () => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0); // Reset to the first step
+  };
+
+  useEffect(() => {
+    // Start the tour when the component mounts
+    startTour();
+  }, []);
+
+  useEffect(() => {
+    // Update visibility states based on your logic
+    setVisibilityStates({
+      isCollectionNameVisible: true, // or false based on your logic
+      isCategorySelectVisible: true, // or false based on your logic
+      isStageSelectVisible: true, // or false based on your logic
+      isPublicCheckboxVisible: true, // or false based on your logic
+      isSubmitButtonVisible: true, // or false based on your logic
+    });
+  }, []);
 
   const handleNext = () => {
     if (!name.trim()) {
@@ -43,6 +81,15 @@ const NewCollection: React.FC = () => {
     }
   };
 
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
@@ -52,72 +99,96 @@ const NewCollection: React.FC = () => {
           Step 1 - Create
         </h1>
         <h1 className="text-3xl font-bold">New Collection</h1>
-        <div className="mb-4 max-w-[300px]">
-          <input
-            type="text"
-            id="collectionName"
-            className={`collection-name-input font-caveat rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Collection Name"
-            title="Collection Name"
-            onKeyDown={handleKeyDown}
-          />
-        </div>
-        <div className="mb-4 flex max-w-[300px] items-center justify-center">
-          <label htmlFor="categorySelect" className="mr-2">
-            Category:
-          </label>
-          <select
-            id="categorySelect"
-            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+        
+        {visibilityStates.isCollectionNameVisible && (
+          <div className="mb-4 max-w-[300px]">
+            <input
+              type="text"
+              id="collectionName"
+              className={`collection-name-input font-caveat rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Collection Name"
+              title="Collection Name"
+              onKeyDown={handleKeyDown}
+            />
+          </div>
+        )}
+
+        {visibilityStates.isCategorySelectVisible && (
+          <div className="mb-4 flex max-w-[300px] items-center justify-center">
+            <label htmlFor="categorySelect" className="mr-2">
+              Category:
+            </label>
+            <select
+              id="categorySelect"
+              className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {visibilityStates.isStageSelectVisible && (
+          <div className="mb-4 flex max-w-[300px] items-center justify-center">
+            <label htmlFor="stageSelect" className="mr-2">
+              Stage:
+            </label>
+            <select
+              id="stageSelect"
+              className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+              value={stage}
+              onChange={(e) => setStage(e.target.value)}
+            >
+              {stages.map((stage) => (
+                <option key={stage} value={stage}>
+                  {stage.charAt(0).toUpperCase() + stage.slice(1)}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {visibilityStates.isPublicCheckboxVisible && (
+          <div className="mt-2.5 flex items-center text-sm">
+            <input
+              type="checkbox"
+              id="publicCheckbox"
+              checked={isPublic}
+              onChange={() => setIsPublic(!isPublic)}
+              title="Share collection publicly"
+              className={`relative mr-2.5 size-5 cursor-pointer appearance-none rounded border-2 ${theme.isDarkMode ? "border-gray-600 bg-gray-700" : "border-gray-300 bg-white"} checked:bg-blue-500 checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:text-sm checked:after:text-white checked:after:content-["✓"]`}
+            />
+            <label htmlFor="publicCheckbox">
+              I want to share my collection publicly
+            </label>
+          </div>
+        )}
+
+        {visibilityStates.isSubmitButtonVisible && (
+          <button
+            type="button"
+            onClick={handleNext}
+            className="submit-collection-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-4 flex max-w-[300px] items-center justify-center">
-          <label htmlFor="stageSelect" className="mr-2">
-            Stage:
-          </label>
-          <select
-            id="stageSelect"
-            className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-            value={stage}
-            onChange={(e) => setStage(e.target.value)}
-          >
-            {stages.map((stage) => (
-              <option key={stage} value={stage}>
-                {stage.charAt(0).toUpperCase() + stage.slice(1)}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mt-2.5 flex items-center text-sm">
-          <input
-            type="checkbox"
-            id="publicCheckbox"
-            checked={isPublic}
-            onChange={() => setIsPublic(!isPublic)}
-            title="Share collection publicly"
-            className={`relative mr-2.5 size-5 cursor-pointer appearance-none rounded border-2 ${theme.isDarkMode ? "border-gray-600 bg-gray-700" : "border-gray-300 bg-white"} checked:bg-blue-500 checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:text-sm checked:after:text-white checked:after:content-["✓"]`}
-          />
-          <label htmlFor="publicCheckbox">
-            I want to share my collection publicly
-          </label>
-        </div>
-        <button
-          type="button"
-          onClick={handleNext}
-          className="submit-collection-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
-        >
-          Next
-        </button>
+            Next
+          </button>
+        )}
+
+        {/* Add the GuidedTour component here */}
+        <GuidedTour
+          steps={steps}
+          isRunning={isTourRunning}
+          onComplete={handleTourComplete} // Use the new handler
+          currentStep={currentTourStep}
+          onStepChange={handleTourStepChange}
+        />
       </div>
     </div>
   );

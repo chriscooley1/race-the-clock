@@ -25,13 +25,14 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
     const { status, index, type } = data;
 
     if (["finished", "skipped"].includes(status as string)) {
-      onComplete();
+      onComplete(); // Call onComplete when the tour is finished or skipped
     } else if (type === "step:after") {
       console.log("Current step index:", index);
       if (index + 1 < steps.length) {
         onStepChange(index + 1); // Move to the next step
       } else {
         console.log("No more steps to navigate.");
+        onComplete(); // Ensure onComplete is called when there are no more steps
       }
       // Scroll to the target element if isScrollToEnabled is true
       if (isScrollToEnabled) {
