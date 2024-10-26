@@ -76,6 +76,16 @@ const Navbar: React.FC<NavbarProps> = ({
       isDotCountTypeVisible: true, // Set based on your conditions
       isMinDotsVisible: true,
       isMaxDotsVisible: true,
+      isTypeSelectVisible: false, // Add missing properties
+      isItemCountVisible: false,
+      isCollectionItemCountVisible: false,
+      isDotColorVisible: false,
+      isDotShapeVisible: false,
+      isGenerateRandomSequenceButtonVisible: false,
+      isFileUploadVisible: false,
+      isNextButtonVisible: false,
+      isClearButtonVisible: false,
+      isGeneratedSequencePreviewVisible: false,
     };
 
     let steps: Step[];
