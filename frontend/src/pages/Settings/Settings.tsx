@@ -71,11 +71,12 @@ const Settings: React.FC = () => {
   const handleColorblindModeChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setColorblindMode(event.target.checked);
-    setTheme((prevTheme) => ({
-      ...prevTheme,
-      isColorblindMode: event.target.checked,
-    }));
+    const isChecked = event.target.checked;
+    setColorblindMode(isChecked); // This will now trigger color adjustments
+    // Optionally, you can also set a default colorblind type if needed
+    if (isChecked && !theme.colorblindType) {
+      setColorblindType("protanopia"); // Set a default type if none is selected
+    }
   };
 
   const handleColorblindTypeChange = (
@@ -266,6 +267,8 @@ const Settings: React.FC = () => {
                         backgroundImage: prevTheme.backgroundImage,
                         adjustColorForColorblindness:
                           prevTheme.adjustColorForColorblindness,
+                        originalTextColor: prevTheme.originalTextColor, // Added
+                        originalBackgroundColor: prevTheme.originalBackgroundColor, // Added
                       }));
                     }
                   }}
