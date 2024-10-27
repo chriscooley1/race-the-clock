@@ -3,6 +3,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { getCurrentUser } from "../../api";
 import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm";
 import { useTheme } from "../../context/ThemeContext";
+import { VisibilityStates, tourSteps } from "./tourStepsMyAccount"; // Import visibility states and tour steps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 interface UserData {
   display_name?: string;
@@ -13,6 +15,23 @@ const MyAccount: React.FC = () => {
   const { user, getAccessTokenSilently } = useAuth0();
   const [userData, setUserData] = useState<UserData | null>(null);
   const { theme } = useTheme();
+
+  // Declare visibility states
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isProfileVisible: true,
+    isUpdateFormVisible: true,
+  });
+
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  // Define the steps variable
+  const steps = tourSteps(visibilityStates); // Create tour steps based on visibility states
+
+  const startTour = () => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0); // Reset to the first step
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -25,7 +44,25 @@ const MyAccount: React.FC = () => {
     };
 
     fetchUserData();
+    startTour(); // Start the tour when the component mounts
   }, [getAccessTokenSilently]);
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
+
+  // Example of using setVisibilityStates
+  const toggleProfileVisibility = () => {
+    setVisibilityStates((prev) => ({
+      ...prev,
+      isProfileVisible: !prev.isProfileVisible,
+    }));
+  };
 
   return (
     <div
@@ -37,7 +74,7 @@ const MyAccount: React.FC = () => {
         <h1 className="mb-6 text-center text-2xl font-bold">My Account</h1>
         {user ? (
           <div className="space-y-4">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center user-profile">
               <img
                 src={user.picture}
                 alt={user.name}
@@ -51,13 +88,23 @@ const MyAccount: React.FC = () => {
               >
                 {user.email}
               </p>
+              <button type="button" onClick={toggleProfileVisibility} className="mt-2 text-blue-500">
+                Toggle Profile Visibility
+              </button>
             </div>
-            <UpdateDisplayNameForm />
+            <UpdateDisplayNameForm className="update-display-name-form" />
           </div>
         ) : (
           <p className="text-center">Loading user information...</p>
         )}
       </div>
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete} // Use the new handler
+        currentStep={currentTourStep}
+        onStepChange={handleTourStepChange}
+      />
     </div>
   );
 };
