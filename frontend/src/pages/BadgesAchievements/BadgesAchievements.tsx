@@ -1,32 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import { VisibilityStates, tourSteps } from "./tourStepsBadgesAchievements"; // Import visibility states and tour steps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
-  const [badges, setBadges] = useState<string[]>([]); // State to hold badges
-  const [achievements, setAchievements] = useState<string[]>([]); // State to hold achievements
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
+  const [badges, setBadges] = useState<string[]>([]);
+  const [achievements, setAchievements] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isBadgesSectionVisible: true,
+    isAchievementsSectionVisible: true,
+    isLoadingMessageVisible: true,
+  });
 
   useEffect(() => {
-    // Simulate loading data or setup
     const loadData = async () => {
-      // Simulate a delay for loading
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Example data
       setBadges([
         "Read 60 Letters in a Minute",
         "Complete an Advanced Session",
       ]);
       setAchievements(["First Login", "Completed 5 Sessions"]);
       setIsLoading(false);
+      // Update visibility states after loading data
+      setVisibilityStates((prev) => ({
+        ...prev,
+        isLoadingMessageVisible: false, // Hide loading message after data is loaded
+      }));
     };
 
     loadData();
   }, []);
 
+  // Define the steps variable
+  const steps = tourSteps(visibilityStates); // Create tour steps based on visibility states
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false);
+  };
+
+  useEffect(() => {
+    // Start the tour when the component mounts
+    setIsTourRunning(true);
+  }, []);
+
   return (
     <div
-      className={`badges-achievements flex min-h-screen w-full flex-col items-center px-4 pt-[50px] md:pl-[250px] ${
+      className={`badges-achievements flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
@@ -42,28 +67,40 @@ const BadgesAchievements: React.FC = () => {
       </p>
 
       {isLoading ? (
-        <p>Loading badges and achievements...</p>
+        <p className="loading-message">Loading badges and achievements...</p>
       ) : (
         <div className="mt-8 w-full max-w-2xl">
-          <div className="badges-section">
-            <h2 className="text-2xl font-semibold">Badges</h2>
-            <ul className="list-disc pl-5">
-              {badges.map((badge, index) => (
-                <li key={index}>{badge}</li>
-              ))}
-            </ul>
-          </div>
+          {visibilityStates.isBadgesSectionVisible && (
+            <div className="badges-section">
+              <h2 className="text-2xl font-semibold">Badges</h2>
+              <ul className="list-disc pl-5">
+                {badges.map((badge, index) => (
+                  <li key={index}>{badge}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-          <div className="achievements-section mt-8">
-            <h2 className="text-2xl font-semibold">Achievements</h2>
-            <ul className="list-disc pl-5">
-              {achievements.map((achievement, index) => (
-                <li key={index}>{achievement}</li>
-              ))}
-            </ul>
-          </div>
+          {visibilityStates.isAchievementsSectionVisible && (
+            <div className="achievements-section mt-8">
+              <h2 className="text-2xl font-semibold">Achievements</h2>
+              <ul className="list-disc pl-5">
+                {achievements.map((achievement, index) => (
+                  <li key={index}>{achievement}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
+
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+      />
     </div>
   );
 };
