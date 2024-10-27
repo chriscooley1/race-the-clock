@@ -11,8 +11,11 @@ import {
   generateNursingTerms,
 } from "../../utils/RandomGenerators";
 import { v4 as uuidv4 } from "uuid"; // Add this import for generating unique IDs
+import { createTourSteps, VisibilityStates } from "./tourStepsCollectionFinalStep"; // Import VisibilityStates and createTourSteps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 // Export the function to avoid the "unused" error
+// createTourSteps will be used in future implementation
 export function generateId(): string {
   return Math.random().toString(36).slice(2, 11);
 }
@@ -79,6 +82,29 @@ const CollectionFinalStep: React.FC = () => {
   const [images, setImages] = useState<
     { id: string; file: File; preview: string }[]
   >([]);
+
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isSaveButtonVisible: true,
+    isItemPreviewVisible: true,
+    isMathProblemVisible: true,
+    isDotButtonVisible: true,
+    isImageUploadVisible: true,
+  });
+
+  // Tour state management
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  // Update visibility states based on your logic
+  useEffect(() => {
+    setVisibilityStates({
+      isSaveButtonVisible: true,
+      isItemPreviewVisible: items.length > 0,
+      isMathProblemVisible: category === "Math",
+      isDotButtonVisible: category === "Number Sense",
+      isImageUploadVisible: true,
+    });
+  }, [items, category]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -343,6 +369,18 @@ const CollectionFinalStep: React.FC = () => {
     }));
     setItems([...items, ...newItems]);
     setImages([]);
+  };
+
+  // Generate tour steps based on visibility states
+  const steps = createTourSteps(visibilityStates);
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false);
+    // Additional logic for when the tour completes
+  };
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
   };
 
   if (!currentUser) {
@@ -613,88 +651,94 @@ const CollectionFinalStep: React.FC = () => {
           </>
         )}
       </div>
-      {items.map((item) => (
-        <div key={item.id} className="mb-2 flex items-center">
-          {category === "Math" && initialType === "mathProblems" ? (
-            <input
-              type="text"
-              className="mr-2 grow rounded-md border border-gray-300 p-2 font-['Caveat']"
-              value={item.name.split("|")[0]}
-              readOnly
-              title={`Item ${item.id}: ${item.name.split("|")[0]}`}
-            />
-          ) : (
-            <input
-              type="text"
-              className="mr-2 grow rounded-md border border-gray-300 p-2 font-['Caveat']"
-              value={item.name}
-              readOnly
-              title={`Item ${item.id}: ${item.name}`}
-            />
-          )}
-          <button
-            className="rounded-md bg-red-500 px-2 py-1 text-white transition duration-300 hover:bg-red-600"
-            type="button"
-            onClick={() => handleRemoveItem(item.id)}
-            title="Remove Item"
-          >
-            x
-          </button>
+      {visibilityStates.isItemPreviewVisible && (
+        <div className="item-preview mt-4 grid grid-cols-3 gap-4">
+          {items.map((item) => (
+            <div key={item.id} className="mb-2 flex items-center">
+              <input
+                type="text"
+                className="mr-2 grow rounded-md border border-gray-300 p-2 font-['Caveat']"
+                value={item.name}
+                readOnly
+                title={`Item ${item.id}: ${item.name}`}
+              />
+              <button
+                className="rounded-md bg-red-500 px-2 py-1 text-white transition duration-300 hover:bg-red-600"
+                type="button"
+                onClick={() => handleRemoveItem(item.id)}
+                title="Remove Item"
+              >
+                x
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
-      <button
-        className="save-collection-button rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
-        type="button"
-        onClick={handleSaveCollection}
-        title="Save Collection"
-      >
-        Save Collection
-      </button>
-      <div className="mb-4 flex flex-col items-center text-center">
-        <label
-          htmlFor="image-upload"
-          className="add-image-button mb-2 mt-4 cursor-pointer rounded-md bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
+      )}
+      {visibilityStates.isSaveButtonVisible && (
+        <button
+          className="save-collection-button rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+          type="button"
+          onClick={handleSaveCollection}
+          title="Save Collection"
         >
-          Upload Images
-        </label>
-        <input
-          id="image-upload"
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleImageUpload}
-          className="hidden"
-        />
-        {images.length > 0 && (
-          <div className="item-preview mt-4 grid grid-cols-3 gap-4">
-            {images.map((image) => (
-              <div key={image.id} className="relative">
-                <img
-                  src={image.preview}
-                  alt={image.file.name}
-                  className="size-24 object-cover"
-                />
-                <button
-                  type="button"
-                  onClick={() => handleRemoveImage(image.id)}
-                  className="absolute -right-2 -top-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white"
-                >
-                  X
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-        {images.length > 0 && (
-          <button
-            type="button"
-            onClick={handleAddImageItem}
-            className="mt-4 rounded-md bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+          Save Collection
+        </button>
+      )}
+      {visibilityStates.isImageUploadVisible && (
+        <div className="mb-4 flex flex-col items-center text-center">
+          <label
+            htmlFor="image-upload"
+            className="add-image-button mb-2 mt-4 cursor-pointer rounded-md bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
           >
-            Add Images to Collection
-          </button>
-        )}
-      </div>
+            Upload Images
+          </label>
+          <input
+            id="image-upload"
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+          {images.length > 0 && (
+            <div className="item-preview mt-4 grid grid-cols-3 gap-4">
+              {images.map((image) => (
+                <div key={image.id} className="relative">
+                  <img
+                    src={image.preview}
+                    alt={image.file.name}
+                    className="size-24 object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(image.id)}
+                    className="absolute -right-2 -top-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white"
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          {images.length > 0 && (
+            <button
+              type="button"
+              onClick={handleAddImageItem}
+              className="mt-4 rounded-md bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+            >
+              Add Images to Collection
+            </button>
+          )}
+        </div>
+      )}
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={handleTourStepChange}
+      />
     </div>
   );
 };
