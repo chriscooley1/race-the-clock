@@ -20,6 +20,8 @@ import {
 import { collectionColorSchemes } from "../../constants/colorSchemes";
 import { lightenColor } from "../../utils/colorUtils";
 import { useTheme } from "../../context/ThemeContext";
+import { createTourSteps, VisibilityStates } from "./tourStepsYourCollections"; // Import VisibilityStates and createTourSteps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 interface Collection {
   collection_id: number;
@@ -97,6 +99,29 @@ const YourCollections: React.FC = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { theme, adjustColorForColorblindness } = useTheme();
 
+  // Visibility states for the tour
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isCollectionCardVisible: true,
+    isStartCollectionButtonVisible: true,
+    isEditCollectionButtonVisible: true,
+    isDeleteCollectionButtonVisible: true,
+  });
+
+  // Tour state management
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  // Generate tour steps based on visibility states
+  const steps = createTourSteps(visibilityStates);
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false);
+  };
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
+
   useEffect(() => {
     const loadCollections = async () => {
       try {
@@ -116,6 +141,11 @@ const YourCollections: React.FC = () => {
             selectedCategory,
             sortOption,
           );
+          // Update visibility states based on the fetched collections
+          setVisibilityStates((prev) => ({
+            ...prev,
+            isCollectionCardVisible: fetchedCollections.length > 0,
+          }));
         } else {
           console.error("Unexpected data format:", fetchedCollections);
         }
@@ -287,6 +317,11 @@ const YourCollections: React.FC = () => {
         selectedCategory,
         sortOption,
       );
+      // Update visibility states based on the updated collections
+      setVisibilityStates((prev) => ({
+        ...prev,
+        isCollectionCardVisible: updatedCollections.length > 0,
+      }));
     } catch (error) {
       console.error("Error deleting collection:", error);
     }
@@ -575,6 +610,15 @@ const YourCollections: React.FC = () => {
         </div>
       )}
       {isLoading && <div>Loading...</div>}
+
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={handleTourStepChange}
+      />
     </div>
   );
 };
