@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import { VisibilityStates, tourSteps } from "./tourStepsGames"; // Import visibility states and tour steps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 const Games: React.FC = () => {
   const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isMatchingGameVisible: true,
+    isMultipleWordsGameVisible: true,
+  });
 
   useEffect(() => {
     // Simulate loading data or setup
@@ -15,6 +24,30 @@ const Games: React.FC = () => {
 
     loadData();
   }, []);
+
+  // Example of updating visibility states based on some condition
+  useEffect(() => {
+    // You can set visibility states based on your logic here
+    setVisibilityStates({
+      isMatchingGameVisible: true, // or false based on your logic
+      isMultipleWordsGameVisible: true, // or false based on your logic
+    });
+  }, []); // This effect runs once when the component mounts
+
+  // Start the tour when the component mounts
+  useEffect(() => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0); // Reset to the first step
+  }, []);
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
 
   return (
     <div
@@ -45,6 +78,15 @@ const Games: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={tourSteps(visibilityStates)} // Pass the visibility states to create tour steps
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete} // Use the new handler
+        currentStep={currentTourStep}
+        onStepChange={handleTourStepChange}
+      />
     </div>
   );
 };
