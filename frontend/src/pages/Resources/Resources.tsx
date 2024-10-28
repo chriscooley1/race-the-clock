@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import { VisibilityStates, tourSteps } from "./tourStepsResources"; // Import the visibility states and tour steps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 interface FAQ {
   question: string;
@@ -17,6 +19,13 @@ const Resources: React.FC = () => {
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [videos, setVideos] = useState<InstructionalVideo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isFAQSectionVisible: true,
+    isInstructionalVideosVisible: true,
+  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -59,6 +68,23 @@ const Resources: React.FC = () => {
 
     loadData();
   }, []);
+
+  // Start the tour when the component mounts
+  useEffect(() => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0); // Reset to the first step
+
+    // Optionally, you can set visibility states here based on your logic
+    setVisibilityStates({
+      isFAQSectionVisible: true, // Set based on your logic
+      isInstructionalVideosVisible: true, // Set based on your logic
+    });
+  }, []);
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
 
   return (
     <div
@@ -109,6 +135,15 @@ const Resources: React.FC = () => {
           </section>
         </>
       )}
+
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={tourSteps(visibilityStates)}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete} // Use the new handler
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+      />
     </div>
   );
 };
