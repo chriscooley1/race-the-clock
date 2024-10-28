@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { fetchReports } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
+import { VisibilityStates, tourSteps } from "./tourStepsReports"; // Import visibility states and tour steps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 // Define the Report interface
 interface Report {
@@ -20,6 +22,18 @@ const Reports: React.FC = () => {
   const [reports, setReports] = useState<Report[]>([]); // State to hold reports
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
 
+  // Visibility states for the tour
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isReportsOverviewVisible: true,
+    isReportsListVisible: true,
+  });
+
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  // Define the steps variable
+  const steps = tourSteps(visibilityStates); // Create tour steps based on visibility states
+
   useEffect(() => {
     const loadReports = async () => {
       try {
@@ -34,6 +48,31 @@ const Reports: React.FC = () => {
 
     loadReports();
   }, [getAccessTokenSilently]);
+
+  // Example of using setVisibilityStates
+  useEffect(() => {
+    // You can set visibility states based on your logic here
+    setVisibilityStates({
+      isReportsOverviewVisible: true, // Set based on your conditions
+      isReportsListVisible: reports.length > 0, // Show list if reports are available
+    });
+  }, [reports]); // Update visibility states when reports change
+
+  // Add a function to start the tour
+  const startTour = () => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0); // Reset to the first step
+  };
+
+  useEffect(() => {
+    // Start the tour when the component mounts
+    startTour();
+  }, []);
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
 
   return (
     <div
@@ -63,7 +102,14 @@ const Reports: React.FC = () => {
           </ul>
         </div>
       )}
-      {/* Add your report logic and UI here */}
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete} // Use the new handler
+        currentStep={currentTourStep}
+        onStepChange={(step) => setCurrentTourStep(step)}
+      />
     </div>
   );
 };
