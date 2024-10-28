@@ -12,6 +12,8 @@ import axios from "axios";
 import { lightenColor } from "../../utils/colorUtils";
 import { collectionColorSchemes } from "../../constants/colorSchemes";
 import { useTheme } from "../../context/ThemeContext";
+import { tourSteps, VisibilityStates } from "./tourStepsDiscoverCollections"; // Import the visibility states and tour steps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 interface Item {
   id: number;
@@ -38,6 +40,49 @@ const DiscoverCollections: React.FC = () => {
   const [subscriptionStatus, setSubscriptionStatus] = useState<
     Record<string, boolean>
   >({});
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isSearchInputVisible: true,
+    isSortSelectVisible: true,
+    isCollectionsGridVisible: true,
+    isPreviewButtonVisible: true,
+  });
+
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  // Define the steps variable
+  const steps = tourSteps(visibilityStates); // Create tour steps based on visibility states
+
+  // Add a function to start the tour
+  const startTour = () => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0); // Reset to the first step
+  };
+
+  useEffect(() => {
+    // Start the tour when the component mounts
+    startTour();
+  }, []);
+
+  // Example of updating visibility states based on some logic
+  useEffect(() => {
+    // You can set visibility states based on your application logic
+    setVisibilityStates({
+      isSearchInputVisible: true, // Set to true or false based on your logic
+      isSortSelectVisible: true, // Set to true or false based on your logic
+      isCollectionsGridVisible: collections.length > 0, // Show grid if there are collections
+      isPreviewButtonVisible: activeCollection !== null, // Show preview button if a collection is active
+    });
+  }, [collections, activeCollection]); // Dependencies to trigger updates
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
 
   const fetchCollections = useCallback(async () => {
     try {
@@ -291,6 +336,14 @@ const DiscoverCollections: React.FC = () => {
           isSubscribed={activeCollection.isSubscribed || false}
         />
       )}
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={handleTourStepChange}
+      />
     </div>
   );
 };
