@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { fetchCollections } from "../../api"; // Import the fetchCollections function
 import { useAuth0 } from "@auth0/auth0-react";
+import { VisibilityStates, tourSteps } from "./tourStepsTimedChallenges"; // Import visibility states and tour steps
+import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
 
 // Define the Collection interface
 interface Collection {
@@ -26,12 +28,21 @@ const TimedChallenges: React.FC = () => {
   const [collections, setCollections] = useState<Collection[]>([]); // State to hold collections
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
 
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isTimedChallengesVisible: true,
+    isCollectionsOverviewVisible: true,
+  });
+
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  // Define the steps variable
+  const steps = tourSteps(visibilityStates); // Create tour steps based on visibility states
+
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const fetchedCollections = await fetchCollections(
-          getAccessTokenSilently,
-        );
+        const fetchedCollections = await fetchCollections(getAccessTokenSilently);
         setCollections(
           fetchedCollections.filter(
             (collection: Collection) => collection.collection_id != null,
@@ -46,6 +57,32 @@ const TimedChallenges: React.FC = () => {
 
     loadCollections();
   }, [getAccessTokenSilently]);
+
+  const startTour = () => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0); // Reset to the first step
+  };
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
+
+  useEffect(() => {
+    // Start the tour when the component mounts
+    startTour();
+  }, []);
+
+  // Example of updating visibility states based on some logic
+  useEffect(() => {
+    // Update visibility states based on your application logic
+    if (!isLoading) {
+      setVisibilityStates((prev) => ({
+        ...prev,
+        isCollectionsOverviewVisible: collections.length > 0, // Show if there are collections
+      }));
+    }
+  }, [isLoading, collections]);
 
   return (
     <div
@@ -71,6 +108,15 @@ const TimedChallenges: React.FC = () => {
         </div>
       )}
       {/* Add your game logic and UI here */}
+      
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete} // Use the new handler
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+      />
     </div>
   );
 };
