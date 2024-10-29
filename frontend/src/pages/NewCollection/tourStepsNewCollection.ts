@@ -1,7 +1,8 @@
 import { Step } from "react-joyride";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
 // Function to create tour steps based on visibility states
-export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsNewCollection = (visibilityStates: VisibilityStates): Step[] => {
   const steps: Step[] = [
     {
       target: ".new-collection-page", // Target the main container
@@ -45,13 +46,3 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
     return true; // Include all other steps
   });
 };
-
-export interface VisibilityStates {
-  isCollectionNameVisible: boolean;
-  isCategorySelectVisible: boolean;
-  isStageSelectVisible: boolean;
-  isPublicCheckboxVisible: boolean;
-  isSubmitButtonVisible: boolean;
-}
-
-export const tourSteps = (visibilityStates: VisibilityStates) => createTourSteps(visibilityStates);

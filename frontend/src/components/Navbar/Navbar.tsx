@@ -3,25 +3,25 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTheme } from "../../context/ThemeContext";
 import { useTour } from "../../context/TourContext";
-import { tourStepsNavbar } from "./tourStepsNavbar";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { Step } from "react-joyride";
 
-import { tourSteps as landingPageSteps } from "../../pages/LandingPage/tourStepsLandingPage";
-import { tourSteps as yourCollectionsSteps } from "../../pages/YourCollections/tourStepsYourCollections";
-import { tourSteps as newCollectionSteps } from "../../pages/NewCollection/tourStepsNewCollection";
+import { tourStepsLandingPage } from "../../pages/LandingPage/tourStepsLandingPage";
+import { tourStepsYourCollections } from "../../pages/YourCollections/tourStepsYourCollections";
+import { tourStepsNewCollection } from "../../pages/NewCollection/tourStepsNewCollection";
 import { tourStepsDiscoverCollections } from "../../pages/DiscoverCollections/tourStepsDiscoverCollections";
 import { tourStepsFullScreenDisplay } from "../../pages/FullScreenDisplay/tourStepsFullScreenDisplay";
 import { tourStepsCollectionSetup } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
 import { tourStepsCollectionFinalStep } from "../../pages/CollectionFinalStep/tourStepsCollectionFinalStep";
-import { tourSteps as nameGeneratorSteps } from "../../pages/NameGenerator/tourStepsNameGenerator";
-import { tourSteps as resourcesSteps } from "../../pages/Resources/tourStepsResources";
-import { tourSteps as settingsSteps } from "../../pages/Settings/tourStepsSettings";
-import { tourSteps as myAccountSteps } from "../../pages/MyAccount/tourStepsMyAccount";
+import { tourStepsNameGenerator } from "../../pages/NameGenerator/tourStepsNameGenerator";
+import { tourStepsResources } from "../../pages/Resources/tourStepsResources";
+import { tourStepsSettings } from "../../pages/Settings/tourStepsSettings";
+import { tourStepsMyAccount } from "../../pages/MyAccount/tourStepsMyAccount";
 import { tourStepsGames } from "../../pages/Games/tourStepsGames";
-import { tourSteps as timedChallengesSteps } from "../../pages/TimedChallenges/tourStepsTimedChallenges";
-import { tourSteps as reportsSteps } from "../../pages/Reports/tourStepsReports";
+import { tourStepsTimedChallenges } from "../../pages/TimedChallenges/tourStepsTimedChallenges";
+import { tourStepsReports } from "../../pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "../../pages/BadgesAchievements/tourStepsBadgesAchievements";
+import { tourStepsNavbar } from "./tourStepsNavbar";
 
 interface NavbarProps {
   isPaused?: boolean;
@@ -92,21 +92,47 @@ const Navbar: React.FC<NavbarProps> = ({
       isDotCountTypeVisible: true,
       isMinDotsVisible: true,
       isMaxDotsVisible: true,
-      isTypeSelectVisible: false,
-      isItemCountVisible: false,
-      isCollectionItemCountVisible: false,
-      isDotColorVisible: false,
-      isDotShapeVisible: false,
-      isGenerateRandomSequenceButtonVisible: false,
-      isFileUploadVisible: false,
-      isNextButtonVisible: false,
-      isClearButtonVisible: false,
-      isGeneratedSequencePreviewVisible: false,
-      // Set additional properties as needed
+      isTypeSelectVisible: true,
+      isItemCountVisible: true,
+      isCollectionItemCountVisible: true,
+      isDotColorVisible: true,
+      isDotShapeVisible: true,
+      isGenerateRandomSequenceButtonVisible: true,
+      isFileUploadVisible: true,
+      isNextButtonVisible: true,
+      isClearButtonVisible: true,
+      isGeneratedSequencePreviewVisible: true,
+      isNameInputVisible: false,
+      isAddNameButtonVisible: false,
+      isSpinButtonVisible: false,
+      isNamesListVisible: false,
+      isCollectionNameVisible: false,
+      isCategorySelectVisible: false,
+      isStageSelectVisible: false,
+      isPublicCheckboxVisible: false,
+      isSubmitButtonVisible: false,
+      isReportsOverviewVisible: false,
+      isReportsListVisible: false,
+      isFAQSectionVisible: false,
+      isInstructionalVideosVisible: false,
+      isTimedChallengesVisible: false,
+      isCollectionsOverviewVisible: false,
+      isCollectionCardVisible: false,
+      isStartCollectionButtonVisible: false,
+      isEditCollectionButtonVisible: false,
+      isDeleteCollectionButtonVisible: false,
+      isMainFontVisible: false,
+      isHeadingFontVisible: false,
+      isButtonFontVisible: false,
+      isColorThemeVisible: false,
+      isTextColorVisible: false,
+      isBackgroundColorVisible: false,
+      isAccessibilityVisible: false,
+      isBackgroundThemeVisible: false,
     };
 
     let steps: Step[];
-    let tourName: string; // Declare a variable for the tour name
+    let tourName: string;
 
     // Determine the steps based on the current location
     switch (location.pathname) {
@@ -135,39 +161,39 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "games";
         break;
       case "/landing-page":
-        steps = landingPageSteps(visibilityStates);
+        steps = tourStepsLandingPage(visibilityStates);
         tourName = "landingPage";
         break;
       case "/my-account":
-        steps = myAccountSteps(visibilityStates);
+        steps = tourStepsMyAccount(visibilityStates);
         tourName = "myAccount";
         break;
       case "/name-generator":
-        steps = nameGeneratorSteps(visibilityStates);
+        steps = tourStepsNameGenerator(visibilityStates);
         tourName = "nameGenerator";
         break;
       case "/new-collection":
-        steps = newCollectionSteps(visibilityStates);
+        steps = tourStepsNewCollection(visibilityStates);
         tourName = "newCollection";
         break;
       case "/reports":
-        steps = reportsSteps(visibilityStates);
+        steps = tourStepsReports(visibilityStates);
         tourName = "reports";
         break;
       case "/resources":
-        steps = resourcesSteps(visibilityStates);
+        steps = tourStepsResources(visibilityStates);
         tourName = "resources";
         break;
       case "/settings":
-        steps = settingsSteps(visibilityStates);
+        steps = tourStepsSettings(visibilityStates);
         tourName = "settings";
         break;
       case "/timed-challenges":
-        steps = timedChallengesSteps(visibilityStates);
+        steps = tourStepsTimedChallenges(visibilityStates);
         tourName = "timedChallenges";
         break;
       case "/your-collections":
-        steps = yourCollectionsSteps(visibilityStates);
+        steps = tourStepsYourCollections(visibilityStates);
         tourName = "yourCollections";
         break;
       // Add more cases for other pages as needed
@@ -179,7 +205,6 @@ const Navbar: React.FC<NavbarProps> = ({
 
     onStartTour?.(); // Call onStartTour if it's provided
     startTour(steps); // Start the tour with the steps
-    // Pass the tourName to the GuidedTour component
     setTourName(tourName); // Assuming you have a way to set the current tour name
   }, [location.pathname, startTour, onStartTour]);
 

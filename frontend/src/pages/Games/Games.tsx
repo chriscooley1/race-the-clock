@@ -10,6 +10,7 @@ const Games: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
+  // Initialize visibilityStates with all properties
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
     isDotCountTypeVisible: false,
     isMinDotsVisible: false,
@@ -42,6 +43,33 @@ const Games: React.FC = () => {
     isScreenClickAreaVisible: false,
     isMatchingGameVisible: true,
     isMultipleWordsGameVisible: true,
+    isNameInputVisible: false, // Set to false for visibility
+    isAddNameButtonVisible: false, // Set to false for visibility
+    isSpinButtonVisible: false, // Set to false for visibility
+    isNamesListVisible: false, // Set to false for visibility
+    isCollectionNameVisible: false, // Set to false for visibility
+    isCategorySelectVisible: false, // Set to false for visibility
+    isStageSelectVisible: false, // Set to false for visibility
+    isPublicCheckboxVisible: false, // Set to false for visibility
+    isSubmitButtonVisible: false, // Set to false for visibility
+    isReportsOverviewVisible: false, // Set to false for visibility
+    isReportsListVisible: false, // Set to false for visibility
+    isFAQSectionVisible: false, // Set to false for visibility
+    isInstructionalVideosVisible: false, // Set to false for visibility
+    isTimedChallengesVisible: false, // Set to false for visibility
+    isCollectionsOverviewVisible: false, // Set to false for visibility
+    isCollectionCardVisible: false, // Set to false for visibility
+    isStartCollectionButtonVisible: false, // Set to false for visibility
+    isEditCollectionButtonVisible: false, // Set to false for visibility
+    isDeleteCollectionButtonVisible: false, // Set to false for visibility
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
   });
 
   useEffect(() => {

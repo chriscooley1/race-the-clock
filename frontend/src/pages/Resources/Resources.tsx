@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { VisibilityStates, tourSteps } from "./tourStepsResources"; // Import the visibility states and tour steps
-import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
+import { tourStepsResources } from "./tourStepsResources";
+import GuidedTour from "../../components/GuidedTour";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
 interface FAQ {
   question: string;
@@ -23,8 +24,68 @@ const Resources: React.FC = () => {
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
+    isSaveButtonVisible: false,
+    isItemPreviewVisible: false,
+    isMathProblemVisible: false,
+    isDotButtonVisible: false,
+    isImageUploadVisible: false,
+    isPreviousButtonVisible: false,
+    isProgressIndicatorVisible: false,
+    isPauseButtonVisible: false,
+    isScreenClickAreaVisible: false,
+    isMatchingGameVisible: false,
+    isMultipleWordsGameVisible: false,
+    isRegisterButtonVisible: false,
+    isLoginButtonVisible: false,
+    isProfileVisible: false,
+    isUpdateFormVisible: false,
+    isNameInputVisible: false,
+    isAddNameButtonVisible: false,
+    isSpinButtonVisible: false,
+    isNamesListVisible: false,
+    isCollectionNameVisible: false,
+    isCategorySelectVisible: false,
+    isStageSelectVisible: false,
+    isPublicCheckboxVisible: false,
+    isSubmitButtonVisible: false,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
     isFAQSectionVisible: true,
     isInstructionalVideosVisible: true,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
   });
 
   useEffect(() => {
@@ -145,9 +206,9 @@ const Resources: React.FC = () => {
 
       {/* Add the GuidedTour component here */}
       <GuidedTour
-        steps={tourSteps(visibilityStates)}
+        steps={tourStepsResources(visibilityStates)}
         isRunning={isTourRunning}
-        onComplete={handleTourComplete} // Use the new handler
+        onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={setCurrentTourStep}
         tourName="resources"

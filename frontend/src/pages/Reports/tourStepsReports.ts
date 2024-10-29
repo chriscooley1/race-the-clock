@@ -1,13 +1,8 @@
 import { Step } from "react-joyride";
-
-// Define the visibility states interface
-export interface VisibilityStates {
-  isReportsOverviewVisible: boolean;
-  isReportsListVisible: boolean;
-}
+import { VisibilityStates } from "../../types/VisibilityStates";
 
 // Function to create tour steps based on visibility states
-export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsReports = (visibilityStates: VisibilityStates): Step[] => {
   const steps: Step[] = [
     {
       target: ".reports", // Target the main container
@@ -37,5 +32,3 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
     return true; // Include all other steps
   });
 };
-
-export const tourSteps = (visibilityStates: VisibilityStates) => createTourSteps(visibilityStates);

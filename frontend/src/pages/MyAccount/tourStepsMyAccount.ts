@@ -1,11 +1,8 @@
 import { Step } from "react-joyride";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
-export interface VisibilityStates {
-  isProfileVisible: boolean;
-  isUpdateFormVisible: boolean;
-}
 
-export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsMyAccount = (visibilityStates: VisibilityStates): Step[] => {
   const steps: Step[] = [
     {
       target: ".my-account", // Target the main container
@@ -31,5 +28,3 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
     return true; // Include all other steps
   });
 };
-
-export const tourSteps = (visibilityStates: VisibilityStates) => createTourSteps(visibilityStates);

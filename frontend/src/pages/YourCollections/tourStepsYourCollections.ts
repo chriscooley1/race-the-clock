@@ -1,13 +1,7 @@
 import { Step } from "react-joyride";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
-export interface VisibilityStates {
-  isCollectionCardVisible: boolean;
-  isStartCollectionButtonVisible: boolean;
-  isEditCollectionButtonVisible: boolean;
-  isDeleteCollectionButtonVisible: boolean;
-}
-
-export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsYourCollections = (visibilityStates: VisibilityStates): Step[] => {
   const steps: Step[] = [
     {
       target: ".your-collections-page",
@@ -44,7 +38,3 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
     return true; // Include all other steps
   });
 };
-
-export const tourSteps = (visibilityStates: VisibilityStates) => createTourSteps(visibilityStates);
-
-export const yourCollectionsSteps = [ /* your steps here */ ];

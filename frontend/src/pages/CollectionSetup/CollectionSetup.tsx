@@ -69,7 +69,34 @@ const CollectionSetup: React.FC = () => {
     isFileUploadVisible: true,
     isNextButtonVisible: true,
     isClearButtonVisible: true,
-    isGeneratedSequencePreviewVisible: true,
+    isGeneratedSequencePreviewVisible: false,
+    isNameInputVisible: false,
+    isAddNameButtonVisible: false,
+    isSpinButtonVisible: false,
+    isNamesListVisible: false,
+    isCollectionNameVisible: false,
+    isCategorySelectVisible: false,
+    isStageSelectVisible: false,
+    isPublicCheckboxVisible: false,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isSubmitButtonVisible: true,
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
   });
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -81,22 +108,14 @@ const CollectionSetup: React.FC = () => {
   useEffect(
     () => {
       // Update visibility states based on your logic
-      setVisibilityStates({
-        isDotCountTypeVisible: true, // or false based on your logic
-        isMinDotsVisible: true, // or false based on your logic
-        isMaxDotsVisible: true, // or false based on your logic
-        isTypeSelectVisible: true, // or false based on your logic
-        isItemCountVisible: true, // or false based on your logic
-        isCollectionItemCountVisible: true, // or false based on your logic
-        isDotColorVisible: true, // or false based on your logic
-        isDotShapeVisible: true, // or false based on your logic
-        isGenerateRandomSequenceButtonVisible: true, // or false based on your logic
-        isFileUploadVisible: true, // or false based on your logic
-        isNextButtonVisible: true, // or false based on your logic
-        isClearButtonVisible: true, // or false based on your logic
-        isGeneratedSequencePreviewVisible: isGenerated, // Example condition
-      });
+      setVisibilityStates((prev) => ({
+        ...prev,
+        isGeneratedSequencePreviewVisible: true, // Example condition
+      }));
     },
+    [
+      /* dependencies that indicate readiness */
+    ],
   );
 
   // Call createTourSteps with updated visibilityStates
@@ -182,17 +201,36 @@ const CollectionSetup: React.FC = () => {
     const newVisibilityStates: VisibilityStates = {
       isDotCountTypeVisible: type === "numberSense", // Example condition
       isMinDotsVisible: dotCountType === "random", // Example condition
-      isMaxDotsVisible: dotCountType === "random", // Example condition
-      isTypeSelectVisible: true, // or false based on your logic
-      isItemCountVisible: true, // or false based on your logic
-      isCollectionItemCountVisible: true, // or false based on your logic
-      isDotColorVisible: true, // or false based on your logic
-      isDotShapeVisible: true, // or false based on your logic
-      isGenerateRandomSequenceButtonVisible: true, // or false based on your logic
-      isFileUploadVisible: true, // or false based on your logic
-      isNextButtonVisible: true, // or false based on your logic
-      isClearButtonVisible: true, // or false based on your logic
-      isGeneratedSequencePreviewVisible: isGenerated, // Example condition
+      isMaxDotsVisible: dotCountType === "random", // Add this line
+      isTypeSelectVisible: true, // Add this line
+      isItemCountVisible: true, // Add this line
+      isCollectionItemCountVisible: true, // Add this line
+      isDotColorVisible: true, // Add this line
+      isDotShapeVisible: true, // Add this line
+      isGenerateRandomSequenceButtonVisible: true, // Add this line
+      isFileUploadVisible: true, // Add this line
+      isNextButtonVisible: true, // Add this line
+      isClearButtonVisible: true, // Add this line
+      isGeneratedSequencePreviewVisible: isGenerated, // Add this line
+      isNameInputVisible: false, // Add this line
+      isAddNameButtonVisible: false, // Add this line
+      isSpinButtonVisible: false, // Add this line
+      isNamesListVisible: false, // Add this line
+      isCollectionNameVisible: false, // Add this line
+      isCategorySelectVisible: false, // Add this line
+      isStageSelectVisible: false, // Add this line
+      isPublicCheckboxVisible: false, // Add this line
+      isReportsOverviewVisible: false, // Add this line
+      isReportsListVisible: false, // Add this line
+      isFAQSectionVisible: false, // Add this line
+      isInstructionalVideosVisible: false, // Add this line
+      isTimedChallengesVisible: false, // Add this line
+      isCollectionsOverviewVisible: false, // Add this line
+      isCollectionCardVisible: false, // Add this line
+      isStartCollectionButtonVisible: false, // Add this line
+      isEditCollectionButtonVisible: false, // Add this line
+      isDeleteCollectionButtonVisible: false, // Add this line
+      isSubmitButtonVisible: true, // Add this line
     };
     setVisibilityStates(newVisibilityStates);
   }, [type, dotCountType, isGenerated]); // Add dependencies as needed

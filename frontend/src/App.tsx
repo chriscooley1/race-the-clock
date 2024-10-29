@@ -10,20 +10,20 @@ import GuidedTour from "./components/GuidedTour";
 import { TourProvider } from "./context/TourContext";
 
 // Import your tour steps here
-import { tourSteps as landingPageSteps } from "./pages/LandingPage/tourStepsLandingPage";
-import { tourSteps as yourCollectionsSteps } from "./pages/YourCollections/tourStepsYourCollections";
-import { tourSteps as newCollectionSteps } from "./pages/NewCollection/tourStepsNewCollection";
+import { tourStepsLandingPage } from "./pages/LandingPage/tourStepsLandingPage";
+import { tourStepsYourCollections } from "./pages/YourCollections/tourStepsYourCollections";
+import { tourStepsNewCollection } from "./pages/NewCollection/tourStepsNewCollection";
 import { tourStepsDiscoverCollections } from "./pages/DiscoverCollections/tourStepsDiscoverCollections";
 import { tourStepsFullScreenDisplay } from "./pages/FullScreenDisplay/tourStepsFullScreenDisplay";
 import { tourStepsCollectionSetup } from "./pages/CollectionSetup/tourStepsCollectionSetup";
 import { tourStepsCollectionFinalStep } from "./pages/CollectionFinalStep/tourStepsCollectionFinalStep";
-import { tourSteps as nameGeneratorSteps } from "./pages/NameGenerator/tourStepsNameGenerator";
-import { tourSteps as resourcesSteps } from "./pages/Resources/tourStepsResources";
-import { tourSteps as settingsSteps } from "./pages/Settings/tourStepsSettings";
-import { tourSteps as myAccountSteps } from "./pages/MyAccount/tourStepsMyAccount";
+import { tourStepsNameGenerator } from "./pages/NameGenerator/tourStepsNameGenerator";
+import { tourStepsResources } from "./pages/Resources/tourStepsResources";
+import { tourStepsSettings } from "./pages/Settings/tourStepsSettings";
+import { tourStepsMyAccount } from "./pages/MyAccount/tourStepsMyAccount";
 import { tourStepsGames } from "./pages/Games/tourStepsGames";
-import { tourSteps as timedChallengesSteps } from "./pages/TimedChallenges/tourStepsTimedChallenges";
-import { tourSteps as reportsSteps } from "./pages/Reports/tourStepsReports";
+import { tourStepsTimedChallenges } from "./pages/TimedChallenges/tourStepsTimedChallenges";
+import { tourStepsReports } from "./pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "./pages/BadgesAchievements/tourStepsBadgesAchievements";
 
 // Import your page components here
@@ -81,11 +81,11 @@ const App: React.FC = () => {
   const getTourSteps = () => {
     switch (location.pathname) {
       case "/":
-        return landingPageSteps;
+        return tourStepsLandingPage;
       case "/your-collections":
-        return yourCollectionsSteps;
+        return tourStepsYourCollections;
       case "/new-collection":
-        return newCollectionSteps;
+        return tourStepsNewCollection;
       case "/full-screen-display":
         return tourStepsFullScreenDisplay;
       case "/discover-collections":
@@ -95,19 +95,19 @@ const App: React.FC = () => {
       case "/collection-final-step":
         return tourStepsCollectionFinalStep;
       case "/name-generator":
-        return nameGeneratorSteps;
+        return tourStepsNameGenerator;
       case "/resources":
-        return resourcesSteps;
+        return tourStepsResources;
       case "/settings":
-        return settingsSteps;
+        return tourStepsSettings;
       case "/my-account":
-        return myAccountSteps;
+        return tourStepsMyAccount;
       case "/games":
         return tourStepsGames;
       case "/timed-challenges":
-        return timedChallengesSteps;
+        return tourStepsTimedChallenges;
       case "/reports":
-        return reportsSteps;
+        return tourStepsReports;
       case "/badges-achievements":
         return tourStepsBadgesAchievements;
       default:

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
-import { VisibilityStates, createTourSteps } from "./tourStepsNewCollection"; // Import the visibility states and createTourSteps
-import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
+import { tourStepsNewCollection } from "./tourStepsNewCollection";
+import GuidedTour from "../../components/GuidedTour";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -22,19 +23,77 @@ const NewCollection: React.FC = () => {
 
   const stages = ["beginner", "intermediate", "advanced"];
 
+  // Initialize visibilityStates with all properties
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isStartCollectionButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
+    isSaveButtonVisible: false,
+    isItemPreviewVisible: false,
+    isMathProblemVisible: false,
+    isDotButtonVisible: false,
+    isImageUploadVisible: false,
+    isPreviousButtonVisible: false,
+    isProgressIndicatorVisible: false,
+    isPauseButtonVisible: false,
+    isScreenClickAreaVisible: false,
+    isMatchingGameVisible: false,
+    isMultipleWordsGameVisible: false,
+    isRegisterButtonVisible: false,
+    isLoginButtonVisible: false,
+    isProfileVisible: false,
+    isUpdateFormVisible: false,
+    isNameInputVisible: false,
+    isAddNameButtonVisible: false,
+    isSpinButtonVisible: false,
+    isNamesListVisible: false,
     isCollectionNameVisible: true,
     isCategorySelectVisible: true,
     isStageSelectVisible: true,
     isPublicCheckboxVisible: true,
     isSubmitButtonVisible: true,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
   });
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   // Define the steps variable
-  const steps = createTourSteps(visibilityStates); // Create tour steps based on visibility states
+  const steps = tourStepsNewCollection(visibilityStates); // Create tour steps based on visibility states
 
   // Add a function to start the tour
   const startTour = () => {
@@ -48,17 +107,6 @@ const NewCollection: React.FC = () => {
   // Start the tour when the component mounts
   useEffect(() => {
     startTour(); // Call the startTour function
-  }, []);
-
-  useEffect(() => {
-    // Update visibility states based on your logic
-    setVisibilityStates({
-      isCollectionNameVisible: true, // or false based on your logic
-      isCategorySelectVisible: true, // or false based on your logic
-      isStageSelectVisible: true, // or false based on your logic
-      isPublicCheckboxVisible: true, // or false based on your logic
-      isSubmitButtonVisible: true, // or false based on your logic
-    });
   }, []);
 
   const handleNext = () => {
@@ -92,6 +140,15 @@ const NewCollection: React.FC = () => {
     console.log("Tour completed");
     setIsTourRunning(false); // Reset the tour running state
   };
+
+  // Example of updating visibility states based on some condition
+  useEffect(() => {
+    // For example, you might want to show the public checkbox only if a certain condition is met
+    setVisibilityStates((prev) => ({
+      ...prev,
+      isPublicCheckboxVisible: true, // Update based on your logic
+    }));
+  }, []); // Add dependencies as needed
 
   return (
     <div

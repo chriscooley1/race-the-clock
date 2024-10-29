@@ -1,17 +1,7 @@
 import { Step } from "react-joyride";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
-export interface VisibilityStates {
-  isMainFontVisible: boolean;
-  isHeadingFontVisible: boolean;
-  isButtonFontVisible: boolean;
-  isColorThemeVisible: boolean;
-  isTextColorVisible: boolean;
-  isBackgroundColorVisible: boolean;
-  isAccessibilityVisible: boolean;
-  isBackgroundThemeVisible: boolean;
-}
-
-export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsSettings = (visibilityStates: VisibilityStates): Step[] => {
   const steps: Step[] = [
     {
       target: ".settings", // Target the main container
@@ -54,5 +44,3 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
 
   return steps;
 };
-
-export const tourSteps = (visibilityStates: VisibilityStates) => createTourSteps(visibilityStates);

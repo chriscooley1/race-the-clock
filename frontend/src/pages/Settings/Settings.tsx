@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { colorSchemes } from "../../constants/colorSchemes";
-import { VisibilityStates } from "./tourStepsSettings"; // Import the VisibilityStates interface
+import { tourStepsSettings } from "./tourStepsSettings";
+import GuidedTour from "../../components/GuidedTour";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -33,6 +35,60 @@ const Settings: React.FC = () => {
   } = useTheme();
 
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
+    isSaveButtonVisible: false,
+    isItemPreviewVisible: false,
+    isMathProblemVisible: false,
+    isDotButtonVisible: false,
+    isImageUploadVisible: false,
+    isPreviousButtonVisible: false,
+    isProgressIndicatorVisible: false,
+    isPauseButtonVisible: false,
+    isScreenClickAreaVisible: false,
+    isMatchingGameVisible: false,
+    isMultipleWordsGameVisible: false,
+    isRegisterButtonVisible: false,
+    isLoginButtonVisible: false,
+    isProfileVisible: false,
+    isUpdateFormVisible: false,
+    isNameInputVisible: true,
+    isAddNameButtonVisible: true,
+    isSpinButtonVisible: true,
+    isNamesListVisible: true,
+    isCollectionNameVisible: true,
+    isCategorySelectVisible: true,
+    isStageSelectVisible: true,
+    isPublicCheckboxVisible: true,
+    isSubmitButtonVisible: true,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
     isMainFontVisible: true,
     isHeadingFontVisible: true,
     isButtonFontVisible: true,
@@ -43,20 +99,27 @@ const Settings: React.FC = () => {
     isBackgroundThemeVisible: true,
   });
 
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  const steps = tourStepsSettings(visibilityStates); // Create tour steps based on visibility states
+
+  const startTour = () => {
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+      setCurrentTourStep(0); // Reset to the first step
+    }
+  };
+
   useEffect(() => {
-    // Example: Update visibility states based on some condition
-    // You can modify this logic based on your requirements
-    setVisibilityStates({
-      isMainFontVisible: true,
-      isHeadingFontVisible: true,
-      isButtonFontVisible: true,
-      isColorThemeVisible: true,
-      isTextColorVisible: true,
-      isBackgroundColorVisible: true,
-      isAccessibilityVisible: true,
-      isBackgroundThemeVisible: true,
-    });
-  }, []); // Empty dependency array means this runs once on mount
+    startTour(); // Call the startTour function
+  }, []);
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
 
   const handleTextColorChange = (color: string) => {
     console.log("Text color selected:", color);
@@ -364,6 +427,15 @@ const Settings: React.FC = () => {
           </div>
         )}
       </div>
+
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete} // Use the new handler
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="settings" // Set the tour name
+      />
     </div>
   );
 };

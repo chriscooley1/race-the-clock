@@ -84,6 +84,7 @@ const CollectionFinalStep: React.FC = () => {
     { id: string; file: File; preview: string }[]
   >([]);
 
+  // Initialize visibilityStates with all properties
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
     isDotCountTypeVisible: false,
     isMinDotsVisible: false,
@@ -110,6 +111,43 @@ const CollectionFinalStep: React.FC = () => {
     isMathProblemVisible: true,
     isDotButtonVisible: true,
     isImageUploadVisible: true,
+    isPreviousButtonVisible: false,
+    isProgressIndicatorVisible: false,
+    isPauseButtonVisible: false,
+    isScreenClickAreaVisible: false,
+    isMatchingGameVisible: false,
+    isMultipleWordsGameVisible: false,
+    isRegisterButtonVisible: false,
+    isLoginButtonVisible: false,
+    isProfileVisible: false,
+    isUpdateFormVisible: false,
+    isNameInputVisible: false, // Set to false for visibility
+    isAddNameButtonVisible: false, // Set to false for visibility
+    isSpinButtonVisible: false, // Set to false for visibility
+    isNamesListVisible: false, // Set to false for visibility
+    isCollectionNameVisible: false,
+    isCategorySelectVisible: false,
+    isStageSelectVisible: false,
+    isPublicCheckboxVisible: false,
+    isSubmitButtonVisible: false,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
   });
 
   // Tour state management

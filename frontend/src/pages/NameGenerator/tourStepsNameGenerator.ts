@@ -1,15 +1,8 @@
 import { Step } from "react-joyride";
-
-// Define the visibility states interface
-export interface VisibilityStates {
-  isNameInputVisible: boolean;
-  isAddNameButtonVisible: boolean;
-  isSpinButtonVisible: boolean;
-  isNamesListVisible: boolean;
-}
+import { VisibilityStates } from "../../types/VisibilityStates";
 
 // Function to create tour steps based on visibility states
-export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsNameGenerator = (visibilityStates: VisibilityStates): Step[] => {
   const steps: Step[] = [
     {
       target: ".name-generator", // Target the main container
@@ -47,5 +40,3 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
     return true; // Include all other steps
   });
 };
-
-export const tourSteps = (visibilityStates: VisibilityStates) => createTourSteps(visibilityStates);
