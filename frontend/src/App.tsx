@@ -24,7 +24,7 @@ import { tourSteps as myAccountSteps } from "./pages/MyAccount/tourStepsMyAccoun
 import { tourSteps as gamesSteps } from "./pages/Games/tourStepsGames";
 import { tourSteps as timedChallengesSteps } from "./pages/TimedChallenges/tourStepsTimedChallenges";
 import { tourSteps as reportsSteps } from "./pages/Reports/tourStepsReports";
-import { tourSteps as badgesAchievementsSteps } from "./pages/BadgesAchievements/tourStepsBadgesAchievements";
+import { tourStepsBadgesAchievements } from "./pages/BadgesAchievements/tourStepsBadgesAchievements";
 
 // Import your page components here
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -109,7 +109,7 @@ const App: React.FC = () => {
       case "/reports":
         return reportsSteps;
       case "/badges-achievements":
-        return badgesAchievementsSteps;
+        return tourStepsBadgesAchievements;
       default:
         return [];
     }

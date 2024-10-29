@@ -21,7 +21,7 @@ import { tourSteps as myAccountSteps } from "../../pages/MyAccount/tourStepsMyAc
 import { tourSteps as gamesSteps } from "../../pages/Games/tourStepsGames";
 import { tourSteps as timedChallengesSteps } from "../../pages/TimedChallenges/tourStepsTimedChallenges";
 import { tourSteps as reportsSteps } from "../../pages/Reports/tourStepsReports";
-import { tourSteps as badgesAchievementsSteps } from "../../pages/BadgesAchievements/tourStepsBadgesAchievements";
+import { tourStepsBadgesAchievements } from "../../pages/BadgesAchievements/tourStepsBadgesAchievements";
 
 interface NavbarProps {
   isPaused?: boolean;
@@ -111,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({
     // Determine the steps based on the current location
     switch (location.pathname) {
       case "/badges-achievements":
-        steps = badgesAchievementsSteps(visibilityStates);
+        steps = tourStepsBadgesAchievements(visibilityStates);
         tourName = "badgesAchievements";
         break;
       case "/collection-final-step":

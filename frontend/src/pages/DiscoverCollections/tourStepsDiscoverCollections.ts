@@ -35,6 +35,6 @@ export const tourStepsDiscoverCollections = (visibilityStates: VisibilityStates)
     if (step.target === "#sortSelect") return visibilityStates.isSortSelectVisible;
     if (step.target === ".grid") return visibilityStates.isCollectionsGridVisible;
     if (step.target === ".preview-collection-button") return visibilityStates.isPreviewButtonVisible;
-    return true; // Include all other steps
+    return true;
   });
 };

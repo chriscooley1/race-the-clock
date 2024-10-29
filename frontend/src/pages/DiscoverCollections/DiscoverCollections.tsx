@@ -12,8 +12,8 @@ import axios from "axios";
 import { lightenColor } from "../../utils/colorUtils";
 import { collectionColorSchemes } from "../../constants/colorSchemes";
 import { useTheme } from "../../context/ThemeContext";
-import { tourStepsDiscoverCollections } from "./tourStepsDiscoverCollections"; // Adjust the path as necessary
-import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
+import { tourStepsDiscoverCollections } from "./tourStepsDiscoverCollections";
+import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 interface Item {
   id: number;

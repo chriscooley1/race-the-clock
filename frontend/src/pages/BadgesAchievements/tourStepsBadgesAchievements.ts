@@ -1,12 +1,7 @@
 import { Step } from "react-joyride";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
-export interface VisibilityStates {
-  isBadgesSectionVisible: boolean;
-  isAchievementsSectionVisible: boolean;
-  isLoadingMessageVisible: boolean;
-}
-
-export const tourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsBadgesAchievements = (visibilityStates: VisibilityStates): Step[] => {
   const steps: Step[] = [
     {
       target: ".badges-achievements",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { VisibilityStates, tourSteps } from "./tourStepsBadgesAchievements";
+import { VisibilityStates } from "../../types/VisibilityStates";
+import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
 
 const BadgesAchievements: React.FC = () => {
@@ -12,9 +13,26 @@ const BadgesAchievements: React.FC = () => {
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
     isBadgesSectionVisible: true,
     isAchievementsSectionVisible: true,
     isLoadingMessageVisible: true,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
   });
 
   useEffect(() => {
@@ -26,18 +44,16 @@ const BadgesAchievements: React.FC = () => {
       ]);
       setAchievements(["First Login", "Completed 5 Sessions"]);
       setIsLoading(false);
-      // Update visibility states after loading data
       setVisibilityStates((prev) => ({
         ...prev,
-        isLoadingMessageVisible: false, // Hide loading message after data is loaded
+        isLoadingMessageVisible: false,
       }));
     };
 
     loadData();
   }, []);
 
-  // Define the steps variable
-  const steps = tourSteps(visibilityStates); // Create tour steps based on visibility states
+  const steps = tourStepsBadgesAchievements(visibilityStates);
 
   const handleTourComplete = () => {
     console.log("Tour completed");
@@ -45,7 +61,6 @@ const BadgesAchievements: React.FC = () => {
   };
 
   useEffect(() => {
-    // Start the tour when the component mounts
     setIsTourRunning(true);
   }, []);
 
