@@ -385,7 +385,7 @@ const CollectionFinalStep: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    // startTour(); // This line should be removed or commented out
+    setIsTourRunning(true);
   }, []);
 
   if (!currentUser) {
@@ -743,6 +743,7 @@ const CollectionFinalStep: React.FC = () => {
         onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={handleTourStepChange}
+        tourName="collectionFinalStep"
       />
     </div>
   );

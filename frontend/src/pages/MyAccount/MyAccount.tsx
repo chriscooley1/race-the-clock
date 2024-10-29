@@ -47,10 +47,9 @@ const MyAccount: React.FC = () => {
   }, [getAccessTokenSilently]);
 
   useEffect(() => {
-    if (userData) { // Check if userData is available
-      startTour(); // Automatically start the tour when userData is fetched
-    }
-  }, [userData]); // Dependency on userData
+    // Start the tour when the component mounts
+    startTour(); // Call startTour to use the function
+  }, []);
 
   const handleTourStepChange = (step: number) => {
     setCurrentTourStep(step);
@@ -109,6 +108,7 @@ const MyAccount: React.FC = () => {
         onComplete={handleTourComplete} // Use the new handler
         currentStep={currentTourStep}
         onStepChange={handleTourStepChange}
+        tourName="myAccount"
       />
     </div>
   );

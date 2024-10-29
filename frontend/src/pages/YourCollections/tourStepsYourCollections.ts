@@ -46,3 +46,5 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
 };
 
 export const tourSteps = (visibilityStates: VisibilityStates) => createTourSteps(visibilityStates);
+
+export const yourCollectionsSteps = [ /* your steps here */ ];

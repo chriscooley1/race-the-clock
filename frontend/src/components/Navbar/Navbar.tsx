@@ -7,13 +7,15 @@ import { tourStepsNavbar } from "./tourStepsNavbar";
 import { tourSteps as collectionSetupSteps } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
 import { VisibilityStates } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
 import { Step } from "react-joyride";
+import { yourCollectionsSteps } from "../../pages/YourCollections/tourStepsYourCollections";
 
 interface NavbarProps {
   isPaused?: boolean;
   onPauseResume?: () => void;
   onBack?: () => void;
   hasBackButton?: boolean;
-  onStartTour?: () => void;
+  onStartTour: () => void;
+  setTourName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -22,6 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({
   onBack,
   hasBackButton,
   onStartTour,
+  setTourName,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -29,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
   const { theme, toggleDarkMode } = useTheme();
-  const { toursCompleted, startTour } = useTour();
+  const { startTour } = useTour();
 
   const handleMenuToggle = () => {
     console.log("Toggling menu. Current state:", menuOpen);
@@ -71,12 +74,6 @@ const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const handleStartTour = useCallback(() => {
-    // Check if the navbar tour has already been completed
-    if (toursCompleted.navbar) {
-      console.log("Navbar tour has already been completed.");
-      return; // Exit if the tour has already been completed
-    }
-
     // Determine visibility states based on your application logic
     const visibilityStates: VisibilityStates = {
       isDotCountTypeVisible: true,
@@ -95,14 +92,30 @@ const Navbar: React.FC<NavbarProps> = ({
     };
 
     let steps: Step[];
-    if (location.pathname === "/collection-setup") {
-      steps = collectionSetupSteps(visibilityStates);
-    } else {
-      steps = tourStepsNavbar; // Default to navbar steps
+    let tourName: string; // Declare a variable for the tour name
+
+    // Determine the steps based on the current location
+    switch (location.pathname) {
+      case "/collection-setup":
+        steps = collectionSetupSteps(visibilityStates);
+        tourName = "collectionSetup"; // Set the tour name for collection setup
+        break;
+      case "/your-collections":
+        steps = yourCollectionsSteps; // Now this will be defined
+        tourName = "yourCollections"; // Set the tour name for your collections
+        break;
+      // Add more cases for other pages as needed
+      default:
+        steps = tourStepsNavbar; // Default to navbar steps if no specific tour is found
+        tourName = "navbar"; // Set the tour name for navbar
+        break;
     }
+
     onStartTour?.(); // Call onStartTour if it's provided
     startTour(steps); // Start the tour with the steps
-  }, [location.pathname, startTour, toursCompleted, onStartTour]);
+    // Pass the tourName to the GuidedTour component
+    setTourName(tourName); // Assuming you have a way to set the current tour name
+  }, [location.pathname, startTour, onStartTour]);
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">

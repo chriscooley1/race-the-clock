@@ -30,7 +30,7 @@ const LandingPage: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    startTour(); // Call the startTour function
+    startTour(); // Call startTour here
   }, []);
 
   // Example of using setVisibilityStates
@@ -107,6 +107,7 @@ const LandingPage: React.FC = () => {
         onComplete={handleTourComplete} // Use the new handler
         currentStep={currentTourStep}
         onStepChange={handleTourStepChange}
+        tourName="landingPage"
       />
     </div>
   );

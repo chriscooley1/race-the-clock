@@ -43,9 +43,10 @@ const NameGenerator: React.FC = () => {
     }
   };
 
+  // Start the tour when the component mounts
   useEffect(() => {
-    // Start the tour when the component mounts
     startTour(); // Call the startTour function
+    setIsTourRunning(true);
   }, []);
 
   const handleTourComplete = () => {
@@ -301,6 +302,7 @@ const NameGenerator: React.FC = () => {
         onComplete={handleTourComplete} // Use the new handler
         currentStep={currentTourStep}
         onStepChange={handleTourStepChange} // Pass the step change handler
+        tourName="nameGenerator"
       />
     </div>
   );

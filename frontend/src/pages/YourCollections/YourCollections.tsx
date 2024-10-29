@@ -20,8 +20,8 @@ import {
 import { collectionColorSchemes } from "../../constants/colorSchemes";
 import { lightenColor } from "../../utils/colorUtils";
 import { useTheme } from "../../context/ThemeContext";
-import { createTourSteps, VisibilityStates } from "./tourStepsYourCollections"; // Import VisibilityStates and createTourSteps
-import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
+import { createTourSteps, VisibilityStates } from "./tourStepsYourCollections";
+import GuidedTour from "../../components/GuidedTour";
 
 interface Collection {
   collection_id: number;
@@ -426,7 +426,7 @@ const YourCollections: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    // startTour(); // This line should be removed or commented out
+    setIsTourRunning(true);
   }, []);
 
   return (
@@ -623,6 +623,7 @@ const YourCollections: React.FC = () => {
         onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={handleTourStepChange}
+        tourName="yourCollections"
       />
     </div>
   );

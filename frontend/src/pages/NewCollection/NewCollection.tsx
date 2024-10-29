@@ -45,8 +45,8 @@ const NewCollection: React.FC = () => {
     }
   };
 
+  // Start the tour when the component mounts
   useEffect(() => {
-    // Start the tour when the component mounts
     startTour(); // Call the startTour function
   }, []);
 
@@ -191,6 +191,7 @@ const NewCollection: React.FC = () => {
           onComplete={handleTourComplete} // Use the new handler
           currentStep={currentTourStep}
           onStepChange={handleTourStepChange}
+          tourName="newCollection"
         />
       </div>
     </div>

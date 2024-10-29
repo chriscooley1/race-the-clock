@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { VisibilityStates, tourSteps } from "./tourStepsBadgesAchievements"; // Import visibility states and tour steps
-import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
+import { VisibilityStates, tourSteps } from "./tourStepsBadgesAchievements";
+import GuidedTour from "../../components/GuidedTour";
 
 const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
@@ -46,7 +46,7 @@ const BadgesAchievements: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    // startTour(); // This line should be removed or commented out
+    setIsTourRunning(true);
   }, []);
 
   return (
@@ -100,6 +100,7 @@ const BadgesAchievements: React.FC = () => {
         onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={setCurrentTourStep}
+        tourName="badgesAchievements"
       />
     </div>
   );

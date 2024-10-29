@@ -459,7 +459,7 @@ const CollectionSetup: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    // startTour(); // This line should be removed or commented out
+    setIsTourRunning(true);
   }, []);
 
   if (!currentUser) {
@@ -818,6 +818,7 @@ const CollectionSetup: React.FC = () => {
           currentStep={currentStep}
           onStepChange={handleStepChange}
           isScrollToEnabled={true}
+          tourName="collectionSetup"
         />
       )}
     </div>

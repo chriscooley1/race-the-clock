@@ -5,13 +5,13 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { Step } from "react-joyride"; // Import the Step type
+import { Step } from "react-joyride";
 
 // Define the type for the context value
 interface TourContextType {
   toursCompleted: Record<string, boolean>;
   startTour: (steps: Step[]) => void; // Specify the type for steps
-  completeTour: () => void; // Add a completeTour function
+  completeTour: (tourName: string) => void; // Add a completeTour function
   isTourRunning: boolean; // Add a state to track if the tour is running
   setIsTourRunning: (isRunning: boolean) => void; // Function to set the tour running state
 }
@@ -38,9 +38,13 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
     // Here you would typically call a function from a library like react-joyride
   };
 
-  const completeTour = () => {
-    // Logic to mark the tour as completed
-    console.log("Tour completed");
+  const completeTour = (tourName: string) => {
+    // Logic to mark the tour as completed, excluding the Navbar tour
+    if (tourName !== "navbar") {
+      setToursCompleted((prev) => ({ ...prev, [tourName]: true }));
+      localStorage.setItem("toursCompleted", JSON.stringify({ ...toursCompleted, [tourName]: true }));
+    }
+    console.log("Tour completed:", tourName);
   };
 
   return (

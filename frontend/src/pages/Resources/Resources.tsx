@@ -72,7 +72,7 @@ const Resources: React.FC = () => {
   // Start the tour when the component mounts
   useEffect(() => {
     // Start the tour when the component mounts
-    // startTour(); // This line should be removed or commented out
+    setIsTourRunning(true);
   }, []);
 
   const handleTourComplete = () => {
@@ -150,6 +150,7 @@ const Resources: React.FC = () => {
         onComplete={handleTourComplete} // Use the new handler
         currentStep={currentTourStep}
         onStepChange={setCurrentTourStep}
+        tourName="resources"
       />
     </div>
   );

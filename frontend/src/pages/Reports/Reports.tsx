@@ -69,7 +69,8 @@ const Reports: React.FC = () => {
 
   // Start the tour when the component mounts
   useEffect(() => {
-    startTour(); // Call the startTour function
+    // Start the tour when the component mounts
+    startTour(); // Call startTour here
   }, []);
 
   const handleTourComplete = () => {
@@ -112,6 +113,7 @@ const Reports: React.FC = () => {
         onComplete={handleTourComplete} // Use the new handler
         currentStep={currentTourStep}
         onStepChange={(step) => setCurrentTourStep(step)}
+        tourName="reports"
       />
     </div>
   );

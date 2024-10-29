@@ -72,6 +72,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [progress, setProgress] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [stopCondition, setStopCondition] = useState("collection");
+  const [tourName, setTourName] = useState<string>("");
 
   // Define visibility states using the VisibilityStates interface
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -281,7 +282,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   useEffect(() => {
     // Start the tour when the component mounts
-    // startTour(); // This line should be removed or commented out
+    setIsTourRunning(true);
   }, []);
 
   const handleTourComplete = () => {
@@ -436,6 +437,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         isPaused={isPaused}
         onPauseResume={handlePauseResume}
         onStartTour={handleStartTour}
+        setTourName={setTourName}
       />
       <div
         className="relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
@@ -480,6 +482,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           onComplete={handleTourComplete}
           currentStep={currentTourStep}
           onStepChange={setCurrentTourStep}
+          tourName={tourName}
         />
       </div>
     </>

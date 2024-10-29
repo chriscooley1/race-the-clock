@@ -71,9 +71,9 @@ const TimedChallenges: React.FC = () => {
     setIsTourRunning(false); // Reset the tour running state
   };
 
+  // Call startTour when the component mounts to initiate the tour
   useEffect(() => {
-    // Start the tour when the component mounts
-    startTour(); // Call the startTour function to avoid the unused error
+    startTour(); // Start the tour when the component mounts
   }, []);
 
   // Example of updating visibility states based on some logic
@@ -119,6 +119,7 @@ const TimedChallenges: React.FC = () => {
         onComplete={handleTourComplete} // Use the new handler
         currentStep={currentTourStep}
         onStepChange={setCurrentTourStep}
+        tourName="timedChallenges"
       />
     </div>
   );

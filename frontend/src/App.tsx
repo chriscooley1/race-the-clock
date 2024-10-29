@@ -50,6 +50,7 @@ const App: React.FC = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isTourRunning, setIsTourRunning] = useState(false);
   const [currentTourStep, setCurrentTourStep] = useState(0);
+  const [currentTourName, setCurrentTourName] = useState<string>("");
 
   useEffect(() => {
     const hiddenRoutes = ["/", "/fullscreen-display", "/math-collection"];
@@ -119,7 +120,7 @@ const App: React.FC = () => {
       <ErrorBoundary>
         <TourProvider>
           <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
-            <Navbar onStartTour={handleTourStart} />
+            <Navbar onStartTour={handleTourStart} setTourName={setCurrentTourName} />
             <div className="flex pt-[70px]">
               {!hideSidebar && <Sidebar />}
               <div className={`grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area`}>
@@ -253,6 +254,7 @@ const App: React.FC = () => {
               onComplete={handleTourComplete}
               currentStep={currentTourStep}
               onStepChange={handleTourStepChange}
+              tourName={currentTourName}
             />
           </div>
         </TourProvider>

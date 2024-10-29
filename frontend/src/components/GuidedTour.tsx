@@ -1,6 +1,6 @@
 import React from "react";
 import Joyride, { CallBackProps, Step } from "react-joyride";
-import { useTour } from "../context/TourContext"; // Import the useTour hook
+import { useTour } from "../context/TourContext";
 
 interface GuidedTourProps {
   steps: Step[];
@@ -9,6 +9,7 @@ interface GuidedTourProps {
   currentStep: number;
   onStepChange: (step: number) => void;
   isScrollToEnabled?: boolean;
+  tourName: string; // Add tourName prop
 }
 
 const GuidedTour: React.FC<GuidedTourProps> = ({
@@ -18,6 +19,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   currentStep,
   onStepChange,
   isScrollToEnabled,
+  tourName, // Destructure tourName
 }) => {
   const { completeTour } = useTour(); // Get completeTour from context
 
@@ -28,7 +30,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
     const { status, index, type } = data;
 
     if (["finished", "skipped"].includes(status as string)) {
-      completeTour(); // Call completeTour when the tour is finished or skipped
+      completeTour(tourName); // Pass tourName when calling completeTour
       onComplete(); // Call onComplete as well
     } else if (type === "step:after") {
       console.log("Current step index:", index);
