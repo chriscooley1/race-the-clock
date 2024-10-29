@@ -19,4 +19,9 @@ export interface VisibilityStates {
   isSortSelectVisible?: boolean;
   isCollectionsGridVisible?: boolean;
   isPreviewButtonVisible?: boolean;
+  isSaveButtonVisible?: boolean;
+  isItemPreviewVisible?: boolean;
+  isMathProblemVisible?: boolean;
+  isDotButtonVisible?: boolean;
+  isImageUploadVisible?: boolean;
 }

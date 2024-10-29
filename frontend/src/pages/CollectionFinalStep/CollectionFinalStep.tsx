@@ -11,8 +11,9 @@ import {
   generateNursingTerms,
 } from "../../utils/RandomGenerators";
 import { v4 as uuidv4 } from "uuid"; // Add this import for generating unique IDs
-import { createTourSteps, VisibilityStates } from "./tourStepsCollectionFinalStep"; // Import VisibilityStates and createTourSteps
-import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
+import { tourStepsCollectionFinalStep } from "./tourStepsCollectionFinalStep";
+import { VisibilityStates } from "../../types/VisibilityStates";
+import GuidedTour from "../../components/GuidedTour";
 
 // Export the function to avoid the "unused" error
 // createTourSteps will be used in future implementation
@@ -84,6 +85,26 @@ const CollectionFinalStep: React.FC = () => {
   >([]);
 
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
     isSaveButtonVisible: true,
     isItemPreviewVisible: true,
     isMathProblemVisible: true,
@@ -97,14 +118,13 @@ const CollectionFinalStep: React.FC = () => {
 
   // Update visibility states based on your logic
   useEffect(() => {
-    setVisibilityStates({
-      isSaveButtonVisible: true,
+    setVisibilityStates((prev) => ({
+      ...prev,
       isItemPreviewVisible: items.length > 0,
-      isMathProblemVisible: category === "Math",
-      isDotButtonVisible: category === "Number Sense",
-      isImageUploadVisible: true,
-    });
-  }, [items, category]);
+      isMathProblemVisible: true,
+      isDotButtonVisible: true,
+    }));
+  }, [items]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -372,7 +392,7 @@ const CollectionFinalStep: React.FC = () => {
   };
 
   // Generate tour steps based on visibility states
-  const steps = createTourSteps(visibilityStates);
+  const steps = tourStepsCollectionFinalStep(visibilityStates);
 
   const handleTourComplete = () => {
     setIsTourRunning(false);

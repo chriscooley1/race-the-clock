@@ -1,14 +1,7 @@
 import { Step } from "react-joyride";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
-export interface VisibilityStates {
-  isSaveButtonVisible: boolean;
-  isItemPreviewVisible: boolean;
-  isMathProblemVisible: boolean;
-  isDotButtonVisible: boolean;
-  isImageUploadVisible: boolean;
-}
-
-export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsCollectionFinalStep = (visibilityStates: VisibilityStates): Step[] => {
   const steps: Step[] = [
     {
       target: ".collection-final-step",
@@ -40,7 +33,6 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
       content: "Upload images for your collection here.",
       ...(visibilityStates.isImageUploadVisible ? { isOpen: true } : {}),
     },
-    // Add more steps as needed based on visibility states
   ];
 
   return steps.filter((step) => {
@@ -52,5 +44,3 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
     return true; // Include all other steps
   });
 };
-
-export const tourSteps = (visibilityStates: VisibilityStates) => createTourSteps(visibilityStates);

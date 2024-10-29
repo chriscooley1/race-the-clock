@@ -13,7 +13,7 @@ import { tourSteps as newCollectionSteps } from "../../pages/NewCollection/tourS
 import { tourStepsDiscoverCollections } from "../../pages/DiscoverCollections/tourStepsDiscoverCollections";
 import { tourSteps as fullScreenDisplaySteps } from "../../pages/FullScreenDisplay/tourStepsFullScreenDisplay";
 import { tourSteps as collectionSetupSteps } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
-import { tourSteps as collectionFinalStepSteps } from "../../pages/CollectionFinalStep/tourStepsCollectionFinalStep";
+import { tourStepsCollectionFinalStep } from "../../pages/CollectionFinalStep/tourStepsCollectionFinalStep";
 import { tourSteps as nameGeneratorSteps } from "../../pages/NameGenerator/tourStepsNameGenerator";
 import { tourSteps as resourcesSteps } from "../../pages/Resources/tourStepsResources";
 import { tourSteps as settingsSteps } from "../../pages/Settings/tourStepsSettings";
@@ -115,7 +115,7 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "badgesAchievements";
         break;
       case "/collection-final-step":
-        steps = collectionFinalStepSteps(visibilityStates);
+        steps = tourStepsCollectionFinalStep(visibilityStates);
         tourName = "collectionFinalStep";
         break;
       case "/collection-setup":
