@@ -424,6 +424,11 @@ const YourCollections: React.FC = () => {
     [adjustColorForColorblindness],
   );
 
+  useEffect(() => {
+    // Start the tour when the component mounts
+    // startTour(); // This line should be removed or commented out
+  }, []);
+
   return (
     <div
       className={`min-h-screen w-full px-4 pt-[170px] md:pl-[270px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}

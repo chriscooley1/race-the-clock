@@ -36,8 +36,7 @@ const Games: React.FC = () => {
 
   // Start the tour when the component mounts
   useEffect(() => {
-    setIsTourRunning(true);
-    setCurrentTourStep(0); // Reset to the first step
+    // startTour(); // This line should be removed or commented out
   }, []);
 
   const handleTourComplete = () => {

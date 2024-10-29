@@ -383,6 +383,11 @@ const CollectionFinalStep: React.FC = () => {
     setCurrentTourStep(step);
   };
 
+  useEffect(() => {
+    // Start the tour when the component mounts
+    // startTour(); // This line should be removed or commented out
+  }, []);
+
   if (!currentUser) {
     return <div>Loading user information...</div>;
   }

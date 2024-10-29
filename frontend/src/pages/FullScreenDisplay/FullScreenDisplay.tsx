@@ -281,7 +281,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   useEffect(() => {
     // Start the tour when the component mounts
-    handleStartTour();
+    // startTour(); // This line should be removed or commented out
   }, []);
 
   const handleTourComplete = () => {

@@ -46,7 +46,7 @@ const BadgesAchievements: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    setIsTourRunning(true);
+    // startTour(); // This line should be removed or commented out
   }, []);
 
   return (

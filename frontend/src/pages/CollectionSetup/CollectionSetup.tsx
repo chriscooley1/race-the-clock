@@ -457,6 +457,11 @@ const CollectionSetup: React.FC = () => {
     setCurrentStep(step);
   };
 
+  useEffect(() => {
+    // Start the tour when the component mounts
+    // startTour(); // This line should be removed or commented out
+  }, []);
+
   if (!currentUser) {
     return <div className="p-4 text-center">Loading user information...</div>;
   }
