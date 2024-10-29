@@ -11,7 +11,7 @@ import { tourSteps as landingPageSteps } from "../../pages/LandingPage/tourSteps
 import { tourSteps as yourCollectionsSteps } from "../../pages/YourCollections/tourStepsYourCollections";
 import { tourSteps as newCollectionSteps } from "../../pages/NewCollection/tourStepsNewCollection";
 import { tourStepsDiscoverCollections } from "../../pages/DiscoverCollections/tourStepsDiscoverCollections";
-import { tourSteps as fullScreenDisplaySteps } from "../../pages/FullScreenDisplay/tourStepsFullScreenDisplay";
+import { tourStepsFullScreenDisplay } from "../../pages/FullScreenDisplay/tourStepsFullScreenDisplay";
 import { tourStepsCollectionSetup } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
 import { tourStepsCollectionFinalStep } from "../../pages/CollectionFinalStep/tourStepsCollectionFinalStep";
 import { tourSteps as nameGeneratorSteps } from "../../pages/NameGenerator/tourStepsNameGenerator";
@@ -127,7 +127,7 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "discoverCollections";
         break;
       case "/fullscreen-display":
-        steps = fullScreenDisplaySteps; // Use it directly if it's an array
+        steps = tourStepsFullScreenDisplay(visibilityStates);
         tourName = "fullscreenDisplay";
         break;
       case "/games":

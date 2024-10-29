@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import Navbar from "../../components/Navbar/Navbar";
-import { createTourSteps, VisibilityStates } from "./tourStepsFullScreenDisplay"; // Import the new function
-import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
+import { tourStepsFullScreenDisplay } from "./tourStepsFullScreenDisplay";
+import { VisibilityStates } from "../../types/VisibilityStates";
+import GuidedTour from "../../components/GuidedTour";
 
 interface CollectionItem {
   name: string;
@@ -76,7 +77,31 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   // Define visibility states using the VisibilityStates interface
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
     isNextButtonVisible: true,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
+    isSaveButtonVisible: false,
+    isItemPreviewVisible: false,
+    isMathProblemVisible: false,
+    isDotButtonVisible: false,
+    isImageUploadVisible: false,
     isPreviousButtonVisible: true,
     isProgressIndicatorVisible: true,
     isPauseButtonVisible: true,
@@ -87,7 +112,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   
   // Create tour steps based on visibility states
-  const steps = createTourSteps(visibilityStates);
+  const steps = tourStepsFullScreenDisplay(visibilityStates);
 
   const shuffleArray = (array: CollectionItem[]): CollectionItem[] => {
     return [...array].sort(() => Math.random() - 0.5);
@@ -293,13 +318,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   // Example of using setVisibilityStates
   useEffect(() => {
     // Logic to update visibility states based on some conditions
-    setVisibilityStates({
+    setVisibilityStates((prevStates) => ({
+      ...prevStates,
       isNextButtonVisible: true,
       isPreviousButtonVisible: true,
       isProgressIndicatorVisible: true,
       isPauseButtonVisible: true,
       isScreenClickAreaVisible: true,
-    });
+    }));
   }, [/* dependencies */]);
 
   // Add this check at the beginning of the component

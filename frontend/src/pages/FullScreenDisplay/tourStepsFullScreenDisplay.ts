@@ -1,15 +1,7 @@
 import { Step } from "react-joyride";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
-export interface VisibilityStates {
-  isNextButtonVisible: boolean;
-  isPreviousButtonVisible: boolean;
-  isProgressIndicatorVisible: boolean;
-  isPauseButtonVisible: boolean;
-  isScreenClickAreaVisible: boolean;
-}
-
-// Function to create tour steps based on visibility states
-export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsFullScreenDisplay = (visibilityStates: VisibilityStates): Step[] => {
   const steps: Step[] = [
     {
       target: ".full-screen-display", // Target the main display area
@@ -53,12 +45,3 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
     return true; // Include all other steps
   });
 };
-
-// If you want to export a tourSteps variable, you can define it here
-export const tourSteps = createTourSteps({
-  isNextButtonVisible: true,
-  isPreviousButtonVisible: true,
-  isProgressIndicatorVisible: true,
-  isPauseButtonVisible: true,
-  isScreenClickAreaVisible: true,
-});

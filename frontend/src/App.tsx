@@ -14,7 +14,7 @@ import { tourSteps as landingPageSteps } from "./pages/LandingPage/tourStepsLand
 import { tourSteps as yourCollectionsSteps } from "./pages/YourCollections/tourStepsYourCollections";
 import { tourSteps as newCollectionSteps } from "./pages/NewCollection/tourStepsNewCollection";
 import { tourStepsDiscoverCollections } from "./pages/DiscoverCollections/tourStepsDiscoverCollections";
-import { tourSteps as fullScreenDisplaySteps } from "./pages/FullScreenDisplay/tourStepsFullScreenDisplay";
+import { tourStepsFullScreenDisplay } from "./pages/FullScreenDisplay/tourStepsFullScreenDisplay";
 import { tourStepsCollectionSetup } from "./pages/CollectionSetup/tourStepsCollectionSetup";
 import { tourStepsCollectionFinalStep } from "./pages/CollectionFinalStep/tourStepsCollectionFinalStep";
 import { tourSteps as nameGeneratorSteps } from "./pages/NameGenerator/tourStepsNameGenerator";
@@ -87,7 +87,7 @@ const App: React.FC = () => {
       case "/new-collection":
         return newCollectionSteps;
       case "/full-screen-display":
-        return fullScreenDisplaySteps;
+        return tourStepsFullScreenDisplay;
       case "/discover-collections":
         return tourStepsDiscoverCollections;
       case "/collection-setup":

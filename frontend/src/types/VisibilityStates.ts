@@ -24,4 +24,8 @@ export interface VisibilityStates {
   isMathProblemVisible?: boolean;
   isDotButtonVisible?: boolean;
   isImageUploadVisible?: boolean;
+  isPreviousButtonVisible?: boolean;
+  isProgressIndicatorVisible?: boolean;
+  isPauseButtonVisible?: boolean;
+  isScreenClickAreaVisible?: boolean;
 }
