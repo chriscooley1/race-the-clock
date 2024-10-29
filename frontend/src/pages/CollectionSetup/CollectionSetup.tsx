@@ -71,7 +71,7 @@ const CollectionSetup: React.FC = () => {
     isGeneratedSequencePreviewVisible: true,
   });
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [isTourReady, setIsTourReady] = useState(false);
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
 
   // Define the steps variable
   const steps: Step[] = createTourSteps(visibilityStates);
@@ -96,18 +96,15 @@ const CollectionSetup: React.FC = () => {
         isGeneratedSequencePreviewVisible: isGenerated, // Example condition
       });
     },
-    [
-      /* dependencies */
-    ],
   );
 
   // Call createTourSteps with updated visibilityStates
   useEffect(() => {
     console.log("Generated tour steps:", steps); // Debugging log for steps
-    if (isTourReady) {
-      console.log("Tour is ready with steps:", steps);
+    if (isTourRunning) {
+      console.log("Tour is running with steps:", steps);
     }
-  }, [visibilityStates, isTourReady]); // Regenerate steps when visibility states change
+  }, [visibilityStates, isTourRunning]); // Regenerate steps when visibility states change
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -171,8 +168,8 @@ const CollectionSetup: React.FC = () => {
 
   useEffect(
     () => {
-      // Assuming you have logic to determine when the tour is ready
-      setIsTourReady(true);
+      // Logic to determine if the tour should start
+      setIsTourRunning(true);
     },
     [
       /* dependencies that indicate readiness */
@@ -456,11 +453,6 @@ const CollectionSetup: React.FC = () => {
     console.log("Step changed to:", step);
     setCurrentStep(step);
   };
-
-  useEffect(() => {
-    // Start the tour when the component mounts
-    setIsTourRunning(true);
-  }, []);
 
   if (!currentUser) {
     return <div className="p-4 text-center">Loading user information...</div>;
@@ -810,7 +802,7 @@ const CollectionSetup: React.FC = () => {
           </div>
         </div>
       )}
-      {isTourReady && (
+      {isTourRunning && (
         <GuidedTour
           steps={steps}
           isRunning={true}
