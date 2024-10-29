@@ -12,7 +12,7 @@ import { tourSteps as yourCollectionsSteps } from "../../pages/YourCollections/t
 import { tourSteps as newCollectionSteps } from "../../pages/NewCollection/tourStepsNewCollection";
 import { tourStepsDiscoverCollections } from "../../pages/DiscoverCollections/tourStepsDiscoverCollections";
 import { tourSteps as fullScreenDisplaySteps } from "../../pages/FullScreenDisplay/tourStepsFullScreenDisplay";
-import { tourSteps as collectionSetupSteps } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
+import { tourStepsCollectionSetup } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
 import { tourStepsCollectionFinalStep } from "../../pages/CollectionFinalStep/tourStepsCollectionFinalStep";
 import { tourSteps as nameGeneratorSteps } from "../../pages/NameGenerator/tourStepsNameGenerator";
 import { tourSteps as resourcesSteps } from "../../pages/Resources/tourStepsResources";
@@ -119,7 +119,7 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "collectionFinalStep";
         break;
       case "/collection-setup":
-        steps = collectionSetupSteps(visibilityStates);
+        steps = tourStepsCollectionSetup(visibilityStates);
         tourName = "collectionSetup";
         break;
       case "/discover-collections":

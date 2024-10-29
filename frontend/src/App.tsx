@@ -15,7 +15,7 @@ import { tourSteps as yourCollectionsSteps } from "./pages/YourCollections/tourS
 import { tourSteps as newCollectionSteps } from "./pages/NewCollection/tourStepsNewCollection";
 import { tourStepsDiscoverCollections } from "./pages/DiscoverCollections/tourStepsDiscoverCollections";
 import { tourSteps as fullScreenDisplaySteps } from "./pages/FullScreenDisplay/tourStepsFullScreenDisplay";
-import { tourSteps as collectionSetupSteps } from "./pages/CollectionSetup/tourStepsCollectionSetup";
+import { tourStepsCollectionSetup } from "./pages/CollectionSetup/tourStepsCollectionSetup";
 import { tourStepsCollectionFinalStep } from "./pages/CollectionFinalStep/tourStepsCollectionFinalStep";
 import { tourSteps as nameGeneratorSteps } from "./pages/NameGenerator/tourStepsNameGenerator";
 import { tourSteps as resourcesSteps } from "./pages/Resources/tourStepsResources";
@@ -91,7 +91,7 @@ const App: React.FC = () => {
       case "/discover-collections":
         return tourStepsDiscoverCollections;
       case "/collection-setup":
-        return collectionSetupSteps;
+        return tourStepsCollectionSetup;
       case "/collection-final-step":
         return tourStepsCollectionFinalStep;
       case "/name-generator":

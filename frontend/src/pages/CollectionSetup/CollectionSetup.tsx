@@ -16,7 +16,8 @@ import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { User } from "../../types/user";
 import { useTheme } from "../../context/ThemeContext";
-import { VisibilityStates, createTourSteps } from "./tourStepsCollectionSetup";
+import { VisibilityStates } from "../../types/VisibilityStates";
+import { tourStepsCollectionSetup } from "./tourStepsCollectionSetup";
 import { Step } from "react-joyride";
 import GuidedTour from "../../components/GuidedTour";
 
@@ -74,7 +75,7 @@ const CollectionSetup: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
 
   // Define the steps variable
-  const steps: Step[] = createTourSteps(visibilityStates);
+  const steps: Step[] = tourStepsCollectionSetup(visibilityStates);
 
   // Example of updating visibility states based on some condition
   useEffect(
@@ -818,7 +819,6 @@ const CollectionSetup: React.FC = () => {
 };
 
 export default CollectionSetup;
-
 // Define the type guard function
 function isUser(user: unknown): user is User {
   return (
@@ -832,3 +832,4 @@ function isUser(user: unknown): user is User {
 function generateId(): string {
   return Math.random().toString(36).slice(2, 11);
 }
+
