@@ -4,10 +4,24 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useTheme } from "../../context/ThemeContext";
 import { useTour } from "../../context/TourContext";
 import { tourStepsNavbar } from "./tourStepsNavbar";
-import { tourSteps as collectionSetupSteps } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
-import { VisibilityStates } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
+import { VisibilityStates } from "../../types/VisibilityStates";
 import { Step } from "react-joyride";
-import { yourCollectionsSteps } from "../../pages/YourCollections/tourStepsYourCollections";
+
+import { tourSteps as landingPageSteps } from "../../pages/LandingPage/tourStepsLandingPage";
+import { tourSteps as yourCollectionsSteps } from "../../pages/YourCollections/tourStepsYourCollections";
+import { tourSteps as newCollectionSteps } from "../../pages/NewCollection/tourStepsNewCollection";
+import { tourStepsDiscoverCollections } from "../../pages/DiscoverCollections/tourStepsDiscoverCollections";
+import { tourSteps as fullScreenDisplaySteps } from "../../pages/FullScreenDisplay/tourStepsFullScreenDisplay";
+import { tourSteps as collectionSetupSteps } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
+import { tourSteps as collectionFinalStepSteps } from "../../pages/CollectionFinalStep/tourStepsCollectionFinalStep";
+import { tourSteps as nameGeneratorSteps } from "../../pages/NameGenerator/tourStepsNameGenerator";
+import { tourSteps as resourcesSteps } from "../../pages/Resources/tourStepsResources";
+import { tourSteps as settingsSteps } from "../../pages/Settings/tourStepsSettings";
+import { tourSteps as myAccountSteps } from "../../pages/MyAccount/tourStepsMyAccount";
+import { tourSteps as gamesSteps } from "../../pages/Games/tourStepsGames";
+import { tourSteps as timedChallengesSteps } from "../../pages/TimedChallenges/tourStepsTimedChallenges";
+import { tourSteps as reportsSteps } from "../../pages/Reports/tourStepsReports";
+import { tourSteps as badgesAchievementsSteps } from "../../pages/BadgesAchievements/tourStepsBadgesAchievements";
 
 interface NavbarProps {
   isPaused?: boolean;
@@ -74,7 +88,6 @@ const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const handleStartTour = useCallback(() => {
-    // Determine visibility states based on your application logic
     const visibilityStates: VisibilityStates = {
       isDotCountTypeVisible: true,
       isMinDotsVisible: true,
@@ -89,6 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({
       isNextButtonVisible: false,
       isClearButtonVisible: false,
       isGeneratedSequencePreviewVisible: false,
+      // Set additional properties as needed
     };
 
     let steps: Step[];
@@ -96,18 +110,70 @@ const Navbar: React.FC<NavbarProps> = ({
 
     // Determine the steps based on the current location
     switch (location.pathname) {
+      case "/badges-achievements":
+        steps = badgesAchievementsSteps(visibilityStates);
+        tourName = "badgesAchievements";
+        break;
+      case "/collection-final-step":
+        steps = collectionFinalStepSteps(visibilityStates);
+        tourName = "collectionFinalStep";
+        break;
       case "/collection-setup":
         steps = collectionSetupSteps(visibilityStates);
-        tourName = "collectionSetup"; // Set the tour name for collection setup
+        tourName = "collectionSetup";
+        break;
+      case "/discover-collections":
+        steps = tourStepsDiscoverCollections(visibilityStates);
+        tourName = "discoverCollections";
+        break;
+      case "/fullscreen-display":
+        steps = fullScreenDisplaySteps; // Use it directly if it's an array
+        tourName = "fullscreenDisplay";
+        break;
+      case "/games":
+        steps = gamesSteps(visibilityStates);
+        tourName = "games";
+        break;
+      case "/landing-page":
+        steps = landingPageSteps(visibilityStates);
+        tourName = "landingPage";
+        break;
+      case "/my-account":
+        steps = myAccountSteps(visibilityStates);
+        tourName = "myAccount";
+        break;
+      case "/name-generator":
+        steps = nameGeneratorSteps(visibilityStates);
+        tourName = "nameGenerator";
+        break;
+      case "/new-collection":
+        steps = newCollectionSteps(visibilityStates);
+        tourName = "newCollection";
+        break;
+      case "/reports":
+        steps = reportsSteps(visibilityStates);
+        tourName = "reports";
+        break;
+      case "/resources":
+        steps = resourcesSteps(visibilityStates);
+        tourName = "resources";
+        break;
+      case "/settings":
+        steps = settingsSteps(visibilityStates);
+        tourName = "settings";
+        break;
+      case "/timed-challenges":
+        steps = timedChallengesSteps(visibilityStates);
+        tourName = "timedChallenges";
         break;
       case "/your-collections":
-        steps = yourCollectionsSteps; // Now this will be defined
-        tourName = "yourCollections"; // Set the tour name for your collections
+        steps = yourCollectionsSteps(visibilityStates);
+        tourName = "yourCollections";
         break;
       // Add more cases for other pages as needed
       default:
         steps = tourStepsNavbar; // Default to navbar steps if no specific tour is found
-        tourName = "navbar"; // Set the tour name for navbar
+        tourName = "navbar";
         break;
     }
 

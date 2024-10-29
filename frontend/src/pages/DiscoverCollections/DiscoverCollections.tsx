@@ -12,9 +12,9 @@ import axios from "axios";
 import { lightenColor } from "../../utils/colorUtils";
 import { collectionColorSchemes } from "../../constants/colorSchemes";
 import { useTheme } from "../../context/ThemeContext";
-import { tourSteps, VisibilityStates } from "./tourStepsDiscoverCollections"; // Import the visibility states and tour steps
+import { tourStepsDiscoverCollections } from "./tourStepsDiscoverCollections"; // Adjust the path as necessary
 import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
-
+import { VisibilityStates } from "../../types/VisibilityStates";
 interface Item {
   id: number;
   name: string;
@@ -41,6 +41,22 @@ const DiscoverCollections: React.FC = () => {
     Record<string, boolean>
   >({});
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
     isSearchInputVisible: true,
     isSortSelectVisible: true,
     isCollectionsGridVisible: true,
@@ -51,7 +67,7 @@ const DiscoverCollections: React.FC = () => {
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   // Define the steps variable
-  const steps = tourSteps(visibilityStates); // Create tour steps based on visibility states
+  const steps = tourStepsDiscoverCollections(visibilityStates); // Create tour steps based on visibility states
 
   // Add a function to start the tour
   const startTour = () => {
@@ -70,12 +86,13 @@ const DiscoverCollections: React.FC = () => {
   // Example of updating visibility states based on some logic
   useEffect(() => {
     // You can set visibility states based on your application logic
-    setVisibilityStates({
+    setVisibilityStates((prevStates) => ({
+      ...prevStates, // Keep the previous state
       isSearchInputVisible: true, // Set to true or false based on your logic
       isSortSelectVisible: true, // Set to true or false based on your logic
       isCollectionsGridVisible: collections.length > 0, // Show grid if there are collections
       isPreviewButtonVisible: activeCollection !== null, // Show preview button if a collection is active
-    });
+    }));
   }, [collections, activeCollection]); // Dependencies to trigger updates
 
   const handleTourStepChange = (step: number) => {
