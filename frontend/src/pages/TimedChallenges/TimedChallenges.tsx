@@ -79,8 +79,8 @@ const TimedChallenges: React.FC = () => {
     isReportsListVisible: false,
     isFAQSectionVisible: false,
     isInstructionalVideosVisible: false,
-    isTimedChallengesVisible: true, // Set to true for visibility
-    isCollectionsOverviewVisible: true, // Set to true for visibility
+    isTimedChallengesVisible: true,
+    isCollectionsOverviewVisible: true,
     isCollectionCardVisible: false,
     isStartCollectionButtonVisible: false,
     isEditCollectionButtonVisible: false,

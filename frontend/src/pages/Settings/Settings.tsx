@@ -208,6 +208,14 @@ const Settings: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    // Example condition to update visibility states
+    setVisibilityStates((prev) => ({
+      ...prev,
+      isDotCountTypeVisible: true, // Update based on your logic
+    }));
+  }, []); // Add dependencies as needed
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${

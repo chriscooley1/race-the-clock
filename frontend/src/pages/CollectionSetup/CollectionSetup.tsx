@@ -110,7 +110,7 @@ const CollectionSetup: React.FC = () => {
       // Update visibility states based on your logic
       setVisibilityStates((prev) => ({
         ...prev,
-        isGeneratedSequencePreviewVisible: true, // Example condition
+        isGeneratedSequencePreviewVisible: true,
       }));
     },
     [
@@ -199,38 +199,47 @@ const CollectionSetup: React.FC = () => {
   useEffect(() => {
     // Update visibility states based on the selected type
     const newVisibilityStates: VisibilityStates = {
-      isDotCountTypeVisible: type === "numberSense", // Example condition
-      isMinDotsVisible: dotCountType === "random", // Example condition
-      isMaxDotsVisible: dotCountType === "random", // Add this line
-      isTypeSelectVisible: true, // Add this line
-      isItemCountVisible: true, // Add this line
-      isCollectionItemCountVisible: true, // Add this line
-      isDotColorVisible: true, // Add this line
-      isDotShapeVisible: true, // Add this line
-      isGenerateRandomSequenceButtonVisible: true, // Add this line
-      isFileUploadVisible: true, // Add this line
-      isNextButtonVisible: true, // Add this line
-      isClearButtonVisible: true, // Add this line
-      isGeneratedSequencePreviewVisible: isGenerated, // Add this line
-      isNameInputVisible: false, // Add this line
-      isAddNameButtonVisible: false, // Add this line
-      isSpinButtonVisible: false, // Add this line
-      isNamesListVisible: false, // Add this line
-      isCollectionNameVisible: false, // Add this line
-      isCategorySelectVisible: false, // Add this line
-      isStageSelectVisible: false, // Add this line
-      isPublicCheckboxVisible: false, // Add this line
-      isReportsOverviewVisible: false, // Add this line
-      isReportsListVisible: false, // Add this line
-      isFAQSectionVisible: false, // Add this line
-      isInstructionalVideosVisible: false, // Add this line
-      isTimedChallengesVisible: false, // Add this line
-      isCollectionsOverviewVisible: false, // Add this line
-      isCollectionCardVisible: false, // Add this line
-      isStartCollectionButtonVisible: false, // Add this line
-      isEditCollectionButtonVisible: false, // Add this line
-      isDeleteCollectionButtonVisible: false, // Add this line
-      isSubmitButtonVisible: true, // Add this line
+      ...visibilityStates, // Spread existing visibility states
+      isDotCountTypeVisible: type === "numberSense",
+      isMinDotsVisible: dotCountType === "random",
+      isMaxDotsVisible: dotCountType === "random",
+      isTypeSelectVisible: true,
+      isItemCountVisible: true,
+      isCollectionItemCountVisible: true,
+      isDotColorVisible: true,
+      isDotShapeVisible: true,
+      isGenerateRandomSequenceButtonVisible: true,
+      isFileUploadVisible: true,
+      isNextButtonVisible: true,
+      isClearButtonVisible: true,
+      isGeneratedSequencePreviewVisible: isGenerated,
+      isNameInputVisible: false,
+      isAddNameButtonVisible: false,
+      isSpinButtonVisible: false,
+      isNamesListVisible: false,
+      isCollectionNameVisible: false,
+      isCategorySelectVisible: false,
+      isStageSelectVisible: false,
+      isPublicCheckboxVisible: false,
+      isReportsOverviewVisible: false,
+      isReportsListVisible: false,
+      isFAQSectionVisible: false,
+      isInstructionalVideosVisible: false,
+      isTimedChallengesVisible: false,
+      isCollectionsOverviewVisible: false,
+      isCollectionCardVisible: false,
+      isStartCollectionButtonVisible: false,
+      isEditCollectionButtonVisible: false,
+      isDeleteCollectionButtonVisible: false,
+      isSubmitButtonVisible: true,
+      isMainFontVisible: false,
+      isHeadingFontVisible: false,
+      isButtonFontVisible: false,
+      isColorThemeVisible: false,
+      isTextColorVisible: false,
+      isBackgroundColorVisible: false,
+      isAccessibilityVisible: false,
+      isBackgroundThemeVisible: false,
     };
     setVisibilityStates(newVisibilityStates);
   }, [type, dotCountType, isGenerated]); // Add dependencies as needed

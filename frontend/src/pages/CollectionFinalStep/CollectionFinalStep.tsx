@@ -121,10 +121,10 @@ const CollectionFinalStep: React.FC = () => {
     isLoginButtonVisible: false,
     isProfileVisible: false,
     isUpdateFormVisible: false,
-    isNameInputVisible: false, // Set to false for visibility
-    isAddNameButtonVisible: false, // Set to false for visibility
-    isSpinButtonVisible: false, // Set to false for visibility
-    isNamesListVisible: false, // Set to false for visibility
+    isNameInputVisible: false,
+    isAddNameButtonVisible: false,
+    isSpinButtonVisible: false,
+    isNamesListVisible: false,
     isCollectionNameVisible: false,
     isCategorySelectVisible: false,
     isStageSelectVisible: false,

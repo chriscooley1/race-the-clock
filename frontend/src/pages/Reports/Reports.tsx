@@ -69,8 +69,8 @@ const Reports: React.FC = () => {
     isStageSelectVisible: false,
     isPublicCheckboxVisible: false,
     isSubmitButtonVisible: false,
-    isReportsOverviewVisible: true, // Set to true for visibility
-    isReportsListVisible: true, // Set to true for visibility
+    isReportsOverviewVisible: true,
+    isReportsListVisible: true,
     isFAQSectionVisible: false,
     isInstructionalVideosVisible: false,
     isTimedChallengesVisible: false,

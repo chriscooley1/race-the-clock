@@ -42,27 +42,27 @@ const LandingPage: React.FC = () => {
     isScreenClickAreaVisible: false,
     isMatchingGameVisible: false,
     isMultipleWordsGameVisible: false,
-    isRegisterButtonVisible: true, // Set to true for visibility
-    isLoginButtonVisible: true, // Set to true for visibility
-    isNameInputVisible: false, // Set to false for visibility
-    isAddNameButtonVisible: false, // Set to false for visibility
-    isSpinButtonVisible: false, // Set to false for visibility
-    isNamesListVisible: false, // Set to false for visibility
-    isCollectionNameVisible: false, // Set to false for visibility
-    isCategorySelectVisible: false, // Set to false for visibility
-    isStageSelectVisible: false, // Set to false for visibility
-    isPublicCheckboxVisible: false, // Set to false for visibility
-    isSubmitButtonVisible: false, // Set to false for visibility
-    isReportsOverviewVisible: false, // Set to false for visibility
-    isReportsListVisible: false, // Set to false for visibility
-    isFAQSectionVisible: false, // Set to false for visibility
-    isInstructionalVideosVisible: false, // Set to false for visibility
-    isTimedChallengesVisible: false, // Set to false for visibility
-    isCollectionsOverviewVisible: false, // Set to false for visibility
-    isCollectionCardVisible: false, // Set to false for visibility
-    isStartCollectionButtonVisible: false, // Set to false for visibility
-    isEditCollectionButtonVisible: false, // Set to false for visibility
-    isDeleteCollectionButtonVisible: false, // Set to false for visibility
+    isRegisterButtonVisible: true,
+    isLoginButtonVisible: true,
+    isNameInputVisible: false,
+    isAddNameButtonVisible: false,
+    isSpinButtonVisible: false,
+    isNamesListVisible: false,
+    isCollectionNameVisible: false,
+    isCategorySelectVisible: false,
+    isStageSelectVisible: false,
+    isPublicCheckboxVisible: false,
+    isSubmitButtonVisible: false,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
     isMainFontVisible: false,
     isHeadingFontVisible: false,
     isButtonFontVisible: false,
@@ -128,27 +128,35 @@ const LandingPage: React.FC = () => {
       isScreenClickAreaVisible: false,
       isMatchingGameVisible: false,
       isMultipleWordsGameVisible: false,
-      isRegisterButtonVisible: true, // or false based on your logic
-      isLoginButtonVisible: true, // or false based on your logic
-      isNameInputVisible: false, // Set to false for visibility
-      isAddNameButtonVisible: false, // Set to false for visibility
-      isSpinButtonVisible: false, // Set to false for visibility
-      isNamesListVisible: false, // Set to false for visibility
-      isCollectionNameVisible: false, // Set to false for visibility
-      isCategorySelectVisible: false, // Set to false for visibility
-      isStageSelectVisible: false, // Set to false for visibility
-      isPublicCheckboxVisible: false, // Set to false for visibility
-      isSubmitButtonVisible: false, // Set to false for visibility
-      isReportsOverviewVisible: false, // Set to false for visibility
-      isReportsListVisible: false, // Set to false for visibility
-      isFAQSectionVisible: false, // Set to false for visibility
-      isInstructionalVideosVisible: false, // Set to false for visibility
-      isTimedChallengesVisible: false, // Set to false for visibility
-      isCollectionsOverviewVisible: false, // Set to false for visibility
-      isCollectionCardVisible: false, // Set to false for visibility
-      isStartCollectionButtonVisible: false, // Set to false for visibility
-      isEditCollectionButtonVisible: false, // Set to false for visibility
-      isDeleteCollectionButtonVisible: false, // Set to false for visibility
+      isRegisterButtonVisible: true,
+      isLoginButtonVisible: true,
+      isNameInputVisible: false,
+      isAddNameButtonVisible: false,
+      isSpinButtonVisible: false,
+      isNamesListVisible: false,
+      isCollectionNameVisible: false,
+      isCategorySelectVisible: false,
+      isStageSelectVisible: false,
+      isPublicCheckboxVisible: false,
+      isSubmitButtonVisible: false,
+      isReportsOverviewVisible: false,
+      isReportsListVisible: false,
+      isFAQSectionVisible: false,
+      isInstructionalVideosVisible: false,
+      isTimedChallengesVisible: false,
+      isCollectionsOverviewVisible: false,
+      isCollectionCardVisible: false,
+      isStartCollectionButtonVisible: false,
+      isEditCollectionButtonVisible: false,
+      isDeleteCollectionButtonVisible: false,
+      isMainFontVisible: false,
+      isHeadingFontVisible: false,
+      isButtonFontVisible: false,
+      isColorThemeVisible: false,
+      isTextColorVisible: false,
+      isBackgroundColorVisible: false,
+      isAccessibilityVisible: false,
+      isBackgroundThemeVisible: false,
     };
     setVisibilityStates(newVisibilityStates);
   }, []); // This effect runs once when the component mounts
