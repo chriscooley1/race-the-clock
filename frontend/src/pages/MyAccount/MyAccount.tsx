@@ -46,6 +46,12 @@ const MyAccount: React.FC = () => {
     fetchUserData();
   }, [getAccessTokenSilently]);
 
+  useEffect(() => {
+    if (userData) { // Check if userData is available
+      startTour(); // Automatically start the tour when userData is fetched
+    }
+  }, [userData]); // Dependency on userData
+
   const handleTourStepChange = (step: number) => {
     setCurrentTourStep(step);
   };
@@ -104,9 +110,6 @@ const MyAccount: React.FC = () => {
         currentStep={currentTourStep}
         onStepChange={handleTourStepChange}
       />
-      <button type="button" onClick={startTour} className="mt-4 text-blue-500">
-        Start Tour
-      </button>
     </div>
   );
 };
