@@ -38,8 +38,11 @@ const NewCollection: React.FC = () => {
 
   // Add a function to start the tour
   const startTour = () => {
-    setIsTourRunning(true);
-    setCurrentTourStep(0); // Reset to the first step
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+      setCurrentTourStep(0); // Reset to the first step
+    }
   };
 
   useEffect(() => {

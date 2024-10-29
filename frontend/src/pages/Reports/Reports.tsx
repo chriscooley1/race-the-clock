@@ -60,8 +60,11 @@ const Reports: React.FC = () => {
 
   // Add a function to start the tour
   const startTour = () => {
-    setIsTourRunning(true);
-    setCurrentTourStep(0); // Reset to the first step
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+      setCurrentTourStep(0); // Reset to the first step
+    }
   };
 
   // Start the tour when the component mounts
