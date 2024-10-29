@@ -36,6 +36,7 @@ const Games: React.FC = () => {
 
   // Start the tour when the component mounts
   useEffect(() => {
+    // Start the tour when the component mounts
     // startTour(); // This line should be removed or commented out
   }, []);
 

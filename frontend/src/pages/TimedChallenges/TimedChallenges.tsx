@@ -70,7 +70,7 @@ const TimedChallenges: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    startTour();
+    startTour(); // Call the startTour function to avoid the unused error
   }, []);
 
   // Example of updating visibility states based on some logic

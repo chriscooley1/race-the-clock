@@ -44,7 +44,6 @@ const MyAccount: React.FC = () => {
     };
 
     fetchUserData();
-    startTour(); // Start the tour when the component mounts
   }, [getAccessTokenSilently]);
 
   const handleTourStepChange = (step: number) => {
@@ -105,6 +104,9 @@ const MyAccount: React.FC = () => {
         currentStep={currentTourStep}
         onStepChange={handleTourStepChange}
       />
+      <button type="button" onClick={startTour} className="mt-4 text-blue-500">
+        Start Tour
+      </button>
     </div>
   );
 };

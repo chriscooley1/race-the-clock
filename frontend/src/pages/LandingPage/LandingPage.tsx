@@ -27,7 +27,7 @@ const LandingPage: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    startTour();
+    startTour(); // Call the startTour function
   }, []);
 
   // Example of using setVisibilityStates

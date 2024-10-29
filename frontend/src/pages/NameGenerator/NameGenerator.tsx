@@ -42,7 +42,7 @@ const NameGenerator: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    startTour();
+    startTour(); // Call the startTour function
   }, []);
 
   const handleTourComplete = () => {

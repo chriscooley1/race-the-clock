@@ -71,19 +71,20 @@ const Resources: React.FC = () => {
 
   // Start the tour when the component mounts
   useEffect(() => {
-    setIsTourRunning(true);
-    setCurrentTourStep(0); // Reset to the first step
-
-    // Optionally, you can set visibility states here based on your logic
-    setVisibilityStates({
-      isFAQSectionVisible: true, // Set based on your logic
-      isInstructionalVideosVisible: true, // Set based on your logic
-    });
+    // Start the tour when the component mounts
+    // startTour(); // This line should be removed or commented out
   }, []);
 
   const handleTourComplete = () => {
     console.log("Tour completed");
     setIsTourRunning(false); // Reset the tour running state
+  };
+
+  const toggleFAQVisibility = () => {
+    setVisibilityStates((prev) => ({
+      ...prev,
+      isFAQSectionVisible: !prev.isFAQSectionVisible,
+    }));
   };
 
   return (
@@ -94,45 +95,51 @@ const Resources: React.FC = () => {
     >
       <h1 className="mb-8 text-3xl font-bold">Resources</h1>
 
+      <button onClick={toggleFAQVisibility}>Toggle FAQ Visibility</button>
+
       {isLoading ? (
         <p>Loading resources...</p>
       ) : (
         <>
-          <section className="mb-8 w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index}>
-                  <h3 className="mb-2 text-xl font-medium">{faq.question}</h3>
-                  <p>{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          {visibilityStates.isFAQSectionVisible && (
+            <section className="mb-8 w-full max-w-3xl">
+              <h2 className="mb-4 text-2xl font-semibold">
+                Frequently Asked Questions
+              </h2>
+              <div className="space-y-4">
+                {faqs.map((faq, index) => (
+                  <div key={index}>
+                    <h3 className="mb-2 text-xl font-medium">{faq.question}</h3>
+                    <p>{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section className="w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">
-              Instructional Videos
-            </h2>
-            <div className="space-y-6">
-              {videos.map((video, index) => (
-                <div key={index}>
-                  <h3 className="mb-2 text-xl font-medium">{video.title}</h3>
-                  <p>{video.description}</p>
-                  <a
-                    href={video.videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline"
-                  >
-                    Watch Video
-                  </a>
-                </div>
-              ))}
-            </div>
-          </section>
+          {visibilityStates.isInstructionalVideosVisible && (
+            <section className="w-full max-w-3xl">
+              <h2 className="mb-4 text-2xl font-semibold">
+                Instructional Videos
+              </h2>
+              <div className="space-y-6">
+                {videos.map((video, index) => (
+                  <div key={index}>
+                    <h3 className="mb-2 text-xl font-medium">{video.title}</h3>
+                    <p>{video.description}</p>
+                    <a
+                      href={video.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline"
+                    >
+                      Watch Video
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </>
       )}
 

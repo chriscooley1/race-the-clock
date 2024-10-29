@@ -64,9 +64,9 @@ const Reports: React.FC = () => {
     setCurrentTourStep(0); // Reset to the first step
   };
 
+  // Start the tour when the component mounts
   useEffect(() => {
-    // Start the tour when the component mounts
-    startTour();
+    startTour(); // Call the startTour function
   }, []);
 
   const handleTourComplete = () => {

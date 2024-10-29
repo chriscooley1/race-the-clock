@@ -61,7 +61,7 @@ const DiscoverCollections: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    startTour();
+    startTour(); // Call the startTour function here
   }, []);
 
   // Example of updating visibility states based on some logic
