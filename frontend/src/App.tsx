@@ -21,7 +21,7 @@ import { tourSteps as nameGeneratorSteps } from "./pages/NameGenerator/tourSteps
 import { tourSteps as resourcesSteps } from "./pages/Resources/tourStepsResources";
 import { tourSteps as settingsSteps } from "./pages/Settings/tourStepsSettings";
 import { tourSteps as myAccountSteps } from "./pages/MyAccount/tourStepsMyAccount";
-import { tourSteps as gamesSteps } from "./pages/Games/tourStepsGames";
+import { tourStepsGames } from "./pages/Games/tourStepsGames";
 import { tourSteps as timedChallengesSteps } from "./pages/TimedChallenges/tourStepsTimedChallenges";
 import { tourSteps as reportsSteps } from "./pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "./pages/BadgesAchievements/tourStepsBadgesAchievements";
@@ -103,7 +103,7 @@ const App: React.FC = () => {
       case "/my-account":
         return myAccountSteps;
       case "/games":
-        return gamesSteps;
+        return tourStepsGames;
       case "/timed-challenges":
         return timedChallengesSteps;
       case "/reports":

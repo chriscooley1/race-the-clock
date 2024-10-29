@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { VisibilityStates, tourSteps } from "./tourStepsGames"; // Import visibility states and tour steps
-import GuidedTour from "../../components/GuidedTour"; // Import GuidedTour
+import { tourStepsGames } from "./tourStepsGames";
+import { VisibilityStates } from "../../types/VisibilityStates";
+import GuidedTour from "../../components/GuidedTour";
 
 const Games: React.FC = () => {
   const { theme } = useTheme();
@@ -10,6 +11,35 @@ const Games: React.FC = () => {
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
+    isSaveButtonVisible: false,
+    isItemPreviewVisible: false,
+    isMathProblemVisible: false,
+    isDotButtonVisible: false,
+    isImageUploadVisible: false,
+    isPreviousButtonVisible: false,
+    isProgressIndicatorVisible: false,
+    isPauseButtonVisible: false,
+    isScreenClickAreaVisible: false,
     isMatchingGameVisible: true,
     isMultipleWordsGameVisible: true,
   });
@@ -28,10 +58,11 @@ const Games: React.FC = () => {
   // Example of updating visibility states based on some condition
   useEffect(() => {
     // You can set visibility states based on your logic here
-    setVisibilityStates({
+    setVisibilityStates((prevStates) => ({
+      ...prevStates,
       isMatchingGameVisible: true, // or false based on your logic
       isMultipleWordsGameVisible: true, // or false based on your logic
-    });
+    }));
   }, []); // This effect runs once when the component mounts
 
   // Start the tour when the component mounts
@@ -81,7 +112,7 @@ const Games: React.FC = () => {
 
       {/* Add the GuidedTour component here */}
       <GuidedTour
-        steps={tourSteps(visibilityStates)} // Pass the visibility states to create tour steps
+        steps={tourStepsGames(visibilityStates)} // Pass the visibility states to create tour steps
         isRunning={isTourRunning}
         onComplete={handleTourComplete} // Use the new handler
         currentStep={currentTourStep}

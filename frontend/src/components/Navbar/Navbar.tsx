@@ -18,7 +18,7 @@ import { tourSteps as nameGeneratorSteps } from "../../pages/NameGenerator/tourS
 import { tourSteps as resourcesSteps } from "../../pages/Resources/tourStepsResources";
 import { tourSteps as settingsSteps } from "../../pages/Settings/tourStepsSettings";
 import { tourSteps as myAccountSteps } from "../../pages/MyAccount/tourStepsMyAccount";
-import { tourSteps as gamesSteps } from "../../pages/Games/tourStepsGames";
+import { tourStepsGames } from "../../pages/Games/tourStepsGames";
 import { tourSteps as timedChallengesSteps } from "../../pages/TimedChallenges/tourStepsTimedChallenges";
 import { tourSteps as reportsSteps } from "../../pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "../../pages/BadgesAchievements/tourStepsBadgesAchievements";
@@ -131,7 +131,7 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "fullscreenDisplay";
         break;
       case "/games":
-        steps = gamesSteps(visibilityStates);
+        steps = tourStepsGames(visibilityStates);
         tourName = "games";
         break;
       case "/landing-page":

@@ -28,4 +28,6 @@ export interface VisibilityStates {
   isProgressIndicatorVisible?: boolean;
   isPauseButtonVisible?: boolean;
   isScreenClickAreaVisible?: boolean;
+  isMatchingGameVisible?: boolean;
+  isMultipleWordsGameVisible?: boolean;
 }
