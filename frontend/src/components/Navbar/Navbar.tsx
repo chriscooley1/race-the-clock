@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
   const { theme, toggleDarkMode } = useTheme();
-  const { toursCompleted, completeTour, startTour } = useTour();
+  const { toursCompleted, startTour } = useTour();
 
   const handleMenuToggle = () => {
     console.log("Toggling menu. Current state:", menuOpen);
@@ -100,14 +100,9 @@ const Navbar: React.FC<NavbarProps> = ({
     } else {
       steps = tourStepsNavbar; // Default to navbar steps
     }
+    onStartTour?.(); // Call onStartTour if it's provided
     startTour(steps); // Start the tour with the steps
-  }, [location.pathname, startTour, completeTour, toursCompleted]);
-
-  useEffect(() => {
-    if (!toursCompleted.navbar) {
-      handleStartTour(); // Start the tour for the navbar
-    }
-  }, [toursCompleted, handleStartTour]);
+  }, [location.pathname, startTour, toursCompleted, onStartTour]);
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
@@ -140,7 +135,7 @@ const Navbar: React.FC<NavbarProps> = ({
         )}
         <button
           type="button"
-          onClick={onStartTour}
+          onClick={handleStartTour}
           className="rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
         >
           Start Tour

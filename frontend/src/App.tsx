@@ -118,17 +118,11 @@ const App: React.FC = () => {
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
         <TourProvider>
-          {" "}
-          {/* Wrap your application with TourProvider */}
-          <div
-            className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
-          >
+          <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
             <Navbar onStartTour={handleTourStart} />
             <div className="flex pt-[70px]">
               {!hideSidebar && <Sidebar />}
-              <div
-                className={`grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area`}
-              >
+              <div className={`grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area`}>
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route
@@ -261,8 +255,7 @@ const App: React.FC = () => {
               onStepChange={handleTourStepChange}
             />
           </div>
-        </TourProvider>{" "}
-        {/* Close TourProvider */}
+        </TourProvider>
       </ErrorBoundary>
     </Auth0ProviderWithHistory>
   );

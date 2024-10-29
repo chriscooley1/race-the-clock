@@ -44,7 +44,7 @@ const NewCollection: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    startTour();
+    // startTour(); // This line should be removed or commented out
   }, []);
 
   useEffect(() => {
@@ -189,6 +189,8 @@ const NewCollection: React.FC = () => {
           currentStep={currentTourStep}
           onStepChange={handleTourStepChange}
         />
+
+        <button type="button" onClick={startTour}>Start Tour</button>
       </div>
     </div>
   );
