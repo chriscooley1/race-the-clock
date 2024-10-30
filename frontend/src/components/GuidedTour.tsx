@@ -25,20 +25,20 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   const { completeTour, setIsTourRunning } = useTour();
 
   const handleJoyrideCallback = (data: ExtendedCallBackProps) => {
-    const { status } = data;
+    const { status, index } = data;
 
     if (["finished", "skipped"].includes(status as string)) {
       completeTour(tourName);
       setIsTourRunning(false);
       onComplete();
     } else if (data.type === "step:after") {
-      if (currentStep + 1 < steps.length) {
-        onStepChange(currentStep + 1);
+      if (index + 1 < steps.length) {
+        onStepChange(index + 1);
       } else {
         onComplete();
       }
       if (isScrollToEnabled) {
-        const targetSelector = steps[currentStep].target as string;
+        const targetSelector = steps[index].target as string;
         const target = document.querySelector(targetSelector);
         if (target instanceof HTMLElement) {
           target.scrollIntoView({ behavior: "smooth", block: "center" });

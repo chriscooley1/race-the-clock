@@ -496,6 +496,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         onPauseResume={handlePauseResume}
         onStartTour={handleStartTour}
         setTourName={setTourName}
+        setCurrentTourStep={setCurrentTourStep}
       />
       <div
         className="relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"

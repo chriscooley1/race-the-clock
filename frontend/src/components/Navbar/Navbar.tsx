@@ -30,6 +30,7 @@ interface NavbarProps {
   hasBackButton?: boolean;
   onStartTour: () => void;
   setTourName: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -39,6 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({
   hasBackButton,
   onStartTour,
   setTourName,
+  setCurrentTourStep,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -205,7 +207,8 @@ const Navbar: React.FC<NavbarProps> = ({
     onStartTour?.();
     startTour(steps);
     setTourName(tourName);
-  }, [location.pathname, startTour, onStartTour, setTourName]);
+    setCurrentTourStep(0);
+  }, [location.pathname, startTour, onStartTour, setTourName, setCurrentTourStep]);
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
@@ -227,7 +230,7 @@ const Navbar: React.FC<NavbarProps> = ({
             Back
           </button>
         )}
-        {onPauseResume && (
+        {location.pathname === "/fullscreen-display" && onPauseResume && (
           <button
             type="button"
             className="bg-custom-green hover:bg-custom-green-dark rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
