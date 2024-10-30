@@ -10,6 +10,8 @@ import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
 import { TourProvider } from "./context/TourContext";
+import MatchingGame from "./pages/Games/MatchingGame";
+import MultipleWordsGame from "./pages/Games/MultipleWordsGame";
 
 // Import your tour steps here
 import { tourStepsLandingPage } from "./pages/LandingPage/tourStepsLandingPage";
@@ -317,6 +319,22 @@ const App: React.FC = () => {
                     element={
                       <Suspense fallback={<div>Loading...</div>}>
                         <PrivateRoute element={<BadgesAchievements />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/games/matching-game"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<MatchingGame />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/games/multiple-words-game"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<MultipleWordsGame />} />
                       </Suspense>
                     }
                   />

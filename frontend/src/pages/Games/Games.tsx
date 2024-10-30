@@ -3,6 +3,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsGames } from "./tourStepsGames";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import GuidedTour from "../../components/GuidedTour";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const Games: React.FC = () => {
   const { theme } = useTheme();
@@ -125,17 +126,15 @@ const Games: React.FC = () => {
         <p>Loading games...</p>
       ) : (
         <div className="w-full max-w-2xl">
-          <div className="matching-game mt-8">
+          <Link to="/games/matching-game" className="matching-game mt-8">
             <h2 className="text-2xl font-semibold">Matching Game</h2>
             <p>Match the letters with the corresponding images!</p>
-            {/* Add your game logic and UI here */}
-          </div>
+          </Link>
 
-          <div className="multiple-words-game mt-8">
+          <Link to="/games/multiple-words-game" className="multiple-words-game mt-8">
             <h2 className="text-2xl font-semibold">Multiple Words Game</h2>
             <p>Drag and connect words to their corresponding cards!</p>
-            {/* Add your game logic and UI here */}
-          </div>
+          </Link>
         </div>
       )}
 
