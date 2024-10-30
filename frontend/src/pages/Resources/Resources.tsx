@@ -130,15 +130,16 @@ const Resources: React.FC = () => {
     loadData();
   }, []);
 
-  // Start the tour when the component mounts
   useEffect(() => {
-    // Start the tour when the component mounts
-    setIsTourRunning(true);
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true); // Start the tour if not completed
+    }
   }, []);
 
   const handleTourComplete = () => {
-    console.log("Tour completed");
-    setIsTourRunning(false); // Reset the tour running state
+    setIsTourRunning(false);
+    localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
   };
 
   const toggleFAQVisibility = () => {
@@ -204,7 +205,6 @@ const Resources: React.FC = () => {
         </>
       )}
 
-      {/* Add the GuidedTour component here */}
       <GuidedTour
         steps={tourStepsResources(visibilityStates)}
         isRunning={isTourRunning}

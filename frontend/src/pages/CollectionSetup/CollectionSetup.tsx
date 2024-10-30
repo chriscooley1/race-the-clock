@@ -100,6 +100,7 @@ const CollectionSetup: React.FC = () => {
   });
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   // Define the steps variable
   const steps: Step[] = tourStepsCollectionSetup(visibilityStates);
@@ -243,6 +244,22 @@ const CollectionSetup: React.FC = () => {
     };
     setVisibilityStates(newVisibilityStates);
   }, [type, dotCountType, isGenerated]); // Add dependencies as needed
+
+  useEffect(() => {
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true); // Start the tour if not completed
+    }
+  }, []);
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false);
+    localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
+  };
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -850,17 +867,14 @@ const CollectionSetup: React.FC = () => {
           </div>
         </div>
       )}
-      {isTourRunning && (
-        <GuidedTour
-          steps={steps}
-          isRunning={true}
-          onComplete={() => console.log("Tour completed")}
-          currentStep={currentStep}
-          onStepChange={handleStepChange}
-          isScrollToEnabled={true}
-          tourName="collectionSetup"
-        />
-      )}
+      <GuidedTour
+        steps={tourStepsCollectionSetup(visibilityStates)} // Pass the visibility states to create tour steps
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete} // Use the new handler
+        currentStep={currentTourStep}
+        onStepChange={handleTourStepChange}
+        tourName="collectionSetup"
+      />
     </div>
   );
 };

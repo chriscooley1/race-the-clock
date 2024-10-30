@@ -189,11 +189,6 @@ const YourCollections: React.FC = () => {
   };
 
   useEffect(() => {
-    // Start the tour when the component mounts
-    handleTourStart();
-  }, []);
-
-  useEffect(() => {
     const loadCollections = async () => {
       try {
         console.log("Fetching user collections...");
@@ -494,11 +489,6 @@ const YourCollections: React.FC = () => {
     },
     [adjustColorForColorblindness],
   );
-
-  useEffect(() => {
-    // Start the tour when the component mounts
-    handleTourStart();
-  }, []);
 
   return (
     <div
