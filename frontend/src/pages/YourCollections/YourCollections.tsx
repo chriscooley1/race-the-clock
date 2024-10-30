@@ -189,6 +189,11 @@ const YourCollections: React.FC = () => {
   };
 
   useEffect(() => {
+    // Start the tour when the component mounts
+    handleTourStart();
+  }, []); // Add an empty dependency array to run it once on mount
+
+  useEffect(() => {
     const loadCollections = async () => {
       try {
         console.log("Fetching user collections...");

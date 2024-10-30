@@ -53,7 +53,6 @@ const App: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState(false);
   const [currentTourStep, setCurrentTourStep] = useState(0);
   const [currentTourName, setCurrentTourName] = useState<string>("");
-  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const hiddenRoutes = ["/", "/fullscreen-display", "/math-collection"];
@@ -183,10 +182,6 @@ const App: React.FC = () => {
     }
   };
 
-  const handlePauseResume = () => {
-    setIsPaused((prev) => !prev);
-  };
-
   return (
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
@@ -195,8 +190,6 @@ const App: React.FC = () => {
             className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
           >
             <Navbar
-              isPaused={isPaused}
-              onPauseResume={handlePauseResume}
               onStartTour={handleTourStart}
               setTourName={setCurrentTourName}
               setCurrentTourStep={setCurrentTourStep}

@@ -98,7 +98,6 @@ const CollectionSetup: React.FC = () => {
     isAccessibilityVisible: false,
     isBackgroundThemeVisible: false,
   });
-  const [currentStep, setCurrentStep] = useState<number>(0);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
@@ -513,12 +512,6 @@ const CollectionSetup: React.FC = () => {
     setPreviewSequence(updatedSequence); // Set the updated sequence
   };
 
-  // Update the onStepChange function
-  const handleStepChange = (step: number) => {
-    console.log("Step changed to:", step);
-    setCurrentStep(step);
-  };
-
   if (!currentUser) {
     return <div className="p-4 text-center">Loading user information...</div>;
   }
@@ -868,9 +861,9 @@ const CollectionSetup: React.FC = () => {
         </div>
       )}
       <GuidedTour
-        steps={tourStepsCollectionSetup(visibilityStates)} // Pass the visibility states to create tour steps
+        steps={steps}
         isRunning={isTourRunning}
-        onComplete={handleTourComplete} // Use the new handler
+        onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={handleTourStepChange}
         tourName="collectionSetup"
