@@ -15,6 +15,8 @@ interface Theme {
   name: string;
   backgroundColor: string;
   textColor: string;
+  originalTextColor: string; // Store original text color
+  originalBackgroundColor: string; // Store original background color
   className?: string;
   displayTextColor?: string;
   displayBackgroundColor?: string;
@@ -79,6 +81,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       ? JSON.parse(savedTheme)
       : {
           ...colorSchemes[0],
+          originalTextColor: colorSchemes[0].textColor, // Store original text color
+          originalBackgroundColor: colorSchemes[0].backgroundColor, // Store original background color
           isColorblindMode: false,
           colorblindType: "",
           displayTextColor: undefined,
@@ -105,13 +109,39 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   const setColorblindMode = (isEnabled: boolean) => {
     setTheme((prevTheme) => {
       const updatedTheme = { ...prevTheme, isColorblindMode: isEnabled };
-      // Re-apply color adjustments when toggling colorblind mode
-      return applyColorAdjustments(updatedTheme);
+
+      if (isEnabled) {
+        // Apply color adjustments when enabling colorblind mode
+        return applyColorAdjustments(updatedTheme);
+      } else {
+        // Reset to original colors when disabling colorblind mode
+        return {
+          ...updatedTheme,
+          displayTextColor: updatedTheme.originalTextColor, // Reset to original text color
+          displayBackgroundColor: updatedTheme.originalBackgroundColor, // Reset to original background color
+          // Ensure all other properties are included
+          name: updatedTheme.name,
+          backgroundColor: updatedTheme.backgroundColor,
+          textColor: updatedTheme.textColor,
+          className: updatedTheme.className,
+          backgroundImage: updatedTheme.backgroundImage,
+          isDarkMode: updatedTheme.isDarkMode,
+          font: updatedTheme.font,
+          headingFont: updatedTheme.headingFont,
+          buttonFont: updatedTheme.buttonFont,
+          adjustColorForColorblindness:
+            updatedTheme.adjustColorForColorblindness,
+        };
+      }
     });
   };
 
   const setColorblindType = (type: string) => {
-    setTheme((prevTheme) => ({ ...prevTheme, colorblindType: type }));
+    setTheme((prevTheme) => {
+      const updatedTheme = { ...prevTheme, colorblindType: type };
+      // Re-apply color adjustments when changing colorblind type
+      return applyColorAdjustments(updatedTheme);
+    });
   };
 
   const toggleDarkMode = () => {

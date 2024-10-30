@@ -1,24 +1,9 @@
 import { Step } from "react-joyride";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
-// Define the type for visibility states
-export interface VisibilityStates {
-  isDotCountTypeVisible: boolean;
-  isMinDotsVisible: boolean;
-  isMaxDotsVisible: boolean;
-  isTypeSelectVisible: boolean;
-  isItemCountVisible: boolean;
-  isCollectionItemCountVisible: boolean;
-  isDotColorVisible: boolean;
-  isDotShapeVisible: boolean;
-  isGenerateRandomSequenceButtonVisible: boolean;
-  isFileUploadVisible: boolean;
-  isNextButtonVisible: boolean;
-  isClearButtonVisible: boolean;
-  isGeneratedSequencePreviewVisible: boolean;
-}
-
-// Function to create tour steps based on visibility states
-export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsCollectionSetup = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".collection-setup",
@@ -101,7 +86,7 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
 
   // Filter steps based on visibility states
   return steps.filter((step) => {
-    if (step.target === ".dot-count-type")
+    if (step.target === "#dotCountType")
       return visibilityStates.isDotCountTypeVisible;
     if (step.target === "#minDots") return visibilityStates.isMinDotsVisible;
     if (step.target === "#maxDots") return visibilityStates.isMaxDotsVisible;
@@ -125,14 +110,4 @@ export const createTourSteps = (visibilityStates: VisibilityStates): Step[] => {
       return visibilityStates.isGeneratedSequencePreviewVisible;
     return true; // Include all other steps
   });
-};
-
-// Export a constant that uses the function
-export const tourSteps = (visibilityStates: VisibilityStates) =>
-  createTourSteps(visibilityStates);
-
-// You may need to export a function to initialize the tour with the visibility states
-export const initializeTour = (visibilityStates: VisibilityStates) => {
-  // Use visibilityStates to create tour steps
-  return createTourSteps(visibilityStates);
 };

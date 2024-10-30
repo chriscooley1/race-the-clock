@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import { tourStepsResources } from "./tourStepsResources";
+import GuidedTour from "../../components/GuidedTour";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
 interface FAQ {
   question: string;
@@ -17,6 +20,73 @@ const Resources: React.FC = () => {
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [videos, setVideos] = useState<InstructionalVideo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
+    isSaveButtonVisible: false,
+    isItemPreviewVisible: false,
+    isMathProblemVisible: false,
+    isDotButtonVisible: false,
+    isImageUploadVisible: false,
+    isPreviousButtonVisible: false,
+    isProgressIndicatorVisible: false,
+    isPauseButtonVisible: false,
+    isScreenClickAreaVisible: false,
+    isMatchingGameVisible: false,
+    isMultipleWordsGameVisible: false,
+    isRegisterButtonVisible: false,
+    isLoginButtonVisible: false,
+    isProfileVisible: false,
+    isUpdateFormVisible: false,
+    isNameInputVisible: false,
+    isAddNameButtonVisible: false,
+    isSpinButtonVisible: false,
+    isNamesListVisible: false,
+    isCollectionNameVisible: false,
+    isCategorySelectVisible: false,
+    isStageSelectVisible: false,
+    isPublicCheckboxVisible: false,
+    isSubmitButtonVisible: false,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: true,
+    isInstructionalVideosVisible: true,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
+  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -60,6 +130,24 @@ const Resources: React.FC = () => {
     loadData();
   }, []);
 
+  // Start the tour when the component mounts
+  useEffect(() => {
+    // Start the tour when the component mounts
+    setIsTourRunning(true);
+  }, []);
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
+
+  const toggleFAQVisibility = () => {
+    setVisibilityStates((prev) => ({
+      ...prev,
+      isFAQSectionVisible: !prev.isFAQSectionVisible,
+    }));
+  };
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] md:pl-[250px] ${
@@ -68,47 +156,63 @@ const Resources: React.FC = () => {
     >
       <h1 className="mb-8 text-3xl font-bold">Resources</h1>
 
+      <button onClick={toggleFAQVisibility}>Toggle FAQ Visibility</button>
+
       {isLoading ? (
         <p>Loading resources...</p>
       ) : (
         <>
-          <section className="mb-8 w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index}>
-                  <h3 className="mb-2 text-xl font-medium">{faq.question}</h3>
-                  <p>{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          {visibilityStates.isFAQSectionVisible && (
+            <section className="mb-8 w-full max-w-3xl">
+              <h2 className="mb-4 text-2xl font-semibold">
+                Frequently Asked Questions
+              </h2>
+              <div className="space-y-4">
+                {faqs.map((faq, index) => (
+                  <div key={index}>
+                    <h3 className="mb-2 text-xl font-medium">{faq.question}</h3>
+                    <p>{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section className="w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">
-              Instructional Videos
-            </h2>
-            <div className="space-y-6">
-              {videos.map((video, index) => (
-                <div key={index}>
-                  <h3 className="mb-2 text-xl font-medium">{video.title}</h3>
-                  <p>{video.description}</p>
-                  <a
-                    href={video.videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline"
-                  >
-                    Watch Video
-                  </a>
-                </div>
-              ))}
-            </div>
-          </section>
+          {visibilityStates.isInstructionalVideosVisible && (
+            <section className="w-full max-w-3xl">
+              <h2 className="mb-4 text-2xl font-semibold">
+                Instructional Videos
+              </h2>
+              <div className="space-y-6">
+                {videos.map((video, index) => (
+                  <div key={index}>
+                    <h3 className="mb-2 text-xl font-medium">{video.title}</h3>
+                    <p>{video.description}</p>
+                    <a
+                      href={video.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline"
+                    >
+                      Watch Video
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </>
       )}
+
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={tourStepsResources(visibilityStates)}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="resources"
+      />
     </div>
   );
 };

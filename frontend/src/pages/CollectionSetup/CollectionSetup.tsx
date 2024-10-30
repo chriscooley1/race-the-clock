@@ -16,7 +16,8 @@ import { saveCollection, getCurrentUser } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { User } from "../../types/user";
 import { useTheme } from "../../context/ThemeContext";
-import { VisibilityStates, createTourSteps } from "./tourStepsCollectionSetup";
+import { VisibilityStates } from "../../types/VisibilityStates";
+import { tourStepsCollectionSetup } from "./tourStepsCollectionSetup";
 import { Step } from "react-joyride";
 import GuidedTour from "../../components/GuidedTour";
 
@@ -68,46 +69,62 @@ const CollectionSetup: React.FC = () => {
     isFileUploadVisible: true,
     isNextButtonVisible: true,
     isClearButtonVisible: true,
-    isGeneratedSequencePreviewVisible: true,
+    isGeneratedSequencePreviewVisible: false,
+    isNameInputVisible: false,
+    isAddNameButtonVisible: false,
+    isSpinButtonVisible: false,
+    isNamesListVisible: false,
+    isCollectionNameVisible: false,
+    isCategorySelectVisible: false,
+    isStageSelectVisible: false,
+    isPublicCheckboxVisible: false,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isSubmitButtonVisible: true,
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
   });
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [isTourReady, setIsTourReady] = useState(false);
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
 
   // Define the steps variable
-  const steps: Step[] = createTourSteps(visibilityStates);
+  const steps: Step[] = tourStepsCollectionSetup(visibilityStates);
 
   // Example of updating visibility states based on some condition
   useEffect(
     () => {
       // Update visibility states based on your logic
-      setVisibilityStates({
-        isDotCountTypeVisible: true, // or false based on your logic
-        isMinDotsVisible: true, // or false based on your logic
-        isMaxDotsVisible: true, // or false based on your logic
-        isTypeSelectVisible: true, // or false based on your logic
-        isItemCountVisible: true, // or false based on your logic
-        isCollectionItemCountVisible: true, // or false based on your logic
-        isDotColorVisible: true, // or false based on your logic
-        isDotShapeVisible: true, // or false based on your logic
-        isGenerateRandomSequenceButtonVisible: true, // or false based on your logic
-        isFileUploadVisible: true, // or false based on your logic
-        isNextButtonVisible: true, // or false based on your logic
-        isClearButtonVisible: true, // or false based on your logic
-        isGeneratedSequencePreviewVisible: isGenerated, // Example condition
-      });
+      setVisibilityStates((prev) => ({
+        ...prev,
+        isGeneratedSequencePreviewVisible: true,
+      }));
     },
     [
-      /* dependencies */
+      /* dependencies that indicate readiness */
     ],
   );
 
   // Call createTourSteps with updated visibilityStates
   useEffect(() => {
     console.log("Generated tour steps:", steps); // Debugging log for steps
-    if (isTourReady) {
-      console.log("Tour is ready with steps:", steps);
+    if (isTourRunning) {
+      console.log("Tour is running with steps:", steps);
     }
-  }, [visibilityStates, isTourReady]); // Regenerate steps when visibility states change
+  }, [visibilityStates, isTourRunning]); // Regenerate steps when visibility states change
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -171,8 +188,8 @@ const CollectionSetup: React.FC = () => {
 
   useEffect(
     () => {
-      // Assuming you have logic to determine when the tour is ready
-      setIsTourReady(true);
+      // Logic to determine if the tour should start
+      setIsTourRunning(true);
     },
     [
       /* dependencies that indicate readiness */
@@ -182,19 +199,47 @@ const CollectionSetup: React.FC = () => {
   useEffect(() => {
     // Update visibility states based on the selected type
     const newVisibilityStates: VisibilityStates = {
-      isDotCountTypeVisible: type === "numberSense", // Example condition
-      isMinDotsVisible: dotCountType === "random", // Example condition
-      isMaxDotsVisible: dotCountType === "random", // Example condition
-      isTypeSelectVisible: true, // or false based on your logic
-      isItemCountVisible: true, // or false based on your logic
-      isCollectionItemCountVisible: true, // or false based on your logic
-      isDotColorVisible: true, // or false based on your logic
-      isDotShapeVisible: true, // or false based on your logic
-      isGenerateRandomSequenceButtonVisible: true, // or false based on your logic
-      isFileUploadVisible: true, // or false based on your logic
-      isNextButtonVisible: true, // or false based on your logic
-      isClearButtonVisible: true, // or false based on your logic
-      isGeneratedSequencePreviewVisible: isGenerated, // Example condition
+      ...visibilityStates, // Spread existing visibility states
+      isDotCountTypeVisible: type === "numberSense",
+      isMinDotsVisible: dotCountType === "random",
+      isMaxDotsVisible: dotCountType === "random",
+      isTypeSelectVisible: true,
+      isItemCountVisible: true,
+      isCollectionItemCountVisible: true,
+      isDotColorVisible: true,
+      isDotShapeVisible: true,
+      isGenerateRandomSequenceButtonVisible: true,
+      isFileUploadVisible: true,
+      isNextButtonVisible: true,
+      isClearButtonVisible: true,
+      isGeneratedSequencePreviewVisible: isGenerated,
+      isNameInputVisible: false,
+      isAddNameButtonVisible: false,
+      isSpinButtonVisible: false,
+      isNamesListVisible: false,
+      isCollectionNameVisible: false,
+      isCategorySelectVisible: false,
+      isStageSelectVisible: false,
+      isPublicCheckboxVisible: false,
+      isReportsOverviewVisible: false,
+      isReportsListVisible: false,
+      isFAQSectionVisible: false,
+      isInstructionalVideosVisible: false,
+      isTimedChallengesVisible: false,
+      isCollectionsOverviewVisible: false,
+      isCollectionCardVisible: false,
+      isStartCollectionButtonVisible: false,
+      isEditCollectionButtonVisible: false,
+      isDeleteCollectionButtonVisible: false,
+      isSubmitButtonVisible: true,
+      isMainFontVisible: false,
+      isHeadingFontVisible: false,
+      isButtonFontVisible: false,
+      isColorThemeVisible: false,
+      isTextColorVisible: false,
+      isBackgroundColorVisible: false,
+      isAccessibilityVisible: false,
+      isBackgroundThemeVisible: false,
     };
     setVisibilityStates(newVisibilityStates);
   }, [type, dotCountType, isGenerated]); // Add dependencies as needed
@@ -805,7 +850,7 @@ const CollectionSetup: React.FC = () => {
           </div>
         </div>
       )}
-      {isTourReady && (
+      {isTourRunning && (
         <GuidedTour
           steps={steps}
           isRunning={true}
@@ -813,6 +858,7 @@ const CollectionSetup: React.FC = () => {
           currentStep={currentStep}
           onStepChange={handleStepChange}
           isScrollToEnabled={true}
+          tourName="collectionSetup"
         />
       )}
     </div>
@@ -820,7 +866,6 @@ const CollectionSetup: React.FC = () => {
 };
 
 export default CollectionSetup;
-
 // Define the type guard function
 function isUser(user: unknown): user is User {
   return (

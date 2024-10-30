@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState, ReactNode, ElementType } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useTheme } from "./context/ThemeContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -8,23 +8,24 @@ import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
 import { TourProvider } from "./context/TourContext";
+import { BeaconRenderProps } from "react-beacon-map";
 
 // Import your tour steps here
-import { tourSteps as landingPageSteps } from "./pages/LandingPage/tourStepsLandingPage";
-import { tourSteps as yourCollectionsSteps } from "./pages/YourCollections/tourStepsYourCollections";
-import { tourSteps as newCollectionSteps } from "./pages/NewCollection/tourStepsNewCollection";
-import { tourSteps as discoverCollectionsSteps } from "./pages/DiscoverCollections/tourStepsDiscoverCollections";
-import { tourSteps as fullScreenDisplaySteps } from "./pages/FullScreenDisplay/tourStepsFullScreenDisplay";
-import { tourSteps as collectionSetupSteps } from "./pages/CollectionSetup/tourStepsCollectionSetup";
-import { tourSteps as collectionFinalStepSteps } from "./pages/CollectionFinalStep/tourStepsCollectionFinalStep";
-import { tourSteps as nameGeneratorSteps } from "./pages/NameGenerator/tourStepsNameGenerator";
-import { tourSteps as resourcesSteps } from "./pages/Resources/tourStepsResources";
-import { tourSteps as settingsSteps } from "./pages/Settings/tourStepsSettings";
-import { tourSteps as myAccountSteps } from "./pages/MyAccount/tourStepsMyAccount";
-import { tourSteps as gamesSteps } from "./pages/Games/tourStepsGames";
-import { tourSteps as timedChallengesSteps } from "./pages/TimedChallenges/tourStepsTimedChallenges";
-import { tourSteps as reportsSteps } from "./pages/Reports/tourStepsReports";
-import { tourSteps as badgesAchievementsSteps } from "./pages/BadgesAchievements/tourStepsBadgesAchievements";
+import { tourStepsLandingPage } from "./pages/LandingPage/tourStepsLandingPage";
+import { tourStepsYourCollections } from "./pages/YourCollections/tourStepsYourCollections";
+import { tourStepsNewCollection } from "./pages/NewCollection/tourStepsNewCollection";
+import { tourStepsDiscoverCollections } from "./pages/DiscoverCollections/tourStepsDiscoverCollections";
+import { tourStepsFullScreenDisplay } from "./pages/FullScreenDisplay/tourStepsFullScreenDisplay";
+import { tourStepsCollectionSetup } from "./pages/CollectionSetup/tourStepsCollectionSetup";
+import { tourStepsCollectionFinalStep } from "./pages/CollectionFinalStep/tourStepsCollectionFinalStep";
+import { tourStepsNameGenerator } from "./pages/NameGenerator/tourStepsNameGenerator";
+import { tourStepsResources } from "./pages/Resources/tourStepsResources";
+import { tourStepsSettings } from "./pages/Settings/tourStepsSettings";
+import { tourStepsMyAccount } from "./pages/MyAccount/tourStepsMyAccount";
+import { tourStepsGames } from "./pages/Games/tourStepsGames";
+import { tourStepsTimedChallenges } from "./pages/TimedChallenges/tourStepsTimedChallenges";
+import { tourStepsReports } from "./pages/Reports/tourStepsReports";
+import { tourStepsBadgesAchievements } from "./pages/BadgesAchievements/tourStepsBadgesAchievements";
 
 // Import your page components here
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -50,6 +51,7 @@ const App: React.FC = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isTourRunning, setIsTourRunning] = useState(false);
   const [currentTourStep, setCurrentTourStep] = useState(0);
+  const [currentTourName, setCurrentTourName] = useState<string>("");
 
   useEffect(() => {
     const hiddenRoutes = ["/", "/fullscreen-display", "/math-collection"];
@@ -77,40 +79,54 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const getTourSteps = () => {
+  const getTourSteps = (): { 
+    beaconComponent?: ElementType<BeaconRenderProps>; 
+    disableCloseOnEsc?: boolean; 
+    disableOverlay?: boolean; 
+    title?: ReactNode; 
+    content: ReactNode; 
+    target: string; 
+  }[] => {
     switch (location.pathname) {
       case "/":
-        return landingPageSteps;
+        return tourStepsLandingPage as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/your-collections":
-        return yourCollectionsSteps;
+        return tourStepsYourCollections as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/new-collection":
-        return newCollectionSteps;
+        return tourStepsNewCollection as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/full-screen-display":
-        return fullScreenDisplaySteps;
+        return tourStepsFullScreenDisplay as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/discover-collections":
-        return discoverCollectionsSteps;
+        return tourStepsDiscoverCollections as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/collection-setup":
-        return collectionSetupSteps;
+        return tourStepsCollectionSetup as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/collection-final-step":
-        return collectionFinalStepSteps;
+        return tourStepsCollectionFinalStep as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/name-generator":
-        return nameGeneratorSteps;
+        return tourStepsNameGenerator as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/resources":
-        return resourcesSteps;
+        return tourStepsResources as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/settings":
-        return settingsSteps;
+        return tourStepsSettings as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/my-account":
-        return myAccountSteps;
+        return tourStepsMyAccount as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/games":
-        return gamesSteps;
+        return tourStepsGames as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/timed-challenges":
-        return timedChallengesSteps;
+        return tourStepsTimedChallenges as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/reports":
-        return reportsSteps;
+        return tourStepsReports as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       case "/badges-achievements":
-        return badgesAchievementsSteps;
+        return tourStepsBadgesAchievements as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
       default:
-        return [];
+        return [] as { 
+          beaconComponent?: ElementType<BeaconRenderProps>; 
+          disableCloseOnEsc?: boolean; 
+          disableOverlay?: boolean; 
+          title?: ReactNode; 
+          content: ReactNode; 
+          target: string; 
+        }[];
     }
   };
 
@@ -118,12 +134,13 @@ const App: React.FC = () => {
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
         <TourProvider>
-          {" "}
-          {/* Wrap your application with TourProvider */}
           <div
             className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
           >
-            <Navbar onStartTour={handleTourStart} />
+            <Navbar
+              onStartTour={handleTourStart}
+              setTourName={setCurrentTourName}
+            />
             <div className="flex pt-[70px]">
               {!hideSidebar && <Sidebar />}
               <div
@@ -259,10 +276,10 @@ const App: React.FC = () => {
               onComplete={handleTourComplete}
               currentStep={currentTourStep}
               onStepChange={handleTourStepChange}
+              tourName={currentTourName}
             />
           </div>
-        </TourProvider>{" "}
-        {/* Close TourProvider */}
+        </TourProvider>
       </ErrorBoundary>
     </Auth0ProviderWithHistory>
   );

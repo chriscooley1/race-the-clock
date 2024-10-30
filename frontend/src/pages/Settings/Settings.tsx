@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { colorSchemes } from "../../constants/colorSchemes";
+import { tourStepsSettings } from "./tourStepsSettings";
+import GuidedTour from "../../components/GuidedTour";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -31,49 +34,92 @@ const Settings: React.FC = () => {
     setButtonFont,
   } = useTheme();
 
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
+    isSaveButtonVisible: false,
+    isItemPreviewVisible: false,
+    isMathProblemVisible: false,
+    isDotButtonVisible: false,
+    isImageUploadVisible: false,
+    isPreviousButtonVisible: false,
+    isProgressIndicatorVisible: false,
+    isPauseButtonVisible: false,
+    isScreenClickAreaVisible: false,
+    isMatchingGameVisible: false,
+    isMultipleWordsGameVisible: false,
+    isRegisterButtonVisible: false,
+    isLoginButtonVisible: false,
+    isProfileVisible: false,
+    isUpdateFormVisible: false,
+    isNameInputVisible: true,
+    isAddNameButtonVisible: true,
+    isSpinButtonVisible: true,
+    isNamesListVisible: true,
+    isCollectionNameVisible: true,
+    isCategorySelectVisible: true,
+    isStageSelectVisible: true,
+    isPublicCheckboxVisible: true,
+    isSubmitButtonVisible: true,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isMainFontVisible: true,
+    isHeadingFontVisible: true,
+    isButtonFontVisible: true,
+    isColorThemeVisible: true,
+    isTextColorVisible: true,
+    isBackgroundColorVisible: true,
+    isAccessibilityVisible: true,
+    isBackgroundThemeVisible: true,
+  });
+
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  const steps = tourStepsSettings(visibilityStates); // Create tour steps based on visibility states
+
+  const startTour = () => {
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+      setCurrentTourStep(0); // Reset to the first step
+    }
+  };
+
   useEffect(() => {
-    console.log("Theme changed:", theme); // New log
-    localStorage.setItem("app-theme", JSON.stringify(theme));
+    startTour(); // Call the startTour function
+  }, []);
 
-    document.documentElement.style.setProperty(
-      "--background-color",
-      theme.backgroundColor,
-    );
-    document.documentElement.style.setProperty(
-      "--text-color",
-      theme.textColor ?? "",
-    );
-    document.documentElement.style.setProperty(
-      "--display-text-color",
-      theme.displayTextColor ?? "",
-    );
-    document.documentElement.style.setProperty(
-      "--display-background-color",
-      theme.displayBackgroundColor ?? "",
-    );
-
-    if (theme.backgroundImage && theme.backgroundImage !== "none") {
-      document.documentElement.style.setProperty(
-        "--background-image",
-        `url(${theme.backgroundImage})`,
-      );
-      document.documentElement.style.setProperty(
-        "--background-color",
-        "transparent",
-      );
-    } else {
-      document.documentElement.style.setProperty("--background-image", "none");
-    }
-
-    if (theme.isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-
-    document.documentElement.style.setProperty("--font-family", theme.font);
-    document.body.style.fontFamily = theme.font;
-  }, [theme]);
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
 
   const handleTextColorChange = (color: string) => {
     console.log("Text color selected:", color);
@@ -88,11 +134,12 @@ const Settings: React.FC = () => {
   const handleColorblindModeChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setColorblindMode(event.target.checked);
-    setTheme((prevTheme) => ({
-      ...prevTheme,
-      isColorblindMode: event.target.checked,
-    }));
+    const isChecked = event.target.checked;
+    setColorblindMode(isChecked); // This will now trigger color adjustments
+    // Optionally, you can also set a default colorblind type if needed
+    if (isChecked && !theme.colorblindType) {
+      setColorblindType("protanopia"); // Set a default type if none is selected
+    }
   };
 
   const handleColorblindTypeChange = (
@@ -161,6 +208,14 @@ const Settings: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    // Example condition to update visibility states
+    setVisibilityStates((prev) => ({
+      ...prev,
+      isDotCountTypeVisible: true, // Update based on your logic
+    }));
+  }, []); // Add dependencies as needed
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${
@@ -192,176 +247,204 @@ const Settings: React.FC = () => {
       <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
 
       <div className="w-full space-y-6 px-4 md:px-8">
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">Main Font</h2>
-          <select
-            value={theme.font}
-            onChange={handleFontChange}
-            className="main-font rounded border border-gray-300 bg-white p-2 text-black"
-            title="Select main font"
-          >
-            {fonts.map((font) => (
-              <option
-                key={font}
-                value={font}
-                className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
-              >
-                {font}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">Heading Font</h2>
-          <select
-            value={theme.headingFont}
-            onChange={handleHeadingFontChange}
-            className="heading-font rounded border border-gray-300 bg-white p-2 text-black"
-            title="Select heading font"
-          >
-            {fonts.map((font) => (
-              <option
-                key={font}
-                value={font}
-                className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
-              >
-                {font}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">Button Font</h2>
-          <select
-            value={theme.buttonFont}
-            onChange={handleButtonFontChange}
-            className="button-font rounded border border-gray-300 bg-white p-2 text-black"
-            title="Select button font"
-          >
-            {fonts.map((font) => (
-              <option
-                key={font}
-                value={font}
-                className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
-              >
-                {font}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label className="mb-2 block font-bold">Color Theme:</label>
-          <div className="flex flex-wrap">
-            {colorOptions.map((color) => (
-              <div
-                key={color.name}
-                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
-                style={{ backgroundColor: color.value }}
-                onClick={() => {
-                  const newTheme = colorSchemes.find(
-                    (scheme) => scheme.name === color.name,
-                  );
-                  if (newTheme) {
-                    setTheme((prevTheme) => ({
-                      ...newTheme,
-                      isColorblindMode: prevTheme.isColorblindMode,
-                      colorblindType: prevTheme.colorblindType,
-                      isDarkMode: prevTheme.isDarkMode,
-                      font: prevTheme.font,
-                      headingFont: prevTheme.headingFont,
-                      buttonFont: prevTheme.buttonFont,
-                      backgroundImage: prevTheme.backgroundImage,
-                      adjustColorForColorblindness:
-                        prevTheme.adjustColorForColorblindness,
-                    }));
-                  }
-                }}
-              />
-            ))}
+        {visibilityStates.isMainFontVisible && (
+          <div>
+            <h2 className="mb-2 text-xl font-semibold">Main Font</h2>
+            <select
+              value={theme.font}
+              onChange={handleFontChange}
+              className="main-font rounded border border-gray-300 bg-white p-2 text-black"
+              title="Select main font"
+            >
+              {fonts.map((font) => (
+                <option
+                  key={font}
+                  value={font}
+                  className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  {font}
+                </option>
+              ))}
+            </select>
           </div>
-        </div>
+        )}
 
-        <div className="mb-4">
-          <label className="mb-2 block font-bold">
-            Text Color for FullScreenDisplay:
-          </label>
-          <div className="flex flex-wrap">
-            {colorOptions.map((color) => (
-              <div
-                key={color.name}
-                className={`text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}`}
-                style={{ backgroundColor: color.value }}
-                onClick={() => handleTextColorChange(color.value)}
-              />
-            ))}
+        {visibilityStates.isHeadingFontVisible && (
+          <div>
+            <h2 className="mb-2 text-xl font-semibold">Heading Font</h2>
+            <select
+              value={theme.headingFont}
+              onChange={handleHeadingFontChange}
+              className="heading-font rounded border border-gray-300 bg-white p-2 text-black"
+              title="Select heading font"
+            >
+              {fonts.map((font) => (
+                <option
+                  key={font}
+                  value={font}
+                  className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  {font}
+                </option>
+              ))}
+            </select>
           </div>
-        </div>
+        )}
 
-        <div className="mb-4">
-          <label className="mb-2 block font-bold">
-            Background Color for FullScreenDisplay:
-          </label>
-          <div className="flex flex-wrap">
-            {colorOptions.map((color) => (
-              <div
-                key={color.name}
-                className={`background-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-4 border-black" : ""}`}
-                style={{ backgroundColor: color.value }}
-                onClick={() => handleBackgroundColorChange(color.value)}
-              />
-            ))}
+        {visibilityStates.isButtonFontVisible && (
+          <div>
+            <h2 className="mb-2 text-xl font-semibold">Button Font</h2>
+            <select
+              value={theme.buttonFont}
+              onChange={handleButtonFontChange}
+              className="button-font rounded border border-gray-300 bg-white p-2 text-black"
+              title="Select button font"
+            >
+              {fonts.map((font) => (
+                <option
+                  key={font}
+                  value={font}
+                  className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  {font}
+                </option>
+              ))}
+            </select>
           </div>
-        </div>
+        )}
 
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">Accessibility</h2>
-          <div className="space-y-2">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                checked={theme.isColorblindMode}
-                onChange={handleColorblindModeChange}
-                className="accessibility mr-2"
-              />
-              Enable Colorblind Mode
+        {visibilityStates.isColorThemeVisible && (
+          <div className="mb-4">
+            <label className="mb-2 block font-bold">Color Theme:</label>
+            <div className="flex flex-wrap">
+              {colorOptions.map((color) => (
+                <div
+                  key={color.name}
+                  className={`color-theme m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
+                  style={{ backgroundColor: color.value }}
+                  onClick={() => {
+                    const newTheme = colorSchemes.find(
+                      (scheme) => scheme.name === color.name,
+                    );
+                    if (newTheme) {
+                      setTheme((prevTheme) => ({
+                        ...newTheme,
+                        isColorblindMode: prevTheme.isColorblindMode,
+                        colorblindType: prevTheme.colorblindType,
+                        isDarkMode: prevTheme.isDarkMode,
+                        font: prevTheme.font,
+                        headingFont: prevTheme.headingFont,
+                        buttonFont: prevTheme.buttonFont,
+                        backgroundImage: prevTheme.backgroundImage,
+                        adjustColorForColorblindness:
+                          prevTheme.adjustColorForColorblindness,
+                        originalTextColor: prevTheme.originalTextColor, // Added
+                        originalBackgroundColor:
+                          prevTheme.originalBackgroundColor, // Added
+                      }));
+                    }
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {visibilityStates.isTextColorVisible && (
+          <div className="mb-4">
+            <label className="mb-2 block font-bold">
+              Text Color for FullScreenDisplay:
             </label>
-            {theme.isColorblindMode && (
-              <select
-                value={theme.colorblindType}
-                onChange={handleColorblindTypeChange}
-                className="w-full max-w-xs rounded border p-2 text-black"
-                title="Select colorblind type"
-              >
-                {colorblindTypes.map((type) => (
-                  <option key={type} value={type.toLowerCase()}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            )}
+            <div className="flex flex-wrap">
+              {colorOptions.map((color) => (
+                <div
+                  key={color.name}
+                  className={`text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}`}
+                  style={{ backgroundColor: color.value }}
+                  onClick={() => handleTextColorChange(color.value)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">Background Theme</h2>
-          <select
-            value={theme.backgroundImage}
-            onChange={handleBackgroundThemeChange}
-            className="background-theme rounded border border-gray-300 bg-white p-2 text-black"
-            title="Select background theme"
-          >
-            {backgroundThemes.map((theme) => (
-              <option key={theme.name} value={theme.value}>
-                {theme.name}
-              </option>
-            ))}
-          </select>
-          <p>Current background image: {theme.backgroundImage}</p>{" "}
-          {/* New debug line */}
-        </div>
+        )}
+
+        {visibilityStates.isBackgroundColorVisible && (
+          <div className="mb-4">
+            <label className="mb-2 block font-bold">
+              Background Color for FullScreenDisplay:
+            </label>
+            <div className="flex flex-wrap">
+              {colorOptions.map((color) => (
+                <div
+                  key={color.name}
+                  className={`background-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-4 border-black" : ""}`}
+                  style={{ backgroundColor: color.value }}
+                  onClick={() => handleBackgroundColorChange(color.value)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {visibilityStates.isAccessibilityVisible && (
+          <div>
+            <h2 className="mb-2 text-xl font-semibold">Accessibility</h2>
+            <div className="space-y-2">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={theme.isColorblindMode}
+                  onChange={handleColorblindModeChange}
+                  className="accessibility mr-2"
+                />
+                Enable Colorblind Mode
+              </label>
+              {theme.isColorblindMode && (
+                <select
+                  value={theme.colorblindType}
+                  onChange={handleColorblindTypeChange}
+                  className="w-full max-w-xs rounded border p-2 text-black"
+                  title="Select colorblind type"
+                >
+                  {colorblindTypes.map((type) => (
+                    <option key={type} value={type.toLowerCase()}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+          </div>
+        )}
+
+        {visibilityStates.isBackgroundThemeVisible && (
+          <div>
+            <h2 className="mb-2 text-xl font-semibold">Background Theme</h2>
+            <select
+              value={theme.backgroundImage}
+              onChange={handleBackgroundThemeChange}
+              className="background-theme rounded border border-gray-300 bg-white p-2 text-black"
+              title="Select background theme"
+            >
+              {backgroundThemes.map((theme) => (
+                <option key={theme.name} value={theme.value}>
+                  {theme.name}
+                </option>
+              ))}
+            </select>
+            <p>Current background image: {theme.backgroundImage}</p>
+          </div>
+        )}
       </div>
+
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete} // Use the new handler
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="settings" // Set the tour name
+      />
     </div>
   );
 };

@@ -12,7 +12,9 @@ import axios from "axios";
 import { lightenColor } from "../../utils/colorUtils";
 import { collectionColorSchemes } from "../../constants/colorSchemes";
 import { useTheme } from "../../context/ThemeContext";
-
+import { tourStepsDiscoverCollections } from "./tourStepsDiscoverCollections";
+import GuidedTour from "../../components/GuidedTour";
+import { VisibilityStates } from "../../types/VisibilityStates";
 interface Item {
   id: number;
   name: string;
@@ -38,6 +40,96 @@ const DiscoverCollections: React.FC = () => {
   const [subscriptionStatus, setSubscriptionStatus] = useState<
     Record<string, boolean>
   >({});
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: true,
+    isSortSelectVisible: true,
+    isCollectionsGridVisible: true,
+    isPreviewButtonVisible: true,
+    isNameInputVisible: false,
+    isAddNameButtonVisible: false,
+    isSpinButtonVisible: false,
+    isNamesListVisible: false,
+    isCollectionNameVisible: false,
+    isCategorySelectVisible: false,
+    isStageSelectVisible: false,
+    isPublicCheckboxVisible: false,
+    isSubmitButtonVisible: false,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
+  });
+
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  // Define the steps variable
+  const steps = tourStepsDiscoverCollections(visibilityStates); // Create tour steps based on visibility states
+
+  // Add a function to start the tour
+  const startTour = () => {
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+      setCurrentTourStep(0); // Reset to the first step
+    }
+  };
+
+  useEffect(() => {
+    // Start the tour when the component mounts
+    startTour();
+  }, []);
+
+  // Example of updating visibility states based on some logic
+  useEffect(() => {
+    // You can set visibility states based on your application logic
+    setVisibilityStates((prevStates) => ({
+      ...prevStates, // Keep the previous state
+      isSearchInputVisible: true, // Set to true or false based on your logic
+      isSortSelectVisible: true, // Set to true or false based on your logic
+      isCollectionsGridVisible: collections.length > 0, // Show grid if there are collections
+      isPreviewButtonVisible: activeCollection !== null, // Show preview button if a collection is active
+    }));
+  }, [collections, activeCollection]); // Dependencies to trigger updates
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
 
   const fetchCollections = useCallback(async () => {
     try {
@@ -291,6 +383,15 @@ const DiscoverCollections: React.FC = () => {
           isSubscribed={activeCollection.isSubscribed || false}
         />
       )}
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={handleTourStepChange}
+        tourName="discoverCollections"
+      />
     </div>
   );
 };

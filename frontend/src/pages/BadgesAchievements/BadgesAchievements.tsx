@@ -1,32 +1,122 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import { VisibilityStates } from "../../types/VisibilityStates";
+import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
+import GuidedTour from "../../components/GuidedTour";
 
 const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
-  const [badges, setBadges] = useState<string[]>([]); // State to hold badges
-  const [achievements, setAchievements] = useState<string[]>([]); // State to hold achievements
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
+  const [badges, setBadges] = useState<string[]>([]);
+  const [achievements, setAchievements] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: true,
+    isAchievementsSectionVisible: true,
+    isLoadingMessageVisible: true,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
+    isSaveButtonVisible: false,
+    isItemPreviewVisible: false,
+    isMathProblemVisible: false,
+    isDotButtonVisible: false,
+    isImageUploadVisible: false,
+    isPreviousButtonVisible: false,
+    isProgressIndicatorVisible: false,
+    isPauseButtonVisible: false,
+    isScreenClickAreaVisible: false,
+    isMatchingGameVisible: false,
+    isMultipleWordsGameVisible: false,
+    isRegisterButtonVisible: false,
+    isLoginButtonVisible: false,
+    isProfileVisible: false,
+    isUpdateFormVisible: false,
+    isNameInputVisible: false,
+    isAddNameButtonVisible: false,
+    isSpinButtonVisible: false,
+    isNamesListVisible: false,
+    isCollectionNameVisible: false,
+    isCategorySelectVisible: false,
+    isStageSelectVisible: false,
+    isPublicCheckboxVisible: false,
+    isSubmitButtonVisible: false,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
+  });
 
   useEffect(() => {
-    // Simulate loading data or setup
     const loadData = async () => {
-      // Simulate a delay for loading
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Example data
       setBadges([
         "Read 60 Letters in a Minute",
         "Complete an Advanced Session",
       ]);
       setAchievements(["First Login", "Completed 5 Sessions"]);
       setIsLoading(false);
+      setVisibilityStates((prev) => ({
+        ...prev,
+        isLoadingMessageVisible: false,
+        isMainFontVisible: false,
+        isHeadingFontVisible: false,
+        isButtonFontVisible: false,
+        isColorThemeVisible: false,
+        isTextColorVisible: false,
+        isBackgroundColorVisible: false,
+        isAccessibilityVisible: false,
+        isBackgroundThemeVisible: false,
+      }));
     };
 
     loadData();
   }, []);
 
+  const steps = tourStepsBadgesAchievements(visibilityStates);
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false);
+  };
+
+  useEffect(() => {
+    setIsTourRunning(true);
+  }, []);
+
   return (
     <div
-      className={`badges-achievements flex min-h-screen w-full flex-col items-center px-4 pt-[50px] md:pl-[250px] ${
+      className={`badges-achievements flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
     >
@@ -42,28 +132,41 @@ const BadgesAchievements: React.FC = () => {
       </p>
 
       {isLoading ? (
-        <p>Loading badges and achievements...</p>
+        <p className="loading-message">Loading badges and achievements...</p>
       ) : (
         <div className="mt-8 w-full max-w-2xl">
-          <div className="badges-section">
-            <h2 className="text-2xl font-semibold">Badges</h2>
-            <ul className="list-disc pl-5">
-              {badges.map((badge, index) => (
-                <li key={index}>{badge}</li>
-              ))}
-            </ul>
-          </div>
+          {visibilityStates.isBadgesSectionVisible && (
+            <div className="badges-section">
+              <h2 className="text-2xl font-semibold">Badges</h2>
+              <ul className="list-disc pl-5">
+                {badges.map((badge, index) => (
+                  <li key={index}>{badge}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-          <div className="achievements-section mt-8">
-            <h2 className="text-2xl font-semibold">Achievements</h2>
-            <ul className="list-disc pl-5">
-              {achievements.map((achievement, index) => (
-                <li key={index}>{achievement}</li>
-              ))}
-            </ul>
-          </div>
+          {visibilityStates.isAchievementsSectionVisible && (
+            <div className="achievements-section mt-8">
+              <h2 className="text-2xl font-semibold">Achievements</h2>
+              <ul className="list-disc pl-5">
+                {achievements.map((achievement, index) => (
+                  <li key={index}>{achievement}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
+
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="badgesAchievements"
+      />
     </div>
   );
 };

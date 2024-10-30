@@ -31,6 +31,8 @@ const ThemeSelector: React.FC = () => {
         buttonFont: prevTheme.buttonFont,
         displayTextColor: selectedScheme.textColor,
         displayBackgroundColor: selectedScheme.backgroundColor,
+        originalTextColor: prevTheme.originalTextColor,
+        originalBackgroundColor: prevTheme.originalBackgroundColor,
         adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
       }));
     }

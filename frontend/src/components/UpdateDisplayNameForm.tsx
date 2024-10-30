@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { updateDisplayName } from "../api";
 
-const UpdateDisplayNameForm: React.FC = () => {
+interface UpdateDisplayNameFormProps {
+  className?: string; // Accept className as an optional prop
+}
+
+const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
+  className,
+}) => {
   const [displayName, setDisplayName] = useState("");
   const { getAccessTokenSilently } = useAuth0();
 
@@ -26,7 +32,9 @@ const UpdateDisplayNameForm: React.FC = () => {
   };
 
   return (
-    <div className="mt-5 flex w-full max-w-[300px] flex-col items-center">
+    <div
+      className={`update-display-name-form mt-5 flex w-full max-w-[300px] flex-col items-center ${className}`}
+    >
       <input
         type="text"
         className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-base"

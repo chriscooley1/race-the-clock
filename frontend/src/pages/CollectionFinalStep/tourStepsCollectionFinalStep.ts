@@ -1,51 +1,54 @@
 import { Step } from "react-joyride";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
-export const tourSteps: Step[] = [
-  {
-    target: ".collection-final-step", // Target the main container
-    content:
-      "This is the final step for your collection. Review your items before saving.",
-    disableBeacon: true,
-  },
-  {
-    target: ".save-collection-button", // Target the save button
-    content: "Click here to save your collection.",
-  },
-  {
-    target: ".item-preview", // Target an item preview
-    content: "This is a preview of the items in your collection.",
-  },
-  {
-    target: "#first-number-select", // Target the first number select
-    content: "Select the first number for your math problem.",
-  },
-  {
-    target: "#operator-select", // Target the operator select
-    content: "Choose the operator for your math problem.",
-  },
-  {
-    target: "#second-number-select", // Target the second number select
-    content: "Select the second number for your math problem.",
-  },
-  {
-    target: ".add-math-problem-button", // Target the add math problem button
-    content: "Click here to add a math problem to your collection.",
-  },
-  {
-    target: ".add-dot-button", // Target the add dot button
-    content: "Add dots to represent number sense items.",
-  },
-  {
-    target: ".add-image-button", // Target the add image button
-    content: "Upload images to include in your collection.",
-  },
-  {
-    target: ".remove-item-button", // Target the remove item button
-    content: "Click here to remove an item from your collection.",
-  },
-  {
-    target: ".add-image-item-button", // Target the add image item button
-    content: "Add uploaded images to your collection.",
-  },
-  // Add more steps as needed
-];
+export const tourStepsCollectionFinalStep = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
+  const steps: Step[] = [
+    {
+      target: ".collection-final-step",
+      content:
+        "This is the final step for your collection. Review your items before saving.",
+      disableBeacon: true,
+    },
+    {
+      target: ".save-collection-button",
+      content: "Click here to save your collection.",
+      ...(visibilityStates.isSaveButtonVisible ? { isOpen: true } : {}),
+    },
+    {
+      target: ".item-preview",
+      content: "This is a preview of the items in your collection.",
+      ...(visibilityStates.isItemPreviewVisible ? { isOpen: true } : {}),
+    },
+    {
+      target: ".math-problem-section", // Example target for math problems
+      content: "This section allows you to add math problems.",
+      ...(visibilityStates.isMathProblemVisible ? { isOpen: true } : {}),
+    },
+    {
+      target: ".dot-button", // Example target for dot button
+      content: "Click here to add a dot.",
+      ...(visibilityStates.isDotButtonVisible ? { isOpen: true } : {}),
+    },
+    {
+      target: ".image-upload-section", // Example target for image upload
+      content: "Upload images for your collection here.",
+      ...(visibilityStates.isImageUploadVisible ? { isOpen: true } : {}),
+    },
+  ];
+
+  return steps.filter((step) => {
+    if (step.target === ".save-collection-button")
+      return visibilityStates.isSaveButtonVisible;
+    if (step.target === ".item-preview")
+      return visibilityStates.isItemPreviewVisible;
+    if (step.target === ".math-problem-section")
+      return visibilityStates.isMathProblemVisible;
+    if (step.target === ".dot-button")
+      return visibilityStates.isDotButtonVisible;
+    if (step.target === ".image-upload-section")
+      return visibilityStates.isImageUploadVisible;
+    return true; // Include all other steps
+  });
+};

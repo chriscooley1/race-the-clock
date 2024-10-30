@@ -4,6 +4,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import NameWheel from "../../components/NameWheel";
 import WheelSegment from "../../components/WheelSegment";
 import { useTheme } from "../../context/ThemeContext";
+import { tourStepsNameGenerator } from "./tourStepsNameGenerator";
+import GuidedTour from "../../components/GuidedTour";
+import { VisibilityStates } from "../../types/VisibilityStates";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
@@ -19,6 +22,101 @@ const NameGenerator: React.FC = () => {
     targetDegrees: number;
     spinRevolutions: number;
   } | null>(null);
+
+  // Initialize visibilityStates with all properties
+  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isDotCountTypeVisible: false,
+    isMinDotsVisible: false,
+    isMaxDotsVisible: false,
+    isTypeSelectVisible: false,
+    isItemCountVisible: false,
+    isCollectionItemCountVisible: false,
+    isDotColorVisible: false,
+    isDotShapeVisible: false,
+    isGenerateRandomSequenceButtonVisible: false,
+    isFileUploadVisible: false,
+    isNextButtonVisible: false,
+    isClearButtonVisible: false,
+    isGeneratedSequencePreviewVisible: false,
+    isBadgesSectionVisible: false,
+    isAchievementsSectionVisible: false,
+    isLoadingMessageVisible: false,
+    isSearchInputVisible: false,
+    isSortSelectVisible: false,
+    isCollectionsGridVisible: false,
+    isPreviewButtonVisible: false,
+    isSaveButtonVisible: false,
+    isItemPreviewVisible: false,
+    isMathProblemVisible: false,
+    isDotButtonVisible: false,
+    isImageUploadVisible: false,
+    isPreviousButtonVisible: false,
+    isProgressIndicatorVisible: false,
+    isPauseButtonVisible: false,
+    isScreenClickAreaVisible: false,
+    isMatchingGameVisible: false,
+    isMultipleWordsGameVisible: false,
+    isRegisterButtonVisible: false,
+    isLoginButtonVisible: false,
+    isProfileVisible: false,
+    isUpdateFormVisible: false,
+    isNameInputVisible: true,
+    isAddNameButtonVisible: true,
+    isSpinButtonVisible: true,
+    isNamesListVisible: true,
+    isCollectionNameVisible: false,
+    isCategorySelectVisible: false,
+    isStageSelectVisible: false,
+    isPublicCheckboxVisible: false,
+    isSubmitButtonVisible: false,
+    isReportsOverviewVisible: false,
+    isReportsListVisible: false,
+    isFAQSectionVisible: false,
+    isInstructionalVideosVisible: false,
+    isTimedChallengesVisible: false,
+    isCollectionsOverviewVisible: false,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
+    isMainFontVisible: false,
+    isHeadingFontVisible: false,
+    isButtonFontVisible: false,
+    isColorThemeVisible: false,
+    isTextColorVisible: false,
+    isBackgroundColorVisible: false,
+    isAccessibilityVisible: false,
+    isBackgroundThemeVisible: false,
+  });
+
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+  // Define the steps variable
+  const steps = tourStepsNameGenerator(visibilityStates); // Create tour steps based on visibility states
+
+  // Add a function to start the tour
+  const startTour = () => {
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+      setCurrentTourStep(0); // Reset to the first step
+    }
+  };
+
+  // Start the tour when the component mounts
+  useEffect(() => {
+    startTour(); // Call the startTour function
+  }, []);
+
+  const handleTourComplete = () => {
+    console.log("Tour completed");
+    setIsTourRunning(false); // Reset the tour running state
+  };
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
 
   const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"; // Fallback to localhost for development
 
@@ -82,6 +180,12 @@ const NameGenerator: React.FC = () => {
       setNameList(updatedList);
       setNameInput("");
       saveNameList(updatedList);
+
+      // Update visibility states if needed
+      setVisibilityStates((prev) => ({
+        ...prev,
+        isNamesListVisible: true, // Show names list after adding a name
+      }));
     }
   };
 
@@ -170,13 +274,15 @@ const NameGenerator: React.FC = () => {
               }}
             />
           </div>
-          <button
-            type="button"
-            onClick={handleSpin}
-            className="spin-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-4 max-w-md rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
-          >
-            Spin the Wheel
-          </button>
+          {visibilityStates.isSpinButtonVisible && (
+            <button
+              type="button"
+              onClick={handleSpin}
+              className="spin-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-4 max-w-md rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+            >
+              Spin the Wheel
+            </button>
+          )}
           {generatedName && (
             <div className="mt-5 text-center">
               <h2 className="text-xl font-bold">Generated Name:</h2>
@@ -193,43 +299,50 @@ const NameGenerator: React.FC = () => {
               : "w-0 overflow-hidden opacity-0"
           }`}
         >
-          <div className="mb-5 flex items-center justify-center">
-            <label htmlFor="nameInput" className="mr-2 whitespace-nowrap">
-              Add a Name:
-            </label>
-            <input
-              type="text"
-              id="nameInput"
-              value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              className="font-caveat mr-2 rounded border border-current bg-white p-2 text-center text-base text-black"
-              placeholder="Enter a name"
-            />
-            <button
-              type="button"
-              onClick={handleAddName}
-              className="add-name-button bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
-            >
-              Add
-            </button>
-          </div>
-          <div className="flex w-full flex-col items-center">
-            <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
-            <ul className="list-none p-0 text-center">
-              {nameList.map((name, index) => (
-                <WheelSegment
-                  key={index}
-                  name={name}
-                  index={index}
-                  angle={0}
-                  radius={150}
-                  onRemove={() => handleRemoveName(index)}
-                  onEdit={(newName) => handleEditName(index, newName)}
-                />
-              ))}
-            </ul>
-          </div>
+          {visibilityStates.isNameInputVisible && (
+            <div className="mb-5 flex items-center">
+              <label htmlFor="nameInput" className="mr-2 whitespace-nowrap">
+                Add a Name:
+              </label>
+              <input
+                type="text"
+                id="nameInput"
+                value={nameInput}
+                onChange={(e) => setNameInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="font-caveat mr-2 rounded border border-current bg-white p-2 text-center text-base text-black"
+                placeholder="Enter a name"
+              />
+              {visibilityStates.isAddNameButtonVisible && (
+                <button
+                  type="button"
+                  onClick={handleAddName}
+                  className="add-name-button bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+                >
+                  Add
+                </button>
+              )}
+            </div>
+          )}
+
+          {visibilityStates.isNamesListVisible && (
+            <div className="flex w-full flex-col items-center">
+              <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
+              <ul className="list-none p-0 text-center">
+                {nameList.map((name, index) => (
+                  <WheelSegment
+                    key={index}
+                    name={name}
+                    index={index}
+                    angle={0}
+                    radius={150}
+                    onRemove={() => handleRemoveName(index)}
+                    onEdit={(newName) => handleEditName(index, newName)}
+                  />
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 
@@ -241,6 +354,16 @@ const NameGenerator: React.FC = () => {
       >
         {showRightSide ? "-" : "+"}
       </button>
+
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete} // Use the new handler
+        currentStep={currentTourStep}
+        onStepChange={handleTourStepChange} // Pass the step change handler
+        tourName="nameGenerator"
+      />
     </div>
   );
 };
