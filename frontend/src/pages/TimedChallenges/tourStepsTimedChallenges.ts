@@ -2,7 +2,9 @@ import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
 // Function to create tour steps based on visibility states
-export const tourStepsTimedChallenges = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsTimedChallenges = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".timed-challenges", // Target the main container
@@ -12,20 +14,27 @@ export const tourStepsTimedChallenges = (visibilityStates: VisibilityStates): St
     },
     {
       target: "h1.mb-8", // Target the main title
-      content: "This is the Timed Challenges page where you can test your skills.",
-      ...(visibilityStates.isCollectionsOverviewVisible ? { isOpen: true } : {}),
+      content:
+        "This is the Timed Challenges page where you can test your skills.",
+      ...(visibilityStates.isCollectionsOverviewVisible
+        ? { isOpen: true }
+        : {}),
     },
     {
       target: ".collections-overview", // Target the collections overview component
       content: "Here are your collections for the timed challenges.",
-      ...(visibilityStates.isCollectionsOverviewVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isCollectionsOverviewVisible
+        ? { isOpen: true }
+        : {}),
     },
   ];
 
   // Filter steps based on visibility states
   return steps.filter((step) => {
-    if (step.target === ".timed-challenges") return visibilityStates.isTimedChallengesVisible;
-    if (step.target === ".collections-overview") return visibilityStates.isCollectionsOverviewVisible;
+    if (step.target === ".timed-challenges")
+      return visibilityStates.isTimedChallengesVisible;
+    if (step.target === ".collections-overview")
+      return visibilityStates.isCollectionsOverviewVisible;
     return true; // Include all other steps
   });
 };

@@ -1,7 +1,9 @@
 import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
-export const tourStepsResources = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsResources = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".resources", // Target the main container
@@ -26,28 +28,37 @@ export const tourStepsResources = (visibilityStates: VisibilityStates): Step[] =
     {
       target: ".max-w-3xl h2:nth-of-type(2)", // Target the Instructional Videos section header
       content: "Watch instructional videos to learn more about the features.",
-      ...(visibilityStates.isInstructionalVideosVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isInstructionalVideosVisible
+        ? { isOpen: true }
+        : {}),
     },
     {
       target: ".space-y-6 > div:nth-child(1)", // Target the first instructional video item
       content: "Learn about the Your Collections page.",
-      ...(visibilityStates.isInstructionalVideosVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isInstructionalVideosVisible
+        ? { isOpen: true }
+        : {}),
     },
     {
       target: ".space-y-6 > div:nth-child(2)", // Target the second instructional video item
       content: "Discover how to use the Discover Collections page.",
-      ...(visibilityStates.isInstructionalVideosVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isInstructionalVideosVisible
+        ? { isOpen: true }
+        : {}),
     },
     {
       target: ".space-y-6 > div:nth-child(3)", // Target the third instructional video item
       content: "Get a guide on how to use the Name Generator feature.",
-      ...(visibilityStates.isInstructionalVideosVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isInstructionalVideosVisible
+        ? { isOpen: true }
+        : {}),
     },
   ];
 
   return steps.filter((step) => {
     if (step.target === ".mb-8 h2") return visibilityStates.isFAQSectionVisible;
-    if (step.target === ".space-y-6 > div:nth-child(1)") return visibilityStates.isInstructionalVideosVisible;
+    if (step.target === ".space-y-6 > div:nth-child(1)")
+      return visibilityStates.isInstructionalVideosVisible;
     return true; // Include all other steps
   });
 };

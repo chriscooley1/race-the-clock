@@ -22,7 +22,7 @@ const NameGenerator: React.FC = () => {
     targetDegrees: number;
     spinRevolutions: number;
   } | null>(null);
-  
+
   // Initialize visibilityStates with all properties
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
     isDotCountTypeVisible: false,
@@ -180,7 +180,7 @@ const NameGenerator: React.FC = () => {
       setNameList(updatedList);
       setNameInput("");
       saveNameList(updatedList);
-      
+
       // Update visibility states if needed
       setVisibilityStates((prev) => ({
         ...prev,

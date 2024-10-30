@@ -1,7 +1,9 @@
 import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
-export const tourStepsDiscoverCollections = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsDiscoverCollections = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".discover-collections-page",
@@ -25,16 +27,21 @@ export const tourStepsDiscoverCollections = (visibilityStates: VisibilityStates)
     },
     {
       target: ".preview-collection-button",
-      content: "Click to see more details about a collection and subscribe to it.",
+      content:
+        "Click to see more details about a collection and subscribe to it.",
       ...(visibilityStates.isPreviewButtonVisible ? { isOpen: true } : {}),
     },
   ];
 
   return steps.filter((step) => {
-    if (step.target === ".search-collections-input") return visibilityStates.isSearchInputVisible;
-    if (step.target === "#sortSelect") return visibilityStates.isSortSelectVisible;
-    if (step.target === ".grid") return visibilityStates.isCollectionsGridVisible;
-    if (step.target === ".preview-collection-button") return visibilityStates.isPreviewButtonVisible;
+    if (step.target === ".search-collections-input")
+      return visibilityStates.isSearchInputVisible;
+    if (step.target === "#sortSelect")
+      return visibilityStates.isSortSelectVisible;
+    if (step.target === ".grid")
+      return visibilityStates.isCollectionsGridVisible;
+    if (step.target === ".preview-collection-button")
+      return visibilityStates.isPreviewButtonVisible;
     return true;
   });
 };

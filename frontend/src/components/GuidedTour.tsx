@@ -1,6 +1,7 @@
 import React from "react";
-import Joyride, { CallBackProps, Step } from "react-joyride";
+import Joyride, { Step } from "react-joyride";
 import { useTour } from "../context/TourContext";
+import { ExtendedCallBackProps } from "../context/TourContext";
 
 interface GuidedTourProps {
   steps: Step[];
@@ -9,7 +10,7 @@ interface GuidedTourProps {
   currentStep: number;
   onStepChange: (step: number) => void;
   isScrollToEnabled?: boolean;
-  tourName: string; // Add tourName prop
+  tourName: string;
 }
 
 const GuidedTour: React.FC<GuidedTourProps> = ({
@@ -21,22 +22,21 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   isScrollToEnabled,
   tourName,
 }) => {
-  const { completeTour, setIsTourRunning } = useTour(); // Destructure setIsTourRunning
+  const { completeTour, setIsTourRunning } = useTour();
 
-  const handleJoyrideCallback = (data: CallBackProps) => {
+  const handleJoyrideCallback = (data: ExtendedCallBackProps) => {
     const { status } = data;
 
     if (["finished", "skipped"].includes(status as string)) {
-      completeTour(tourName); // Pass tourName when calling completeTour
-      setIsTourRunning(false); // Set tour running state to false
-      onComplete(); // Call onComplete as well
+      completeTour(tourName);
+      setIsTourRunning(false);
+      onComplete();
     } else if (data.type === "step:after") {
       if (currentStep + 1 < steps.length) {
-        onStepChange(currentStep + 1); // Move to the next step
+        onStepChange(currentStep + 1);
       } else {
-        onComplete(); // Ensure onComplete is called when there are no more steps
+        onComplete();
       }
-      // Scroll to the target element if isScrollToEnabled is true
       if (isScrollToEnabled) {
         const targetSelector = steps[currentStep].target as string;
         const target = document.querySelector(targetSelector);

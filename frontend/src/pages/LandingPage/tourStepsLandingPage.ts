@@ -2,7 +2,9 @@ import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
 // Function to create tour steps based on visibility states
-export const tourStepsLandingPage = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsLandingPage = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".box-border", // Target the main container
@@ -24,8 +26,10 @@ export const tourStepsLandingPage = (visibilityStates: VisibilityStates): Step[]
 
   // Filter steps based on visibility states
   return steps.filter((step) => {
-    if (step.target === ".register-button") return visibilityStates.isRegisterButtonVisible;
-    if (step.target === ".already-registered-button") return visibilityStates.isLoginButtonVisible;
+    if (step.target === ".register-button")
+      return visibilityStates.isRegisterButtonVisible;
+    if (step.target === ".already-registered-button")
+      return visibilityStates.isLoginButtonVisible;
     return true; // Include all other steps
   });
 };

@@ -104,7 +104,9 @@ const TimedChallenges: React.FC = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const fetchedCollections = await fetchCollections(getAccessTokenSilently);
+        const fetchedCollections = await fetchCollections(
+          getAccessTokenSilently,
+        );
         setCollections(
           fetchedCollections.filter(
             (collection: Collection) => collection.collection_id != null,
@@ -173,7 +175,7 @@ const TimedChallenges: React.FC = () => {
         </div>
       )}
       {/* Add your game logic and UI here */}
-      
+
       {/* Add the GuidedTour component here */}
       <GuidedTour
         steps={steps}

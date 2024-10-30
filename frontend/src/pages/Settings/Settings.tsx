@@ -339,7 +339,8 @@ const Settings: React.FC = () => {
                         adjustColorForColorblindness:
                           prevTheme.adjustColorForColorblindness,
                         originalTextColor: prevTheme.originalTextColor, // Added
-                        originalBackgroundColor: prevTheme.originalBackgroundColor, // Added
+                        originalBackgroundColor:
+                          prevTheme.originalBackgroundColor, // Added
                       }));
                     }
                   }}

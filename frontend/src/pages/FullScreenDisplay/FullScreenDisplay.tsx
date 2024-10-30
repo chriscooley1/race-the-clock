@@ -137,7 +137,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  
+
   // Create tour steps based on visibility states
   const steps = tourStepsFullScreenDisplay(visibilityStates);
 
@@ -343,17 +343,22 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   // Example of using setVisibilityStates
-  useEffect(() => {
-    // Logic to update visibility states based on some conditions
-    setVisibilityStates((prevStates) => ({
-      ...prevStates,
-      isNextButtonVisible: true,
-      isPreviousButtonVisible: true,
-      isProgressIndicatorVisible: true,
-      isPauseButtonVisible: true,
-      isScreenClickAreaVisible: true,
-    }));
-  }, [/* dependencies */]);
+  useEffect(
+    () => {
+      // Logic to update visibility states based on some conditions
+      setVisibilityStates((prevStates) => ({
+        ...prevStates,
+        isNextButtonVisible: true,
+        isPreviousButtonVisible: true,
+        isProgressIndicatorVisible: true,
+        isPauseButtonVisible: true,
+        isScreenClickAreaVisible: true,
+      }));
+    },
+    [
+      /* dependencies */
+    ],
+  );
 
   // Add this check at the beginning of the component
   if (!shuffledSequence.length) {

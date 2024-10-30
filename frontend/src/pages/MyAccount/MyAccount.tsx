@@ -139,7 +139,7 @@ const MyAccount: React.FC = () => {
         <h1 className="mb-6 text-center text-2xl font-bold">My Account</h1>
         {user ? (
           <div className="space-y-4">
-            <div className="flex flex-col items-center user-profile">
+            <div className="user-profile flex flex-col items-center">
               <img
                 src={user.picture}
                 alt={user.name}
@@ -153,7 +153,11 @@ const MyAccount: React.FC = () => {
               >
                 {user.email}
               </p>
-              <button type="button" onClick={toggleProfileVisibility} className="mt-2 text-blue-500">
+              <button
+                type="button"
+                onClick={toggleProfileVisibility}
+                className="mt-2 text-blue-500"
+              >
                 Toggle Profile Visibility
               </button>
             </div>

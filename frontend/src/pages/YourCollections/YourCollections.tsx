@@ -23,6 +23,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsYourCollections } from "./tourStepsYourCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
+import { useTour } from "../../context/TourContext";
 
 interface Collection {
   collection_id: number;
@@ -99,6 +100,7 @@ const YourCollections: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { theme, adjustColorForColorblindness } = useTheme();
+  const { startTour } = useTour();
 
   // Visibility states for the tour
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -179,6 +181,11 @@ const YourCollections: React.FC = () => {
 
   const handleTourStepChange = (step: number) => {
     setCurrentTourStep(step);
+  };
+
+  const handleTourStart = () => {
+    setIsTourRunning(true);
+    startTour(steps);
   };
 
   useEffect(() => {
@@ -485,7 +492,7 @@ const YourCollections: React.FC = () => {
 
   useEffect(() => {
     // Start the tour when the component mounts
-    setIsTourRunning(true);
+    handleTourStart();
   }, []);
 
   return (

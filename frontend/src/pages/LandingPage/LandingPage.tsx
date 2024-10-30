@@ -177,7 +177,9 @@ const LandingPage: React.FC = () => {
     } catch (error) {
       console.error("Error accessing localStorage:", error);
     }
-    loginWithRedirect({ appState: { returnTo: "/your-collections", isSignup: true } });
+    loginWithRedirect({
+      appState: { returnTo: "/your-collections", isSignup: true },
+    });
   };
 
   const handleLogin = () => {

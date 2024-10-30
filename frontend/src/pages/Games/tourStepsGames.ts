@@ -11,11 +11,13 @@ export const tourStepsGames = (visibilityStates: VisibilityStates): Step[] => {
     },
     {
       target: "h1.mb-8", // Target the main title
-      content: "This is the Games page where you can find various educational games.",
+      content:
+        "This is the Games page where you can find various educational games.",
     },
     {
       target: ".matching-game", // Target the Matching Game component
-      content: "Try the Matching Game to associate letters or words with images.",
+      content:
+        "Try the Matching Game to associate letters or words with images.",
       ...(visibilityStates.isMatchingGameVisible ? { isOpen: true } : {}),
     },
     {
@@ -27,8 +29,10 @@ export const tourStepsGames = (visibilityStates: VisibilityStates): Step[] => {
 
   // Filter steps based on visibility states
   return steps.filter((step) => {
-    if (step.target === ".matching-game") return visibilityStates.isMatchingGameVisible;
-    if (step.target === ".multiple-words-game") return visibilityStates.isMultipleWordsGameVisible;
+    if (step.target === ".matching-game")
+      return visibilityStates.isMatchingGameVisible;
+    if (step.target === ".multiple-words-game")
+      return visibilityStates.isMultipleWordsGameVisible;
     return true; // Include all other steps
   });
 };

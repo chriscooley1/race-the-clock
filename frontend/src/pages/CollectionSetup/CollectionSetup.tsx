@@ -879,4 +879,3 @@ function isUser(user: unknown): user is User {
 function generateId(): string {
   return Math.random().toString(36).slice(2, 11);
 }
-

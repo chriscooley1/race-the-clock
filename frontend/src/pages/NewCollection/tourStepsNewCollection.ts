@@ -2,7 +2,9 @@ import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
 // Function to create tour steps based on visibility states
-export const tourStepsNewCollection = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsNewCollection = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".new-collection-page", // Target the main container
@@ -38,11 +40,16 @@ export const tourStepsNewCollection = (visibilityStates: VisibilityStates): Step
 
   // Filter steps based on visibility states
   return steps.filter((step) => {
-    if (step.target === "#collectionName") return visibilityStates.isCollectionNameVisible;
-    if (step.target === "#categorySelect") return visibilityStates.isCategorySelectVisible;
-    if (step.target === "#stageSelect") return visibilityStates.isStageSelectVisible;
-    if (step.target === "#publicCheckbox") return visibilityStates.isPublicCheckboxVisible;
-    if (step.target === ".submit-collection-button") return visibilityStates.isSubmitButtonVisible;
+    if (step.target === "#collectionName")
+      return visibilityStates.isCollectionNameVisible;
+    if (step.target === "#categorySelect")
+      return visibilityStates.isCategorySelectVisible;
+    if (step.target === "#stageSelect")
+      return visibilityStates.isStageSelectVisible;
+    if (step.target === "#publicCheckbox")
+      return visibilityStates.isPublicCheckboxVisible;
+    if (step.target === ".submit-collection-button")
+      return visibilityStates.isSubmitButtonVisible;
     return true; // Include all other steps
   });
 };

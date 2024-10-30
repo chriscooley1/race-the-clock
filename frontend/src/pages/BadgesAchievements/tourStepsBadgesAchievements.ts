@@ -1,7 +1,9 @@
 import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
-export const tourStepsBadgesAchievements = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsBadgesAchievements = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".badges-achievements",
@@ -16,23 +18,30 @@ export const tourStepsBadgesAchievements = (visibilityStates: VisibilityStates):
     {
       target: ".achievements-section",
       content: "This section lists all your completed achievements.",
-      ...(visibilityStates.isAchievementsSectionVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isAchievementsSectionVisible
+        ? { isOpen: true }
+        : {}),
     },
     {
       target: "h1.mb-8",
-      content: "This is the Badges & Achievements page where you can track progress.",
+      content:
+        "This is the Badges & Achievements page where you can track progress.",
     },
     {
       target: ".loading-message",
-      content: "This message appears while your badges and achievements are loading.",
+      content:
+        "This message appears while your badges and achievements are loading.",
       ...(visibilityStates.isLoadingMessageVisible ? { isOpen: true } : {}),
     },
   ];
 
   return steps.filter((step) => {
-    if (step.target === ".badges-section") return visibilityStates.isBadgesSectionVisible;
-    if (step.target === ".achievements-section") return visibilityStates.isAchievementsSectionVisible;
-    if (step.target === ".loading-message") return visibilityStates.isLoadingMessageVisible;
+    if (step.target === ".badges-section")
+      return visibilityStates.isBadgesSectionVisible;
+    if (step.target === ".achievements-section")
+      return visibilityStates.isAchievementsSectionVisible;
+    if (step.target === ".loading-message")
+      return visibilityStates.isLoadingMessageVisible;
     return true;
   });
 };

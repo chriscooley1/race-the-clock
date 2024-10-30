@@ -1,11 +1,14 @@
 import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
-export const tourStepsFullScreenDisplay = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsFullScreenDisplay = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".full-screen-display", // Target the main display area
-      content: "This is the full screen display where you can view your content.",
+      content:
+        "This is the full screen display where you can view your content.",
       disableBeacon: true,
     },
     {
@@ -37,11 +40,16 @@ export const tourStepsFullScreenDisplay = (visibilityStates: VisibilityStates): 
 
   // Filter steps based on visibility states
   return steps.filter((step) => {
-    if (step.target === ".next-button") return visibilityStates.isNextButtonVisible;
-    if (step.target === ".previous-button") return visibilityStates.isPreviousButtonVisible;
-    if (step.target === ".progress-indicator") return visibilityStates.isProgressIndicatorVisible;
-    if (step.target === ".pause-button") return visibilityStates.isPauseButtonVisible;
-    if (step.target === ".screen-click-area") return visibilityStates.isScreenClickAreaVisible;
+    if (step.target === ".next-button")
+      return visibilityStates.isNextButtonVisible;
+    if (step.target === ".previous-button")
+      return visibilityStates.isPreviousButtonVisible;
+    if (step.target === ".progress-indicator")
+      return visibilityStates.isProgressIndicatorVisible;
+    if (step.target === ".pause-button")
+      return visibilityStates.isPauseButtonVisible;
+    if (step.target === ".screen-click-area")
+      return visibilityStates.isScreenClickAreaVisible;
     return true; // Include all other steps
   });
 };

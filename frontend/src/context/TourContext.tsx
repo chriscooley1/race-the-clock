@@ -4,16 +4,23 @@ import React, {
   useState,
   useEffect,
   ReactNode,
+  useRef,
 } from "react";
-import { Step } from "react-joyride";
+import { Step, CallBackProps } from "react-joyride";
+import Joyride from "react-joyride"; // Import Joyride
+
+// Extend CallBackProps to include tourName
+export interface ExtendedCallBackProps extends CallBackProps {
+  tourName?: string; // Add tourName as an optional property
+}
 
 // Define the type for the context value
 interface TourContextType {
   toursCompleted: Record<string, boolean>;
-  startTour: (steps: Step[]) => void; // Specify the type for steps
-  completeTour: (tourName: string) => void; // Add a completeTour function
-  isTourRunning: boolean; // Add a state to track if the tour is running
-  setIsTourRunning: (isRunning: boolean) => void; // Function to set the tour running state
+  startTour: (steps: Step[]) => void;
+  completeTour: (tourName: string) => void;
+  isTourRunning: boolean;
+  setIsTourRunning: (isRunning: boolean) => void;
 }
 
 // Create the context with a default value of null
@@ -22,8 +29,12 @@ const TourContext = createContext<TourContextType | null>(null);
 export const TourProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [toursCompleted, setToursCompleted] = useState<Record<string, boolean>>({});
-  const [isTourRunning, setIsTourRunning] = useState<boolean>(false); // Track if the tour is running
+  const [toursCompleted, setToursCompleted] = useState<Record<string, boolean>>(
+    {},
+  );
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [steps, setSteps] = useState<Step[]>([]); // Store steps in state
+  const joyrideRef = useRef<Joyride | null>(null); // Specify the type for Joyride ref
 
   useEffect(() => {
     const storedTours = localStorage.getItem("toursCompleted");
@@ -32,24 +43,48 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, []);
 
-  const startTour = (steps: Step[]) => {
-    setIsTourRunning(true); // Set the tour as running
-    console.log("Starting tour with steps:", steps);
-    // Here you would typically call a function from a library like react-joyride
+  const startTour = (tourSteps: Step[]) => {
+    setSteps(tourSteps); // Set the steps for the tour
+    setIsTourRunning(true); // Set the tour running state
+    console.log("Starting tour with steps:", tourSteps);
   };
 
   const completeTour = (tourName: string) => {
-    // Logic to mark the tour as completed, excluding the Navbar tour
     if (tourName !== "navbar") {
       setToursCompleted((prev) => ({ ...prev, [tourName]: true }));
-      localStorage.setItem("toursCompleted", JSON.stringify({ ...toursCompleted, [tourName]: true }));
+      localStorage.setItem(
+        "toursCompleted",
+        JSON.stringify({ ...toursCompleted, [tourName]: true }),
+      );
     }
     console.log("Tour completed:", tourName);
   };
 
   return (
-    <TourContext.Provider value={{ toursCompleted, startTour, completeTour, isTourRunning, setIsTourRunning }}>
+    <TourContext.Provider
+      value={{
+        toursCompleted,
+        startTour,
+        completeTour,
+        isTourRunning,
+        setIsTourRunning,
+      }}
+    >
       {children}
+      <Joyride
+        ref={joyrideRef}
+        steps={steps} // Pass the steps from state
+        run={isTourRunning} // Control the running state
+        continuous
+        showSkipButton
+        showProgress
+        callback={(data: ExtendedCallBackProps) => {
+          if (data.status === "finished" || data.status === "skipped") {
+            completeTour(data.tourName || ""); // Call completeTour when the tour is finished or skipped
+            setIsTourRunning(false); // Set tour running state to false
+          }
+        }}
+      />
     </TourContext.Provider>
   );
 };

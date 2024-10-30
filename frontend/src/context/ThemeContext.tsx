@@ -129,7 +129,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
           font: updatedTheme.font,
           headingFont: updatedTheme.headingFont,
           buttonFont: updatedTheme.buttonFont,
-          adjustColorForColorblindness: updatedTheme.adjustColorForColorblindness,
+          adjustColorForColorblindness:
+            updatedTheme.adjustColorForColorblindness,
         };
       }
     });

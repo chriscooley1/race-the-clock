@@ -159,7 +159,7 @@ const NewCollection: React.FC = () => {
           Step 1 - Create
         </h1>
         <h1 className="text-3xl font-bold">New Collection</h1>
-        
+
         {visibilityStates.isCollectionNameVisible && (
           <div className="mb-4 max-w-[300px]">
             <input

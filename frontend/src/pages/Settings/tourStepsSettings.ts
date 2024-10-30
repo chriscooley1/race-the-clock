@@ -1,7 +1,9 @@
 import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
-export const tourStepsSettings = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsSettings = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".settings", // Target the main container

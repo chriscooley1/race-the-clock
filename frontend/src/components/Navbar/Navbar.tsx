@@ -196,17 +196,16 @@ const Navbar: React.FC<NavbarProps> = ({
         steps = tourStepsYourCollections(visibilityStates);
         tourName = "yourCollections";
         break;
-      // Add more cases for other pages as needed
       default:
-        steps = tourStepsNavbar; // Default to navbar steps if no specific tour is found
+        steps = tourStepsNavbar;
         tourName = "navbar";
         break;
     }
 
-    onStartTour?.(); // Call onStartTour if it's provided
-    startTour(steps); // Start the tour with the steps
-    setTourName(tourName); // Assuming you have a way to set the current tour name
-  }, [location.pathname, startTour, onStartTour]);
+    onStartTour?.();
+    startTour(steps);
+    setTourName(tourName);
+  }, [location.pathname, startTour, onStartTour, setTourName]);
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">

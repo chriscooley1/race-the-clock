@@ -2,7 +2,9 @@ import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
 // Function to create tour steps based on visibility states
-export const tourStepsNameGenerator = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsNameGenerator = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".name-generator", // Target the main container
@@ -33,10 +35,14 @@ export const tourStepsNameGenerator = (visibilityStates: VisibilityStates): Step
 
   // Filter steps based on visibility states
   return steps.filter((step) => {
-    if (step.target === "#nameInput") return visibilityStates.isNameInputVisible;
-    if (step.target === ".add-name-button") return visibilityStates.isAddNameButtonVisible;
-    if (step.target === ".spin-button") return visibilityStates.isSpinButtonVisible;
-    if (step.target === ".names-list") return visibilityStates.isNamesListVisible;
+    if (step.target === "#nameInput")
+      return visibilityStates.isNameInputVisible;
+    if (step.target === ".add-name-button")
+      return visibilityStates.isAddNameButtonVisible;
+    if (step.target === ".spin-button")
+      return visibilityStates.isSpinButtonVisible;
+    if (step.target === ".names-list")
+      return visibilityStates.isNamesListVisible;
     return true; // Include all other steps
   });
 };

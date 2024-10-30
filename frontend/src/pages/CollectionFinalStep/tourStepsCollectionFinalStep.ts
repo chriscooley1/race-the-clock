@@ -1,11 +1,14 @@
 import { Step } from "react-joyride";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
-export const tourStepsCollectionFinalStep = (visibilityStates: VisibilityStates): Step[] => {
+export const tourStepsCollectionFinalStep = (
+  visibilityStates: VisibilityStates,
+): Step[] => {
   const steps: Step[] = [
     {
       target: ".collection-final-step",
-      content: "This is the final step for your collection. Review your items before saving.",
+      content:
+        "This is the final step for your collection. Review your items before saving.",
       disableBeacon: true,
     },
     {
@@ -36,11 +39,16 @@ export const tourStepsCollectionFinalStep = (visibilityStates: VisibilityStates)
   ];
 
   return steps.filter((step) => {
-    if (step.target === ".save-collection-button") return visibilityStates.isSaveButtonVisible;
-    if (step.target === ".item-preview") return visibilityStates.isItemPreviewVisible;
-    if (step.target === ".math-problem-section") return visibilityStates.isMathProblemVisible;
-    if (step.target === ".dot-button") return visibilityStates.isDotButtonVisible;
-    if (step.target === ".image-upload-section") return visibilityStates.isImageUploadVisible;
+    if (step.target === ".save-collection-button")
+      return visibilityStates.isSaveButtonVisible;
+    if (step.target === ".item-preview")
+      return visibilityStates.isItemPreviewVisible;
+    if (step.target === ".math-problem-section")
+      return visibilityStates.isMathProblemVisible;
+    if (step.target === ".dot-button")
+      return visibilityStates.isDotButtonVisible;
+    if (step.target === ".image-upload-section")
+      return visibilityStates.isImageUploadVisible;
     return true; // Include all other steps
   });
 };
