@@ -1,6 +1,8 @@
-import React, { Suspense, useEffect, useState, ReactNode, ElementType } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useTheme } from "./context/ThemeContext";
+import { Step } from "react-joyride";
+import { VisibilityStates } from "./types/VisibilityStates";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar";
@@ -8,7 +10,6 @@ import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
 import { TourProvider } from "./context/TourContext";
-import { BeaconRenderProps } from "react-beacon-map";
 
 // Import your tour steps here
 import { tourStepsLandingPage } from "./pages/LandingPage/tourStepsLandingPage";
@@ -79,54 +80,105 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const getTourSteps = (): { 
-    beaconComponent?: ElementType<BeaconRenderProps>; 
-    disableCloseOnEsc?: boolean; 
-    disableOverlay?: boolean; 
-    title?: ReactNode; 
-    content: ReactNode; 
-    target: string; 
-  }[] => {
+  const getTourSteps = (): Step[] => {
+    const visibilityStates: VisibilityStates = {
+      isDotCountTypeVisible: true,
+      isMinDotsVisible: true,
+      isMaxDotsVisible: false,
+      isTypeSelectVisible: false,
+      isItemCountVisible: false,
+      isCollectionItemCountVisible: false,
+      isDotColorVisible: false,
+      isDotShapeVisible: false,
+      isGenerateRandomSequenceButtonVisible: false,
+      isFileUploadVisible: false,
+      isNextButtonVisible: false,
+      isClearButtonVisible: false,
+      isGeneratedSequencePreviewVisible: false,
+      isBadgesSectionVisible: false,
+      isAchievementsSectionVisible: false,
+      isLoadingMessageVisible: false,
+      isSearchInputVisible: false,
+      isSortSelectVisible: false,
+      isCollectionsGridVisible: false,
+      isPreviewButtonVisible: false,
+      isSaveButtonVisible: false,
+      isItemPreviewVisible: false,
+      isMathProblemVisible: false,
+      isDotButtonVisible: false,
+      isImageUploadVisible: false,
+      isPreviousButtonVisible: false,
+      isProgressIndicatorVisible: false,
+      isPauseButtonVisible: false,
+      isScreenClickAreaVisible: false,
+      isMatchingGameVisible: false,
+      isMultipleWordsGameVisible: false,
+      isRegisterButtonVisible: true,
+      isLoginButtonVisible: true,
+      isProfileVisible: false,
+      isUpdateFormVisible: false,
+      isNameInputVisible: false,
+      isAddNameButtonVisible: false,
+      isSpinButtonVisible: false,
+      isNamesListVisible: false,
+      isCollectionNameVisible: false,
+      isCategorySelectVisible: false,
+      isStageSelectVisible: false,
+      isPublicCheckboxVisible: false,
+      isSubmitButtonVisible: false,
+      isReportsOverviewVisible: false,
+      isReportsListVisible: false,
+      isFAQSectionVisible: false,
+      isInstructionalVideosVisible: false,
+      isTimedChallengesVisible: false,
+      isCollectionsOverviewVisible: false,
+      isCollectionCardVisible: false,
+      isStartCollectionButtonVisible: false,
+      isEditCollectionButtonVisible: false,
+      isDeleteCollectionButtonVisible: false,
+      isMainFontVisible: false,
+      isHeadingFontVisible: false,
+      isButtonFontVisible: false,
+      isColorThemeVisible: false,
+      isTextColorVisible: false,
+      isBackgroundColorVisible: false,
+      isAccessibilityVisible: false,
+      isBackgroundThemeVisible: false,
+    };
+
     switch (location.pathname) {
       case "/":
-        return tourStepsLandingPage as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsLandingPage(visibilityStates);
       case "/your-collections":
-        return tourStepsYourCollections as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsYourCollections(visibilityStates);
       case "/new-collection":
-        return tourStepsNewCollection as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
-      case "/full-screen-display":
-        return tourStepsFullScreenDisplay as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsNewCollection(visibilityStates);
       case "/discover-collections":
-        return tourStepsDiscoverCollections as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsDiscoverCollections(visibilityStates);
+      case "/full-screen-display":
+        return tourStepsFullScreenDisplay(visibilityStates);
       case "/collection-setup":
-        return tourStepsCollectionSetup as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsCollectionSetup(visibilityStates);
       case "/collection-final-step":
-        return tourStepsCollectionFinalStep as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsCollectionFinalStep(visibilityStates);
       case "/name-generator":
-        return tourStepsNameGenerator as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsNameGenerator(visibilityStates);
       case "/resources":
-        return tourStepsResources as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsResources(visibilityStates);
       case "/settings":
-        return tourStepsSettings as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsSettings(visibilityStates);
       case "/my-account":
-        return tourStepsMyAccount as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsMyAccount(visibilityStates);
       case "/games":
-        return tourStepsGames as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsGames(visibilityStates);
       case "/timed-challenges":
-        return tourStepsTimedChallenges as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsTimedChallenges(visibilityStates);
       case "/reports":
-        return tourStepsReports as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsReports(visibilityStates);
       case "/badges-achievements":
-        return tourStepsBadgesAchievements as unknown as { beaconComponent?: ElementType<BeaconRenderProps>; disableCloseOnEsc?: boolean; disableOverlay?: boolean; title?: ReactNode; content: ReactNode; target: string; }[];
+        return tourStepsBadgesAchievements(visibilityStates);
       default:
-        return [] as { 
-          beaconComponent?: ElementType<BeaconRenderProps>; 
-          disableCloseOnEsc?: boolean; 
-          disableOverlay?: boolean; 
-          title?: ReactNode; 
-          content: ReactNode; 
-          target: string; 
-        }[];
+        return [];
     }
   };
 
