@@ -44,6 +44,7 @@ const Games: React.FC = () => {
     isScreenClickAreaVisible: false,
     isMatchingGameVisible: true,
     isMultipleWordsGameVisible: true,
+    isTimedChallengesVisible: true,
     isNameInputVisible: false,
     isAddNameButtonVisible: false,
     isSpinButtonVisible: false,
@@ -57,7 +58,6 @@ const Games: React.FC = () => {
     isReportsListVisible: false,
     isFAQSectionVisible: false,
     isInstructionalVideosVisible: false,
-    isTimedChallengesVisible: false,
     isCollectionsOverviewVisible: false,
     isCollectionCardVisible: false,
     isStartCollectionButtonVisible: false,
@@ -134,6 +134,11 @@ const Games: React.FC = () => {
           <Link to="/games/multiple-words-game" className="multiple-words-game mt-8">
             <h2 className="text-2xl font-semibold">Multiple Words Game</h2>
             <p>Drag and connect words to their corresponding cards!</p>
+          </Link>
+
+          <Link to="/games/timed-challenges" className="timed-challenges-game mt-8">
+            <h2 className="text-2xl font-semibold">Timed Challenges</h2>
+            <p>Complete as many challenges as you can within the time limit!</p>
           </Link>
         </div>
       )}

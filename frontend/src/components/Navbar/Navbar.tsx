@@ -18,7 +18,7 @@ import { tourStepsResources } from "../../pages/Resources/tourStepsResources";
 import { tourStepsSettings } from "../../pages/Settings/tourStepsSettings";
 import { tourStepsMyAccount } from "../../pages/MyAccount/tourStepsMyAccount";
 import { tourStepsGames } from "../../pages/Games/tourStepsGames";
-import { tourStepsTimedChallenges } from "../../pages/TimedChallenges/tourStepsTimedChallenges";
+import { tourStepsTimedChallenges } from "../../pages/Games/tourStepsTimedChallenges";
 import { tourStepsReports } from "../../pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "../../pages/BadgesAchievements/tourStepsBadgesAchievements";
 import { tourStepsNavbar } from "./tourStepsNavbar";
