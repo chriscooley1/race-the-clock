@@ -244,13 +244,6 @@ const CollectionSetup: React.FC = () => {
     setVisibilityStates(newVisibilityStates);
   }, [type, dotCountType, isGenerated]); // Add dependencies as needed
 
-  useEffect(() => {
-    const tourCompleted = localStorage.getItem("tourCompleted");
-    if (!tourCompleted) {
-      setIsTourRunning(true); // Start the tour if not completed
-    }
-  }, []);
-
   const handleTourComplete = () => {
     setIsTourRunning(false);
     localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
