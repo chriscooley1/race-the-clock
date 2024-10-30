@@ -442,8 +442,10 @@ const CollectionFinalStep: React.FC = () => {
   };
 
   useEffect(() => {
-    // Start the tour when the component mounts
-    setIsTourRunning(true);
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true); // Start the tour if not completed
+    }
   }, []);
 
   if (!currentUser) {

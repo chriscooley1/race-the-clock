@@ -103,16 +103,19 @@ const BadgesAchievements: React.FC = () => {
     loadData();
   }, []);
 
-  const steps = tourStepsBadgesAchievements(visibilityStates);
+  useEffect(() => {
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true); // Start the tour if not completed
+    }
+  }, []);
 
   const handleTourComplete = () => {
-    console.log("Tour completed");
     setIsTourRunning(false);
+    localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
   };
 
-  useEffect(() => {
-    setIsTourRunning(true);
-  }, []);
+  const steps = tourStepsBadgesAchievements(visibilityStates);
 
   return (
     <div

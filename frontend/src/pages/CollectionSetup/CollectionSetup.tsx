@@ -98,8 +98,8 @@ const CollectionSetup: React.FC = () => {
     isAccessibilityVisible: false,
     isBackgroundThemeVisible: false,
   });
-  const [currentStep, setCurrentStep] = useState<number>(0);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   // Define the steps variable
   const steps: Step[] = tourStepsCollectionSetup(visibilityStates);
@@ -243,6 +243,15 @@ const CollectionSetup: React.FC = () => {
     };
     setVisibilityStates(newVisibilityStates);
   }, [type, dotCountType, isGenerated]); // Add dependencies as needed
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false);
+    localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
+  };
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -494,12 +503,6 @@ const CollectionSetup: React.FC = () => {
   const deleteItem = (index: number) => {
     const updatedSequence = previewSequence.filter((_, i) => i !== index);
     setPreviewSequence(updatedSequence); // Set the updated sequence
-  };
-
-  // Update the onStepChange function
-  const handleStepChange = (step: number) => {
-    console.log("Step changed to:", step);
-    setCurrentStep(step);
   };
 
   if (!currentUser) {
@@ -850,17 +853,14 @@ const CollectionSetup: React.FC = () => {
           </div>
         </div>
       )}
-      {isTourRunning && (
-        <GuidedTour
-          steps={steps}
-          isRunning={true}
-          onComplete={() => console.log("Tour completed")}
-          currentStep={currentStep}
-          onStepChange={handleStepChange}
-          isScrollToEnabled={true}
-          tourName="collectionSetup"
-        />
-      )}
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={handleTourStepChange}
+        tourName="collectionSetup"
+      />
     </div>
   );
 };
