@@ -91,7 +91,8 @@ const NameWheel: React.FC<NameWheelProps> = ({
         const degreesPerSlice = 360 / names.length;
         // Adjust for the starting position (top of the wheel is 270 degrees)
         const adjustedDegrees = (totalRotation + 270) % 360; // Use totalRotation here
-        const selectedIndex = Math.floor(adjustedDegrees / degreesPerSlice);
+        // Calculate the selected index based on the adjusted degrees
+        const selectedIndex = Math.round(adjustedDegrees / degreesPerSlice) % names.length; // Change from Math.floor to Math.round
 
         // Update last landed degrees for the next spin
         setLastLandedDegrees(totalRotation % 360);

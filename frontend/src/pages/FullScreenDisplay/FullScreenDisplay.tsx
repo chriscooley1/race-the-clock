@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/Navbar";
 import { tourStepsFullScreenDisplay } from "./tourStepsFullScreenDisplay";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import GuidedTour from "../../components/GuidedTour";

@@ -105,18 +105,13 @@ const CollectionSetup: React.FC = () => {
   const steps: Step[] = tourStepsCollectionSetup(visibilityStates);
 
   // Example of updating visibility states based on some condition
-  useEffect(
-    () => {
-      // Update visibility states based on your logic
-      setVisibilityStates((prev) => ({
-        ...prev,
-        isGeneratedSequencePreviewVisible: true,
-      }));
-    },
-    [
-      /* dependencies that indicate readiness */
-    ],
-  );
+  useEffect(() => {
+    // Update visibility states based on your logic
+    setVisibilityStates((prev) => ({
+      ...prev,
+      isGeneratedSequencePreviewVisible: true,
+    }));
+  }, []);
 
   // Call createTourSteps with updated visibilityStates
   useEffect(() => {
@@ -126,6 +121,7 @@ const CollectionSetup: React.FC = () => {
     }
   }, [visibilityStates, isTourRunning]); // Regenerate steps when visibility states change
 
+  // Fetch user data
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -153,10 +149,7 @@ const CollectionSetup: React.FC = () => {
     fetchUser();
   }, [getAccessTokenSilently]);
 
-  useEffect(() => {
-    console.log("User data in state:", currentUser); // Debugging log for user data
-  }, [currentUser]);
-
+  // Set type based on category
   useEffect(() => {
     switch (category) {
       case "Math":
@@ -180,24 +173,26 @@ const CollectionSetup: React.FC = () => {
     console.log("Current type set to:", type); // Debugging log for type
   }, [category]);
 
+  // Set default operation for math problems
   useEffect(() => {
     if (type === "mathProblems" && !operation) {
       setOperation("addition"); // Set a default operation
     }
   }, [type, operation]);
 
-  useEffect(
-    () => {
-      // Logic to determine if the tour should start
-      setIsTourRunning(true);
-    },
-    [
-      /* dependencies that indicate readiness */
-    ],
-  );
-
+  // Start the tour based on a specific condition
   useEffect(() => {
-    // Update visibility states based on the selected type
+    // Check if the tour has been completed before
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    
+    // Start the tour if it hasn't been completed
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+    }
+  }, []);
+
+  // Update visibility states based on the selected type
+  useEffect(() => {
     const newVisibilityStates: VisibilityStates = {
       ...visibilityStates, // Spread existing visibility states
       isDotCountTypeVisible: type === "numberSense",

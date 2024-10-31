@@ -63,14 +63,6 @@ const Sidebar: React.FC = () => {
             </li>
             <li>
               <Link
-                to="/timed-challenges"
-                className="timed-challenges-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
-              >
-                Timed Challenges
-              </Link>
-            </li>
-            <li>
-              <Link
                 to="/reports"
                 className="reports-link block rounded px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-pink-200 dark:text-white dark:hover:bg-gray-600"
               >

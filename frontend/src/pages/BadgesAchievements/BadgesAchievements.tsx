@@ -3,6 +3,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
+import { useCompletion } from '../../context/CompletionContext';
 
 const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
@@ -77,14 +78,54 @@ const BadgesAchievements: React.FC = () => {
     isBackgroundThemeVisible: false,
   });
 
+  const { completionCounts } = useCompletion();
+
   useEffect(() => {
     const loadData = async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      setBadges([
-        "Read 60 Letters in a Minute",
+      
+      // Define achievements
+      setAchievements([
+        "Read 30 letters in a minute",
+        "Read 40 letters in a minute",
+        "Read 50 letters in a minute",
+        "Read 60 letters in a minute",
+        "Match 10 items",
+        "Match 20 items",
+        "Match 30 items",
+        "Match 40 items",
         "Complete an Advanced Session",
+        "First Login",
+        "Completed 5 Sessions",
+        "Explored All Games",
+        "Created 3 Collections",
+        "Shared a Collection",
+        "Achieved 100% on a Quiz",
+        "Participated in a Timed Challenge",
+        "Logged in for 7 consecutive days",
       ]);
-      setAchievements(["First Login", "Completed 5 Sessions"]);
+
+      // Define badges corresponding to achievements
+      setBadges([
+        "Bronze Badge for reading 30 letters in a minute",
+        "Silver Badge for reading 40 letters in a minute",
+        "Gold Badge for reading 50 letters in a minute",
+        "Platinum Badge for reading 60 letters in a minute",
+        "Bronze Badge for matching 10 items",
+        "Silver Badge for matching 20 items",
+        "Gold Badge for matching 30 items",
+        "Platinum Badge for matching 40 items",
+        "Master of the Advanced for completing an advanced session",
+        "Welcome Aboard Badge for first login",
+        "Session Slayer Medal for completing 5 sessions",
+        "Explorer of Worlds Badge for exploring all games",
+        "Collection Connoisseur Trophy for creating 3 collections",
+        "Sharing is Caring Badge for sharing a collection",
+        "Quiz Whiz Trophy for achieving 100% on a quiz",
+        "Challenge Accepted Badge for participating in a timed challenge",
+        "Loyalty Badge for logging in for 7 consecutive days",
+      ]);
+
       setIsLoading(false);
       setVisibilityStates((prev) => ({
         ...prev,
@@ -159,6 +200,15 @@ const BadgesAchievements: React.FC = () => {
               </ul>
             </div>
           )}
+
+          <h2 className="text-2xl font-semibold">Completion Counts</h2>
+          <ul>
+            {Object.entries(completionCounts).map(([collectionId, count]) => (
+              <li key={collectionId}>
+                Collection ID {collectionId}: Completed {count} times
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

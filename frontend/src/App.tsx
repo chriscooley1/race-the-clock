@@ -4,12 +4,15 @@ import { useTheme } from "./context/ThemeContext";
 import { Step } from "react-joyride";
 import { VisibilityStates } from "./types/VisibilityStates";
 import PrivateRoute from "./components/PrivateRoute";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
 import { TourProvider } from "./context/TourContext";
+import MatchingGame from "./pages/Games/MatchingGame";
+import MultipleWordsGame from "./pages/Games/MultipleWordsGame";
+import TimedChallenges from "./pages/Games/TimedChallenges";
 
 // Import your tour steps here
 import { tourStepsLandingPage } from "./pages/LandingPage/tourStepsLandingPage";
@@ -24,7 +27,7 @@ import { tourStepsResources } from "./pages/Resources/tourStepsResources";
 import { tourStepsSettings } from "./pages/Settings/tourStepsSettings";
 import { tourStepsMyAccount } from "./pages/MyAccount/tourStepsMyAccount";
 import { tourStepsGames } from "./pages/Games/tourStepsGames";
-import { tourStepsTimedChallenges } from "./pages/TimedChallenges/tourStepsTimedChallenges";
+import { tourStepsTimedChallenges } from "./pages/Games/tourStepsTimedChallenges";
 import { tourStepsReports } from "./pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "./pages/BadgesAchievements/tourStepsBadgesAchievements";
 
@@ -41,9 +44,9 @@ import Resources from "./pages/Resources/Resources";
 import Settings from "./pages/Settings/Settings";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import Games from "./pages/Games/Games";
-import TimedChallenges from "./pages/TimedChallenges/TimedChallenges";
 import Reports from "./pages/Reports/Reports";
 import BadgesAchievements from "./pages/BadgesAchievements/BadgesAchievements";
+import { CompletionProvider } from "./context/CompletionContext";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
@@ -185,6 +188,7 @@ const App: React.FC = () => {
   return (
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
+        <CompletionProvider>
         <TourProvider>
           <div
             className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
@@ -197,7 +201,7 @@ const App: React.FC = () => {
             <div className="flex pt-[70px]">
               {!hideSidebar && <Sidebar />}
               <div
-                className={`grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area`}
+                className={`grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area flex flex-col items-center`}
               >
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
@@ -297,7 +301,7 @@ const App: React.FC = () => {
                     }
                   />
                   <Route
-                    path="/timed-challenges"
+                    path="/games/timed-challenges"
                     element={
                       <Suspense fallback={<div>Loading...</div>}>
                         <PrivateRoute element={<TimedChallenges />} />
@@ -320,6 +324,22 @@ const App: React.FC = () => {
                       </Suspense>
                     }
                   />
+                  <Route
+                    path="/games/matching-game"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<MatchingGame />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/games/multiple-words-game"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<MultipleWordsGame />} />
+                      </Suspense>
+                    }
+                  />
                 </Routes>
               </div>
             </div>
@@ -331,8 +351,9 @@ const App: React.FC = () => {
               onStepChange={handleTourStepChange}
               tourName={currentTourName}
             />
-          </div>
-        </TourProvider>
+            </div>
+          </TourProvider>
+        </CompletionProvider>
       </ErrorBoundary>
     </Auth0ProviderWithHistory>
   );

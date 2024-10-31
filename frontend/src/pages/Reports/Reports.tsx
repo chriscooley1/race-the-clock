@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { fetchReports } from "../../api";
+import { fetchReports, fetchCollections } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
@@ -17,11 +17,18 @@ interface Report {
   created_at: string;
 }
 
+// Define the Collection interface
+interface Collection {
+  collection_id: number;
+  name: string;
+}
+
 const Reports: React.FC = () => {
   const { theme } = useTheme();
   const { getAccessTokenSilently } = useAuth0();
   const [reports, setReports] = useState<Report[]>([]); // State to hold reports
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
+  const [collections, setCollections] = useState<Collection[]>([]); // State to hold collections
 
   // Visibility states for the tour
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -110,6 +117,19 @@ const Reports: React.FC = () => {
     loadReports();
   }, [getAccessTokenSilently]);
 
+  useEffect(() => {
+    const loadCollections = async () => {
+      try {
+        const fetchedCollections = await fetchCollections(getAccessTokenSilently);
+        setCollections(fetchedCollections);
+      } catch (error) {
+        console.error("Error loading collections:", error);
+      }
+    };
+
+    loadCollections();
+  }, [getAccessTokenSilently]);
+
   // Example of using setVisibilityStates
   useEffect(() => {
     // You can set visibility states based on your logic here
@@ -166,6 +186,14 @@ const Reports: React.FC = () => {
               </li>
             ))}
           </ul>
+          <h2>Your Collections</h2>
+          <ul>
+            {collections.map((collection) => (
+              <li key={collection.collection_id}>
+                {collection.name} - Completed: {getCompletionCount(collection)} times
+              </li>
+            ))}
+          </ul>
         </div>
       )}
       {/* Add the GuidedTour component here */}
@@ -179,6 +207,13 @@ const Reports: React.FC = () => {
       />
     </div>
   );
+};
+
+// Helper function to get completion count for a collection
+const getCompletionCount = (collection: Collection): number => {
+  // Use the collection name to demonstrate usage
+  console.log(`Getting completion count for collection: ${collection.name}`);
+  return Math.floor(Math.random() * 10); // Example: random count for demonstration
 };
 
 export default Reports;

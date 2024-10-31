@@ -7,7 +7,7 @@ import React, {
   useRef,
 } from "react";
 import { Step, CallBackProps } from "react-joyride";
-import Joyride from "react-joyride"; // Import Joyride
+import Joyride from "react-joyride";
 
 // Extend CallBackProps to include tourName
 export interface ExtendedCallBackProps extends CallBackProps {

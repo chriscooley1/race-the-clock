@@ -23,7 +23,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsYourCollections } from "./tourStepsYourCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
-import { useTour } from "../../context/TourContext";
+import { useCompletion } from '../../context/CompletionContext';
 
 interface Collection {
   collection_id: number;
@@ -100,7 +100,7 @@ const YourCollections: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { theme, adjustColorForColorblindness } = useTheme();
-  const { startTour } = useTour();
+  const { updateCompletionCount } = useCompletion();
 
   // Visibility states for the tour
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -183,15 +183,10 @@ const YourCollections: React.FC = () => {
     setCurrentTourStep(step);
   };
 
-  const handleTourStart = () => {
-    setIsTourRunning(true);
-    startTour(steps);
-  };
-
+  // Ensure the tour only starts when triggered from the Navbar
   useEffect(() => {
-    // Start the tour when the component mounts
-    handleTourStart();
-  }, []); // Add an empty dependency array to run it once on mount
+    // You can add any logic here if needed to check if the tour should start
+  }, []);
 
   useEffect(() => {
     const loadCollections = async () => {
@@ -432,6 +427,9 @@ const YourCollections: React.FC = () => {
         },
       });
       setShowModal(false);
+
+      // Update completion count for the selected collection
+      updateCompletionCount(selectedCollection.collection_id);
     }
   };
 
@@ -553,6 +551,7 @@ const YourCollections: React.FC = () => {
                           handleEditButtonClick={handleEditButtonClick}
                           handleDeleteCollection={handleDeleteCollection}
                           formatDate={formatDate}
+                          completionCount={0}
                         />
                       </div>
                     )}
@@ -572,6 +571,7 @@ const YourCollections: React.FC = () => {
                       handleEditButtonClick={handleEditButtonClick}
                       handleDeleteCollection={handleDeleteCollection}
                       formatDate={formatDate}
+                      completionCount={0}
                     />
                   </div>
                 );
@@ -702,6 +702,7 @@ interface CollectionContentProps {
   handleEditButtonClick: (collection: Collection) => void;
   handleDeleteCollection: (id: number) => void;
   formatDate: (dateString: string) => string;
+  completionCount: number;
 }
 
 const CollectionContent: React.FC<CollectionContentProps> = ({
@@ -731,7 +732,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
       <div className="flex flex-col items-center justify-end">
         <button
           type="button"
-          className="start-collection-button mb-2.5 w-full cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+          className="start-collection-button mb-2.5 w-full cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
           style={{ backgroundColor: "green" }}
           onClick={() => handleStartCollection(collection.collection_id)}
         >
@@ -740,7 +741,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
         <div className="flex w-full justify-between space-x-4">
           <button
             type="button"
-            className="edit-collection-button flex-1 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+            className="edit-collection-button flex-1 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
             style={{ backgroundColor: "yellow" }}
             onClick={() => handleEditButtonClick(collection)}
           >
@@ -748,7 +749,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
           </button>
           <button
             type="button"
-            className="delete-collection-button flex-1 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95 active:opacity-70"
+            className="delete-collection-button flex-1 cursor-pointer rounded-lg border-none p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
             style={{ backgroundColor: "red" }}
             onClick={() => handleDeleteCollection(collection.collection_id)}
           >
