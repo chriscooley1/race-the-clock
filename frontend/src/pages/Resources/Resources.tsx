@@ -88,6 +88,102 @@ const Resources: React.FC = () => {
     isBackgroundThemeVisible: false,
   });
 
+  // Define the steps variable
+  const steps = tourStepsResources(visibilityStates); // Create tour steps based on visibility states
+
+  // Add a function to start the tour
+  const startTour = () => {
+    const tourCompleted = localStorage.getItem("tourCompleted");
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+      setCurrentTourStep(0); // Reset to the first step
+    }
+  };
+
+  useEffect(() => {
+    // Start the tour when the component mounts
+    startTour(); // Call startTour here
+  }, []);
+
+  // Example of using setVisibilityStates
+  useEffect(() => {
+    // Here you can set visibility states based on your logic
+    const newVisibilityStates: VisibilityStates = {
+      isDotCountTypeVisible: false,
+      isMinDotsVisible: false,
+      isMaxDotsVisible: false,
+      isTypeSelectVisible: false,
+      isItemCountVisible: false,
+      isCollectionItemCountVisible: false,
+      isDotColorVisible: false,
+      isDotShapeVisible: false,
+      isGenerateRandomSequenceButtonVisible: false,
+      isFileUploadVisible: false,
+      isNextButtonVisible: false,
+      isClearButtonVisible: false,
+      isGeneratedSequencePreviewVisible: false,
+      isBadgesSectionVisible: false,
+      isAchievementsSectionVisible: false,
+      isLoadingMessageVisible: false,
+      isSearchInputVisible: false,
+      isSortSelectVisible: false,
+      isCollectionsGridVisible: false,
+      isPreviewButtonVisible: false,
+      isSaveButtonVisible: false,
+      isItemPreviewVisible: false,
+      isMathProblemVisible: false,
+      isDotButtonVisible: false,
+      isImageUploadVisible: false,
+      isPreviousButtonVisible: false,
+      isProgressIndicatorVisible: false,
+      isPauseButtonVisible: false,
+      isScreenClickAreaVisible: false,
+      isMatchingGameVisible: false,
+      isMultipleWordsGameVisible: false,
+      isRegisterButtonVisible: false,
+      isLoginButtonVisible: false,
+      isProfileVisible: false,
+      isUpdateFormVisible: false,
+      isNameInputVisible: false,
+      isAddNameButtonVisible: false,
+      isSpinButtonVisible: false,
+      isNamesListVisible: false,
+      isCollectionNameVisible: false,
+      isCategorySelectVisible: false,
+      isStageSelectVisible: false,
+      isPublicCheckboxVisible: false,
+      isSubmitButtonVisible: false,
+      isReportsOverviewVisible: false,
+      isReportsListVisible: false,
+      isFAQSectionVisible: true,
+      isInstructionalVideosVisible: true,
+      isTimedChallengesVisible: false,
+      isCollectionsOverviewVisible: false,
+      isCollectionCardVisible: false,
+      isStartCollectionButtonVisible: false,
+      isEditCollectionButtonVisible: false,
+      isDeleteCollectionButtonVisible: false,
+      isMainFontVisible: false,
+      isHeadingFontVisible: false,
+      isButtonFontVisible: false,
+      isColorThemeVisible: false,
+      isTextColorVisible: false,
+      isBackgroundColorVisible: false,
+      isAccessibilityVisible: false,
+      isBackgroundThemeVisible: false,
+    };
+    setVisibilityStates(newVisibilityStates);
+  }, []); // This effect runs once when the component mounts
+
+  const handleTourStepChange = (step: number) => {
+    setCurrentTourStep(step);
+  };
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false); // Reset the tour running state
+    localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
+  };
+
   useEffect(() => {
     const loadData = async () => {
       // Simulate fetching data
@@ -130,24 +226,19 @@ const Resources: React.FC = () => {
     loadData();
   }, []);
 
-  useEffect(() => {
-    const tourCompleted = localStorage.getItem("tourCompleted");
-    if (!tourCompleted) {
-      setIsTourRunning(true); // Start the tour if not completed
-    }
-  }, []);
-
-  const handleTourComplete = () => {
-    setIsTourRunning(false);
-    localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
-  };
-
   const toggleFAQVisibility = () => {
     setVisibilityStates((prev) => ({
       ...prev,
       isFAQSectionVisible: !prev.isFAQSectionVisible,
     }));
   };
+
+  useEffect(() => {
+    console.log("Resources component mounted");
+    return () => {
+      console.log("Resources component unmounted");
+    };
+  }, []);
 
   return (
     <div
@@ -156,8 +247,7 @@ const Resources: React.FC = () => {
       } resources`}
     >
       <h1 className="mb-8 text-3xl font-bold">Resources</h1>
-
-      <button onClick={toggleFAQVisibility}>Toggle FAQ Visibility</button>
+      <button type="button" onClick={toggleFAQVisibility}>Toggle FAQ Visibility</button>
 
       {isLoading ? (
         <p>Loading resources...</p>
@@ -178,7 +268,6 @@ const Resources: React.FC = () => {
               </div>
             </section>
           )}
-
           {visibilityStates.isInstructionalVideosVisible && (
             <section className="w-full max-w-3xl">
               <h2 className="mb-4 text-2xl font-semibold">
@@ -205,12 +294,13 @@ const Resources: React.FC = () => {
         </>
       )}
 
+      {/* Add the GuidedTour component here */}
       <GuidedTour
-        steps={tourStepsResources(visibilityStates)}
+        steps={steps}
         isRunning={isTourRunning}
-        onComplete={handleTourComplete}
+        onComplete={handleTourComplete} // Use the new handler
         currentStep={currentTourStep}
-        onStepChange={setCurrentTourStep}
+        onStepChange={handleTourStepChange}
         tourName="resources"
       />
     </div>
