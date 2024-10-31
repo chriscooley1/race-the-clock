@@ -4,7 +4,7 @@ import { useTheme } from "./context/ThemeContext";
 import { Step } from "react-joyride";
 import { VisibilityStates } from "./types/VisibilityStates";
 import PrivateRoute from "./components/PrivateRoute";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";

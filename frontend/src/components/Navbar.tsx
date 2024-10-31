@@ -1,27 +1,26 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useTheme } from "../../context/ThemeContext";
-import { useTour } from "../../context/TourContext";
-import { VisibilityStates } from "../../types/VisibilityStates";
+import { useTheme } from "../context/ThemeContext";
+import { useTour } from "../context/TourContext";
+import { VisibilityStates } from "../types/VisibilityStates";
 import { Step } from "react-joyride";
 
-import { tourStepsLandingPage } from "../../pages/LandingPage/tourStepsLandingPage";
-import { tourStepsYourCollections } from "../../pages/YourCollections/tourStepsYourCollections";
-import { tourStepsNewCollection } from "../../pages/NewCollection/tourStepsNewCollection";
-import { tourStepsDiscoverCollections } from "../../pages/DiscoverCollections/tourStepsDiscoverCollections";
-import { tourStepsFullScreenDisplay } from "../../pages/FullScreenDisplay/tourStepsFullScreenDisplay";
-import { tourStepsCollectionSetup } from "../../pages/CollectionSetup/tourStepsCollectionSetup";
-import { tourStepsCollectionFinalStep } from "../../pages/CollectionFinalStep/tourStepsCollectionFinalStep";
-import { tourStepsNameGenerator } from "../../pages/NameGenerator/tourStepsNameGenerator";
-import { tourStepsResources } from "../../pages/Resources/tourStepsResources";
-import { tourStepsSettings } from "../../pages/Settings/tourStepsSettings";
-import { tourStepsMyAccount } from "../../pages/MyAccount/tourStepsMyAccount";
-import { tourStepsGames } from "../../pages/Games/tourStepsGames";
-import { tourStepsTimedChallenges } from "../../pages/Games/tourStepsTimedChallenges";
-import { tourStepsReports } from "../../pages/Reports/tourStepsReports";
-import { tourStepsBadgesAchievements } from "../../pages/BadgesAchievements/tourStepsBadgesAchievements";
-import { tourStepsNavbar } from "./tourStepsNavbar";
+import { tourStepsLandingPage } from "../pages/LandingPage/tourStepsLandingPage";
+import { tourStepsYourCollections } from "../pages/YourCollections/tourStepsYourCollections";
+import { tourStepsNewCollection } from "../pages/NewCollection/tourStepsNewCollection";
+import { tourStepsDiscoverCollections } from "../pages/DiscoverCollections/tourStepsDiscoverCollections";
+import { tourStepsFullScreenDisplay } from "../pages/FullScreenDisplay/tourStepsFullScreenDisplay";
+import { tourStepsCollectionSetup } from "../pages/CollectionSetup/tourStepsCollectionSetup";
+import { tourStepsCollectionFinalStep } from "../pages/CollectionFinalStep/tourStepsCollectionFinalStep";
+import { tourStepsNameGenerator } from "../pages/NameGenerator/tourStepsNameGenerator";
+import { tourStepsResources } from "../pages/Resources/tourStepsResources";
+import { tourStepsSettings } from "../pages/Settings/tourStepsSettings";
+import { tourStepsMyAccount } from "../pages/MyAccount/tourStepsMyAccount";
+import { tourStepsGames } from "../pages/Games/tourStepsGames";
+import { tourStepsTimedChallenges } from "../pages/Games/tourStepsTimedChallenges";
+import { tourStepsReports } from "../pages/Reports/tourStepsReports";
+import { tourStepsBadgesAchievements } from "../pages/BadgesAchievements/tourStepsBadgesAchievements";
 
 interface NavbarProps {
   isPaused?: boolean;
@@ -199,7 +198,7 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "yourCollections";
         break;
       default:
-        steps = tourStepsNavbar;
+        steps = [];
         tourName = "navbar";
         break;
     }
