@@ -19,6 +19,8 @@ const MyAccount: React.FC = () => {
 
   // Initialize visibilityStates with all properties
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isProfileVisible: true,
+    isUpdateFormVisible: true,
     isDotCountTypeVisible: false,
     isMinDotsVisible: false,
     isMaxDotsVisible: false,
@@ -52,8 +54,6 @@ const MyAccount: React.FC = () => {
     isMultipleWordsGameVisible: false,
     isRegisterButtonVisible: false,
     isLoginButtonVisible: false,
-    isProfileVisible: true,
-    isUpdateFormVisible: true,
     isNameInputVisible: false,
     isAddNameButtonVisible: false,
     isSpinButtonVisible: false,
@@ -85,20 +85,23 @@ const MyAccount: React.FC = () => {
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [shouldStartTour, setShouldStartTour] = useState<boolean>(false); // Local state to control tour start
 
   // Define the steps variable
-  const steps = tourStepsMyAccount(visibilityStates); // Create tour steps based on visibility states
+  const steps = tourStepsMyAccount(visibilityStates); // Ensure this returns the correct steps
 
-  const startTour = () => {
-    setIsTourRunning(true);
-    setCurrentTourStep(0); // Reset to the first step
-  };
+  // Debugging: Log visibility states and steps
+  useEffect(() => {
+    console.log("Visibility States:", visibilityStates);
+    console.log("Tour Steps:", steps);
+  }, [visibilityStates, steps]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const userProfile = await getCurrentUser(getAccessTokenSilently);
         setUserData(userProfile);
+        // Do not start the tour automatically
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -107,13 +110,21 @@ const MyAccount: React.FC = () => {
     fetchUserData();
   }, [getAccessTokenSilently]);
 
+  // Effect to start the tour based on the shouldStartTour flag
   useEffect(() => {
-    // Start the tour when the component mounts
-    startTour(); // Call startTour to use the function
-  }, []);
+    if (shouldStartTour) {
+      startTour(); // Start the tour if the flag is set
+      setShouldStartTour(false); // Reset the flag
+    }
+  }, [shouldStartTour]);
 
-  const handleTourStepChange = (step: number) => {
-    setCurrentTourStep(step);
+  const startTour = () => {
+    if (steps.length > 0) { // Ensure there are steps to show
+      setIsTourRunning(true);
+      setCurrentTourStep(0); // Reset to the first step
+    } else {
+      console.warn("No steps available for the tour.");
+    }
   };
 
   const handleTourComplete = () => {
@@ -129,9 +140,12 @@ const MyAccount: React.FC = () => {
     }));
   };
 
+  // You can call startTour() directly from wherever you want to trigger the tour
+  // For example, you can call it based on a specific condition or user action
+
   return (
     <div
-      className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} my-account`}
     >
       <div
         className={`w-full max-w-md rounded-lg p-16 shadow-md ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`}
@@ -170,9 +184,9 @@ const MyAccount: React.FC = () => {
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}
-        onComplete={handleTourComplete} // Use the new handler
+        onComplete={handleTourComplete}
         currentStep={currentTourStep}
-        onStepChange={handleTourStepChange}
+        onStepChange={setCurrentTourStep}
         tourName="myAccount"
       />
     </div>
