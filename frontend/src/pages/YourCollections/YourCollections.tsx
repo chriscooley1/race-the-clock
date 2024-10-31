@@ -23,7 +23,6 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsYourCollections } from "./tourStepsYourCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
-import { useTour } from "../../context/TourContext";
 import { useCompletion } from '../../context/CompletionContext';
 
 interface Collection {
@@ -101,7 +100,6 @@ const YourCollections: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { theme, adjustColorForColorblindness } = useTheme();
-  const { startTour } = useTour();
   const { updateCompletionCount } = useCompletion();
 
   // Visibility states for the tour
@@ -185,15 +183,10 @@ const YourCollections: React.FC = () => {
     setCurrentTourStep(step);
   };
 
-  const handleTourStart = () => {
-    setIsTourRunning(true);
-    startTour(steps);
-  };
-
+  // Ensure the tour only starts when triggered from the Navbar
   useEffect(() => {
-    // Start the tour when the component mounts
-    handleTourStart();
-  }, []); // Add an empty dependency array to run it once on mount
+    // You can add any logic here if needed to check if the tour should start
+  }, []);
 
   useEffect(() => {
     const loadCollections = async () => {
