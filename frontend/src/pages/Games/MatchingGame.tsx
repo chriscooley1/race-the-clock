@@ -2,10 +2,17 @@ import React, { useState } from "react";
 
 const MatchingGame: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
+  const [matches, setMatches] = useState<{ [key: string]: boolean }>({}); // Track matches
+  const words = ["A", "B", "C"]; // Example words
+  const images = ["Image1", "Image2", "Image3"]; // Example images
 
   const startGame = () => {
     setIsGameStarted(true);
-    // Additional logic to initialize the game can be added here
+    // Initialize matches or game state here
+  };
+
+  const handleMatch = (word: string) => {
+    setMatches((prev) => ({ ...prev, [word]: true })); // Update match state
   };
 
   return (
@@ -19,7 +26,21 @@ const MatchingGame: React.FC = () => {
           </button>
         </div>
       ) : (
-        <p>Game is starting... (Add game logic here)</p>
+        <div>
+          <p>Game is starting...</p>
+          <div className="flex">
+            {words.map((word) => (
+              <div key={word} onClick={() => handleMatch(word)} className="m-2 cursor-pointer">
+                {word} {matches[word] && "✓"} {/* Show match status */}
+              </div>
+            ))}
+            {images.map((image) => (
+              <div key={image} className="m-2">
+                {image}
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

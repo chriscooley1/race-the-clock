@@ -2,10 +2,17 @@ import React, { useState } from "react";
 
 const MultipleWordsGame: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
+  const [connections, setConnections] = useState<{ [key: string]: string }>({}); // Track connections
+  const words = ["Word1", "Word2", "Word3"]; // Example words
+  const images = ["Image1", "Image2", "Image3"]; // Example images
 
   const startGame = () => {
     setIsGameStarted(true);
-    // Additional logic to initialize the game can be added here
+    // Initialize connections or game state here
+  };
+
+  const handleConnect = (word: string, image: string) => {
+    setConnections((prev) => ({ ...prev, [word]: image })); // Update connection state
   };
 
   return (
@@ -19,7 +26,21 @@ const MultipleWordsGame: React.FC = () => {
           </button>
         </div>
       ) : (
-        <p>Game is starting... (Add game logic here)</p>
+        <div>
+          <p>Game is starting...</p>
+          <div className="flex">
+            {words.map((word) => (
+              <div key={word} onClick={() => handleConnect(word, "Image1")} className="m-2 cursor-pointer">
+                {word} {connections[word] && `→ ${connections[word]}`} {/* Show connection status */}
+              </div>
+            ))}
+            {images.map((image) => (
+              <div key={image} className="m-2">
+                {image}
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
