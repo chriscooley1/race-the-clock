@@ -24,6 +24,7 @@ import { tourStepsYourCollections } from "./tourStepsYourCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { useTour } from "../../context/TourContext";
+import { useCompletion } from '../../context/CompletionContext';
 
 interface Collection {
   collection_id: number;
@@ -101,7 +102,7 @@ const YourCollections: React.FC = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { theme, adjustColorForColorblindness } = useTheme();
   const { startTour } = useTour();
-  const [completionCounts, setCompletionCounts] = useState<{ [key: number]: number }>({});
+  const { updateCompletionCount } = useCompletion();
 
   // Visibility states for the tour
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -435,10 +436,7 @@ const YourCollections: React.FC = () => {
       setShowModal(false);
 
       // Update completion count for the selected collection
-      setCompletionCounts((prevCounts) => ({
-        ...prevCounts,
-        [selectedCollection.collection_id]: (prevCounts[selectedCollection.collection_id] || 0) + 1,
-      }));
+      updateCompletionCount(selectedCollection.collection_id);
     }
   };
 
@@ -560,7 +558,7 @@ const YourCollections: React.FC = () => {
                           handleEditButtonClick={handleEditButtonClick}
                           handleDeleteCollection={handleDeleteCollection}
                           formatDate={formatDate}
-                          completionCount={completionCounts[collection.collection_id] || 0}
+                          completionCount={0}
                         />
                       </div>
                     )}
@@ -580,7 +578,7 @@ const YourCollections: React.FC = () => {
                       handleEditButtonClick={handleEditButtonClick}
                       handleDeleteCollection={handleDeleteCollection}
                       formatDate={formatDate}
-                      completionCount={completionCounts[collection.collection_id] || 0}
+                      completionCount={0}
                     />
                   </div>
                 );
@@ -721,7 +719,6 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
   handleEditButtonClick,
   handleDeleteCollection,
   formatDate,
-  completionCount,
 }) => (
   <>
     <h1
@@ -734,9 +731,6 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
       <div>
         <p className="mb-1 text-base font-bold text-black">
           {getItemsCount(collection.description)} items in collection
-        </p>
-        <p className="mb-2.5 text-base font-bold text-black">
-          Completed: {completionCount} times
         </p>
         <p className="mb-2.5 text-base font-bold text-black">
           Created by you on {formatDate(collection.created_at)}

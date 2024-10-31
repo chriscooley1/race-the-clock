@@ -46,6 +46,7 @@ import MyAccount from "./pages/MyAccount/MyAccount";
 import Games from "./pages/Games/Games";
 import Reports from "./pages/Reports/Reports";
 import BadgesAchievements from "./pages/BadgesAchievements/BadgesAchievements";
+import { CompletionProvider } from "./context/CompletionContext";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
@@ -187,6 +188,7 @@ const App: React.FC = () => {
   return (
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
+        <CompletionProvider>
         <TourProvider>
           <div
             className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
@@ -349,8 +351,9 @@ const App: React.FC = () => {
               onStepChange={handleTourStepChange}
               tourName={currentTourName}
             />
-          </div>
-        </TourProvider>
+            </div>
+          </TourProvider>
+        </CompletionProvider>
       </ErrorBoundary>
     </Auth0ProviderWithHistory>
   );

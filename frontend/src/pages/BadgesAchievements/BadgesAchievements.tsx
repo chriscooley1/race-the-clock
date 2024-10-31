@@ -3,6 +3,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
+import { useCompletion } from '../../context/CompletionContext';
 
 const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
@@ -76,6 +77,8 @@ const BadgesAchievements: React.FC = () => {
     isAccessibilityVisible: false,
     isBackgroundThemeVisible: false,
   });
+
+  const { completionCounts } = useCompletion();
 
   useEffect(() => {
     const loadData = async () => {
@@ -197,6 +200,15 @@ const BadgesAchievements: React.FC = () => {
               </ul>
             </div>
           )}
+
+          <h2 className="text-2xl font-semibold">Completion Counts</h2>
+          <ul>
+            {Object.entries(completionCounts).map(([collectionId, count]) => (
+              <li key={collectionId}>
+                Collection ID {collectionId}: Completed {count} times
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 
