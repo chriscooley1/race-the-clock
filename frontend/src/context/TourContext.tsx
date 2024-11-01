@@ -19,7 +19,6 @@ interface TourContextType {
   completeTour: (tourName: string) => void;
   isTourRunning: boolean;
   setIsTourRunning: (isRunning: boolean) => void;
-  steps: Step[];
 }
 
 // Create the context with a default value of null
@@ -32,7 +31,6 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
     {},
   );
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
-  const [steps, setSteps] = useState<Step[]>([]); // Store steps in state
 
   useEffect(() => {
     const storedTours = localStorage.getItem("toursCompleted");
@@ -42,13 +40,11 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   const startTour = (tourSteps: Step[]) => {
-    setSteps(tourSteps); // Set the steps for the tour
     setIsTourRunning(true); // Set the tour running state
     console.log("Starting tour with steps:", tourSteps);
   };
 
   const completeTour = (tourName: string) => {
-    console.log("Completing tour:", tourName);
     if (tourName !== "navbar") {
       setToursCompleted((prev) => ({ ...prev, [tourName]: true }));
       localStorage.setItem(
@@ -67,7 +63,6 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
         completeTour,
         isTourRunning,
         setIsTourRunning,
-        steps,
       }}
     >
       {children}

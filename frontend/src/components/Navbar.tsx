@@ -47,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
   const { theme, toggleDarkMode } = useTheme();
-  const { isTourRunning, startTour } = useTour();
+  const { startTour } = useTour();
 
   const handleMenuToggle = () => {
     console.log("Toggling menu. Current state:", menuOpen);
@@ -89,8 +89,6 @@ const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const handleStartTour = useCallback(() => {
-    if (isTourRunning) return; // Prevent starting if the tour is already running
-
     const visibilityStates: VisibilityStates = {
       isDotCountTypeVisible: true,
       isMinDotsVisible: true,
@@ -205,15 +203,11 @@ const Navbar: React.FC<NavbarProps> = ({
         break;
     }
 
-    console.log("Starting tour from Navbar with steps:", steps);
-    console.log("Tour name:", tourName);
-
-    // Start the tour immediately when the button is clicked
-    onStartTour(); // Call the onStartTour prop if needed
-    startTour(steps); // Pass the steps to startTour
-    setTourName(tourName); // Set the tour name
-    setCurrentTourStep(0); // Reset the current step
-  }, [location.pathname, isTourRunning, startTour, onStartTour, setTourName, setCurrentTourStep]);
+    onStartTour();
+    startTour(steps);
+    setTourName(tourName);
+    setCurrentTourStep(0);
+  }, [location.pathname, startTour, onStartTour, setTourName, setCurrentTourStep]);
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
