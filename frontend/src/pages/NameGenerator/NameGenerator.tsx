@@ -118,9 +118,9 @@ const NameGenerator: React.FC = () => {
     setCurrentTourStep(step);
   };
 
-  const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"; // Fallback to localhost for development
+  const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"; // Fallback for local development
 
-  console.log("API_URL:", API_URL); // Add this line to check the value
+  console.log("API_URL:", API_URL); // Log to verify the URL being used
   console.log("Environment Variables:", import.meta.env);
 
   const loadNameList = useCallback(async () => {
