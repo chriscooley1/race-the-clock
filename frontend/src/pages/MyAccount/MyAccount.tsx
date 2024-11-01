@@ -118,7 +118,8 @@ const MyAccount: React.FC = () => {
     }
   }, [shouldStartTour]);
   const startTour = () => {
-    if (steps.length > 0) { // Ensure there are steps to show
+    if (steps.length > 0) {
+      // Ensure there are steps to show
       setIsTourRunning(true);
       setCurrentTourStep(0); // Reset to the first step
     } else {

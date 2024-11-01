@@ -131,12 +131,18 @@ const Games: React.FC = () => {
             <p>Match the letters with the corresponding images!</p>
           </Link>
 
-          <Link to="/games/multiple-words-game" className="multiple-words-game mt-8">
+          <Link
+            to="/games/multiple-words-game"
+            className="multiple-words-game mt-8"
+          >
             <h2 className="text-2xl font-semibold">Multiple Words Game</h2>
             <p>Drag and connect words to their corresponding cards!</p>
           </Link>
 
-          <Link to="/games/timed-challenges" className="timed-challenges-game mt-8">
+          <Link
+            to="/games/timed-challenges"
+            className="timed-challenges-game mt-8"
+          >
             <h2 className="text-2xl font-semibold">Timed Challenges</h2>
             <p>Complete as many challenges as you can within the time limit!</p>
           </Link>

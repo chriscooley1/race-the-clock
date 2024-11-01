@@ -207,7 +207,13 @@ const Navbar: React.FC<NavbarProps> = ({
     startTour(steps);
     setTourName(tourName);
     setCurrentTourStep(0);
-  }, [location.pathname, startTour, onStartTour, setTourName, setCurrentTourStep]);
+  }, [
+    location.pathname,
+    startTour,
+    onStartTour,
+    setTourName,
+    setCurrentTourStep,
+  ]);
 
   return (
     <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">

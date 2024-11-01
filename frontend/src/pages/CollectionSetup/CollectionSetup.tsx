@@ -184,7 +184,7 @@ const CollectionSetup: React.FC = () => {
   useEffect(() => {
     // Check if the tour has been completed before
     const tourCompleted = localStorage.getItem("tourCompleted");
-    
+
     // Start the tour if it hasn't been completed
     if (!tourCompleted) {
       setIsTourRunning(true);

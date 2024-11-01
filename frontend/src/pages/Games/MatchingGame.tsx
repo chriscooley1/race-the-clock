@@ -16,12 +16,16 @@ const MatchingGame: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-[70px]">
+    <div className="mt-[70px] flex flex-col items-center">
       <h1 className="text-3xl font-bold">Matching Game</h1>
       {!isGameStarted ? (
         <div>
           <p>Match the letters with the corresponding images!</p>
-          <button type="button" onClick={startGame} className="mt-4 p-2 bg-blue-500 text-white rounded">
+          <button
+            type="button"
+            onClick={startGame}
+            className="mt-4 rounded bg-blue-500 p-2 text-white"
+          >
             Start Game
           </button>
         </div>
@@ -30,7 +34,11 @@ const MatchingGame: React.FC = () => {
           <p>Game is starting...</p>
           <div className="flex">
             {words.map((word) => (
-              <div key={word} onClick={() => handleMatch(word)} className="m-2 cursor-pointer">
+              <div
+                key={word}
+                onClick={() => handleMatch(word)}
+                className="m-2 cursor-pointer"
+              >
                 {word} {matches[word] && "✓"} {/* Show match status */}
               </div>
             ))}

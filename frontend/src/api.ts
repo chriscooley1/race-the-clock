@@ -5,8 +5,7 @@ import { AxiosError } from "axios";
 console.log("All environment variables:", import.meta.env);
 console.log("VITE_API_BASE_URL from env:", import.meta.env.VITE_API_BASE_URL);
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://race-the-clock-backend-production.up.railway.app";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 console.log("API_BASE_URL being used:", API_BASE_URL);
 
 if (!API_BASE_URL) {
