@@ -49,6 +49,8 @@ import BadgesAchievements from "./pages/BadgesAchievements/BadgesAchievements";
 import { CompletionProvider } from "./context/CompletionContext";
 
 const App: React.FC = () => {
+  console.log("App component rendered");
+
   const { theme } = useTheme();
   const location = useLocation();
   const [hideSidebar, setHideSidebar] = useState(false);
@@ -58,9 +60,12 @@ const App: React.FC = () => {
   const [currentTourName, setCurrentTourName] = useState<string>("");
 
   useEffect(() => {
+    console.log("App state changed");
+    console.log("isTourRunning:", isTourRunning);
+    console.log("currentTourStep:", currentTourStep);
     const hiddenRoutes = ["/", "/fullscreen-display", "/math-collection"];
     setHideSidebar(hiddenRoutes.includes(location.pathname));
-  }, [location.pathname]);
+  }, [location.pathname, hideSidebar, isFullScreen, isTourRunning, currentTourStep]);
 
   const handleTourComplete = () => {
     setIsTourRunning(false);

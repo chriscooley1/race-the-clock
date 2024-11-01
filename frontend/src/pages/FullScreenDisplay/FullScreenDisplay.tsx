@@ -74,9 +74,16 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [showAnswer, setShowAnswer] = useState(false);
   const [stopCondition, setStopCondition] = useState("collection");
   const [tourName, setTourName] = useState<string>("");
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   // Define visibility states using the VisibilityStates interface
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isNextButtonVisible: true,
+    isPreviousButtonVisible: true,
+    isProgressIndicatorVisible: true,
+    isPauseButtonVisible: true,
+    isScreenClickAreaVisible: true,
     isDotCountTypeVisible: false,
     isMinDotsVisible: false,
     isMaxDotsVisible: false,
@@ -87,7 +94,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     isDotShapeVisible: false,
     isGenerateRandomSequenceButtonVisible: false,
     isFileUploadVisible: false,
-    isNextButtonVisible: true,
     isClearButtonVisible: false,
     isGeneratedSequencePreviewVisible: false,
     isBadgesSectionVisible: false,
@@ -102,10 +108,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     isMathProblemVisible: false,
     isDotButtonVisible: false,
     isImageUploadVisible: false,
-    isPreviousButtonVisible: true,
-    isProgressIndicatorVisible: true,
-    isPauseButtonVisible: true,
-    isScreenClickAreaVisible: true,
     isNameInputVisible: false,
     isAddNameButtonVisible: false,
     isSpinButtonVisible: false,
@@ -134,9 +136,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     isAccessibilityVisible: false,
     isBackgroundThemeVisible: false,
   });
-
-  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
-  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   // Create tour steps based on visibility states
   const steps = tourStepsFullScreenDisplay(visibilityStates);
@@ -328,14 +327,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   const handleStartTour = () => {
+    console.log("Starting Tour");
     setIsTourRunning(true);
     setCurrentTourStep(0); // Reset to the first step
   };
-
-  useEffect(() => {
-    // Start the tour when the component mounts
-    setIsTourRunning(true);
-  }, []);
 
   const handleTourComplete = () => {
     console.log("Tour completed");
@@ -499,7 +494,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         setCurrentTourStep={setCurrentTourStep}
       />
       <div
-        className="relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
+        className="relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300 full-screen-display"
         style={{
           color: theme.displayTextColor || theme.textColor,
           backgroundColor:
@@ -510,19 +505,19 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         {renderContent()}
         <button
           type="button"
-          className="w-15 h-15 absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
+          className="w-15 h-15 absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70 previous-button"
           onClick={handlePrevious}
         >
           ←
         </button>
         <button
           type="button"
-          className="w-15 h-15 absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
+          className="w-15 h-15 absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70 next-button"
           onClick={handleNext}
         >
           →
         </button>
-        <div className="fixed inset-x-2.5 bottom-2.5 h-2.5 rounded-full bg-white/30">
+        <div className="fixed inset-x-2.5 bottom-2.5 h-2.5 rounded-full bg-white/30 progress-indicator">
           <div
             className="h-full rounded-full bg-green-500 transition-all duration-300 ease-in-out"
             style={{ width: `${progress}%` }}
@@ -534,7 +529,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         >
           {Math.round(progress)}% Complete
         </div>
-        {/* Add the GuidedTour component here */}
         <GuidedTour
           steps={steps}
           isRunning={isTourRunning}

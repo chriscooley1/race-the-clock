@@ -8,6 +8,8 @@ import GuidedTour from "../../components/GuidedTour";
 const LandingPage: React.FC = () => {
   const { loginWithRedirect } = useAuth0();
   const { theme } = useTheme();
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   // Initialize visibilityStates with all properties
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -72,9 +74,6 @@ const LandingPage: React.FC = () => {
     isAccessibilityVisible: false,
     isBackgroundThemeVisible: false,
   });
-
-  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
-  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   // Define the steps variable
   const steps = tourStepsLandingPage(visibilityStates); // Create tour steps based on visibility states
@@ -166,8 +165,8 @@ const LandingPage: React.FC = () => {
   };
 
   const handleTourComplete = () => {
-    console.log("Tour completed");
     setIsTourRunning(false); // Reset the tour running state
+    localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
   };
 
   const handleSignup = () => {

@@ -4,10 +4,8 @@ import React, {
   useState,
   useEffect,
   ReactNode,
-  useRef,
 } from "react";
 import { Step, CallBackProps } from "react-joyride";
-import Joyride from "react-joyride";
 
 // Extend CallBackProps to include tourName
 export interface ExtendedCallBackProps extends CallBackProps {
@@ -33,8 +31,6 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
     {},
   );
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
-  const [steps, setSteps] = useState<Step[]>([]); // Store steps in state
-  const joyrideRef = useRef<Joyride | null>(null); // Specify the type for Joyride ref
 
   useEffect(() => {
     const storedTours = localStorage.getItem("toursCompleted");
@@ -44,7 +40,6 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   const startTour = (tourSteps: Step[]) => {
-    setSteps(tourSteps); // Set the steps for the tour
     setIsTourRunning(true); // Set the tour running state
     console.log("Starting tour with steps:", tourSteps);
   };
@@ -71,20 +66,6 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
       }}
     >
       {children}
-      <Joyride
-        ref={joyrideRef}
-        steps={steps} // Pass the steps from state
-        run={isTourRunning} // Control the running state
-        continuous
-        showSkipButton
-        showProgress
-        callback={(data: ExtendedCallBackProps) => {
-          if (data.status === "finished" || data.status === "skipped") {
-            completeTour(data.tourName || ""); // Call completeTour when the tour is finished or skipped
-            setIsTourRunning(false); // Set tour running state to false
-          }
-        }}
-      />
     </TourContext.Provider>
   );
 };
