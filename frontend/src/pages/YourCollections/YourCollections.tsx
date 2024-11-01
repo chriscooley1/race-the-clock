@@ -23,7 +23,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsYourCollections } from "./tourStepsYourCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
-import { useCompletion } from '../../context/CompletionContext';
+import { useCompletion } from "../../context/CompletionContext";
 
 interface Collection {
   collection_id: number;

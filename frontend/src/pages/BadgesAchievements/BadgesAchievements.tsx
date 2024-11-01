@@ -3,7 +3,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
-import { useCompletion } from '../../context/CompletionContext';
+import { useCompletion } from "../../context/CompletionContext";
 
 const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
@@ -83,7 +83,7 @@ const BadgesAchievements: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+
       // Define achievements
       setAchievements([
         "Read 30 letters in a minute",

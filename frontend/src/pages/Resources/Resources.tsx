@@ -247,7 +247,9 @@ const Resources: React.FC = () => {
       } resources`}
     >
       <h1 className="mb-8 text-3xl font-bold">Resources</h1>
-      <button type="button" onClick={toggleFAQVisibility}>Toggle FAQ Visibility</button>
+      <button type="button" onClick={toggleFAQVisibility}>
+        Toggle FAQ Visibility
+      </button>
 
       {isLoading ? (
         <p>Loading resources...</p>

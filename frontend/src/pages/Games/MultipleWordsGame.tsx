@@ -16,12 +16,16 @@ const MultipleWordsGame: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-[70px]">
+    <div className="mt-[70px] flex flex-col items-center">
       <h1 className="text-3xl font-bold">Multiple Words Game</h1>
       {!isGameStarted ? (
         <div>
           <p>Drag and connect words to their corresponding cards!</p>
-          <button type="button" onClick={startGame} className="mt-4 p-2 bg-blue-500 text-white rounded">
+          <button
+            type="button"
+            onClick={startGame}
+            className="mt-4 rounded bg-blue-500 p-2 text-white"
+          >
             Start Game
           </button>
         </div>
@@ -30,8 +34,13 @@ const MultipleWordsGame: React.FC = () => {
           <p>Game is starting...</p>
           <div className="flex">
             {words.map((word) => (
-              <div key={word} onClick={() => handleConnect(word, "Image1")} className="m-2 cursor-pointer">
-                {word} {connections[word] && `→ ${connections[word]}`} {/* Show connection status */}
+              <div
+                key={word}
+                onClick={() => handleConnect(word, "Image1")}
+                className="m-2 cursor-pointer"
+              >
+                {word} {connections[word] && `→ ${connections[word]}`}{" "}
+                {/* Show connection status */}
               </div>
             ))}
             {images.map((image) => (
