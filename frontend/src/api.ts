@@ -7,7 +7,6 @@ console.log("VITE_API_BASE_URL from env:", import.meta.env.VITE_API_BASE_URL);
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   "https://race-the-clock-backend-production.up.railway.app";
-console.log("API_BASE_URL being used:", API_BASE_URL);
 
 if (!API_BASE_URL) {
   console.error("VITE_API_BASE_URL is not set in the environment variables");
