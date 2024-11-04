@@ -55,7 +55,23 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       const savedTheme = localStorage.getItem("app-theme");
       if (savedTheme) {
         const parsedTheme = JSON.parse(savedTheme);
-        // Don't apply adjustments here, just return the saved state
+        
+        // If colorblind mode is enabled, adjust the colors
+        if (parsedTheme.isColorblindMode) {
+          const originalTextColor = parsedTheme.originalTextColor || parsedTheme.textColor;
+          const originalBackgroundColor = parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor;
+          
+          return {
+            ...parsedTheme,
+            displayTextColor: adjustColor(originalTextColor, parsedTheme.colorblindType),
+            displayBackgroundColor: adjustColor(originalBackgroundColor, parsedTheme.colorblindType),
+            textColor: adjustColor(originalTextColor, parsedTheme.colorblindType),
+            backgroundColor: adjustColor(originalBackgroundColor, parsedTheme.colorblindType),
+            adjustColorForColorblindness: (color: string) =>
+              parsedTheme.isColorblindMode ? adjustColor(color, parsedTheme.colorblindType) : color,
+          };
+        }
+        
         return {
           ...parsedTheme,
           adjustColorForColorblindness: (color: string) =>
@@ -98,24 +114,28 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       const originalTextColor = prevTheme.originalTextColor || prevTheme.textColor;
       const originalBackgroundColor = prevTheme.originalBackgroundColor || prevTheme.backgroundColor;
 
-      if (isEnabled) {
-        const adjustedTextColor = adjustColor(originalTextColor, prevTheme.colorblindType);
-        const adjustedBackgroundColor = adjustColor(originalBackgroundColor, prevTheme.colorblindType);
+      const newTheme = {
+        ...prevTheme,
+        isColorblindMode: isEnabled,
+        originalTextColor,
+        originalBackgroundColor,
+      };
 
+      if (isEnabled) {
         return {
-          ...prevTheme,
-          isColorblindMode: true,
-          originalTextColor,
-          originalBackgroundColor,
-          displayTextColor: adjustedTextColor,
-          displayBackgroundColor: adjustedBackgroundColor,
+          ...newTheme,
+          displayTextColor: adjustColor(originalTextColor, prevTheme.colorblindType),
+          displayBackgroundColor: adjustColor(originalBackgroundColor, prevTheme.colorblindType),
+          textColor: adjustColor(originalTextColor, prevTheme.colorblindType),
+          backgroundColor: adjustColor(originalBackgroundColor, prevTheme.colorblindType),
         };
       } else {
         return {
-          ...prevTheme,
-          isColorblindMode: false,
+          ...newTheme,
           displayTextColor: originalTextColor,
           displayBackgroundColor: originalBackgroundColor,
+          textColor: originalTextColor,
+          backgroundColor: originalBackgroundColor,
         };
       }
     });
@@ -123,24 +143,21 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
   const setColorblindType = (type: string) => {
     setTheme((prevTheme) => {
-      // Create updated theme with new colorblind type
       const updatedTheme = {
         ...prevTheme,
         colorblindType: type,
       };
 
-      // If colorblind mode is enabled, adjust the colors
       if (prevTheme.isColorblindMode) {
+        const originalTextColor = prevTheme.originalTextColor || prevTheme.textColor;
+        const originalBackgroundColor = prevTheme.originalBackgroundColor || prevTheme.backgroundColor;
+        
         return {
           ...updatedTheme,
-          displayTextColor: adjustColor(
-            prevTheme.originalTextColor || prevTheme.textColor,
-            type
-          ),
-          displayBackgroundColor: adjustColor(
-            prevTheme.originalBackgroundColor || prevTheme.backgroundColor,
-            type
-          ),
+          displayTextColor: adjustColor(originalTextColor, type),
+          displayBackgroundColor: adjustColor(originalBackgroundColor, type),
+          textColor: adjustColor(originalTextColor, type),
+          backgroundColor: adjustColor(originalBackgroundColor, type),
         };
       }
 
