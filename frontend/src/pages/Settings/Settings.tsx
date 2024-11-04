@@ -4,6 +4,7 @@ import { colorSchemes } from "../../constants/colorSchemes";
 import { tourStepsSettings } from "./tourStepsSettings";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
+import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -327,21 +328,43 @@ const Settings: React.FC = () => {
                       (scheme) => scheme.name === color.name,
                     );
                     if (newTheme) {
-                      setTheme((prevTheme) => ({
-                        ...newTheme,
-                        isColorblindMode: prevTheme.isColorblindMode,
-                        colorblindType: prevTheme.colorblindType,
-                        isDarkMode: prevTheme.isDarkMode,
-                        font: prevTheme.font,
-                        headingFont: prevTheme.headingFont,
-                        buttonFont: prevTheme.buttonFont,
-                        backgroundImage: prevTheme.backgroundImage,
-                        adjustColorForColorblindness:
-                          prevTheme.adjustColorForColorblindness,
-                        originalTextColor: prevTheme.originalTextColor, // Added
-                        originalBackgroundColor:
-                          prevTheme.originalBackgroundColor, // Added
-                      }));
+                      setTheme((prevTheme) => {
+                        const baseTheme = {
+                          ...newTheme,
+                          isColorblindMode: prevTheme.isColorblindMode,
+                          colorblindType: prevTheme.colorblindType,
+                          isDarkMode: prevTheme.isDarkMode,
+                          font: prevTheme.font,
+                          headingFont: prevTheme.headingFont,
+                          buttonFont: prevTheme.buttonFont,
+                          backgroundImage: prevTheme.backgroundImage,
+                          adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
+                          originalTextColor: newTheme.textColor,
+                          originalBackgroundColor: newTheme.backgroundColor,
+                        };
+
+                        // If colorblind mode is enabled, adjust the colors
+                        if (prevTheme.isColorblindMode) {
+                          return {
+                            ...baseTheme,
+                            displayTextColor: adjustColorForColorblindness(
+                              newTheme.textColor,
+                              prevTheme.colorblindType
+                            ),
+                            displayBackgroundColor: adjustColorForColorblindness(
+                              newTheme.backgroundColor,
+                              prevTheme.colorblindType
+                            ),
+                          };
+                        }
+
+                        // If colorblind mode is not enabled, use the original colors
+                        return {
+                          ...baseTheme,
+                          displayTextColor: newTheme.textColor,
+                          displayBackgroundColor: newTheme.backgroundColor,
+                        };
+                      });
                     }
                   }}
                 />

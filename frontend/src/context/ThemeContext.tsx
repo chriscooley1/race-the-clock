@@ -6,6 +6,7 @@ import React, {
   ReactNode,
   Dispatch,
   SetStateAction,
+  useRef,
 } from "react";
 import { adjustColorForColorblindness as adjustColor } from "../utils/colorAdjustment";
 import { colorSchemes } from "../constants/colorSchemes";
@@ -49,51 +50,37 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const applyColorAdjustments = (currentTheme: Theme): Theme => {
-    const adjustThemeColor = (color: string | undefined): string => {
-      if (!color) return "";
-      let adjustedColor = color;
-      if (currentTheme.isColorblindMode && currentTheme.colorblindType) {
-        adjustedColor = adjustColor(adjustedColor, currentTheme.colorblindType);
-      }
-      if (currentTheme.isDarkMode) {
-        adjustedColor = darkenColor(adjustedColor, 0.3);
-      }
-      return adjustedColor;
-    };
-
-    return {
-      ...currentTheme,
-      backgroundColor: adjustThemeColor(currentTheme.backgroundColor),
-      textColor: adjustThemeColor(currentTheme.textColor),
-      displayBackgroundColor: adjustThemeColor(
-        currentTheme.displayBackgroundColor || currentTheme.backgroundColor,
-      ),
-      displayTextColor: adjustThemeColor(
-        currentTheme.displayTextColor || currentTheme.textColor,
-      ),
-    };
-  };
-
   const getInitialTheme = (): Theme => {
-    const savedTheme = localStorage.getItem("app-theme");
-    return savedTheme
-      ? JSON.parse(savedTheme)
-      : {
-          ...colorSchemes[0],
-          originalTextColor: colorSchemes[0].textColor, // Store original text color
-          originalBackgroundColor: colorSchemes[0].backgroundColor, // Store original background color
-          isColorblindMode: false,
-          colorblindType: "",
-          displayTextColor: undefined,
-          displayBackgroundColor: undefined,
-          isDarkMode: false,
-          font: "Comic Neue",
-          headingFont: "Chewy",
-          buttonFont: "Patrick Hand",
-          backgroundImage: "none",
-          adjustColorForColorblindness: (color: string) => color,
+    try {
+      const savedTheme = localStorage.getItem("app-theme");
+      if (savedTheme) {
+        const parsedTheme = JSON.parse(savedTheme);
+        // Don't apply adjustments here, just return the saved state
+        return {
+          ...parsedTheme,
+          adjustColorForColorblindness: (color: string) =>
+            parsedTheme.isColorblindMode ? adjustColor(color, parsedTheme.colorblindType) : color,
         };
+      }
+    } catch (error) {
+      console.error("Error loading theme from localStorage:", error);
+    }
+
+    // Default theme
+    return {
+      ...colorSchemes[2],
+      isColorblindMode: false,
+      colorblindType: "protanopia",
+      isDarkMode: false,
+      font: "Arial",
+      headingFont: "Arial",
+      buttonFont: "Arial",
+      originalTextColor: colorSchemes[2].textColor,
+      originalBackgroundColor: colorSchemes[2].backgroundColor,
+      displayTextColor: colorSchemes[2].textColor,
+      displayBackgroundColor: colorSchemes[2].backgroundColor,
+      adjustColorForColorblindness: (color: string) => color,
+    };
   };
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme());
@@ -108,29 +95,27 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
   const setColorblindMode = (isEnabled: boolean) => {
     setTheme((prevTheme) => {
-      const updatedTheme = { ...prevTheme, isColorblindMode: isEnabled };
+      const originalTextColor = prevTheme.originalTextColor || prevTheme.textColor;
+      const originalBackgroundColor = prevTheme.originalBackgroundColor || prevTheme.backgroundColor;
 
       if (isEnabled) {
-        // Apply color adjustments when enabling colorblind mode
-        return applyColorAdjustments(updatedTheme);
-      } else {
-        // Reset to original colors when disabling colorblind mode
+        const adjustedTextColor = adjustColor(originalTextColor, prevTheme.colorblindType);
+        const adjustedBackgroundColor = adjustColor(originalBackgroundColor, prevTheme.colorblindType);
+
         return {
-          ...updatedTheme,
-          displayTextColor: updatedTheme.originalTextColor, // Reset to original text color
-          displayBackgroundColor: updatedTheme.originalBackgroundColor, // Reset to original background color
-          // Ensure all other properties are included
-          name: updatedTheme.name,
-          backgroundColor: updatedTheme.backgroundColor,
-          textColor: updatedTheme.textColor,
-          className: updatedTheme.className,
-          backgroundImage: updatedTheme.backgroundImage,
-          isDarkMode: updatedTheme.isDarkMode,
-          font: updatedTheme.font,
-          headingFont: updatedTheme.headingFont,
-          buttonFont: updatedTheme.buttonFont,
-          adjustColorForColorblindness:
-            updatedTheme.adjustColorForColorblindness,
+          ...prevTheme,
+          isColorblindMode: true,
+          originalTextColor,
+          originalBackgroundColor,
+          displayTextColor: adjustedTextColor,
+          displayBackgroundColor: adjustedBackgroundColor,
+        };
+      } else {
+        return {
+          ...prevTheme,
+          isColorblindMode: false,
+          displayTextColor: originalTextColor,
+          displayBackgroundColor: originalBackgroundColor,
         };
       }
     });
@@ -138,9 +123,28 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
   const setColorblindType = (type: string) => {
     setTheme((prevTheme) => {
-      const updatedTheme = { ...prevTheme, colorblindType: type };
-      // Re-apply color adjustments when changing colorblind type
-      return applyColorAdjustments(updatedTheme);
+      // Create updated theme with new colorblind type
+      const updatedTheme = {
+        ...prevTheme,
+        colorblindType: type,
+      };
+
+      // If colorblind mode is enabled, adjust the colors
+      if (prevTheme.isColorblindMode) {
+        return {
+          ...updatedTheme,
+          displayTextColor: adjustColor(
+            prevTheme.originalTextColor || prevTheme.textColor,
+            type
+          ),
+          displayBackgroundColor: adjustColor(
+            prevTheme.originalBackgroundColor || prevTheme.backgroundColor,
+            type
+          ),
+        };
+      }
+
+      return updatedTheme;
     });
   };
 
@@ -184,12 +188,56 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     setTheme((prevTheme) => ({ ...prevTheme, buttonFont: font }));
   };
 
+  // Add a new ref to track initial load
+  const isInitialLoad = useRef(true);
+
+  // Add this effect before the main theme effect
   useEffect(() => {
+    // Initialize theme colors on mount
+    if (theme.isColorblindMode) {
+      const adjustedTextColor = adjustColor(
+        theme.originalTextColor || theme.textColor,
+        theme.colorblindType
+      );
+      const adjustedBackgroundColor = adjustColor(
+        theme.originalBackgroundColor || theme.backgroundColor,
+        theme.colorblindType
+      );
+
+      setTheme(prevTheme => ({
+        ...prevTheme,
+        displayTextColor: adjustedTextColor,
+        displayBackgroundColor: adjustedBackgroundColor,
+      }));
+    }
+  }, []); // Empty dependency array means this runs once on mount
+
+  // Modify the useEffect that handles theme changes
+  useEffect(() => {
+    // Skip the first render to prevent double initialization
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
+
     console.log("Applying theme:", theme);
+    
+    // Ensure we're using the correct colors based on colorblind mode
+    const effectiveTheme = {
+      ...theme,
+      displayTextColor: theme.isColorblindMode 
+        ? adjustColor(theme.originalTextColor || theme.textColor, theme.colorblindType)
+        : theme.originalTextColor || theme.textColor,
+      displayBackgroundColor: theme.isColorblindMode
+        ? adjustColor(theme.originalBackgroundColor || theme.backgroundColor, theme.colorblindType)
+        : theme.originalBackgroundColor || theme.backgroundColor,
+    };
 
-    localStorage.setItem("app-theme", JSON.stringify(theme));
+    // Save the complete theme state
+    localStorage.setItem("app-theme", JSON.stringify(effectiveTheme));
 
-    const adjustedTheme = applyColorAdjustments(theme);
+    // Use the effective background color
+    const currentBackgroundColor = effectiveTheme.displayBackgroundColor;
 
     if (theme.backgroundImage && theme.backgroundImage !== "none") {
       console.log("Setting background image:", theme.backgroundImage);
@@ -209,22 +257,27 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       document.body.style.backgroundRepeat = "no-repeat";
       document.body.style.backgroundColor = "transparent";
     } else {
-      console.log("Removing background image");
+      console.log("Setting background color to:", currentBackgroundColor);
       document.body.style.backgroundImage = "none";
-      document.body.style.backgroundColor = theme.backgroundColor;
+      document.body.style.backgroundColor = currentBackgroundColor;
     }
 
+    // Update CSS custom properties with effective colors
+    document.documentElement.style.setProperty(
+      "--background-color",
+      currentBackgroundColor
+    );
     document.documentElement.style.setProperty(
       "--text-color",
-      adjustedTheme.textColor ?? "",
+      effectiveTheme.displayTextColor
     );
     document.documentElement.style.setProperty(
       "--display-text-color",
-      adjustedTheme.displayTextColor ?? "",
+      effectiveTheme.displayTextColor
     );
     document.documentElement.style.setProperty(
       "--display-background-color",
-      adjustedTheme.displayBackgroundColor ?? "",
+      currentBackgroundColor
     );
 
     if (theme.backgroundImage && theme.backgroundImage !== "none") {
