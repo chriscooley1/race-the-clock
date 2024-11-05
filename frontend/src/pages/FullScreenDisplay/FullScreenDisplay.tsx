@@ -207,7 +207,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   useEffect(() => {
     if (
       shuffledSequence.length > 0 &&
-      (category === "Number Sense" || (category === "Math" && type === "mathProblems"))
+      (category === "Number Sense" ||
+        (category === "Math" && type === "mathProblems"))
     ) {
       setShowAnswer(false);
       const timer = setTimeout(() => {
@@ -237,16 +238,17 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     if (
       shuffledSequence.length > 0 &&
       !isPaused &&
-      (category === "Number Sense" || (category === "Math" && type === "mathProblems"))
+      (category === "Number Sense" ||
+        (category === "Math" && type === "mathProblems"))
     ) {
       const interval = setInterval(() => {
         setIndex((prevIndex) => {
           const newIndex = (prevIndex + 1) % shuffledSequence.length;
           setProgress((newIndex / shuffledSequence.length) * 100);
-          
+
           // Reset showAnswer to false for the new item
           setShowAnswer(false);
-          
+
           // Set up timer to show the answer
           setTimeout(() => setShowAnswer(true), speed);
 
@@ -258,7 +260,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           return newIndex;
         });
       }, speed + answerDisplayTime); // Total time for both question and answer
-      
+
       setIntervalId(interval as unknown as number);
       return () => clearInterval(interval);
     } else if (shuffledSequence.length > 0 && !isPaused) {
@@ -321,7 +323,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   const handleScreenClick = () => {
-    if (category === "Number Sense" || (category === "Math" && type === "mathProblems")) {
+    if (
+      category === "Number Sense" ||
+      (category === "Math" && type === "mathProblems")
+    ) {
       setShowAnswer(!showAnswer);
     }
   };
@@ -374,7 +379,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const renderContent = () => {
     const currentItem = shuffledSequence[index];
 
-    if (category === "Number Sense" || (category === "Math" && type === "mathProblems")) {
+    if (
+      category === "Number Sense" ||
+      (category === "Math" && type === "mathProblems")
+    ) {
       if (showAnswer) {
         return (
           <div className="flex size-full items-center justify-center">
@@ -389,7 +397,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="text-6xl font-bold text-orange-600">
-                  {category === "Number Sense" ? currentItem.count : currentItem.name.split("|")[1]}
+                  {category === "Number Sense"
+                    ? currentItem.count
+                    : currentItem.name.split("|")[1]}
                 </span>
               </div>
             </div>
@@ -441,7 +451,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       const [symbol, name, atomicNumber] = currentItem.name.split(" - ");
       return (
         <div className="flex h-full flex-col items-center justify-center">
-          <h1 className={`m-0 ${getTextClass(atomicNumber)}`}>{atomicNumber}</h1>
+          <h1 className={`m-0 ${getTextClass(atomicNumber)}`}>
+            {atomicNumber}
+          </h1>
           <h2 className={`m-0 ${getTextClass(name)}`}>{name}</h2>
           <h3 className={`m-0 ${getTextClass(symbol)}`}>{symbol}</h3>
         </div>

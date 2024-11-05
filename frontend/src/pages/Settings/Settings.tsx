@@ -338,7 +338,8 @@ const Settings: React.FC = () => {
                           headingFont: prevTheme.headingFont,
                           buttonFont: prevTheme.buttonFont,
                           backgroundImage: prevTheme.backgroundImage,
-                          adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
+                          adjustColorForColorblindness:
+                            prevTheme.adjustColorForColorblindness,
                           originalTextColor: newTheme.textColor,
                           originalBackgroundColor: newTheme.backgroundColor,
                         };
@@ -349,12 +350,13 @@ const Settings: React.FC = () => {
                             ...baseTheme,
                             displayTextColor: adjustColorForColorblindness(
                               newTheme.textColor,
-                              prevTheme.colorblindType
+                              prevTheme.colorblindType,
                             ),
-                            displayBackgroundColor: adjustColorForColorblindness(
-                              newTheme.backgroundColor,
-                              prevTheme.colorblindType
-                            ),
+                            displayBackgroundColor:
+                              adjustColorForColorblindness(
+                                newTheme.backgroundColor,
+                                prevTheme.colorblindType,
+                              ),
                           };
                         }
 

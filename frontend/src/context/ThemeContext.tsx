@@ -55,27 +55,45 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       const savedTheme = localStorage.getItem("app-theme");
       if (savedTheme) {
         const parsedTheme = JSON.parse(savedTheme);
-        
+
         // If colorblind mode is enabled, adjust the colors
         if (parsedTheme.isColorblindMode) {
-          const originalTextColor = parsedTheme.originalTextColor || parsedTheme.textColor;
-          const originalBackgroundColor = parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor;
-          
+          const originalTextColor =
+            parsedTheme.originalTextColor || parsedTheme.textColor;
+          const originalBackgroundColor =
+            parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor;
+
           return {
             ...parsedTheme,
-            displayTextColor: adjustColor(originalTextColor, parsedTheme.colorblindType),
-            displayBackgroundColor: adjustColor(originalBackgroundColor, parsedTheme.colorblindType),
-            textColor: adjustColor(originalTextColor, parsedTheme.colorblindType),
-            backgroundColor: adjustColor(originalBackgroundColor, parsedTheme.colorblindType),
+            displayTextColor: adjustColor(
+              originalTextColor,
+              parsedTheme.colorblindType,
+            ),
+            displayBackgroundColor: adjustColor(
+              originalBackgroundColor,
+              parsedTheme.colorblindType,
+            ),
+            textColor: adjustColor(
+              originalTextColor,
+              parsedTheme.colorblindType,
+            ),
+            backgroundColor: adjustColor(
+              originalBackgroundColor,
+              parsedTheme.colorblindType,
+            ),
             adjustColorForColorblindness: (color: string) =>
-              parsedTheme.isColorblindMode ? adjustColor(color, parsedTheme.colorblindType) : color,
+              parsedTheme.isColorblindMode
+                ? adjustColor(color, parsedTheme.colorblindType)
+                : color,
           };
         }
-        
+
         return {
           ...parsedTheme,
           adjustColorForColorblindness: (color: string) =>
-            parsedTheme.isColorblindMode ? adjustColor(color, parsedTheme.colorblindType) : color,
+            parsedTheme.isColorblindMode
+              ? adjustColor(color, parsedTheme.colorblindType)
+              : color,
         };
       }
     } catch (error) {
@@ -111,8 +129,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
   const setColorblindMode = (isEnabled: boolean) => {
     setTheme((prevTheme) => {
-      const originalTextColor = prevTheme.originalTextColor || prevTheme.textColor;
-      const originalBackgroundColor = prevTheme.originalBackgroundColor || prevTheme.backgroundColor;
+      const originalTextColor =
+        prevTheme.originalTextColor || prevTheme.textColor;
+      const originalBackgroundColor =
+        prevTheme.originalBackgroundColor || prevTheme.backgroundColor;
 
       const newTheme = {
         ...prevTheme,
@@ -124,10 +144,19 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       if (isEnabled) {
         return {
           ...newTheme,
-          displayTextColor: adjustColor(originalTextColor, prevTheme.colorblindType),
-          displayBackgroundColor: adjustColor(originalBackgroundColor, prevTheme.colorblindType),
+          displayTextColor: adjustColor(
+            originalTextColor,
+            prevTheme.colorblindType,
+          ),
+          displayBackgroundColor: adjustColor(
+            originalBackgroundColor,
+            prevTheme.colorblindType,
+          ),
           textColor: adjustColor(originalTextColor, prevTheme.colorblindType),
-          backgroundColor: adjustColor(originalBackgroundColor, prevTheme.colorblindType),
+          backgroundColor: adjustColor(
+            originalBackgroundColor,
+            prevTheme.colorblindType,
+          ),
         };
       } else {
         return {
@@ -149,9 +178,11 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       };
 
       if (prevTheme.isColorblindMode) {
-        const originalTextColor = prevTheme.originalTextColor || prevTheme.textColor;
-        const originalBackgroundColor = prevTheme.originalBackgroundColor || prevTheme.backgroundColor;
-        
+        const originalTextColor =
+          prevTheme.originalTextColor || prevTheme.textColor;
+        const originalBackgroundColor =
+          prevTheme.originalBackgroundColor || prevTheme.backgroundColor;
+
         return {
           ...updatedTheme,
           displayTextColor: adjustColor(originalTextColor, type),
@@ -214,14 +245,14 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     if (theme.isColorblindMode) {
       const adjustedTextColor = adjustColor(
         theme.originalTextColor || theme.textColor,
-        theme.colorblindType
+        theme.colorblindType,
       );
       const adjustedBackgroundColor = adjustColor(
         theme.originalBackgroundColor || theme.backgroundColor,
-        theme.colorblindType
+        theme.colorblindType,
       );
 
-      setTheme(prevTheme => ({
+      setTheme((prevTheme) => ({
         ...prevTheme,
         displayTextColor: adjustedTextColor,
         displayBackgroundColor: adjustedBackgroundColor,
@@ -238,15 +269,21 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     console.log("Applying theme:", theme);
-    
+
     // Ensure we're using the correct colors based on colorblind mode
     const effectiveTheme = {
       ...theme,
-      displayTextColor: theme.isColorblindMode 
-        ? adjustColor(theme.originalTextColor || theme.textColor, theme.colorblindType)
+      displayTextColor: theme.isColorblindMode
+        ? adjustColor(
+            theme.originalTextColor || theme.textColor,
+            theme.colorblindType,
+          )
         : theme.originalTextColor || theme.textColor,
       displayBackgroundColor: theme.isColorblindMode
-        ? adjustColor(theme.originalBackgroundColor || theme.backgroundColor, theme.colorblindType)
+        ? adjustColor(
+            theme.originalBackgroundColor || theme.backgroundColor,
+            theme.colorblindType,
+          )
         : theme.originalBackgroundColor || theme.backgroundColor,
     };
 
@@ -282,19 +319,19 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     // Update CSS custom properties with effective colors
     document.documentElement.style.setProperty(
       "--background-color",
-      currentBackgroundColor
+      currentBackgroundColor,
     );
     document.documentElement.style.setProperty(
       "--text-color",
-      effectiveTheme.displayTextColor
+      effectiveTheme.displayTextColor,
     );
     document.documentElement.style.setProperty(
       "--display-text-color",
-      effectiveTheme.displayTextColor
+      effectiveTheme.displayTextColor,
     );
     document.documentElement.style.setProperty(
       "--display-background-color",
-      currentBackgroundColor
+      currentBackgroundColor,
     );
 
     if (theme.backgroundImage && theme.backgroundImage !== "none") {

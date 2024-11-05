@@ -45,11 +45,11 @@ const ThemeSelector: React.FC = () => {
         if (prevTheme.isColorblindMode) {
           const adjustedTextColor = adjustColor(
             originalTextColor,
-            prevTheme.colorblindType
+            prevTheme.colorblindType,
           );
           const adjustedBackgroundColor = adjustColor(
             originalBackgroundColor,
-            prevTheme.colorblindType
+            prevTheme.colorblindType,
           );
 
           return {
@@ -69,27 +69,31 @@ const ThemeSelector: React.FC = () => {
     }
   };
 
-  const handleTextColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTextColorChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     const newColor = event.target.value;
     if (theme.isColorblindMode) {
       setDisplayTextColor(adjustColor(newColor, theme.colorblindType));
     } else {
       setDisplayTextColor(newColor);
     }
-    setTheme(prevTheme => ({
+    setTheme((prevTheme) => ({
       ...prevTheme,
       originalTextColor: newColor,
     }));
   };
 
-  const handleBackgroundColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleBackgroundColorChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     const newColor = event.target.value;
     if (theme.isColorblindMode) {
       setDisplayBackgroundColor(adjustColor(newColor, theme.colorblindType));
     } else {
       setDisplayBackgroundColor(newColor);
     }
-    setTheme(prevTheme => ({
+    setTheme((prevTheme) => ({
       ...prevTheme,
       originalBackgroundColor: newColor,
     }));
