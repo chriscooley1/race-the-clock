@@ -495,6 +495,25 @@ if os.environ.get("NODE_ENV") == "development":
         SQLModel.metadata.create_all(engine)
         return {"message": "Development database initialized"}
 
+@app.get("/db-info")
+async def get_db_info(db: Session = Depends(get_db)):
+    try:
+        # Use text() to declare the SQL expression
+        tables = db.execute(text("SELECT table_name FROM information_schema.tables WHERE table_schema='public'")).fetchall()
+        
+        db_info = {}
+        for table in tables:
+            table_name = table[0]
+            # Fetch all rows from the table
+            data = db.execute(text(f"SELECT * FROM {table_name}")).fetchall()
+            # Convert rows to a list of dictionaries
+            db_info[table_name] = [dict(zip(row.keys(), row)) for row in data]
+        
+        return db_info
+    except Exception as e:
+        logger.error(f"Error fetching database info: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
 if __name__ == "__main__":
     init_db()
     import uvicorn
