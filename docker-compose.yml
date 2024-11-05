@@ -15,6 +15,7 @@ services:
   backend:
     build: ./backend
     environment:
+      NODE_ENV: development
       DATABASE_URL: ${DATABASE_URL}
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}

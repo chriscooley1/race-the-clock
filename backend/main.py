@@ -130,9 +130,15 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
 
     # Check if user exists, if not, create the user
     user = db.query(User).filter(User.username == username).first()
+    logger.info(f"Querying user: {username}, Result: {user}")
     if user is None:
         # Create the user if not found
-        new_user = User(username=username, email=email, hashed_password="")  # No password since Auth0 handles auth
+        new_user = User(
+            username=username, 
+            email=email, 
+            hashed_password="",  # No password since Auth0 handles auth
+            role="student"  # Set default role
+        )
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
@@ -410,7 +416,15 @@ def health_check():
 
 def create_db_and_tables():
     engine = get_engine()
+    
+    # Drop all tables if they exist
+    SQLModel.metadata.drop_all(engine)
+    
+    # Create all tables fresh
     SQLModel.metadata.create_all(engine)
+    
+    # Log the table creation
+    logger.info("Database tables created successfully")
 
 def wait_for_db(db_url, max_retries=5, retry_interval=5):
     retries = 0
@@ -442,9 +456,47 @@ async def check_subscription(
     
     return {"isSubscribed": subscription is not None}
 
+@app.put("/users/{user_id}/role", response_model=User)
+async def update_user_role(user_id: str, role: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    logger.info(f"User {current_user.username} is attempting to update role for user ID: {user_id} to {role}")
+    
+    if current_user.id != user_id:
+        logger.warning(f"User {current_user.username} is not authorized to update user ID: {user_id}")
+        raise HTTPException(status_code=403, detail="Not authorized to update this user")
+    
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        logger.error(f"User with ID {user_id} not found")
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    user.role = role
+    db.commit()
+    db.refresh(user)
+    logger.info(f"User role updated successfully for user ID: {user_id} to {role}")
+    return user
+
+def init_db():
+    engine = get_engine()
+    SQLModel.metadata.create_all(engine)
+
+@app.post("/init-db")
+async def initialize_database():
+    engine = get_engine()
+    SQLModel.metadata.drop_all(engine)
+    SQLModel.metadata.create_all(engine)
+    return {"message": "Database initialized"}
+
+# Only add this if NODE_ENV is development
+if os.environ.get("NODE_ENV") == "development":
+    @app.post("/dev/init-db")
+    async def init_dev_db():
+        """Development only endpoint to initialize the database"""
+        engine = get_engine()
+        SQLModel.metadata.create_all(engine)
+        return {"message": "Development database initialized"}
+
 if __name__ == "__main__":
-    wait_for_db(DATABASE_URL)
-    create_db_and_tables()
+    init_db()
     import uvicorn
     port = int(os.environ.get("PORT", 8080))
     uvicorn.run("main:app", host="0.0.0.0", port=port, log_level="info")

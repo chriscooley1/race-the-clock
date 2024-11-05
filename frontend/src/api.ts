@@ -524,3 +524,24 @@ export const fetchReports = async (
     handleApiError(error);
   }
 };
+
+export const updateUserRole = async (userId: string, role: string, token: string) => {
+  console.log(`Updating role for user ID: ${userId} to role: ${role}`);
+  const response = await fetch(`/users/${userId}/role`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ role }),
+  });
+
+  if (!response.ok) {
+    console.error("Failed to update user role:", response.statusText);
+    throw new Error("Failed to update user role");
+  }
+
+  const data = await response.json();
+  console.log("User role updated successfully:", data);
+  return data; // Adjust based on your User type
+};
