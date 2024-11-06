@@ -101,6 +101,10 @@ const Settings: React.FC = () => {
     isBackgroundColorVisible: true,
     isAccessibilityVisible: true,
     isBackgroundThemeVisible: true,
+    isSessionSettingsModalVisible: false,
+    isEditCollectionModalVisible: false,
+    isDuplicateCollectionModalVisible: false,
+    isCollectionPreviewModalVisible: false,
   });
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);

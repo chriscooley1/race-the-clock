@@ -97,6 +97,10 @@ const CollectionSetup: React.FC = () => {
     isBackgroundColorVisible: false,
     isAccessibilityVisible: false,
     isBackgroundThemeVisible: false,
+    isSessionSettingsModalVisible: false,
+    isEditCollectionModalVisible: false,
+    isDuplicateCollectionModalVisible: false,
+    isCollectionPreviewModalVisible: false,
   });
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
@@ -235,6 +239,9 @@ const CollectionSetup: React.FC = () => {
       isBackgroundColorVisible: false,
       isAccessibilityVisible: false,
       isBackgroundThemeVisible: false,
+      isSessionSettingsModalVisible: false,
+      isEditCollectionModalVisible: false,
+      isDuplicateCollectionModalVisible: false,
     };
     setVisibilityStates(newVisibilityStates);
   }, [type, dotCountType, isGenerated]); // Add dependencies as needed

@@ -31,6 +31,11 @@ export const tourStepsDiscoverCollections = (
         "Click to see more details about a collection and subscribe to it.",
       ...(visibilityStates.isPreviewButtonVisible ? { isOpen: true } : {}),
     },
+    {
+      target: ".collection-preview-modal",
+      content: "This modal shows details about the collection and allows you to subscribe.",
+      ...(visibilityStates.isCollectionPreviewModalVisible ? { isOpen: true } : {}),
+    },
   ];
 
   return steps.filter((step) => {
@@ -42,6 +47,8 @@ export const tourStepsDiscoverCollections = (
       return visibilityStates.isCollectionsGridVisible;
     if (step.target === ".preview-collection-button")
       return visibilityStates.isPreviewButtonVisible;
+    if (step.target === ".collection-preview-modal")
+      return visibilityStates.isCollectionPreviewModalVisible;
     return true;
   });
 };

@@ -61,4 +61,8 @@ export interface VisibilityStates {
   isBackgroundColorVisible: boolean;
   isAccessibilityVisible: boolean;
   isBackgroundThemeVisible: boolean;
+  isSessionSettingsModalVisible: boolean;
+  isEditCollectionModalVisible: boolean;
+  isDuplicateCollectionModalVisible: boolean;
+  isCollectionPreviewModalVisible: boolean;
 }

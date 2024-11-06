@@ -527,7 +527,7 @@ export const fetchReports = async (
 
 export const updateUserRole = async (userId: string, role: string, token: string) => {
   console.log(`Updating role for user ID: ${userId} to role: ${role}`);
-  const response = await fetch(`/users/${userId}/role`, {
+  const response = await fetch(`${API_BASE_URL}/users/${userId}/role`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,

@@ -158,6 +158,10 @@ const App: React.FC = () => {
       isBackgroundColorVisible: false,
       isAccessibilityVisible: false,
       isBackgroundThemeVisible: false,
+      isSessionSettingsModalVisible: false,
+      isEditCollectionModalVisible: false,
+      isDuplicateCollectionModalVisible: false,
+      isCollectionPreviewModalVisible: false,
     };
 
     switch (location.pathname) {

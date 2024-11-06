@@ -166,6 +166,10 @@ const YourCollections: React.FC = () => {
     isBackgroundColorVisible: false,
     isAccessibilityVisible: false,
     isBackgroundThemeVisible: false,
+    isSessionSettingsModalVisible: false,
+    isEditCollectionModalVisible: false,
+    isDuplicateCollectionModalVisible: false,
+    isCollectionPreviewModalVisible: false,
   });
 
   // Tour state management
