@@ -142,7 +142,7 @@ const Navbar: React.FC<NavbarProps> = ({
     // Determine the steps based on the current location
     switch (location.pathname) {
       case "/badges-achievements":
-        steps = tourStepsBadgesAchievements(visibilityStates);
+        steps = tourStepsBadgesAchievements();
         tourName = "badgesAchievements";
         break;
       case "/collection-final-step":

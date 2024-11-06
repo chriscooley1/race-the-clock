@@ -39,9 +39,6 @@ const NewCollection: React.FC = () => {
     isClearButtonVisible: false,
     isStartCollectionButtonVisible: false,
     isGeneratedSequencePreviewVisible: false,
-    isBadgesSectionVisible: false,
-    isAchievementsSectionVisible: false,
-    isLoadingMessageVisible: false,
     isSearchInputVisible: false,
     isSortSelectVisible: false,
     isCollectionsGridVisible: false,
@@ -101,7 +98,7 @@ const NewCollection: React.FC = () => {
 
   // Add a function to start the tour
   const startTour = () => {
-    const tourCompleted = localStorage.getItem("tourCompleted");
+    const tourCompleted = localStorage.getItem("newCollectionTourCompleted");
     if (!tourCompleted) {
       setIsTourRunning(true);
       setCurrentTourStep(0); // Reset to the first step
@@ -142,7 +139,8 @@ const NewCollection: React.FC = () => {
 
   const handleTourComplete = () => {
     console.log("Tour completed");
-    setIsTourRunning(false); // Reset the tour running state
+    setIsTourRunning(false);
+    localStorage.setItem("newCollectionTourCompleted", "true"); // Store completion state specifically for this tour
   };
 
   // Example of updating visibility states based on some condition

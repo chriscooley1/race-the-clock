@@ -1,8 +1,7 @@
 import { Step } from "react-joyride";
-import { VisibilityStates } from "../../types/VisibilityStates";
 
-// Function to create tour steps based on visibility states
-export const tourStepsGames = (visibilityStates: VisibilityStates): Step[] => {
+// Function to create tour steps without visibility states
+export const tourStepsGames = (): Step[] => {
   const steps: Step[] = [
     {
       target: ".games", // Target the main container
@@ -18,21 +17,13 @@ export const tourStepsGames = (visibilityStates: VisibilityStates): Step[] => {
       target: ".matching-game", // Target the Matching Game component
       content:
         "Try the Matching Game to associate letters or words with images.",
-      ...(visibilityStates.isMatchingGameVisible ? { isOpen: true } : {}),
     },
     {
       target: ".multiple-words-game", // Target the Multiple Words Game component
       content: "Play the Multiple Words Game to drag and connect words.",
-      ...(visibilityStates.isMultipleWordsGameVisible ? { isOpen: true } : {}),
     },
   ];
 
-  // Filter steps based on visibility states
-  return steps.filter((step) => {
-    if (step.target === ".matching-game")
-      return visibilityStates.isMatchingGameVisible;
-    if (step.target === ".multiple-words-game")
-      return visibilityStates.isMultipleWordsGameVisible;
-    return true; // Include all other steps
-  });
+  // Return all steps without filtering
+  return steps;
 };

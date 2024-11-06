@@ -109,9 +109,6 @@ const App: React.FC = () => {
       isNextButtonVisible: false,
       isClearButtonVisible: false,
       isGeneratedSequencePreviewVisible: false,
-      isBadgesSectionVisible: false,
-      isAchievementsSectionVisible: false,
-      isLoadingMessageVisible: false,
       isSearchInputVisible: false,
       isSortSelectVisible: false,
       isCollectionsGridVisible: false,
@@ -194,7 +191,7 @@ const App: React.FC = () => {
       case "/reports":
         return tourStepsReports(visibilityStates);
       case "/badges-achievements":
-        return tourStepsBadgesAchievements(visibilityStates);
+        return tourStepsBadgesAchievements();
       default:
         return [];
     }
