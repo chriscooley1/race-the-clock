@@ -4,6 +4,10 @@ import { colorSchemes } from "../../constants/colorSchemes";
 import { tourStepsSettings } from "./tourStepsSettings";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
+import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
+import { useAuth0 } from "@auth0/auth0-react";
+import { updateUserRole } from "../../api"; // Assume you have an API function to update user role
+import ToggleSwitch from "../../components/ToggleSwitch";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -97,6 +101,10 @@ const Settings: React.FC = () => {
     isBackgroundColorVisible: true,
     isAccessibilityVisible: true,
     isBackgroundThemeVisible: true,
+    isSessionSettingsModalVisible: false,
+    isEditCollectionModalVisible: false,
+    isDuplicateCollectionModalVisible: false,
+    isCollectionPreviewModalVisible: false,
   });
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -216,6 +224,30 @@ const Settings: React.FC = () => {
     }));
   }, []); // Add dependencies as needed
 
+  const { user, getAccessTokenSilently } = useAuth0();
+  const [role, setRole] = useState<string>("student"); // Default role
+
+  useEffect(() => {
+    console.log("Settings component mounted. Current user:", user);
+    console.log("Initial role:", role);
+  }, [user]);
+
+  const handleRoleChange = async (newRole: string) => {
+    console.log("Changing role to:", newRole);
+    if (user && user.sub) {
+      const token = await getAccessTokenSilently();
+      try {
+        const updatedUser = await updateUserRole(user.sub, newRole, token);
+        console.log("Role updated successfully:", updatedUser);
+        setRole(newRole); // Update the local state
+      } catch (error) {
+        console.error("Error updating role:", error);
+      }
+    } else {
+      console.error("User is not authenticated");
+    }
+  };
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${
@@ -245,6 +277,7 @@ const Settings: React.FC = () => {
         />
       )}
       <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
+      <ToggleSwitch role={role} onChange={handleRoleChange} />
 
       <div className="w-full space-y-6 px-4 md:px-8">
         {visibilityStates.isMainFontVisible && (
@@ -327,21 +360,45 @@ const Settings: React.FC = () => {
                       (scheme) => scheme.name === color.name,
                     );
                     if (newTheme) {
-                      setTheme((prevTheme) => ({
-                        ...newTheme,
-                        isColorblindMode: prevTheme.isColorblindMode,
-                        colorblindType: prevTheme.colorblindType,
-                        isDarkMode: prevTheme.isDarkMode,
-                        font: prevTheme.font,
-                        headingFont: prevTheme.headingFont,
-                        buttonFont: prevTheme.buttonFont,
-                        backgroundImage: prevTheme.backgroundImage,
-                        adjustColorForColorblindness:
-                          prevTheme.adjustColorForColorblindness,
-                        originalTextColor: prevTheme.originalTextColor, // Added
-                        originalBackgroundColor:
-                          prevTheme.originalBackgroundColor, // Added
-                      }));
+                      setTheme((prevTheme) => {
+                        const baseTheme = {
+                          ...newTheme,
+                          isColorblindMode: prevTheme.isColorblindMode,
+                          colorblindType: prevTheme.colorblindType,
+                          isDarkMode: prevTheme.isDarkMode,
+                          font: prevTheme.font,
+                          headingFont: prevTheme.headingFont,
+                          buttonFont: prevTheme.buttonFont,
+                          backgroundImage: prevTheme.backgroundImage,
+                          adjustColorForColorblindness:
+                            prevTheme.adjustColorForColorblindness,
+                          originalTextColor: newTheme.textColor,
+                          originalBackgroundColor: newTheme.backgroundColor,
+                        };
+
+                        // If colorblind mode is enabled, adjust the colors
+                        if (prevTheme.isColorblindMode) {
+                          return {
+                            ...baseTheme,
+                            displayTextColor: adjustColorForColorblindness(
+                              newTheme.textColor,
+                              prevTheme.colorblindType,
+                            ),
+                            displayBackgroundColor:
+                              adjustColorForColorblindness(
+                                newTheme.backgroundColor,
+                                prevTheme.colorblindType,
+                              ),
+                          };
+                        }
+
+                        // If colorblind mode is not enabled, use the original colors
+                        return {
+                          ...baseTheme,
+                          displayTextColor: newTheme.textColor,
+                          displayBackgroundColor: newTheme.backgroundColor,
+                        };
+                      });
                     }
                   }}
                 />

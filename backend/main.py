@@ -130,9 +130,15 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
 
     # Check if user exists, if not, create the user
     user = db.query(User).filter(User.username == username).first()
+    logger.info(f"Querying user: {username}, Result: {user}")
     if user is None:
         # Create the user if not found
-        new_user = User(username=username, email=email, hashed_password="")  # No password since Auth0 handles auth
+        new_user = User(
+            username=username, 
+            email=email, 
+            hashed_password="",  # No password since Auth0 handles auth
+            role="student"  # Set default role
+        )
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
@@ -410,7 +416,15 @@ def health_check():
 
 def create_db_and_tables():
     engine = get_engine()
+    
+    # Drop all tables if they exist
+    SQLModel.metadata.drop_all(engine)
+    
+    # Create all tables fresh
     SQLModel.metadata.create_all(engine)
+    
+    # Log the table creation
+    logger.info("Database tables created successfully")
 
 def wait_for_db(db_url, max_retries=5, retry_interval=5):
     retries = 0
@@ -442,9 +456,70 @@ async def check_subscription(
     
     return {"isSubscribed": subscription is not None}
 
+@app.put("/users/{user_id}/role", response_model=User)
+async def update_user_role(user_id: str, role: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    logger.info(f"Updating role for user ID: {user_id} to role: {role}")
+    
+    # Ensure role is valid
+    if role not in ["student", "teacher"]:  # Add any other valid roles
+        raise HTTPException(status_code=422, detail="Invalid role")
+    
+    if current_user.id != user_id:
+        logger.warning(f"User {current_user.username} is not authorized to update user ID: {user_id}")
+        raise HTTPException(status_code=403, detail="Not authorized to update this user")
+    
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        logger.error(f"User with ID {user_id} not found")
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    user.role = role
+    db.commit()
+    db.refresh(user)
+    logger.info(f"User role updated successfully for user ID: {user_id} to {role}")
+    return user
+
+def init_db():
+    engine = get_engine()
+    SQLModel.metadata.create_all(engine)
+
+@app.post("/init-db")
+async def initialize_database():
+    engine = get_engine()
+    SQLModel.metadata.drop_all(engine)
+    SQLModel.metadata.create_all(engine)
+    return {"message": "Database initialized"}
+
+# Only add this if NODE_ENV is development
+if os.environ.get("NODE_ENV") == "development":
+    @app.post("/dev/init-db")
+    async def init_dev_db():
+        """Development only endpoint to initialize the database"""
+        engine = get_engine()
+        SQLModel.metadata.create_all(engine)
+        return {"message": "Development database initialized"}
+
+@app.get("/db-info")
+async def get_db_info(db: Session = Depends(get_db)):
+    try:
+        # Use text() to declare the SQL expression
+        tables = db.execute(text("SELECT table_name FROM information_schema.tables WHERE table_schema='public'")).fetchall()
+        
+        db_info = {}
+        for table in tables:
+            table_name = table[0]
+            # Fetch all rows from the table
+            data = db.execute(text(f"SELECT * FROM {table_name}")).fetchall()
+            # Convert rows to a list of dictionaries
+            db_info[table_name] = [dict(zip(row.keys(), row)) for row in data]
+        
+        return db_info
+    except Exception as e:
+        logger.error(f"Error fetching database info: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
 if __name__ == "__main__":
-    wait_for_db(DATABASE_URL)
-    create_db_and_tables()
+    init_db()
     import uvicorn
     port = int(os.environ.get("PORT", 8080))
     uvicorn.run("main:app", host="0.0.0.0", port=port, log_level="info")

@@ -86,6 +86,10 @@ const Resources: React.FC = () => {
     isBackgroundColorVisible: false,
     isAccessibilityVisible: false,
     isBackgroundThemeVisible: false,
+    isSessionSettingsModalVisible: false,
+    isEditCollectionModalVisible: false,
+    isDuplicateCollectionModalVisible: false,
+    isCollectionPreviewModalVisible: false,
   });
 
   // Define the steps variable
@@ -171,6 +175,10 @@ const Resources: React.FC = () => {
       isBackgroundColorVisible: false,
       isAccessibilityVisible: false,
       isBackgroundThemeVisible: false,
+      isSessionSettingsModalVisible: false,
+      isEditCollectionModalVisible: false,
+      isDuplicateCollectionModalVisible: false,
+      isCollectionPreviewModalVisible: false,
     };
     setVisibilityStates(newVisibilityStates);
   }, []); // This effect runs once when the component mounts

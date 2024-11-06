@@ -37,6 +37,21 @@ export const tourStepsYourCollections = (
         ? { isOpen: true }
         : {}),
     },
+    {
+      target: ".session-settings-modal",
+      content: "Configure your session settings here before starting.",
+      ...(visibilityStates.isSessionSettingsModalVisible ? { isOpen: true } : {}),
+    },
+    {
+      target: ".edit-collection-modal",
+      content: "Edit your collection details in this modal.",
+      ...(visibilityStates.isEditCollectionModalVisible ? { isOpen: true } : {}),
+    },
+    {
+      target: ".duplicate-collection-modal",
+      content: "Use this modal to duplicate an existing collection.",
+      ...(visibilityStates.isDuplicateCollectionModalVisible ? { isOpen: true } : {}),
+    },
   ];
 
   return steps.filter((step) => {
@@ -48,6 +63,12 @@ export const tourStepsYourCollections = (
       return visibilityStates.isEditCollectionButtonVisible;
     if (step.target === ".delete-collection-button")
       return visibilityStates.isDeleteCollectionButtonVisible;
+    if (step.target === ".session-settings-modal")
+      return visibilityStates.isSessionSettingsModalVisible;
+    if (step.target === ".edit-collection-modal")
+      return visibilityStates.isEditCollectionModalVisible;
+    if (step.target === ".duplicate-collection-modal")
+      return visibilityStates.isDuplicateCollectionModalVisible;
     return true; // Include all other steps
   });
 };

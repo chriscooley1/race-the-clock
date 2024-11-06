@@ -135,6 +135,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     isBackgroundColorVisible: false,
     isAccessibilityVisible: false,
     isBackgroundThemeVisible: false,
+    isSessionSettingsModalVisible: false,
+    isEditCollectionModalVisible: false,
+    isDuplicateCollectionModalVisible: false,
+    isCollectionPreviewModalVisible: false,
   });
 
   // Create tour steps based on visibility states

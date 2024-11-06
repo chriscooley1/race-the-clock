@@ -130,6 +130,10 @@ const Navbar: React.FC<NavbarProps> = ({
       isBackgroundColorVisible: false,
       isAccessibilityVisible: false,
       isBackgroundThemeVisible: false,
+      isSessionSettingsModalVisible: false,
+      isEditCollectionModalVisible: false,
+      isDuplicateCollectionModalVisible: false,
+      isCollectionPreviewModalVisible: false,
     };
 
     let steps: Step[];

@@ -61,6 +61,8 @@ class User(SQLModel, table=True):
     sequences: List["Sequence"] = Relationship(back_populates="user")
     collections: List["Collection"] = Relationship(back_populates="user")
     namelists: List[NameList] = Relationship(back_populates="user")
+    role: str = Field(default="student", sa_column=sa.Column(sa.String, nullable=False))  # Add default value
+
 
 # Sequence Models
 class SequenceBase(SQLModel):
