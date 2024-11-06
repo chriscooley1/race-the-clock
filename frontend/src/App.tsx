@@ -106,7 +106,6 @@ const App: React.FC = () => {
       isDotShapeVisible: false,
       isGenerateRandomSequenceButtonVisible: false,
       isFileUploadVisible: false,
-      isNextButtonVisible: false,
       isClearButtonVisible: false,
       isGeneratedSequencePreviewVisible: false,
       isSearchInputVisible: false,
@@ -118,16 +117,8 @@ const App: React.FC = () => {
       isMathProblemVisible: false,
       isDotButtonVisible: false,
       isImageUploadVisible: false,
-      isPreviousButtonVisible: false,
-      isProgressIndicatorVisible: false,
-      isPauseButtonVisible: false,
-      isScreenClickAreaVisible: false,
-      isMatchingGameVisible: false,
-      isMultipleWordsGameVisible: false,
-      isRegisterButtonVisible: true,
       isLoginButtonVisible: true,
       isProfileVisible: false,
-      isUpdateFormVisible: false,
       isNameInputVisible: false,
       isAddNameButtonVisible: false,
       isSpinButtonVisible: false,
@@ -137,12 +128,6 @@ const App: React.FC = () => {
       isStageSelectVisible: false,
       isPublicCheckboxVisible: false,
       isSubmitButtonVisible: false,
-      isReportsOverviewVisible: false,
-      isReportsListVisible: false,
-      isFAQSectionVisible: false,
-      isInstructionalVideosVisible: false,
-      isTimedChallengesVisible: false,
-      isCollectionsOverviewVisible: false,
       isCollectionCardVisible: false,
       isStartCollectionButtonVisible: false,
       isEditCollectionButtonVisible: false,
@@ -163,7 +148,7 @@ const App: React.FC = () => {
 
     switch (location.pathname) {
       case "/":
-        return tourStepsLandingPage(visibilityStates);
+        return tourStepsLandingPage();
       case "/your-collections":
         return tourStepsYourCollections(visibilityStates);
       case "/new-collection":
@@ -171,7 +156,7 @@ const App: React.FC = () => {
       case "/discover-collections":
         return tourStepsDiscoverCollections(visibilityStates);
       case "/full-screen-display":
-        return tourStepsFullScreenDisplay(visibilityStates);
+        return tourStepsFullScreenDisplay();
       case "/collection-setup":
         return tourStepsCollectionSetup(visibilityStates);
       case "/collection-final-step":
@@ -179,17 +164,17 @@ const App: React.FC = () => {
       case "/name-generator":
         return tourStepsNameGenerator(visibilityStates);
       case "/resources":
-        return tourStepsResources(visibilityStates);
+        return tourStepsResources();
       case "/settings":
         return tourStepsSettings(visibilityStates);
       case "/my-account":
-        return tourStepsMyAccount(visibilityStates);
+        return tourStepsMyAccount();
       case "/games":
-        return tourStepsGames(visibilityStates);
+        return tourStepsGames();
       case "/timed-challenges":
-        return tourStepsTimedChallenges(visibilityStates);
+        return tourStepsTimedChallenges();
       case "/reports":
-        return tourStepsReports(visibilityStates);
+        return tourStepsReports();
       case "/badges-achievements":
         return tourStepsBadgesAchievements();
       default:

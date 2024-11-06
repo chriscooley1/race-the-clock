@@ -100,7 +100,6 @@ const Navbar: React.FC<NavbarProps> = ({
       isDotShapeVisible: true,
       isGenerateRandomSequenceButtonVisible: true,
       isFileUploadVisible: true,
-      isNextButtonVisible: true,
       isClearButtonVisible: true,
       isGeneratedSequencePreviewVisible: true,
       isNameInputVisible: false,
@@ -112,12 +111,6 @@ const Navbar: React.FC<NavbarProps> = ({
       isStageSelectVisible: false,
       isPublicCheckboxVisible: false,
       isSubmitButtonVisible: false,
-      isReportsOverviewVisible: false,
-      isReportsListVisible: false,
-      isFAQSectionVisible: false,
-      isInstructionalVideosVisible: false,
-      isTimedChallengesVisible: false,
-      isCollectionsOverviewVisible: false,
       isCollectionCardVisible: false,
       isStartCollectionButtonVisible: false,
       isEditCollectionButtonVisible: false,
@@ -134,6 +127,17 @@ const Navbar: React.FC<NavbarProps> = ({
       isEditCollectionModalVisible: false,
       isDuplicateCollectionModalVisible: false,
       isCollectionPreviewModalVisible: false,
+      isSearchInputVisible: false,
+      isSortSelectVisible: false,
+      isCollectionsGridVisible: false,
+      isPreviewButtonVisible: false,
+      isSaveButtonVisible: false,
+      isItemPreviewVisible: false,
+      isMathProblemVisible: false,
+      isDotButtonVisible: false,
+      isImageUploadVisible: false,
+      isLoginButtonVisible: true,
+      isProfileVisible: false,
     };
 
     let steps: Step[];
@@ -158,19 +162,19 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "discoverCollections";
         break;
       case "/fullscreen-display":
-        steps = tourStepsFullScreenDisplay(visibilityStates);
+        steps = tourStepsFullScreenDisplay();
         tourName = "fullscreenDisplay";
         break;
       case "/games":
-        steps = tourStepsGames(visibilityStates);
+        steps = tourStepsGames();
         tourName = "games";
         break;
       case "/landing-page":
-        steps = tourStepsLandingPage(visibilityStates);
+        steps = tourStepsLandingPage();
         tourName = "landingPage";
         break;
       case "/my-account":
-        steps = tourStepsMyAccount(visibilityStates);
+        steps = tourStepsMyAccount();
         tourName = "myAccount";
         break;
       case "/name-generator":
@@ -182,11 +186,11 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "newCollection";
         break;
       case "/reports":
-        steps = tourStepsReports(visibilityStates);
+        steps = tourStepsReports();
         tourName = "reports";
         break;
       case "/resources":
-        steps = tourStepsResources(visibilityStates);
+        steps = tourStepsResources();
         tourName = "resources";
         break;
       case "/settings":
@@ -194,7 +198,7 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "settings";
         break;
       case "/timed-challenges":
-        steps = tourStepsTimedChallenges(visibilityStates);
+        steps = tourStepsTimedChallenges();
         tourName = "timedChallenges";
         break;
       case "/your-collections":
