@@ -14,28 +14,29 @@ const RoleSelection: React.FC<RoleSelectionProps> = ({ onRoleChange }) => {
 
   return (
     <div>
-      <h2>Select Your Role</h2>
-      <div>
-        <label>
+      <div className="text-center mb-4">
+        <h2>Select Your Role</h2>
+      </div>
+      <div className="space-y-2">
+        <label className="flex items-center">
           <input
             type="radio"
             value="teacher"
             checked={role === "teacher"}
-            onChange={() => handleRoleChange("teacher")} // Call handleRoleChange with the new role
+            onChange={() => handleRoleChange("teacher")}
           />
-          Teacher
+          <span className="ml-2">Teacher</span>
         </label>
-        <label>
+        <label className="flex items-center">
           <input
             type="radio"
             value="student"
             checked={role === "student"}
-            onChange={() => handleRoleChange("student")} // Call handleRoleChange with the new role
+            onChange={() => handleRoleChange("student")}
           />
-          Student
+          <span className="ml-2">Student</span>
         </label>
       </div>
-      <button type="button" onClick={() => onRoleChange(role)}>Continue</button>
     </div>
   );
 };

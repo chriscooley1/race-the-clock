@@ -384,19 +384,16 @@ const YourCollections: React.FC = () => {
     speed: number,
     textColor: string,
     answerDisplayTime: number,
+    stopCondition: string,
   ) => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
       const sequence = sequenceItems.map(
-        (
-          item: { name: string; svg?: string; count?: number } | string,
-          index: number,
-        ) => ({
+        (item: { name: string; svg?: string; count?: number } | string, index: number) => ({
           name: typeof item === "object" ? item.name : item,
           svg: typeof item === "object" ? item.svg : undefined,
           count: typeof item === "object" ? item.count : undefined,
-          isAnswer:
-            selectedCollection.type === "mathProblems" && index % 2 !== 0,
+          isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0,
         }),
       );
 
@@ -408,6 +405,7 @@ const YourCollections: React.FC = () => {
           category: selectedCollection.category,
           type: selectedCollection.type,
           answerDisplayTime,
+          stopCondition,
         },
       });
       setShowModal(false);

@@ -158,9 +158,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   }, [shuffledSequence, category, type, speed]);
 
   const handleEndSession = useCallback(() => {
-    // Wrap in useCallback
     console.log("Ending session..."); // Debug log
-    if (stopCondition === "timer") {
+    if (stopCondition === "timer") { // Check if stopCondition is "timer"
       console.log(
         "Session ended due to timer. Redirecting to Your Collections...",
       );
@@ -234,7 +233,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       }, totalTimerSeconds * 1000); // Convert to milliseconds
       return () => clearTimeout(timer);
     }
-  }, [stopCondition, timerMinutes, timerSeconds]); // Add timer dependencies
+  }, [stopCondition, timerMinutes, timerSeconds, handleEndSession]); // Add timer dependencies
 
   const handlePauseResume = () => {
     setIsPaused(!isPaused);

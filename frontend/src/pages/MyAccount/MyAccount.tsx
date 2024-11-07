@@ -102,13 +102,15 @@ const MyAccount: React.FC = () => {
                 {user.email}
               </p>
             </div>
-            <UpdateDisplayNameForm className="update-display-name-form" />
+            <UpdateDisplayNameForm className="update-display-name-form mb-4" />
+            <div className="flex justify-center">
+              <RoleSelection onRoleChange={handleRoleChange} />
+            </div>
           </div>
         ) : (
           <p className="text-center">Loading user information...</p>
         )}
-        <RoleSelection onRoleChange={handleRoleChange} /> {/* Pass the role change handler */}
-        <UserRoleFeatures role={role} /> {/* Pass the current role */}
+        <UserRoleFeatures role={role} />
       </div>
       <GuidedTour
         steps={steps}

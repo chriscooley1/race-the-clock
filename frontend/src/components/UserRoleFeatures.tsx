@@ -18,16 +18,20 @@ const UserRoleFeatures: React.FC<UserRoleFeaturesProps> = ({ role }) => {
     <div>
       {user ? (
         <>
-          {role === "teacher" && ( // Use the role prop instead of user.role
-            <div>
-              <h2>Teacher Features</h2>
-              {/* Render teacher-specific features */}
+          {role === "teacher" && (
+            <div className="flex justify-center">
+              <div>
+                <h2>Teacher Features</h2>
+                {/* Render teacher-specific features */}
+              </div>
             </div>
           )}
-          {role === "student" && ( // Use the role prop instead of user.role
-            <div>
-              <h2>Student Features</h2>
-              {/* Render student-specific features */}
+          {role === "student" && (
+            <div className="flex justify-center">
+              <div>
+                <h2>Student Features</h2>
+                {/* Render student-specific features */}
+              </div>
             </div>
           )}
         </>
