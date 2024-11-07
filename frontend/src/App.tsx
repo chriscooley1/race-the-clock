@@ -96,6 +96,19 @@ const App: React.FC = () => {
 
   const getTourSteps = (): Step[] => {
     const visibilityStates: VisibilityStates = {
+      isCollectionCardVisible: false,
+      isStartCollectionButtonVisible: false,
+      isEditCollectionButtonVisible: false,
+      isDeleteCollectionButtonVisible: false,
+      isCollectionNameVisible: false,
+      isCategorySelectVisible: false,
+      isStageSelectVisible: false,
+      isPublicCheckboxVisible: false,
+      isSubmitButtonVisible: false,
+      isSearchInputVisible: false,
+      isSortSelectVisible: false,
+      isCollectionsGridVisible: false,
+      isPreviewButtonVisible: false,
       isDotCountTypeVisible: false,
       isMinDotsVisible: false,
       isMaxDotsVisible: false,
@@ -108,10 +121,6 @@ const App: React.FC = () => {
       isFileUploadVisible: false,
       isClearButtonVisible: false,
       isGeneratedSequencePreviewVisible: false,
-      isSearchInputVisible: false,
-      isSortSelectVisible: false,
-      isCollectionsGridVisible: false,
-      isPreviewButtonVisible: false,
       isSaveButtonVisible: false,
       isItemPreviewVisible: false,
       isMathProblemVisible: false,
@@ -121,15 +130,6 @@ const App: React.FC = () => {
       isAddNameButtonVisible: false,
       isSpinButtonVisible: false,
       isNamesListVisible: false,
-      isCollectionNameVisible: false,
-      isCategorySelectVisible: false,
-      isStageSelectVisible: false,
-      isPublicCheckboxVisible: false,
-      isSubmitButtonVisible: false,
-      isCollectionCardVisible: false,
-      isStartCollectionButtonVisible: false,
-      isEditCollectionButtonVisible: false,
-      isDeleteCollectionButtonVisible: false,
       isMainFontVisible: false,
       isHeadingFontVisible: false,
       isButtonFontVisible: false,
@@ -152,6 +152,10 @@ const App: React.FC = () => {
         visibilityStates.isStartCollectionButtonVisible = true;
         visibilityStates.isEditCollectionButtonVisible = true;
         visibilityStates.isDeleteCollectionButtonVisible = true;
+        visibilityStates.isSessionSettingsModalVisible = false;
+        visibilityStates.isEditCollectionModalVisible = false;
+        visibilityStates.isDuplicateCollectionModalVisible = false;
+        visibilityStates.isCollectionPreviewModalVisible = false;
         return tourStepsYourCollections(visibilityStates);
       case "/new-collection":
         visibilityStates.isCollectionNameVisible = true;
@@ -207,15 +211,6 @@ const App: React.FC = () => {
         visibilityStates.isBackgroundColorVisible = true;
         visibilityStates.isAccessibilityVisible = true;
         visibilityStates.isBackgroundThemeVisible = true;
-        visibilityStates.isNameInputVisible = true;
-        visibilityStates.isAddNameButtonVisible = true;
-        visibilityStates.isSpinButtonVisible = true;
-        visibilityStates.isNamesListVisible = true;
-        visibilityStates.isCollectionNameVisible = true;
-        visibilityStates.isCategorySelectVisible = true;
-        visibilityStates.isStageSelectVisible = true;
-        visibilityStates.isPublicCheckboxVisible = true;
-        visibilityStates.isSubmitButtonVisible = true;
         return tourStepsSettings(visibilityStates);
       case "/my-account":
         return tourStepsMyAccount();
