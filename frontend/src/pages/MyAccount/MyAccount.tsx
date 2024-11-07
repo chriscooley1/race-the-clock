@@ -5,10 +5,14 @@ import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm";
 import { useTheme } from "../../context/ThemeContext";
 import { tourStepsMyAccount } from "./tourStepsMyAccount";
 import GuidedTour from "../../components/GuidedTour";
+import { updateUserRole } from "../../api"; // Assume you have an API function to update user role
+import RoleSelection from "../../components/RoleSelection";
+import UserRoleFeatures from "../../components/UserRoleFeatures";
 
 interface UserData {
   display_name?: string;
   email?: string;
+  role?: string; // Add role to UserData interface
 }
 
 const MyAccount: React.FC = () => {
@@ -18,6 +22,7 @@ const MyAccount: React.FC = () => {
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [role, setRole] = useState<string>("student"); // Default role
 
   // Define the steps variable without visibility states
   const steps = tourStepsMyAccount(); // Create tour steps without visibility states
@@ -55,6 +60,22 @@ const MyAccount: React.FC = () => {
     localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
   };
 
+  const handleRoleChange = async (newRole: string) => {
+    console.log("Changing role to:", newRole);
+    if (user && user.sub) {
+      const token = await getAccessTokenSilently();
+      try {
+        const updatedUser = await updateUserRole(user.sub, newRole, token);
+        console.log("Role updated successfully:", updatedUser);
+        setRole(newRole); // Update the local state
+      } catch (error) {
+        console.error("Error updating role:", error);
+      }
+    } else {
+      console.error("User is not authenticated");
+    }
+  };
+
   return (
     <div
       className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} my-account`}
@@ -62,7 +83,8 @@ const MyAccount: React.FC = () => {
       <div
         className={`w-full max-w-md rounded-lg p-16 shadow-md ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`}
       >
-        <h1 className="mb-6 text-center text-2xl font-bold">My Account</h1>
+        <h1 className="mb-6 text-center text-3xl font-bold">My Account</h1>
+
         {user ? (
           <div className="space-y-4">
             <div className="user-profile flex flex-col items-center">
@@ -85,6 +107,8 @@ const MyAccount: React.FC = () => {
         ) : (
           <p className="text-center">Loading user information...</p>
         )}
+        <RoleSelection onRoleChange={handleRoleChange} /> {/* Pass the role change handler */}
+        <UserRoleFeatures role={role} /> {/* Pass the current role */}
       </div>
       <GuidedTour
         steps={steps}

@@ -254,6 +254,8 @@ const CollectionSetup: React.FC = () => {
           count: 1,
         };
         setSequence([newItem]);
+        setPreviewSequence([newItem]);
+        setIsGenerated(true);
       };
 
       reader.readAsDataURL(selectedFile);
