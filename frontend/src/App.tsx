@@ -96,8 +96,8 @@ const App: React.FC = () => {
 
   const getTourSteps = (): Step[] => {
     const visibilityStates: VisibilityStates = {
-      isDotCountTypeVisible: true,
-      isMinDotsVisible: true,
+      isDotCountTypeVisible: false,
+      isMinDotsVisible: false,
       isMaxDotsVisible: false,
       isTypeSelectVisible: false,
       isItemCountVisible: false,
@@ -148,22 +148,74 @@ const App: React.FC = () => {
       case "/":
         return tourStepsLandingPage();
       case "/your-collections":
+        visibilityStates.isCollectionCardVisible = true;
+        visibilityStates.isStartCollectionButtonVisible = true;
+        visibilityStates.isEditCollectionButtonVisible = true;
+        visibilityStates.isDeleteCollectionButtonVisible = true;
         return tourStepsYourCollections(visibilityStates);
       case "/new-collection":
+        visibilityStates.isCollectionNameVisible = true;
+        visibilityStates.isCategorySelectVisible = true;
+        visibilityStates.isStageSelectVisible = true;
+        visibilityStates.isPublicCheckboxVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
         return tourStepsNewCollection(visibilityStates);
       case "/discover-collections":
+        visibilityStates.isSearchInputVisible = true;
+        visibilityStates.isSortSelectVisible = true;
+        visibilityStates.isCollectionsGridVisible = true;
+        visibilityStates.isPreviewButtonVisible = true;
         return tourStepsDiscoverCollections(visibilityStates);
       case "/full-screen-display":
         return tourStepsFullScreenDisplay();
       case "/collection-setup":
+        visibilityStates.isDotCountTypeVisible = true;
+        visibilityStates.isMinDotsVisible = true;
+        visibilityStates.isMaxDotsVisible = true;
+        visibilityStates.isTypeSelectVisible = true;
+        visibilityStates.isItemCountVisible = true;
+        visibilityStates.isCollectionItemCountVisible = true;
+        visibilityStates.isDotColorVisible = true;
+        visibilityStates.isDotShapeVisible = true;
+        visibilityStates.isGenerateRandomSequenceButtonVisible = true;
+        visibilityStates.isFileUploadVisible = true;
+        visibilityStates.isClearButtonVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
+        visibilityStates.isGeneratedSequencePreviewVisible = true;
         return tourStepsCollectionSetup(visibilityStates);
       case "/collection-final-step":
+        visibilityStates.isSaveButtonVisible = true;
+        visibilityStates.isItemPreviewVisible = true;
+        visibilityStates.isMathProblemVisible = true;
+        visibilityStates.isDotButtonVisible = true;
+        visibilityStates.isImageUploadVisible = true;
         return tourStepsCollectionFinalStep(visibilityStates);
       case "/name-generator":
+        visibilityStates.isNameInputVisible = true;
+        visibilityStates.isAddNameButtonVisible = true;
+        visibilityStates.isSpinButtonVisible = true;
+        visibilityStates.isNamesListVisible = true;
         return tourStepsNameGenerator(visibilityStates);
       case "/resources":
         return tourStepsResources();
       case "/settings":
+        visibilityStates.isMainFontVisible = true;
+        visibilityStates.isHeadingFontVisible = true;
+        visibilityStates.isButtonFontVisible = true;
+        visibilityStates.isColorThemeVisible = true;
+        visibilityStates.isTextColorVisible = true;
+        visibilityStates.isBackgroundColorVisible = true;
+        visibilityStates.isAccessibilityVisible = true;
+        visibilityStates.isBackgroundThemeVisible = true;
+        visibilityStates.isNameInputVisible = true;
+        visibilityStates.isAddNameButtonVisible = true;
+        visibilityStates.isSpinButtonVisible = true;
+        visibilityStates.isNamesListVisible = true;
+        visibilityStates.isCollectionNameVisible = true;
+        visibilityStates.isCategorySelectVisible = true;
+        visibilityStates.isStageSelectVisible = true;
+        visibilityStates.isPublicCheckboxVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
         return tourStepsSettings(visibilityStates);
       case "/my-account":
         return tourStepsMyAccount();

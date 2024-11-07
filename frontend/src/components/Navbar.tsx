@@ -90,18 +90,18 @@ const Navbar: React.FC<NavbarProps> = ({
 
   const handleStartTour = useCallback(() => {
     const visibilityStates: VisibilityStates = {
-      isDotCountTypeVisible: true,
-      isMinDotsVisible: true,
-      isMaxDotsVisible: true,
-      isTypeSelectVisible: true,
-      isItemCountVisible: true,
-      isCollectionItemCountVisible: true,
-      isDotColorVisible: true,
-      isDotShapeVisible: true,
-      isGenerateRandomSequenceButtonVisible: true,
-      isFileUploadVisible: true,
-      isClearButtonVisible: true,
-      isGeneratedSequencePreviewVisible: true,
+      isDotCountTypeVisible: false,
+      isMinDotsVisible: false,
+      isMaxDotsVisible: false,
+      isTypeSelectVisible: false,
+      isItemCountVisible: false,
+      isCollectionItemCountVisible: false,
+      isDotColorVisible: false,
+      isDotShapeVisible: false,
+      isGenerateRandomSequenceButtonVisible: false,
+      isFileUploadVisible: false,
+      isClearButtonVisible: false,
+      isGeneratedSequencePreviewVisible: false,
       isNameInputVisible: false,
       isAddNameButtonVisible: false,
       isSpinButtonVisible: false,
@@ -137,6 +137,79 @@ const Navbar: React.FC<NavbarProps> = ({
       isDotButtonVisible: false,
       isImageUploadVisible: false,
     };
+
+    // Set visibility states based on the current location
+    switch (location.pathname) {
+      case "/your-collections":
+        visibilityStates.isCollectionCardVisible = true;
+        visibilityStates.isStartCollectionButtonVisible = true;
+        visibilityStates.isEditCollectionButtonVisible = true;
+        visibilityStates.isDeleteCollectionButtonVisible = true;
+        break;
+      case "/new-collection":
+        visibilityStates.isCollectionNameVisible = true;
+        visibilityStates.isCategorySelectVisible = true;
+        visibilityStates.isStageSelectVisible = true;
+        visibilityStates.isPublicCheckboxVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
+        break;
+      case "/discover-collections":
+        visibilityStates.isSearchInputVisible = true;
+        visibilityStates.isSortSelectVisible = true;
+        visibilityStates.isCollectionsGridVisible = true;
+        visibilityStates.isPreviewButtonVisible = true;
+        break;
+      case "/collection-setup":
+        visibilityStates.isDotCountTypeVisible = true;
+        visibilityStates.isMinDotsVisible = true;
+        visibilityStates.isMaxDotsVisible = true;
+        visibilityStates.isTypeSelectVisible = true;
+        visibilityStates.isItemCountVisible = true;
+        visibilityStates.isCollectionItemCountVisible = true;
+        visibilityStates.isDotColorVisible = true;
+        visibilityStates.isDotShapeVisible = true;
+        visibilityStates.isGenerateRandomSequenceButtonVisible = true;
+        visibilityStates.isFileUploadVisible = true;
+        visibilityStates.isClearButtonVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
+        visibilityStates.isGeneratedSequencePreviewVisible = true;
+        break;
+      case "/collection-final-step":
+        visibilityStates.isSaveButtonVisible = true;
+        visibilityStates.isItemPreviewVisible = true;
+        visibilityStates.isMathProblemVisible = true;
+        visibilityStates.isDotButtonVisible = true;
+        visibilityStates.isImageUploadVisible = true;
+        break;
+      case "/name-generator":
+        visibilityStates.isNameInputVisible = true;
+        visibilityStates.isAddNameButtonVisible = true;
+        visibilityStates.isSpinButtonVisible = true;
+        visibilityStates.isNamesListVisible = true;
+        break;
+      case "/settings":
+        visibilityStates.isMainFontVisible = true;
+        visibilityStates.isHeadingFontVisible = true;
+        visibilityStates.isButtonFontVisible = true;
+        visibilityStates.isColorThemeVisible = true;
+        visibilityStates.isTextColorVisible = true;
+        visibilityStates.isBackgroundColorVisible = true;
+        visibilityStates.isAccessibilityVisible = true;
+        visibilityStates.isBackgroundThemeVisible = true;
+        visibilityStates.isNameInputVisible = true;
+        visibilityStates.isAddNameButtonVisible = true;
+        visibilityStates.isSpinButtonVisible = true;
+        visibilityStates.isNamesListVisible = true;
+        visibilityStates.isCollectionNameVisible = true;
+        visibilityStates.isCategorySelectVisible = true;
+        visibilityStates.isStageSelectVisible = true;
+        visibilityStates.isPublicCheckboxVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
+        break;
+      // Add cases for other routes as needed
+      default:
+        break;
+    }
 
     let steps: Step[];
     let tourName: string;
