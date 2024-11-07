@@ -37,9 +37,6 @@ const RoleSelection: React.FC<RoleSelectionProps> = ({ onRoleChange }) => {
           <span className="ml-2">Student</span>
         </label>
       </div>
-      <div className="flex justify-center mt-4">
-        <button type="button" onClick={() => onRoleChange(role)}>Continue</button>
-      </div>
     </div>
   );
 };

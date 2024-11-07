@@ -459,9 +459,11 @@ async def check_subscription(
 @app.put("/users/{user_id}/role", response_model=User)
 async def update_user_role(user_id: str, role: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     logger.info(f"Updating role for user ID: {user_id} to role: {role}")
-    
+    # Add logging for the current user
+    logger.info(f"Current user: {current_user.username} with role: {current_user.role}")
     # Ensure role is valid
-    if role not in ["student", "teacher"]:  # Add any other valid roles
+    if role not in ["student", "teacher"]:
+        logger.error(f"Invalid role: {role}")
         raise HTTPException(status_code=422, detail="Invalid role")
     
     if current_user.id != user_id:
