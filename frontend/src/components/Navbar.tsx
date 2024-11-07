@@ -136,8 +136,6 @@ const Navbar: React.FC<NavbarProps> = ({
       isMathProblemVisible: false,
       isDotButtonVisible: false,
       isImageUploadVisible: false,
-      isLoginButtonVisible: true,
-      isProfileVisible: false,
     };
 
     let steps: Step[];

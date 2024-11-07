@@ -117,8 +117,6 @@ const App: React.FC = () => {
       isMathProblemVisible: false,
       isDotButtonVisible: false,
       isImageUploadVisible: false,
-      isLoginButtonVisible: true,
-      isProfileVisible: false,
       isNameInputVisible: false,
       isAddNameButtonVisible: false,
       isSpinButtonVisible: false,

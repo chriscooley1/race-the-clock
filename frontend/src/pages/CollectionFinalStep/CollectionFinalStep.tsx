@@ -107,8 +107,6 @@ const CollectionFinalStep: React.FC = () => {
     isSortSelectVisible: false,
     isCollectionsGridVisible: false,
     isPreviewButtonVisible: false,
-    isLoginButtonVisible: false,
-    isProfileVisible: false,
     isNameInputVisible: false,
     isAddNameButtonVisible: false,
     isSpinButtonVisible: false,

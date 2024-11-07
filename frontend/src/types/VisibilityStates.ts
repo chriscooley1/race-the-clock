@@ -20,8 +20,6 @@ export interface VisibilityStates {
   isMathProblemVisible?: boolean;
   isDotButtonVisible?: boolean;
   isImageUploadVisible?: boolean;
-  isLoginButtonVisible?: boolean;
-  isProfileVisible?: boolean;
   isNameInputVisible: boolean;
   isAddNameButtonVisible: boolean;
   isSpinButtonVisible: boolean;

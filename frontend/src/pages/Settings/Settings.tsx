@@ -77,8 +77,6 @@ const Settings: React.FC = () => {
     isMathProblemVisible: false,
     isDotButtonVisible: false,
     isImageUploadVisible: false,
-    isLoginButtonVisible: false,
-    isProfileVisible: false,
     isCollectionCardVisible: false,
     isStartCollectionButtonVisible: false,
     isEditCollectionButtonVisible: false,

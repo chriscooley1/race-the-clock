@@ -50,8 +50,6 @@ const NameGenerator: React.FC = () => {
     isMathProblemVisible: false,
     isDotButtonVisible: false,
     isImageUploadVisible: false,
-    isLoginButtonVisible: false,
-    isProfileVisible: false,
     isCollectionNameVisible: false,
     isCategorySelectVisible: false,
     isStageSelectVisible: false,

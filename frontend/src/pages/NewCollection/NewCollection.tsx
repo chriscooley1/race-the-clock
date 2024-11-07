@@ -52,8 +52,6 @@ const NewCollection: React.FC = () => {
     isMathProblemVisible: false,
     isDotButtonVisible: false,
     isImageUploadVisible: false,
-    isLoginButtonVisible: false,
-    isProfileVisible: false,
     isNameInputVisible: false,
     isAddNameButtonVisible: false,
     isSpinButtonVisible: false,
