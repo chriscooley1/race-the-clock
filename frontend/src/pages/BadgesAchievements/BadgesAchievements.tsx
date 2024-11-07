@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { VisibilityStates } from "../../types/VisibilityStates";
 import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
 import { useCompletion } from "../../context/CompletionContext";
@@ -9,78 +8,8 @@ const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
   const [badges, setBadges] = useState<string[]>([]);
   const [achievements, setAchievements] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-
-  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
-    isDotCountTypeVisible: false,
-    isMinDotsVisible: false,
-    isMaxDotsVisible: false,
-    isTypeSelectVisible: false,
-    isItemCountVisible: false,
-    isCollectionItemCountVisible: false,
-    isDotColorVisible: false,
-    isDotShapeVisible: false,
-    isGenerateRandomSequenceButtonVisible: false,
-    isFileUploadVisible: false,
-    isNextButtonVisible: false,
-    isClearButtonVisible: false,
-    isGeneratedSequencePreviewVisible: false,
-    isBadgesSectionVisible: true,
-    isAchievementsSectionVisible: true,
-    isLoadingMessageVisible: true,
-    isSearchInputVisible: false,
-    isSortSelectVisible: false,
-    isCollectionsGridVisible: false,
-    isPreviewButtonVisible: false,
-    isSaveButtonVisible: false,
-    isItemPreviewVisible: false,
-    isMathProblemVisible: false,
-    isDotButtonVisible: false,
-    isImageUploadVisible: false,
-    isPreviousButtonVisible: false,
-    isProgressIndicatorVisible: false,
-    isPauseButtonVisible: false,
-    isScreenClickAreaVisible: false,
-    isMatchingGameVisible: false,
-    isMultipleWordsGameVisible: false,
-    isRegisterButtonVisible: false,
-    isLoginButtonVisible: false,
-    isProfileVisible: false,
-    isUpdateFormVisible: false,
-    isNameInputVisible: false,
-    isAddNameButtonVisible: false,
-    isSpinButtonVisible: false,
-    isNamesListVisible: false,
-    isCollectionNameVisible: false,
-    isCategorySelectVisible: false,
-    isStageSelectVisible: false,
-    isPublicCheckboxVisible: false,
-    isSubmitButtonVisible: false,
-    isReportsOverviewVisible: false,
-    isReportsListVisible: false,
-    isFAQSectionVisible: false,
-    isInstructionalVideosVisible: false,
-    isTimedChallengesVisible: false,
-    isCollectionsOverviewVisible: false,
-    isCollectionCardVisible: false,
-    isStartCollectionButtonVisible: false,
-    isEditCollectionButtonVisible: false,
-    isDeleteCollectionButtonVisible: false,
-    isMainFontVisible: false,
-    isHeadingFontVisible: false,
-    isButtonFontVisible: false,
-    isColorThemeVisible: false,
-    isTextColorVisible: false,
-    isBackgroundColorVisible: false,
-    isAccessibilityVisible: false,
-    isBackgroundThemeVisible: false,
-    isSessionSettingsModalVisible: false,
-    isEditCollectionModalVisible: false,
-    isDuplicateCollectionModalVisible: false,
-    isCollectionPreviewModalVisible: false,
-  });
 
   const { completionCounts } = useCompletion();
 
@@ -129,20 +58,6 @@ const BadgesAchievements: React.FC = () => {
         "Challenge Accepted Badge for participating in a timed challenge",
         "Loyalty Badge for logging in for 7 consecutive days",
       ]);
-
-      setIsLoading(false);
-      setVisibilityStates((prev) => ({
-        ...prev,
-        isLoadingMessageVisible: false,
-        isMainFontVisible: false,
-        isHeadingFontVisible: false,
-        isButtonFontVisible: false,
-        isColorThemeVisible: false,
-        isTextColorVisible: false,
-        isBackgroundColorVisible: false,
-        isAccessibilityVisible: false,
-        isBackgroundThemeVisible: false,
-      }));
     };
 
     loadData();
@@ -160,7 +75,8 @@ const BadgesAchievements: React.FC = () => {
     localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
   };
 
-  const steps = tourStepsBadgesAchievements(visibilityStates);
+  // Call the function without arguments
+  const steps = tourStepsBadgesAchievements();
 
   return (
     <div
@@ -179,42 +95,46 @@ const BadgesAchievements: React.FC = () => {
         rewarding them as they improve, fostering motivation.
       </p>
 
-      {isLoading ? (
-        <p className="loading-message">Loading badges and achievements...</p>
-      ) : (
-        <div className="mt-8 w-full max-w-2xl">
-          {visibilityStates.isBadgesSectionVisible && (
-            <div className="badges-section">
-              <h2 className="text-2xl font-semibold">Badges</h2>
-              <ul className="list-disc pl-5">
-                {badges.map((badge, index) => (
-                  <li key={index}>{badge}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+      <div className="mt-8 w-full max-w-2xl">
+        <div className="badges-section">
+          <h2 className="text-2xl font-semibold">Badges</h2>
+          <ul className="list-disc pl-5">
+            {badges.length > 0 ? (
+              badges.map((badge, index) => (
+                <li key={index}>{badge}</li>
+              ))
+            ) : (
+              <li>No badges available.</li>
+            )}
+          </ul>
+        </div>
 
-          {visibilityStates.isAchievementsSectionVisible && (
-            <div className="achievements-section mt-8">
-              <h2 className="text-2xl font-semibold">Achievements</h2>
-              <ul className="list-disc pl-5">
-                {achievements.map((achievement, index) => (
-                  <li key={index}>{achievement}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+        <div className="achievements-section mt-8">
+          <h2 className="text-2xl font-semibold">Achievements</h2>
+          <ul className="list-disc pl-5">
+            {achievements.length > 0 ? (
+              achievements.map((achievement, index) => (
+                <li key={index}>{achievement}</li>
+              ))
+            ) : (
+              <li>No achievements available.</li>
+            )}
+          </ul>
+        </div>
 
-          <h2 className="text-2xl font-semibold">Completion Counts</h2>
-          <ul>
-            {Object.entries(completionCounts).map(([collectionId, count]) => (
+        <h2 className="text-2xl font-semibold">Completion Counts</h2>
+        <ul>
+          {Object.entries(completionCounts).length > 0 ? (
+            Object.entries(completionCounts).map(([collectionId, count]) => (
               <li key={collectionId}>
                 Collection ID {collectionId}: Completed {count} times
               </li>
-            ))}
-          </ul>
-        </div>
-      )}
+            ))
+          ) : (
+            <li>No completion counts available.</li>
+          )}
+        </ul>
+      </div>
 
       <GuidedTour
         steps={steps}

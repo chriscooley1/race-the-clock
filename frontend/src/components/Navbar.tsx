@@ -90,19 +90,18 @@ const Navbar: React.FC<NavbarProps> = ({
 
   const handleStartTour = useCallback(() => {
     const visibilityStates: VisibilityStates = {
-      isDotCountTypeVisible: true,
-      isMinDotsVisible: true,
-      isMaxDotsVisible: true,
-      isTypeSelectVisible: true,
-      isItemCountVisible: true,
-      isCollectionItemCountVisible: true,
-      isDotColorVisible: true,
-      isDotShapeVisible: true,
-      isGenerateRandomSequenceButtonVisible: true,
-      isFileUploadVisible: true,
-      isNextButtonVisible: true,
-      isClearButtonVisible: true,
-      isGeneratedSequencePreviewVisible: true,
+      isDotCountTypeVisible: false,
+      isMinDotsVisible: false,
+      isMaxDotsVisible: false,
+      isTypeSelectVisible: false,
+      isItemCountVisible: false,
+      isCollectionItemCountVisible: false,
+      isDotColorVisible: false,
+      isDotShapeVisible: false,
+      isGenerateRandomSequenceButtonVisible: false,
+      isFileUploadVisible: false,
+      isClearButtonVisible: false,
+      isGeneratedSequencePreviewVisible: false,
       isNameInputVisible: false,
       isAddNameButtonVisible: false,
       isSpinButtonVisible: false,
@@ -112,12 +111,6 @@ const Navbar: React.FC<NavbarProps> = ({
       isStageSelectVisible: false,
       isPublicCheckboxVisible: false,
       isSubmitButtonVisible: false,
-      isReportsOverviewVisible: false,
-      isReportsListVisible: false,
-      isFAQSectionVisible: false,
-      isInstructionalVideosVisible: false,
-      isTimedChallengesVisible: false,
-      isCollectionsOverviewVisible: false,
       isCollectionCardVisible: false,
       isStartCollectionButtonVisible: false,
       isEditCollectionButtonVisible: false,
@@ -134,7 +127,89 @@ const Navbar: React.FC<NavbarProps> = ({
       isEditCollectionModalVisible: false,
       isDuplicateCollectionModalVisible: false,
       isCollectionPreviewModalVisible: false,
+      isSearchInputVisible: false,
+      isSortSelectVisible: false,
+      isCollectionsGridVisible: false,
+      isPreviewButtonVisible: false,
+      isSaveButtonVisible: false,
+      isItemPreviewVisible: false,
+      isMathProblemVisible: false,
+      isDotButtonVisible: false,
+      isImageUploadVisible: false,
     };
+
+    // Set visibility states based on the current location
+    switch (location.pathname) {
+      case "/your-collections":
+        visibilityStates.isCollectionCardVisible = true;
+        visibilityStates.isStartCollectionButtonVisible = true;
+        visibilityStates.isEditCollectionButtonVisible = true;
+        visibilityStates.isDeleteCollectionButtonVisible = true;
+        break;
+      case "/new-collection":
+        visibilityStates.isCollectionNameVisible = true;
+        visibilityStates.isCategorySelectVisible = true;
+        visibilityStates.isStageSelectVisible = true;
+        visibilityStates.isPublicCheckboxVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
+        break;
+      case "/discover-collections":
+        visibilityStates.isSearchInputVisible = true;
+        visibilityStates.isSortSelectVisible = true;
+        visibilityStates.isCollectionsGridVisible = true;
+        visibilityStates.isPreviewButtonVisible = true;
+        break;
+      case "/collection-setup":
+        visibilityStates.isDotCountTypeVisible = true;
+        visibilityStates.isMinDotsVisible = true;
+        visibilityStates.isMaxDotsVisible = true;
+        visibilityStates.isTypeSelectVisible = true;
+        visibilityStates.isItemCountVisible = true;
+        visibilityStates.isCollectionItemCountVisible = true;
+        visibilityStates.isDotColorVisible = true;
+        visibilityStates.isDotShapeVisible = true;
+        visibilityStates.isGenerateRandomSequenceButtonVisible = true;
+        visibilityStates.isFileUploadVisible = true;
+        visibilityStates.isClearButtonVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
+        visibilityStates.isGeneratedSequencePreviewVisible = true;
+        break;
+      case "/collection-final-step":
+        visibilityStates.isSaveButtonVisible = true;
+        visibilityStates.isItemPreviewVisible = true;
+        visibilityStates.isMathProblemVisible = true;
+        visibilityStates.isDotButtonVisible = true;
+        visibilityStates.isImageUploadVisible = true;
+        break;
+      case "/name-generator":
+        visibilityStates.isNameInputVisible = true;
+        visibilityStates.isAddNameButtonVisible = true;
+        visibilityStates.isSpinButtonVisible = true;
+        visibilityStates.isNamesListVisible = true;
+        break;
+      case "/settings":
+        visibilityStates.isMainFontVisible = true;
+        visibilityStates.isHeadingFontVisible = true;
+        visibilityStates.isButtonFontVisible = true;
+        visibilityStates.isColorThemeVisible = true;
+        visibilityStates.isTextColorVisible = true;
+        visibilityStates.isBackgroundColorVisible = true;
+        visibilityStates.isAccessibilityVisible = true;
+        visibilityStates.isBackgroundThemeVisible = true;
+        visibilityStates.isNameInputVisible = true;
+        visibilityStates.isAddNameButtonVisible = true;
+        visibilityStates.isSpinButtonVisible = true;
+        visibilityStates.isNamesListVisible = true;
+        visibilityStates.isCollectionNameVisible = true;
+        visibilityStates.isCategorySelectVisible = true;
+        visibilityStates.isStageSelectVisible = true;
+        visibilityStates.isPublicCheckboxVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
+        break;
+      // Add cases for other routes as needed
+      default:
+        break;
+    }
 
     let steps: Step[];
     let tourName: string;
@@ -142,7 +217,7 @@ const Navbar: React.FC<NavbarProps> = ({
     // Determine the steps based on the current location
     switch (location.pathname) {
       case "/badges-achievements":
-        steps = tourStepsBadgesAchievements(visibilityStates);
+        steps = tourStepsBadgesAchievements();
         tourName = "badgesAchievements";
         break;
       case "/collection-final-step":
@@ -158,19 +233,19 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "discoverCollections";
         break;
       case "/fullscreen-display":
-        steps = tourStepsFullScreenDisplay(visibilityStates);
+        steps = tourStepsFullScreenDisplay();
         tourName = "fullscreenDisplay";
         break;
       case "/games":
-        steps = tourStepsGames(visibilityStates);
+        steps = tourStepsGames();
         tourName = "games";
         break;
       case "/landing-page":
-        steps = tourStepsLandingPage(visibilityStates);
+        steps = tourStepsLandingPage();
         tourName = "landingPage";
         break;
       case "/my-account":
-        steps = tourStepsMyAccount(visibilityStates);
+        steps = tourStepsMyAccount();
         tourName = "myAccount";
         break;
       case "/name-generator":
@@ -182,11 +257,11 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "newCollection";
         break;
       case "/reports":
-        steps = tourStepsReports(visibilityStates);
+        steps = tourStepsReports();
         tourName = "reports";
         break;
       case "/resources":
-        steps = tourStepsResources(visibilityStates);
+        steps = tourStepsResources();
         tourName = "resources";
         break;
       case "/settings":
@@ -194,7 +269,7 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "settings";
         break;
       case "/timed-challenges":
-        steps = tourStepsTimedChallenges(visibilityStates);
+        steps = tourStepsTimedChallenges();
         tourName = "timedChallenges";
         break;
       case "/your-collections":

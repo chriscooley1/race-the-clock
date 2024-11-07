@@ -32,11 +32,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
       setIsTourRunning(false);
       onComplete();
     } else if (data.type === "step:after") {
-      if (index + 1 < steps.length) {
-        onStepChange(index + 1);
-      } else {
-        onComplete();
-      }
+      onStepChange(index + 1);
       if (isScrollToEnabled) {
         const targetSelector = steps[index].target as string;
         const target = document.querySelector(targetSelector);

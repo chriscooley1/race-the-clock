@@ -25,6 +25,11 @@ const NewCollection: React.FC = () => {
 
   // Initialize visibilityStates with all properties
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
+    isCollectionNameVisible: true,
+    isCategorySelectVisible: true,
+    isStageSelectVisible: true,
+    isPublicCheckboxVisible: true,
+    isSubmitButtonVisible: true,
     isDotCountTypeVisible: false,
     isMinDotsVisible: false,
     isMaxDotsVisible: false,
@@ -35,13 +40,9 @@ const NewCollection: React.FC = () => {
     isDotShapeVisible: false,
     isGenerateRandomSequenceButtonVisible: false,
     isFileUploadVisible: false,
-    isNextButtonVisible: false,
     isClearButtonVisible: false,
     isStartCollectionButtonVisible: false,
     isGeneratedSequencePreviewVisible: false,
-    isBadgesSectionVisible: false,
-    isAchievementsSectionVisible: false,
-    isLoadingMessageVisible: false,
     isSearchInputVisible: false,
     isSortSelectVisible: false,
     isCollectionsGridVisible: false,
@@ -51,31 +52,10 @@ const NewCollection: React.FC = () => {
     isMathProblemVisible: false,
     isDotButtonVisible: false,
     isImageUploadVisible: false,
-    isPreviousButtonVisible: false,
-    isProgressIndicatorVisible: false,
-    isPauseButtonVisible: false,
-    isScreenClickAreaVisible: false,
-    isMatchingGameVisible: false,
-    isMultipleWordsGameVisible: false,
-    isRegisterButtonVisible: false,
-    isLoginButtonVisible: false,
-    isProfileVisible: false,
-    isUpdateFormVisible: false,
     isNameInputVisible: false,
     isAddNameButtonVisible: false,
     isSpinButtonVisible: false,
     isNamesListVisible: false,
-    isCollectionNameVisible: true,
-    isCategorySelectVisible: true,
-    isStageSelectVisible: true,
-    isPublicCheckboxVisible: true,
-    isSubmitButtonVisible: true,
-    isReportsOverviewVisible: false,
-    isReportsListVisible: false,
-    isFAQSectionVisible: false,
-    isInstructionalVideosVisible: false,
-    isTimedChallengesVisible: false,
-    isCollectionsOverviewVisible: false,
     isCollectionCardVisible: false,
     isEditCollectionButtonVisible: false,
     isDeleteCollectionButtonVisible: false,
@@ -101,7 +81,7 @@ const NewCollection: React.FC = () => {
 
   // Add a function to start the tour
   const startTour = () => {
-    const tourCompleted = localStorage.getItem("tourCompleted");
+    const tourCompleted = localStorage.getItem("newCollectionTourCompleted");
     if (!tourCompleted) {
       setIsTourRunning(true);
       setCurrentTourStep(0); // Reset to the first step
@@ -142,7 +122,8 @@ const NewCollection: React.FC = () => {
 
   const handleTourComplete = () => {
     console.log("Tour completed");
-    setIsTourRunning(false); // Reset the tour running state
+    setIsTourRunning(false);
+    localStorage.setItem("newCollectionTourCompleted", "true"); // Store completion state specifically for this tour
   };
 
   // Example of updating visibility states based on some condition

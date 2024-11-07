@@ -4,7 +4,6 @@ import { fetchCollections } from "../../api"; // Import the fetchCollections fun
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsTimedChallenges } from "./tourStepsTimedChallenges";
 import GuidedTour from "../../components/GuidedTour";
-import { VisibilityStates } from "../../types/VisibilityStates";
 
 // Define the Collection interface
 interface Collection {
@@ -29,81 +28,11 @@ const TimedChallenges: React.FC = () => {
   const [collections, setCollections] = useState<Collection[]>([]); // State to hold collections
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
 
-  // Initialize visibilityStates with all properties
-  const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
-    isDotCountTypeVisible: false,
-    isMinDotsVisible: false,
-    isMaxDotsVisible: false,
-    isTypeSelectVisible: false,
-    isItemCountVisible: false,
-    isCollectionItemCountVisible: false,
-    isDotColorVisible: false,
-    isDotShapeVisible: false,
-    isGenerateRandomSequenceButtonVisible: false,
-    isFileUploadVisible: false,
-    isNextButtonVisible: false,
-    isClearButtonVisible: false,
-    isGeneratedSequencePreviewVisible: false,
-    isBadgesSectionVisible: false,
-    isAchievementsSectionVisible: false,
-    isLoadingMessageVisible: false,
-    isSearchInputVisible: false,
-    isSortSelectVisible: false,
-    isCollectionsGridVisible: false,
-    isPreviewButtonVisible: false,
-    isSaveButtonVisible: false,
-    isItemPreviewVisible: false,
-    isMathProblemVisible: false,
-    isDotButtonVisible: false,
-    isImageUploadVisible: false,
-    isPreviousButtonVisible: false,
-    isProgressIndicatorVisible: false,
-    isPauseButtonVisible: false,
-    isScreenClickAreaVisible: false,
-    isMatchingGameVisible: false,
-    isMultipleWordsGameVisible: false,
-    isRegisterButtonVisible: false,
-    isLoginButtonVisible: false,
-    isProfileVisible: false,
-    isUpdateFormVisible: false,
-    isNameInputVisible: false,
-    isAddNameButtonVisible: false,
-    isSpinButtonVisible: false,
-    isNamesListVisible: false,
-    isCollectionNameVisible: false,
-    isCategorySelectVisible: false,
-    isStageSelectVisible: false,
-    isPublicCheckboxVisible: false,
-    isSubmitButtonVisible: false,
-    isReportsOverviewVisible: false,
-    isReportsListVisible: false,
-    isFAQSectionVisible: false,
-    isInstructionalVideosVisible: false,
-    isTimedChallengesVisible: true,
-    isCollectionsOverviewVisible: true,
-    isCollectionCardVisible: false,
-    isStartCollectionButtonVisible: false,
-    isEditCollectionButtonVisible: false,
-    isDeleteCollectionButtonVisible: false,
-    isMainFontVisible: false,
-    isHeadingFontVisible: false,
-    isButtonFontVisible: false,
-    isColorThemeVisible: false,
-    isTextColorVisible: false,
-    isBackgroundColorVisible: false,
-    isAccessibilityVisible: false,
-    isBackgroundThemeVisible: false,
-    isSessionSettingsModalVisible: false,
-    isEditCollectionModalVisible: false,
-    isDuplicateCollectionModalVisible: false,
-    isCollectionPreviewModalVisible: false,
-  });
-
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   // Define the steps variable
-  const steps = tourStepsTimedChallenges(visibilityStates); // Create tour steps based on visibility states
+  const steps = tourStepsTimedChallenges(); // Create tour steps without visibility states
 
   useEffect(() => {
     const loadCollections = async () => {
@@ -143,17 +72,6 @@ const TimedChallenges: React.FC = () => {
   useEffect(() => {
     startTour(); // Start the tour when the component mounts
   }, []);
-
-  // Example of updating visibility states based on some logic
-  useEffect(() => {
-    // Update visibility states based on your application logic
-    if (!isLoading) {
-      setVisibilityStates((prev) => ({
-        ...prev,
-        isCollectionsOverviewVisible: collections.length > 0, // Show if there are collections
-      }));
-    }
-  }, [isLoading, collections]);
 
   return (
     <div

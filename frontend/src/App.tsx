@@ -96,8 +96,21 @@ const App: React.FC = () => {
 
   const getTourSteps = (): Step[] => {
     const visibilityStates: VisibilityStates = {
-      isDotCountTypeVisible: true,
-      isMinDotsVisible: true,
+      isCollectionCardVisible: false,
+      isStartCollectionButtonVisible: false,
+      isEditCollectionButtonVisible: false,
+      isDeleteCollectionButtonVisible: false,
+      isCollectionNameVisible: false,
+      isCategorySelectVisible: false,
+      isStageSelectVisible: false,
+      isPublicCheckboxVisible: false,
+      isSubmitButtonVisible: false,
+      isSearchInputVisible: false,
+      isSortSelectVisible: false,
+      isCollectionsGridVisible: false,
+      isPreviewButtonVisible: false,
+      isDotCountTypeVisible: false,
+      isMinDotsVisible: false,
       isMaxDotsVisible: false,
       isTypeSelectVisible: false,
       isItemCountVisible: false,
@@ -106,50 +119,17 @@ const App: React.FC = () => {
       isDotShapeVisible: false,
       isGenerateRandomSequenceButtonVisible: false,
       isFileUploadVisible: false,
-      isNextButtonVisible: false,
       isClearButtonVisible: false,
       isGeneratedSequencePreviewVisible: false,
-      isBadgesSectionVisible: false,
-      isAchievementsSectionVisible: false,
-      isLoadingMessageVisible: false,
-      isSearchInputVisible: false,
-      isSortSelectVisible: false,
-      isCollectionsGridVisible: false,
-      isPreviewButtonVisible: false,
       isSaveButtonVisible: false,
       isItemPreviewVisible: false,
       isMathProblemVisible: false,
       isDotButtonVisible: false,
       isImageUploadVisible: false,
-      isPreviousButtonVisible: false,
-      isProgressIndicatorVisible: false,
-      isPauseButtonVisible: false,
-      isScreenClickAreaVisible: false,
-      isMatchingGameVisible: false,
-      isMultipleWordsGameVisible: false,
-      isRegisterButtonVisible: true,
-      isLoginButtonVisible: true,
-      isProfileVisible: false,
-      isUpdateFormVisible: false,
       isNameInputVisible: false,
       isAddNameButtonVisible: false,
       isSpinButtonVisible: false,
       isNamesListVisible: false,
-      isCollectionNameVisible: false,
-      isCategorySelectVisible: false,
-      isStageSelectVisible: false,
-      isPublicCheckboxVisible: false,
-      isSubmitButtonVisible: false,
-      isReportsOverviewVisible: false,
-      isReportsListVisible: false,
-      isFAQSectionVisible: false,
-      isInstructionalVideosVisible: false,
-      isTimedChallengesVisible: false,
-      isCollectionsOverviewVisible: false,
-      isCollectionCardVisible: false,
-      isStartCollectionButtonVisible: false,
-      isEditCollectionButtonVisible: false,
-      isDeleteCollectionButtonVisible: false,
       isMainFontVisible: false,
       isHeadingFontVisible: false,
       isButtonFontVisible: false,
@@ -166,35 +146,82 @@ const App: React.FC = () => {
 
     switch (location.pathname) {
       case "/":
-        return tourStepsLandingPage(visibilityStates);
+        return tourStepsLandingPage();
       case "/your-collections":
+        visibilityStates.isCollectionCardVisible = true;
+        visibilityStates.isStartCollectionButtonVisible = true;
+        visibilityStates.isEditCollectionButtonVisible = true;
+        visibilityStates.isDeleteCollectionButtonVisible = true;
+        visibilityStates.isSessionSettingsModalVisible = false;
+        visibilityStates.isEditCollectionModalVisible = false;
+        visibilityStates.isDuplicateCollectionModalVisible = false;
+        visibilityStates.isCollectionPreviewModalVisible = false;
         return tourStepsYourCollections(visibilityStates);
       case "/new-collection":
+        visibilityStates.isCollectionNameVisible = true;
+        visibilityStates.isCategorySelectVisible = true;
+        visibilityStates.isStageSelectVisible = true;
+        visibilityStates.isPublicCheckboxVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
         return tourStepsNewCollection(visibilityStates);
       case "/discover-collections":
+        visibilityStates.isSearchInputVisible = true;
+        visibilityStates.isSortSelectVisible = true;
+        visibilityStates.isCollectionsGridVisible = true;
+        visibilityStates.isPreviewButtonVisible = true;
         return tourStepsDiscoverCollections(visibilityStates);
       case "/full-screen-display":
-        return tourStepsFullScreenDisplay(visibilityStates);
+        return tourStepsFullScreenDisplay();
       case "/collection-setup":
+        visibilityStates.isDotCountTypeVisible = true;
+        visibilityStates.isMinDotsVisible = true;
+        visibilityStates.isMaxDotsVisible = true;
+        visibilityStates.isTypeSelectVisible = true;
+        visibilityStates.isItemCountVisible = true;
+        visibilityStates.isCollectionItemCountVisible = true;
+        visibilityStates.isDotColorVisible = true;
+        visibilityStates.isDotShapeVisible = true;
+        visibilityStates.isGenerateRandomSequenceButtonVisible = true;
+        visibilityStates.isFileUploadVisible = true;
+        visibilityStates.isClearButtonVisible = true;
+        visibilityStates.isSubmitButtonVisible = true;
+        visibilityStates.isGeneratedSequencePreviewVisible = true;
         return tourStepsCollectionSetup(visibilityStates);
       case "/collection-final-step":
+        visibilityStates.isSaveButtonVisible = true;
+        visibilityStates.isItemPreviewVisible = true;
+        visibilityStates.isMathProblemVisible = true;
+        visibilityStates.isDotButtonVisible = true;
+        visibilityStates.isImageUploadVisible = true;
         return tourStepsCollectionFinalStep(visibilityStates);
       case "/name-generator":
+        visibilityStates.isNameInputVisible = true;
+        visibilityStates.isAddNameButtonVisible = true;
+        visibilityStates.isSpinButtonVisible = true;
+        visibilityStates.isNamesListVisible = true;
         return tourStepsNameGenerator(visibilityStates);
       case "/resources":
-        return tourStepsResources(visibilityStates);
+        return tourStepsResources();
       case "/settings":
+        visibilityStates.isMainFontVisible = true;
+        visibilityStates.isHeadingFontVisible = true;
+        visibilityStates.isButtonFontVisible = true;
+        visibilityStates.isColorThemeVisible = true;
+        visibilityStates.isTextColorVisible = true;
+        visibilityStates.isBackgroundColorVisible = true;
+        visibilityStates.isAccessibilityVisible = true;
+        visibilityStates.isBackgroundThemeVisible = true;
         return tourStepsSettings(visibilityStates);
       case "/my-account":
-        return tourStepsMyAccount(visibilityStates);
+        return tourStepsMyAccount();
       case "/games":
-        return tourStepsGames(visibilityStates);
+        return tourStepsGames();
       case "/timed-challenges":
-        return tourStepsTimedChallenges(visibilityStates);
+        return tourStepsTimedChallenges();
       case "/reports":
-        return tourStepsReports(visibilityStates);
+        return tourStepsReports();
       case "/badges-achievements":
-        return tourStepsBadgesAchievements(visibilityStates);
+        return tourStepsBadgesAchievements();
       default:
         return [];
     }
