@@ -88,9 +88,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       isColorblindMode: false,
       colorblindType: "protanopia",
       isDarkMode: false,
-      font: "Arial",
-      headingFont: "Arial",
-      buttonFont: "Arial",
+      font: "Caveat",
+      headingFont: "Chewy",
+      buttonFont: "Patrick Hand",
       originalTextColor: colorSchemes[2].textColor,
       originalBackgroundColor: colorSchemes[2].backgroundColor,
       displayTextColor: colorSchemes[2].textColor,
@@ -312,7 +312,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       document.documentElement.classList.remove("dark");
     }
 
-    document.documentElement.style.setProperty("--font-family", theme.font);
+    document.documentElement.style.setProperty("--font-family", effectiveTheme.font);
     document.documentElement.style.setProperty(
       "--heading-font-family",
       theme.headingFont,
