@@ -6,6 +6,7 @@ import {
   ColorScheme,
   colorSchemes,
 } from "../constants/colorSchemes";
+import { adjustColorForColorblindness as adjustColor } from "../utils/colorAdjustment";
 
 const ThemeSelector: React.FC = () => {
   const {
@@ -21,35 +22,73 @@ const ThemeSelector: React.FC = () => {
       (scheme: ColorScheme) => scheme.name === event.target.value,
     );
     if (selectedScheme) {
-      setTheme((prevTheme) => ({
-        ...selectedScheme,
-        isColorblindMode: prevTheme.isColorblindMode,
-        colorblindType: prevTheme.colorblindType,
-        isDarkMode: prevTheme.isDarkMode,
-        font: prevTheme.font,
-        headingFont: prevTheme.headingFont,
-        buttonFont: prevTheme.buttonFont,
-        displayTextColor: selectedScheme.textColor,
-        displayBackgroundColor: selectedScheme.backgroundColor,
-        originalTextColor: prevTheme.originalTextColor,
-        originalBackgroundColor: prevTheme.originalBackgroundColor,
-        adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
-      }));
+      setTheme((prevTheme) => {
+        // Store the new original colors
+        const originalTextColor = selectedScheme.textColor;
+        const originalBackgroundColor = selectedScheme.backgroundColor;
+        // Create base theme
+        const baseTheme = {
+          ...selectedScheme,
+          isColorblindMode: prevTheme.isColorblindMode,
+          colorblindType: prevTheme.colorblindType,
+          isDarkMode: prevTheme.isDarkMode,
+          font: prevTheme.font,
+          headingFont: prevTheme.headingFont,
+          buttonFont: prevTheme.buttonFont,
+          originalTextColor,
+          originalBackgroundColor,
+          adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
+        };
+        // If colorblind mode is enabled, adjust the colors
+        if (prevTheme.isColorblindMode) {
+          const adjustedTextColor = adjustColor(
+            originalTextColor,
+            prevTheme.colorblindType
+          );
+          const adjustedBackgroundColor = adjustColor(
+            originalBackgroundColor,
+            prevTheme.colorblindType
+          );
+          return {
+            ...baseTheme,
+            displayTextColor: adjustedTextColor,
+            displayBackgroundColor: adjustedBackgroundColor,
+          };
+        }
+        // If colorblind mode is not enabled, use the original colors
+        return {
+          ...baseTheme,
+          displayTextColor: originalTextColor,
+          displayBackgroundColor: originalBackgroundColor,
+        };
+      });
     }
   };
 
-  const handleTextColorChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    console.log("Selected text color:", event.target.value);
-    setDisplayTextColor(event.target.value);
+  const handleTextColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newColor = event.target.value;
+    if (theme.isColorblindMode) {
+      setDisplayTextColor(adjustColor(newColor, theme.colorblindType));
+    } else {
+      setDisplayTextColor(newColor);
+    }
+    setTheme(prevTheme => ({
+      ...prevTheme,
+      originalTextColor: newColor,
+    }));
   };
 
-  const handleBackgroundColorChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    console.log("Selected background color:", event.target.value);
-    setDisplayBackgroundColor(event.target.value);
+  const handleBackgroundColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newColor = event.target.value;
+    if (theme.isColorblindMode) {
+      setDisplayBackgroundColor(adjustColor(newColor, theme.colorblindType));
+    } else {
+      setDisplayBackgroundColor(newColor);
+    }
+    setTheme(prevTheme => ({
+      ...prevTheme,
+      originalBackgroundColor: newColor,
+    }));
   };
 
   return (
@@ -120,6 +159,7 @@ const ThemeSelector: React.FC = () => {
         Dark Mode:
       </label>
       <button
+        type="submit"
         id="dark-mode-toggle"
         onClick={toggleDarkMode}
         className="text-theme-text bg-theme-bg mb-4 w-full rounded-md border border-gray-300 p-2"

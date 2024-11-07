@@ -1,24 +1,30 @@
 import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const UserRoleFeatures: React.FC = () => {
+interface UserRoleFeaturesProps {
+  role: string; // Accept role as a prop
+}
+
+const UserRoleFeatures: React.FC<UserRoleFeaturesProps> = ({ role }) => {
   const { user } = useAuth0();
 
   useEffect(() => {
-    console.log("UserRoleFeatures component rendered. Current user:", user);
+    if (user) {
+      console.log("UserRoleFeatures component rendered. Current user:", user);
+    }
   }, [user]);
 
   return (
     <div>
       {user ? (
         <>
-          {user.role === "teacher" && (
+          {role === "teacher" && ( // Use the role prop instead of user.role
             <div>
               <h2>Teacher Features</h2>
               {/* Render teacher-specific features */}
             </div>
           )}
-          {user.role === "student" && (
+          {role === "student" && ( // Use the role prop instead of user.role
             <div>
               <h2>Student Features</h2>
               {/* Render student-specific features */}

@@ -26,6 +26,4 @@ export const colorSchemes: ColorScheme[] = [
 
 export const collectionColorSchemes = colorSchemes.slice(2); // Exclude White and Black
 
-export const appBackgroundColors = {
-  // Define your app background colors here
-};
+export const appBackgroundColors = colorSchemes; // Use the full colorSchemes array instead of an empty object
