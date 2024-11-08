@@ -12,8 +12,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    font-family: var(--font-family, 'KG What the Teacher Wants');
-    @apply font-teacher;
+    font-family: var(--font-family, "KG What the Teacher Wants", sans-serif);
   }
 
   html,
@@ -27,17 +26,12 @@
   h2,
   h3 {
     @apply font-teacher;
-    font-family: 'KG What the Teacher Wants';
-  }
-
-  p {
-    @apply font-teacher;
-    font-family: 'KG What the Teacher Wants';
+    font-family: var(--heading-font-family, "KG What the Teacher Wants");
   }
 
   button {
     @apply font-teacher;
-    font-family: 'KG What the Teacher Wants';
+    font-family: var(--button-font-family, "KG What the Teacher Wants");
   }
 
   h1 {
