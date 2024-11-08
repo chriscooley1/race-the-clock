@@ -25,7 +25,7 @@ const WheelSegment: React.FC<WheelSegmentProps> = ({
         type="text"
         value={name}
         onChange={handleEdit}
-        className="font-caveat mr-2 grow rounded border border-current bg-white p-2 text-base text-black"
+        className="font-teacher mr-2 grow rounded border border-current bg-white p-2 text-base text-black"
         placeholder="Edit name"
         title={`Edit name ${index + 1}`}
       />

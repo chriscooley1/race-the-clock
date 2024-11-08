@@ -151,7 +151,7 @@ const NewCollection: React.FC = () => {
             <input
               type="text"
               id="collectionName"
-              className={`collection-name-input font-caveat rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+              className={`collection-name-input font-teacher rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Collection Name"
@@ -168,7 +168,7 @@ const NewCollection: React.FC = () => {
             </label>
             <select
               id="categorySelect"
-              className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+              className={`font-teacher w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
@@ -188,7 +188,7 @@ const NewCollection: React.FC = () => {
             </label>
             <select
               id="stageSelect"
-              className={`font-caveat w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+              className={`font-teacher w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
               value={stage}
               onChange={(e) => setStage(e.target.value)}
             >
