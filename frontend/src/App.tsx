@@ -142,6 +142,7 @@ const App: React.FC = () => {
       isEditCollectionModalVisible: false,
       isDuplicateCollectionModalVisible: false,
       isCollectionPreviewModalVisible: false,
+      isNextButtonVisible: false,
     };
 
     switch (location.pathname) {
@@ -186,6 +187,7 @@ const App: React.FC = () => {
         visibilityStates.isClearButtonVisible = true;
         visibilityStates.isSubmitButtonVisible = true;
         visibilityStates.isGeneratedSequencePreviewVisible = true;
+        visibilityStates.isNextButtonVisible = true;
         return tourStepsCollectionSetup(visibilityStates);
       case "/collection-final-step":
         visibilityStates.isSaveButtonVisible = true;

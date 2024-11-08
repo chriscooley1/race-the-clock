@@ -150,6 +150,7 @@ const YourCollections: React.FC = () => {
     isEditCollectionModalVisible: false,
     isDuplicateCollectionModalVisible: false,
     isCollectionPreviewModalVisible: false,
+    isNextButtonVisible: false,
   });
 
   // Tour state management

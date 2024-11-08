@@ -71,6 +71,7 @@ const NewCollection: React.FC = () => {
     isEditCollectionModalVisible: false,
     isDuplicateCollectionModalVisible: false,
     isCollectionPreviewModalVisible: false,
+    isNextButtonVisible: false,
   });
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
