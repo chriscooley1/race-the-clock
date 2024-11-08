@@ -33,8 +33,11 @@ export const tourStepsDiscoverCollections = (
     },
     {
       target: ".collection-preview-modal",
-      content: "This modal shows details about the collection and allows you to subscribe.",
-      ...(visibilityStates.isCollectionPreviewModalVisible ? { isOpen: true } : {}),
+      content:
+        "This modal shows details about the collection and allows you to subscribe.",
+      ...(visibilityStates.isCollectionPreviewModalVisible
+        ? { isOpen: true }
+        : {}),
     },
   ];
 

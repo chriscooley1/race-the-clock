@@ -159,7 +159,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 
   const handleEndSession = useCallback(() => {
     console.log("Ending session..."); // Debug log
-    if (stopCondition === "timer") { // Check if stopCondition is "timer"
+    if (stopCondition === "timer") {
+      // Check if stopCondition is "timer"
       console.log(
         "Session ended due to timer. Redirecting to Your Collections...",
       );

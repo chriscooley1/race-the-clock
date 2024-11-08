@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useTheme, setThemeWithColorAdjustment } from "../../context/ThemeContext";
+import {
+  useTheme,
+  setThemeWithColorAdjustment,
+} from "../../context/ThemeContext";
 import { ColorScheme, colorSchemes } from "../../constants/colorSchemes";
 import { tourStepsSettings } from "./tourStepsSettings";
 import GuidedTour from "../../components/GuidedTour";
@@ -113,7 +116,7 @@ const Settings: React.FC = () => {
 
   const handleBackgroundColorChange = (color: string) => {
     setDisplayBackgroundColor(color);
-    setTheme(prevTheme => {
+    setTheme((prevTheme) => {
       const newTheme = {
         ...prevTheme,
         originalBackgroundColor: color,
@@ -210,7 +213,8 @@ const Settings: React.FC = () => {
 
   const handleColorThemeChange = (color: ColorScheme) => {
     setTheme((prevTheme) => {
-      const newDisplayTextColor = getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+      const newDisplayTextColor =
+        getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
       const newTheme = {
         ...color,
         isColorblindMode: prevTheme.isColorblindMode,

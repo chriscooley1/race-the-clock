@@ -799,6 +799,7 @@ const CollectionSetup: React.FC = () => {
                 )}
                 <div className="mt-2 flex justify-between">
                   <button
+                    type="button"
                     onClick={() =>
                       editItem(
                         index,
@@ -810,6 +811,7 @@ const CollectionSetup: React.FC = () => {
                     Edit
                   </button>
                   <button
+                    type="button"
                     onClick={() => deleteItem(index)}
                     className="text-red-500"
                   >

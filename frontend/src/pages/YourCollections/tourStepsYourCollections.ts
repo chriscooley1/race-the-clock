@@ -40,17 +40,23 @@ export const tourStepsYourCollections = (
     {
       target: ".session-settings-modal",
       content: "Configure your session settings here before starting.",
-      ...(visibilityStates.isSessionSettingsModalVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isSessionSettingsModalVisible
+        ? { isOpen: true }
+        : {}),
     },
     {
       target: ".edit-collection-modal",
       content: "Edit your collection details in this modal.",
-      ...(visibilityStates.isEditCollectionModalVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isEditCollectionModalVisible
+        ? { isOpen: true }
+        : {}),
     },
     {
       target: ".duplicate-collection-modal",
       content: "Use this modal to duplicate an existing collection.",
-      ...(visibilityStates.isDuplicateCollectionModalVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isDuplicateCollectionModalVisible
+        ? { isOpen: true }
+        : {}),
     },
   ];
 

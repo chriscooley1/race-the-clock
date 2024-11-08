@@ -53,7 +53,9 @@ const Reports: React.FC = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const fetchedCollections = await fetchCollections(getAccessTokenSilently);
+        const fetchedCollections = await fetchCollections(
+          getAccessTokenSilently,
+        );
         setCollections(fetchedCollections);
       } catch (error) {
         console.error("Error loading collections:", error);
@@ -113,7 +115,8 @@ const Reports: React.FC = () => {
           <ul>
             {collections.map((collection) => (
               <li key={collection.collection_id}>
-                {collection.name} - Completed: {getCompletionCount(collection)} times
+                {collection.name} - Completed: {getCompletionCount(collection)}{" "}
+                times
               </li>
             ))}
           </ul>

@@ -26,8 +26,12 @@ const ThemeSelector: React.FC = () => {
     if (selectedScheme) {
       setTheme((prevTheme) => {
         // Special handling for Black and White themes
-        if (selectedScheme.name === "White" || selectedScheme.name === "Black") {
-          const newDisplayTextColor = selectedScheme.name === "White" ? "#000000" : "#FFFFFF";
+        if (
+          selectedScheme.name === "White" ||
+          selectedScheme.name === "Black"
+        ) {
+          const newDisplayTextColor =
+            selectedScheme.name === "White" ? "#000000" : "#FFFFFF";
           const baseTheme = {
             ...selectedScheme,
             isColorblindMode: prevTheme.isColorblindMode,
@@ -38,14 +42,18 @@ const ThemeSelector: React.FC = () => {
             buttonFont: prevTheme.buttonFont,
             originalTextColor: newDisplayTextColor,
             originalBackgroundColor: selectedScheme.backgroundColor,
-            adjustColorForColorblindness: (color: string) => adjustColor(color, prevTheme.colorblindType),
+            adjustColorForColorblindness: (color: string) =>
+              adjustColor(color, prevTheme.colorblindType),
             displayTextColor: newDisplayTextColor,
           };
           return setThemeWithColorAdjustment(baseTheme);
         }
 
         // For all other themes, use luminance-based text color
-        const newDisplayTextColor = getLuminance(selectedScheme.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+        const newDisplayTextColor =
+          getLuminance(selectedScheme.backgroundColor) < 0.5
+            ? "#FFFFFF"
+            : "#000000";
         const baseTheme = {
           ...selectedScheme,
           isColorblindMode: prevTheme.isColorblindMode,
@@ -56,7 +64,8 @@ const ThemeSelector: React.FC = () => {
           buttonFont: prevTheme.buttonFont,
           originalTextColor: newDisplayTextColor,
           originalBackgroundColor: selectedScheme.backgroundColor,
-          adjustColorForColorblindness: (color: string) => adjustColor(color, prevTheme.colorblindType),
+          adjustColorForColorblindness: (color: string) =>
+            adjustColor(color, prevTheme.colorblindType),
           displayTextColor: newDisplayTextColor,
         };
         return setThemeWithColorAdjustment(baseTheme);
@@ -64,28 +73,33 @@ const ThemeSelector: React.FC = () => {
     }
   };
 
-  const handleTextColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTextColorChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     const newColor = event.target.value;
     if (theme.isColorblindMode) {
       setDisplayTextColor(adjustColor(newColor, theme.colorblindType));
     } else {
       setDisplayTextColor(newColor);
     }
-    setTheme(prevTheme => ({
+    setTheme((prevTheme) => ({
       ...prevTheme,
       originalTextColor: newColor,
     }));
   };
 
-  const handleBackgroundColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleBackgroundColorChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     const newColor = event.target.value;
     setDisplayBackgroundColor(newColor);
-    setTheme(prevTheme => {
+    setTheme((prevTheme) => {
       const newTheme = {
         ...prevTheme,
         originalBackgroundColor: newColor,
         displayTextColor: getLuminance(newColor) < 0.5 ? "#FFFFFF" : "#000000",
-        adjustColorForColorblindness: (color: string) => adjustColor(color, prevTheme.colorblindType),
+        adjustColorForColorblindness: (color: string) =>
+          adjustColor(color, prevTheme.colorblindType),
       };
       return setThemeWithColorAdjustment(newTheme);
     });
@@ -93,7 +107,8 @@ const ThemeSelector: React.FC = () => {
 
   const handleColorThemeChange = (color: ColorScheme) => {
     setTheme((prevTheme) => {
-      const newDisplayTextColor = getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+      const newDisplayTextColor =
+        getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
       const newTheme = {
         ...color,
         isColorblindMode: prevTheme.isColorblindMode,

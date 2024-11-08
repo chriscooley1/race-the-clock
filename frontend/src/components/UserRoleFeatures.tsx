@@ -42,4 +42,4 @@ const UserRoleFeatures: React.FC<UserRoleFeaturesProps> = ({ role }) => {
   );
 };
 
-export default UserRoleFeatures; 
+export default UserRoleFeatures;
