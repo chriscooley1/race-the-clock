@@ -90,7 +90,7 @@ const config: Config = {
     ...colorSchemes.map((scheme) => `bg-[${scheme.backgroundColor}]`),
     ...colorSchemes.map((scheme) => `text-[${scheme.textColor}]`),
     // Add the custom classes to the safelist
-    "font-caveat",
+    "font-teacher",
     "bg-light-blue",
     "bg-custom-red",
     "hover:bg-custom-red-dark",
