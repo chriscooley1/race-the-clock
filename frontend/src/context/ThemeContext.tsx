@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import { adjustColorForColorblindness as adjustColor } from "../utils/colorAdjustment";
 import { colorSchemes } from "../constants/colorSchemes";
-import { darkenColor, lightenColor } from "../utils/colorUtils";
+import { darkenColor, lightenColor, getLuminance } from "../utils/colorUtils";
 
 interface Theme {
   name: string;
@@ -34,6 +34,7 @@ interface Theme {
 interface ThemeContextType {
   theme: Theme;
   setTheme: Dispatch<SetStateAction<Theme>>;
+  updateTheme: (newTheme: Theme) => void;
   setDisplayTextColor: (color: string) => void;
   setDisplayBackgroundColor: (color: string) => void;
   setColorblindMode: (isEnabled: boolean) => void;
@@ -44,6 +45,17 @@ interface ThemeContextType {
   setHeadingFont: (font: string) => void;
   setButtonFont: (font: string) => void;
 }
+
+// Move the function outside of the ThemeProvider
+export const setThemeWithColorAdjustment = (newTheme: Theme) => {
+  const luminance = getLuminance(newTheme.backgroundColor);
+  const isDarkBackground = luminance < 0.5; // Threshold for dark background
+
+  return {
+    ...newTheme,
+    displayTextColor: isDarkBackground ? "#FFFFFF" : "#000000", // Set text color based on background
+  };
+};
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
@@ -109,6 +121,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     setTheme((prevTheme) => ({ ...prevTheme, displayBackgroundColor: color }));
   };
 
+  const updateTheme = (newTheme: Theme) => {
+    setTheme(setThemeWithColorAdjustment(newTheme));
+  };
+
   const setColorblindMode = (isEnabled: boolean) => {
     setTheme((prevTheme) => {
       const originalTextColor = prevTheme.originalTextColor || prevTheme.textColor;
@@ -130,13 +146,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
           backgroundColor: adjustColor(originalBackgroundColor, prevTheme.colorblindType),
         };
       } else {
-        return {
-          ...newTheme,
-          displayTextColor: originalTextColor,
-          displayBackgroundColor: originalBackgroundColor,
-          textColor: originalTextColor,
-          backgroundColor: originalBackgroundColor,
-        };
+        return setThemeWithColorAdjustment(newTheme); // Adjust text color based on background
       }
     });
   };
@@ -168,15 +178,27 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   const toggleDarkMode = () => {
     setTheme((prevTheme) => {
       const newIsDarkMode = !prevTheme.isDarkMode;
+      
+      // Special handling for Black and White themes
+      if (prevTheme.name === "White" || prevTheme.name === "Black") {
+        return {
+          ...prevTheme,
+          isDarkMode: newIsDarkMode,
+          // For White theme: always black text
+          // For Black theme: always white text
+          textColor: prevTheme.name === "White" ? "#000000" : "#FFFFFF",
+          displayTextColor: prevTheme.name === "White" ? "#000000" : "#FFFFFF"
+        };
+      }
+
+      // For all other themes, follow the dark/light mode logic
       return {
         ...prevTheme,
         isDarkMode: newIsDarkMode,
         backgroundColor: newIsDarkMode
           ? darkenColor(prevTheme.backgroundColor, 0.5)
           : lightenColor(prevTheme.backgroundColor, 0.5),
-        textColor: newIsDarkMode
-          ? lightenColor(prevTheme.textColor, 0.5)
-          : darkenColor(prevTheme.textColor, 0.5),
+        textColor: newIsDarkMode ? "#FFFFFF" : "#000000",
         displayBackgroundColor: newIsDarkMode
           ? darkenColor(
               prevTheme.displayBackgroundColor || prevTheme.backgroundColor,
@@ -186,9 +208,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
               prevTheme.displayBackgroundColor || prevTheme.backgroundColor,
               0.5,
             ),
-        displayTextColor: newIsDarkMode
-          ? lightenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5)
-          : darkenColor(prevTheme.displayTextColor || prevTheme.textColor, 0.5),
+        displayTextColor: newIsDarkMode ? "#FFFFFF" : "#000000",
       };
     });
   };
@@ -328,6 +348,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   const themeContextValue: ThemeContextType = {
     theme,
     setTheme,
+    updateTheme,
     setDisplayTextColor,
     setDisplayBackgroundColor,
     setColorblindMode,

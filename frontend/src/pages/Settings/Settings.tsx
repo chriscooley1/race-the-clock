@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "../../context/ThemeContext";
-import { colorSchemes } from "../../constants/colorSchemes";
+import { useTheme, setThemeWithColorAdjustment } from "../../context/ThemeContext";
+import { ColorScheme, colorSchemes } from "../../constants/colorSchemes";
 import { tourStepsSettings } from "./tourStepsSettings";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
-import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
+import { getLuminance } from "../../utils/colorUtils";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -112,8 +112,15 @@ const Settings: React.FC = () => {
   };
 
   const handleBackgroundColorChange = (color: string) => {
-    console.log("Background color selected:", color);
     setDisplayBackgroundColor(color);
+    setTheme(prevTheme => {
+      const newTheme = {
+        ...prevTheme,
+        originalBackgroundColor: color,
+        displayTextColor: getLuminance(color) < 0.5 ? "#FFFFFF" : "#000000",
+      };
+      return setThemeWithColorAdjustment(newTheme);
+    });
   };
 
   const handleColorblindModeChange = (
@@ -200,6 +207,27 @@ const Settings: React.FC = () => {
       isDotCountTypeVisible: true, // Update based on your logic
     }));
   }, []); // Add dependencies as needed
+
+  const handleColorThemeChange = (color: ColorScheme) => {
+    setTheme((prevTheme) => {
+      const newDisplayTextColor = getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+      const newTheme = {
+        ...color,
+        isColorblindMode: prevTheme.isColorblindMode,
+        colorblindType: prevTheme.colorblindType,
+        isDarkMode: prevTheme.isDarkMode,
+        font: prevTheme.font,
+        headingFont: prevTheme.headingFont,
+        buttonFont: prevTheme.buttonFont,
+        originalTextColor: newDisplayTextColor,
+        originalBackgroundColor: color.backgroundColor,
+        adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
+        displayTextColor: newDisplayTextColor,
+        textColor: newDisplayTextColor,
+      };
+      return setThemeWithColorAdjustment(newTheme);
+    });
+  };
 
   return (
     <div
@@ -312,45 +340,7 @@ const Settings: React.FC = () => {
                       (scheme) => scheme.name === color.name,
                     );
                     if (newTheme) {
-                      setTheme((prevTheme) => {
-                        const baseTheme = {
-                          ...newTheme,
-                          isColorblindMode: prevTheme.isColorblindMode,
-                          colorblindType: prevTheme.colorblindType,
-                          isDarkMode: prevTheme.isDarkMode,
-                          font: prevTheme.font,
-                          headingFont: prevTheme.headingFont,
-                          buttonFont: prevTheme.buttonFont,
-                          backgroundImage: prevTheme.backgroundImage,
-                          adjustColorForColorblindness:
-                            prevTheme.adjustColorForColorblindness,
-                          originalTextColor: newTheme.textColor,
-                          originalBackgroundColor: newTheme.backgroundColor,
-                        };
-
-                        // If colorblind mode is enabled, adjust the colors
-                        if (prevTheme.isColorblindMode) {
-                          return {
-                            ...baseTheme,
-                            displayTextColor: adjustColorForColorblindness(
-                              newTheme.textColor,
-                              prevTheme.colorblindType,
-                            ),
-                            displayBackgroundColor:
-                              adjustColorForColorblindness(
-                                newTheme.backgroundColor,
-                                prevTheme.colorblindType,
-                              ),
-                          };
-                        }
-
-                        // If colorblind mode is not enabled, use the original colors
-                        return {
-                          ...baseTheme,
-                          displayTextColor: newTheme.textColor,
-                          displayBackgroundColor: newTheme.backgroundColor,
-                        };
-                      });
+                      handleColorThemeChange(newTheme); // Use the handleColorThemeChange function
                     }
                   }}
                 />
