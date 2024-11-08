@@ -52,7 +52,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
               id="sortSelect"
               value={sortOption}
               onChange={onSortChange}
-              className="font-caveat w-40 rounded border border-gray-300 bg-white p-2 text-base text-black"
+              className="font-teacher w-40 rounded border border-gray-300 bg-white p-2 text-base text-black"
             >
               <option value="name">Name</option>
               <option value="alphabetical">Alphabetical</option>

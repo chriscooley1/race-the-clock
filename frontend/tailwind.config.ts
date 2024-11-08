@@ -48,6 +48,7 @@ const config: Config = {
         "comic-neue": ["Comic Neue", "cursive"],
         "baloo-2": ["Baloo 2", "cursive"],
         custom: "var(--font-family, 'Comic Neue', sans-serif)",
+        "teacher": ['"KG What the Teacher Wants"', "cursive"],
       },
       spacing: {
         sidebar: "250px",

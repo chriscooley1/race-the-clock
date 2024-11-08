@@ -458,7 +458,7 @@ const CollectionFinalStep: React.FC = () => {
               id="first-number-select"
               value={firstNumber}
               onChange={(e) => setFirstNumber(Number(e.target.value))}
-              className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+              className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
             >
               {Array.from({ length: 10 }, (_, i) => (
                 <option key={i} value={i + 1}>
@@ -471,7 +471,7 @@ const CollectionFinalStep: React.FC = () => {
               id="operator-select"
               value={operator}
               onChange={(e) => setOperator(e.target.value)}
-              className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+              className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
             >
               <option value="addition">+</option>
               <option value="subtraction">-</option>
@@ -483,7 +483,7 @@ const CollectionFinalStep: React.FC = () => {
               id="second-number-select"
               value={secondNumber}
               onChange={(e) => setSecondNumber(Number(e.target.value))}
-              className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+              className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
             >
               {Array.from({ length: 10 }, (_, i) => (
                 <option key={i} value={i + 1}>
@@ -518,7 +518,7 @@ const CollectionFinalStep: React.FC = () => {
                       onChange={(e) =>
                         handleDotChange(index, "position", e.target.value)
                       }
-                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
                     >
                       {[
                         ...new Set([
@@ -545,7 +545,7 @@ const CollectionFinalStep: React.FC = () => {
                       onChange={(e) =>
                         handleDotChange(index, "color", e.target.value)
                       }
-                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
                     >
                       {["blue", "green", "red", "purple", "orange"].map(
                         (color) => (
@@ -567,7 +567,7 @@ const CollectionFinalStep: React.FC = () => {
                       onChange={(e) =>
                         handleDotChange(index, "shape", e.target.value)
                       }
-                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+                      className="mb-2 w-full rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
                     >
                       {["circle", "square", "triangle"].map((shape) => (
                         <option key={shape} value={shape}>
@@ -611,7 +611,7 @@ const CollectionFinalStep: React.FC = () => {
                   id="element-select"
                   value={selectedElement}
                   onChange={handleElementSelect}
-                  className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+                  className="mb-4 w-full rounded-md border border-gray-300 p-2 font-teacher"
                 >
                   <option value="">Select an element</option>
                   {Object.values(periodicTable).map((element) => (
@@ -641,7 +641,7 @@ const CollectionFinalStep: React.FC = () => {
                   id="term-select"
                   value={selectedTerm}
                   onChange={handleTermSelect}
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-teacher text-black"
                 >
                   <option value="">Select a term</option>
                   {terms.map((term, index) => (
@@ -658,7 +658,7 @@ const CollectionFinalStep: React.FC = () => {
                   id="custom-term-input"
                   value={customTerm}
                   onChange={handleCustomTermChange}
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-black"
+                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-teacher text-black"
                   placeholder={`Enter custom ${category.toLowerCase()} term`}
                 />
                 <button
@@ -679,7 +679,7 @@ const CollectionFinalStep: React.FC = () => {
                   id="new-item-input"
                   value={newItem}
                   onChange={(e) => setNewItem(e.target.value)}
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-teacher"
                   placeholder={`Enter new ${
                     category === "Science"
                       ? "science term"
@@ -707,7 +707,7 @@ const CollectionFinalStep: React.FC = () => {
             <div key={item.id} className="mb-2 flex items-center">
               <input
                 type="text"
-                className="mr-2 grow rounded-md border border-gray-300 p-2 font-['Caveat']"
+                className="mr-2 grow rounded-md border border-gray-300 p-2 font-teacher"
                 value={item.name}
                 readOnly
                 title={`Item ${item.id}: ${item.name}`}
