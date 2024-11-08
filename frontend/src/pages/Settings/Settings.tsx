@@ -159,6 +159,7 @@ const Settings: React.FC = () => {
     "Patrick Hand",
     "Chewy",
     "Baloo 2",
+    "KG What the Teacher Wants",
   ];
 
   const backgroundThemes = [

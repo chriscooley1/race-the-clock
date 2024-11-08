@@ -520,7 +520,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="typeSelect"
-                className="font-caveat rounded border border-gray-300 bg-white p-2 text-center text-black"
+                className="font-teacher rounded border border-gray-300 bg-white p-2 text-center text-black"
                 value={type}
                 onChange={(e) => {
                   setType(e.target.value);
@@ -567,7 +567,7 @@ const CollectionSetup: React.FC = () => {
                 <input
                   type="number"
                   id="itemCount"
-                  className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
+                  className="rounded-md border border-gray-300 p-2 text-center font-teacher"
                   value={itemCount}
                   min={1}
                   onChange={(e) => {
@@ -590,7 +590,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dotCountType"
-                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+                className="rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
                 value={dotCountType}
                 onChange={(e) => {
                   setDotCountType(e.target.value as "fixed" | "random");
@@ -612,7 +612,7 @@ const CollectionSetup: React.FC = () => {
                 <input
                   type="number"
                   id="itemCount"
-                  className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
+                  className="rounded-md border border-gray-300 p-2 text-center font-teacher"
                   value={itemCount}
                   min={1}
                   onChange={(e) => {
@@ -634,7 +634,7 @@ const CollectionSetup: React.FC = () => {
                   <input
                     type="number"
                     id="minDots"
-                    className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
+                    className="rounded-md border border-gray-300 p-2 text-center font-teacher"
                     value={minDots}
                     min={1}
                     onChange={(e) => {
@@ -654,7 +654,7 @@ const CollectionSetup: React.FC = () => {
                   <input
                     type="number"
                     id="maxDots"
-                    className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
+                    className="rounded-md border border-gray-300 p-2 text-center font-teacher"
                     value={maxDots}
                     min={minDots}
                     onChange={(e) => {
@@ -676,7 +676,7 @@ const CollectionSetup: React.FC = () => {
               <input
                 type="number"
                 id="collectionItemCount"
-                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat']"
+                className="rounded-md border border-gray-300 p-2 text-center font-teacher"
                 value={collectionItemCount}
                 min={1}
                 onChange={(e) => {
@@ -695,7 +695,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dot-color"
-                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+                className="rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
                 value={dotColor}
                 onChange={(e) => {
                   setDotColor(e.target.value);
@@ -718,7 +718,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dot-shape"
-                className="rounded-md border border-gray-300 p-2 text-center font-['Caveat'] text-black"
+                className="rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
                 value={dotShape}
                 onChange={(e) => {
                   setDotShape(e.target.value);
@@ -749,7 +749,7 @@ const CollectionSetup: React.FC = () => {
           <input
             type="file"
             id="fileUpload"
-            className="w-full rounded-md border border-gray-300 p-2 font-['Caveat']"
+            className="w-full rounded-md border border-gray-300 p-2 font-teacher"
             onChange={handleFileChange}
           />
         </div>
