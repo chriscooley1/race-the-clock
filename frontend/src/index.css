@@ -12,7 +12,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    font-family: var(--font-family, "Comic Neue", sans-serif);
+    font-family: var(--font-family, 'KG What the Teacher Wants');
     @apply font-teacher;
   }
 
@@ -26,14 +26,18 @@
   h1,
   h2,
   h3 {
-    @apply font-chewy;
-    font-family: var(--heading-font-family, "Chewy", cursive);
+    @apply font-teacher;
+    font-family: 'KG What the Teacher Wants';
   }
 
-  p,
+  p {
+    @apply font-teacher;
+    font-family: 'KG What the Teacher Wants';
+  }
+
   button {
-    @apply font-patrick-hand;
-    font-family: var(--button-font-family, "Patrick Hand", cursive);
+    @apply font-teacher;
+    font-family: 'KG What the Teacher Wants';
   }
 
   h1 {
@@ -59,5 +63,6 @@
   .start-session-button,
   .cancel-button {
     @apply bg-theme-bg text-theme-text;
+    font-family: 'KG What the Teacher Wants';
   }
 }
