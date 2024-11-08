@@ -45,4 +45,5 @@ export interface VisibilityStates {
   isEditCollectionModalVisible: boolean;
   isDuplicateCollectionModalVisible: boolean;
   isCollectionPreviewModalVisible: boolean;
+  isNextButtonVisible: boolean;
 }

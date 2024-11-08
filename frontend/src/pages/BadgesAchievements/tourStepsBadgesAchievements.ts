@@ -17,7 +17,8 @@ export const tourStepsBadgesAchievements = (): Step[] => {
     },
     {
       target: "h1.mb-8",
-      content: "This is the Badges & Achievements page where you can track progress.",
+      content:
+        "This is the Badges & Achievements page where you can track progress.",
     },
   ];
 

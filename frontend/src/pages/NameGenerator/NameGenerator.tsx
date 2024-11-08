@@ -71,6 +71,7 @@ const NameGenerator: React.FC = () => {
     isEditCollectionModalVisible: false,
     isDuplicateCollectionModalVisible: false,
     isCollectionPreviewModalVisible: false,
+    isNextButtonVisible: false,
   });
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -294,7 +295,7 @@ const NameGenerator: React.FC = () => {
                 value={nameInput}
                 onChange={(e) => setNameInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="font-caveat mr-2 rounded border border-current bg-white p-2 text-center text-base text-black"
+                className="font-teacher mr-2 rounded border border-current bg-white p-2 text-center text-base text-black"
                 placeholder="Enter a name"
               />
               {visibilityStates.isAddNameButtonVisible && (

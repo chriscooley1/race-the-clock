@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Chewy&family=Comic+Neue:wght@400;700&family=Patrick+Hand&family=Baloo+2:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=KG+What+The+Teacher+Wants&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +13,7 @@
     background-position: center;
     background-repeat: no-repeat;
     font-family: var(--font-family, "Comic Neue", sans-serif);
+    @apply font-teacher;
   }
 
   html,

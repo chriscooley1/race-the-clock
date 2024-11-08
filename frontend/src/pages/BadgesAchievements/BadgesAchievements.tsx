@@ -100,9 +100,7 @@ const BadgesAchievements: React.FC = () => {
           <h2 className="text-2xl font-semibold">Badges</h2>
           <ul className="list-disc pl-5">
             {badges.length > 0 ? (
-              badges.map((badge, index) => (
-                <li key={index}>{badge}</li>
-              ))
+              badges.map((badge, index) => <li key={index}>{badge}</li>)
             ) : (
               <li>No badges available.</li>
             )}

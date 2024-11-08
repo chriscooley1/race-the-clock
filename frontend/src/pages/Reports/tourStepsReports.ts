@@ -10,11 +10,13 @@ export const tourStepsReports = (): Step[] => {
     },
     {
       target: "h1.mb-8", // Target the main title
-      content: "This is the Reports page where you can monitor user performance.",
+      content:
+        "This is the Reports page where you can monitor user performance.",
     },
     {
       target: ".reports-overview", // Target the Reports Overview component
-      content: "This section provides an overview of user performance after each session.",
+      content:
+        "This section provides an overview of user performance after each session.",
     },
     {
       target: ".reports-overview ul", // Target the reports list

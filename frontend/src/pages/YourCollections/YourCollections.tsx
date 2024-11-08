@@ -150,6 +150,7 @@ const YourCollections: React.FC = () => {
     isEditCollectionModalVisible: false,
     isDuplicateCollectionModalVisible: false,
     isCollectionPreviewModalVisible: false,
+    isNextButtonVisible: false,
   });
 
   // Tour state management
@@ -389,11 +390,15 @@ const YourCollections: React.FC = () => {
     if (selectedCollection) {
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
       const sequence = sequenceItems.map(
-        (item: { name: string; svg?: string; count?: number } | string, index: number) => ({
+        (
+          item: { name: string; svg?: string; count?: number } | string,
+          index: number,
+        ) => ({
           name: typeof item === "object" ? item.name : item,
           svg: typeof item === "object" ? item.svg : undefined,
           count: typeof item === "object" ? item.count : undefined,
-          isAnswer: selectedCollection.type === "mathProblems" && index % 2 !== 0,
+          isAnswer:
+            selectedCollection.type === "mathProblems" && index % 2 !== 0,
         }),
       );
 
@@ -591,7 +596,7 @@ const YourCollections: React.FC = () => {
         <div className="fixed left-0 top-0 z-[1001] flex size-full items-center justify-center overflow-hidden bg-black/70">
           <div
             ref={modalRef}
-            className="font-caveat relative z-[1002] w-1/4 max-w-[600px] rounded-lg p-5 text-center shadow-lg"
+            className="font-teacher relative z-[1002] w-1/4 max-w-[600px] rounded-lg p-5 text-center shadow-lg"
             style={{
               backgroundColor: adjustColorForColorblindness(
                 theme.backgroundColor,
@@ -610,7 +615,7 @@ const YourCollections: React.FC = () => {
                 onChange={(e) =>
                   setSelectedCollectionToDuplicate(Number(e.target.value))
                 }
-                className="font-caveat w-full rounded border p-2 text-base"
+                className="font-teacher w-full rounded border p-2 text-base"
                 style={{
                   backgroundColor: adjustColorForColorblindness(
                     theme.backgroundColor,

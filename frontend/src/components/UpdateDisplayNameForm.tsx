@@ -37,7 +37,7 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
     >
       <input
         type="text"
-        className="mb-4 w-full rounded-md border border-gray-300 p-2 font-['Caveat'] text-base"
+        className="mb-4 w-full rounded-md border border-gray-300 p-2 font-teacher text-base"
         value={displayName}
         onChange={(e) => {
           console.log("Display name input changed:", e.target.value);

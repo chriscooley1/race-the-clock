@@ -136,6 +136,7 @@ const Navbar: React.FC<NavbarProps> = ({
       isMathProblemVisible: false,
       isDotButtonVisible: false,
       isImageUploadVisible: false,
+      isNextButtonVisible: false,
     };
 
     // Set visibility states based on the current location
@@ -173,6 +174,7 @@ const Navbar: React.FC<NavbarProps> = ({
         visibilityStates.isClearButtonVisible = true;
         visibilityStates.isSubmitButtonVisible = true;
         visibilityStates.isGeneratedSequencePreviewVisible = true;
+        visibilityStates.isNextButtonVisible = true;
         break;
       case "/collection-final-step":
         visibilityStates.isSaveButtonVisible = true;
