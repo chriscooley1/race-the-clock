@@ -42,12 +42,13 @@ const config: Config = {
         ),
       },
       fontFamily: {
-        caveat: ["Caveat", "cursive"],
-        "patrick-hand": ["'Patrick Hand'", "cursive"],
-        chewy: ["Chewy", "cursive"],
-        "comic-neue": ["Comic Neue", "cursive"],
-        "baloo-2": ["Baloo 2", "cursive"],
+        caveat: "Caveat",
+        "patrick-hand": "'Patrick Hand'",
+        chewy: "Chewy",
+        "comic-neue": "Comic Neue",
+        "baloo-2": "Baloo 2",
         custom: "var(--font-family, 'Comic Neue', sans-serif)",
+        "teacher": '"KG What the Teacher Wants"',
       },
       spacing: {
         sidebar: "250px",
