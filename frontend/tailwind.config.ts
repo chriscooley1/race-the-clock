@@ -62,12 +62,12 @@ const config: Config = {
         "background-transform": "background-color, transform",
       },
       fontSize: {
-        "vw-5": "clamp(25vw,30vw,35vw)",
-        "vw-7": "clamp(15vw,19vw,23vw)",
-        "vw-10": "clamp(8vw,12vw,16vw)",
-        "vw-15": "clamp(5vw,9vw,13vw)",
-        "vw-20": "clamp(2vw,6vw,10vw)",
-        "3xl": "27em",
+        "vw-5": "5vw",
+        "vw-7": "7vw",
+        "vw-10": "10vw",
+        "vw-15": "15vw",
+        "vw-20": "20vw",
+        "3xl": "3em",
       },
       maxWidth: {
         "collection-setup": "600px",
