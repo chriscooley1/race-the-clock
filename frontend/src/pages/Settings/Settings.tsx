@@ -235,16 +235,19 @@ const Settings: React.FC = () => {
     });
   };
 
+  const [mainTextColor, setMainTextColor] = useState<string>(theme.originalTextColor);
+
+  const handleMainTextColorChange = (color: string) => {
+    console.log("Main text color selected:", color);
+    setMainTextColor(color);
+  };
+
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${
-        theme.isDarkMode ? "text-white" : "text-black"
-      }`}
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "text-white" : "text-black"}`}
       style={{
-        backgroundColor:
-          theme.backgroundImage === "none"
-            ? theme.backgroundColor
-            : "transparent",
+        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+        color: mainTextColor,
       }}
     >
       {theme.backgroundImage && theme.backgroundImage !== "none" && (
@@ -329,6 +332,24 @@ const Settings: React.FC = () => {
                 </option>
               ))}
             </select>
+          </div>
+        )}
+
+        {visibilityStates.isTextColorVisible && (
+          <div className="mb-4">
+            <label className="mb-2 block font-bold">
+              Main Text Color:
+            </label>
+            <div className="flex flex-wrap">
+              {colorOptions.map((color) => (
+                <div
+                  key={color.name}
+                  className={`main-text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.originalTextColor === color.value ? "border-4 border-black" : ""}`}
+                  style={{ backgroundColor: color.value }}
+                  onClick={() => handleMainTextColorChange(color.value)}
+                />
+              ))}
+            </div>
           </div>
         )}
 

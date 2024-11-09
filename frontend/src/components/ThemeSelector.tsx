@@ -17,6 +17,7 @@ const ThemeSelector: React.FC = () => {
     setDisplayTextColor,
     setDisplayBackgroundColor,
     toggleDarkMode,
+    setMainTextColor,
   } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -26,34 +27,13 @@ const ThemeSelector: React.FC = () => {
     if (selectedScheme) {
       setTheme((prevTheme) => {
         // Special handling for Black and White themes
-        if (
-          selectedScheme.name === "White" ||
-          selectedScheme.name === "Black"
-        ) {
-          const newDisplayTextColor =
-            selectedScheme.name === "White" ? "#000000" : "#FFFFFF";
-          const baseTheme = {
-            ...selectedScheme,
-            isColorblindMode: prevTheme.isColorblindMode,
-            colorblindType: prevTheme.colorblindType,
-            isDarkMode: prevTheme.isDarkMode,
-            font: prevTheme.font,
-            headingFont: prevTheme.headingFont,
-            buttonFont: prevTheme.buttonFont,
-            originalTextColor: newDisplayTextColor,
-            originalBackgroundColor: selectedScheme.backgroundColor,
-            adjustColorForColorblindness: (color: string) =>
-              adjustColor(color, prevTheme.colorblindType),
-            displayTextColor: newDisplayTextColor,
-          };
-          return setThemeWithColorAdjustment(baseTheme);
-        }
-
-        // For all other themes, use luminance-based text color
-        const newDisplayTextColor =
-          getLuminance(selectedScheme.backgroundColor) < 0.5
+        const isBlackOrWhite = selectedScheme.name === "White" || selectedScheme.name === "Black";
+        const newDisplayTextColor = isBlackOrWhite
+          ? (prevTheme.isDarkMode ? "#FFFFFF" : "#000000") // Set text color based on mode
+          : getLuminance(selectedScheme.backgroundColor) < 0.5
             ? "#FFFFFF"
             : "#000000";
+
         const baseTheme = {
           ...selectedScheme,
           isColorblindMode: prevTheme.isColorblindMode,
@@ -124,6 +104,11 @@ const ThemeSelector: React.FC = () => {
       };
       return setThemeWithColorAdjustment(newTheme);
     });
+  };
+
+  const handleMainTextColorChange = (color: string) => {
+    console.log("Main text color selected:", color);
+    setMainTextColor(color);
   };
 
   return (
@@ -208,6 +193,21 @@ const ThemeSelector: React.FC = () => {
       >
         Change Color Theme
       </button>
+      <label htmlFor="main-text-color-select" className="mb-2 block font-bold">
+        Select Main Text Color:
+      </label>
+      <select
+        id="main-text-color-select"
+        value={theme.originalTextColor}
+        onChange={(e) => handleMainTextColorChange(e.target.value)}
+        className="bg-right-8-center mb-4 w-full appearance-none rounded-md border border-gray-300 bg-white bg-no-repeat p-2 text-black"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>\")",
+        }}
+      >
+        {/* Options for colors */}
+      </select>
     </div>
   );
 };

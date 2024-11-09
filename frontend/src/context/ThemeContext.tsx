@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import { adjustColorForColorblindness as adjustColor } from "../utils/colorAdjustment";
 import { colorSchemes } from "../constants/colorSchemes";
-import { darkenColor, lightenColor, getLuminance } from "../utils/colorUtils";
+import { darkenColor, lightenColor } from "../utils/colorUtils";
 
 interface Theme {
   name: string;
@@ -44,16 +44,17 @@ interface ThemeContextType {
   setFont: (font: string) => void;
   setHeadingFont: (font: string) => void;
   setButtonFont: (font: string) => void;
+  setMainTextColor: (color: string) => void;
 }
 
 // Move the function outside of the ThemeProvider
 export const setThemeWithColorAdjustment = (newTheme: Theme) => {
-  const luminance = getLuminance(newTheme.backgroundColor);
-  const isDarkBackground = luminance < 0.5; // Threshold for dark background
+  // Set text color based on the current mode
+  const textColor = newTheme.isDarkMode ? "#FFFFFF" : "#000000";
 
   return {
     ...newTheme,
-    displayTextColor: isDarkBackground ? "#FFFFFF" : "#000000", // Set text color based on background
+    displayTextColor: textColor, // Always set text color based on mode
   };
 };
 
@@ -212,13 +213,12 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
       // Special handling for Black and White themes
       if (prevTheme.name === "White" || prevTheme.name === "Black") {
+        const newTextColor = prevTheme.name === "White" ? "#000000" : "#FFFFFF"; // Set text color based on theme
         return {
           ...prevTheme,
           isDarkMode: newIsDarkMode,
-          // For White theme: always black text
-          // For Black theme: always white text
-          textColor: prevTheme.name === "White" ? "#000000" : "#FFFFFF",
-          displayTextColor: prevTheme.name === "White" ? "#000000" : "#FFFFFF",
+          textColor: newTextColor,
+          displayTextColor: newTextColor,
         };
       }
 
@@ -254,6 +254,14 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
   const setButtonFont = (font: string) => {
     setTheme((prevTheme) => ({ ...prevTheme, buttonFont: font }));
+  };
+
+  const setMainTextColor = (color: string) => {
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      originalTextColor: color,
+      displayTextColor: color, // Update display text color
+    }));
   };
 
   // Add a new ref to track initial load
@@ -337,22 +345,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     // Update CSS custom properties with effective colors
-    document.documentElement.style.setProperty(
-      "--background-color",
-      currentBackgroundColor,
-    );
-    document.documentElement.style.setProperty(
-      "--text-color",
-      effectiveTheme.displayTextColor,
-    );
-    document.documentElement.style.setProperty(
-      "--display-text-color",
-      effectiveTheme.displayTextColor,
-    );
-    document.documentElement.style.setProperty(
-      "--display-background-color",
-      currentBackgroundColor,
-    );
+    document.documentElement.style.setProperty("--background-color", currentBackgroundColor);
+    document.documentElement.style.setProperty("--text-color", theme.originalTextColor);
+    document.documentElement.style.setProperty("--display-background-color", currentBackgroundColor || "");
+    document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor || "");
 
     if (theme.backgroundImage && theme.backgroundImage !== "none") {
       document.documentElement.style.setProperty(
@@ -399,6 +395,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     setFont,
     setHeadingFont,
     setButtonFont,
+    setMainTextColor,
   };
 
   return (
