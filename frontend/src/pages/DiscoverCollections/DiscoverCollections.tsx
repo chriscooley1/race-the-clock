@@ -280,6 +280,7 @@ const DiscoverCollections: React.FC = () => {
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
+      style={{ color: theme.originalTextColor }}
     >
       <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
         Discover Public Collections

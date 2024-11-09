@@ -483,6 +483,7 @@ const YourCollections: React.FC = () => {
   return (
     <div
       className={`min-h-screen w-full px-4 pt-[170px] md:pl-[270px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      style={{ color: theme.originalTextColor }}
     >
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}

@@ -95,6 +95,7 @@ const Resources: React.FC = () => {
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       } resources`}
+      style={{ color: theme.originalTextColor }}
     >
       <h1 className="mb-8 text-3xl font-bold">Resources</h1>
 

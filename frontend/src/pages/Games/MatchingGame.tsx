@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useTheme } from "../../context/ThemeContext";
 
 const MatchingGame: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const [matches, setMatches] = useState<{ [key: string]: boolean }>({}); // Track matches
   const words = ["A", "B", "C"]; // Example words
   const images = ["Image1", "Image2", "Image3"]; // Example images
+  const { theme } = useTheme(); // Get the theme context
 
   const startGame = () => {
     setIsGameStarted(true);
@@ -16,7 +18,7 @@ const MatchingGame: React.FC = () => {
   };
 
   return (
-    <div className="mt-[70px] flex flex-col items-center">
+    <div className="mt-[70px] flex flex-col items-center" style={{ color: theme.originalTextColor }}>
       <h1 className="text-3xl font-bold">Matching Game</h1>
       {!isGameStarted ? (
         <div>

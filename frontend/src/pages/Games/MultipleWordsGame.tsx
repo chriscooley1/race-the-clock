@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useTheme } from "../../context/ThemeContext";
 
 const MultipleWordsGame: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const [connections, setConnections] = useState<{ [key: string]: string }>({}); // Track connections
   const words = ["Word1", "Word2", "Word3"]; // Example words
   const images = ["Image1", "Image2", "Image3"]; // Example images
+  const { theme } = useTheme(); // Get the theme context
 
   const startGame = () => {
     setIsGameStarted(true);
@@ -16,7 +18,7 @@ const MultipleWordsGame: React.FC = () => {
   };
 
   return (
-    <div className="mt-[70px] flex flex-col items-center">
+    <div className="mt-[70px] flex flex-col items-center" style={{ color: theme.originalTextColor }}>
       <h1 className="text-3xl font-bold">Multiple Words Game</h1>
       {!isGameStarted ? (
         <div>

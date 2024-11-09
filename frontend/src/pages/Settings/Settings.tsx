@@ -237,6 +237,25 @@ const Settings: React.FC = () => {
 
   const [mainTextColor, setMainTextColor] = useState<string>(theme.originalTextColor);
 
+  // Load the main text color from local storage when the component mounts
+  useEffect(() => {
+    const savedMainTextColor = localStorage.getItem("mainTextColor");
+    if (savedMainTextColor) {
+      setMainTextColor(savedMainTextColor);
+      setDisplayTextColor(savedMainTextColor); // Set the display text color as well
+    }
+  }, []);
+
+  // Save the main text color to local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("mainTextColor", mainTextColor);
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      originalTextColor: mainTextColor,
+      displayTextColor: getLuminance(mainTextColor) < 0.5 ? "#FFFFFF" : "#000000",
+    }));
+  }, [mainTextColor, setTheme]);
+
   const handleMainTextColorChange = (color: string) => {
     console.log("Main text color selected:", color);
     setMainTextColor(color);
@@ -344,7 +363,7 @@ const Settings: React.FC = () => {
               {colorOptions.map((color) => (
                 <div
                   key={color.name}
-                  className={`main-text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.originalTextColor === color.value ? "border-4 border-black" : ""}`}
+                  className={`main-text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${mainTextColor === color.value ? "border-4 border-black" : ""}`}
                   style={{ backgroundColor: color.value }}
                   onClick={() => handleMainTextColorChange(color.value)}
                 />

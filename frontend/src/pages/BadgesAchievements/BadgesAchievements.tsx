@@ -83,6 +83,7 @@ const BadgesAchievements: React.FC = () => {
       className={`badges-achievements flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
+      style={{ color: theme.originalTextColor }}
     >
       <h1 className="mb-8 text-3xl font-bold">Badges & Achievements</h1>
       <p>
