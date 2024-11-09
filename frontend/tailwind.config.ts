@@ -43,12 +43,12 @@ const config: Config = {
       },
       fontFamily: {
         caveat: "Caveat",
-        "patrick-hand": "'Patrick Hand'",
+        "patrick-hand": "Patrick Hand",
         chewy: "Chewy",
         "comic-neue": "Comic Neue",
         "baloo-2": "Baloo 2",
         custom: "var(--font-family, 'Comic Neue', sans-serif)",
-        "teacher": '"KG What the Teacher Wants"',
+        "teacher": "KG What the Teacher Wants",
       },
       spacing: {
         sidebar: "250px",
@@ -90,7 +90,7 @@ const config: Config = {
     ...colorSchemes.map((scheme) => `bg-[${scheme.backgroundColor}]`),
     ...colorSchemes.map((scheme) => `text-[${scheme.textColor}]`),
     // Add the custom classes to the safelist
-    "font-caveat",
+    "font-teacher",
     "bg-light-blue",
     "bg-custom-red",
     "hover:bg-custom-red-dark",
