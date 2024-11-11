@@ -269,7 +269,7 @@ const Settings: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "text-white" : "text-black"}`}
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "text-white" : "text-black"} mt-4`}
       style={{
         backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
         color: mainTextColor,

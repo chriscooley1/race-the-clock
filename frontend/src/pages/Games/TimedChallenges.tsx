@@ -77,7 +77,7 @@ const TimedChallenges: React.FC = () => {
     <div
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-      } timed-challenges`}
+      } timed-challenges mt-4`}
       style={{ color: theme.originalTextColor }}
     >
       <h1 className="mb-8 text-3xl font-bold">Timed Challenges</h1>
