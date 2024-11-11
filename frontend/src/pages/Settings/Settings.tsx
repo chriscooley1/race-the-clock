@@ -115,7 +115,11 @@ const Settings: React.FC = () => {
     setDisplayTextColor(color);
   };
 
+  const [selectedColorTheme, setSelectedColorTheme] = useState<ColorScheme | null>(null);
+  const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<string | null>(null);
+
   const handleBackgroundColorChange = (color: string) => {
+    setSelectedBackgroundColor(color); // Set the selected background color
     setDisplayBackgroundColor(color);
     setTheme((prevTheme) => {
       const newTheme = {
@@ -160,6 +164,7 @@ const Settings: React.FC = () => {
     "Chewy",
     "Baloo 2",
     "KG What the Teacher Wants",
+    "KG Shake It Off",
   ];
 
   const backgroundThemes = [
@@ -214,6 +219,7 @@ const Settings: React.FC = () => {
   }, []); // Add dependencies as needed
 
   const handleColorThemeChange = (color: ColorScheme) => {
+    setSelectedColorTheme(color); // Set the selected color theme
     setTheme((prevTheme) => {
       const newDisplayTextColor =
         getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
@@ -235,16 +241,38 @@ const Settings: React.FC = () => {
     });
   };
 
+  const [mainTextColor, setMainTextColor] = useState<string>(theme.originalTextColor);
+
+  // Load the main text color from local storage when the component mounts
+  useEffect(() => {
+    const savedMainTextColor = localStorage.getItem("mainTextColor");
+    if (savedMainTextColor) {
+      setMainTextColor(savedMainTextColor);
+      setDisplayTextColor(savedMainTextColor); // Set the display text color as well
+    }
+  }, []);
+
+  // Save the main text color to local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("mainTextColor", mainTextColor);
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      originalTextColor: mainTextColor,
+      displayTextColor: getLuminance(mainTextColor) < 0.5 ? "#FFFFFF" : "#000000",
+    }));
+  }, [mainTextColor, setTheme]);
+
+  const handleMainTextColorChange = (color: string) => {
+    console.log("Main text color selected:", color);
+    setMainTextColor(color);
+  };
+
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${
-        theme.isDarkMode ? "text-white" : "text-black"
-      }`}
+      className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "text-white" : "text-black"} mt-4`}
       style={{
-        backgroundColor:
-          theme.backgroundImage === "none"
-            ? theme.backgroundColor
-            : "transparent",
+        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+        color: mainTextColor,
       }}
     >
       {theme.backgroundImage && theme.backgroundImage !== "none" && (
@@ -332,6 +360,22 @@ const Settings: React.FC = () => {
           </div>
         )}
 
+        {visibilityStates.isTextColorVisible && (
+          <div className="mb-4">
+            <label className="mb-2 block font-bold">Main Text Color:</label>
+            <div className="flex flex-wrap">
+              {colorOptions.map((color) => (
+                <div
+                  key={color.name}
+                  className={`main-text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${mainTextColor === color.value || selectedColorTheme?.backgroundColor === color.value ? "border-4 border-black" : ""}`}
+                  style={{ backgroundColor: color.value }}
+                  onClick={() => handleMainTextColorChange(color.value)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
         {visibilityStates.isColorThemeVisible && (
           <div className="mb-4">
             <label className="mb-2 block font-bold">Color Theme:</label>
@@ -357,14 +401,12 @@ const Settings: React.FC = () => {
 
         {visibilityStates.isTextColorVisible && (
           <div className="mb-4">
-            <label className="mb-2 block font-bold">
-              Text Color for FullScreenDisplay:
-            </label>
+            <label className="mb-2 block font-bold">Text Color for FullScreenDisplay:</label>
             <div className="flex flex-wrap">
               {colorOptions.map((color) => (
                 <div
                   key={color.name}
-                  className={`text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}`}
+                  className={`text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value || selectedBackgroundColor === color.value ? "border-4 border-black" : ""}`}
                   style={{ backgroundColor: color.value }}
                   onClick={() => handleTextColorChange(color.value)}
                 />
@@ -375,9 +417,7 @@ const Settings: React.FC = () => {
 
         {visibilityStates.isBackgroundColorVisible && (
           <div className="mb-4">
-            <label className="mb-2 block font-bold">
-              Background Color for FullScreenDisplay:
-            </label>
+            <label className="mb-2 block font-bold">Background Color for FullScreenDisplay:</label>
             <div className="flex flex-wrap">
               {colorOptions.map((color) => (
                 <div

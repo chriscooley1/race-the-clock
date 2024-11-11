@@ -60,7 +60,8 @@ const LandingPage: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center justify-center p-5 text-center ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
+      className={`flex min-h-screen w-full flex-col items-center justify-center p-5 text-center ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
+      style={{ color: theme.originalTextColor }}
     >
       <h1 className="mb-5 box-border text-xl sm:text-2xl md:text-3xl">
         Welcome to Race The Clock

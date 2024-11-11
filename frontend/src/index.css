@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Chewy&family=Comic+Neue:wght@400;700&family=Patrick+Hand&family=Baloo+2:wght@400;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=KG+What+The+Teacher+Wants&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Chewy&family=Comic+Neue:wght@400;700&family=Patrick+Hand&family=Baloo+2:wght@400;700&family=KG+What+The+Teacher+Wants&family=KG+Shake+It+Off&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=KG+What+The+Teacher+Wants&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -59,4 +59,22 @@
     @apply bg-theme-bg text-theme-text;
     font-family: 'KG What the Teacher Wants';
   }
+}
+
+:root {
+  --text-color: #000000; /* Default text color */
+  --background-color: #FFFFFF; /* Default background color */
+  --display-background-color: #FFFFFF; /* Default display background color */
+  --display-text-color: #000000; /* Default display text color */
+}
+
+/* Apply the CSS variables to the body */
+body {
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+/* Update the body to use the display text color */
+body {
+  color: var(--display-text-color);
 }

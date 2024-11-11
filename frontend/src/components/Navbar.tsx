@@ -5,6 +5,7 @@ import { useTheme } from "../context/ThemeContext";
 import { useTour } from "../context/TourContext";
 import { VisibilityStates } from "../types/VisibilityStates";
 import { Step } from "react-joyride";
+import logo from "../assets/race-the-clock.jpeg";
 
 import { tourStepsLandingPage } from "../pages/LandingPage/tourStepsLandingPage";
 import { tourStepsYourCollections } from "../pages/YourCollections/tourStepsYourCollections";
@@ -297,7 +298,7 @@ const Navbar: React.FC<NavbarProps> = ({
   ]);
 
   return (
-    <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
+    <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800" style={{ height: "65px" }}>
       <div className="flex items-center space-x-2">
         {/* Dark mode toggle */}
         <button
@@ -333,11 +334,12 @@ const Navbar: React.FC<NavbarProps> = ({
           Start Tour
         </button>
       </div>
-      <div
-        className="grow cursor-pointer text-center text-base font-bold text-gray-800 md:text-xl dark:text-white"
-        onClick={handleTitleClick}
-      >
-        Race The Clock
+      <div className="flex items-center cursor-pointer" onClick={handleTitleClick}>
+        <img 
+            src={logo} 
+            alt="Race the Clock" 
+            className="h-16"
+        />
       </div>
       <div
         className="flex h-[25px] w-[30px] cursor-pointer flex-col justify-between"
