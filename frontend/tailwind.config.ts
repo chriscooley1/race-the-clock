@@ -49,6 +49,7 @@ const config: Config = {
         "baloo-2": "Baloo 2",
         custom: "var(--font-family, 'Comic Neue', sans-serif)",
         "teacher": "KG What the Teacher Wants",
+        "shake-it-off": "KG Shake It Off",
       },
       spacing: {
         sidebar: "250px",

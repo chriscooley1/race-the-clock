@@ -26,10 +26,9 @@ const ThemeSelector: React.FC = () => {
     );
     if (selectedScheme) {
       setTheme((prevTheme) => {
-        // Special handling for Black and White themes
         const isBlackOrWhite = selectedScheme.name === "White" || selectedScheme.name === "Black";
         const newDisplayTextColor = isBlackOrWhite
-          ? (prevTheme.isDarkMode ? "#FFFFFF" : "#000000") // Set text color based on mode
+          ? (prevTheme.isDarkMode ? "#FFFFFF" : "#000000")
           : getLuminance(selectedScheme.backgroundColor) < 0.5
             ? "#FFFFFF"
             : "#000000";
@@ -111,6 +110,14 @@ const ThemeSelector: React.FC = () => {
     setMainTextColor(color);
   };
 
+  // Determine if a color is disabled based on current selections
+  const isColorDisabled = (color: string) => {
+    return (
+      (theme.originalTextColor === color) ||
+      (theme.displayTextColor === color)
+    );
+  };
+
   return (
     <div className="bg-theme-bg text-theme-text mt-5 w-full max-w-[300px] rounded-md border-none p-4">
       <label htmlFor="theme-select" className="mb-2 block font-bold">
@@ -128,7 +135,7 @@ const ThemeSelector: React.FC = () => {
       >
         {(appBackgroundColors as ColorScheme[]).map(
           (scheme: ColorScheme, index: number) => (
-            <option key={index} value={scheme.name}>
+            <option key={index} value={scheme.name} disabled={!!isColorDisabled(scheme.backgroundColor)}>
               {scheme.name}
             </option>
           ),
@@ -149,7 +156,7 @@ const ThemeSelector: React.FC = () => {
         }}
       >
         {collectionColorSchemes.map((scheme, index) => (
-          <option key={index} value={scheme.textColor}>
+          <option key={index} value={scheme.textColor} disabled={isColorDisabled(scheme.textColor)}>
             {scheme.name} Text Color
           </option>
         ))}
@@ -169,7 +176,7 @@ const ThemeSelector: React.FC = () => {
         }}
       >
         {collectionColorSchemes.map((scheme, index) => (
-          <option key={index} value={scheme.backgroundColor}>
+          <option key={index} value={scheme.backgroundColor} disabled={isColorDisabled(scheme.backgroundColor)}>
             {scheme.name} Background
           </option>
         ))}
@@ -206,7 +213,11 @@ const ThemeSelector: React.FC = () => {
             "url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>\")",
         }}
       >
-        {/* Options for colors */}
+        {collectionColorSchemes.map((scheme, index) => (
+          <option key={index} value={scheme.textColor} disabled={isColorDisabled(scheme.textColor)}>
+            {scheme.name} Text Color
+          </option>
+        ))}
       </select>
     </div>
   );
