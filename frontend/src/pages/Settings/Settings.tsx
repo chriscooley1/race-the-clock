@@ -267,6 +267,13 @@ const Settings: React.FC = () => {
     setMainTextColor(color);
   };
 
+  const handleToggleDarkMode = () => {
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      isDarkMode: !prevTheme.isDarkMode,
+    }));
+  };
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "text-white" : "text-black"} mt-4`}
@@ -292,6 +299,18 @@ const Settings: React.FC = () => {
         />
       )}
       <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
+
+      <div className="absolute top-[65px] right-4 z-10 mt-4">
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={theme.isDarkMode}
+            onChange={handleToggleDarkMode}
+            className="mr-2"
+          />
+          Toggle Dark Mode
+        </label>
+      </div>
 
       <div className="w-full space-y-6 px-4 md:px-8">
         {visibilityStates.isMainFontVisible && (
