@@ -5,6 +5,7 @@ import { useTheme } from "../context/ThemeContext";
 import { useTour } from "../context/TourContext";
 import { VisibilityStates } from "../types/VisibilityStates";
 import { Step } from "react-joyride";
+import logo from '../assets/race-the-clock.png'; // Adjust the path based on your image name
 
 import { tourStepsLandingPage } from "../pages/LandingPage/tourStepsLandingPage";
 import { tourStepsYourCollections } from "../pages/YourCollections/tourStepsYourCollections";
@@ -333,11 +334,8 @@ const Navbar: React.FC<NavbarProps> = ({
           Start Tour
         </button>
       </div>
-      <div
-        className="grow cursor-pointer text-center text-base font-bold text-gray-800 md:text-xl dark:text-white"
-        onClick={handleTitleClick}
-      >
-        Race The Clock
+      <div className="flex items-center cursor-pointer" onClick={handleTitleClick}>
+        <img src={logo} alt="Race the Clock" className="h-8" /> {/* Adjust height as needed */}
       </div>
       <div
         className="flex h-[25px] w-[30px] cursor-pointer flex-col justify-between"
