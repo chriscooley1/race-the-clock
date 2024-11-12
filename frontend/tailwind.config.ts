@@ -34,12 +34,44 @@ const config: Config = {
         "theme-text": "var(--text-color, #000000)",
         "theme-display-bg": "var(--display-background-color, #FFFFFF)",
         "theme-display-text": "var(--display-text-color, #000000)",
+        // Dynamically add colors from colorSchemes
         ...Object.fromEntries(
           colorSchemes.map((scheme) => [
             scheme.name.toLowerCase().replace(/\s+/g, "-"),
             scheme.backgroundColor,
           ]),
         ),
+        // Add text colors as well
+        ...Object.fromEntries(
+          colorSchemes.map((scheme) => [
+            `text-${scheme.name.toLowerCase().replace(/\s+/g, "-")}`,
+            scheme.textColor,
+          ]),
+        ),
+        "sunny-yellow": "#FFD740",
+        "sky-blue": "#40C4FF",
+        "lime-green": "#AEEA00",
+        "hot-pink": "#FF4081",
+        "electric-purple": "#7C4DFF",
+        "tangerine": "#FF6E40",
+        "turquoise": "#1DE9B6",
+        "lavender": "#B39DDB",
+        "mint-green": "#00E676",
+        "bright-cyan": "#18FFFF",
+        "magenta": "#E040FB",
+        "heisenberg-blue": "#6fd7fe",
+        "salmon-pink": "#fa96a2",
+        "alesan": "#f0ccb2",
+        "alesan-light": "#f5d1c2",
+        "red-radish": "#f63643",
+        "oleander-pink": "#fe609d",
+        "white": "#FFFFFF",
+        "hawkbit": "#ffd86f",
+        "middle-blue-purple": "#8c6fbf",
+        "jasmine-green": "#8cca43",
+        "gainsboro": "#dcdcdc",
+        "vibrant-orange": "#ff7220",
+        "black": "#000000",
       },
       fontFamily: {
         caveat: "Caveat",
@@ -49,7 +81,7 @@ const config: Config = {
         "baloo-2": "Baloo 2",
         custom: "var(--font-family, 'Comic Neue', sans-serif)",
         "teacher": "KG What the Teacher Wants",
-        "shake-it-off": "KG Shake It Off",
+        "shake-it-off": "KG Shake It Off", // Ensure this is included in the font family
       },
       spacing: {
         sidebar: "250px",
@@ -109,6 +141,7 @@ const config: Config = {
     "fullscreen",
     "dark",
     "main-content-area",
+    "font-shake-it-off",
   ],
   plugins: [],
 };
