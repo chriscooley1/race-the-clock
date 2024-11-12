@@ -33,6 +33,8 @@ export const colorSchemes: ColorScheme[] = [
   { name: "Magenta", backgroundColor: "#E040FB", textColor: "#FFFFFF" },
 ];
 
-export const collectionColorSchemes = colorSchemes.slice(2); // Exclude White and Black
+export const collectionColorSchemes = colorSchemes.filter(
+  (scheme) => scheme.name !== "Black" && scheme.name !== "White"
+);
 
 export const appBackgroundColors = colorSchemes; // Use the full colorSchemes array instead of an empty object
