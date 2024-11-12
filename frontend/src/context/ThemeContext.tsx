@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import { adjustColorForColorblindness as adjustColor } from "../utils/colorAdjustment";
 import { colorSchemes } from "../constants/colorSchemes";
-import { darkenColor, lightenColor } from "../utils/colorUtils";
+import { darkenColor, getLuminance, lightenColor } from "../utils/colorUtils";
 
 interface Theme {
   name: string;
@@ -68,45 +68,38 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       const savedTheme = localStorage.getItem("app-theme");
       if (savedTheme) {
         const parsedTheme = JSON.parse(savedTheme);
+        
+        // Calculate text color based on background luminance if not already set
+        const backgroundColor = parsedTheme.backgroundColor || colorSchemes[2].backgroundColor;
+        const textColor = parsedTheme.textColor || (getLuminance(backgroundColor) < 0.5 ? "#FFFFFF" : "#000000");
+        
+        // Preserve the original text color or calculate it
+        const originalTextColor = parsedTheme.originalTextColor || textColor;
+        const displayTextColor = parsedTheme.displayTextColor || textColor;
 
         // If colorblind mode is enabled, adjust the colors
         if (parsedTheme.isColorblindMode) {
-          const originalTextColor =
-            parsedTheme.originalTextColor || parsedTheme.textColor;
-          const originalBackgroundColor =
-            parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor;
-
           return {
             ...parsedTheme,
-            displayTextColor: adjustColor(
-              originalTextColor,
-              parsedTheme.colorblindType,
-            ),
-            displayBackgroundColor: adjustColor(
-              originalBackgroundColor,
-              parsedTheme.colorblindType,
-            ),
-            textColor: adjustColor(
-              originalTextColor,
-              parsedTheme.colorblindType,
-            ),
-            backgroundColor: adjustColor(
-              originalBackgroundColor,
-              parsedTheme.colorblindType,
-            ),
+            displayTextColor: adjustColor(originalTextColor, parsedTheme.colorblindType),
+            displayBackgroundColor: adjustColor(parsedTheme.originalBackgroundColor || backgroundColor, parsedTheme.colorblindType),
+            textColor: adjustColor(originalTextColor, parsedTheme.colorblindType),
+            backgroundColor: adjustColor(parsedTheme.originalBackgroundColor || backgroundColor, parsedTheme.colorblindType),
+            originalTextColor,
+            originalBackgroundColor: parsedTheme.originalBackgroundColor || backgroundColor,
             adjustColorForColorblindness: (color: string) =>
-              parsedTheme.isColorblindMode
-                ? adjustColor(color, parsedTheme.colorblindType)
-                : color,
+              parsedTheme.isColorblindMode ? adjustColor(color, parsedTheme.colorblindType) : color,
           };
         }
 
         return {
           ...parsedTheme,
+          displayTextColor,
+          textColor,
+          originalTextColor,
+          originalBackgroundColor: parsedTheme.originalBackgroundColor || backgroundColor,
           adjustColorForColorblindness: (color: string) =>
-            parsedTheme.isColorblindMode
-              ? adjustColor(color, parsedTheme.colorblindType)
-              : color,
+            parsedTheme.isColorblindMode ? adjustColor(color, parsedTheme.colorblindType) : color,
         };
       }
     } catch (error) {
@@ -114,6 +107,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     // Default theme
+    const defaultBackgroundColor = colorSchemes[2].backgroundColor;
+    const defaultTextColor = getLuminance(defaultBackgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+
     return {
       ...colorSchemes[2],
       isColorblindMode: false,
@@ -122,10 +118,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       font: "KG What the Teacher Wants",
       headingFont: "KG What the Teacher Wants",
       buttonFont: "KG What the Teacher Wants",
-      originalTextColor: colorSchemes[2].textColor,
-      originalBackgroundColor: colorSchemes[2].backgroundColor,
-      displayTextColor: colorSchemes[2].textColor,
-      displayBackgroundColor: colorSchemes[2].backgroundColor,
+      originalTextColor: defaultTextColor,
+      originalBackgroundColor: defaultBackgroundColor,
+      displayTextColor: defaultTextColor,
+      displayBackgroundColor: defaultBackgroundColor,
       adjustColorForColorblindness: (color: string) => color,
     };
   };

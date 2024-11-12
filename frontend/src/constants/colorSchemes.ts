@@ -20,7 +20,6 @@ export const colorSchemes: ColorScheme[] = [
   { name: "Vibrant Orange", backgroundColor: "#ff7220", textColor: "#FFFFFF" },
   { name: "Black", backgroundColor: "#000000", textColor: "#FFFFFF" },
   // New color schemes from the image
-  { name: "Bright Red", backgroundColor: "#FF5252", textColor: "#FFFFFF" },
   { name: "Sunny Yellow", backgroundColor: "#FFD740", textColor: "#333333" },
   { name: "Sky Blue", backgroundColor: "#40C4FF", textColor: "#333333" },
   { name: "Lime Green", backgroundColor: "#AEEA00", textColor: "#333333" },
@@ -29,7 +28,6 @@ export const colorSchemes: ColorScheme[] = [
   { name: "Tangerine", backgroundColor: "#FF6E40", textColor: "#333333" },
   { name: "Turquoise", backgroundColor: "#1DE9B6", textColor: "#333333" },
   { name: "Lavender", backgroundColor: "#B39DDB", textColor: "#333333" },
-  { name: "Coral", backgroundColor: "#FF7043", textColor: "#333333" },
   { name: "Mint Green", backgroundColor: "#00E676", textColor: "#333333" },
   { name: "Bright Cyan", backgroundColor: "#18FFFF", textColor: "#333333" },
   { name: "Magenta", backgroundColor: "#E040FB", textColor: "#FFFFFF" },

@@ -118,15 +118,20 @@ const Settings: React.FC = () => {
   const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<string | null>(null);
 
   const handleBackgroundColorChange = (color: string) => {
-    setSelectedBackgroundColor(color); // Set the selected background color
+    setSelectedBackgroundColor(color);
     setDisplayBackgroundColor(color);
+    const calculatedTextColor = getLuminance(color) < 0.5 ? "#FFFFFF" : "#000000";
+    
     setTheme((prevTheme) => {
       const newTheme = {
         ...prevTheme,
         originalBackgroundColor: color,
-        displayTextColor: getLuminance(color) < 0.5 ? "#FFFFFF" : "#000000",
+        originalTextColor: calculatedTextColor,
+        displayTextColor: calculatedTextColor,
+        displayBackgroundColor: color,
       };
-      return setThemeWithColorAdjustment(newTheme);
+      localStorage.setItem("app-theme", JSON.stringify(newTheme));
+      return newTheme;
     });
   };
 
