@@ -245,7 +245,11 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const setFont = (font: string) => {
-    setTheme((prevTheme) => ({ ...prevTheme, font }));
+    setTheme((prevTheme) => {
+      const newTheme = { ...prevTheme, font };
+      document.documentElement.style.setProperty("--font-family", font); // Set the CSS variable
+      return newTheme;
+    });
   };
 
   const setHeadingFont = (font: string) => {

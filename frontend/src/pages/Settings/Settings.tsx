@@ -179,7 +179,9 @@ const Settings: React.FC = () => {
   ];
 
   const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFont(e.target.value);
+    const selectedFont = e.target.value;
+    setFont(selectedFont); // Update the font in the theme
+    document.documentElement.style.setProperty("--font-family", selectedFont); // Set the CSS variable
   };
 
   const handleHeadingFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
