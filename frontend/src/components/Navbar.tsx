@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useTheme } from "../context/ThemeContext";
 import { useTour } from "../context/TourContext";
 import { VisibilityStates } from "../types/VisibilityStates";
 import { Step } from "react-joyride";
@@ -47,7 +46,6 @@ const Navbar: React.FC<NavbarProps> = ({
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
-  const { theme, toggleDarkMode } = useTheme();
   const { startTour } = useTour();
 
   const handleMenuToggle = () => {
@@ -298,16 +296,8 @@ const Navbar: React.FC<NavbarProps> = ({
   ]);
 
   return (
-    <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex h-[50px] items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800">
+    <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800" style={{ height: "65px" }}>
       <div className="flex items-center space-x-2">
-        {/* Dark mode toggle */}
-        <button
-          type="button"
-          onClick={toggleDarkMode}
-          className="rounded-full bg-gray-200 p-2 text-gray-800 dark:bg-gray-600 dark:text-white"
-        >
-          {theme.isDarkMode ? "☀️" : "🌙"}
-        </button>
         {(location.pathname === "/fullscreen-display" || hasBackButton) && (
           <button
             type="button"

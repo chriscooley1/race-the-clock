@@ -89,7 +89,8 @@ const Reports: React.FC = () => {
     <div
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-      } reports`}
+      } reports mt-4`}
+      style={{ color: theme.originalTextColor }}
     >
       <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
       <p>View detailed reports of user performance after each session.</p>

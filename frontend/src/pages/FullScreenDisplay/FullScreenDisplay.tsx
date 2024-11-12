@@ -415,7 +415,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         setCurrentTourStep={setCurrentTourStep}
       />
       <div
-        className="full-screen-display relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
+        className="full-screen-display relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300 mt-4"
         style={{
           color: theme.displayTextColor || theme.textColor,
           backgroundColor:
