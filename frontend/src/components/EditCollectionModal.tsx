@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 interface EditCollectionModalProps {
   isOpen: boolean;
@@ -20,6 +21,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   onSave,
   type, // Destructure type prop
 }) => {
+  const { theme } = useTheme();
   const [editedItems, setEditedItems] = useState<
     { name: string; id?: number }[]
   >([]);
@@ -93,10 +95,14 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div
         ref={modalRef}
-        className="flex max-h-[90vh] w-full max-w-md flex-col items-center overflow-y-auto rounded-lg bg-gray-800 p-4 text-white shadow-lg sm:p-6"
+        className="flex max-h-[90vh] w-full max-w-md flex-col items-center overflow-y-auto rounded-lg p-4 shadow-lg"
+        style={{
+          backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+          color: theme.isDarkMode ? "#FFFFFF" : "#000000",
+        }}
       >
         <h1 className="mb-4 text-xl font-bold sm:mb-6 sm:text-2xl">
           Edit Collection

@@ -599,10 +599,8 @@ const YourCollections: React.FC = () => {
             ref={modalRef}
             className="font-teacher relative z-[1002] w-1/4 max-w-[600px] rounded-lg p-5 text-center shadow-lg"
             style={{
-              backgroundColor: adjustColorForColorblindness(
-                theme.backgroundColor,
-              ),
-              color: adjustColorForColorblindness(theme.textColor),
+              backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+              color: theme.isDarkMode ? "#FFFFFF" : "#000000",
             }}
           >
             <h2 className="mb-4 text-2xl font-bold">Duplicate Collection</h2>

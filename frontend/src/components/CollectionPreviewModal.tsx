@@ -75,9 +75,8 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
             : "w-11/12 max-w-md"
         }`}
         style={{
-          backgroundColor:
-            theme.displayBackgroundColor || theme.backgroundColor,
-          color: theme.displayTextColor || theme.textColor,
+          backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+          color: theme.isDarkMode ? "#FFFFFF" : "#000000",
         }}
       >
         <h2 className="mb-4 text-center text-2xl font-bold">
