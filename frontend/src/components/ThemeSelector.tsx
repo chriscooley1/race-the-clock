@@ -17,7 +17,6 @@ const ThemeSelector: React.FC = () => {
     setDisplayTextColor,
     setDisplayBackgroundColor,
     toggleDarkMode,
-    setMainTextColor,
   } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -103,11 +102,6 @@ const ThemeSelector: React.FC = () => {
       };
       return setThemeWithColorAdjustment(newTheme);
     });
-  };
-
-  const handleMainTextColorChange = (color: string) => {
-    console.log("Main text color selected:", color);
-    setMainTextColor(color);
   };
 
   // Determine if a color is disabled based on current selections
@@ -200,25 +194,6 @@ const ThemeSelector: React.FC = () => {
       >
         Change Color Theme
       </button>
-      <label htmlFor="main-text-color-select" className="mb-2 block font-bold">
-        Select Main Text Color:
-      </label>
-      <select
-        id="main-text-color-select"
-        value={theme.originalTextColor}
-        onChange={(e) => handleMainTextColorChange(e.target.value)}
-        className="bg-right-8-center mb-4 w-full appearance-none rounded-md border border-gray-300 bg-white bg-no-repeat p-2 text-black"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>\")",
-        }}
-      >
-        {collectionColorSchemes.map((scheme, index) => (
-          <option key={index} value={scheme.textColor} disabled={isColorDisabled(scheme.textColor)}>
-            {scheme.name} Text Color
-          </option>
-        ))}
-      </select>
     </div>
   );
 };
