@@ -118,14 +118,25 @@ const Settings: React.FC = () => {
   const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<string | null>(null);
 
   const handleBackgroundColorChange = (color: string) => {
-    setSelectedBackgroundColor(color); // Set the selected background color
+    setSelectedBackgroundColor(color);
     setDisplayBackgroundColor(color);
     setTheme((prevTheme) => {
       const newTheme = {
         ...prevTheme,
+        backgroundColor: color,
         originalBackgroundColor: color,
+        displayBackgroundColor: color,
         displayTextColor: getLuminance(color) < 0.5 ? "#FFFFFF" : "#000000",
+        name: colorSchemes.find(scheme => scheme.backgroundColor === color)?.name || prevTheme.name
       };
+      
+      // Update CSS variables immediately
+      document.documentElement.style.setProperty("--background-color", color);
+      document.documentElement.style.setProperty("--display-background-color", color);
+      
+      // Save to localStorage
+      localStorage.setItem("app-theme", JSON.stringify(newTheme));
+      
       return setThemeWithColorAdjustment(newTheme);
     });
   };
@@ -179,7 +190,9 @@ const Settings: React.FC = () => {
   ];
 
   const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFont(e.target.value);
+    const selectedFont = e.target.value;
+    setFont(selectedFont); // Update the font in the theme
+    document.documentElement.style.setProperty("--font-family", selectedFont); // Set the CSS variable
   };
 
   const handleHeadingFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

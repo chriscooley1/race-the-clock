@@ -6,12 +6,17 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --text-color: #000000;
+    --background-color: #FFFFFF;
+    --display-text-color: var(--text-color);
+    --display-background-color: var(--background-color);
+  }
+
   body {
     @apply bg-theme-bg text-theme-text;
-    background-image: var(--background-image);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: var(--font-family, "KG What the Teacher Wants", sans-serif);
   }
 
@@ -62,10 +67,10 @@
 }
 
 :root {
-  --text-color: #000000; /* Default text color */
-  --background-color: #FFFFFF; /* Default background color */
-  --display-background-color: #FFFFFF; /* Default display background color */
-  --display-text-color: #000000; /* Default display text color */
+  --text-color: #000000;
+  --background-color: #FFFFFF;
+  --display-text-color: var(--text-color);
+  --display-background-color: var(--background-color);
 }
 
 /* Apply the CSS variables to the body */

@@ -30,10 +30,10 @@ const config: Config = {
         },
         "hover-blue": "#1e90ff",
         "active-blue": "#0056b3",
-        "theme-bg": "var(--background-color)",
-        "theme-text": "var(--text-color)",
-        "theme-display-bg": "var(--display-background-color)",
-        "theme-display-text": "var(--display-text-color)",
+        "theme-bg": "var(--background-color, #FFFFFF)",
+        "theme-text": "var(--text-color, #000000)",
+        "theme-display-bg": "var(--display-background-color, #FFFFFF)",
+        "theme-display-text": "var(--display-text-color, #000000)",
         ...Object.fromEntries(
           colorSchemes.map((scheme) => [
             scheme.name.toLowerCase().replace(/\s+/g, "-"),
