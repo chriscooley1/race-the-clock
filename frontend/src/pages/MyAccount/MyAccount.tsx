@@ -103,7 +103,13 @@ const MyAccount: React.FC = () => {
                 {user.email}
               </p>
             </div>
-            <UpdateDisplayNameForm className="update-display-name-form mb-4" />
+            <UpdateDisplayNameForm
+              className="update-display-name-form mb-4"
+              style={{
+                backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+                color: theme.isDarkMode ? "#FFFFFF" : "#000000",
+              }}
+            />
             <div className="flex justify-center">
               <RoleSelection onRoleChange={handleRoleChange} />
             </div>

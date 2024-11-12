@@ -30,7 +30,6 @@ const Settings: React.FC = () => {
     theme,
     setTheme,
     setDisplayTextColor,
-    setDisplayBackgroundColor,
     setColorblindMode,
     setColorblindType,
     setFont,
@@ -113,32 +112,6 @@ const Settings: React.FC = () => {
   const handleTextColorChange = (color: string) => {
     console.log("Text color selected:", color);
     setDisplayTextColor(color);
-  };
-
-  const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<string | null>(null);
-
-  const handleBackgroundColorChange = (color: string) => {
-    setSelectedBackgroundColor(color);
-    setDisplayBackgroundColor(color);
-    setTheme((prevTheme) => {
-      const newTheme = {
-        ...prevTheme,
-        backgroundColor: color,
-        originalBackgroundColor: color,
-        displayBackgroundColor: color,
-        displayTextColor: getLuminance(color) < 0.5 ? "#FFFFFF" : "#000000",
-        name: colorSchemes.find(scheme => scheme.backgroundColor === color)?.name || prevTheme.name
-      };
-      
-      // Update CSS variables immediately
-      document.documentElement.style.setProperty("--background-color", color);
-      document.documentElement.style.setProperty("--display-background-color", color);
-      
-      // Save to localStorage
-      localStorage.setItem("app-theme", JSON.stringify(newTheme));
-      
-      return setThemeWithColorAdjustment(newTheme);
-    });
   };
 
   const handleColorblindModeChange = (
@@ -389,30 +362,14 @@ const Settings: React.FC = () => {
 
         {visibilityStates.isTextColorVisible && (
           <div className="mb-4">
-            <label className="mb-2 block font-bold">Text Color for FullScreenDisplay:</label>
+            <label className="mb-2 block font-bold">Text Color for Full Screen Display:</label>
             <div className="flex flex-wrap">
               {colorOptions.map((color) => (
                 <div
                   key={color.name}
-                  className={`text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value || selectedBackgroundColor === color.value ? "border-4 border-black" : ""}`}
+                  className={`text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}`}
                   style={{ backgroundColor: color.value }}
                   onClick={() => handleTextColorChange(color.value)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {visibilityStates.isBackgroundColorVisible && (
-          <div className="mb-4">
-            <label className="mb-2 block font-bold">Background Color for FullScreenDisplay:</label>
-            <div className="flex flex-wrap">
-              {colorOptions.map((color) => (
-                <div
-                  key={color.name}
-                  className={`background-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayBackgroundColor === color.value ? "border-4 border-black" : ""}`}
-                  style={{ backgroundColor: color.value }}
-                  onClick={() => handleBackgroundColorChange(color.value)}
                 />
               ))}
             </div>

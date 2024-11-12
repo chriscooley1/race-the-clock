@@ -296,7 +296,7 @@ const Navbar: React.FC<NavbarProps> = ({
   ]);
 
   return (
-    <div className="bg-light-blue fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800" style={{ height: "65px" }}>
+    <div className="bg-heisenberg-blue fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800" style={{ height: "65px" }}>
       <div className="flex items-center space-x-2">
         {(location.pathname === "/fullscreen-display" || hasBackButton) && (
           <button

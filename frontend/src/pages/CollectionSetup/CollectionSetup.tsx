@@ -568,7 +568,7 @@ const CollectionSetup: React.FC = () => {
                 <input
                   type="number"
                   id="itemCount"
-                  className="rounded-md border border-gray-300 p-2 text-center font-teacher"
+                  className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                   value={itemCount}
                   min={1}
                   onChange={(e) => {
@@ -613,7 +613,7 @@ const CollectionSetup: React.FC = () => {
                 <input
                   type="number"
                   id="itemCount"
-                  className="rounded-md border border-gray-300 p-2 text-center font-teacher"
+                  className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                   value={itemCount}
                   min={1}
                   onChange={(e) => {
@@ -635,7 +635,7 @@ const CollectionSetup: React.FC = () => {
                   <input
                     type="number"
                     id="minDots"
-                    className="rounded-md border border-gray-300 p-2 text-center font-teacher"
+                    className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                     value={minDots}
                     min={1}
                     onChange={(e) => {
@@ -655,7 +655,7 @@ const CollectionSetup: React.FC = () => {
                   <input
                     type="number"
                     id="maxDots"
-                    className="rounded-md border border-gray-300 p-2 text-center font-teacher"
+                    className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                     value={maxDots}
                     min={minDots}
                     onChange={(e) => {
@@ -677,7 +677,7 @@ const CollectionSetup: React.FC = () => {
               <input
                 type="number"
                 id="collectionItemCount"
-                className="rounded-md border border-gray-300 p-2 text-center font-teacher"
+                className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                 value={collectionItemCount}
                 min={1}
                 onChange={(e) => {
@@ -696,7 +696,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dot-color"
-                className="rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
+                className={`rounded-md border border-gray-300 p-2 text-center font-teacher text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                 value={dotColor}
                 onChange={(e) => {
                   setDotColor(e.target.value);
@@ -719,7 +719,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dot-shape"
-                className="rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
+                className={`rounded-md border border-gray-300 p-2 text-center font-teacher text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                 value={dotShape}
                 onChange={(e) => {
                   setDotShape(e.target.value);
@@ -750,7 +750,7 @@ const CollectionSetup: React.FC = () => {
           <input
             type="file"
             id="fileUpload"
-            className="w-full rounded-md border border-gray-300 p-2 font-teacher"
+            className={`w-full rounded-md border border-gray-300 p-2 font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             onChange={handleFileChange}
           />
         </div>

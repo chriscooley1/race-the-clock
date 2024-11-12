@@ -97,9 +97,8 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       <div
         className="w-full max-w-sm rounded-lg p-4 shadow-xl"
         style={{
-          backgroundColor:
-            theme.displayBackgroundColor || theme.backgroundColor,
-          color: theme.displayTextColor || theme.textColor,
+          backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+          color: theme.isDarkMode ? "#FFFFFF" : "#000000",
         }}
       >
         <h2 className="mb-2 text-center text-xl font-bold">{collectionName}</h2>
@@ -121,6 +120,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 placeholder="Min"
                 title="Minutes"
                 min={0}
+                style={{
+                  backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+                  color: theme.isDarkMode ? "#FFFFFF" : "#000000",
+                }}
                 onKeyDown={handleKeyDown}
               />
               <input
@@ -133,6 +136,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 title="Seconds"
                 min={0}
                 max={59}
+                style={{
+                  backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+                  color: theme.isDarkMode ? "#FFFFFF" : "#000000",
+                }}
                 onKeyDown={handleKeyDown}
               />
             </div>
