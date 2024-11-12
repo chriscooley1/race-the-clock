@@ -328,7 +328,7 @@ const Navbar: React.FC<NavbarProps> = ({
         className="grow cursor-pointer text-center text-base font-bold text-gray-800 md:text-xl dark:text-white"
         onClick={handleTitleClick}
       >
-        <img src={mainLogo} alt="Main Logo" className="h-8" />
+        <img src={mainLogo} alt="Main Logo" className="h-16" />
       </div>
       <div
         className="flex h-[25px] w-[30px] cursor-pointer flex-col justify-between"
