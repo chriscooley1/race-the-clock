@@ -294,7 +294,7 @@ const DiscoverCollections: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by collection name or username"
-            className="search-collections-input mb-2 rounded-md border border-gray-300 p-2 sm:mb-0 sm:mr-2"
+            className={`search-collections-input mb-2 rounded-md border border-gray-300 p-2 ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
           />
           <button
             type="button"

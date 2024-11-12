@@ -680,7 +680,7 @@ const CollectionFinalStep: React.FC = () => {
                   id="new-item-input"
                   value={newItem}
                   onChange={(e) => setNewItem(e.target.value)}
-                  className="mb-2 w-full rounded-md border border-gray-300 p-2 font-teacher"
+                  className={`mb-2 w-full rounded-md border border-gray-300 p-2 font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                   placeholder={`Enter new ${
                     category === "Science"
                       ? "science term"

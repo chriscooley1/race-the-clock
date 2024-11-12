@@ -4,10 +4,12 @@ import { updateDisplayName } from "../api";
 
 interface UpdateDisplayNameFormProps {
   className?: string; // Accept className as an optional prop
+  style?: React.CSSProperties; // Add this line to allow style prop
 }
 
 const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
   className,
+  style, // Destructure style prop
 }) => {
   const [displayName, setDisplayName] = useState("");
   const { getAccessTokenSilently } = useAuth0();
@@ -34,6 +36,7 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
   return (
     <div
       className={`update-display-name-form mt-5 flex w-full max-w-[300px] flex-col items-center ${className}`}
+      style={style} // Apply the style prop here
     >
       <input
         type="text"

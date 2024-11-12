@@ -120,6 +120,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 placeholder="Min"
                 title="Minutes"
                 min={0}
+                style={{
+                  backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+                  color: theme.isDarkMode ? "#FFFFFF" : "#000000",
+                }}
                 onKeyDown={handleKeyDown}
               />
               <input
@@ -132,6 +136,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 title="Seconds"
                 min={0}
                 max={59}
+                style={{
+                  backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+                  color: theme.isDarkMode ? "#FFFFFF" : "#000000",
+                }}
                 onKeyDown={handleKeyDown}
               />
             </div>
