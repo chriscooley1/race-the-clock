@@ -35,6 +35,7 @@ interface Collection {
   creator_username: string;
   items: Item[];
   type: string;
+  status: string;
 }
 
 interface Item {
@@ -266,6 +267,7 @@ const YourCollections: React.FC = () => {
   const handleSaveUpdatedItems = async (
     newItems: { name: string; id?: number }[],
     newCollectionName: string,
+    isPublic: boolean,
   ) => {
     setIsLoading(true);
     try {
@@ -281,9 +283,10 @@ const YourCollections: React.FC = () => {
 
         const updatedCollection = await updateCollection(
           selectedCollection.collection_id,
-          newCollectionName, // Use the new collection name here
+          newCollectionName,
           updatedDescription,
           selectedCollection.category,
+          isPublic,
           getAccessTokenSilently,
         );
 
@@ -591,6 +594,7 @@ const YourCollections: React.FC = () => {
           items={parseDescription(selectedCollection.description)}
           onSave={handleSaveUpdatedItems}
           type={selectedCollection.type}
+          isPublic={selectedCollection.status === "public"}
         />
       )}
       {isDuplicateModalOpen && (
