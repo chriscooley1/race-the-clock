@@ -280,7 +280,7 @@ const DiscoverCollections: React.FC = () => {
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       } mt-4`}
-      style={{ color: theme.originalTextColor }}
+      style={{ color: theme.originalTextColor, marginLeft: "20px" }}
     >
       <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
         Discover Public Collections
@@ -294,12 +294,13 @@ const DiscoverCollections: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by collection name or username"
-            className={`search-collections-input mb-2 rounded-md border border-gray-300 p-2 ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`search-collections-input mb-2 sm:mb-0 sm:mr-2 rounded-md border border-gray-300 p-2 ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
           />
           <button
             type="button"
             onClick={handleSearch}
             className="search-collections-input rounded-md bg-green-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-green-600"
+            style={{ alignSelf: "flex-start" }}
           >
             Search
           </button>
