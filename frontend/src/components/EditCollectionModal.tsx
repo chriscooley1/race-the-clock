@@ -9,8 +9,10 @@ interface EditCollectionModalProps {
   onSave: (
     items: { name: string; id?: number }[],
     collectionName: string,
+    isPublic: boolean
   ) => void;
   type: string; // Added type prop
+  isPublic: boolean; // New prop to indicate if the collection is public
 }
 
 const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
@@ -20,6 +22,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   items,
   onSave,
   type, // Destructure type prop
+  isPublic, // Destructure the new prop
 }) => {
   const { theme } = useTheme();
   const [editedItems, setEditedItems] = useState<
@@ -27,6 +30,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   >([]);
   const [editedCollectionName, setEditedCollectionName] =
     useState(collectionName);
+  const [isCollectionPublic, setIsCollectionPublic] = useState(isPublic); // State for checkbox
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -88,7 +92,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
   const handleSave = () => {
     console.log("Saving collection with items:", editedItems);
     console.log("New collection name:", editedCollectionName);
-    onSave(editedItems, editedCollectionName);
+    onSave(editedItems, editedCollectionName, isCollectionPublic); // Pass the public status
     onClose();
   };
 
@@ -119,6 +123,17 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
             onChange={(e) => setEditedCollectionName(e.target.value)}
             title="Collection Name"
           />
+        </div>
+        <div className="mb-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              checked={isCollectionPublic} // Reflect current public status
+              onChange={() => setIsCollectionPublic(!isCollectionPublic)} // Toggle public status
+              className="mr-2"
+            />
+            Make Collection Public
+          </label>
         </div>
         <div className="mb-4 flex flex-col items-center justify-center">
           <label className="mb-2 block"></label>

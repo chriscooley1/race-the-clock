@@ -232,6 +232,7 @@ export const updateCollection = async (
   name: string,
   description: string,
   category: string,
+  isPublic: boolean,
   getAccessTokenSilently: () => Promise<string>,
 ) => {
   try {
@@ -243,6 +244,7 @@ export const updateCollection = async (
         name,
         description,
         category,
+        status: isPublic ? "public" : "private",
       },
       {
         headers: { Authorization: `Bearer ${token}` },
