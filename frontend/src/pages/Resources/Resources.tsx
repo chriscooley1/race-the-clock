@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { tourStepsResources } from "./tourStepsResources";
 import GuidedTour from "../../components/GuidedTour";
+import FeedbackForm from "../../components/FeedbackForm";
 
 interface FAQ {
   question: string;
@@ -21,6 +22,7 @@ const Resources: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable without visibility states
   const steps = tourStepsResources(); // Create tour steps without visibility states
@@ -140,11 +142,16 @@ const Resources: React.FC = () => {
         </>
       )}
 
-      {/* Add the GuidedTour component here */}
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}
-        onComplete={handleTourComplete} // Use the new handler
+        onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={handleTourStepChange}
         tourName="resources"

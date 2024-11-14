@@ -554,19 +554,15 @@ export const updateUserRole = async (
 };
 
 // Function to submit feedback
-export const submitFeedback = async (
-  feedback: { user_email: string; message: string; page_url: string },
-  getAccessTokenSilently: () => Promise<string>
-) => {
+export const submitFeedback = async (message: string) => {
   try {
-    const token = await getAccessTokenSilently();
-    const response = await axios.post(`${API_BASE_URL}/api/feedback`, feedback, {
-      headers: { Authorization: `Bearer ${token}` },
+    const response = await axios.post(`${API_BASE_URL}/api/feedback`, {
+      message,
+      page_url: window.location.href
     });
-    console.log("Feedback submitted successfully:", response.data);
     return response.data;
   } catch (error) {
-    handleApiError(error);
-    throw new Error("Could not submit feedback.");
+    console.error("Error submitting feedback:", error);
+    throw error;
   }
 };
