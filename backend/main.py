@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, status, Header, Query
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
-from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate, DisplayNameUpdate, NameList, NameListCreate, NameListRead
+from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate, DisplayNameUpdate, NameList, NameListCreate, NameListRead, Feedback
 from jose import jwt, jwk
 from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError, JWTError
 from datetime import datetime, timedelta
@@ -15,8 +15,14 @@ from pytz import timezone
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 import time
+import smtplib
+from email.mime.text import MIMEText
+from dotenv import load_dotenv
 
 from database import get_db, get_engine
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Logging setup
 class MountainTimeFormatter(logging.Formatter):
@@ -519,6 +525,37 @@ async def get_db_info(db: Session = Depends(get_db)):
     except Exception as e:
         logger.error(f"Error fetching database info: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+@app.post("/api/feedback")
+async def submit_feedback(feedback: Feedback, db: Session = Depends(get_db)):
+    db.add(feedback)
+    db.commit()
+    db.refresh(feedback)
+
+    # Send email
+    send_feedback_email(feedback.message, feedback.page_url)
+    
+    return feedback
+
+def send_feedback_email(message: str, page_url: str):
+    sender_email = os.getenv("SENDER_EMAIL")
+    receiver_email = os.getenv("RECEIVER_EMAIL")
+    email_password = os.getenv("EMAIL_PASSWORD")
+    smtp_server = os.getenv("SMTP_SERVER")
+    smtp_port = os.getenv("SMTP_PORT")
+
+    subject = "New Feedback Received"
+    body = f"Feedback Message: {message}\nPage URL: {page_url}"
+
+    msg = MIMEText(body)
+    msg["Subject"] = subject
+    msg["From"] = sender_email
+    msg["To"] = receiver_email
+
+    with smtplib.SMTP(smtp_server, int(smtp_port)) as server:
+        server.starttls()
+        server.login(sender_email, email_password)
+        server.sendmail(sender_email, receiver_email, msg.as_string())
 
 if __name__ == "__main__":
     init_db()

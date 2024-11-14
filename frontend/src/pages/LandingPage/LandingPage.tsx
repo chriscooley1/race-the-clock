@@ -3,12 +3,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useTheme } from "../../context/ThemeContext";
 import { tourStepsLandingPage } from "./tourStepsLandingPage";
 import GuidedTour from "../../components/GuidedTour";
+import FeedbackForm from "../../components/FeedbackForm";
 
 const LandingPage: React.FC = () => {
   const { loginWithRedirect } = useAuth0();
   const { theme } = useTheme();
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   // Define the steps variable
   const steps = tourStepsLandingPage(); // Create tour steps without visibility states
@@ -92,6 +94,9 @@ const LandingPage: React.FC = () => {
         onStepChange={handleTourStepChange}
         tourName="landingPage"
       />
+
+      <button type="button" onClick={() => setShowFeedback(true)}>Give Feedback</button>
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
     </div>
   );
 };
