@@ -134,6 +134,8 @@ class ItemRead(SQLModel):
     collection_id: int
 
 class Feedback(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
-    message: str
-    page_url: str
+    __tablename__ = "feedback"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    message: str = Field(...)
+    page_url: str = Field(...)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

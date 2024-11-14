@@ -18,6 +18,7 @@ import time
 import smtplib
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
+import pytz
 
 from database import get_db, get_engine
 
@@ -527,15 +528,38 @@ async def get_db_info(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 @app.post("/api/feedback")
-async def submit_feedback(feedback: Feedback, db: Session = Depends(get_db)):
-    db.add(feedback)
-    db.commit()
-    db.refresh(feedback)
+async def submit_feedback(
+    feedback_data: dict,
+    db: Session = Depends(get_db)
+):
+    logger.info(f"Received feedback: {feedback_data}")
+    try:
+        # Create new Feedback instance with UTC time
+        feedback = Feedback(
+            message=feedback_data["message"],
+            page_url=feedback_data["page_url"],
+            created_at=datetime.now(pytz.UTC)  # Use pytz.UTC instead of timezone.utc
+        )
+        
+        # Add to database
+        db.add(feedback)
+        db.commit()
+        db.refresh(feedback)
 
-    # Send email
-    send_feedback_email(feedback.message, feedback.page_url)
-    
-    return feedback
+        # Send email notification
+        try:
+            send_feedback_email(feedback.message, feedback.page_url)
+        except Exception as e:
+            logger.error(f"Error sending feedback email: {str(e)}")
+            # Continue even if email fails
+            
+        return {"status": "success", "message": "Feedback submitted successfully"}
+    except KeyError as e:
+        logger.error(f"Missing required field in feedback data: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Missing required field: {str(e)}")
+    except Exception as e:
+        logger.error(f"Error submitting feedback: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 def send_feedback_email(message: str, page_url: str):
     sender_email = os.getenv("SENDER_EMAIL")
