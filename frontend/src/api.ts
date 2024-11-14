@@ -552,3 +552,21 @@ export const updateUserRole = async (
   console.log("User role updated successfully:", data);
   return data; // Adjust based on your User type
 };
+
+// Function to submit feedback
+export const submitFeedback = async (
+  feedback: { user_email: string; message: string; page_url: string },
+  getAccessTokenSilently: () => Promise<string>
+) => {
+  try {
+    const token = await getAccessTokenSilently();
+    const response = await axios.post(`${API_BASE_URL}/api/feedback`, feedback, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log("Feedback submitted successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw new Error("Could not submit feedback.");
+  }
+};

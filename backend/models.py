@@ -132,3 +132,8 @@ class ItemRead(SQLModel):
     item_id: int
     name: str
     collection_id: int
+
+class Feedback(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True)
+    message: str
+    page_url: str

@@ -16,3 +16,4 @@ requests
 pytest 
 pytest-asyncio
 pyjwt
+secure-smtplib
