@@ -79,10 +79,17 @@ const MyAccount: React.FC = () => {
   return (
     <div
       className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} my-account mt-4`}
-      style={{ color: theme.originalTextColor }}
+      style={{ 
+        color: theme.originalTextColor,
+        backgroundColor: theme.backgroundColor
+      }}
     >
       <div
-        className={`w-full max-w-md rounded-lg p-16 shadow-md ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`}
+        className={`w-full max-w-md rounded-lg p-16 shadow-md`}
+        style={{
+          backgroundColor: theme.backgroundColor,
+          color: theme.originalTextColor
+        }}
       >
         <h1 className="mb-6 text-center text-3xl font-bold">My Account</h1>
 
@@ -106,8 +113,8 @@ const MyAccount: React.FC = () => {
             <UpdateDisplayNameForm
               className="update-display-name-form mb-4"
               style={{
-                backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
-                color: theme.isDarkMode ? "#FFFFFF" : "#000000",
+                backgroundColor: theme.backgroundColor,
+                color: theme.originalTextColor,
               }}
             />
             <div className="flex justify-center">

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "../context/ThemeContext";
 
 interface WheelSegmentProps {
   name: string;
@@ -15,17 +16,15 @@ const WheelSegment: React.FC<WheelSegmentProps> = ({
   onRemove,
   onEdit,
 }) => {
-  const handleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onEdit(e.target.value);
-  };
+  const { theme } = useTheme();
 
   return (
     <li className="mb-2 flex items-center">
       <input
         type="text"
         value={name}
-        onChange={handleEdit}
-        className="font-teacher mr-2 grow rounded border border-current bg-white p-2 text-base text-black"
+        onChange={(e) => onEdit(e.target.value)}
+        className={`font-teacher mr-2 grow rounded border border-current ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"} p-2 text-base`}
         placeholder="Edit name"
         title={`Edit name ${index + 1}`}
       />

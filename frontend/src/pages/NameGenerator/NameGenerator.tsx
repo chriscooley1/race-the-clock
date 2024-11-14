@@ -237,7 +237,7 @@ const NameGenerator: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`name-generator flex min-h-screen flex-col items-center justify-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
+      className={`name-generator flex min-h-screen flex-col items-center justify-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"} mt-4`}
       style={{ color: theme.originalTextColor }}
     >
       <div
@@ -296,7 +296,7 @@ const NameGenerator: React.FC = () => {
                 value={nameInput}
                 onChange={(e) => setNameInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="font-teacher mr-2 rounded border border-current bg-white p-2 text-center text-base text-black"
+                className={`font-teacher mr-2 rounded border border-current ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"} p-2 text-center text-base`}
                 placeholder="Enter a name"
               />
               {visibilityStates.isAddNameButtonVisible && (
