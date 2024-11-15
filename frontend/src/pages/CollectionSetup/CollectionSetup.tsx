@@ -35,7 +35,7 @@ const CollectionSetup: React.FC = () => {
   const { collectionName, isPublic, category } = location.state || {};
   const { theme } = useTheme();
 
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File[]>([]);
   const [itemCount, setItemCount] = useState<number>(1);
   const [collectionItemCount, setCollectionItemCount] = useState<number>(1);
   const [sequence, setSequence] = useState<
@@ -245,22 +245,24 @@ const CollectionSetup: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const selectedFile = e.target.files[0];
-      setFile(selectedFile);
+      const selectedFiles = Array.from(e.target.files);
+      setFile((prevFiles) => [...prevFiles, ...selectedFiles]);
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const newItem = {
-          name: selectedFile.name,
-          svg: reader.result as string,
-          count: 1,
+      selectedFiles.forEach((selectedFile) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const newItem = {
+            name: selectedFile.name,
+            svg: reader.result as string,
+            count: 1,
+          };
+          setSequence((prevSequence) => [...prevSequence, newItem]);
+          setPreviewSequence((prevPreview) => [...prevPreview, newItem]);
+          setIsGenerated(true);
         };
-        setSequence([newItem]);
-        setPreviewSequence([newItem]);
-        setIsGenerated(true);
-      };
 
-      reader.readAsDataURL(selectedFile);
+        reader.readAsDataURL(selectedFile);
+      });
     }
   };
 
@@ -408,7 +410,7 @@ const CollectionSetup: React.FC = () => {
     console.log("Generated sequence:", generatedSequence); // Debugging log for generated sequence
     setSequence(generatedSequence);
     setPreviewSequence(generatedSequence);
-    setFile(null);
+    setFile([]);
     setIsGenerated(true);
   };
 
@@ -419,7 +421,7 @@ const CollectionSetup: React.FC = () => {
     }
 
     // Check if a random sequence was generated or a file was uploaded
-    if (isGenerated || file) {
+    if (isGenerated || file.length > 0) {
       handleSaveCollection(); // Call the save function directly
     } else {
       // Navigate to CollectionFinalStep if no sequence or file
@@ -433,7 +435,7 @@ const CollectionSetup: React.FC = () => {
     setIsGenerated(false);
     setSequence([]);
     setPreviewSequence([]);
-    setFile(null);
+    setFile([]);
     setNumberSenseItems([]);
   };
 
@@ -451,7 +453,7 @@ const CollectionSetup: React.FC = () => {
         name: item.name,
         svg: item.svg,
         count: item.count,
-        file: file ? file.name : null,
+        file: file.length > 0 ? file[0].name : null,
       }));
 
       console.log("Saving collection with data:", {
