@@ -546,13 +546,9 @@ async def submit_feedback(
         db.commit()
         db.refresh(feedback)
 
-        # Send email notification
-        try:
-            send_feedback_email(feedback.message, feedback.page_url)
-        except Exception as e:
-            logger.error(f"Error sending feedback email: {str(e)}")
-            # Continue even if email fails
-            
+        # Log the feedback
+        logger.info(f"Feedback stored: {feedback}")
+
         return {"status": "success", "message": "Feedback submitted successfully"}
     except KeyError as e:
         logger.error(f"Missing required field in feedback data: {str(e)}")
@@ -560,26 +556,6 @@ async def submit_feedback(
     except Exception as e:
         logger.error(f"Error submitting feedback: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
-
-def send_feedback_email(message: str, page_url: str):
-    sender_email = os.getenv("SENDER_EMAIL")
-    receiver_email = os.getenv("RECEIVER_EMAIL")
-    email_password = os.getenv("EMAIL_PASSWORD")
-    smtp_server = os.getenv("SMTP_SERVER")
-    smtp_port = os.getenv("SMTP_PORT")
-
-    subject = "New Feedback Received"
-    body = f"Feedback Message: {message}\nPage URL: {page_url}"
-
-    msg = MIMEText(body)
-    msg["Subject"] = subject
-    msg["From"] = sender_email
-    msg["To"] = receiver_email
-
-    with smtplib.SMTP(smtp_server, int(smtp_port)) as server:
-        server.starttls()
-        server.login(sender_email, email_password)
-        server.sendmail(sender_email, receiver_email, msg.as_string())
 
 if __name__ == "__main__":
     init_db()
