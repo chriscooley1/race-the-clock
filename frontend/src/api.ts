@@ -558,7 +558,7 @@ export const submitFeedback = async (message: string) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/api/feedback`, {
       message,
-      page_url: window.location.href
+      page_url: window.location.href,
     });
     return response.data;
   } catch (error) {

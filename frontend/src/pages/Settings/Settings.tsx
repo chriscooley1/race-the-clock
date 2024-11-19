@@ -238,7 +238,10 @@ const Settings: React.FC = () => {
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
       style={{
-        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+        backgroundColor:
+          theme.backgroundImage === "none"
+            ? theme.backgroundColor
+            : "transparent",
         color: theme.originalTextColor,
       }}
     >
@@ -259,8 +262,7 @@ const Settings: React.FC = () => {
         />
       )}
       <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
-
-      <div className="absolute top-[65px] right-4 z-10 mt-4">
+      <div className="absolute right-4 top-[65px] z-10 mt-4">
         <label className="flex items-center">
           <input
             type="checkbox"
@@ -271,7 +273,6 @@ const Settings: React.FC = () => {
           Toggle Dark Mode
         </label>
       </div>
-
       <div className="w-full space-y-6 px-4 md:px-8">
         {visibilityStates.isMainFontVisible && (
           <div>
@@ -364,7 +365,9 @@ const Settings: React.FC = () => {
 
         {visibilityStates.isTextColorVisible && (
           <div className="mb-4">
-            <label className="mb-2 block font-bold">Text Color for Full Screen Display:</label>
+            <label className="mb-2 block font-bold">
+              Text Color for Full Screen Display:
+            </label>
             <div className="flex flex-wrap">
               {colorOptions.map((color) => (
                 <div
@@ -428,14 +431,16 @@ const Settings: React.FC = () => {
           </div>
         )}
       </div>
-
       {/* Button to show feedback form */}
-      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="bg-light-blue mt-4 rounded px-4 py-2 text-white"
+      >
         Give Feedback
       </button>
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />} {/* Render FeedbackForm */}
-
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
+      {/* Render FeedbackForm */}
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}

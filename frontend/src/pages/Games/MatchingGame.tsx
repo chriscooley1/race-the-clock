@@ -20,7 +20,10 @@ const MatchingGame: React.FC = () => {
   };
 
   return (
-    <div className="mt-[70px] flex flex-col items-center" style={{ color: theme.originalTextColor }}>
+    <div
+      className="mt-[70px] flex flex-col items-center"
+      style={{ color: theme.originalTextColor }}
+    >
       <h1 className="text-3xl font-bold">Matching Game</h1>
       {!isGameStarted ? (
         <div>
@@ -54,13 +57,16 @@ const MatchingGame: React.FC = () => {
           </div>
         </div>
       )}
-
       {/* Button to show feedback form */}
-      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="bg-light-blue mt-4 rounded px-4 py-2 text-white"
+      >
         Give Feedback
       </button>
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />} {/* Render FeedbackForm */}
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
+      {/* Render FeedbackForm */}
     </div>
   );
 };

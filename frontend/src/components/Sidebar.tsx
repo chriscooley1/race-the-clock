@@ -11,12 +11,12 @@ const Sidebar: React.FC = () => {
       <button
         type="button"
         onClick={toggleSidebar}
-        className="bg-alesan fixed left-2 top-2 z-50 rounded-md p-2 md:hidden dark:bg-gray-700 mt-4"
+        className="bg-alesan fixed left-2 top-2 z-50 mt-4 rounded-md p-2 md:hidden dark:bg-gray-700"
       >
         ☰
       </button>
       <div
-        className={`bg-alesan fixed left-0 top-[50px] z-40 h-[calc(100vh-50px)] w-[250px] overflow-y-auto shadow-md transition-transform duration-300 ease-in-out dark:bg-gray-700 ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 mt-3`}
+        className={`bg-alesan fixed left-0 top-[50px] z-40 h-[calc(100vh-50px)] w-[250px] overflow-y-auto shadow-md transition-transform duration-300 ease-in-out dark:bg-gray-700 ${isOpen ? "translate-x-0" : "-translate-x-full"} mt-3 md:translate-x-0`}
       >
         <nav className="p-4">
           <ul className="space-y-2">

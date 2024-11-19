@@ -9,7 +9,7 @@ interface EditCollectionModalProps {
   onSave: (
     items: { name: string; id?: number }[],
     collectionName: string,
-    isPublic: boolean
+    isPublic: boolean,
   ) => void;
   type: string; // Added type prop
   isPublic: boolean; // New prop to indicate if the collection is public

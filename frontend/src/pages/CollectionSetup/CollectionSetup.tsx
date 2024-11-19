@@ -572,7 +572,7 @@ const CollectionSetup: React.FC = () => {
                 <input
                   type="number"
                   id="itemCount"
-                  className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                  className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                   value={itemCount}
                   min={1}
                   onChange={(e) => {
@@ -595,7 +595,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dotCountType"
-                className="rounded-md border border-gray-300 p-2 text-center font-teacher text-black"
+                className="font-teacher rounded-md border border-gray-300 p-2 text-center text-black"
                 value={dotCountType}
                 onChange={(e) => {
                   setDotCountType(e.target.value as "fixed" | "random");
@@ -617,7 +617,7 @@ const CollectionSetup: React.FC = () => {
                 <input
                   type="number"
                   id="itemCount"
-                  className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                  className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                   value={itemCount}
                   min={1}
                   onChange={(e) => {
@@ -639,7 +639,7 @@ const CollectionSetup: React.FC = () => {
                   <input
                     type="number"
                     id="minDots"
-                    className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                    className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                     value={minDots}
                     min={1}
                     onChange={(e) => {
@@ -659,7 +659,7 @@ const CollectionSetup: React.FC = () => {
                   <input
                     type="number"
                     id="maxDots"
-                    className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                    className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                     value={maxDots}
                     min={minDots}
                     onChange={(e) => {
@@ -681,7 +681,7 @@ const CollectionSetup: React.FC = () => {
               <input
                 type="number"
                 id="collectionItemCount"
-                className={`rounded-md border border-gray-300 p-2 text-center font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                 value={collectionItemCount}
                 min={1}
                 onChange={(e) => {
@@ -700,7 +700,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dot-color"
-                className={`rounded-md border border-gray-300 p-2 text-center font-teacher text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                className={`font-teacher rounded-md border border-gray-300 p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                 value={dotColor}
                 onChange={(e) => {
                   setDotColor(e.target.value);
@@ -723,7 +723,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dot-shape"
-                className={`rounded-md border border-gray-300 p-2 text-center font-teacher text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                className={`font-teacher rounded-md border border-gray-300 p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                 value={dotShape}
                 onChange={(e) => {
                   setDotShape(e.target.value);
@@ -754,7 +754,7 @@ const CollectionSetup: React.FC = () => {
           <input
             type="file"
             id="fileUpload"
-            className={`w-full rounded-md border border-gray-300 p-2 font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`font-teacher w-full rounded-md border border-gray-300 p-2 ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             onChange={handleFileChange}
             multiple
           />
@@ -861,7 +861,11 @@ const CollectionSetup: React.FC = () => {
         onStepChange={handleTourStepChange}
         tourName="collectionSetup"
       />
-      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="bg-light-blue mt-4 rounded px-4 py-2 text-white"
+      >
         Give Feedback
       </button>
 

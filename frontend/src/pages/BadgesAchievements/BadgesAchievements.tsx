@@ -137,7 +137,11 @@ const BadgesAchievements: React.FC = () => {
         </ul>
       </div>
 
-      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="bg-light-blue mt-4 rounded px-4 py-2 text-white"
+      >
         Give Feedback
       </button>
 
