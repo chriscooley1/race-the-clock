@@ -5,6 +5,7 @@ import Navbar from "../../components/Navbar";
 import { tourStepsFullScreenDisplay } from "./tourStepsFullScreenDisplay";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
+import { useTour } from "../../context/TourContext";
 
 interface CollectionItem {
   name: string;
@@ -15,6 +16,7 @@ interface CollectionItem {
 interface FullScreenDisplayProps {
   onEnterFullScreen: () => void;
   onExitFullScreen: () => void;
+  setShowFeedback: (show: boolean) => void;
 }
 
 interface FullScreenDisplayState {
@@ -44,6 +46,7 @@ interface SequenceItem {
 const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onEnterFullScreen,
   onExitFullScreen,
+  setShowFeedback,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -76,7 +79,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [tourName, setTourName] = useState<string>("");
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
+  const { isGuidedTourEnabled } = useTour();
 
   // Create tour steps without visibility states
   const steps = tourStepsFullScreenDisplay();
@@ -418,7 +422,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         setShowFeedback={setShowFeedback}
       />
       <div
-        className="full-screen-display relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300 mt-4"
+        className="full-screen-display relative m-0 mt-4 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
         style={{
           color: theme.displayTextColor || theme.textColor,
           backgroundColor:
@@ -453,17 +457,19 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         >
           {Math.round(progress)}% Complete
         </div>
-        <GuidedTour
-          steps={steps}
-          isRunning={isTourRunning}
-          onComplete={handleTourComplete}
-          currentStep={currentTourStep}
-          onStepChange={setCurrentTourStep}
-          tourName={tourName}
-        />
+        {isGuidedTourEnabled && (
+          <GuidedTour
+            steps={steps}
+            isRunning={isTourRunning}
+            onComplete={handleTourComplete}
+            currentStep={currentTourStep}
+            onStepChange={setCurrentTourStep}
+            tourName={tourName}
+          />
+        )}
       </div>
 
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+      {isFeedbackVisible && <FeedbackForm onClose={() => setIsFeedbackVisible(false)} />}
     </>
   );
 };

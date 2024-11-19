@@ -27,7 +27,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   ];
 
   return (
-    <div className="fixed inset-x-0 top-[50px] z-40 shadow-md md:left-[250px] dark:bg-gray-800 mt-4">
+    <div className="fixed inset-x-0 top-[50px] z-40 mt-4 shadow-md md:left-[250px] dark:bg-gray-800">
       <div className="flex w-full flex-col px-4 py-2">
         <div className="mb-2 flex w-full overflow-x-auto">
           {categories.map((category) => (
@@ -73,7 +73,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           <button
             type="button"
             onClick={() => setShowFeedback(true)}
-            className="ml-4 rounded bg-light-blue px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-light-blue-600 active:scale-95 active:bg-light-blue-700"
+            className="bg-light-blue hover:bg-light-blue-600 active:bg-light-blue-700 ml-4 rounded px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 active:scale-95"
           >
             Give Feedback
           </button>

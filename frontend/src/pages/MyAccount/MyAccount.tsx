@@ -81,16 +81,16 @@ const MyAccount: React.FC = () => {
   return (
     <div
       className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} my-account mt-4`}
-      style={{ 
+      style={{
         color: theme.originalTextColor,
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.backgroundColor,
       }}
     >
       <div
         className={`w-full max-w-md rounded-lg p-16 shadow-md`}
         style={{
           backgroundColor: theme.backgroundColor,
-          color: theme.originalTextColor
+          color: theme.originalTextColor,
         }}
       >
         <h1 className="mb-6 text-center text-3xl font-bold">My Account</h1>
@@ -128,7 +128,11 @@ const MyAccount: React.FC = () => {
         )}
         <UserRoleFeatures role={role} />
       </div>
-      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="bg-light-blue mt-4 rounded px-4 py-2 text-white"
+      >
         Give Feedback
       </button>
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}

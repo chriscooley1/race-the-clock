@@ -95,7 +95,9 @@ const LandingPage: React.FC = () => {
         tourName="landingPage"
       />
 
-      <button type="button" onClick={() => setShowFeedback(true)}>Give Feedback</button>
+      <button type="button" onClick={() => setShowFeedback(true)}>
+        Give Feedback
+      </button>
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
     </div>
   );

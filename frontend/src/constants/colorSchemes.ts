@@ -14,7 +14,11 @@ export const colorSchemes: ColorScheme[] = [
   { name: "Oleander Pink", backgroundColor: "#fe609d", textColor: "#FFFFFF" },
   { name: "White", backgroundColor: "#FFFFFF", textColor: "#333333" },
   { name: "Hawkbit", backgroundColor: "#ffd86f", textColor: "#333333" },
-  { name: "Middle Blue Purple", backgroundColor: "#8c6fbf", textColor: "#FFFFFF" },
+  {
+    name: "Middle Blue Purple",
+    backgroundColor: "#8c6fbf",
+    textColor: "#FFFFFF",
+  },
   { name: "Jasmine Green", backgroundColor: "#8cca43", textColor: "#FFFFFF" },
   { name: "Gainsboro", backgroundColor: "#dcdcdc", textColor: "#333333" },
   { name: "Vibrant Orange", backgroundColor: "#ff7220", textColor: "#FFFFFF" },
@@ -34,7 +38,7 @@ export const colorSchemes: ColorScheme[] = [
 ];
 
 export const collectionColorSchemes = colorSchemes.filter(
-  (scheme) => scheme.name !== "Black" && scheme.name !== "White"
+  (scheme) => scheme.name !== "Black" && scheme.name !== "White",
 );
 
 export const appBackgroundColors = colorSchemes; // Use the full colorSchemes array instead of an empty object

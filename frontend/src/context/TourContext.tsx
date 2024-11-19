@@ -19,6 +19,8 @@ interface TourContextType {
   completeTour: (tourName: string) => void;
   isTourRunning: boolean;
   setIsTourRunning: (isRunning: boolean) => void;
+  isGuidedTourEnabled: boolean;
+  setIsGuidedTourEnabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Create the context with a default value of null
@@ -31,6 +33,7 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
     {},
   );
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [isGuidedTourEnabled, setIsGuidedTourEnabled] = useState<boolean>(true);
 
   useEffect(() => {
     const storedTours = localStorage.getItem("toursCompleted");
@@ -63,6 +66,8 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
         completeTour,
         isTourRunning,
         setIsTourRunning,
+        isGuidedTourEnabled,
+        setIsGuidedTourEnabled,
       }}
     >
       {children}

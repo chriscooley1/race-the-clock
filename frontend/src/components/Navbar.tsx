@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
-  const { startTour } = useTour();
+  const { isGuidedTourEnabled } = useTour();
 
   const handleMenuToggle = () => {
     console.log("Toggling menu. Current state:", menuOpen);
@@ -282,23 +282,25 @@ const Navbar: React.FC<NavbarProps> = ({
       default:
         steps = [];
         tourName = "navbar";
+        console.log(steps);
         break;
     }
 
     onStartTour();
-    startTour(steps);
     setTourName(tourName);
     setCurrentTourStep(0);
   }, [
     location.pathname,
-    startTour,
     onStartTour,
     setTourName,
     setCurrentTourStep,
   ]);
 
   return (
-    <div className="bg-heisenberg-blue fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800" style={{ height: "65px" }}>
+    <div
+      className="bg-heisenberg-blue fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
+      style={{ height: "65px" }}
+    >
       <div className="flex items-center space-x-2">
         {(location.pathname === "/fullscreen-display" || hasBackButton) && (
           <button
@@ -318,19 +320,21 @@ const Navbar: React.FC<NavbarProps> = ({
             {isPaused ? "Resume" : "Pause"}
           </button>
         )}
-        <button
-          type="button"
-          onClick={handleStartTour}
-          className="rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
-        >
-          Start Tour
-        </button>
+        {isGuidedTourEnabled && (
+          <button
+            type="button"
+            onClick={handleStartTour}
+            className="rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
+          >
+            Start Tour
+          </button>
+        )}
         {/* Conditionally render the feedback button only for FullScreenDisplay */}
         {location.pathname === "/fullscreen-display" && (
           <button
             type="button"
             onClick={() => setShowFeedback(true)}
-            className="ml-4 rounded bg-light-blue px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-light-blue-600 md:px-4 md:py-2 md:text-base"
+            className="bg-light-blue hover:bg-light-blue-600 ml-4 rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
           >
             Give Feedback
           </button>

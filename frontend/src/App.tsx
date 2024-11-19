@@ -13,6 +13,7 @@ import { TourProvider } from "./context/TourContext";
 import MatchingGame from "./pages/Games/MatchingGame";
 import MultipleWordsGame from "./pages/Games/MultipleWordsGame";
 import TimedChallenges from "./pages/Games/TimedChallenges";
+import FeedbackForm from "./components/FeedbackForm";
 
 // Import your tour steps here
 import { tourStepsLandingPage } from "./pages/LandingPage/tourStepsLandingPage";
@@ -58,6 +59,7 @@ const App: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState(false);
   const [currentTourStep, setCurrentTourStep] = useState(0);
   const [currentTourName, setCurrentTourName] = useState<string>("");
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("App state changed");
@@ -241,6 +243,7 @@ const App: React.FC = () => {
                 onStartTour={handleTourStart}
                 setTourName={setCurrentTourName}
                 setCurrentTourStep={setCurrentTourStep}
+                setShowFeedback={setShowFeedback}
               />
               <div className="flex pt-[70px]">
                 {!hideSidebar && <Sidebar />}
@@ -258,6 +261,7 @@ const App: React.FC = () => {
                               <FullScreenDisplay
                                 onEnterFullScreen={() => setIsFullScreen(true)}
                                 onExitFullScreen={() => setIsFullScreen(false)}
+                                setShowFeedback={setShowFeedback}
                               />
                             }
                           />
@@ -395,6 +399,7 @@ const App: React.FC = () => {
                 onStepChange={handleTourStepChange}
                 tourName={currentTourName}
               />
+              {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
             </div>
           </TourProvider>
         </CompletionProvider>

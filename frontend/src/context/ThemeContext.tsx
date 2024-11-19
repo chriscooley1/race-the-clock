@@ -68,21 +68,34 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       const savedTheme = localStorage.getItem("app-theme");
       if (savedTheme) {
         const parsedTheme = JSON.parse(savedTheme);
-        
+
         // Immediately set CSS variables
-        const currentBackgroundColor = parsedTheme.displayBackgroundColor || parsedTheme.backgroundColor;
-        document.documentElement.style.setProperty("--background-color", currentBackgroundColor);
-        document.documentElement.style.setProperty("--display-background-color", currentBackgroundColor);
-        
+        const currentBackgroundColor =
+          parsedTheme.displayBackgroundColor || parsedTheme.backgroundColor;
+        document.documentElement.style.setProperty(
+          "--background-color",
+          currentBackgroundColor,
+        );
+        document.documentElement.style.setProperty(
+          "--display-background-color",
+          currentBackgroundColor,
+        );
+
         // Ensure we preserve the background and text colors
         const themeWithColors = {
           ...parsedTheme,
-          displayBackgroundColor: parsedTheme.displayBackgroundColor || parsedTheme.backgroundColor,
-          displayTextColor: parsedTheme.displayTextColor || parsedTheme.textColor,
-          originalBackgroundColor: parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor,
-          originalTextColor: parsedTheme.originalTextColor || parsedTheme.textColor,
+          displayBackgroundColor:
+            parsedTheme.displayBackgroundColor || parsedTheme.backgroundColor,
+          displayTextColor:
+            parsedTheme.displayTextColor || parsedTheme.textColor,
+          originalBackgroundColor:
+            parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor,
+          originalTextColor:
+            parsedTheme.originalTextColor || parsedTheme.textColor,
           adjustColorForColorblindness: (color: string) =>
-            parsedTheme.isColorblindMode ? adjustColor(color, parsedTheme.colorblindType) : color,
+            parsedTheme.isColorblindMode
+              ? adjustColor(color, parsedTheme.colorblindType)
+              : color,
         };
 
         return themeWithColors;
@@ -277,11 +290,18 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       const savedTheme = localStorage.getItem("app-theme");
       if (savedTheme) {
         const parsedTheme = JSON.parse(savedTheme);
-        const currentBackgroundColor = parsedTheme.displayBackgroundColor || parsedTheme.backgroundColor;
-        
+        const currentBackgroundColor =
+          parsedTheme.displayBackgroundColor || parsedTheme.backgroundColor;
+
         // Set the CSS variables immediately
-        document.documentElement.style.setProperty("--background-color", currentBackgroundColor);
-        document.documentElement.style.setProperty("--display-background-color", currentBackgroundColor);
+        document.documentElement.style.setProperty(
+          "--background-color",
+          currentBackgroundColor,
+        );
+        document.documentElement.style.setProperty(
+          "--display-background-color",
+          currentBackgroundColor,
+        );
       }
       isInitialLoad.current = false;
       return;
@@ -293,10 +313,16 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     const effectiveTheme = {
       ...theme,
       displayTextColor: theme.isColorblindMode
-        ? adjustColor(theme.originalTextColor || theme.textColor, theme.colorblindType)
+        ? adjustColor(
+            theme.originalTextColor || theme.textColor,
+            theme.colorblindType,
+          )
         : theme.originalTextColor || theme.textColor,
       displayBackgroundColor: theme.isColorblindMode
-        ? adjustColor(theme.originalBackgroundColor || theme.backgroundColor, theme.colorblindType)
+        ? adjustColor(
+            theme.originalBackgroundColor || theme.backgroundColor,
+            theme.colorblindType,
+          )
         : theme.originalBackgroundColor || theme.backgroundColor,
     };
 
@@ -304,7 +330,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.setItem("app-theme", JSON.stringify(effectiveTheme));
 
     // Use the effective background color
-    const currentBackgroundColor = effectiveTheme.displayBackgroundColor || effectiveTheme.backgroundColor;
+    const currentBackgroundColor =
+      effectiveTheme.displayBackgroundColor || effectiveTheme.backgroundColor;
 
     if (theme.backgroundImage && theme.backgroundImage !== "none") {
       console.log("Setting background image:", theme.backgroundImage);
@@ -327,13 +354,25 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       console.log("Setting background color to:", currentBackgroundColor);
       document.body.style.backgroundImage = "none";
       document.body.style.backgroundColor = currentBackgroundColor;
-      document.documentElement.style.setProperty("--background-color", currentBackgroundColor);
+      document.documentElement.style.setProperty(
+        "--background-color",
+        currentBackgroundColor,
+      );
     }
 
     // Update CSS custom properties with effective colors
-    document.documentElement.style.setProperty("--text-color", theme.originalTextColor);
-    document.documentElement.style.setProperty("--display-background-color", currentBackgroundColor || "");
-    document.documentElement.style.setProperty("--display-text-color", theme.displayTextColor || "");
+    document.documentElement.style.setProperty(
+      "--text-color",
+      theme.originalTextColor,
+    );
+    document.documentElement.style.setProperty(
+      "--display-background-color",
+      currentBackgroundColor || "",
+    );
+    document.documentElement.style.setProperty(
+      "--display-text-color",
+      theme.displayTextColor || "",
+    );
 
     if (theme.backgroundImage && theme.backgroundImage !== "none") {
       document.documentElement.style.setProperty(

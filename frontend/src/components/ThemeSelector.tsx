@@ -25,9 +25,12 @@ const ThemeSelector: React.FC = () => {
     );
     if (selectedScheme) {
       setTheme((prevTheme) => {
-        const isBlackOrWhite = selectedScheme.name === "White" || selectedScheme.name === "Black";
+        const isBlackOrWhite =
+          selectedScheme.name === "White" || selectedScheme.name === "Black";
         const newDisplayTextColor = isBlackOrWhite
-          ? (prevTheme.isDarkMode ? "#FFFFFF" : "#000000")
+          ? prevTheme.isDarkMode
+            ? "#FFFFFF"
+            : "#000000"
           : getLuminance(selectedScheme.backgroundColor) < 0.5
             ? "#FFFFFF"
             : "#000000";
@@ -107,8 +110,7 @@ const ThemeSelector: React.FC = () => {
   // Determine if a color is disabled based on current selections
   const isColorDisabled = (color: string) => {
     return (
-      (theme.originalTextColor === color) ||
-      (theme.displayTextColor === color)
+      theme.originalTextColor === color || theme.displayTextColor === color
     );
   };
 
@@ -129,7 +131,11 @@ const ThemeSelector: React.FC = () => {
       >
         {(appBackgroundColors as ColorScheme[]).map(
           (scheme: ColorScheme, index: number) => (
-            <option key={index} value={scheme.name} disabled={!!isColorDisabled(scheme.backgroundColor)}>
+            <option
+              key={index}
+              value={scheme.name}
+              disabled={!!isColorDisabled(scheme.backgroundColor)}
+            >
               {scheme.name}
             </option>
           ),
@@ -150,7 +156,11 @@ const ThemeSelector: React.FC = () => {
         }}
       >
         {collectionColorSchemes.map((scheme, index) => (
-          <option key={index} value={scheme.textColor} disabled={isColorDisabled(scheme.textColor)}>
+          <option
+            key={index}
+            value={scheme.textColor}
+            disabled={isColorDisabled(scheme.textColor)}
+          >
             {scheme.name} Text Color
           </option>
         ))}
@@ -170,7 +180,11 @@ const ThemeSelector: React.FC = () => {
         }}
       >
         {collectionColorSchemes.map((scheme, index) => (
-          <option key={index} value={scheme.backgroundColor} disabled={isColorDisabled(scheme.backgroundColor)}>
+          <option
+            key={index}
+            value={scheme.backgroundColor}
+            disabled={isColorDisabled(scheme.backgroundColor)}
+          >
             {scheme.name} Background
           </option>
         ))}

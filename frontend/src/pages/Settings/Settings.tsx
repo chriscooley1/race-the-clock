@@ -9,6 +9,8 @@ import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { getLuminance } from "../../utils/colorUtils";
 import FeedbackForm from "../../components/FeedbackForm";
+import Navbar from "../../components/Navbar";
+import { useTour } from "../../context/TourContext";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -37,6 +39,8 @@ const Settings: React.FC = () => {
     setHeadingFont,
     setButtonFont,
   } = useTheme();
+
+  const { isGuidedTourEnabled, setIsGuidedTourEnabled } = useTour();
 
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
     isMainFontVisible: true,
@@ -234,11 +238,30 @@ const Settings: React.FC = () => {
     }));
   };
 
+  const handleGuidedTourToggle = () => {
+    setIsGuidedTourEnabled((prev) => {
+      const newValue = !prev;
+      localStorage.setItem("guidedTourEnabled", JSON.stringify(newValue));
+      return newValue;
+    });
+  };
+
+  // Load the guided tour preference from localStorage
+  useEffect(() => {
+    const storedPreference = localStorage.getItem("guidedTourEnabled");
+    if (storedPreference !== null) {
+      setIsGuidedTourEnabled(JSON.parse(storedPreference));
+    }
+  }, [setIsGuidedTourEnabled]);
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
       style={{
-        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+        backgroundColor:
+          theme.backgroundImage === "none"
+            ? theme.backgroundColor
+            : "transparent",
         color: theme.originalTextColor,
       }}
     >
@@ -259,8 +282,7 @@ const Settings: React.FC = () => {
         />
       )}
       <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
-
-      <div className="absolute top-[65px] right-4 z-10 mt-4">
+      <div className="absolute right-4 top-[65px] z-10 mt-4">
         <label className="flex items-center">
           <input
             type="checkbox"
@@ -271,7 +293,17 @@ const Settings: React.FC = () => {
           Toggle Dark Mode
         </label>
       </div>
-
+      <div className="absolute right-4 top-[90px] z-10 mt-4">
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={isGuidedTourEnabled}
+            onChange={handleGuidedTourToggle}
+            className="mr-2"
+          />
+          Enable Guided Tour
+        </label>
+      </div>
       <div className="w-full space-y-6 px-4 md:px-8">
         {visibilityStates.isMainFontVisible && (
           <div>
@@ -364,7 +396,9 @@ const Settings: React.FC = () => {
 
         {visibilityStates.isTextColorVisible && (
           <div className="mb-4">
-            <label className="mb-2 block font-bold">Text Color for Full Screen Display:</label>
+            <label className="mb-2 block font-bold">
+              Text Color for Full Screen Display:
+            </label>
             <div className="flex flex-wrap">
               {colorOptions.map((color) => (
                 <div
@@ -428,21 +462,30 @@ const Settings: React.FC = () => {
           </div>
         )}
       </div>
-
       {/* Button to show feedback form */}
-      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="bg-light-blue mt-4 rounded px-4 py-2 text-white"
+      >
         Give Feedback
       </button>
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />} {/* Render FeedbackForm */}
-
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}
-        onComplete={handleTourComplete} // Use the new handler
+        onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={setCurrentTourStep}
-        tourName="settings" // Set the tour name
+        tourName="settings"
+      />
+      <Navbar
+        isPaused={false}
+        onPauseResume={() => {}}
+        onStartTour={startTour}
+        setTourName={() => {}}
+        setCurrentTourStep={() => {}}
+        setShowFeedback={setShowFeedback}
       />
     </div>
   );
