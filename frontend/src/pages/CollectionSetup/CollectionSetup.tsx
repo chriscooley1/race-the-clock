@@ -247,23 +247,28 @@ const CollectionSetup: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const selectedFiles = Array.from(e.target.files);
-      setFile((prevFiles) => [...prevFiles, ...selectedFiles]);
+        const selectedFiles = Array.from(e.target.files);
+        setFile((prevFiles) => [...prevFiles, ...selectedFiles]); // Append files to existing state
 
-      selectedFiles.forEach((selectedFile) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const newItem = {
-            name: selectedFile.name,
-            svg: reader.result as string,
-            count: 1,
-          };
-          setSequence((prevSequence) => [...prevSequence, newItem]);
-          setPreviewSequence((prevPreview) => [...prevPreview, newItem]);
-          setIsGenerated(true);
-        };
+        const newItems = selectedFiles.map((selectedFile) => {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const newItem = {
+                        name: selectedFile.name,
+                        svg: reader.result as string,
+                        count: 1,
+                    };
+                    resolve(newItem);
+                };
+                reader.readAsDataURL(selectedFile);
+            });
+        });
 
-        reader.readAsDataURL(selectedFile);
+        Promise.all(newItems).then((items) => {
+        setSequence((prevSequence) => [...prevSequence, ...items as { name: string; svg?: string; count?: number }[]]); // Append to sequence
+        setPreviewSequence((prevPreview) => [...prevPreview, ...items as { name: string; svg?: string; count?: number }[]]); // Append to preview sequence
+        setIsGenerated(true);
       });
     }
   };
@@ -756,6 +761,7 @@ const CollectionSetup: React.FC = () => {
             id="fileUpload"
             className={`w-full rounded-md border border-gray-300 p-2 font-teacher ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             onChange={handleFileChange}
+            multiple
           />
         </div>
         {isGenerated ? (
@@ -785,7 +791,7 @@ const CollectionSetup: React.FC = () => {
           </button>
         )}
       </div>
-      {isGenerated && category !== "Number Sense" && (
+      {isGenerated && (
         <div className="mt-6">
           <h3 className="generated-sequence-preview mb-2 text-center text-xl font-bold">
             Generated Sequence Preview:
