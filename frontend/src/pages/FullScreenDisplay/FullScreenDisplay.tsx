@@ -415,6 +415,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         onStartTour={handleStartTour}
         setTourName={setTourName}
         setCurrentTourStep={setCurrentTourStep}
+        setShowFeedback={setShowFeedback}
       />
       <div
         className="full-screen-display relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300 mt-4"
@@ -460,12 +461,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           onStepChange={setCurrentTourStep}
           tourName={tourName}
         />
-        <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
-          Give Feedback
-        </button>
-
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       </div>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
     </>
   );
 };
