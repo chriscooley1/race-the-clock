@@ -282,6 +282,7 @@ const Navbar: React.FC<NavbarProps> = ({
       default:
         steps = [];
         tourName = "navbar";
+        console.log(steps);
         break;
     }
 
