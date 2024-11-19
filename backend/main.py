@@ -242,7 +242,7 @@ async def create_collection(
         description=collection.description,
         status=collection.status or "private",  
         category=collection.category,
-        stage=collection.stage,
+        # stage=collection.stage,  # Keep this line commented out for future use
         user_id=current_user.user_id,
         created_at=mst_time  # Set the created_at time to Mountain Time
     )

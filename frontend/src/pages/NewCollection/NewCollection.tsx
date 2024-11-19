@@ -10,7 +10,6 @@ const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("Math");
   const [isPublic, setIsPublic] = useState<boolean>(false);
-  const [stage, setStage] = useState<string>("beginner");
   const navigate = useNavigate();
   const { theme } = useTheme();
 
@@ -21,8 +20,6 @@ const NewCollection: React.FC = () => {
     "Science",
     "Nursing",
   ];
-
-  const stages = ["beginner", "intermediate", "advanced"];
 
   // Initialize visibilityStates with all properties
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -105,10 +102,9 @@ const NewCollection: React.FC = () => {
       name,
       category,
       isPublic,
-      stage,
     });
     navigate("/collection-setup", {
-      state: { collectionName: name, isPublic, category, stage },
+      state: { collectionName: name, isPublic, category },
     });
   };
 
@@ -179,26 +175,6 @@ const NewCollection: React.FC = () => {
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
                   {cat}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        {visibilityStates.isStageSelectVisible && (
-          <div className="mb-4 flex max-w-[300px] items-center justify-center">
-            <label htmlFor="stageSelect" className="mr-2">
-              Stage:
-            </label>
-            <select
-              id="stageSelect"
-              className={`font-teacher w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-              value={stage}
-              onChange={(e) => setStage(e.target.value)}
-            >
-              {stages.map((stage) => (
-                <option key={stage} value={stage}>
-                  {stage.charAt(0).toUpperCase() + stage.slice(1)}
                 </option>
               ))}
             </select>
