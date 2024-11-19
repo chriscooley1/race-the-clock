@@ -45,9 +45,6 @@ const CollectionSetup: React.FC = () => {
   const [type, setType] = useState<string>("letters");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [operation, setOperation] = useState<Operation | null>(null);
-  const [numberSenseItems, setNumberSenseItems] = useState<
-    { url?: string; svg?: string; count: number }[]
-  >([]);
   const [dotColor, setDotColor] = useState<string>("blue");
   const [dotShape, setDotShape] = useState<string>("circle");
   const [dotCountType, setDotCountType] = useState<"fixed" | "random">("fixed");
@@ -300,7 +297,7 @@ const CollectionSetup: React.FC = () => {
     }> = [];
 
     // Clear previous number sense items
-    setNumberSenseItems([]);
+    // setNumberSenseItems([]);
 
     const usedItems = new Set<string>(); // Track used items to avoid duplicates
 
@@ -382,7 +379,6 @@ const CollectionSetup: React.FC = () => {
             count: image.count,
           });
         }
-        setNumberSenseItems(generatedItems);
         generatedSequence = generatedItems;
         break;
       }
@@ -438,7 +434,7 @@ const CollectionSetup: React.FC = () => {
     setSequence([]);
     setPreviewSequence([]);
     setFile([]);
-    setNumberSenseItems([]);
+    // setNumberSenseItems([]);
   };
 
   const handleSaveCollection = async () => {
@@ -826,28 +822,6 @@ const CollectionSetup: React.FC = () => {
                     Delete
                   </button>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      {category === "Number Sense" && numberSenseItems.length > 0 && (
-        <div className="mt-6">
-          <h3 className="mb-2 text-center text-xl font-bold">
-            Generated Sequence:
-          </h3>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-            {numberSenseItems.map((image, index) => (
-              <div
-                key={index}
-                className="rounded-md border border-gray-300 p-2"
-              >
-                <img
-                  src={image.url || image.svg}
-                  alt={`Number Sense Image ${index + 1}`}
-                  className="h-auto w-full"
-                />
-                <p className="mt-2 text-center">Count: {image.count}</p>
               </div>
             ))}
           </div>
