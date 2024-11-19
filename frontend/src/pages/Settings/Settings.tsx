@@ -9,6 +9,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { getLuminance } from "../../utils/colorUtils";
 import FeedbackForm from "../../components/FeedbackForm";
+import Navbar from "../../components/Navbar";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -91,6 +92,7 @@ const Settings: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
+  const [isGuidedTourEnabled, setIsGuidedTourEnabled] = useState<boolean>(true); // Default to true
 
   const steps = tourStepsSettings(visibilityStates); // Create tour steps based on visibility states
 
@@ -234,6 +236,22 @@ const Settings: React.FC = () => {
     }));
   };
 
+  const handleGuidedTourToggle = () => {
+    setIsGuidedTourEnabled((prev) => {
+      const newValue = !prev;
+      localStorage.setItem("guidedTourEnabled", JSON.stringify(newValue));
+      return newValue;
+    });
+  };
+
+  // Load the guided tour preference from localStorage
+  useEffect(() => {
+    const storedPreference = localStorage.getItem("guidedTourEnabled");
+    if (storedPreference !== null) {
+      setIsGuidedTourEnabled(JSON.parse(storedPreference));
+    }
+  }, []);
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
@@ -271,6 +289,17 @@ const Settings: React.FC = () => {
             className="mr-2"
           />
           Toggle Dark Mode
+        </label>
+      </div>
+      <div className="absolute right-4 top-[90px] z-10 mt-4">
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={isGuidedTourEnabled}
+            onChange={handleGuidedTourToggle}
+            className="mr-2"
+          />
+          Enable Guided Tour
         </label>
       </div>
       <div className="w-full space-y-6 px-4 md:px-8">
@@ -439,15 +468,24 @@ const Settings: React.FC = () => {
       >
         Give Feedback
       </button>
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
-      {/* Render FeedbackForm */}
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}
-        onComplete={handleTourComplete} // Use the new handler
+        onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={setCurrentTourStep}
-        tourName="settings" // Set the tour name
+        tourName="settings"
+      />
+      <Navbar
+        isPaused={false}
+        onPauseResume={() => {}}
+        onStartTour={startTour}
+        setTourName={() => {}}
+        setCurrentTourStep={() => {}}
+        setShowFeedback={setShowFeedback}
+        isGuidedTourEnabled={isGuidedTourEnabled}
+        onToggleGuidedTour={handleGuidedTourToggle}
       />
     </div>
   );

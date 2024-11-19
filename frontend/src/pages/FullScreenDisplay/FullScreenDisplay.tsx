@@ -15,6 +15,8 @@ interface CollectionItem {
 interface FullScreenDisplayProps {
   onEnterFullScreen: () => void;
   onExitFullScreen: () => void;
+  isGuidedTourEnabled: boolean;
+  setShowFeedback: (show: boolean) => void;
 }
 
 interface FullScreenDisplayState {
@@ -44,6 +46,8 @@ interface SequenceItem {
 const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onEnterFullScreen,
   onExitFullScreen,
+  isGuidedTourEnabled,
+  setShowFeedback,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -76,7 +80,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [tourName, setTourName] = useState<string>("");
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
 
   // Create tour steps without visibility states
   const steps = tourStepsFullScreenDisplay();
@@ -416,6 +420,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         setTourName={setTourName}
         setCurrentTourStep={setCurrentTourStep}
         setShowFeedback={setShowFeedback}
+        isGuidedTourEnabled={isGuidedTourEnabled}
+        onToggleGuidedTour={() => {}}
       />
       <div
         className="full-screen-display relative m-0 mt-4 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
@@ -453,17 +459,19 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         >
           {Math.round(progress)}% Complete
         </div>
-        <GuidedTour
-          steps={steps}
-          isRunning={isTourRunning}
-          onComplete={handleTourComplete}
-          currentStep={currentTourStep}
-          onStepChange={setCurrentTourStep}
-          tourName={tourName}
-        />
+        {isGuidedTourEnabled && (
+          <GuidedTour
+            steps={steps}
+            isRunning={isTourRunning}
+            onComplete={handleTourComplete}
+            currentStep={currentTourStep}
+            onStepChange={setCurrentTourStep}
+            tourName={tourName}
+          />
+        )}
       </div>
 
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+      {isFeedbackVisible && <FeedbackForm onClose={() => setIsFeedbackVisible(false)} />}
     </>
   );
 };

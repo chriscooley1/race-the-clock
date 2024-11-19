@@ -31,6 +31,8 @@ interface NavbarProps {
   setTourName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
   setShowFeedback: (show: boolean) => void;
+  isGuidedTourEnabled: boolean;
+  onToggleGuidedTour: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -42,6 +44,8 @@ const Navbar: React.FC<NavbarProps> = ({
   setTourName,
   setCurrentTourStep,
   setShowFeedback,
+  isGuidedTourEnabled,
+  onToggleGuidedTour,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -321,13 +325,26 @@ const Navbar: React.FC<NavbarProps> = ({
             {isPaused ? "Resume" : "Pause"}
           </button>
         )}
-        <button
-          type="button"
-          onClick={handleStartTour}
-          className="rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
-        >
-          Start Tour
-        </button>
+        <div className="absolute right-4 top-[90px] z-10 mt-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              checked={isGuidedTourEnabled}
+              onChange={onToggleGuidedTour}
+              className="mr-2"
+            />
+            Enable Guided Tour
+          </label>
+        </div>
+        {isGuidedTourEnabled && (
+          <button
+            type="button"
+            onClick={handleStartTour}
+            className="rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
+          >
+            Start Tour
+          </button>
+        )}
         {/* Conditionally render the feedback button only for FullScreenDisplay */}
         {location.pathname === "/fullscreen-display" && (
           <button
