@@ -6,6 +6,7 @@ interface CollectionsNavBarProps {
   sortOption: string;
   onSortChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onDuplicateCollection: () => void;
+  setShowFeedback: (show: boolean) => void;
 }
 
 const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
@@ -14,6 +15,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   sortOption,
   onSortChange,
   onDuplicateCollection,
+  setShowFeedback,
 }) => {
   const categories = [
     "All Collections",
@@ -67,6 +69,13 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             className="ml-4 rounded bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
           >
             Duplicate Collection
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowFeedback(true)}
+            className="ml-4 rounded bg-light-blue px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-light-blue-600 active:scale-95 active:bg-light-blue-700"
+          >
+            Give Feedback
           </button>
         </div>
       </div>

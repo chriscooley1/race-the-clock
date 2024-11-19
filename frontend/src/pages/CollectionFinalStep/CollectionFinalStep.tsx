@@ -10,10 +10,11 @@ import {
   generateScienceTerms,
   generateNursingTerms,
 } from "../../utils/RandomGenerators";
-import { v4 as uuidv4 } from "uuid"; // Add this import for generating unique IDs
+import { v4 as uuidv4 } from "uuid";
 import { tourStepsCollectionFinalStep } from "./tourStepsCollectionFinalStep";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import GuidedTour from "../../components/GuidedTour";
+import FeedbackForm from "../../components/FeedbackForm";
 
 // Export the function to avoid the "unused" error
 // createTourSteps will be used in future implementation
@@ -433,6 +434,8 @@ const CollectionFinalStep: React.FC = () => {
     }
   }, []);
 
+  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
+
   if (!currentUser) {
     return <div>Loading user information...</div>;
   }
@@ -791,6 +794,12 @@ const CollectionFinalStep: React.FC = () => {
         onStepChange={handleTourStepChange}
         tourName="collectionFinalStep"
       />
+      {/* Button to show feedback form */}
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />} {/* Render FeedbackForm */}
     </div>
   );
 };

@@ -30,6 +30,7 @@ interface NavbarProps {
   onStartTour: () => void;
   setTourName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
+  setShowFeedback: (show: boolean) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -40,6 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({
   onStartTour,
   setTourName,
   setCurrentTourStep,
+  setShowFeedback,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -323,6 +325,16 @@ const Navbar: React.FC<NavbarProps> = ({
         >
           Start Tour
         </button>
+        {/* Conditionally render the feedback button only for FullScreenDisplay */}
+        {location.pathname === "/fullscreen-display" && (
+          <button
+            type="button"
+            onClick={() => setShowFeedback(true)}
+            className="ml-4 rounded bg-light-blue px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-light-blue-600 md:px-4 md:py-2 md:text-base"
+          >
+            Give Feedback
+          </button>
+        )}
       </div>
       <div
         className="grow cursor-pointer text-center text-base font-bold text-gray-800 md:text-xl dark:text-white"

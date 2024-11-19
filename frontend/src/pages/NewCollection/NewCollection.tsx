@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { tourStepsNewCollection } from "./tourStepsNewCollection";
 import GuidedTour from "../../components/GuidedTour";
+import FeedbackForm from "../../components/FeedbackForm";
 import { VisibilityStates } from "../../types/VisibilityStates";
 
 const NewCollection: React.FC = () => {
@@ -136,6 +137,8 @@ const NewCollection: React.FC = () => {
     }));
   }, []); // Add dependencies as needed
 
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[60px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
@@ -237,6 +240,12 @@ const NewCollection: React.FC = () => {
           onStepChange={handleTourStepChange}
           tourName="newCollection"
         />
+
+        <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+          Give Feedback
+        </button>
+
+        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       </div>
     </div>
   );

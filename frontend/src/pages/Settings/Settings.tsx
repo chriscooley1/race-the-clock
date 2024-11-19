@@ -8,6 +8,7 @@ import { tourStepsSettings } from "./tourStepsSettings";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { getLuminance } from "../../utils/colorUtils";
+import FeedbackForm from "../../components/FeedbackForm";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -89,6 +90,7 @@ const Settings: React.FC = () => {
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
   const steps = tourStepsSettings(visibilityStates); // Create tour steps based on visibility states
 
@@ -426,6 +428,13 @@ const Settings: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Button to show feedback form */}
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />} {/* Render FeedbackForm */}
 
       <GuidedTour
         steps={steps}

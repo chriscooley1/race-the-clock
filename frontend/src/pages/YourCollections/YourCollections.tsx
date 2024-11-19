@@ -24,6 +24,7 @@ import { tourStepsYourCollections } from "./tourStepsYourCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { useCompletion } from "../../context/CompletionContext";
+import FeedbackForm from "../../components/FeedbackForm";
 
 interface Collection {
   collection_id: number;
@@ -102,6 +103,7 @@ const YourCollections: React.FC = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { theme, adjustColorForColorblindness } = useTheme();
   const { updateCompletionCount } = useCompletion();
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Visibility states for the tour
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -494,6 +496,7 @@ const YourCollections: React.FC = () => {
         sortOption={sortOption}
         onSortChange={handleSortChange}
         onDuplicateCollection={handleDuplicateCollection}
+        setShowFeedback={setShowFeedback}
       />
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -681,6 +684,8 @@ const YourCollections: React.FC = () => {
         onStepChange={handleTourStepChange}
         tourName="yourCollections"
       />
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
     </div>
   );
 };

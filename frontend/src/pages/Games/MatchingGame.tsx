@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import FeedbackForm from "../../components/FeedbackForm";
 
 const MatchingGame: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
@@ -7,6 +8,7 @@ const MatchingGame: React.FC = () => {
   const words = ["A", "B", "C"]; // Example words
   const images = ["Image1", "Image2", "Image3"]; // Example images
   const { theme } = useTheme(); // Get the theme context
+  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
   const startGame = () => {
     setIsGameStarted(true);
@@ -52,6 +54,13 @@ const MatchingGame: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Button to show feedback form */}
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />} {/* Render FeedbackForm */}
     </div>
   );
 };

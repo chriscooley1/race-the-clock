@@ -20,6 +20,7 @@ import { VisibilityStates } from "../../types/VisibilityStates";
 import { tourStepsCollectionSetup } from "./tourStepsCollectionSetup";
 import { Step } from "react-joyride";
 import GuidedTour from "../../components/GuidedTour";
+import FeedbackForm from "../../components/FeedbackForm";
 
 type Operation =
   | "multiplication"
@@ -98,6 +99,7 @@ const CollectionSetup: React.FC = () => {
   });
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable
   const steps: Step[] = tourStepsCollectionSetup(visibilityStates);
@@ -858,6 +860,11 @@ const CollectionSetup: React.FC = () => {
         onStepChange={handleTourStepChange}
         tourName="collectionSetup"
       />
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
     </div>
   );
 };
