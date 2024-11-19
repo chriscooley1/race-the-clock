@@ -5,9 +5,10 @@ import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm";
 import { useTheme } from "../../context/ThemeContext";
 import { tourStepsMyAccount } from "./tourStepsMyAccount";
 import GuidedTour from "../../components/GuidedTour";
-import { updateUserRole } from "../../api"; // Assume you have an API function to update user role
+import { updateUserRole } from "../../api";
 import RoleSelection from "../../components/RoleSelection";
 import UserRoleFeatures from "../../components/UserRoleFeatures";
+import FeedbackForm from "../../components/FeedbackForm";
 
 interface UserData {
   display_name?: string;
@@ -23,6 +24,7 @@ const MyAccount: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [role, setRole] = useState<string>("student"); // Default role
+  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
   // Define the steps variable without visibility states
   const steps = tourStepsMyAccount(); // Create tour steps without visibility states
@@ -126,6 +128,10 @@ const MyAccount: React.FC = () => {
         )}
         <UserRoleFeatures role={role} />
       </div>
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}

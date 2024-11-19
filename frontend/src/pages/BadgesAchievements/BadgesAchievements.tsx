@@ -3,6 +3,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
 import { useCompletion } from "../../context/CompletionContext";
+import FeedbackForm from "../../components/FeedbackForm";
 
 const BadgesAchievements: React.FC = () => {
   const { theme } = useTheme();
@@ -10,6 +11,7 @@ const BadgesAchievements: React.FC = () => {
   const [achievements, setAchievements] = useState<string[]>([]);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   const { completionCounts } = useCompletion();
 
@@ -134,6 +136,12 @@ const BadgesAchievements: React.FC = () => {
           )}
         </ul>
       </div>
+
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 
       <GuidedTour
         steps={steps}

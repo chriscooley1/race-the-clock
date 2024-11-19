@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { fetchCollections } from "../../api"; // Import the fetchCollections function
+import { fetchCollections } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsTimedChallenges } from "./tourStepsTimedChallenges";
 import GuidedTour from "../../components/GuidedTour";
+import FeedbackForm from "../../components/FeedbackForm";
 
 // Define the Collection interface
 interface Collection {
@@ -27,9 +28,9 @@ const TimedChallenges: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [collections, setCollections] = useState<Collection[]>([]); // State to hold collections
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
-
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
   // Define the steps variable
   const steps = tourStepsTimedChallenges(); // Create tour steps without visibility states
@@ -98,6 +99,13 @@ const TimedChallenges: React.FC = () => {
         </div>
       )}
       {/* Add your game logic and UI here */}
+
+      {/* Button to show feedback form */}
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />} {/* Render FeedbackForm */}
 
       {/* Add the GuidedTour component here */}
       <GuidedTour

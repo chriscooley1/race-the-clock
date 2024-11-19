@@ -15,6 +15,8 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsDiscoverCollections } from "./tourStepsDiscoverCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
+import FeedbackForm from "../../components/FeedbackForm";
+
 interface Item {
   id: number;
   name: string;
@@ -87,6 +89,7 @@ const DiscoverCollections: React.FC = () => {
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable
   const steps = tourStepsDiscoverCollections(visibilityStates); // Create tour steps based on visibility states
@@ -322,6 +325,11 @@ const DiscoverCollections: React.FC = () => {
           <option value="category">Category</option>
         </select>
       </div>
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {collections.map((collection, index) => {
           const baseColor = adjustColorForTheme(

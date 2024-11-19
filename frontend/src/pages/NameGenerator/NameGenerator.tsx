@@ -7,6 +7,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsNameGenerator } from "./tourStepsNameGenerator";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
+import FeedbackForm from "../../components/FeedbackForm";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
@@ -234,6 +235,8 @@ const NameGenerator: React.FC = () => {
     };
   }, []);
 
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+
   return (
     <div
       ref={containerRef}
@@ -350,6 +353,13 @@ const NameGenerator: React.FC = () => {
         onStepChange={handleTourStepChange} // Pass the step change handler
         tourName="nameGenerator"
       />
+
+      {/* Button to show feedback form */}
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
     </div>
   );
 };

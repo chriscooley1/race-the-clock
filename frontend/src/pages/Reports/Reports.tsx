@@ -4,6 +4,7 @@ import { fetchReports, fetchCollections } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
+import FeedbackForm from "../../components/FeedbackForm";
 
 // Define the Report interface
 interface Report {
@@ -31,6 +32,7 @@ const Reports: React.FC = () => {
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable without visibility states
   const steps = tourStepsReports(); // Create tour steps without visibility states
@@ -123,11 +125,16 @@ const Reports: React.FC = () => {
           </ul>
         </div>
       )}
-      {/* Add the GuidedTour component here */}
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}
-        onComplete={handleTourComplete} // Use the new handler
+        onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={(step) => setCurrentTourStep(step)}
         tourName="reports"

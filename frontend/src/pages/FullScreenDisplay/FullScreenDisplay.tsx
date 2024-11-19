@@ -4,6 +4,7 @@ import { useTheme } from "../../context/ThemeContext";
 import Navbar from "../../components/Navbar";
 import { tourStepsFullScreenDisplay } from "./tourStepsFullScreenDisplay";
 import GuidedTour from "../../components/GuidedTour";
+import FeedbackForm from "../../components/FeedbackForm";
 
 interface CollectionItem {
   name: string;
@@ -75,6 +76,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [tourName, setTourName] = useState<string>("");
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Create tour steps without visibility states
   const steps = tourStepsFullScreenDisplay();
@@ -458,6 +460,11 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
           onStepChange={setCurrentTourStep}
           tourName={tourName}
         />
+        <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+          Give Feedback
+        </button>
+
+        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       </div>
     </>
   );

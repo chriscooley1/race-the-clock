@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { tourStepsGames } from "./tourStepsGames";
 import GuidedTour from "../../components/GuidedTour";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link } from "react-router-dom";
+import FeedbackForm from "../../components/FeedbackForm";
 
 const Games: React.FC = () => {
   const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
   useEffect(() => {
     // Simulate loading data or setup
@@ -76,6 +78,13 @@ const Games: React.FC = () => {
           </Link>
         </div>
       )}
+
+      {/* Button to show feedback form */}
+      <button type="button" onClick={() => setShowFeedback(true)} className="mt-4 bg-light-blue text-white py-2 px-4 rounded">
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />} {/* Render FeedbackForm */}
 
       {/* Add the GuidedTour component here */}
       <GuidedTour
