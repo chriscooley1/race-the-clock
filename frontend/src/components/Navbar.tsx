@@ -31,8 +31,6 @@ interface NavbarProps {
   setTourName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
   setShowFeedback: (show: boolean) => void;
-  isGuidedTourEnabled: boolean;
-  onToggleGuidedTour: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -44,15 +42,13 @@ const Navbar: React.FC<NavbarProps> = ({
   setTourName,
   setCurrentTourStep,
   setShowFeedback,
-  isGuidedTourEnabled,
-  onToggleGuidedTour,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
-  const { startTour } = useTour();
+  const { isGuidedTourEnabled } = useTour();
 
   const handleMenuToggle = () => {
     console.log("Toggling menu. Current state:", menuOpen);
@@ -290,12 +286,10 @@ const Navbar: React.FC<NavbarProps> = ({
     }
 
     onStartTour();
-    startTour(steps);
     setTourName(tourName);
     setCurrentTourStep(0);
   }, [
     location.pathname,
-    startTour,
     onStartTour,
     setTourName,
     setCurrentTourStep,
@@ -325,17 +319,6 @@ const Navbar: React.FC<NavbarProps> = ({
             {isPaused ? "Resume" : "Pause"}
           </button>
         )}
-        <div className="absolute right-4 top-[90px] z-10 mt-4">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={isGuidedTourEnabled}
-              onChange={onToggleGuidedTour}
-              className="mr-2"
-            />
-            Enable Guided Tour
-          </label>
-        </div>
         {isGuidedTourEnabled && (
           <button
             type="button"

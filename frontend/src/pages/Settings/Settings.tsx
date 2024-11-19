@@ -10,6 +10,7 @@ import { VisibilityStates } from "../../types/VisibilityStates";
 import { getLuminance } from "../../utils/colorUtils";
 import FeedbackForm from "../../components/FeedbackForm";
 import Navbar from "../../components/Navbar";
+import { useTour } from "../../context/TourContext";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -38,6 +39,8 @@ const Settings: React.FC = () => {
     setHeadingFont,
     setButtonFont,
   } = useTheme();
+
+  const { isGuidedTourEnabled, setIsGuidedTourEnabled } = useTour();
 
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
     isMainFontVisible: true,
@@ -92,7 +95,6 @@ const Settings: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
-  const [isGuidedTourEnabled, setIsGuidedTourEnabled] = useState<boolean>(true); // Default to true
 
   const steps = tourStepsSettings(visibilityStates); // Create tour steps based on visibility states
 
@@ -250,7 +252,7 @@ const Settings: React.FC = () => {
     if (storedPreference !== null) {
       setIsGuidedTourEnabled(JSON.parse(storedPreference));
     }
-  }, []);
+  }, [setIsGuidedTourEnabled]);
 
   return (
     <div
@@ -484,8 +486,6 @@ const Settings: React.FC = () => {
         setTourName={() => {}}
         setCurrentTourStep={() => {}}
         setShowFeedback={setShowFeedback}
-        isGuidedTourEnabled={isGuidedTourEnabled}
-        onToggleGuidedTour={handleGuidedTourToggle}
       />
     </div>
   );

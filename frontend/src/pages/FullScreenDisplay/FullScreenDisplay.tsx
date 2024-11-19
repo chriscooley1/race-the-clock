@@ -5,6 +5,7 @@ import Navbar from "../../components/Navbar";
 import { tourStepsFullScreenDisplay } from "./tourStepsFullScreenDisplay";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
+import { useTour } from "../../context/TourContext";
 
 interface CollectionItem {
   name: string;
@@ -15,7 +16,6 @@ interface CollectionItem {
 interface FullScreenDisplayProps {
   onEnterFullScreen: () => void;
   onExitFullScreen: () => void;
-  isGuidedTourEnabled: boolean;
   setShowFeedback: (show: boolean) => void;
 }
 
@@ -46,7 +46,6 @@ interface SequenceItem {
 const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onEnterFullScreen,
   onExitFullScreen,
-  isGuidedTourEnabled,
   setShowFeedback,
 }) => {
   const location = useLocation();
@@ -81,6 +80,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
+  const { isGuidedTourEnabled } = useTour();
 
   // Create tour steps without visibility states
   const steps = tourStepsFullScreenDisplay();
@@ -420,8 +420,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         setTourName={setTourName}
         setCurrentTourStep={setCurrentTourStep}
         setShowFeedback={setShowFeedback}
-        isGuidedTourEnabled={isGuidedTourEnabled}
-        onToggleGuidedTour={() => {}}
       />
       <div
         className="full-screen-display relative m-0 mt-4 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"

@@ -59,7 +59,6 @@ const App: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState(false);
   const [currentTourStep, setCurrentTourStep] = useState(0);
   const [currentTourName, setCurrentTourName] = useState<string>("");
-  const [isGuidedTourEnabled, setIsGuidedTourEnabled] = useState<boolean>(true);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   useEffect(() => {
@@ -94,21 +93,6 @@ const App: React.FC = () => {
     const tourCompleted = localStorage.getItem("tourCompleted");
     if (!tourCompleted) {
       setIsTourRunning(true);
-    }
-  }, []);
-
-  const handleGuidedTourToggle = () => {
-    setIsGuidedTourEnabled((prev) => {
-      const newValue = !prev;
-      localStorage.setItem("guidedTourEnabled", JSON.stringify(newValue));
-      return newValue;
-    });
-  };
-
-  useEffect(() => {
-    const storedPreference = localStorage.getItem("guidedTourEnabled");
-    if (storedPreference !== null) {
-      setIsGuidedTourEnabled(JSON.parse(storedPreference));
     }
   }, []);
 
@@ -259,8 +243,6 @@ const App: React.FC = () => {
                 onStartTour={handleTourStart}
                 setTourName={setCurrentTourName}
                 setCurrentTourStep={setCurrentTourStep}
-                isGuidedTourEnabled={isGuidedTourEnabled}
-                onToggleGuidedTour={handleGuidedTourToggle}
                 setShowFeedback={setShowFeedback}
               />
               <div className="flex pt-[70px]">
@@ -279,7 +261,6 @@ const App: React.FC = () => {
                               <FullScreenDisplay
                                 onEnterFullScreen={() => setIsFullScreen(true)}
                                 onExitFullScreen={() => setIsFullScreen(false)}
-                                isGuidedTourEnabled={isGuidedTourEnabled}
                                 setShowFeedback={setShowFeedback}
                               />
                             }
