@@ -87,7 +87,7 @@ class CollectionBase(SQLModel):
     description: str
     user_id: int
     category: str = Field(..., description="Category of the collection")
-    stage: str = Field(default="beginner", description="Stage of mastery: beginner, intermediate, advanced")
+    # stage: str = Field(default="beginner", description="Stage of mastery: beginner, intermediate, advanced")  # Keep this line commented out for future use
 
 class Collection(SQLModel, table=True):
     __tablename__ = "collections"
@@ -97,7 +97,7 @@ class Collection(SQLModel, table=True):
     user_id: int = Field(foreign_key="users.user_id")
     status: str = Field(default="private")
     category: str
-    stage: str = Field(default="beginner")
+    # stage: str  # Keep this line commented out for future use
     user: User = Relationship(back_populates="collections")
     items: List["Item"] = Relationship(back_populates="collection")
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
