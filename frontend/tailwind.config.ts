@@ -79,8 +79,8 @@ const config: Config = {
         chewy: "Chewy",
         "comic-neue": "Comic Neue",
         "baloo-2": "Baloo 2",
-        custom: "var(--font-family, 'Comic Neue', sans-serif)",
-        teacher: ['"KG What The Teacher Wants"', "Comic Neue", "sans-serif"],
+        custom: ['KG What The Teacher Wants', 'Comic Neue', 'sans-serif'],
+        teacher: ['KG What The Teacher Wants', 'Comic Neue', 'sans-serif'],
         "shake-it-off": ['"KG Shake It Off"', "Comic Neue", "sans-serif"],
       },
       spacing: {
