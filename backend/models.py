@@ -54,6 +54,7 @@ class UserBase(SQLModel):
 class User(SQLModel, table=True):
     __tablename__ = "users"
     user_id: Optional[int] = Field(default=None, primary_key=True)
+    auth0_id: str = Field(sa_column=sa.Column(sa.String, unique=True, index=True))
     username: str = Field(sa_column=sa.Column(sa.String, unique=True, index=True))
     email: Optional[str] = Field(default=None)
     hashed_password: str = Field(sa_column=sa.Column(sa.String, nullable=False))
@@ -61,8 +62,11 @@ class User(SQLModel, table=True):
     sequences: List["Sequence"] = Relationship(back_populates="user")
     collections: List["Collection"] = Relationship(back_populates="user")
     namelists: List[NameList] = Relationship(back_populates="user")
-    role: str = Field(default="student", sa_column=sa.Column(sa.String, nullable=False))  # Add default value
+    role: str = Field(default="student")
 
+# Add this class for role updates
+class RoleUpdate(BaseModel):
+    role: str
 
 # Sequence Models
 class SequenceBase(SQLModel):
