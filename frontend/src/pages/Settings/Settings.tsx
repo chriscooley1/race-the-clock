@@ -170,34 +170,34 @@ const Settings: React.FC = () => {
 
   const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFont = e.target.value;
-    const cssFont = selectedFont.replace(/^["'](.+)["']$/, '$1');
+    const cssFont = selectedFont.replace(/^["'](.+)["']$/, "$1");
     setFont(selectedFont);
     document.documentElement.style.setProperty(
       "--font-family", 
-      cssFont.includes(' ') ? `"${cssFont}"` : cssFont
+      cssFont.includes(" ") ? `"${cssFont}"` : cssFont
     );
   };
 
   const handleHeadingFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFont = e.target.value;
     const cssFont = selectedFont.replace(/^["'](.+)["']$/, '$1');
-    const formattedFont = cssFont === 'Baloo 2' ? '"Baloo 2"' : cssFont;
+    const formattedFont = cssFont === "Baloo 2" ? '"Baloo 2"' : cssFont;
     
     setHeadingFont(selectedFont);
     document.documentElement.style.setProperty(
-      '--heading-font-family',
+      "--heading-font-family",
       formattedFont
     );
   };
 
   const handleButtonFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFont = e.target.value;
-    const cssFont = selectedFont.replace(/^["'](.+)["']$/, '$1');
-    const formattedFont = cssFont === 'Baloo 2' ? '"Baloo 2"' : cssFont;
+    const cssFont = selectedFont.replace(/^["'](.+)["']$/, "$1");
+    const formattedFont = cssFont === "Baloo 2" ? '"Baloo 2"' : cssFont;
     
     setButtonFont(selectedFont);
     document.documentElement.style.setProperty(
-      '--button-font-family',
+      "--button-font-family",
       formattedFont
     );
   };
@@ -279,12 +279,12 @@ const Settings: React.FC = () => {
       try {
         await document.fonts.ready;
         const kgTeacherFont = new FontFace(
-          'KG What The Teacher Wants',
-          'url(/fonts/KGWhatTheTeacherWants.ttf)'
+          "KG What The Teacher Wants",
+          "url(/fonts/KGWhatTheTeacherWants.ttf)"
         );
         const kgShakeFont = new FontFace(
-          'KG Shake It Off',
-          'url(/fonts/KGShakeItOff.ttf)'
+          "KG Shake It Off",
+          "url(/fonts/KGShakeItOff.ttf)"
         );
         
         await Promise.all([
@@ -295,9 +295,9 @@ const Settings: React.FC = () => {
         document.fonts.add(kgTeacherFont);
         document.fonts.add(kgShakeFont);
         
-        console.log('Custom fonts loaded successfully');
+        console.log("Custom fonts loaded successfully");
       } catch (error) {
-        console.error('Error loading fonts:', error);
+        console.error("Error loading fonts:", error);
       }
     };
 
