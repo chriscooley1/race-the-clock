@@ -21,6 +21,8 @@ import { tourStepsGames } from "../pages/Games/tourStepsGames";
 import { tourStepsTimedChallenges } from "../pages/Games/tourStepsTimedChallenges";
 import { tourStepsReports } from "../pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "../pages/BadgesAchievements/tourStepsBadgesAchievements";
+import { tourStepsMatchingGame } from "../pages/Games/tourStepsMatchingGame";
+import { tourStepsMultipleWords } from "../pages/Games/tourStepsMultipleWords";
 
 interface NavbarProps {
   isPaused?: boolean;
@@ -251,6 +253,14 @@ const Navbar: React.FC<NavbarProps> = ({
       case "/your-collections":
         steps = tourStepsYourCollections(visibilityStates);
         tourName = "yourCollections";
+        break;
+      case "/games/matching-game":
+        steps = tourStepsMatchingGame();
+        tourName = "matchingGame";
+        break;
+      case "/games/multiple-words-game":
+        steps = tourStepsMultipleWords();
+        tourName = "multipleWords";
         break;
       default:
         steps = [];

@@ -10,11 +10,9 @@ import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
 import { TourProvider } from "./context/TourContext";
-import MatchingGame from "./pages/Games/MatchingGame";
-import MultipleWordsGame from "./pages/Games/MultipleWordsGame";
-import TimedChallenges from "./pages/Games/TimedChallenges";
 import FeedbackForm from "./components/FeedbackForm";
 import FontPreloader from "./components/FontPreloader";
+import { CompletionProvider } from "./context/CompletionContext";
 
 // Import your tour steps here
 import { tourStepsLandingPage } from "./pages/LandingPage/tourStepsLandingPage";
@@ -32,6 +30,8 @@ import { tourStepsGames } from "./pages/Games/tourStepsGames";
 import { tourStepsTimedChallenges } from "./pages/Games/tourStepsTimedChallenges";
 import { tourStepsReports } from "./pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "./pages/BadgesAchievements/tourStepsBadgesAchievements";
+import { tourStepsMatchingGame } from "./pages/Games/tourStepsMatchingGame";
+import { tourStepsMultipleWords } from "./pages/Games/tourStepsMultipleWords";
 
 // Import your page components here
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -46,9 +46,11 @@ import Resources from "./pages/Resources/Resources";
 import Settings from "./pages/Settings/Settings";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import Games from "./pages/Games/Games";
+import MatchingGame from "./pages/Games/MatchingGame";
+import MultipleWordsGame from "./pages/Games/MultipleWordsGame";
+import TimedChallenges from "./pages/Games/TimedChallenges";
 import Reports from "./pages/Reports/Reports";
 import BadgesAchievements from "./pages/BadgesAchievements/BadgesAchievements";
-import { CompletionProvider } from "./context/CompletionContext";
 
 const App: React.FC = () => {
   console.log("App component rendered");
@@ -205,7 +207,11 @@ const App: React.FC = () => {
         return tourStepsMyAccount();
       case "/games":
         return tourStepsGames();
-      case "/timed-challenges":
+      case "/games/matching-game":
+        return tourStepsMatchingGame();
+      case "/games/multiple-words-game":
+        return tourStepsMultipleWords();
+      case "/games/timed-challenges":
         return tourStepsTimedChallenges();
       case "/reports":
         return tourStepsReports();
@@ -344,6 +350,22 @@ const App: React.FC = () => {
                       }
                     />
                     <Route
+                      path="/games/matching-game"
+                      element={
+                        <Suspense fallback={<div>Loading...</div>}>
+                          <PrivateRoute element={<MatchingGame />} />
+                        </Suspense>
+                      }
+                    />
+                    <Route
+                      path="/games/multiple-words-game"
+                      element={
+                        <Suspense fallback={<div>Loading...</div>}>
+                          <PrivateRoute element={<MultipleWordsGame />} />
+                        </Suspense>
+                      }
+                    />
+                    <Route
                       path="/games/timed-challenges"
                       element={
                         <Suspense fallback={<div>Loading...</div>}>
@@ -364,22 +386,6 @@ const App: React.FC = () => {
                       element={
                         <Suspense fallback={<div>Loading...</div>}>
                           <PrivateRoute element={<BadgesAchievements />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/games/matching-game"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<MatchingGame />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/games/multiple-words-game"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<MultipleWordsGame />} />
                         </Suspense>
                       }
                     />

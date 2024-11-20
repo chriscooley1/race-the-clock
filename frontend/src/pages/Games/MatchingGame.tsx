@@ -1,63 +1,76 @@
 import React, { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import FeedbackForm from "../../components/FeedbackForm";
+import GuidedTour from "../../components/GuidedTour";
+import { tourStepsMatchingGame } from "./tourStepsMatchingGame";
+import { useTour } from "../../context/TourContext";
 
 const MatchingGame: React.FC = () => {
+  const { theme } = useTheme();
+  const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
-  const [matches, setMatches] = useState<{ [key: string]: boolean }>({}); // Track matches
-  const words = ["A", "B", "C"]; // Example words
-  const images = ["Image1", "Image2", "Image3"]; // Example images
-  const { theme } = useTheme(); // Get the theme context
-  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
+  const [matches, setMatches] = useState<{ [key: string]: boolean }>({});
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+
+  const words = ["A", "B", "C"];
+  const images = ["Image1", "Image2", "Image3"];
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false);
+    localStorage.setItem("tourCompleted_matchingGame", "true");
+  };
 
   const startGame = () => {
     setIsGameStarted(true);
-    // Initialize matches or game state here
   };
 
   const handleMatch = (word: string) => {
-    setMatches((prev) => ({ ...prev, [word]: true })); // Update match state
+    setMatches((prev) => ({ ...prev, [word]: true }));
   };
 
   return (
     <div
-      className="mt-[70px] flex flex-col items-center"
+      className="matching-game-container mt-[70px] flex flex-col items-center"
       style={{ color: theme.originalTextColor }}
     >
       <h1 className="text-3xl font-bold">Matching Game</h1>
       {!isGameStarted ? (
-        <div>
+        <div className="game-instructions">
           <p>Match the letters with the corresponding images!</p>
           <button
             type="button"
             onClick={startGame}
-            className="mt-4 rounded bg-blue-500 p-2 text-white"
+            className="start-button mt-4 rounded bg-blue-500 p-2 text-white"
           >
             Start Game
           </button>
         </div>
       ) : (
-        <div>
+        <div className="game-board">
           <p>Game is starting...</p>
           <div className="flex">
-            {words.map((word) => (
-              <div
-                key={word}
-                onClick={() => handleMatch(word)}
-                className="m-2 cursor-pointer"
-              >
-                {word} {matches[word] && "✓"} {/* Show match status */}
-              </div>
-            ))}
-            {images.map((image) => (
-              <div key={image} className="m-2">
-                {image}
-              </div>
-            ))}
+            <div className="words-section">
+              {words.map((word) => (
+                <div
+                  key={word}
+                  onClick={() => handleMatch(word)}
+                  className="m-2 cursor-pointer"
+                >
+                  {word} {matches[word] && "✓"}
+                </div>
+              ))}
+            </div>
+            <div className="cards-section">
+              {images.map((image) => (
+                <div key={image} className="m-2">
+                  {image}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
-      {/* Button to show feedback form */}
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
@@ -65,8 +78,15 @@ const MatchingGame: React.FC = () => {
       >
         Give Feedback
       </button>
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
-      {/* Render FeedbackForm */}
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+      <GuidedTour
+        steps={tourStepsMatchingGame()}
+        isRunning={isTourRunning && isGuidedTourEnabled}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="matchingGame"
+      />
     </div>
   );
 };
