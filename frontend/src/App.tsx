@@ -14,6 +14,7 @@ import MatchingGame from "./pages/Games/MatchingGame";
 import MultipleWordsGame from "./pages/Games/MultipleWordsGame";
 import TimedChallenges from "./pages/Games/TimedChallenges";
 import FeedbackForm from "./components/FeedbackForm";
+import FontPreloader from "./components/FontPreloader";
 
 // Import your tour steps here
 import { tourStepsLandingPage } from "./pages/LandingPage/tourStepsLandingPage";
@@ -231,11 +232,21 @@ const App: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    document.fonts.ready.then(() => {
+      console.log("All fonts loaded");
+      document.fonts.forEach(font => {
+        console.log(`Font loaded: ${font.family}`);
+      });
+    });
+  }, []);
+
   return (
     <Auth0ProviderWithHistory>
       <ErrorBoundary>
         <CompletionProvider>
           <TourProvider>
+            <FontPreloader />
             <div
               className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
             >

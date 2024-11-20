@@ -10,6 +10,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
   return {
     plugins: [react()],
     base: "/",
+    publicDir: "public",
     define: {
       "import.meta.env.MODE": JSON.stringify(mode),
       "import.meta.env.VITE_AUTH0_DOMAIN": JSON.stringify(
@@ -54,6 +55,10 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       port: parseInt(env.PORT || "5173"),
       watch: {
         usePolling: true,
+      },
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
       },
     },
     preview: {
