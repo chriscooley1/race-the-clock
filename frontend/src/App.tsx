@@ -133,14 +133,6 @@ const App: React.FC = () => {
       isAddNameButtonVisible: false,
       isSpinButtonVisible: false,
       isNamesListVisible: false,
-      isMainFontVisible: false,
-      isHeadingFontVisible: false,
-      isButtonFontVisible: false,
-      isColorThemeVisible: false,
-      isTextColorVisible: false,
-      isBackgroundColorVisible: false,
-      isAccessibilityVisible: false,
-      isBackgroundThemeVisible: false,
       isSessionSettingsModalVisible: false,
       isEditCollectionModalVisible: false,
       isDuplicateCollectionModalVisible: false,
@@ -208,15 +200,7 @@ const App: React.FC = () => {
       case "/resources":
         return tourStepsResources();
       case "/settings":
-        visibilityStates.isMainFontVisible = true;
-        visibilityStates.isHeadingFontVisible = true;
-        visibilityStates.isButtonFontVisible = true;
-        visibilityStates.isColorThemeVisible = true;
-        visibilityStates.isTextColorVisible = true;
-        visibilityStates.isBackgroundColorVisible = true;
-        visibilityStates.isAccessibilityVisible = true;
-        visibilityStates.isBackgroundThemeVisible = true;
-        return tourStepsSettings(visibilityStates);
+        return tourStepsSettings();
       case "/my-account":
         return tourStepsMyAccount();
       case "/games":

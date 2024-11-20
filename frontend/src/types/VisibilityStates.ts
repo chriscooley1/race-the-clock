@@ -33,14 +33,6 @@ export interface VisibilityStates {
   isStartCollectionButtonVisible: boolean;
   isEditCollectionButtonVisible: boolean;
   isDeleteCollectionButtonVisible: boolean;
-  isMainFontVisible: boolean;
-  isHeadingFontVisible: boolean;
-  isButtonFontVisible: boolean;
-  isColorThemeVisible: boolean;
-  isTextColorVisible: boolean;
-  isBackgroundColorVisible: boolean;
-  isAccessibilityVisible: boolean;
-  isBackgroundThemeVisible: boolean;
   isSessionSettingsModalVisible: boolean;
   isEditCollectionModalVisible: boolean;
   isDuplicateCollectionModalVisible: boolean;

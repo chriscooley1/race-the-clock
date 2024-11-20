@@ -116,14 +116,6 @@ const Navbar: React.FC<NavbarProps> = ({
       isStartCollectionButtonVisible: false,
       isEditCollectionButtonVisible: false,
       isDeleteCollectionButtonVisible: false,
-      isMainFontVisible: false,
-      isHeadingFontVisible: false,
-      isButtonFontVisible: false,
-      isColorThemeVisible: false,
-      isTextColorVisible: false,
-      isBackgroundColorVisible: false,
-      isAccessibilityVisible: false,
-      isBackgroundThemeVisible: false,
       isSessionSettingsModalVisible: false,
       isEditCollectionModalVisible: false,
       isDuplicateCollectionModalVisible: false,
@@ -190,25 +182,6 @@ const Navbar: React.FC<NavbarProps> = ({
         visibilityStates.isSpinButtonVisible = true;
         visibilityStates.isNamesListVisible = true;
         break;
-      case "/settings":
-        visibilityStates.isMainFontVisible = true;
-        visibilityStates.isHeadingFontVisible = true;
-        visibilityStates.isButtonFontVisible = true;
-        visibilityStates.isColorThemeVisible = true;
-        visibilityStates.isTextColorVisible = true;
-        visibilityStates.isBackgroundColorVisible = true;
-        visibilityStates.isAccessibilityVisible = true;
-        visibilityStates.isBackgroundThemeVisible = true;
-        visibilityStates.isNameInputVisible = true;
-        visibilityStates.isAddNameButtonVisible = true;
-        visibilityStates.isSpinButtonVisible = true;
-        visibilityStates.isNamesListVisible = true;
-        visibilityStates.isCollectionNameVisible = true;
-        visibilityStates.isCategorySelectVisible = true;
-        visibilityStates.isStageSelectVisible = true;
-        visibilityStates.isPublicCheckboxVisible = true;
-        visibilityStates.isSubmitButtonVisible = true;
-        break;
       // Add cases for other routes as needed
       default:
         break;
@@ -268,7 +241,7 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "resources";
         break;
       case "/settings":
-        steps = tourStepsSettings(visibilityStates);
+        steps = tourStepsSettings();
         tourName = "settings";
         break;
       case "/timed-challenges":
