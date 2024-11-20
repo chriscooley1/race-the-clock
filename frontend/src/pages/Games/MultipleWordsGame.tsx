@@ -1,64 +1,84 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import FeedbackForm from "../../components/FeedbackForm";
+import GuidedTour from "../../components/GuidedTour";
+import { tourStepsMultipleWords } from "./tourStepsMultipleWords";
+import { useTour } from "../../context/TourContext";
 
 const MultipleWordsGame: React.FC = () => {
+  const { theme } = useTheme();
+  const { isGuidedTourEnabled } = useTour();
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
-  const [connections, setConnections] = useState<{ [key: string]: string }>({}); // Track connections
-  const words = ["Word1", "Word2", "Word3"]; // Example words
-  const images = ["Image1", "Image2", "Image3"]; // Example images
-  const { theme } = useTheme(); // Get the theme context
-  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
+  const [connections, setConnections] = useState<{ [key: string]: string }>({});
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+
+  const words = ["Word1", "Word2", "Word3"];
+  const images = ["Image1", "Image2", "Image3"];
+
+  useEffect(() => {
+    const tourCompleted = localStorage.getItem("tourCompleted_multipleWords");
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+    }
+  }, []);
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false);
+    localStorage.setItem("tourCompleted_multipleWords", "true");
+  };
 
   const startGame = () => {
     setIsGameStarted(true);
-    // Initialize connections or game state here
   };
 
   const handleConnect = (word: string, image: string) => {
-    setConnections((prev) => ({ ...prev, [word]: image })); // Update connection state
+    setConnections((prev) => ({ ...prev, [word]: image }));
   };
 
   return (
     <div
-      className="mt-[70px] flex flex-col items-center"
+      className="multiple-words-container mt-[70px] flex flex-col items-center"
       style={{ color: theme.originalTextColor }}
     >
       <h1 className="text-3xl font-bold">Multiple Words Game</h1>
       {!isGameStarted ? (
-        <div>
+        <div className="game-instructions">
           <p>Drag and connect words to their corresponding cards!</p>
           <button
             type="button"
             onClick={startGame}
-            className="mt-4 rounded bg-blue-500 p-2 text-white"
+            className="start-button mt-4 rounded bg-blue-500 p-2 text-white"
           >
             Start Game
           </button>
         </div>
       ) : (
-        <div>
+        <div className="game-board">
           <p>Game is starting...</p>
           <div className="flex">
-            {words.map((word) => (
-              <div
-                key={word}
-                onClick={() => handleConnect(word, "Image1")}
-                className="m-2 cursor-pointer"
-              >
-                {word} {connections[word] && `→ ${connections[word]}`}{" "}
-                {/* Show connection status */}
-              </div>
-            ))}
-            {images.map((image) => (
-              <div key={image} className="m-2">
-                {image}
-              </div>
-            ))}
+            <div className="words-section">
+              {words.map((word) => (
+                <div
+                  key={word}
+                  onClick={() => handleConnect(word, "Image1")}
+                  className="m-2 cursor-pointer"
+                >
+                  {word} {connections[word] && `→ ${connections[word]}`}
+                </div>
+              ))}
+            </div>
+            <div className="cards-section">
+              {images.map((image) => (
+                <div key={image} className="m-2">
+                  {image}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
-      {/* Button to show feedback form */}
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
@@ -66,8 +86,15 @@ const MultipleWordsGame: React.FC = () => {
       >
         Give Feedback
       </button>
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
-      {/* Render FeedbackForm */}
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+      <GuidedTour
+        steps={tourStepsMultipleWords()}
+        isRunning={isTourRunning && isGuidedTourEnabled}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="multipleWords"
+      />
     </div>
   );
 };

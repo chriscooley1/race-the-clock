@@ -1,48 +1,42 @@
 import { Step } from "react-joyride";
-import { VisibilityStates } from "../../types/VisibilityStates";
 
-export const tourStepsSettings = (
-  visibilityStates: VisibilityStates,
-): Step[] => {
+export const tourStepsSettings = (): Step[] => {
   const steps: Step[] = [
     {
-      target: ".settings", // Target the main container
+      target: ".settings",
       content: "Adjust your settings here.",
       disableBeacon: true,
+      placement: "bottom",
     },
-    visibilityStates.isMainFontVisible && {
-      target: ".main-font", // Target the Main Font section header
+    {
+      target: ".main-font",
       content: "Select your main font from this dropdown.",
     },
-    visibilityStates.isHeadingFontVisible && {
-      target: ".heading-font", // Target the Heading Font section header
+    {
+      target: ".heading-font",
       content: "Choose a font for your headings.",
     },
-    visibilityStates.isButtonFontVisible && {
-      target: ".button-font", // Target the Button Font section header
+    {
+      target: ".button-font",
       content: "Select a font for your buttons.",
     },
-    visibilityStates.isColorThemeVisible && {
-      target: ".color-theme", // Target the Color Theme section header
+    {
+      target: ".color-theme",
       content: "Choose a color theme for the application.",
     },
-    visibilityStates.isTextColorVisible && {
-      target: ".text-color", // Target the Text Color section header
+    {
+      target: ".text-color",
       content: "Select a text color for the Full Screen Display.",
     },
-    visibilityStates.isBackgroundColorVisible && {
-      target: ".background-color", // Target the Background Color section header
-      content: "Choose a background color for the Full Screen Display.",
-    },
-    visibilityStates.isAccessibilityVisible && {
-      target: ".accessibility", // Target the Accessibility section header
+    {
+      target: ".accessibility",
       content: "Enable colorblind mode and select the type.",
     },
-    visibilityStates.isBackgroundThemeVisible && {
-      target: ".background-theme", // Target the Background Theme section header
+    {
+      target: ".background-theme",
       content: "Select a background theme for the application.",
     },
-  ].filter(Boolean) as Step[]; // Filter out any false values
+  ].filter(Boolean) as Step[];
 
   return steps;
 };

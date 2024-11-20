@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsTimedChallenges } from "./tourStepsTimedChallenges";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
+import { useTour } from "../../context/TourContext";
 
 // Define the Collection interface
 interface Collection {
@@ -28,7 +29,7 @@ const TimedChallenges: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [collections, setCollections] = useState<Collection[]>([]); // State to hold collections
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
-  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
@@ -56,23 +57,10 @@ const TimedChallenges: React.FC = () => {
     loadCollections();
   }, [getAccessTokenSilently]);
 
-  const startTour = () => {
-    const tourCompleted = localStorage.getItem("tourCompleted");
-    if (!tourCompleted) {
-      setIsTourRunning(true);
-      setCurrentTourStep(0); // Reset to the first step
-    }
-  };
-
   const handleTourComplete = () => {
-    console.log("Tour completed");
-    setIsTourRunning(false); // Reset the tour running state
+    setIsTourRunning(false);
+    localStorage.setItem("tourCompleted_timedChallenges", "true");
   };
-
-  // Call startTour when the component mounts to initiate the tour
-  useEffect(() => {
-    startTour(); // Start the tour when the component mounts
-  }, []);
 
   return (
     <div
@@ -112,8 +100,8 @@ const TimedChallenges: React.FC = () => {
       {/* Add the GuidedTour component here */}
       <GuidedTour
         steps={steps}
-        isRunning={isTourRunning}
-        onComplete={handleTourComplete} // Use the new handler
+        isRunning={isTourRunning && isGuidedTourEnabled}
+        onComplete={handleTourComplete}
         currentStep={currentTourStep}
         onStepChange={setCurrentTourStep}
         tourName="timedChallenges"
