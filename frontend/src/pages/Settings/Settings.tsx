@@ -274,36 +274,6 @@ const Settings: React.FC = () => {
     }
   }, [setIsGuidedTourEnabled]);
 
-  useEffect(() => {
-    const fontLoadCheck = async () => {
-      try {
-        await document.fonts.ready;
-        const kgTeacherFont = new FontFace(
-          "KG What The Teacher Wants",
-          "url(/fonts/KGWhatTheTeacherWants.ttf)"
-        );
-        const kgShakeFont = new FontFace(
-          "KG Shake It Off",
-          "url(/fonts/KGShakeItOff.ttf)"
-        );
-        
-        await Promise.all([
-          kgTeacherFont.load(),
-          kgShakeFont.load()
-        ]);
-        
-        document.fonts.add(kgTeacherFont);
-        document.fonts.add(kgShakeFont);
-        
-        console.log("Custom fonts loaded successfully");
-      } catch (error) {
-        console.error("Error loading fonts:", error);
-      }
-    };
-
-    fontLoadCheck();
-  }, []);
-
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
