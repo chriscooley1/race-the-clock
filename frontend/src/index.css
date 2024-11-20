@@ -26,9 +26,9 @@
     --background-color: #ffffff;
     --display-text-color: var(--text-color);
     --display-background-color: var(--background-color);
-    --font-family: '"KG What The Teacher Wants"', sans-serif;
-    --heading-font-family: '"KG What The Teacher Wants"', sans-serif;
-    --button-font-family: '"KG What The Teacher Wants"', sans-serif;
+    --font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+    --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+    --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
   }
 
   body {
@@ -48,12 +48,10 @@
   h1,
   h2,
   h3 {
-    @apply font-teacher;
     font-family: var(--heading-font-family);
   }
 
   button {
-    @apply font-teacher;
     font-family: var(--button-font-family);
   }
 
@@ -89,6 +87,9 @@
   --background-color: #ffffff;
   --display-text-color: var(--text-color);
   --display-background-color: var(--background-color);
+  --font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+  --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+  --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
 }
 
 /* Apply the CSS variables to the body */

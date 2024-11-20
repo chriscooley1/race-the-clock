@@ -69,6 +69,22 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       if (savedTheme) {
         const parsedTheme = JSON.parse(savedTheme);
 
+        // Immediately set CSS variables for fonts
+        const cssFont = (font: string) => font.replace(/^["'](.+)["']$/, "$1");
+        
+        document.documentElement.style.setProperty(
+          "--font-family",
+          cssFont(parsedTheme.font || '"KG What The Teacher Wants"')
+        );
+        document.documentElement.style.setProperty(
+          "--heading-font-family",
+          cssFont(parsedTheme.headingFont || '"KG What The Teacher Wants"')
+        );
+        document.documentElement.style.setProperty(
+          "--button-font-family",
+          cssFont(parsedTheme.buttonFont || '"KG What The Teacher Wants"')
+        );
+
         // Immediately set CSS variables
         const currentBackgroundColor =
           parsedTheme.displayBackgroundColor || parsedTheme.backgroundColor;
@@ -110,9 +126,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       isColorblindMode: false,
       colorblindType: "protanopia",
       isDarkMode: false,
-      font: "KG What the Teacher Wants",
-      headingFont: "KG What the Teacher Wants",
-      buttonFont: "KG What the Teacher Wants",
+      font: '"KG What The Teacher Wants"',
+      headingFont: '"KG What The Teacher Wants"',
+      buttonFont: '"KG What The Teacher Wants"',
       originalTextColor: colorSchemes[2].textColor,
       originalBackgroundColor: colorSchemes[2].backgroundColor,
       displayTextColor: colorSchemes[2].textColor,
