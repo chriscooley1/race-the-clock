@@ -18,8 +18,8 @@ export const tourStepsMultipleWords = (): Step[] => {
     {
       target: ".cards-section",
       content: "Drag words to these cards to make connections.",
-    }
+    },
   ];
 
   return steps;
-}; 
+};

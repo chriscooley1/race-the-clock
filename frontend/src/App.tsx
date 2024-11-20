@@ -225,7 +225,7 @@ const App: React.FC = () => {
   useEffect(() => {
     document.fonts.ready.then(() => {
       console.log("All fonts loaded");
-      document.fonts.forEach(font => {
+      document.fonts.forEach((font) => {
         console.log(`Font loaded: ${font.family}`);
       });
     });
@@ -400,7 +400,9 @@ const App: React.FC = () => {
                 onStepChange={handleTourStepChange}
                 tourName={currentTourName}
               />
-              {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+              {showFeedback && (
+                <FeedbackForm onClose={() => setShowFeedback(false)} />
+              )}
             </div>
           </TourProvider>
         </CompletionProvider>

@@ -71,18 +71,18 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
         // Immediately set CSS variables for fonts
         const cssFont = (font: string) => font.replace(/^["'](.+)["']$/, "$1");
-        
+
         document.documentElement.style.setProperty(
           "--font-family",
-          cssFont(parsedTheme.font || '"KG What The Teacher Wants"')
+          cssFont(parsedTheme.font || '"KG What The Teacher Wants"'),
         );
         document.documentElement.style.setProperty(
           "--heading-font-family",
-          cssFont(parsedTheme.headingFont || '"KG What The Teacher Wants"')
+          cssFont(parsedTheme.headingFont || '"KG What The Teacher Wants"'),
         );
         document.documentElement.style.setProperty(
           "--button-font-family",
-          cssFont(parsedTheme.buttonFont || '"KG What The Teacher Wants"')
+          cssFont(parsedTheme.buttonFont || '"KG What The Teacher Wants"'),
         );
 
         // Immediately set CSS variables
@@ -264,15 +264,20 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       // Handle special cases for fonts with spaces or quotes
       const cssFont = font.replace(/^["'](.+)["']$/, "$1");
       let formattedFont = cssFont;
-      
+
       // Special handling for fonts with spaces or special names
-      if (cssFont.includes(" ") || cssFont === "KG Shake It Off" || cssFont === "KG What The Teacher Wants" || cssFont === "Baloo 2") {
+      if (
+        cssFont.includes(" ") ||
+        cssFont === "KG Shake It Off" ||
+        cssFont === "KG What The Teacher Wants" ||
+        cssFont === "Baloo 2"
+      ) {
         formattedFont = `"${cssFont}"`;
       }
-      
+
       document.documentElement.style.setProperty(
         "--heading-font-family",
-        formattedFont
+        formattedFont,
       );
       return { ...prevTheme, headingFont: font };
     });
@@ -281,17 +286,22 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   const setButtonFont = (font: string) => {
     setTheme((prevTheme) => {
       // Handle special cases for fonts with spaces or quotes
-      const cssFont = font.replace(/^["'](.+)["']$/, '$1');
+      const cssFont = font.replace(/^["'](.+)["']$/, "$1");
       let formattedFont = cssFont;
-      
+
       // Special handling for fonts with spaces or special names
-      if (cssFont.includes(' ') || cssFont === "KG Shake It Off" || cssFont === "KG What The Teacher Wants" || cssFont === "Baloo 2") {
+      if (
+        cssFont.includes(" ") ||
+        cssFont === "KG Shake It Off" ||
+        cssFont === "KG What The Teacher Wants" ||
+        cssFont === "Baloo 2"
+      ) {
         formattedFont = `"${cssFont}"`;
       }
-      
+
       document.documentElement.style.setProperty(
-        '--button-font-family',
-        formattedFont
+        "--button-font-family",
+        formattedFont,
       );
       return { ...prevTheme, buttonFont: font };
     });

@@ -272,12 +272,7 @@ const Navbar: React.FC<NavbarProps> = ({
     onStartTour();
     setTourName(tourName);
     setCurrentTourStep(0);
-  }, [
-    location.pathname,
-    onStartTour,
-    setTourName,
-    setCurrentTourStep,
-  ]);
+  }, [location.pathname, onStartTour, setTourName, setCurrentTourStep]);
 
   return (
     <div

@@ -50,7 +50,7 @@ const Settings: React.FC = () => {
 
   const startTour = useCallback(() => {
     const tourCompleted = localStorage.getItem(`tourCompleted_${tourName}`);
-    console.log('Starting tour, tourCompleted:', tourCompleted);
+    console.log("Starting tour, tourCompleted:", tourCompleted);
     if (isGuidedTourEnabled) {
       setIsTourRunning(true);
       setCurrentTourStep(0);
@@ -59,7 +59,7 @@ const Settings: React.FC = () => {
 
   const handleTourComplete = () => {
     console.log(`Tour ${tourName} completed`);
-    localStorage.setItem(`tourCompleted_${tourName}`, 'true');
+    localStorage.setItem(`tourCompleted_${tourName}`, "true");
     setIsTourRunning(false);
   };
 
@@ -121,20 +121,20 @@ const Settings: React.FC = () => {
     const cssFont = selectedFont.replace(/^["'](.+)["']$/, "$1");
     setFont(selectedFont);
     document.documentElement.style.setProperty(
-      "--font-family", 
-      cssFont.includes(" ") ? `"${cssFont}"` : cssFont
+      "--font-family",
+      cssFont.includes(" ") ? `"${cssFont}"` : cssFont,
     );
   };
 
   const handleHeadingFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFont = e.target.value;
-    const cssFont = selectedFont.replace(/^["'](.+)["']$/, '$1');
+    const cssFont = selectedFont.replace(/^["'](.+)["']$/, "$1");
     const formattedFont = cssFont === "Baloo 2" ? '"Baloo 2"' : cssFont;
-    
+
     setHeadingFont(selectedFont);
     document.documentElement.style.setProperty(
       "--heading-font-family",
-      formattedFont
+      formattedFont,
     );
   };
 
@@ -142,11 +142,11 @@ const Settings: React.FC = () => {
     const selectedFont = e.target.value;
     const cssFont = selectedFont.replace(/^["'](.+)["']$/, "$1");
     const formattedFont = cssFont === "Baloo 2" ? '"Baloo 2"' : cssFont;
-    
+
     setButtonFont(selectedFont);
     document.documentElement.style.setProperty(
       "--button-font-family",
-      formattedFont
+      formattedFont,
     );
   };
 
@@ -215,7 +215,7 @@ const Settings: React.FC = () => {
   }, [setIsGuidedTourEnabled]);
 
   useEffect(() => {
-    console.log('Tour state:', {
+    console.log("Tour state:", {
       isTourRunning,
       currentTourStep,
       steps,
@@ -282,7 +282,7 @@ const Settings: React.FC = () => {
             title="Select main font"
           >
             {fonts.map((font) => {
-              const fontName = font.replace(/^["'](.+)["']$/, '$1');
+              const fontName = font.replace(/^["'](.+)["']$/, "$1");
               return (
                 <option
                   key={font}
@@ -305,7 +305,7 @@ const Settings: React.FC = () => {
             title="Select heading font"
           >
             {fonts.map((font) => {
-              const fontName = font.replace(/^["'](.+)["']$/, '$1');
+              const fontName = font.replace(/^["'](.+)["']$/, "$1");
               return (
                 <option
                   key={font}
@@ -328,7 +328,7 @@ const Settings: React.FC = () => {
             title="Select button font"
           >
             {fonts.map((font) => {
-              const fontName = font.replace(/^["'](.+)["']$/, '$1');
+              const fontName = font.replace(/^["'](.+)["']$/, "$1");
               return (
                 <option
                   key={font}

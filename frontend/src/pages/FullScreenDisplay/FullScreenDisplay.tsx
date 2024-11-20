@@ -469,7 +469,9 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         )}
       </div>
 
-      {isFeedbackVisible && <FeedbackForm onClose={() => setIsFeedbackVisible(false)} />}
+      {isFeedbackVisible && (
+        <FeedbackForm onClose={() => setIsFeedbackVisible(false)} />
+      )}
     </>
   );
 };
