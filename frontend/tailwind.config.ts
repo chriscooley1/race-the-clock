@@ -80,8 +80,8 @@ const config: Config = {
         "comic-neue": "Comic Neue",
         "baloo-2": "Baloo 2",
         custom: "var(--font-family, 'Comic Neue', sans-serif)",
-        teacher: "KG What the Teacher Wants",
-        "shake-it-off": "KG Shake It Off", // Ensure this is included in the font family
+        teacher: ['"KG What The Teacher Wants"', 'Comic Neue', 'sans-serif'],
+        "shake-it-off": ['"KG Shake It Off"', 'Comic Neue', 'sans-serif'],
       },
       spacing: {
         sidebar: "250px",

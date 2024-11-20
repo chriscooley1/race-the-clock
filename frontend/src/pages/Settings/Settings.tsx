@@ -152,8 +152,8 @@ const Settings: React.FC = () => {
     "Patrick Hand",
     "Chewy",
     "Baloo 2",
-    "KG What the Teacher Wants",
-    "KG Shake It Off",
+    '"KG What The Teacher Wants"',
+    '"KG Shake It Off"',
   ];
 
   const backgroundThemes = [
@@ -170,16 +170,36 @@ const Settings: React.FC = () => {
 
   const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFont = e.target.value;
-    setFont(selectedFont); // Update the font in the theme
-    document.documentElement.style.setProperty("--font-family", selectedFont); // Set the CSS variable
+    const cssFont = selectedFont.replace(/^["'](.+)["']$/, '$1');
+    setFont(selectedFont);
+    document.documentElement.style.setProperty(
+      "--font-family", 
+      cssFont.includes(' ') ? `"${cssFont}"` : cssFont
+    );
   };
 
   const handleHeadingFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setHeadingFont(e.target.value);
+    const selectedFont = e.target.value;
+    const cssFont = selectedFont.replace(/^["'](.+)["']$/, '$1');
+    const formattedFont = cssFont === 'Baloo 2' ? '"Baloo 2"' : cssFont;
+    
+    setHeadingFont(selectedFont);
+    document.documentElement.style.setProperty(
+      '--heading-font-family',
+      formattedFont
+    );
   };
 
   const handleButtonFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setButtonFont(e.target.value);
+    const selectedFont = e.target.value;
+    const cssFont = selectedFont.replace(/^["'](.+)["']$/, '$1');
+    const formattedFont = cssFont === 'Baloo 2' ? '"Baloo 2"' : cssFont;
+    
+    setButtonFont(selectedFont);
+    document.documentElement.style.setProperty(
+      '--button-font-family',
+      formattedFont
+    );
   };
 
   const handleBackgroundThemeChange = (
@@ -254,6 +274,36 @@ const Settings: React.FC = () => {
     }
   }, [setIsGuidedTourEnabled]);
 
+  useEffect(() => {
+    const fontLoadCheck = async () => {
+      try {
+        await document.fonts.ready;
+        const kgTeacherFont = new FontFace(
+          'KG What The Teacher Wants',
+          'url(/fonts/KGWhatTheTeacherWants.ttf)'
+        );
+        const kgShakeFont = new FontFace(
+          'KG Shake It Off',
+          'url(/fonts/KGShakeItOff.ttf)'
+        );
+        
+        await Promise.all([
+          kgTeacherFont.load(),
+          kgShakeFont.load()
+        ]);
+        
+        document.fonts.add(kgTeacherFont);
+        document.fonts.add(kgShakeFont);
+        
+        console.log('Custom fonts loaded successfully');
+      } catch (error) {
+        console.error('Error loading fonts:', error);
+      }
+    };
+
+    fontLoadCheck();
+  }, []);
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
@@ -314,15 +364,18 @@ const Settings: React.FC = () => {
               className="main-font rounded border border-gray-300 bg-white p-2 text-black"
               title="Select main font"
             >
-              {fonts.map((font) => (
-                <option
-                  key={font}
-                  value={font}
-                  className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
-                >
-                  {font}
-                </option>
-              ))}
+              {fonts.map((font) => {
+                const fontName = font.replace(/^["'](.+)["']$/, '$1');
+                return (
+                  <option
+                    key={font}
+                    value={font}
+                    style={{ fontFamily: fontName }}
+                  >
+                    {fontName}
+                  </option>
+                );
+              })}
             </select>
           </div>
         )}
@@ -336,15 +389,18 @@ const Settings: React.FC = () => {
               className="heading-font rounded border border-gray-300 bg-white p-2 text-black"
               title="Select heading font"
             >
-              {fonts.map((font) => (
-                <option
-                  key={font}
-                  value={font}
-                  className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
-                >
-                  {font}
-                </option>
-              ))}
+              {fonts.map((font) => {
+                const fontName = font.replace(/^["'](.+)["']$/, '$1');
+                return (
+                  <option
+                    key={font}
+                    value={font}
+                    style={{ fontFamily: fontName }}
+                  >
+                    {fontName}
+                  </option>
+                );
+              })}
             </select>
           </div>
         )}
@@ -358,15 +414,18 @@ const Settings: React.FC = () => {
               className="button-font rounded border border-gray-300 bg-white p-2 text-black"
               title="Select button font"
             >
-              {fonts.map((font) => (
-                <option
-                  key={font}
-                  value={font}
-                  className={`font-${font.toLowerCase().replace(/\s+/g, "-")}`}
-                >
-                  {font}
-                </option>
-              ))}
+              {fonts.map((font) => {
+                const fontName = font.replace(/^["'](.+)["']$/, '$1');
+                return (
+                  <option
+                    key={font}
+                    value={font}
+                    style={{ fontFamily: fontName }}
+                  >
+                    {fontName}
+                  </option>
+                );
+              })}
             </select>
           </div>
         )}

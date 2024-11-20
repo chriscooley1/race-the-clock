@@ -1,5 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Chewy&family=Comic+Neue:wght@400;700&family=Patrick+Hand&family=Baloo+2:wght@400;700&family=KG+What+The+Teacher+Wants&family=KG+Shake+It+Off&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=KG+What+The+Teacher+Wants&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Chewy&family=Comic+Neue:wght@400;700&family=Patrick+Hand&family=Baloo+2:wght@400;700&display=swap");
+
+@font-face {
+  font-family: "KG What The Teacher Wants";
+  src: url("/fonts/KGWhatTheTeacherWants.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "KG Shake It Off";
+  src: url("/fonts/KGShakeItOff.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -11,13 +26,16 @@
     --background-color: #ffffff;
     --display-text-color: var(--text-color);
     --display-background-color: var(--background-color);
+    --font-family: '"Comic Neue"', sans-serif;
+    --heading-font-family: '"KG What The Teacher Wants"', sans-serif;
+    --button-font-family: '"KG What The Teacher Wants"', sans-serif;
   }
 
   body {
     @apply bg-theme-bg text-theme-text;
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: var(--font-family, "KG What the Teacher Wants", sans-serif);
+    font-family: var(--font-family);
   }
 
   html,
@@ -31,12 +49,12 @@
   h2,
   h3 {
     @apply font-teacher;
-    font-family: var(--heading-font-family, "KG What the Teacher Wants");
+    font-family: var(--heading-font-family);
   }
 
   button {
     @apply font-teacher;
-    font-family: var(--button-font-family, "KG What the Teacher Wants");
+    font-family: var(--button-font-family);
   }
 
   h1 {
@@ -62,7 +80,7 @@
   .start-session-button,
   .cancel-button {
     @apply bg-theme-bg text-theme-text;
-    font-family: "KG What the Teacher Wants";
+    font-family: var(--button-font-family);
   }
 }
 
@@ -83,3 +101,9 @@ body {
 body {
   color: var(--display-text-color);
 }
+
+/*
+ * Fonts:
+ * "KG What The Teacher Wants" and "KG Shake It Off" by Kimberly Geswein
+ * Used with permission - https://www.kimberlygeswein.com
+ */
