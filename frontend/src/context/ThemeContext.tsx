@@ -244,11 +244,25 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const setHeadingFont = (font: string) => {
-    setTheme((prevTheme) => ({ ...prevTheme, headingFont: font }));
+    setTheme((prevTheme) => {
+      const cssFont = font.replace(/^["'](.+)["']$/, '$1');
+      document.documentElement.style.setProperty(
+        '--heading-font-family', 
+        cssFont.includes(' ') ? `"${cssFont}"` : cssFont
+      );
+      return { ...prevTheme, headingFont: font };
+    });
   };
 
   const setButtonFont = (font: string) => {
-    setTheme((prevTheme) => ({ ...prevTheme, buttonFont: font }));
+    setTheme((prevTheme) => {
+      const cssFont = font.replace(/^["'](.+)["']$/, '$1');
+      document.documentElement.style.setProperty(
+        '--button-font-family', 
+        cssFont.includes(' ') ? `"${cssFont}"` : cssFont
+      );
+      return { ...prevTheme, buttonFont: font };
+    });
   };
 
   const setMainTextColor = (color: string) => {
