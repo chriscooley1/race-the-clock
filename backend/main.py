@@ -19,6 +19,7 @@ import smtplib
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import pytz
+from pydantic import BaseModel
 
 from database import get_db, get_engine
 
@@ -463,29 +464,33 @@ async def check_subscription(
     
     return {"isSubscribed": subscription is not None}
 
-@app.put("/users/{user_id}/role", response_model=User)
-async def update_user_role(user_id: str, role: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    logger.info(f"Updating role for user ID: {user_id} to role: {role}")
-    # Add logging for the current user
-    logger.info(f"Current user: {current_user.username} with role: {current_user.role}")
-    # Ensure role is valid
-    if role not in ["student", "teacher"]:
-        logger.error(f"Invalid role: {role}")
+class RoleUpdate(BaseModel):
+    role: str
+
+@app.put("/users/{user_id}/role")
+async def update_user_role(
+    user_id: str,
+    role_update: RoleUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    # Validate role
+    if role_update.role not in ["student", "teacher"]:
         raise HTTPException(status_code=422, detail="Invalid role")
     
-    if current_user.id != user_id:
-        logger.warning(f"User {current_user.username} is not authorized to update user ID: {user_id}")
-        raise HTTPException(status_code=403, detail="Not authorized to update this user")
-    
-    user = db.query(User).filter(User.id == user_id).first()
+    # Find user by username (which contains the auth0 id)
+    user = db.query(User).filter(User.username == user_id).first()
     if not user:
-        logger.error(f"User with ID {user_id} not found")
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(
+            status_code=404, 
+            detail=f"User not found"
+        )
     
-    user.role = role
+    # Update role
+    user.role = role_update.role
     db.commit()
     db.refresh(user)
-    logger.info(f"User role updated successfully for user ID: {user_id} to {role}")
+    
     return user
 
 def init_db():

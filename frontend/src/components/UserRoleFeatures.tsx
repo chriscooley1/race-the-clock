@@ -1,37 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 interface UserRoleFeaturesProps {
-  role: string; // Accept role as a prop
+  role: string;
 }
 
 const UserRoleFeatures: React.FC<UserRoleFeaturesProps> = ({ role }) => {
   const { user } = useAuth0();
+  const [currentRole, setCurrentRole] = useState<string>(
+    localStorage.getItem('userRole') || role
+  );
+
+  useEffect(() => {
+    if (role !== currentRole) {
+      setCurrentRole(role);
+    }
+  }, [role]);
 
   useEffect(() => {
     if (user) {
-      console.log("UserRoleFeatures component rendered. Current user:", user);
+      console.log("UserRoleFeatures component rendered. Current role:", currentRole);
     }
-  }, [user]);
+  }, [user, currentRole]);
 
   return (
-    <div>
+    <div className="mt-6 border-t pt-6">
       {user ? (
         <>
-          {role === "teacher" && (
-            <div className="flex justify-center">
-              <div>
-                <h2>Teacher Features</h2>
-                {/* Render teacher-specific features */}
-              </div>
+          <h3 className="mb-4 text-xl font-semibold">
+            {currentRole === "teacher" ? "Teacher Features" : "Student Features"}
+          </h3>
+          {currentRole === "teacher" && (
+            <div className="space-y-2">
+              <p>• Create and manage custom collections</p>
+              <p>• Track student progress</p>
+              <p>• Set custom learning paths</p>
+              <p>• Share collections with other teachers</p>
             </div>
           )}
-          {role === "student" && (
-            <div className="flex justify-center">
-              <div>
-                <h2>Student Features</h2>
-                {/* Render student-specific features */}
-              </div>
+          {currentRole === "student" && (
+            <div className="space-y-2">
+              <p>• Practice with assigned collections</p>
+              <p>• Track your learning progress</p>
+              <p>• Earn achievements and badges</p>
+              <p>• Join classroom activities</p>
             </div>
           )}
         </>

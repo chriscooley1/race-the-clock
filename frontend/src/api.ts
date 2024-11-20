@@ -531,26 +531,24 @@ export const updateUserRole = async (
   userId: string,
   role: string,
   token: string,
-) => {
-  console.log(`Updating role for user ID: ${userId} to role: ${role}`);
-  console.log("Payload for updating user role:", { userId, role });
-  const response = await fetch(`${API_BASE_URL}/users/${userId}/role`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ role }),
-  });
-
-  if (!response.ok) {
-    console.error("Failed to update user role:", response.statusText);
+): Promise<User> => {
+  try {
+    console.log("Updating role for user ID:", userId, "to role:", role);
+    const response = await axios.put(
+      `${API_BASE_URL}/users/${encodeURIComponent(userId)}/role`,
+      { role },  // Make sure this matches the RoleUpdate model in backend
+      {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to update user role:", error);
     throw new Error("Failed to update user role");
   }
-
-  const data = await response.json();
-  console.log("User role updated successfully:", data);
-  return data; // Adjust based on your User type
 };
 
 // Function to submit feedback

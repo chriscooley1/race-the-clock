@@ -23,7 +23,9 @@ const MyAccount: React.FC = () => {
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [role, setRole] = useState<string>("student"); // Default role
+  const [role, setRole] = useState<string>(
+    localStorage.getItem('userRole') || "student"
+  );
   const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
   // Define the steps variable without visibility states
@@ -34,10 +36,14 @@ const MyAccount: React.FC = () => {
       try {
         const userProfile = await getCurrentUser(getAccessTokenSilently);
         setUserData(userProfile);
+        // Set initial role from user profile
+        if (userProfile?.role) {
+          setRole(userProfile.role);
+        }
         // Check if the tour has already been completed
         const tourCompleted = localStorage.getItem("tourCompleted");
         if (!tourCompleted) {
-          startTour(); // Call startTour if the tour hasn't been completed
+          startTour();
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -70,6 +76,7 @@ const MyAccount: React.FC = () => {
         const updatedUser = await updateUserRole(user.sub, newRole, token);
         console.log("Role updated successfully:", updatedUser);
         setRole(newRole); // Update the local state
+        localStorage.setItem('userRole', newRole); // Save to localStorage
       } catch (error) {
         console.error("Error updating role:", error);
       }
@@ -120,7 +127,10 @@ const MyAccount: React.FC = () => {
               }}
             />
             <div className="flex justify-center">
-              <RoleSelection onRoleChange={handleRoleChange} />
+              <RoleSelection 
+                onRoleChange={handleRoleChange} 
+                initialRole={userData?.role || role} 
+              />
             </div>
           </div>
         ) : (

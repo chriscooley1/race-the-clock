@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 interface RoleSelectionProps {
-  onRoleChange: (newRole: string) => Promise<void>; // Accept the role change handler
+  onRoleChange: (newRole: string) => Promise<void>;
+  initialRole?: string;
 }
 
-const RoleSelection: React.FC<RoleSelectionProps> = ({ onRoleChange }) => {
-  const [role, setRole] = React.useState<string>("student"); // Default role
+const RoleSelection: React.FC<RoleSelectionProps> = ({ 
+  onRoleChange, 
+  initialRole = "student" 
+}) => {
+  const [role, setRole] = React.useState<string>(
+    localStorage.getItem('userRole') || initialRole
+  );
 
-  const handleRoleChange = (newRole: string) => {
-    setRole(newRole); // Update the local state
-    onRoleChange(newRole); // Call the passed handler
+  useEffect(() => {
+    if (initialRole && initialRole !== role) {
+      setRole(initialRole);
+      localStorage.setItem('userRole', initialRole);
+    }
+  }, [initialRole]);
+
+  const handleRoleChange = async (newRole: string) => {
+    setRole(newRole);
+    localStorage.setItem('userRole', newRole);
+    await onRoleChange(newRole);
   };
 
   return (

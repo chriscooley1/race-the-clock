@@ -18,8 +18,8 @@ export const tourStepsMatchingGame = (): Step[] => {
     {
       target: ".start-button",
       content: "Click here to start the game!",
-    }
+    },
   ];
 
   return steps;
-}; 
+};
