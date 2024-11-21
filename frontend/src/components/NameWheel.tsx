@@ -48,29 +48,41 @@ const NameWheel: React.FC<NameWheelProps> = ({
       // Start drawing from -90 degrees (top) instead of 0 degrees (right)
       const startOffset = -90 * (Math.PI / 180);
 
+      console.log("--- Wheel Drawing Debug ---");
+      console.log("Starting Offset (degrees):", -90);
+      console.log("Segment Angle:", segmentAngle);
+      
       names.forEach((name, index) => {
         const startAngle = startOffset + (index * segmentAngle * Math.PI) / 180;
         const endAngle = startOffset + ((index + 1) * segmentAngle * Math.PI) / 180;
 
-        // Draw wheel segment
+        // Convert angles to degrees for logging
+        const startDegrees = (startAngle * 180) / Math.PI;
+        const endDegrees = (endAngle * 180) / Math.PI;
+        
+        console.log(`Segment ${index} (${name}):`, {
+          start: startDegrees,
+          end: endDegrees,
+          middle: (startDegrees + endDegrees) / 2
+        });
+
+        // Rest of the drawing code...
         ctx.beginPath();
         ctx.moveTo(canvasSize / 2, canvasSize / 2);
         ctx.arc(canvasSize / 2, canvasSize / 2, radius, startAngle, endAngle);
         ctx.closePath();
 
-        // Set segment color
         const hue = (index * 360) / names.length;
-        ctx.fillStyle = `hsl(${hue}, 70%, ${theme.isDarkMode ? '60%' : '70%'})`;
+        ctx.fillStyle = `hsl(${hue}, 70%, ${theme.isDarkMode ? "60%" : "70%"})`;
         ctx.fill();
         ctx.stroke();
 
-        // Draw name text
         ctx.save();
         ctx.translate(canvasSize / 2, canvasSize / 2);
         const textAngle = startAngle + (segmentAngle * Math.PI) / 360;
         ctx.rotate(textAngle);
         ctx.textAlign = "right";
-        ctx.fillStyle = theme.isDarkMode ? '#FFFFFF' : '#000000';
+        ctx.fillStyle = theme.isDarkMode ? "#FFFFFF" : "#000000";
         ctx.font = "16px Arial";
         ctx.fillText(name, radius - 10, 0);
         ctx.restore();
@@ -96,18 +108,31 @@ const NameWheel: React.FC<NameWheelProps> = ({
       setTimeout(() => {
         const degreesPerSlice = 360 / names.length;
         const adjustedDegrees = totalRotation % 360;
+        const normalizedDegrees = (360 - (adjustedDegrees % 360)) % 360;
         
-        // Adjust for the fact that our wheel starts at top (0 degrees) 
-        // and rotates clockwise
-        const selectedIndex = Math.floor(
-          (adjustedDegrees / degreesPerSlice) % names.length
-        );
+        console.log("--- Spin Completion Debug ---");
+        console.log("Total Rotation:", totalRotation);
+        console.log("Adjusted Degrees:", adjustedDegrees);
+        console.log("Normalized Degrees:", normalizedDegrees);
+        console.log("Degrees Per Slice:", degreesPerSlice);
         
-        console.log('--- Selection Calculation ---');
-        console.log('Degrees Per Slice:', degreesPerSlice);
-        console.log('Adjusted Degrees:', adjustedDegrees);
-        console.log('Selected Index:', selectedIndex);
-        console.log('Selected Name:', names[selectedIndex]);
+        // Log where each segment starts and ends after spin
+        names.forEach((name, index) => {
+          const segmentStart = (index * degreesPerSlice);
+          const segmentEnd = ((index + 1) * degreesPerSlice);
+          console.log(`Segment ${index} (${name}):`, {
+            start: segmentStart,
+            end: segmentEnd,
+            middle: (segmentStart + segmentEnd) / 2
+          });
+        });
+
+        // New selection calculation
+        const selectedIndex = Math.floor(normalizedDegrees / degreesPerSlice);
+        
+        console.log("Arrow Position (degrees):", normalizedDegrees);
+        console.log("Selected Index:", selectedIndex);
+        console.log("Selected Name:", names[selectedIndex]);
 
         setLastLandedDegrees(totalRotation % 360);
         onNameSelected(names[selectedIndex]);
@@ -119,7 +144,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
   return (
     <div className="relative">
       <div className="absolute left-1/2 top-0 z-10 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500"></div>
-      <div className="relative" style={{ backgroundColor: 'transparent' }}>
+      <div className="relative" style={{ backgroundColor: "transparent" }}>
         {names.length === 0 ? (
           <div 
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
