@@ -533,9 +533,17 @@ async def get_db_info(db: Session = Depends(get_db)):
         logger.error(f"Error fetching database info: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-# Initialize GitHub issue creator
-github_issue_creator = GitHubIssueCreator()
+# Instead, create a function to get or create the GitHub issue creator
+def get_github_issue_creator():
+    if not hasattr(get_github_issue_creator, '_instance'):
+        try:
+            get_github_issue_creator._instance = GitHubIssueCreator()
+        except ValueError:
+            logger.warning("GitHub integration disabled - configuration missing")
+            get_github_issue_creator._instance = None
+    return get_github_issue_creator._instance
 
+# Update the feedback endpoint
 @app.post("/api/feedback")
 async def submit_feedback(
     feedback_data: dict,
@@ -556,17 +564,20 @@ async def submit_feedback(
         db.commit()
         db.refresh(feedback)
 
-        # Create GitHub issue
-        try:
-            issue_number = github_issue_creator.create_feedback_issue({
-                "message": feedback_data["message"],
-                "page_url": feedback_data["page_url"],
-                "created_at": current_time.strftime("%Y-%m-%d %H:%M:%S UTC")
-            })
-            logger.info(f"Created GitHub issue #{issue_number} for feedback")
-        except Exception as e:
-            logger.error(f"Failed to create GitHub issue: {str(e)}")
-            # Note: We don't want to fail the feedback submission if GitHub integration fails
+        # Try to create GitHub issue if integration is available
+        github_creator = get_github_issue_creator()
+        if github_creator:
+            try:
+                issue_number = github_creator.create_feedback_issue({
+                    "message": feedback_data["message"],
+                    "page_url": feedback_data["page_url"],
+                    "created_at": current_time.strftime("%Y-%m-%d %H:%M:%S UTC")
+                })
+                logger.info(f"Created GitHub issue #{issue_number} for feedback")
+            except Exception as e:
+                logger.error(f"Failed to create GitHub issue: {str(e)}")
+        else:
+            logger.info("Skipping GitHub issue creation - integration not available")
         
         return {"status": "success", "message": "Feedback submitted successfully"}
     except KeyError as e:
