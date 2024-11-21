@@ -95,10 +95,7 @@ const NameGenerator: React.FC = () => {
     setCurrentTourStep(step);
   };
 
-  const API_URL = import.meta.env.VITE_API_BASE_URL;
-  if (!API_URL) {
-    throw new Error("VITE_API_BASE_URL environment variable is not set");
-  }
+  const API_URL = import.meta.env.VITE_API_BASE_URL || "https://race-the-clock-backend-production.up.railway.app";
 
   console.log("API_URL:", API_URL); // Log to verify the URL being used
   console.log("Environment Variables:", import.meta.env);
