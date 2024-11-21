@@ -95,7 +95,10 @@ const NameGenerator: React.FC = () => {
     setCurrentTourStep(step);
   };
 
-  const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"; // Fallback for local development
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+  if (!API_URL) {
+    throw new Error("VITE_API_BASE_URL environment variable is not set");
+  }
 
   console.log("API_URL:", API_URL); // Log to verify the URL being used
   console.log("Environment Variables:", import.meta.env);
