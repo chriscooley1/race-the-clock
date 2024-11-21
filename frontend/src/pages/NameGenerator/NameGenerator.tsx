@@ -12,7 +12,6 @@ import FeedbackForm from "../../components/FeedbackForm";
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
   const [nameList, setNameList] = useState<string[]>([]);
-  const [generatedName, setGeneratedName] = useState<string | null>(null);
   const [nameListId, setNameListId] = useState<number | null>(null);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [showRightSide, setShowRightSide] = useState<boolean>(false);
@@ -184,21 +183,29 @@ const NameGenerator: React.FC = () => {
     if (nameList.length > 0 && !isSpinning) {
       setIsSpinning(true);
       const spinRevolutions = 2 + Math.random() * 3; // 2 to 5 full rotations
-      const degreesPerSlice = 360 / nameList.length; // Calculate degrees per slice
-      const selectedIndex = Math.floor(Math.random() * nameList.length); // Randomly select an index
-      const centerAngle = (selectedIndex + 0.5) * degreesPerSlice; // Center angle for the selected name
-      const targetDegrees = (spinRevolutions * 360 + centerAngle - 90) % 360; // Adjust to stop at the top
-      console.log(
-        `spinRev: ${spinRevolutions} targetDegrees: ${targetDegrees}`,
-      );
-      setSpinData({ targetDegrees, spinRevolutions });
+      const degreesPerSlice = 360 / nameList.length;
+      const selectedIndex = Math.floor(Math.random() * nameList.length);
+      const targetDegrees = (selectedIndex * degreesPerSlice) + (degreesPerSlice / 2);
+      const totalDegrees = (spinRevolutions * 360) + targetDegrees;
+      
+      console.log("--- Spin Initialization ---");
+      console.log("Names List:", nameList);
+      console.log("Degrees Per Slice:", degreesPerSlice);
+      console.log("Random Selected Index:", selectedIndex);
+      console.log("Target Degrees:", targetDegrees);
+      console.log("Total Degrees:", totalDegrees);
+      console.log("Spin Revolutions:", spinRevolutions);
+      
+      setSpinData({ targetDegrees: totalDegrees, spinRevolutions });
     }
   };
 
+  const [selectedName, setSelectedName] = useState<string | null>(null);
+
   const handleNameSelected = (name: string) => {
     console.log(`nameSelected: ${name}`);
-    setGeneratedName(name);
     setIsSpinning(false);
+    setSelectedName(name);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -261,6 +268,7 @@ const NameGenerator: React.FC = () => {
               }}
             />
           </div>
+          
           {visibilityStates.isSpinButtonVisible && (
             <button
               type="button"
@@ -270,10 +278,12 @@ const NameGenerator: React.FC = () => {
               Spin the Wheel
             </button>
           )}
-          {generatedName && (
-            <div className="mt-5 text-center">
-              <h2 className="text-xl font-bold">Generated Name:</h2>
-              <p className="text-2xl">{generatedName}</p>
+
+          {/* Move selected name display here, below the spin button */}
+          {selectedName && (
+            <div className="mt-4 text-center">
+              <h2 className="text-2xl font-bold">Selected:</h2>
+              <p className="text-xl">{selectedName}</p>
             </div>
           )}
         </div>
