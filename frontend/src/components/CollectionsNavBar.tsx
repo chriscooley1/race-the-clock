@@ -73,7 +73,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           <button
             type="button"
             onClick={() => setShowFeedback(true)}
-            className="bg-light-blue hover:bg-light-blue-600 active:bg-light-blue-700 ml-4 rounded px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 active:scale-95"
+            className="bg-blue-500 hover:bg-light-blue-600 active:bg-light-blue-700 ml-4 rounded px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 active:scale-95"
           >
             Give Feedback
           </button>
