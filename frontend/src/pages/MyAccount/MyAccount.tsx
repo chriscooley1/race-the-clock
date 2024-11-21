@@ -24,7 +24,7 @@ const MyAccount: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [role, setRole] = useState<string>(
-    localStorage.getItem('userRole') || "student"
+    localStorage.getItem("userRole") || "student"
   );
   const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
@@ -76,7 +76,7 @@ const MyAccount: React.FC = () => {
         const updatedUser = await updateUserRole(user.sub, newRole, token);
         console.log("Role updated successfully:", updatedUser);
         setRole(newRole); // Update the local state
-        localStorage.setItem('userRole', newRole); // Save to localStorage
+        localStorage.setItem("userRole", newRole);
       } catch (error) {
         console.error("Error updating role:", error);
       }

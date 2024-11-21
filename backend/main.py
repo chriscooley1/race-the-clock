@@ -20,6 +20,7 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import pytz
 from pydantic import BaseModel
+from github_integration import GitHubIssueCreator
 
 from database import get_db, get_engine
 
@@ -532,6 +533,9 @@ async def get_db_info(db: Session = Depends(get_db)):
         logger.error(f"Error fetching database info: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
+# Initialize GitHub issue creator
+github_issue_creator = GitHubIssueCreator()
+
 @app.post("/api/feedback")
 async def submit_feedback(
     feedback_data: dict,
@@ -540,10 +544,11 @@ async def submit_feedback(
     logger.info(f"Received feedback: {feedback_data}")
     try:
         # Create new Feedback instance with UTC time
+        current_time = datetime.now(pytz.UTC)
         feedback = Feedback(
             message=feedback_data["message"],
             page_url=feedback_data["page_url"],
-            created_at=datetime.now(pytz.UTC)  # Use pytz.UTC instead of timezone.utc
+            created_at=current_time
         )
         
         # Add to database
@@ -551,9 +556,18 @@ async def submit_feedback(
         db.commit()
         db.refresh(feedback)
 
-        # Log the feedback
-        logger.info(f"Feedback stored: {feedback}")
-
+        # Create GitHub issue
+        try:
+            issue_number = github_issue_creator.create_feedback_issue({
+                "message": feedback_data["message"],
+                "page_url": feedback_data["page_url"],
+                "created_at": current_time.strftime("%Y-%m-%d %H:%M:%S UTC")
+            })
+            logger.info(f"Created GitHub issue #{issue_number} for feedback")
+        except Exception as e:
+            logger.error(f"Failed to create GitHub issue: {str(e)}")
+            # Note: We don't want to fail the feedback submission if GitHub integration fails
+        
         return {"status": "success", "message": "Feedback submitted successfully"}
     except KeyError as e:
         logger.error(f"Missing required field in feedback data: {str(e)}")
