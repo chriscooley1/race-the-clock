@@ -74,7 +74,7 @@ const MatchingGame: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="bg-light-blue mt-4 rounded px-4 py-2 text-white"
+        className="bg-blue-500 mt-4 rounded px-4 py-2 text-white"
       >
         Give Feedback
       </button>
