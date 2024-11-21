@@ -37,17 +37,20 @@ const NameWheel: React.FC<NameWheelProps> = ({
     const drawWheel = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Add a white background circle first
+      // Add background circle
       ctx.beginPath();
       ctx.arc(canvasSize / 2, canvasSize / 2, radius, 0, 2 * Math.PI);
-      ctx.fillStyle = theme.backgroundColor; // Use theme background color
+      ctx.fillStyle = theme.backgroundColor;
       ctx.fill();
 
       const segmentAngle = 360 / names.length;
 
+      // Start drawing from -90 degrees (top) instead of 0 degrees (right)
+      const startOffset = -90 * (Math.PI / 180);
+
       names.forEach((name, index) => {
-        const startAngle = (index * segmentAngle * Math.PI) / 180;
-        const endAngle = ((index + 1) * segmentAngle * Math.PI) / 180;
+        const startAngle = startOffset + (index * segmentAngle * Math.PI) / 180;
+        const endAngle = startOffset + ((index + 1) * segmentAngle * Math.PI) / 180;
 
         // Draw wheel segment
         ctx.beginPath();
@@ -55,14 +58,10 @@ const NameWheel: React.FC<NameWheelProps> = ({
         ctx.arc(canvasSize / 2, canvasSize / 2, radius, startAngle, endAngle);
         ctx.closePath();
 
-        // Set segment color with theme-aware contrast
+        // Set segment color
         const hue = (index * 360) / names.length;
         ctx.fillStyle = `hsl(${hue}, 70%, ${theme.isDarkMode ? '60%' : '70%'})`;
         ctx.fill();
-
-        // Draw segment border
-        ctx.strokeStyle = theme.isDarkMode ? '#444444' : '#FFFFFF';
-        ctx.lineWidth = 2;
         ctx.stroke();
 
         // Draw name text
@@ -71,7 +70,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
         const textAngle = startAngle + (segmentAngle * Math.PI) / 360;
         ctx.rotate(textAngle);
         ctx.textAlign = "right";
-        ctx.fillStyle = theme.isDarkMode ? '#FFFFFF' : '#000000'; // Use theme text color
+        ctx.fillStyle = theme.isDarkMode ? '#FFFFFF' : '#000000';
         ctx.font = "16px Arial";
         ctx.fillText(name, radius - 10, 0);
         ctx.restore();
@@ -79,7 +78,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
     };
 
     drawWheel();
-  }, [names, radius, theme.isDarkMode, theme.backgroundColor]); // Add theme dependencies
+  }, [names, radius, theme.isDarkMode, theme.backgroundColor]);
 
   useEffect(() => {
     if (isSpinning && spinData) {
@@ -87,7 +86,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
       const totalRotation = spinRevolutions * 360 + targetDegrees;
 
       controls.start({
-        rotate: [lastLandedDegrees, totalRotation], // Start from last landed position
+        rotate: [lastLandedDegrees, totalRotation],
         transition: {
           duration: 5,
           ease: "easeInOut",
@@ -96,28 +95,26 @@ const NameWheel: React.FC<NameWheelProps> = ({
 
       setTimeout(() => {
         const degreesPerSlice = 360 / names.length;
-        // Adjust for the starting position (top of the wheel is 270 degrees)
-        const adjustedDegrees = (totalRotation + 270) % 360; // Use totalRotation here
-        // Calculate the selected index based on the adjusted degrees
-        const selectedIndex =
-          Math.round(adjustedDegrees / degreesPerSlice) % names.length; // Change from Math.floor to Math.round
+        const adjustedDegrees = totalRotation % 360;
+        
+        // Adjust for the fact that our wheel starts at top (0 degrees) 
+        // and rotates clockwise
+        const selectedIndex = Math.floor(
+          (adjustedDegrees / degreesPerSlice) % names.length
+        );
+        
+        console.log('--- Selection Calculation ---');
+        console.log('Degrees Per Slice:', degreesPerSlice);
+        console.log('Adjusted Degrees:', adjustedDegrees);
+        console.log('Selected Index:', selectedIndex);
+        console.log('Selected Name:', names[selectedIndex]);
 
-        // Update last landed degrees for the next spin
         setLastLandedDegrees(totalRotation % 360);
-
         onNameSelected(names[selectedIndex]);
         stopSpinning();
       }, 5000);
     }
-  }, [
-    isSpinning,
-    spinData,
-    controls,
-    names,
-    onNameSelected,
-    stopSpinning,
-    lastLandedDegrees,
-  ]);
+  }, [isSpinning, spinData, controls, names, onNameSelected, stopSpinning, lastLandedDegrees]);
 
   return (
     <div className="relative">
