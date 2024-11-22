@@ -565,6 +565,9 @@ async def submit_feedback(
         db.commit()
         db.refresh(feedback)
 
+        # Get display name from feedback data
+        display_name = feedback_data.get("display_name", "Anonymous User")
+
         # Try to create GitHub issue if integration is available
         github_creator = get_github_issue_creator()
         if github_creator:
@@ -572,7 +575,8 @@ async def submit_feedback(
                 issue_number = github_creator.create_feedback_issue({
                     "message": feedback_data["message"],
                     "page_url": feedback_data["page_url"],
-                    "created_at": current_time.strftime("%Y-%m-%d %H:%M:%S UTC")
+                    "created_at": current_time.strftime("%Y-%m-%d %H:%M:%S UTC"),
+                    "display_name": display_name
                 })
                 logger.info(f"Created GitHub issue #{issue_number} for feedback")
             except Exception as e:

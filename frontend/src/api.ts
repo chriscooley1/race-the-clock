@@ -554,12 +554,31 @@ export const updateUserRole = async (
 };
 
 // Function to submit feedback
-export const submitFeedback = async (message: string) => {
+export const submitFeedback = async (
+  message: string,
+  displayName: string,
+  getAccessTokenSilently: () => Promise<string>
+) => {
   try {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json"
+    };
+
+    // Only add authorization header if getAccessTokenSilently is provided
+    try {
+      const token = await getAccessTokenSilently();
+      headers.Authorization = `Bearer ${token}`;
+    } catch {
+      // Continue without auth token for anonymous feedback
+      console.log("Submitting anonymous feedback");
+    }
+
     const response = await axios.post(`${API_BASE_URL}/api/feedback`, {
       message,
       page_url: window.location.href,
-    });
+      display_name: displayName
+    }, { headers });
+    
     return response.data;
   } catch (error) {
     console.error("Error submitting feedback:", error);
