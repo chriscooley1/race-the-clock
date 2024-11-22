@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getCurrentUser } from "../../api";
+import { getCurrentUser, updateDisplayName } from "../../api";
 import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm";
 import { useTheme } from "../../context/ThemeContext";
 import { tourStepsMyAccount } from "./tourStepsMyAccount";
@@ -35,6 +35,11 @@ const MyAccount: React.FC = () => {
     const fetchUserData = async () => {
       try {
         const userProfile = await getCurrentUser(getAccessTokenSilently);
+        // If no display_name is set, update it with the Auth0 name
+        if (!userProfile.display_name && user?.name) {
+          await updateDisplayName({ display_name: user.name }, getAccessTokenSilently);
+          userProfile.display_name = user.name;
+        }
         setUserData(userProfile);
         // Set initial role from user profile
         if (userProfile?.role) {
@@ -51,7 +56,7 @@ const MyAccount: React.FC = () => {
     };
 
     fetchUserData();
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, user?.name]);
 
   const startTour = () => {
     if (steps.length > 0) {

@@ -6,7 +6,7 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       if (isAuthenticated) {
         try {
           const userProfile = await getCurrentUser(getAccessTokenSilently);
-          displayName = userProfile?.display_name || userProfile?.name || "Anonymous User";
+          displayName = userProfile?.display_name || user?.name || "Anonymous User";
         } catch (error) {
           console.warn("Could not get user profile, using Anonymous User", error);
         }
