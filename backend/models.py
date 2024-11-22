@@ -143,3 +143,4 @@ class Feedback(SQLModel, table=True):
     message: str = Field(...)
     page_url: str = Field(...)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    user_id: Optional[int] = Field(default=None, foreign_key="users.user_id")

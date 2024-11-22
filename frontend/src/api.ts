@@ -563,6 +563,9 @@ export const submitFeedback = async (message: string) => {
     return response.data;
   } catch (error) {
     console.error("Error submitting feedback:", error);
-    throw error;
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.detail || "Failed to submit feedback. Please try again.");
+    }
+    throw new Error("Failed to submit feedback. Please try again.");
   }
 };

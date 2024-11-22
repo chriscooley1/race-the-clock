@@ -556,7 +556,8 @@ async def submit_feedback(
         feedback = Feedback(
             message=feedback_data["message"],
             page_url=feedback_data["page_url"],
-            created_at=current_time
+            created_at=current_time,
+            user_id=None
         )
         
         # Add to database
