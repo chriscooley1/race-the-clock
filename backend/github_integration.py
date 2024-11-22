@@ -26,7 +26,12 @@ class GitHubIssueCreator:
     def create_feedback_issue(self, feedback_data):
         try:
             display_name = feedback_data.get("display_name", "Anonymous User")
-            title = f"Feedback from {display_name} - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            # Extract the route from the full URL
+            page_url = feedback_data["page_url"]
+            route = page_url.split("/")[-1] or "home"  # If split results in empty string, use "home"
+            route = route.replace("-", " ").title()  # Convert "your-collections" to "Your Collections"
+            
+            title = f"Feedback from {display_name} - {route} - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
             body = f"""
 ## Feedback from {display_name}
 
