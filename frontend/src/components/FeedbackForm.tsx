@@ -18,9 +18,9 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       if (isAuthenticated) {
         try {
           const userProfile = await getCurrentUser(getAccessTokenSilently);
-          displayName = userProfile?.display_name || "Anonymous User";
-        } catch {
-          console.warn("Could not get user profile, using Anonymous User");
+          displayName = userProfile?.display_name || userProfile?.name || "Anonymous User";
+        } catch (error) {
+          console.warn("Could not get user profile, using Anonymous User", error);
         }
       }
 
@@ -31,7 +31,8 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       setTimeout(() => {
         onClose();
       }, 2000);
-    } catch {
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
       setError("Failed to submit feedback. Please try again.");
     }
   };
