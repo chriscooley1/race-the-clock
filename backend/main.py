@@ -27,25 +27,6 @@ from database import get_db, get_engine
 # Load environment variables from .env file
 load_dotenv()
 
-# Logging setup
-class MountainTimeFormatter(logging.Formatter):
-    def converter(self, timestamp):
-        dt = datetime.fromtimestamp(timestamp)
-        return TIMEZONE.localize(dt)
-
-    def formatTime(self, record, datefmt=None):
-        dt = self.converter(record.created)
-        if datefmt:
-            return dt.strftime(datefmt)
-        return dt.isoformat()
-
-# Update the logging setup
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-handler = logging.StreamHandler()
-handler.setFormatter(MountainTimeFormatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
-logger.addHandler(handler)
-
 # Set up environment configuration directly
 DATABASE_URL = os.environ.get("DATABASE_URL")
 AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN")
@@ -591,6 +572,33 @@ async def submit_feedback(
     except Exception as e:
         logger.error(f"Error submitting feedback: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# Replace the existing logging setup with this:
+TIMEZONE = timezone("America/Denver")
+
+class MountainTimeFormatter(logging.Formatter):
+    def converter(self, timestamp):
+        dt = datetime.fromtimestamp(timestamp)
+        return TIMEZONE.localize(dt)
+
+    def formatTime(self, record, datefmt=None):
+        dt = self.converter(record.created)
+        if datefmt:
+            return dt.strftime(datefmt)
+        return dt.isoformat()
+
+# Clear any existing handlers
+logging.getLogger().handlers = []
+
+# Configure root logger
+logger = logging.getLogger("main")
+logger.setLevel(logging.INFO)
+logger.handlers = []  # Clear any existing handlers
+
+# Add single handler with Mountain Time formatting
+handler = logging.StreamHandler()
+handler.setFormatter(MountainTimeFormatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
+logger.addHandler(handler)
 
 if __name__ == "__main__":
     init_db()

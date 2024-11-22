@@ -713,7 +713,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
       <div className="border-5 border-t-5 flex w-full grow flex-col items-center justify-between rounded-b-lg border-black p-4">
         <div>
           <p className="mb-1 text-base font-bold text-black">
-            {itemCount} {itemCount === 1 ? 'item' : 'items'} in collection
+            {itemCount} {itemCount === 1 ? "item" : "items"} in collection
           </p>
           <p className="mb-2.5 text-base font-bold text-black">
             Created by you on {formatDate(collection.created_at)}
