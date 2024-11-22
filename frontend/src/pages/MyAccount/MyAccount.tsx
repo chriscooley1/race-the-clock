@@ -85,6 +85,13 @@ const MyAccount: React.FC = () => {
     }
   };
 
+  const handleDisplayNameUpdate = (newDisplayName: string) => {
+    setUserData(prevData => ({
+      ...prevData,
+      display_name: newDisplayName
+    }));
+  };
+
   return (
     <div
       className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} my-account mt-4`}
@@ -125,6 +132,7 @@ const MyAccount: React.FC = () => {
                 backgroundColor: theme.backgroundColor,
                 color: theme.originalTextColor,
               }}
+              onDisplayNameUpdate={handleDisplayNameUpdate}
             />
             <div className="flex justify-center">
               <RoleSelection 

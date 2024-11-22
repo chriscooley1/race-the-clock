@@ -3,13 +3,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { updateDisplayName } from "../api";
 
 interface UpdateDisplayNameFormProps {
-  className?: string; // Accept className as an optional prop
-  style?: React.CSSProperties; // Add this line to allow style prop
+  className?: string;
+  style?: React.CSSProperties;
+  onDisplayNameUpdate?: (newDisplayName: string) => void;
 }
 
 const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
   className,
-  style, // Destructure style prop
+  style,
+  onDisplayNameUpdate,
 }) => {
   const [displayName, setDisplayName] = useState("");
   const { getAccessTokenSilently } = useAuth0();
@@ -22,6 +24,10 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
         getAccessTokenSilently,
       );
       alert("Display name updated successfully");
+      if (onDisplayNameUpdate) {
+        onDisplayNameUpdate(displayName);
+      }
+      setDisplayName("");
     } catch (error) {
       console.error("Error updating display name:", error);
     }
@@ -36,7 +42,7 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
   return (
     <div
       className={`update-display-name-form mt-5 flex w-full max-w-[300px] flex-col items-center ${className}`}
-      style={style} // Apply the style prop here
+      style={style}
     >
       <input
         type="text"
