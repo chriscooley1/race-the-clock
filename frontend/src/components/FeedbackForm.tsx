@@ -1,31 +1,37 @@
 import React, { useState } from "react";
-import axios from "axios";
-
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+import { useAuth0 } from "@auth0/auth0-react";
+import { getCurrentUser, submitFeedback } from "../api";
 
 const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     try {
-      await axios.post(`${API_BASE_URL}/api/feedback`, {
-        message: message,
-        page_url: window.location.href,
-      });
+      let displayName = "Anonymous User";
+
+      if (isAuthenticated) {
+        try {
+          const userProfile = await getCurrentUser(getAccessTokenSilently);
+          displayName = userProfile?.display_name || "Anonymous User";
+        } catch {
+          console.warn("Could not get user profile, using Anonymous User");
+        }
+      }
+
+      await submitFeedback(message, displayName, getAccessTokenSilently);
 
       setSuccess(true);
       setMessage("");
       setTimeout(() => {
         onClose();
       }, 2000);
-    } catch (error) {
-      console.error("Error submitting feedback:", error);
+    } catch {
       setError("Failed to submit feedback. Please try again.");
     }
   };

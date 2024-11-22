@@ -7,8 +7,8 @@ logger = logging.getLogger(__name__)
 
 class GitHubIssueCreator:
     def __init__(self):
-        self.github_token = os.environ.get('GITHUB_ACCESS_TOKEN')
-        self.repo_name = os.environ.get('GITHUB_REPO')
+        self.github_token = os.environ.get("GITHUB_ACCESS_TOKEN")
+        self.repo_name = os.environ.get("GITHUB_REPO")
         
         if not self.github_token or not self.repo_name:
             logger.error("GitHub configuration is missing")
@@ -25,9 +25,10 @@ class GitHubIssueCreator:
 
     def create_feedback_issue(self, feedback_data):
         try:
-            title = f"User Feedback - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            display_name = feedback_data.get("display_name", "Anonymous User")
+            title = f"Feedback from {display_name} - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
             body = f"""
-## User Feedback
+## Feedback from {display_name}
 
 **Page:** {feedback_data['page_url']}
 **Time:** {feedback_data['created_at']}
