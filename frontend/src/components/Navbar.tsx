@@ -6,7 +6,6 @@ import { VisibilityStates } from "../types/VisibilityStates";
 import { Step } from "react-joyride";
 import mainLogo from "../assets/main-logo.png";
 
-import { tourStepsLandingPage } from "../pages/LandingPage/tourStepsLandingPage";
 import { tourStepsYourCollections } from "../pages/YourCollections/tourStepsYourCollections";
 import { tourStepsNewCollection } from "../pages/NewCollection/tourStepsNewCollection";
 import { tourStepsDiscoverCollections } from "../pages/DiscoverCollections/tourStepsDiscoverCollections";
@@ -217,10 +216,6 @@ const Navbar: React.FC<NavbarProps> = ({
       case "/games":
         steps = tourStepsGames();
         tourName = "games";
-        break;
-      case "/landing-page":
-        steps = tourStepsLandingPage();
-        tourName = "landingPage";
         break;
       case "/my-account":
         steps = tourStepsMyAccount();

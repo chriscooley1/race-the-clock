@@ -15,7 +15,6 @@ import FontPreloader from "./components/FontPreloader";
 import { CompletionProvider } from "./context/CompletionContext";
 
 // Import your tour steps here
-import { tourStepsLandingPage } from "./pages/LandingPage/tourStepsLandingPage";
 import { tourStepsYourCollections } from "./pages/YourCollections/tourStepsYourCollections";
 import { tourStepsNewCollection } from "./pages/NewCollection/tourStepsNewCollection";
 import { tourStepsDiscoverCollections } from "./pages/DiscoverCollections/tourStepsDiscoverCollections";
@@ -143,8 +142,6 @@ const App: React.FC = () => {
     };
 
     switch (location.pathname) {
-      case "/":
-        return tourStepsLandingPage();
       case "/your-collections":
         visibilityStates.isCollectionCardVisible = true;
         visibilityStates.isStartCollectionButtonVisible = true;
