@@ -210,7 +210,13 @@ const Settings: React.FC = () => {
   useEffect(() => {
     const storedPreference = localStorage.getItem("guidedTourEnabled");
     if (storedPreference !== null) {
-      setIsGuidedTourEnabled(JSON.parse(storedPreference));
+      const parsedPreference = JSON.parse(storedPreference);
+      setIsGuidedTourEnabled(prev => {
+        if (prev !== parsedPreference) {
+          return parsedPreference;
+        }
+        return prev;
+      });
     }
   }, [setIsGuidedTourEnabled]);
 

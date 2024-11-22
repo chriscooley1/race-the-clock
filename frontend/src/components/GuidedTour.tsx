@@ -22,7 +22,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   isScrollToEnabled,
   tourName,
 }) => {
-  const { completeTour, setIsTourRunning } = useTour();
+  const { completeTour, setIsTourRunning, isGuidedTourEnabled } = useTour();
 
   const handleJoyrideCallback = (data: ExtendedCallBackProps) => {
     const { status, index, action } = data;
@@ -50,7 +50,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   return (
     <Joyride
       steps={steps}
-      run={isRunning}
+      run={isRunning && isGuidedTourEnabled}
       continuous
       showSkipButton
       showProgress
