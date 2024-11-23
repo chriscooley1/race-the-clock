@@ -31,9 +31,6 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     },
     build: {
       rollupOptions: {
-        input: {
-          main: "public/index.html"
-        },
         output: {
           entryFileNames: `assets/[name].[hash].js`,
           chunkFileNames: `assets/[name].[hash].js`,
