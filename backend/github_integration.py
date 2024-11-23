@@ -2,6 +2,7 @@ from github import Github
 import os
 from datetime import datetime
 import logging
+from pytz import timezone
 
 logger = logging.getLogger(__name__)
 
@@ -26,12 +27,14 @@ class GitHubIssueCreator:
     def create_feedback_issue(self, feedback_data):
         try:
             display_name = feedback_data.get("display_name", "Anonymous User")
-            # Extract the route from the full URL
             page_url = feedback_data["page_url"]
-            route = page_url.split("/")[-1] or "home"  # If split results in empty string, use "home"
-            route = route.replace("-", " ").title()  # Convert "your-collections" to "Your Collections"
+            route = page_url.split("/")[-1] or "home"
+            route = route.replace("-", " ").title()
             
-            title = f"Feedback from {display_name} - {route} - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            # Use Mountain Time for the title
+            mst_time = datetime.now(timezone("America/Denver"))
+            title = f"Feedback from {display_name} - {route} - {mst_time.strftime('%Y-%m-%d %H:%M:%S MST')}"
+            
             body = f"""
 ## Feedback from {display_name}
 
