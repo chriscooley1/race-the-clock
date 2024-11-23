@@ -3,6 +3,7 @@ import {
   fetchPublicCollections,
   searchPublicCollections,
   checkSubscription,
+  getCurrentUser,
 } from "../../api";
 import CollectionPreviewModal from "../../components/CollectionPreviewModal";
 import { AxiosError } from "axios";
@@ -82,6 +83,7 @@ const DiscoverCollections: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [userDisplayName, setUserDisplayName] = useState<string>("");
 
   // Define the steps variable
   const steps = tourStepsDiscoverCollections(visibilityStates); // Create tour steps based on visibility states
@@ -277,6 +279,21 @@ const DiscoverCollections: React.FC = () => {
     }));
   };
 
+  useEffect(() => {
+    const fetchUserDisplayName = async () => {
+      if (user) {
+        try {
+          const userData = await getCurrentUser(getAccessTokenSilently);
+          setUserDisplayName(userData.display_name || user.name);
+        } catch (error) {
+          console.error("Error fetching user display name:", error);
+          setUserDisplayName(user.name || ""); // Fallback to user.name if fetch fails
+        }
+      }
+    };
+    fetchUserDisplayName();
+  }, [user, getAccessTokenSilently]);
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
@@ -287,7 +304,7 @@ const DiscoverCollections: React.FC = () => {
       <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
         Discover Public Collections
       </h1>
-      {user && <p className="mb-4">Welcome, {user.name}</p>}
+      {user && <p className="mb-4">Welcome, {userDisplayName}</p>}
       <div className="mb-4 w-full max-w-md">
         <div className="flex flex-col items-center justify-center sm:flex-row sm:items-center">
           <input
