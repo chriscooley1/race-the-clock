@@ -516,7 +516,7 @@ async def get_db_info(db: Session = Depends(get_db)):
 
 # Instead, create a function to get or create the GitHub issue creator
 def get_github_issue_creator():
-    if not hasattr(get_github_issue_creator, '_instance'):
+    if not hasattr(get_github_issue_creator, "_instance"):
         try:
             get_github_issue_creator._instance = GitHubIssueCreator()
         except ValueError:

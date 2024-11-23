@@ -5,24 +5,24 @@ interface RoleSelectionProps {
   initialRole?: string;
 }
 
-const RoleSelection: React.FC<RoleSelectionProps> = ({ 
-  onRoleChange, 
-  initialRole = "student" 
+const RoleSelection: React.FC<RoleSelectionProps> = ({
+  onRoleChange,
+  initialRole = "student",
 }) => {
   const [role, setRole] = React.useState<string>(
-    localStorage.getItem('userRole') || initialRole
+    localStorage.getItem("userRole") || initialRole,
   );
 
   useEffect(() => {
     if (initialRole && initialRole !== role) {
       setRole(initialRole);
-      localStorage.setItem('userRole', initialRole);
+      localStorage.setItem("userRole", initialRole);
     }
   }, [initialRole]);
 
   const handleRoleChange = async (newRole: string) => {
     setRole(newRole);
-    localStorage.setItem('userRole', newRole);
+    localStorage.setItem("userRole", newRole);
     await onRoleChange(newRole);
   };
 

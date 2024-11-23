@@ -48,7 +48,7 @@ class GitHubIssueCreator:
             issue = self.repo.create_issue(
                 title=title,
                 body=body,
-                labels=['feedback']
+                labels=["feedback"]
             )
             logger.info(f"Successfully created GitHub issue #{issue.number}")
             return issue.number

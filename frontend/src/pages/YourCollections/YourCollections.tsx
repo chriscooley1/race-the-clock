@@ -701,7 +701,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
   formatDate,
 }) => {
   const itemCount = getItemsCount(collection.description);
-  
+
   return (
     <>
       <h1

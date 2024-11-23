@@ -18,9 +18,13 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       if (isAuthenticated) {
         try {
           const userProfile = await getCurrentUser(getAccessTokenSilently);
-          displayName = userProfile?.display_name || user?.name || "Anonymous User";
+          displayName =
+            userProfile?.display_name || user?.name || "Anonymous User";
         } catch (error) {
-          console.warn("Could not get user profile, using Anonymous User", error);
+          console.warn(
+            "Could not get user profile, using Anonymous User",
+            error,
+          );
         }
       }
 

@@ -4,6 +4,7 @@ import FeedbackForm from "../../components/FeedbackForm";
 import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMultipleWords } from "./tourStepsMultipleWords";
 import { useTour } from "../../context/TourContext";
+import { useNavigate } from "react-router-dom";
 
 const MultipleWordsGame: React.FC = () => {
   const { theme } = useTheme();
@@ -13,6 +14,7 @@ const MultipleWordsGame: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const words = ["Word1", "Word2", "Word3"];
   const images = ["Image1", "Image2", "Image3"];
@@ -37,11 +39,22 @@ const MultipleWordsGame: React.FC = () => {
     setConnections((prev) => ({ ...prev, [word]: image }));
   };
 
+  const handleBack = () => {
+    navigate("/games");
+  };
+
   return (
     <div
       className="multiple-words-container mt-[70px] flex flex-col items-center"
       style={{ color: theme.originalTextColor }}
     >
+      <button
+        type="button"
+        onClick={handleBack}
+        className="fixed left-[270px] top-20 z-40 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 md:left-[270px]"
+      >
+        Back to Games
+      </button>
       <h1 className="text-3xl font-bold">Multiple Words Game</h1>
       {!isGameStarted ? (
         <div className="game-instructions">
@@ -82,7 +95,7 @@ const MultipleWordsGame: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="bg-blue-500 mt-4 rounded px-4 py-2 text-white"
+        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
