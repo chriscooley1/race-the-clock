@@ -33,10 +33,10 @@ class GitHubIssueCreator:
             
             # Use Mountain Time for the title
             mst_time = datetime.now(timezone("America/Denver"))
-            title = f"Feedback from {display_name} - {route} - {mst_time.strftime('%Y-%m-%d %H:%M:%S MST')}"
+            title = f"{display_name} - {route} - {mst_time.strftime('%Y-%m-%d %H:%M:%S MST')}"
             
             body = f"""
-## Feedback from {display_name}
+## {display_name}
 
 **Page:** {feedback_data['page_url']}
 **Time:** {feedback_data['created_at']}
