@@ -33,6 +33,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
       );
       setIsSubscribed(true);
       alert("You have subscribed to this collection!");
+      onClose();
     } catch (error) {
       if (
         error instanceof Error &&
@@ -40,6 +41,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
       ) {
         setIsSubscribed(true);
         alert("You are already subscribed to this collection.");
+        onClose();
       } else {
         console.error("Error subscribing to collection:", error);
         alert("An error occurred while subscribing to the collection.");
