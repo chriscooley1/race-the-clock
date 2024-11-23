@@ -142,5 +142,7 @@ class Feedback(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     message: str = Field(...)
     page_url: str = Field(...)
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(
+        sa_column=Column(MountainDateTime, default=lambda: datetime.now(timezone("America/Denver")))
+    )
     user_id: Optional[int] = Field(default=None, foreign_key="users.user_id")

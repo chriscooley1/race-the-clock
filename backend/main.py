@@ -532,8 +532,8 @@ async def submit_feedback(
 ):
     logger.info(f"Received feedback: {feedback_data}")
     try:
-        # Create new Feedback instance with UTC time
-        current_time = datetime.now(pytz.UTC)
+        # Create new Feedback instance with Mountain Time
+        current_time = datetime.now(TIMEZONE)
         feedback = Feedback(
             message=feedback_data["message"],
             page_url=feedback_data["page_url"],
@@ -556,7 +556,7 @@ async def submit_feedback(
                 issue_number = github_creator.create_feedback_issue({
                     "message": feedback_data["message"],
                     "page_url": feedback_data["page_url"],
-                    "created_at": current_time.strftime("%Y-%m-%d %H:%M:%S UTC"),
+                    "created_at": current_time.strftime("%Y-%m-%d %H:%M:%S MST"),  # Add MST timezone indicator
                     "display_name": display_name
                 })
                 logger.info(f"Created GitHub issue #{issue_number} for feedback")
