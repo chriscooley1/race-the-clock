@@ -270,6 +270,13 @@ const DiscoverCollections: React.FC = () => {
     [adjustColorForColorblindness],
   );
 
+  const handleSubscribe = (collectionId: string) => {
+    setSubscriptionStatus(prev => ({
+      ...prev,
+      [collectionId]: true
+    }));
+  };
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[100px] md:pl-[250px] ${
@@ -382,6 +389,7 @@ const DiscoverCollections: React.FC = () => {
           collection={activeCollection}
           onClose={closeModal}
           isSubscribed={activeCollection.isSubscribed || false}
+          onSubscribe={handleSubscribe}
         />
       )}
       {/* Add the GuidedTour component here */}

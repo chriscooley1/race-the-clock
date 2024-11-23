@@ -7,12 +7,14 @@ interface CollectionPreviewModalProps {
   collection: Collection;
   onClose: () => void;
   isSubscribed: boolean;
+  onSubscribe?: (collectionId: string) => void;
 }
 
 const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
   collection,
   onClose,
   isSubscribed: initialIsSubscribed,
+  onSubscribe,
 }) => {
   const { getAccessTokenSilently } = useAuth0();
   const [isSubscribed, setIsSubscribed] = useState(initialIsSubscribed);
@@ -32,6 +34,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
         getAccessTokenSilently,
       );
       setIsSubscribed(true);
+      onSubscribe?.(collection.collection_id.toString());
       alert("You have subscribed to this collection!");
       onClose();
     } catch (error) {
