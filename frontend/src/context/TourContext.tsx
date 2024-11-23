@@ -33,10 +33,12 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
     {},
   );
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
-  const [isGuidedTourEnabled, setIsGuidedTourEnabled] = useState<boolean>(() => {
-    const storedPreference = localStorage.getItem("guidedTourEnabled");
-    return storedPreference ? JSON.parse(storedPreference) : true;
-  });
+  const [isGuidedTourEnabled, setIsGuidedTourEnabled] = useState<boolean>(
+    () => {
+      const storedPreference = localStorage.getItem("guidedTourEnabled");
+      return storedPreference ? JSON.parse(storedPreference) : true;
+    },
+  );
 
   useEffect(() => {
     const storedTours = localStorage.getItem("toursCompleted");
@@ -46,7 +48,10 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("guidedTourEnabled", JSON.stringify(isGuidedTourEnabled));
+    localStorage.setItem(
+      "guidedTourEnabled",
+      JSON.stringify(isGuidedTourEnabled),
+    );
   }, [isGuidedTourEnabled]);
 
   const startTour = (tourSteps: Step[]) => {

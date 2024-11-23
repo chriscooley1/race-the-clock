@@ -24,7 +24,7 @@ const MyAccount: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [role, setRole] = useState<string>(
-    localStorage.getItem("userRole") || "student"
+    localStorage.getItem("userRole") || "student",
   );
   const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
@@ -37,7 +37,10 @@ const MyAccount: React.FC = () => {
         const userProfile = await getCurrentUser(getAccessTokenSilently);
         // If no display_name is set, update it with the Auth0 name
         if (!userProfile.display_name && user?.name) {
-          await updateDisplayName({ display_name: user.name }, getAccessTokenSilently);
+          await updateDisplayName(
+            { display_name: user.name },
+            getAccessTokenSilently,
+          );
           userProfile.display_name = user.name;
         }
         setUserData(userProfile);
@@ -91,9 +94,9 @@ const MyAccount: React.FC = () => {
   };
 
   const handleDisplayNameUpdate = (newDisplayName: string) => {
-    setUserData(prevData => ({
+    setUserData((prevData) => ({
       ...prevData,
-      display_name: newDisplayName
+      display_name: newDisplayName,
     }));
   };
 
@@ -140,9 +143,9 @@ const MyAccount: React.FC = () => {
               onDisplayNameUpdate={handleDisplayNameUpdate}
             />
             <div className="flex justify-center">
-              <RoleSelection 
-                onRoleChange={handleRoleChange} 
-                initialRole={userData?.role || role} 
+              <RoleSelection
+                onRoleChange={handleRoleChange}
+                initialRole={userData?.role || role}
               />
             </div>
           </div>
@@ -154,7 +157,7 @@ const MyAccount: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="bg-blue-500 mt-4 rounded px-4 py-2 text-white"
+        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>

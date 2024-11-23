@@ -95,7 +95,9 @@ const NameGenerator: React.FC = () => {
     setCurrentTourStep(step);
   };
 
-  const API_URL = import.meta.env.VITE_API_BASE_URL || "https://race-the-clock-backend-production.up.railway.app";
+  const API_URL =
+    import.meta.env.VITE_API_BASE_URL ||
+    "https://race-the-clock-backend-production.up.railway.app";
 
   console.log("API_URL:", API_URL); // Log to verify the URL being used
   console.log("Environment Variables:", import.meta.env);
@@ -185,9 +187,10 @@ const NameGenerator: React.FC = () => {
       const spinRevolutions = 2 + Math.random() * 3; // 2 to 5 full rotations
       const degreesPerSlice = 360 / nameList.length;
       const selectedIndex = Math.floor(Math.random() * nameList.length);
-      const targetDegrees = (selectedIndex * degreesPerSlice) + (degreesPerSlice / 2);
-      const totalDegrees = (spinRevolutions * 360) + targetDegrees;
-      
+      const targetDegrees =
+        selectedIndex * degreesPerSlice + degreesPerSlice / 2;
+      const totalDegrees = spinRevolutions * 360 + targetDegrees;
+
       console.log("--- Spin Initialization ---");
       console.log("Names List:", nameList);
       console.log("Degrees Per Slice:", degreesPerSlice);
@@ -195,7 +198,7 @@ const NameGenerator: React.FC = () => {
       console.log("Target Degrees:", targetDegrees);
       console.log("Total Degrees:", totalDegrees);
       console.log("Spin Revolutions:", spinRevolutions);
-      
+
       setSpinData({ targetDegrees: totalDegrees, spinRevolutions });
     }
   };
@@ -240,10 +243,16 @@ const NameGenerator: React.FC = () => {
     <div
       ref={containerRef}
       className={`name-generator flex min-h-screen flex-col items-center justify-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
-      style={{ 
-        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+      style={{
+        backgroundColor:
+          theme.backgroundImage === "none"
+            ? theme.backgroundColor
+            : "transparent",
         color: theme.displayTextColor || theme.textColor,
-        backgroundImage: theme.backgroundImage !== "none" ? `url(${theme.backgroundImage})` : "none",
+        backgroundImage:
+          theme.backgroundImage !== "none"
+            ? `url(${theme.backgroundImage})`
+            : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -268,7 +277,7 @@ const NameGenerator: React.FC = () => {
               }}
             />
           </div>
-          
+
           {visibilityStates.isSpinButtonVisible && (
             <button
               type="button"
@@ -366,7 +375,7 @@ const NameGenerator: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="bg-blue-500 mt-4 rounded px-4 py-2 text-white"
+        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>

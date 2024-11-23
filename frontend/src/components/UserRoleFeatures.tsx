@@ -8,7 +8,7 @@ interface UserRoleFeaturesProps {
 const UserRoleFeatures: React.FC<UserRoleFeaturesProps> = ({ role }) => {
   const { user } = useAuth0();
   const [currentRole, setCurrentRole] = useState<string>(
-    localStorage.getItem('userRole') || role
+    localStorage.getItem("userRole") || role,
   );
 
   useEffect(() => {
@@ -19,7 +19,10 @@ const UserRoleFeatures: React.FC<UserRoleFeaturesProps> = ({ role }) => {
 
   useEffect(() => {
     if (user) {
-      console.log("UserRoleFeatures component rendered. Current role:", currentRole);
+      console.log(
+        "UserRoleFeatures component rendered. Current role:",
+        currentRole,
+      );
     }
   }, [user, currentRole]);
 
@@ -28,7 +31,9 @@ const UserRoleFeatures: React.FC<UserRoleFeaturesProps> = ({ role }) => {
       {user ? (
         <>
           <h3 className="mb-4 text-xl font-semibold">
-            {currentRole === "teacher" ? "Teacher Features" : "Student Features"}
+            {currentRole === "teacher"
+              ? "Teacher Features"
+              : "Student Features"}
           </h3>
           {currentRole === "teacher" && (
             <div className="space-y-2">

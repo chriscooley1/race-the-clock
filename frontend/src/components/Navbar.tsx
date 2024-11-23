@@ -307,7 +307,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={() => setShowFeedback(true)}
-            className="bg-blue-500 hover:bg-light-blue-600 ml-4 rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
+            className="hover:bg-light-blue-600 ml-4 rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
           >
             Give Feedback
           </button>

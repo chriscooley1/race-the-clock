@@ -51,19 +51,20 @@ const NameWheel: React.FC<NameWheelProps> = ({
       console.log("--- Wheel Drawing Debug ---");
       console.log("Starting Offset (degrees):", -90);
       console.log("Segment Angle:", segmentAngle);
-      
+
       names.forEach((name, index) => {
         const startAngle = startOffset + (index * segmentAngle * Math.PI) / 180;
-        const endAngle = startOffset + ((index + 1) * segmentAngle * Math.PI) / 180;
+        const endAngle =
+          startOffset + ((index + 1) * segmentAngle * Math.PI) / 180;
 
         // Convert angles to degrees for logging
         const startDegrees = (startAngle * 180) / Math.PI;
         const endDegrees = (endAngle * 180) / Math.PI;
-        
+
         console.log(`Segment ${index} (${name}):`, {
           start: startDegrees,
           end: endDegrees,
-          middle: (startDegrees + endDegrees) / 2
+          middle: (startDegrees + endDegrees) / 2,
         });
 
         // Rest of the drawing code...
@@ -109,27 +110,27 @@ const NameWheel: React.FC<NameWheelProps> = ({
         const degreesPerSlice = 360 / names.length;
         const adjustedDegrees = totalRotation % 360;
         const normalizedDegrees = (360 - (adjustedDegrees % 360)) % 360;
-        
+
         console.log("--- Spin Completion Debug ---");
         console.log("Total Rotation:", totalRotation);
         console.log("Adjusted Degrees:", adjustedDegrees);
         console.log("Normalized Degrees:", normalizedDegrees);
         console.log("Degrees Per Slice:", degreesPerSlice);
-        
+
         // Log where each segment starts and ends after spin
         names.forEach((name, index) => {
-          const segmentStart = (index * degreesPerSlice);
-          const segmentEnd = ((index + 1) * degreesPerSlice);
+          const segmentStart = index * degreesPerSlice;
+          const segmentEnd = (index + 1) * degreesPerSlice;
           console.log(`Segment ${index} (${name}):`, {
             start: segmentStart,
             end: segmentEnd,
-            middle: (segmentStart + segmentEnd) / 2
+            middle: (segmentStart + segmentEnd) / 2,
           });
         });
 
         // New selection calculation
         const selectedIndex = Math.floor(normalizedDegrees / degreesPerSlice);
-        
+
         console.log("Arrow Position (degrees):", normalizedDegrees);
         console.log("Selected Index:", selectedIndex);
         console.log("Selected Name:", names[selectedIndex]);
@@ -139,14 +140,22 @@ const NameWheel: React.FC<NameWheelProps> = ({
         stopSpinning();
       }, 5000);
     }
-  }, [isSpinning, spinData, controls, names, onNameSelected, stopSpinning, lastLandedDegrees]);
+  }, [
+    isSpinning,
+    spinData,
+    controls,
+    names,
+    onNameSelected,
+    stopSpinning,
+    lastLandedDegrees,
+  ]);
 
   return (
     <div className="relative">
       <div className="absolute left-1/2 top-0 z-10 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500"></div>
       <div className="relative" style={{ backgroundColor: "transparent" }}>
         {names.length === 0 ? (
-          <div 
+          <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{ color: theme.displayTextColor || theme.textColor }}
           >

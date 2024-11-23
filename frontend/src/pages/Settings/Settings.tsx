@@ -211,7 +211,7 @@ const Settings: React.FC = () => {
     const storedPreference = localStorage.getItem("guidedTourEnabled");
     if (storedPreference !== null) {
       const parsedPreference = JSON.parse(storedPreference);
-      setIsGuidedTourEnabled(prev => {
+      setIsGuidedTourEnabled((prev) => {
         if (prev !== parsedPreference) {
           return parsedPreference;
         }
@@ -435,7 +435,7 @@ const Settings: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="bg-blue-500 mt-4 rounded px-4 py-2 text-white"
+        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
