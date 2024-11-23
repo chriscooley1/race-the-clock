@@ -31,8 +31,8 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   category,
   type,
 }) => {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState<number | "">(0);
+  const [seconds, setSeconds] = useState<number | "">(0);
   const [shuffle, setShuffle] = useState(false);
   const [answerDisplayTime, setAnswerDisplayTime] = useState(3);
   const [stopCondition, setStopCondition] = useState("collection");
@@ -60,7 +60,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   };
 
   const calculateSpeed = () => {
-    return (minutes * 60 + seconds) * 1000;
+    const mins = typeof minutes === "number" ? minutes : 0;
+    const secs = typeof seconds === "number" ? seconds : 0;
+    return (mins * 60 + secs) * 1000;
   };
 
   const handleStartClick = () => {
@@ -71,8 +73,8 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       timerSeconds,
     ); // Debug log
     onStart(
-      minutes,
-      seconds,
+      typeof minutes === "number" ? minutes : 0,
+      typeof seconds === "number" ? seconds : 0,
       shuffle,
       calculatedSpeed,
       currentSettings.textColor,
@@ -115,7 +117,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 type="number"
                 id="minutes"
                 value={minutes}
-                onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setMinutes(val === "" ? "" : parseInt(val) || 0);
+                }}
                 className="w-20 rounded border border-gray-300 p-1 text-sm"
                 placeholder="Min"
                 title="Minutes"
@@ -130,7 +135,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 type="number"
                 id="seconds"
                 value={seconds}
-                onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setSeconds(val === "" ? "" : parseInt(val) || 0);
+                }}
                 className="w-20 rounded border border-gray-300 p-1 text-sm"
                 placeholder="Sec"
                 title="Seconds"

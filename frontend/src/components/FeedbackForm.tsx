@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getCurrentUser, submitFeedback } from "../api";
 
@@ -7,6 +7,12 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    textareaRef.current?.focus();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,6 +56,7 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <textarea
+              ref={textareaRef}
               className="w-full rounded border p-2 text-gray-800"
               placeholder="Your feedback"
               value={message}
