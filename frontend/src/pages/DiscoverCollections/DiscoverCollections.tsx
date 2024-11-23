@@ -325,21 +325,25 @@ const DiscoverCollections: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="font-teacher mb-4 flex items-center rounded border border-gray-300 bg-white p-2 text-black">
-        <label htmlFor="sortSelect" className="text-sm font-bold">
-          Sort collections by:
-        </label>
-        <select
-          id="sortSelect"
-          value={sortOption}
-          onChange={handleSortChange}
-          className="sort-collections-select rounded-md border border-gray-300"
-        >
-          <option value="date">Date</option>
-          <option value="alphabetical">Alphabetical</option>
-          <option value="itemCount">Item Count</option>
-          <option value="category">Category</option>
-        </select>
+      <div className="mb-4 w-full max-w-md">
+        <div className="flex flex-col items-center justify-center sm:flex-row sm:items-center">
+          <label htmlFor="sortSelect" className="mb-2 text-sm font-bold sm:mb-0 sm:mr-2">
+            Sort collections by:
+          </label>
+          <select
+            id="sortSelect"
+            value={sortOption}
+            onChange={handleSortChange}
+            className={`sort-collections-select rounded-md border border-gray-300 p-2 ${
+              theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"
+            }`}
+          >
+            <option value="date">Date</option>
+            <option value="alphabetical">Alphabetical</option>
+            <option value="itemCount">Item Count</option>
+            <option value="category">Category</option>
+          </select>
+        </div>
       </div>
       <button
         type="button"
