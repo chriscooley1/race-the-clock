@@ -4,6 +4,7 @@ import FeedbackForm from "../../components/FeedbackForm";
 import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMatchingGame } from "./tourStepsMatchingGame";
 import { useTour } from "../../context/TourContext";
+import { useNavigate } from "react-router-dom";
 
 const MatchingGame: React.FC = () => {
   const { theme } = useTheme();
@@ -12,6 +13,7 @@ const MatchingGame: React.FC = () => {
   const [matches, setMatches] = useState<{ [key: string]: boolean }>({});
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const words = ["A", "B", "C"];
   const images = ["Image1", "Image2", "Image3"];
@@ -29,11 +31,22 @@ const MatchingGame: React.FC = () => {
     setMatches((prev) => ({ ...prev, [word]: true }));
   };
 
+  const handleBack = () => {
+    navigate("/games");
+  };
+
   return (
     <div
       className="matching-game-container mt-[70px] flex flex-col items-center"
       style={{ color: theme.originalTextColor }}
     >
+      <button
+        type="button"
+        onClick={handleBack}
+        className="fixed left-[270px] top-20 z-40 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 md:left-[270px]"
+      >
+        Back to Games
+      </button>
       <h1 className="text-3xl font-bold">Matching Game</h1>
       {!isGameStarted ? (
         <div className="game-instructions">

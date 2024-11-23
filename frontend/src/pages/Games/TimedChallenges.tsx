@@ -6,6 +6,7 @@ import { tourStepsTimedChallenges } from "./tourStepsTimedChallenges";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
 import { useTour } from "../../context/TourContext";
+import { useNavigate } from "react-router-dom";
 
 // Define the Collection interface
 interface Collection {
@@ -32,6 +33,7 @@ const TimedChallenges: React.FC = () => {
   const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
+  const navigate = useNavigate();
 
   // Define the steps variable
   const steps = tourStepsTimedChallenges(); // Create tour steps without visibility states
@@ -62,6 +64,10 @@ const TimedChallenges: React.FC = () => {
     localStorage.setItem("tourCompleted_timedChallenges", "true");
   };
 
+  const handleBack = () => {
+    navigate("/games");
+  };
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
@@ -69,6 +75,13 @@ const TimedChallenges: React.FC = () => {
       } timed-challenges mt-4`}
       style={{ color: theme.originalTextColor }}
     >
+      <button
+        type="button"
+        onClick={handleBack}
+        className="fixed left-[270px] top-20 z-40 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 md:left-[270px]"
+      >
+        Back to Games
+      </button>
       <h1 className="mb-8 text-3xl font-bold">Timed Challenges</h1>
       <p>Complete as many challenges as you can within the time limit!</p>
       {isLoading ? (
