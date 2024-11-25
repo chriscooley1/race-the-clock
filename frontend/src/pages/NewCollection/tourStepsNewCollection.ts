@@ -12,7 +12,7 @@ export const tourStepsNewCollection = (
       disableBeacon: true,
     },
     {
-      target: "#collectionName", // Target the collection name input
+      target: ".collection-name-input", // Updated selector to match the class
       content: "Enter the name of your new collection here.",
       ...(visibilityStates.isCollectionNameVisible ? { isOpen: true } : {}),
     },
@@ -22,33 +22,27 @@ export const tourStepsNewCollection = (
       ...(visibilityStates.isCategorySelectVisible ? { isOpen: true } : {}),
     },
     {
-      target: "#stageSelect", // Target the stage selection dropdown
-      content: "Choose the stage of your collection.",
-      ...(visibilityStates.isStageSelectVisible ? { isOpen: true } : {}),
-    },
-    {
       target: "#publicCheckbox", // Target the public checkbox
       content: "Check this box if you want to share your collection publicly.",
       ...(visibilityStates.isPublicCheckboxVisible ? { isOpen: true } : {}),
     },
     {
       target: ".submit-collection-button", // Target the submit button
-      content: "Click here to create your new collection.",
+      content: "Click 'Next' to proceed with creating your collection.",
       ...(visibilityStates.isSubmitButtonVisible ? { isOpen: true } : {}),
     },
   ];
 
   // Filter steps based on visibility states
   return steps.filter((step) => {
-    if (step.target === "#collectionName")
+    const target = step.target as string;
+    if (target === ".collection-name-input")
       return visibilityStates.isCollectionNameVisible;
-    if (step.target === "#categorySelect")
+    if (target === "#categorySelect")
       return visibilityStates.isCategorySelectVisible;
-    if (step.target === "#stageSelect")
-      return visibilityStates.isStageSelectVisible;
-    if (step.target === "#publicCheckbox")
+    if (target === "#publicCheckbox")
       return visibilityStates.isPublicCheckboxVisible;
-    if (step.target === ".submit-collection-button")
+    if (target === ".submit-collection-button")
       return visibilityStates.isSubmitButtonVisible;
     return true; // Include all other steps
   });
