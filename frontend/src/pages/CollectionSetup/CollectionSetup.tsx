@@ -547,7 +547,7 @@ const CollectionSetup: React.FC = () => {
                   htmlFor="itemCount"
                   className="whitespace-nowrap font-bold"
                 >
-                  Quantity:
+                  Number of Items in Collection:
                 </label>
                 <input
                   type="number"
