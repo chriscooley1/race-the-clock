@@ -21,6 +21,8 @@ interface TourContextType {
   setIsTourRunning: (isRunning: boolean) => void;
   isGuidedTourEnabled: boolean;
   setIsGuidedTourEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  currentTourStep: number;
+  setCurrentTourStep: (step: number) => void;
 }
 
 // Create the context with a default value of null
@@ -39,6 +41,7 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
       return storedPreference ? JSON.parse(storedPreference) : true;
     },
   );
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   useEffect(() => {
     const storedTours = localStorage.getItem("toursCompleted");
@@ -61,13 +64,13 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
 
   const completeTour = (tourName: string) => {
     if (tourName !== "navbar") {
-      setToursCompleted((prev) => ({ ...prev, [tourName]: true }));
-      localStorage.setItem(
-        "toursCompleted",
-        JSON.stringify({ ...toursCompleted, [tourName]: true }),
-      );
+      const updatedTours = { ...toursCompleted, [tourName]: true };
+      setToursCompleted(updatedTours);
+      localStorage.setItem("toursCompleted", JSON.stringify(updatedTours));
     }
-    console.log("Tour completed:", tourName);
+    setIsTourRunning(false);
+    setCurrentTourStep(-1); // Reset the step to -1 to fully stop the tour
+    console.log(`Tour "${tourName}" completed and stored in localStorage`);
   };
 
   return (
@@ -80,6 +83,8 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
         setIsTourRunning,
         isGuidedTourEnabled,
         setIsGuidedTourEnabled,
+        currentTourStep,
+        setCurrentTourStep,
       }}
     >
       {children}

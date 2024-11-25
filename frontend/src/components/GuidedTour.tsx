@@ -20,7 +20,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   onStepChange,
   tourName,
 }) => {
-  const { completeTour, setIsTourRunning, isGuidedTourEnabled } = useTour();
+  const { completeTour, isTourRunning, isGuidedTourEnabled } = useTour();
 
   const scrollToTarget = (selector: string) => {
     const target = document.querySelector(selector);
@@ -49,15 +49,19 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
     // Handle tour completion
     if (["finished", "skipped"].includes(status as string)) {
       completeTour(tourName);
-      setIsTourRunning(false);
       onComplete();
-      // Remove the last step's beacon by forcing the tour to stop completely
-      onStepChange(0); // Reset to first step
       return;
     }
 
     // Handle step transitions
     if (type === "step:after") {
+      // Add check for last step completion
+      if (action === "next" && index === steps.length - 1) {
+        completeTour(tourName);
+        onComplete();
+        return;
+      }
+
       if (action === "next" && index < steps.length - 1) {
         onStepChange(index + 1);
         // Pre-emptively scroll to the next target
