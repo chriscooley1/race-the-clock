@@ -20,7 +20,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   onStepChange,
   tourName,
 }) => {
-  const { completeTour, isTourRunning, isGuidedTourEnabled } = useTour();
+  const { completeTour, isGuidedTourEnabled } = useTour();
 
   const scrollToTarget = (selector: string) => {
     const target = document.querySelector(selector);
