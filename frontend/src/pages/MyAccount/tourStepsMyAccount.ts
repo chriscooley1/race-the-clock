@@ -4,20 +4,27 @@ import { Step } from "react-joyride";
 export const tourStepsMyAccount = (): Step[] => {
   const steps: Step[] = [
     {
-      target: ".my-account", // Target the main container
+      target: ".my-account",
       content: "Manage your account details here.",
       disableBeacon: true,
     },
     {
-      target: ".user-profile", // Target the user profile section
+      target: ".user-profile",
       content: "This section displays your profile information.",
     },
     {
-      target: ".update-display-name-form", // Target the update display name form
+      target: ".update-display-name-form",
       content: "Use this form to update your display name.",
     },
+    {
+      target: ".role-selection",
+      content: "Choose your role as either a teacher or student. Teachers can create and manage collections, while students can practice with assigned collections.",
+    },
+    {
+      target: ".role-features",
+      content: "View the features available for your selected role.",
+    }
   ];
 
-  // Return all steps without filtering
   return steps;
 };

@@ -27,7 +27,7 @@ const RoleSelection: React.FC<RoleSelectionProps> = ({
   };
 
   return (
-    <div>
+    <div className="role-selection">
       <div className="mb-4 text-center">
         <h2>Select Your Role</h2>
       </div>
