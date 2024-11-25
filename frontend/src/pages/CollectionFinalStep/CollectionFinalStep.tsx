@@ -667,31 +667,47 @@ const CollectionFinalStep: React.FC = () => {
               </>
             ) : (
               <>
-                <label htmlFor="new-item-input" className="sr-only">
-                  New Item
-                </label>
-                <input
-                  type="text"
-                  id="new-item-input"
-                  value={newItem}
-                  onChange={(e) => setNewItem(e.target.value)}
-                  className={`font-teacher mb-2 w-full rounded-md border border-gray-300 p-2 ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-                  placeholder={`Enter new ${
-                    category === "Science"
-                      ? "science term"
-                      : category === "Nursing"
-                        ? "nursing term"
-                        : "item"
-                  }`}
-                />
-                <button
-                  type="button"
-                  onClick={handleAddItem}
-                  className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
-                  title="Add Item"
-                >
-                  +
-                </button>
+                <div className="flex flex-col items-center">
+                  <label htmlFor="new-item-input" className="mb-2 text-sm">
+                    Type your item below and click the + button to add it to your collection
+                  </label>
+                  <div className="relative flex w-full items-center">
+                    <input
+                      type="text"
+                      id="new-item-input"
+                      value={newItem}
+                      onChange={(e) => setNewItem(e.target.value)}
+                      className={`font-teacher w-full rounded-md border border-gray-300 p-2 pr-24 ${
+                        theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"
+                      }`}
+                      placeholder={`Enter new ${
+                        category === "Science"
+                          ? "science term"
+                          : category === "Nursing"
+                            ? "nursing term"
+                            : "item"
+                      }`}
+                    />
+                    <div className="absolute right-0 flex items-center pr-2">
+                      {newItem && (
+                        <span className="mr-2 animate-pulse text-sm text-blue-500">
+                          Click + to add →
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={handleAddItem}
+                        className={`flex size-10 items-center justify-center rounded-full ${
+                          newItem ? "bg-green-500 hover:bg-green-600" : "bg-gray-400"
+                        } text-2xl text-white transition duration-300`}
+                        title="Add Item"
+                        disabled={!newItem}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </>
             )}
           </>

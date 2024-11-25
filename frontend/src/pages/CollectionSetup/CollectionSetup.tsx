@@ -495,45 +495,22 @@ const CollectionSetup: React.FC = () => {
       <h3 className="mb-4 text-2xl font-semibold">Category: {category}</h3>
       <div className="mb-8 flex flex-col items-center space-y-4">
         <h2 className="text-2xl font-bold">Choose Your Collection Method:</h2>
-        <div className="flex space-x-4">
+        <div className="flex flex-col items-center space-y-4">
+          <p className="text-center text-lg">
+            Stay on this page to generate random items, or click below to create custom items
+          </p>
           <button
             type="button"
-            className={`rounded-lg px-6 py-3 font-bold transition-all duration-300 ${
-              !isGenerated
-                ? "bg-blue-500 text-white hover:bg-blue-600"
-                : "bg-gray-300 text-gray-600"
-            }`}
+            className="rounded-lg bg-green-500 px-6 py-3 font-bold text-white transition-all duration-300 hover:bg-green-600"
             onClick={() => {
-              if (isGenerated) {
-                handleClear();
-              }
-            }}
-          >
-            Generate Random Items
-          </button>
-          <button
-            type="button"
-            className={`rounded-lg px-6 py-3 font-bold transition-all duration-300 ${
-              !isGenerated
-                ? "bg-green-500 text-white hover:bg-green-600"
-                : "bg-gray-300 text-gray-600"
-            }`}
-            onClick={() => {
-              if (!isGenerated) {
-                navigate("/collection-final-step", {
-                  state: { collectionName, isPublic, category, sequence, type },
-                });
-              }
+              navigate("/collection-final-step", {
+                state: { collectionName, isPublic, category, sequence, type },
+              });
             }}
           >
             Create Custom Items
           </button>
         </div>
-        {!isGenerated && (
-          <p className="text-center text-gray-600">
-            Choose to either generate random items now or create your own custom items in the next step
-          </p>
-        )}
       </div>
       <div className="mb-4 flex w-full max-w-3xl flex-col items-center space-y-4">
         {category !== "Number Sense" ? (
