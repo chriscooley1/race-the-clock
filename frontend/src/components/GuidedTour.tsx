@@ -46,8 +46,8 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   const handleJoyrideCallback = (data: ExtendedCallBackProps) => {
     const { status, index, action, type } = data;
 
-    // Handle tour completion
-    if (["finished", "skipped"].includes(status as string)) {
+    // Handle tour completion and closing
+    if (["finished", "skipped"].includes(status as string) || type === "tour:end") {
       completeTour(tourName);
       onComplete();
       return;
