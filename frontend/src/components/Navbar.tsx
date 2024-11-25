@@ -48,11 +48,28 @@ const Navbar: React.FC<NavbarProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
   const { isGuidedTourEnabled } = useTour();
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(event.target as Node)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleMenuToggle = () => {
-    console.log("Toggling menu. Current state:", menuOpen);
     setMenuOpen(!menuOpen);
   };
 
@@ -75,20 +92,6 @@ const Navbar: React.FC<NavbarProps> = ({
   const handleTitleClick = () => {
     navigate("/your-collections");
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        console.log("Clicked outside menu, closing...");
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      console.log("Cleaning up event listener for handleClickOutside");
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const handleStartTour = useCallback(() => {
     const visibilityStates: VisibilityStates = {
@@ -320,6 +323,7 @@ const Navbar: React.FC<NavbarProps> = ({
         <img src={mainLogo} alt="Main Logo" className="h-16" />
       </div>
       <div
+        ref={hamburgerRef}
         className="flex h-[25px] w-[30px] cursor-pointer flex-col justify-between"
         onClick={handleMenuToggle}
       >
