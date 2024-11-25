@@ -25,6 +25,7 @@ import { VisibilityStates } from "../../types/VisibilityStates";
 import { useCompletion } from "../../context/CompletionContext";
 import FeedbackForm from "../../components/FeedbackForm";
 import { categoryColors } from "../../constants/categoryColors";
+import { lightenColor } from "../../utils/colorUtils";
 
 interface Collection {
   collection_id: number;
@@ -708,7 +709,13 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
       >
         {collection.name}
       </h1>
-      <div className="border-5 flex h-full w-full flex-col rounded-b-lg border-black bg-black/10">
+      <div 
+        className="border-5 flex h-full w-full flex-col rounded-b-lg border-black"
+        style={{ 
+          backgroundColor: baseColor ? lightenColor(baseColor, 0.7) : lightenColor("#FFFFFF", 0.7),
+          transition: "background-color 0.3s ease"
+        }}
+      >
         {/* Content wrapper with padding */}
         <div className="flex h-full w-full flex-col p-4">
           {/* Info section - added text-center to center all text */}
