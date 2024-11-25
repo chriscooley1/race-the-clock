@@ -18,7 +18,6 @@ import {
   DropResult,
 } from "@hello-pangea/dnd";
 import { collectionColorSchemes } from "../../constants/colorSchemes";
-import { lightenColor } from "../../utils/colorUtils";
 import { useTheme } from "../../context/ThemeContext";
 import { tourStepsYourCollections } from "./tourStepsYourCollections";
 import GuidedTour from "../../components/GuidedTour";
@@ -108,10 +107,10 @@ const YourCollections: React.FC = () => {
 
   // Visibility states for the tour
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
-    isCollectionCardVisible: true,
-    isStartCollectionButtonVisible: true,
-    isEditCollectionButtonVisible: true,
-    isDeleteCollectionButtonVisible: true,
+    isCollectionCardVisible: false,
+    isStartCollectionButtonVisible: false,
+    isEditCollectionButtonVisible: false,
+    isDeleteCollectionButtonVisible: false,
     isDotCountTypeVisible: false,
     isMinDotsVisible: false,
     isMaxDotsVisible: false,
@@ -483,11 +482,21 @@ const YourCollections: React.FC = () => {
     [adjustColorForColorblindness],
   );
 
+  useEffect(() => {
+    setVisibilityStates(prevState => ({
+      ...prevState,  // Preserve existing values
+      isCollectionCardVisible: collections.length > 0,
+      isStartCollectionButtonVisible: collections.length > 0,
+      isEditCollectionButtonVisible: collections.length > 0,
+      isDeleteCollectionButtonVisible: collections.length > 0,
+      isSessionSettingsModalVisible: showModal,
+      isEditCollectionModalVisible: isEditModalOpen,
+      isDuplicateCollectionModalVisible: isDuplicateModalOpen,
+    }));
+  }, [collections, showModal, isEditModalOpen, isDuplicateModalOpen]);
+
   return (
-    <div
-      className={`min-h-screen w-full px-4 pt-[170px] md:pl-[270px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
-      style={{ color: theme.originalTextColor }}
-    >
+    <div className="your-collections-page min-h-screen p-4 pt-[175px] pl-[270px]">
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}
@@ -498,78 +507,46 @@ const YourCollections: React.FC = () => {
       />
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable
-          droppableId="collections"
-          isDropDisabled={sortOption !== "custom"}
-        >
+        <Droppable droppableId="collections">
           {(provided) => (
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="your-collections-page grid max-h-[calc(100vh-170px)] w-full grid-cols-1 gap-4 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3"
+              className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3"
             >
-              {filteredCollections.map((collection, index) => {
-                const baseColor = adjustColorForTheme(
-                  collectionColorSchemes[index % collectionColorSchemes.length]
-                    .backgroundColor,
-                );
-                const lightColor = baseColor
-                  ? lightenColor(baseColor, 0.7)
-                  : "";
-
-                const isDraggable = sortOption === "custom";
-
-                return isDraggable ? (
-                  <Draggable
-                    key={collection.collection_id}
-                    draggableId={collection.collection_id.toString()}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="border-5 relative flex h-[350px] flex-col items-center justify-start overflow-hidden border-black p-5"
-                        style={{
-                          ...provided.draggableProps.style,
-                          backgroundColor: lightColor,
-                        }}
-                      >
-                        <CollectionContent
-                          collection={collection}
-                          baseColor={baseColor}
-                          handleStartCollection={handleStartCollection}
-                          handleEditButtonClick={handleEditButtonClick}
-                          handleDeleteCollection={handleDeleteCollection}
-                          formatDate={formatDate}
-                          completionCount={0}
-                          theme={theme}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ) : (
-                  <div
-                    key={collection.collection_id}
-                    className="collection-card border-5 relative flex h-[350px] flex-col items-center justify-start overflow-hidden border-black p-5"
-                    style={{
-                      backgroundColor: lightColor,
-                    }}
-                  >
-                    <CollectionContent
-                      collection={collection}
-                      baseColor={baseColor}
-                      handleStartCollection={handleStartCollection}
-                      handleEditButtonClick={handleEditButtonClick}
-                      handleDeleteCollection={handleDeleteCollection}
-                      formatDate={formatDate}
-                      completionCount={0}
-                      theme={theme}
-                    />
-                  </div>
-                );
-              })}
+              {filteredCollections.map((collection, index) => (
+                <Draggable
+                  key={collection.collection_id}
+                  draggableId={collection.collection_id.toString()}
+                  index={index}
+                >
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
+                      style={{
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <CollectionContent
+                        collection={collection}
+                        baseColor={adjustColorForTheme(
+                          collectionColorSchemes[index % collectionColorSchemes.length]
+                            .backgroundColor,
+                        )}
+                        handleStartCollection={handleStartCollection}
+                        handleEditButtonClick={handleEditButtonClick}
+                        handleDeleteCollection={handleDeleteCollection}
+                        formatDate={formatDate}
+                        completionCount={0}
+                        theme={theme}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
               {provided.placeholder}
             </div>
           )}
@@ -601,7 +578,7 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div className="fixed left-0 top-0 z-[1001] flex size-full items-center justify-center overflow-hidden bg-black/70">
+        <div className="duplicate-collection-modal">
           <div
             ref={modalRef}
             className="font-teacher relative z-[1002] w-1/4 max-w-[600px] rounded-lg p-5 text-center shadow-lg"
@@ -755,7 +732,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
             <div className="flex justify-center mb-2.5">
               <button
                 type="button"
-                className="w-2/3 cursor-pointer rounded-lg border-4 border-black bg-green-600 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
+                className="start-collection-button w-2/3 cursor-pointer rounded-lg border-4 border-black bg-green-600 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
                 onClick={() => handleStartCollection(collection.collection_id)}
               >
                 Start
@@ -764,14 +741,14 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
             <div className="flex w-full justify-between space-x-4">
               <button
                 type="button"
-                className="flex-1 cursor-pointer rounded-lg border-4 border-black bg-yellow-400 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
+                className="edit-collection-button flex-1 cursor-pointer rounded-lg border-4 border-black bg-yellow-400 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
                 onClick={() => handleEditButtonClick(collection)}
               >
                 Edit
               </button>
               <button
                 type="button"
-                className="flex-1 cursor-pointer rounded-lg border-4 border-black bg-red-600 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
+                className="delete-collection-button flex-1 cursor-pointer rounded-lg border-4 border-black bg-red-600 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
                 onClick={() => handleDeleteCollection(collection.collection_id)}
               >
                 Delete
