@@ -31,8 +31,14 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
   category,
   type,
 }) => {
-  const [minutes, setMinutes] = useState<number | "">(0);
-  const [seconds, setSeconds] = useState<number | "">(0);
+  const [minutes, setMinutes] = useState<number | "">(() => {
+    const savedMinutes = localStorage.getItem("lastUsedMinutes");
+    return savedMinutes ? parseInt(savedMinutes) : 0;
+  });
+  const [seconds, setSeconds] = useState<number | "">(() => {
+    const savedSeconds = localStorage.getItem("lastUsedSeconds");
+    return savedSeconds ? parseFloat(savedSeconds) : 0;
+  });
   const [shuffle, setShuffle] = useState(false);
   const [answerDisplayTime, setAnswerDisplayTime] = useState(3);
   const [stopCondition, setStopCondition] = useState("collection");
@@ -106,6 +112,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
         <h2 className="mb-2 text-center text-xl font-bold">{collectionName}</h2>
         <div className="space-y-3">
           <div className="flex flex-col items-center">
+            <p className="mb-2 text-sm text-gray-600">
+              Set how long each item will be displayed during the session:
+            </p>
             <div className="flex w-full justify-around p-2">
               <label htmlFor="minutes" className="mr-2">
                 Minutes:
@@ -137,13 +146,14 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 value={seconds}
                 onChange={(e) => {
                   const val = e.target.value;
-                  setSeconds(val === "" ? "" : parseInt(val) || 0);
+                  setSeconds(val === "" ? "" : parseFloat(val) || 0);
                 }}
                 className="w-20 rounded border border-gray-300 p-1 text-sm"
                 placeholder="Sec"
                 title="Seconds"
                 min={0}
                 max={59}
+                step="0.1"
                 style={{
                   backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
                   color: theme.isDarkMode ? "#FFFFFF" : "#000000",

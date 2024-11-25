@@ -385,6 +385,11 @@ const YourCollections: React.FC = () => {
     stopCondition: string,
   ) => {
     if (selectedCollection) {
+      // Save the last used time settings
+      localStorage.setItem("lastUsedMinutes", min.toString());
+      localStorage.setItem("lastUsedSeconds", sec.toString());
+      localStorage.setItem("lastUsedSpeed", speed.toString());
+
       const sequenceItems = JSON.parse(selectedCollection.description || "[]");
       const sequence = sequenceItems.map(
         (
@@ -574,7 +579,7 @@ const YourCollections: React.FC = () => {
           onClose={() => setShowModal(false)}
           onStart={handleStartSession}
           currentSettings={{
-            speed: 500,
+            speed: parseInt(localStorage.getItem("lastUsedSpeed") || "500"),
             textColor: "#000000",
           }}
           category={selectedCollection.category}
