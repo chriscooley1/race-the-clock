@@ -106,6 +106,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
         <h2 className="mb-2 text-center text-xl font-bold">{collectionName}</h2>
         <div className="space-y-3">
           <div className="flex flex-col items-center">
+            <p className="mb-2 text-sm text-gray-600">
+              Set how long each item will be displayed during the session:
+            </p>
             <div className="flex w-full justify-around p-2">
               <label htmlFor="minutes" className="mr-2">
                 Minutes:
