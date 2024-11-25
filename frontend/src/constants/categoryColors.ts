@@ -1,5 +1,6 @@
 // src/constants/categoryColors.ts
 export const categoryColors = {
+  "All Collections": "bg-blue-500",
   "Math": "bg-blue-500",
   "Language Arts": "bg-green-500",
   "Number Sense": "bg-purple-500",

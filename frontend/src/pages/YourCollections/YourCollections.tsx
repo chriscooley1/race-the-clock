@@ -717,6 +717,12 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
 }) => {
   const itemCount = getItemsCount(collection.description);
 
+  // Add this helper function to ensure we get the correct color
+  const getCategoryColor = (category: string) => {
+    const color = categoryColors[category as keyof typeof categoryColors];
+    return color || "bg-gray-500"; // Fallback color if none found
+  };
+
   return (
     <div className="flex h-full w-full flex-col">
       <h1
@@ -734,8 +740,8 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
               {itemCount} {itemCount === 1 ? "item" : "items"} in collection
             </p>
             <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
-              Category:
-              <span className={`ml-2 inline-block rounded-full px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
+              Category:{" "}
+              <span className={`ml-2 inline-block rounded-full px-3 py-1 text-white ${getCategoryColor(collection.category)}`}>
                 {collection.category}
               </span>
             </p>
