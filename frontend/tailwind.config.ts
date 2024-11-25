@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import { colorSchemes } from "./src/constants/colorSchemes";
+import { lightenColor } from "./src/utils/colorUtils";
 
 const config: Config = {
   content: [
@@ -121,6 +122,7 @@ const config: Config = {
   },
   safelist: [
     ...colorSchemes.map((scheme) => `bg-[${scheme.backgroundColor}]`),
+    ...colorSchemes.map((scheme) => `bg-[${lightenColor(scheme.backgroundColor, 0.7)}]`),
     ...colorSchemes.map((scheme) => `text-[${scheme.textColor}]`),
     // Add the custom classes to the safelist
     "font-teacher",

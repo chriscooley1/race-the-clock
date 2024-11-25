@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTour } from "../context/TourContext";
-import { VisibilityStates } from "../types/VisibilityStates";
 import { Step } from "react-joyride";
 import mainLogo from "../assets/main-logo.png";
 
@@ -22,6 +21,7 @@ import { tourStepsReports } from "../pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "../pages/BadgesAchievements/tourStepsBadgesAchievements";
 import { tourStepsMatchingGame } from "../pages/Games/tourStepsMatchingGame";
 import { tourStepsMultipleWords } from "../pages/Games/tourStepsMultipleWords";
+import { getDefaultVisibilityStates } from "../utils/tourHelpers";
 
 interface NavbarProps {
   isPaused?: boolean;
@@ -94,47 +94,7 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   const handleStartTour = useCallback(() => {
-    const visibilityStates: VisibilityStates = {
-      isDotCountTypeVisible: false,
-      isMinDotsVisible: false,
-      isMaxDotsVisible: false,
-      isTypeSelectVisible: false,
-      isItemCountVisible: false,
-      isCollectionItemCountVisible: false,
-      isDotColorVisible: false,
-      isDotShapeVisible: false,
-      isGenerateRandomSequenceButtonVisible: false,
-      isFileUploadVisible: false,
-      isClearButtonVisible: false,
-      isGeneratedSequencePreviewVisible: false,
-      isNameInputVisible: false,
-      isAddNameButtonVisible: false,
-      isSpinButtonVisible: false,
-      isNamesListVisible: false,
-      isCollectionNameVisible: false,
-      isCategorySelectVisible: false,
-      isStageSelectVisible: false,
-      isPublicCheckboxVisible: false,
-      isSubmitButtonVisible: false,
-      isCollectionCardVisible: false,
-      isStartCollectionButtonVisible: false,
-      isEditCollectionButtonVisible: false,
-      isDeleteCollectionButtonVisible: false,
-      isSessionSettingsModalVisible: false,
-      isEditCollectionModalVisible: false,
-      isDuplicateCollectionModalVisible: false,
-      isCollectionPreviewModalVisible: false,
-      isSearchInputVisible: false,
-      isSortSelectVisible: false,
-      isCollectionsGridVisible: false,
-      isPreviewButtonVisible: false,
-      isSaveButtonVisible: false,
-      isItemPreviewVisible: false,
-      isMathProblemVisible: false,
-      isDotButtonVisible: false,
-      isImageUploadVisible: false,
-      isNextButtonVisible: false,
-    };
+    const visibilityStates = getDefaultVisibilityStates();
 
     // Set visibility states based on the current location
     switch (location.pathname) {
@@ -205,7 +165,12 @@ const Navbar: React.FC<NavbarProps> = ({
         tourName = "collectionFinalStep";
         break;
       case "/collection-setup":
-        steps = tourStepsCollectionSetup(visibilityStates);
+        steps = tourStepsCollectionSetup(
+          visibilityStates,
+          "default",
+          "default",
+          "fixed"
+        );
         tourName = "collectionSetup";
         break;
       case "/discover-collections":

@@ -27,7 +27,7 @@ const UserRoleFeatures: React.FC<UserRoleFeaturesProps> = ({ role }) => {
   }, [user, currentRole]);
 
   return (
-    <div className="mt-6 border-t pt-6">
+    <div className="mt-6 border-t pt-6 role-features">
       {user ? (
         <>
           <h3 className="mb-4 text-xl font-semibold">

@@ -11,14 +11,6 @@ export const tourStepsMultipleWords = (): Step[] => {
       target: ".game-instructions",
       content: "Connect words to their matching cards by dragging them.",
     },
-    {
-      target: ".words-section",
-      content: "These are the words you need to match.",
-    },
-    {
-      target: ".cards-section",
-      content: "Drag words to these cards to make connections.",
-    },
   ];
 
   return steps;

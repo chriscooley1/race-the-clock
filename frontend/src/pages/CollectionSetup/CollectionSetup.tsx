@@ -91,7 +91,12 @@ const CollectionSetup: React.FC = () => {
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable
-  const steps: Step[] = tourStepsCollectionSetup(visibilityStates);
+  const steps: Step[] = tourStepsCollectionSetup(
+    visibilityStates,
+    category,
+    type,
+    dotCountType
+  );
 
   // Example of updating visibility states based on some condition
   useEffect(() => {
