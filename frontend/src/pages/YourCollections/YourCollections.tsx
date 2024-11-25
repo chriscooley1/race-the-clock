@@ -25,13 +25,14 @@ import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { useCompletion } from "../../context/CompletionContext";
 import FeedbackForm from "../../components/FeedbackForm";
+import { categoryColors } from "../../constants/categoryColors";
 
 interface Collection {
   collection_id: number;
   name: string;
   description: string;
   created_at: string;
-  category: string;
+  category: keyof typeof categoryColors;
   user_id: number;
   creator_username: string;
   items: Item[];
@@ -529,7 +530,7 @@ const YourCollections: React.FC = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="border-5 relative flex h-[300px] flex-col items-center justify-start overflow-hidden border-black p-5"
+                        className="border-5 relative flex h-[350px] flex-col items-center justify-start overflow-hidden border-black p-5"
                         style={{
                           ...provided.draggableProps.style,
                           backgroundColor: lightColor,
@@ -543,6 +544,7 @@ const YourCollections: React.FC = () => {
                           handleDeleteCollection={handleDeleteCollection}
                           formatDate={formatDate}
                           completionCount={0}
+                          theme={theme}
                         />
                       </div>
                     )}
@@ -550,7 +552,7 @@ const YourCollections: React.FC = () => {
                 ) : (
                   <div
                     key={collection.collection_id}
-                    className="collection-card border-5 relative flex h-[300px] flex-col items-center justify-start overflow-hidden border-black p-5"
+                    className="collection-card border-5 relative flex h-[350px] flex-col items-center justify-start overflow-hidden border-black p-5"
                     style={{
                       backgroundColor: lightColor,
                     }}
@@ -563,6 +565,7 @@ const YourCollections: React.FC = () => {
                       handleDeleteCollection={handleDeleteCollection}
                       formatDate={formatDate}
                       completionCount={0}
+                      theme={theme}
                     />
                   </div>
                 );
@@ -695,6 +698,12 @@ interface CollectionContentProps {
   handleDeleteCollection: (id: number) => void;
   formatDate: (dateString: string) => string;
   completionCount: number;
+  theme: {
+    isDarkMode: boolean;
+    backgroundColor: string;
+    textColor: string;
+    originalTextColor: string;
+  };
 }
 
 const CollectionContent: React.FC<CollectionContentProps> = ({
@@ -704,56 +713,68 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
   handleEditButtonClick,
   handleDeleteCollection,
   formatDate,
+  theme,
 }) => {
   const itemCount = getItemsCount(collection.description);
 
   return (
-    <>
+    <div className="flex h-full w-full flex-col">
       <h1
         className="border-5 w-full rounded-t-lg border-b-0 border-black p-2.5 text-center text-xl font-bold text-black"
         style={{ backgroundColor: baseColor }}
       >
         {collection.name}
       </h1>
-      <div className="border-5 border-t-5 flex w-full grow flex-col items-center justify-between rounded-b-lg border-black p-4">
-        <div>
-          <p className="mb-1 text-base font-bold text-black">
-            {itemCount} {itemCount === 1 ? "item" : "items"} in collection
-          </p>
-          <p className="mb-2.5 text-base font-bold text-black">
-            Created by you on {formatDate(collection.created_at)}
-          </p>
-        </div>
-        <div className="flex flex-col items-center justify-end">
-          <button
-            type="button"
-            className="start-collection-button mb-2.5 w-full cursor-pointer rounded-lg border-4 border-black p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
-            style={{ backgroundColor: "green" }}
-            onClick={() => handleStartCollection(collection.collection_id)}
-          >
-            Start
-          </button>
-          <div className="flex w-full justify-between space-x-4">
-            <button
-              type="button"
-              className="edit-collection-button flex-1 cursor-pointer rounded-lg border-4 border-black p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
-              style={{ backgroundColor: "yellow" }}
-              onClick={() => handleEditButtonClick(collection)}
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              className="delete-collection-button flex-1 cursor-pointer rounded-lg border-4 border-black p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
-              style={{ backgroundColor: "red" }}
-              onClick={() => handleDeleteCollection(collection.collection_id)}
-            >
-              Delete
-            </button>
+      <div className="border-5 flex h-full w-full flex-col rounded-b-lg border-black bg-black/10">
+        {/* Content wrapper with padding */}
+        <div className="flex h-full w-full flex-col p-4">
+          {/* Info section - added text-center to center all text */}
+          <div className="mb-auto text-center">
+            <p className="mb-1 text-base font-bold text-black">
+              {itemCount} {itemCount === 1 ? "item" : "items"} in collection
+            </p>
+            <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+              Category:
+              <span className={`ml-2 inline-block rounded-full px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
+                {collection.category}
+              </span>
+            </p>
+            <p className="mb-2.5 text-base font-bold text-black">
+              Created by you on {formatDate(collection.created_at)}
+            </p>
+          </div>
+
+          {/* Buttons section */}
+          <div className="mt-auto pt-4">
+            <div className="flex justify-center mb-2.5">
+              <button
+                type="button"
+                className="w-2/3 cursor-pointer rounded-lg border-4 border-black bg-green-600 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
+                onClick={() => handleStartCollection(collection.collection_id)}
+              >
+                Start
+              </button>
+            </div>
+            <div className="flex w-full justify-between space-x-4">
+              <button
+                type="button"
+                className="flex-1 cursor-pointer rounded-lg border-4 border-black bg-yellow-400 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
+                onClick={() => handleEditButtonClick(collection)}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className="flex-1 cursor-pointer rounded-lg border-4 border-black bg-red-600 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
+                onClick={() => handleDeleteCollection(collection.collection_id)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
