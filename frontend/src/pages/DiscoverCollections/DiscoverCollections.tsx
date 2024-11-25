@@ -17,6 +17,7 @@ import { tourStepsDiscoverCollections } from "./tourStepsDiscoverCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import FeedbackForm from "../../components/FeedbackForm";
+import { categoryColors } from "../../constants/categoryColors";
 
 interface Item {
   id: number;
@@ -384,7 +385,10 @@ const DiscoverCollections: React.FC = () => {
               <p
                 className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
               >
-                Category: {collection.category}
+                Category: 
+                <span className={`ml-2 inline-block rounded-full px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
+                  {collection.category}
+                </span>
               </p>
               <p
                 className={`mb-2 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}

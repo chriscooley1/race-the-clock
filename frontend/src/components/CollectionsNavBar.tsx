@@ -1,4 +1,5 @@
 import React from "react";
+import { categoryColors } from "../constants/categoryColors";
 
 interface CollectionsNavBarProps {
   onSelectCategory: (category: string) => void;
@@ -26,6 +27,13 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
     "Nursing",
   ];
 
+  const getCategoryButtonColor = (category: string) => {
+    const categoryColor = categoryColors[category as keyof typeof categoryColors];
+    return selectedCategory === category
+      ? `${categoryColor} text-white`
+      : `bg-gray-200 text-gray-700 hover:${categoryColor} hover:text-white dark:bg-gray-700 dark:text-gray-300 dark:hover:${categoryColor}`;
+  };
+
   return (
     <div className="fixed inset-x-0 top-[50px] z-40 mt-4 shadow-md md:left-[250px] dark:bg-gray-800">
       <div className="flex w-full flex-col px-4 py-2">
@@ -35,11 +43,9 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
               type="button"
               key={category}
               onClick={() => onSelectCategory(category)}
-              className={`mr-2 grow whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
-                selectedCategory === category
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-              }`}
+              className={`mr-2 grow whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${getCategoryButtonColor(
+                category
+              )}`}
             >
               {category}
             </button>
@@ -73,7 +79,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           <button
             type="button"
             onClick={() => setShowFeedback(true)}
-            className="hover:bg-light-blue-600 active:bg-light-blue-700 ml-4 rounded bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 active:scale-95"
+            className="ml-4 rounded bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
           >
             Give Feedback
           </button>
