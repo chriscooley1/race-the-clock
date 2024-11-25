@@ -493,6 +493,48 @@ const CollectionSetup: React.FC = () => {
       <h1 className="collection-setup text-4xl font-bold">Step 2 - Setup</h1>
       <h2 className="text-3xl font-bold">Collection: {collectionName}</h2>
       <h3 className="mb-4 text-2xl font-semibold">Category: {category}</h3>
+      <div className="mb-8 flex flex-col items-center space-y-4">
+        <h2 className="text-2xl font-bold">Choose Your Collection Method:</h2>
+        <div className="flex space-x-4">
+          <button
+            type="button"
+            className={`rounded-lg px-6 py-3 font-bold transition-all duration-300 ${
+              !isGenerated
+                ? "bg-blue-500 text-white hover:bg-blue-600"
+                : "bg-gray-300 text-gray-600"
+            }`}
+            onClick={() => {
+              if (isGenerated) {
+                handleClear();
+              }
+            }}
+          >
+            Generate Random Items
+          </button>
+          <button
+            type="button"
+            className={`rounded-lg px-6 py-3 font-bold transition-all duration-300 ${
+              !isGenerated
+                ? "bg-green-500 text-white hover:bg-green-600"
+                : "bg-gray-300 text-gray-600"
+            }`}
+            onClick={() => {
+              if (!isGenerated) {
+                navigate("/collection-final-step", {
+                  state: { collectionName, isPublic, category, sequence, type },
+                });
+              }
+            }}
+          >
+            Create Custom Items
+          </button>
+        </div>
+        {!isGenerated && (
+          <p className="text-center text-gray-600">
+            Choose to either generate random items now or create your own custom items in the next step
+          </p>
+        )}
+      </div>
       <div className="mb-4 flex w-full max-w-3xl flex-col items-center space-y-4">
         {category !== "Number Sense" ? (
           <>
@@ -547,7 +589,7 @@ const CollectionSetup: React.FC = () => {
                   htmlFor="itemCount"
                   className="whitespace-nowrap font-bold"
                 >
-                  Quantity:
+                  Number of Items in Collection:
                 </label>
                 <input
                   type="number"
