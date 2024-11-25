@@ -62,6 +62,9 @@ const App: React.FC = () => {
   const [currentTourStep, setCurrentTourStep] = useState(0);
   const [currentTourName, setCurrentTourName] = useState<string>("");
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [category, setCategory] = useState<string>("default");
+  const [type, setType] = useState<string>("default");
+  const [dotCountType, setDotCountType] = useState<string>("fixed");
 
   useEffect(() => {
     console.log("App state changed");
@@ -97,6 +100,17 @@ const App: React.FC = () => {
       setIsTourRunning(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (location.pathname === "/collection-setup") {
+      const state = location.state as { category?: string; type?: string; dotCountType?: string };
+      if (state) {
+        setCategory(state.category || "default");
+        setType(state.type || "default");
+        setDotCountType(state.dotCountType || "fixed");
+      }
+    }
+  }, [location.pathname, location.state]);
 
   const getTourSteps = (): Step[] => {
     const visibilityStates: VisibilityStates = {
@@ -182,7 +196,12 @@ const App: React.FC = () => {
         visibilityStates.isSubmitButtonVisible = true;
         visibilityStates.isGeneratedSequencePreviewVisible = true;
         visibilityStates.isNextButtonVisible = true;
-        return tourStepsCollectionSetup(visibilityStates);
+        return tourStepsCollectionSetup(
+          visibilityStates,
+          category,
+          type,
+          dotCountType
+        );
       case "/collection-final-step":
         visibilityStates.isSaveButtonVisible = true;
         visibilityStates.isItemPreviewVisible = true;
