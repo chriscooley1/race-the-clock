@@ -30,8 +30,8 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   const getCategoryButtonColor = (category: string) => {
     const categoryColor = categoryColors[category as keyof typeof categoryColors];
     return selectedCategory === category
-      ? `${categoryColor} text-white`
-      : `bg-gray-200 text-gray-700 hover:${categoryColor} hover:text-white dark:bg-gray-700 dark:text-gray-300 dark:hover:${categoryColor}`;
+      ? `${categoryColor} text-white border border-black`
+      : `bg-gray-200 text-gray-700 hover:${categoryColor} hover:text-white border border-black dark:bg-gray-700 dark:text-gray-300 dark:hover:${categoryColor}`;
   };
 
   return (
@@ -60,7 +60,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
               id="sortSelect"
               value={sortOption}
               onChange={onSortChange}
-              className="font-teacher w-40 rounded border border-gray-300 bg-white p-2 text-base text-black"
+              className="font-teacher w-40 rounded border border-black bg-white p-2 text-base text-black"
             >
               <option value="name">Name</option>
               <option value="alphabetical">Alphabetical</option>
@@ -72,14 +72,14 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           <button
             type="button"
             onClick={onDuplicateCollection}
-            className="ml-4 rounded bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
+            className="ml-4 rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
           >
             Duplicate Collection
           </button>
           <button
             type="button"
             onClick={() => setShowFeedback(true)}
-            className="ml-4 rounded bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
+            className="ml-4 rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
           >
             Give Feedback
           </button>

@@ -433,21 +433,21 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         {renderContent()}
         <button
           type="button"
-          className="w-15 h-15 previous-button absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
+          className="w-15 h-15 previous-button absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
           onClick={handlePrevious}
         >
           ←
         </button>
         <button
           type="button"
-          className="w-15 h-15 next-button absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
+          className="w-15 h-15 next-button absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
           onClick={handleNext}
         >
           →
         </button>
-        <div className="progress-indicator fixed inset-x-2.5 bottom-2.5 h-2.5 rounded-full bg-white/30">
+        <div className="progress-indicator fixed inset-x-2.5 bottom-2.5 h-2.5 rounded-full border border-black bg-white/30">
           <div
-            className="h-full rounded-full bg-green-500 transition-all duration-300 ease-in-out"
+            className="h-full rounded-full border border-black bg-green-500 transition-all duration-300 ease-in-out"
             style={{ width: `${progress}%` }}
           ></div>
         </div>

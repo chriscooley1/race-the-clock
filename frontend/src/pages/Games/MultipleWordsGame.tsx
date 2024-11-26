@@ -51,7 +51,7 @@ const MultipleWordsGame: React.FC = () => {
       <button
         type="button"
         onClick={handleBack}
-        className="fixed left-[270px] top-20 z-40 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 md:left-[270px]"
+        className="fixed left-[270px] top-20 z-40 rounded border border-black bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 md:left-[270px]"
       >
         Back to Games
       </button>
@@ -62,7 +62,7 @@ const MultipleWordsGame: React.FC = () => {
           <button
             type="button"
             onClick={startGame}
-            className="start-button mt-4 rounded bg-blue-500 p-2 text-white"
+            className="start-button mt-4 rounded border border-black bg-blue-500 p-2 text-white"
           >
             Start Game
           </button>
@@ -95,7 +95,7 @@ const MultipleWordsGame: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>

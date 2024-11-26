@@ -46,7 +46,7 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
     >
       <input
         type="text"
-        className="font-teacher mb-4 w-full rounded-md border border-gray-300 p-2 text-base"
+        className="font-teacher mb-4 w-full rounded-md border border-black p-2 text-base"
         value={displayName}
         onChange={(e) => {
           console.log("Display name input changed:", e.target.value);
@@ -57,7 +57,7 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
       />
       <button
         type="button"
-        className="w-full cursor-pointer rounded-md border-none bg-blue-600 px-5 py-3 text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-blue-700 active:scale-95 active:bg-blue-800 md:w-auto"
+        className="w-full cursor-pointer rounded-md border-none border border-black bg-blue-600 px-5 py-3 text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-blue-700 active:scale-95 active:bg-blue-800 md:w-auto"
         onClick={handleUpdateDisplayName}
       >
         Update Display Name

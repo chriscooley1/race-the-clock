@@ -246,7 +246,7 @@ const Navbar: React.FC<NavbarProps> = ({
         {(location.pathname === "/fullscreen-display" || hasBackButton) && (
           <button
             type="button"
-            className="bg-custom-red hover:bg-custom-red-dark rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
+            className="border border-black bg-custom-red hover:bg-custom-red-dark rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
             onClick={onBack || handleBack}
           >
             Back
@@ -255,7 +255,7 @@ const Navbar: React.FC<NavbarProps> = ({
         {location.pathname === "/fullscreen-display" && onPauseResume && (
           <button
             type="button"
-            className="bg-custom-green hover:bg-custom-green-dark rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
+            className="border border-black bg-custom-green hover:bg-custom-green-dark rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
             onClick={onPauseResume}
           >
             {isPaused ? "Resume" : "Pause"}
@@ -265,7 +265,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={handleStartTour}
-            className="rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
+            className="rounded border border-black bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
           >
             Start Tour
           </button>
@@ -275,7 +275,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={() => setShowFeedback(true)}
-            className="hover:bg-light-blue-600 ml-4 rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
+            className="hover:bg-light-blue-600 ml-4 rounded border border-black bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
           >
             Give Feedback
           </button>

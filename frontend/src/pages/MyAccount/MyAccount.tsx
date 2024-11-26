@@ -123,7 +123,7 @@ const MyAccount: React.FC = () => {
               <img
                 src={user.picture}
                 alt={user.name}
-                className="mb-4 size-24 rounded-full"
+                className="mb-4 size-24 rounded-full border border-black"
               />
               <h2 className="text-xl font-semibold">
                 {userData?.display_name || user.name}
@@ -157,7 +157,7 @@ const MyAccount: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>

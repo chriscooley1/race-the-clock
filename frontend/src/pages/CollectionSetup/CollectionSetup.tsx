@@ -506,7 +506,7 @@ const CollectionSetup: React.FC = () => {
           </p>
           <button
             type="button"
-            className="rounded-lg bg-green-500 px-6 py-3 font-bold text-white transition-all duration-300 hover:bg-green-600"
+            className="rounded-lg border border-black bg-green-500 px-6 py-3 font-bold text-white transition-all duration-300 hover:bg-green-600"
             onClick={() => {
               navigate("/collection-final-step", {
                 state: { collectionName, isPublic, category, sequence, type },
@@ -529,7 +529,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="typeSelect"
-                className="font-teacher rounded border border-gray-300 bg-white p-2 text-center text-black"
+                className="font-teacher rounded border border-black bg-white p-2 text-center text-black"
                 value={type}
                 onChange={(e) => {
                   setType(e.target.value);
@@ -576,7 +576,7 @@ const CollectionSetup: React.FC = () => {
                 <input
                   type="number"
                   id="itemCount"
-                  className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                  className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                   value={itemCount}
                   min={1}
                   onChange={(e) => {
@@ -599,7 +599,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dotCountType"
-                className="font-teacher rounded-md border border-gray-300 p-2 text-center text-black"
+                className="font-teacher rounded-md border border-black p-2 text-center text-black"
                 value={dotCountType}
                 onChange={(e) => {
                   setDotCountType(e.target.value as "fixed" | "random");
@@ -621,7 +621,7 @@ const CollectionSetup: React.FC = () => {
                 <input
                   type="number"
                   id="itemCount"
-                  className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                  className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                   value={itemCount}
                   min={1}
                   onChange={(e) => {
@@ -643,7 +643,7 @@ const CollectionSetup: React.FC = () => {
                   <input
                     type="number"
                     id="minDots"
-                    className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                    className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                     value={minDots}
                     min={1}
                     onChange={(e) => {
@@ -663,7 +663,7 @@ const CollectionSetup: React.FC = () => {
                   <input
                     type="number"
                     id="maxDots"
-                    className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                    className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                     value={maxDots}
                     min={minDots}
                     onChange={(e) => {
@@ -685,7 +685,7 @@ const CollectionSetup: React.FC = () => {
               <input
                 type="number"
                 id="collectionItemCount"
-                className={`font-teacher rounded-md border border-gray-300 p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                 value={collectionItemCount}
                 min={1}
                 onChange={(e) => {
@@ -704,7 +704,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dot-color"
-                className={`font-teacher rounded-md border border-gray-300 p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                className={`font-teacher rounded-md border border-black p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                 value={dotColor}
                 onChange={(e) => {
                   setDotColor(e.target.value);
@@ -727,7 +727,7 @@ const CollectionSetup: React.FC = () => {
               </label>
               <select
                 id="dot-shape"
-                className={`font-teacher rounded-md border border-gray-300 p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                className={`font-teacher rounded-md border border-black p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
                 value={dotShape}
                 onChange={(e) => {
                   setDotShape(e.target.value);
@@ -745,7 +745,7 @@ const CollectionSetup: React.FC = () => {
         )}
         <button
           type="button"
-          className="generate-random-sequence-button rounded-md bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
+          className="generate-random-sequence-button rounded-md border border-black bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
           onClick={generateRandomSequence}
         >
           Generate Random Sequence
@@ -758,7 +758,7 @@ const CollectionSetup: React.FC = () => {
           <input
             type="file"
             id="fileUpload"
-            className={`font-teacher w-full rounded-md border border-gray-300 p-2 ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+            className={`font-teacher w-full rounded-md border border-black p-2 ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             onChange={handleFileChange}
             multiple
           />
@@ -767,14 +767,14 @@ const CollectionSetup: React.FC = () => {
           <div className="flex flex-col items-center space-y-2">
             <button
               type="button"
-              className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+              className="bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-black p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
               onClick={handleNext}
             >
               Save Collection
             </button>
             <button
               type="button"
-              className="clear-button mt-2 rounded-md bg-yellow-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-yellow-600"
+              className="clear-button mt-2 rounded-md border border-black bg-yellow-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-yellow-600"
               onClick={handleClear}
             >
               Clear
@@ -783,7 +783,7 @@ const CollectionSetup: React.FC = () => {
         ) : (
           <button
             type="button"
-            className="next-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+            className="next-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-black p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
             onClick={handleNext}
           >
             Next
@@ -799,7 +799,7 @@ const CollectionSetup: React.FC = () => {
             {previewSequence.map((item, index) => (
               <div
                 key={index}
-                className="rounded-md border border-gray-300 p-2"
+                className="rounded-md border border-black p-2"
               >
                 <p className="text-center">{item.name}</p>
                 {item.svg && (
@@ -846,7 +846,7 @@ const CollectionSetup: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
