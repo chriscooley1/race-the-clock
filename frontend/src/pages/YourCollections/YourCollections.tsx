@@ -586,7 +586,7 @@ const YourCollections: React.FC = () => {
         />
       )}
       {isDuplicateModalOpen && (
-        <div className="duplicate-collection-modal">
+        <div className="fixed inset-0 z-[1001] flex items-center justify-center bg-black bg-opacity-50">
           <div
             ref={modalRef}
             className="font-teacher relative z-[1002] w-1/4 max-w-[600px] rounded-lg p-5 text-center shadow-lg"
@@ -634,12 +634,12 @@ const YourCollections: React.FC = () => {
               <button
                 type="button"
                 onClick={handleDuplicateConfirm}
-                className="rounded px-4 py-2 font-bold uppercase transition duration-300 hover:scale-105 active:scale-95"
+                className="rounded border border-black bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 active:scale-95"
                 style={{
                   backgroundColor: adjustColorForColorblindness(
                     theme.isDarkMode ? "#4CAF50" : "#45a049",
                   ),
-                  color: adjustColorForColorblindness(theme.backgroundColor),
+                  color: "white",
                 }}
               >
                 Duplicate
@@ -647,12 +647,12 @@ const YourCollections: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setDuplicateModalOpen(false)}
-                className="rounded px-4 py-2 font-bold uppercase transition duration-300 hover:scale-105 active:scale-95"
+                className="rounded border border-black bg-red-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 active:scale-95"
                 style={{
                   backgroundColor: adjustColorForColorblindness(
                     theme.isDarkMode ? "#f44336" : "#d32f2f",
                   ),
-                  color: adjustColorForColorblindness(theme.backgroundColor),
+                  color: "white",
                 }}
               >
                 Cancel
