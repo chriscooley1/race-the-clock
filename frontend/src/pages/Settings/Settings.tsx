@@ -284,7 +284,7 @@ const Settings: React.FC = () => {
           <select
             value={theme.font}
             onChange={handleFontChange}
-            className="main-font rounded border border-gray-300 bg-white p-2 text-black"
+            className="main-font rounded border border-black bg-white p-2 text-black"
             title="Select main font"
           >
             {fonts.map((font) => {
@@ -307,7 +307,7 @@ const Settings: React.FC = () => {
           <select
             value={theme.headingFont}
             onChange={handleHeadingFontChange}
-            className="heading-font rounded border border-gray-300 bg-white p-2 text-black"
+            className="heading-font rounded border border-black bg-white p-2 text-black"
             title="Select heading font"
           >
             {fonts.map((font) => {
@@ -330,7 +330,7 @@ const Settings: React.FC = () => {
           <select
             value={theme.buttonFont}
             onChange={handleButtonFontChange}
-            className="button-font rounded border border-gray-300 bg-white p-2 text-black"
+            className="button-font rounded border border-black bg-white p-2 text-black"
             title="Select button font"
           >
             {fonts.map((font) => {
@@ -354,7 +354,7 @@ const Settings: React.FC = () => {
             {colorOptions.map((color) => (
               <div
                 key={color.name}
-                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
+                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
                 style={{ backgroundColor: color.value }}
                 onClick={() => {
                   const newTheme = colorSchemes.find(
@@ -377,7 +377,7 @@ const Settings: React.FC = () => {
             {colorOptions.map((color) => (
               <div
                 key={color.name}
-                className={`text-color m-1 inline-block size-8 cursor-pointer border border-gray-300 transition-all duration-300 ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}`}
+                className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}`}
                 style={{ backgroundColor: color.value }}
                 onClick={() => handleTextColorChange(color.value)}
               />
@@ -419,7 +419,7 @@ const Settings: React.FC = () => {
           <select
             value={theme.backgroundImage}
             onChange={handleBackgroundThemeChange}
-            className="background-theme rounded border border-gray-300 bg-white p-2 text-black"
+            className="background-theme rounded border border-black bg-white p-2 text-black"
             title="Select background theme"
           >
             {backgroundThemes.map((theme) => (
@@ -435,7 +435,7 @@ const Settings: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
