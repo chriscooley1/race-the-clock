@@ -265,7 +265,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={handleStartTour}
-            className="rounded bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
+            className="rounded border border-black bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
           >
             Start Tour
           </button>
