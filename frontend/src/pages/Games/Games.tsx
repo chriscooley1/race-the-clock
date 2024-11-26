@@ -81,7 +81,7 @@ const Games: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
