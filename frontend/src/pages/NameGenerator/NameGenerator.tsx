@@ -261,8 +261,7 @@ const NameGenerator: React.FC = () => {
         <div
           className={`flex flex-col items-center ${showRightSide ? "w-1/2" : "w-full"}`}
         >
-          <div className="relative w-full max-w-[500px]">
-            <div className="absolute left-1/2 top-0 z-10 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500"></div>
+          <div className="relative flex w-full max-w-[500px] flex-col items-center">
             <NameWheel
               names={nameList}
               isSpinning={isSpinning}
@@ -273,17 +272,17 @@ const NameGenerator: React.FC = () => {
                 setSpinData(null);
               }}
             />
-          </div>
 
-          {visibilityStates.isSpinButtonVisible && (
-            <button
-              type="button"
-              onClick={handleSpin}
-              className="spin-button border border-black bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-4 max-w-md rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
-            >
-              Spin the Wheel
-            </button>
-          )}
+            {visibilityStates.isSpinButtonVisible && (
+              <button
+                type="button"
+                onClick={handleSpin}
+                className="spin-button mt-4 max-w-md rounded border border-black bg-light-blue px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 hover:bg-hover-blue active:scale-95 active:bg-active-blue"
+              >
+                Spin the Wheel
+              </button>
+            )}
+          </div>
 
           {/* Move selected name display here, below the spin button */}
           {selectedName && (

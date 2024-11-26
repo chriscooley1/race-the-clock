@@ -35,6 +35,7 @@ interface Collection {
   category: keyof typeof categoryColors;
   user_id: number;
   creator_username: string;
+  creator_display_name: string;
   items: Item[];
   type: string;
   status: string;
@@ -94,7 +95,7 @@ const YourCollections: React.FC = () => {
   const [isDuplicateModalOpen, setDuplicateModalOpen] =
     useState<boolean>(false);
   const [selectedCollectionToDuplicate, setSelectedCollectionToDuplicate] =
-    useState<number | null>(null);
+    useState<Collection | null>(null);
   const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -328,15 +329,8 @@ const YourCollections: React.FC = () => {
   const handleDuplicateConfirm = async () => {
     if (!selectedCollectionToDuplicate) return;
     try {
-      const collectionToDuplicate = collections.find(
-        (col) => col.collection_id === selectedCollectionToDuplicate,
-      );
-      if (!collectionToDuplicate) {
-        console.error("Selected collection not found");
-        return;
-      }
       const duplicatedCollection = await duplicateCollection(
-        collectionToDuplicate,
+        selectedCollectionToDuplicate,
         getAccessTokenSilently,
       );
       setCollections((prevCollections) => [
@@ -608,10 +602,13 @@ const YourCollections: React.FC = () => {
               </label>
               <select
                 id="duplicate-collection-select"
-                value={selectedCollectionToDuplicate || ""}
-                onChange={(e) =>
-                  setSelectedCollectionToDuplicate(Number(e.target.value))
-                }
+                value={selectedCollectionToDuplicate?.collection_id || ""}
+                onChange={(e) => {
+                  const collection = collections.find(
+                    (col) => col.collection_id === Number(e.target.value)
+                  );
+                  setSelectedCollectionToDuplicate(collection || null);
+                }}
                 className="font-teacher w-full rounded border p-2 text-base"
                 style={{
                   backgroundColor: adjustColorForColorblindness(

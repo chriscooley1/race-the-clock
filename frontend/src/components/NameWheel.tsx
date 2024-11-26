@@ -42,6 +42,30 @@ const NameWheel: React.FC<NameWheelProps> = ({
       ctx.arc(canvasSize / 2, canvasSize / 2, radius, 0, 2 * Math.PI);
       ctx.fillStyle = theme.backgroundColor;
       ctx.fill();
+      ctx.strokeStyle = theme.isDarkMode ? "#444" : "#ddd";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      if (names.length === 0) {
+        // Draw a single segment for empty wheel
+        ctx.beginPath();
+        ctx.moveTo(canvasSize / 2, canvasSize / 2);
+        ctx.arc(canvasSize / 2, canvasSize / 2, radius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = `hsl(200, 70%, ${theme.isDarkMode ? "60%" : "70%"})`;
+        ctx.fill();
+        ctx.stroke();
+
+        // Add "Add names" text
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = theme.isDarkMode ? "#FFFFFF" : "#000000";
+        ctx.font = "20px Arial";
+        ctx.fillText("Click + to add names", canvasSize / 2, canvasSize / 2);
+        ctx.restore();
+        return;
+      }
 
       const segmentAngle = 360 / names.length;
 
@@ -151,22 +175,11 @@ const NameWheel: React.FC<NameWheelProps> = ({
   ]);
 
   return (
-    <div className="relative">
+    <div className="relative inline-block">
       <div className="absolute left-1/2 top-0 z-10 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500"></div>
-      <div className="relative" style={{ backgroundColor: "transparent" }}>
-        {names.length === 0 ? (
-          <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            style={{ color: theme.displayTextColor || theme.textColor }}
-          >
-            <p>No names added yet. Please click the + button to add names.</p>
-          </div>
-        ) : (
-          <motion.div animate={controls} className="inline-block">
-            <canvas ref={canvasRef} />
-          </motion.div>
-        )}
-      </div>
+      <motion.div animate={controls} className="inline-block">
+        <canvas ref={canvasRef} />
+      </motion.div>
     </div>
   );
 };

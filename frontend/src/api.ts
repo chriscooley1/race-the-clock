@@ -177,11 +177,11 @@ export interface Collection {
   category: string;
   user_id: number;
   creator_username: string;
-  creator_display_name?: string; // Add this line
+  creator_display_name: string | null;
   items: CollectionItem[];
   type: string;
-  item_count?: number; // Add this line if it's not already present
-  isSubscribed?: boolean; // Add this line
+  item_count?: number;
+  isSubscribed?: boolean;
 }
 
 interface CollectionItem {
@@ -344,11 +344,23 @@ export const createCollectionFromForm = async (
 export const fetchPublicCollections = async () => {
   try {
     const response = await axios.get<Collection[]>(
-      `${API_BASE_URL}/collections/public`,
+      `${API_BASE_URL}/collections/public`
     );
+    
+    // Log the response to verify creator information
+    console.log("Fetched public collections:", response.data);
+    
     return response.data;
   } catch (error) {
-    handleApiError(error);
+    console.error("Error fetching public collections:", error);
+    if (axios.isAxiosError(error)) {
+      console.error("Axios error details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+      });
+    }
+    throw error;
   }
 };
 
