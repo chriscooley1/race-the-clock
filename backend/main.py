@@ -275,12 +275,16 @@ async def delete_collection(collection_id: int, db: Session = Depends(get_db)):
 
 @app.get("/collections/public", response_model=List[CollectionRead])
 async def get_public_collections(db: Session = Depends(get_db)):
-    public_collections = db.query(Collection).filter(Collection.status == "public").all()
+    collections = db.query(Collection).join(User).filter(
+        Collection.status == "public"
+    ).all()
     
-    for collection in public_collections:
-        collection.items = db.query(Item).filter(Item.collection_id == collection.collection_id).all()
+    # Enhance collections with creator information
+    for collection in collections:
+        collection.creator_display_name = collection.user.display_name
+        collection.creator_username = collection.user.username
     
-    return public_collections
+    return collections
 
 @app.post("/collections/{collection_id}/items")
 async def create_items(collection_id: int, items: List[str], db: Session = Depends(get_db)):

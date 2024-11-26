@@ -415,7 +415,9 @@ const DiscoverCollections: React.FC = () => {
                           </p>
                           <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
                             Created by:{" "}
-                            {collection.creator_display_name || collection.creator_username || "Anonymous"}
+                            {collection.creator_display_name || 
+                             collection.creator_username || 
+                             "Anonymous"}
                           </p>
                           <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
                             Category:{" "}

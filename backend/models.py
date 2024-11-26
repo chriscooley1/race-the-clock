@@ -101,7 +101,8 @@ class Collection(SQLModel, table=True):
     user_id: int = Field(foreign_key="users.user_id")
     status: str = Field(default="private")
     category: str
-    # stage: str  # Keep this line commented out for future use
+    creator_display_name: Optional[str] = None
+    creator_username: Optional[str] = None
     user: User = Relationship(back_populates="collections")
     items: List["Item"] = Relationship(back_populates="collection")
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
@@ -117,6 +118,8 @@ class CollectionRead(CollectionBase):
     collection_id: int
     created_at: datetime
     status: str
+    creator_display_name: Optional[str] = None
+    creator_username: Optional[str] = None
 
 # Item Models
 class ItemBase(SQLModel):
