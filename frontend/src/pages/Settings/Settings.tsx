@@ -171,8 +171,10 @@ const Settings: React.FC = () => {
 
   const handleColorThemeChange = (color: ColorScheme) => {
     setTheme((prevTheme) => {
-      const newDisplayTextColor =
-        getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+      const newDisplayTextColor = color.backgroundColor.toLowerCase() === "#000000" 
+        ? "#FFFFFF" 
+        : getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+
       const newTheme = {
         ...color,
         isColorblindMode: prevTheme.isColorblindMode,
@@ -370,7 +372,12 @@ const Settings: React.FC = () => {
                 className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 
                   ${theme.name === color.name ? "border-4 border-black" : ""}
                   ${isColorDisabled(color.value) ? "opacity-50 cursor-not-allowed" : ""}`}
-                style={{ backgroundColor: color.value }}
+                style={{ 
+                  backgroundColor: color.value,
+                  ...(theme.name === color.name && color.value.toLowerCase() === "#000000" 
+                    ? { backgroundColor: "#404040" } 
+                    : {})
+                }}
                 onClick={() => {
                   if (!isColorDisabled(color.value)) {
                     const newTheme = colorSchemes.find(

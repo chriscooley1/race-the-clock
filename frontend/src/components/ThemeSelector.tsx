@@ -88,8 +88,11 @@ const ThemeSelector: React.FC = () => {
 
   const handleColorThemeChange = (color: ColorScheme) => {
     setTheme((prevTheme) => {
-      const newDisplayTextColor =
-        getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+      // Force white text when black background is selected
+      const newDisplayTextColor = color.backgroundColor.toLowerCase() === "#000000" 
+        ? "#FFFFFF" 
+        : getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+
       const newTheme = {
         ...color,
         isColorblindMode: prevTheme.isColorblindMode,
