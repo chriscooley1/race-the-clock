@@ -454,7 +454,7 @@ const CollectionFinalStep: React.FC = () => {
               id="first-number-select"
               value={firstNumber}
               onChange={(e) => setFirstNumber(Number(e.target.value))}
-              className="font-teacher mb-2 w-full rounded-md border border-gray-300 p-2 text-center text-black"
+              className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
             >
               {Array.from({ length: 10 }, (_, i) => (
                 <option key={i} value={i + 1}>
@@ -467,7 +467,7 @@ const CollectionFinalStep: React.FC = () => {
               id="operator-select"
               value={operator}
               onChange={(e) => setOperator(e.target.value)}
-              className="font-teacher mb-2 w-full rounded-md border border-gray-300 p-2 text-center text-black"
+              className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
             >
               <option value="addition">+</option>
               <option value="subtraction">-</option>
@@ -479,7 +479,7 @@ const CollectionFinalStep: React.FC = () => {
               id="second-number-select"
               value={secondNumber}
               onChange={(e) => setSecondNumber(Number(e.target.value))}
-              className="font-teacher mb-2 w-full rounded-md border border-gray-300 p-2 text-center text-black"
+              className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
             >
               {Array.from({ length: 10 }, (_, i) => (
                 <option key={i} value={i + 1}>
@@ -490,7 +490,7 @@ const CollectionFinalStep: React.FC = () => {
             <button
               type="button"
               onClick={handleAddMathProblem}
-              className="add-math-problem-button mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
+              className="add-math-problem-button mb-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
             >
               Add Math Problem
             </button>
@@ -514,7 +514,7 @@ const CollectionFinalStep: React.FC = () => {
                       onChange={(e) =>
                         handleDotChange(index, "position", e.target.value)
                       }
-                      className="font-teacher mb-2 w-full rounded-md border border-gray-300 p-2 text-center text-black"
+                      className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
                     >
                       {[
                         ...new Set([
@@ -541,7 +541,7 @@ const CollectionFinalStep: React.FC = () => {
                       onChange={(e) =>
                         handleDotChange(index, "color", e.target.value)
                       }
-                      className="font-teacher mb-2 w-full rounded-md border border-gray-300 p-2 text-center text-black"
+                      className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
                     >
                       {["blue", "green", "red", "purple", "orange"].map(
                         (color) => (
@@ -563,7 +563,7 @@ const CollectionFinalStep: React.FC = () => {
                       onChange={(e) =>
                         handleDotChange(index, "shape", e.target.value)
                       }
-                      className="font-teacher mb-2 w-full rounded-md border border-gray-300 p-2 text-center text-black"
+                      className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
                     >
                       {["circle", "square", "triangle"].map((shape) => (
                         <option key={shape} value={shape}>
@@ -585,14 +585,14 @@ const CollectionFinalStep: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleAddDot}
-                  className="add-dot-button mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
+                  className="add-dot-button mb-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
                 >
                   Add Another Dot
                 </button>
                 <button
                   type="button"
                   onClick={handleAddNumberSenseItem}
-                  className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+                  className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
                   title="Add Number Sense Item"
                 >
                   +
@@ -607,7 +607,7 @@ const CollectionFinalStep: React.FC = () => {
                   id="element-select"
                   value={selectedElement}
                   onChange={handleElementSelect}
-                  className="font-teacher mb-4 w-full rounded-md border border-gray-300 p-2"
+                  className="font-teacher mb-4 w-full rounded-md border border-black p-2"
                 >
                   <option value="">Select an element</option>
                   {Object.values(periodicTable).map((element) => (
@@ -622,7 +622,7 @@ const CollectionFinalStep: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleAddItem}
-                  className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+                  className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
                   title="Add Item"
                 >
                   +
@@ -637,7 +637,7 @@ const CollectionFinalStep: React.FC = () => {
                   id="term-select"
                   value={selectedTerm}
                   onChange={handleTermSelect}
-                  className="font-teacher mb-2 w-full rounded-md border border-gray-300 p-2 text-black"
+                  className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-black"
                 >
                   <option value="">Select a term</option>
                   {terms.map((term, index) => (
@@ -654,13 +654,13 @@ const CollectionFinalStep: React.FC = () => {
                   id="custom-term-input"
                   value={customTerm}
                   onChange={handleCustomTermChange}
-                  className="font-teacher mb-2 w-full rounded-md border border-gray-300 p-2 text-black"
+                  className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-black"
                   placeholder={`Enter custom ${category.toLowerCase()} term`}
                 />
                 <button
                   type="button"
                   onClick={handleAddTerm}
-                  className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white"
+                  className="mb-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
                 >
                   Add Term
                 </button>
@@ -677,7 +677,7 @@ const CollectionFinalStep: React.FC = () => {
                       id="new-item-input"
                       value={newItem}
                       onChange={(e) => setNewItem(e.target.value)}
-                      className={`font-teacher w-full rounded-md border border-gray-300 p-2 pr-24 ${
+                      className={`font-teacher w-full rounded-md border border-black p-2 pr-24 ${
                         theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"
                       }`}
                       placeholder={`Enter new ${
@@ -698,7 +698,9 @@ const CollectionFinalStep: React.FC = () => {
                         type="button"
                         onClick={handleAddItem}
                         className={`flex size-10 items-center justify-center rounded-full ${
-                          newItem ? "bg-green-500 hover:bg-green-600" : "bg-gray-400"
+                          newItem
+                            ? "border border-black bg-green-500 hover:bg-green-600"
+                            : "border border-black bg-gray-400"
                         } text-2xl text-white transition duration-300`}
                         title="Add Item"
                         disabled={!newItem}
@@ -738,7 +740,7 @@ const CollectionFinalStep: React.FC = () => {
       )}
       {visibilityStates.isSaveButtonVisible && (
         <button
-          className="save-collection-button rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+          className="save-collection-button rounded-md border border-black bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
           type="button"
           onClick={handleSaveCollection}
           title="Save Collection"
@@ -750,7 +752,7 @@ const CollectionFinalStep: React.FC = () => {
         <div className="mb-4 flex flex-col items-center text-center">
           <label
             htmlFor="image-upload"
-            className="add-image-button mb-2 mt-4 cursor-pointer rounded-md bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
+            className="add-image-button mb-2 mt-4 cursor-pointer rounded-md border border-black bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
           >
             Upload Images
           </label>
@@ -806,7 +808,7 @@ const CollectionFinalStep: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
