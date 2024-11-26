@@ -228,6 +228,19 @@ const Settings: React.FC = () => {
     });
   }, [isTourRunning, currentTourStep, steps]);
 
+  const isColorDisabled = (color: string) => {
+    // Special case for black (#000000) - always allow it
+    if (color.toLowerCase() === "#000000") {
+      return false;
+    }
+    
+    return (
+      theme.displayTextColor === color ||
+      theme.backgroundColor === color ||
+      theme.displayBackgroundColor === color
+    );
+  };
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
@@ -354,14 +367,18 @@ const Settings: React.FC = () => {
             {colorOptions.map((color) => (
               <div
                 key={color.name}
-                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
+                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 
+                  ${theme.name === color.name ? "border-4 border-black" : ""}
+                  ${isColorDisabled(color.value) ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={{ backgroundColor: color.value }}
                 onClick={() => {
-                  const newTheme = colorSchemes.find(
-                    (scheme) => scheme.name === color.name,
-                  );
-                  if (newTheme) {
-                    handleColorThemeChange(newTheme); // Use the handleColorThemeChange function
+                  if (!isColorDisabled(color.value)) {
+                    const newTheme = colorSchemes.find(
+                      (scheme) => scheme.name === color.name,
+                    );
+                    if (newTheme) {
+                      handleColorThemeChange(newTheme);
+                    }
                   }
                 }}
               />
@@ -377,9 +394,15 @@ const Settings: React.FC = () => {
             {colorOptions.map((color) => (
               <div
                 key={color.name}
-                className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}`}
+                className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 
+                  ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}
+                  ${isColorDisabled(color.value) ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={{ backgroundColor: color.value }}
-                onClick={() => handleTextColorChange(color.value)}
+                onClick={() => {
+                  if (!isColorDisabled(color.value)) {
+                    handleTextColorChange(color.value);
+                  }
+                }}
               />
             ))}
           </div>

@@ -109,8 +109,16 @@ const ThemeSelector: React.FC = () => {
 
   // Determine if a color is disabled based on current selections
   const isColorDisabled = (color: string) => {
+    // Special case for black (#000000) - always allow it
+    if (color.toLowerCase() === "#000000") {
+      return false;
+    }
+    
     return (
-      theme.originalTextColor === color || theme.displayTextColor === color
+      theme.originalTextColor === color || 
+      theme.displayTextColor === color ||
+      theme.backgroundColor === color ||
+      theme.displayBackgroundColor === color
     );
   };
 
