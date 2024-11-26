@@ -49,7 +49,7 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-      <div className="w-full max-w-md rounded-lg bg-white p-6">
+      <div className="w-full max-w-md rounded-lg border border-black bg-white p-6">
         <h2 className="mb-4 text-xl font-bold text-gray-800">Feedback</h2>
         {success ? (
           <p className="text-green-600">Thank you for your feedback!</p>
@@ -57,7 +57,7 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <textarea
               ref={textareaRef}
-              className="w-full rounded border p-2 text-gray-800"
+              className="w-full rounded border border-black p-2 text-gray-800"
               placeholder="Your feedback"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -69,13 +69,13 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded bg-gray-200 px-4 py-2 text-gray-800"
+                className="rounded border border-black bg-gray-200 px-4 py-2 text-gray-800"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="rounded bg-blue-500 px-4 py-2 text-white"
+                className="rounded border border-black bg-blue-500 px-4 py-2 text-white"
               >
                 Submit
               </button>
