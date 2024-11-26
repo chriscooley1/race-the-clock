@@ -99,9 +99,6 @@ const NameGenerator: React.FC = () => {
     import.meta.env.VITE_API_BASE_URL ||
     "https://race-the-clock-backend-production.up.railway.app";
 
-  console.log("API_URL:", API_URL); // Log to verify the URL being used
-  console.log("Environment Variables:", import.meta.env);
-
   const loadNameList = useCallback(async () => {
     try {
       const token = await getAccessTokenSilently();
@@ -282,7 +279,7 @@ const NameGenerator: React.FC = () => {
             <button
               type="button"
               onClick={handleSpin}
-              className="spin-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-4 max-w-md rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+              className="spin-button border border-black bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-4 max-w-md rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
             >
               Spin the Wheel
             </button>
@@ -316,14 +313,14 @@ const NameGenerator: React.FC = () => {
                 value={nameInput}
                 onChange={(e) => setNameInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className={`font-teacher mr-2 rounded border border-current ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"} p-2 text-center text-base`}
+                className={`font-teacher mr-2 rounded border border-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"} p-2 text-center text-base`}
                 placeholder="Enter a name"
               />
               {visibilityStates.isAddNameButtonVisible && (
                 <button
                   type="button"
                   onClick={handleAddName}
-                  className="add-name-button bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+                  className="add-name-button border border-black bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
                 >
                   Add
                 </button>
@@ -355,7 +352,7 @@ const NameGenerator: React.FC = () => {
       {/* Toggle button (always visible) */}
       <button
         type="button"
-        className="bg-light-blue hover:bg-hover-blue active:bg-active-blue fixed right-4 top-[70px] rounded-full p-4 font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
+        className="border border-black bg-light-blue hover:bg-hover-blue active:bg-active-blue fixed right-4 top-[70px] rounded-full p-4 font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
         onClick={handleToggleRightSide}
       >
         {showRightSide ? "-" : "+"}
@@ -375,7 +372,7 @@ const NameGenerator: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
