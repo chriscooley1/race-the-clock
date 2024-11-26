@@ -171,8 +171,10 @@ const Settings: React.FC = () => {
 
   const handleColorThemeChange = (color: ColorScheme) => {
     setTheme((prevTheme) => {
-      const newDisplayTextColor =
-        getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+      const newDisplayTextColor = color.backgroundColor.toLowerCase() === "#000000" 
+        ? "#FFFFFF" 
+        : getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+
       const newTheme = {
         ...color,
         isColorblindMode: prevTheme.isColorblindMode,
@@ -227,6 +229,19 @@ const Settings: React.FC = () => {
       steps,
     });
   }, [isTourRunning, currentTourStep, steps]);
+
+  const isColorDisabled = (color: string) => {
+    // Special case for black (#000000) - always allow it
+    if (color.toLowerCase() === "#000000") {
+      return false;
+    }
+    
+    return (
+      theme.displayTextColor === color ||
+      theme.backgroundColor === color ||
+      theme.displayBackgroundColor === color
+    );
+  };
 
   return (
     <div
@@ -354,14 +369,23 @@ const Settings: React.FC = () => {
             {colorOptions.map((color) => (
               <div
                 key={color.name}
-                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""}`}
-                style={{ backgroundColor: color.value }}
+                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 
+                  ${theme.name === color.name ? "border-4 border-black" : ""}
+                  ${isColorDisabled(color.value) ? "opacity-50 cursor-not-allowed" : ""}`}
+                style={{ 
+                  backgroundColor: color.value,
+                  ...(theme.name === color.name && color.value.toLowerCase() === "#000000" 
+                    ? { backgroundColor: "#404040" } 
+                    : {})
+                }}
                 onClick={() => {
-                  const newTheme = colorSchemes.find(
-                    (scheme) => scheme.name === color.name,
-                  );
-                  if (newTheme) {
-                    handleColorThemeChange(newTheme); // Use the handleColorThemeChange function
+                  if (!isColorDisabled(color.value)) {
+                    const newTheme = colorSchemes.find(
+                      (scheme) => scheme.name === color.name,
+                    );
+                    if (newTheme) {
+                      handleColorThemeChange(newTheme);
+                    }
                   }
                 }}
               />
@@ -377,9 +401,15 @@ const Settings: React.FC = () => {
             {colorOptions.map((color) => (
               <div
                 key={color.name}
-                className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}`}
+                className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 
+                  ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}
+                  ${isColorDisabled(color.value) ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={{ backgroundColor: color.value }}
-                onClick={() => handleTextColorChange(color.value)}
+                onClick={() => {
+                  if (!isColorDisabled(color.value)) {
+                    handleTextColorChange(color.value);
+                  }
+                }}
               />
             ))}
           </div>
