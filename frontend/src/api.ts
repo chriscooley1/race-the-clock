@@ -471,12 +471,18 @@ export const subscribeToCollection = async (
   }
 };
 
-export const searchPublicCollections = async (query: string) => {
+export const searchPublicCollections = async (
+  query: string,
+  searchType: "name" | "creator" = "name",
+) => {
   try {
     const response = await axios.get<Collection[]>(
       `${API_BASE_URL}/collections/search`,
       {
-        params: { query },
+        params: { 
+          query,
+          searchType 
+        },
       },
     );
     return response.data;
