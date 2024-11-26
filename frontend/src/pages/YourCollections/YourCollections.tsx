@@ -738,7 +738,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
             </p>
             <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
               Category:{" "}
-              <span className={`ml-2 inline-block rounded-full px-3 py-1 text-white ${getCategoryColor(collection.category)}`}>
+              <span className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${getCategoryColor(collection.category)}`}>
                 {collection.category}
               </span>
             </p>

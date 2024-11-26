@@ -370,7 +370,7 @@ const DiscoverCollections: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
@@ -419,7 +419,7 @@ const DiscoverCollections: React.FC = () => {
                           </p>
                           <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
                             Category:{" "}
-                            <span className={`ml-2 inline-block rounded-full px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
+                            <span className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
                               {collection.category}
                             </span>
                           </p>
