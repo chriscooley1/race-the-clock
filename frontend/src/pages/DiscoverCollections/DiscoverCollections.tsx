@@ -321,7 +321,7 @@ const DiscoverCollections: React.FC = () => {
           <select
             value={searchType}
             onChange={(e) => setSearchType(e.target.value as 'name' | 'creator')}
-            className={`rounded-md border border-gray-300 p-2 ${
+            className={`rounded-md border border-black p-2 ${
               theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"
             }`}
             aria-label="Search type selector"
@@ -335,12 +335,12 @@ const DiscoverCollections: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={`Search by ${searchType === 'name' ? 'collection name' : 'creator'}`}
-            className={`search-collections-input rounded-md border border-gray-300 p-2`}
+            className={`search-collections-input rounded-md border border-black p-2`}
           />
           <button
             type="button"
             onClick={handleSearch}
-            className="search-collections-button rounded-md bg-green-500 px-4 py-2 font-bold text-white"
+            className="search-collections-button rounded-md border border-black bg-green-500 px-4 py-2 font-bold text-white"
           >
             Search
           </button>
@@ -355,7 +355,7 @@ const DiscoverCollections: React.FC = () => {
             id="sortSelect"
             value={sortOption}
             onChange={handleSortChange}
-            className={`sort-collections-select rounded-md border border-gray-300 p-2 ${
+            className={`sort-collections-select rounded-md border border-black p-2 ${
               theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"
             }`}
             aria-label="Sort collections"
@@ -370,7 +370,7 @@ const DiscoverCollections: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
