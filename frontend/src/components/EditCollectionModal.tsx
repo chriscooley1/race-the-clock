@@ -111,14 +111,14 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
         <h1 className="mb-4 text-xl font-bold sm:mb-6 sm:text-2xl">
           Edit Collection
         </h1>
-        <div className="mb-4">
+        <div className="mb-4 flex flex-col items-center justify-center">
           <label htmlFor="collectionName" className="mb-2 block">
             Collection Name
           </label>
           <input
             type="text"
             id="collectionName"
-            className="w-full rounded border border-gray-300 bg-white p-2 text-center text-black"
+            className="w-full rounded border border-black bg-white p-2 text-center text-black"
             value={editedCollectionName}
             onChange={(e) => setEditedCollectionName(e.target.value)}
             title="Collection Name"
@@ -142,7 +142,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
           </p>
           <button
             type="button"
-            className="flex size-10 items-center justify-center rounded-full bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+            className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
             onClick={handleAddItem}
           >
             +
@@ -159,7 +159,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
                   <input
                     type="text"
                     id={`item-${index}`}
-                    className="w-full rounded-l border border-gray-300 bg-white p-2 text-center text-black"
+                    className="w-full rounded-l border border-black bg-white p-2 text-center text-black"
                     value={item.name}
                     onChange={(e) => handleChangeItem(index, e.target.value)}
                     placeholder={`Enter item ${index + 1}`}
@@ -167,7 +167,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
                   />
                   <button
                     type="button"
-                    className="flex size-[42px] items-center justify-center rounded-r bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600"
+                    className="flex size-[42px] items-center justify-center rounded-r border border-black bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600"
                     onClick={() => handleRemoveItem(index)}
                   >
                     &times;
@@ -180,14 +180,14 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
         <div className="mt-6 flex w-full justify-around">
           <button
             type="button"
-            className="rounded bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+            className="rounded border border-black bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
             onClick={handleSave}
           >
             Save Collection
           </button>
           <button
             type="button"
-            className="rounded bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600"
+            className="rounded border border-black bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600"
             onClick={onClose}
           >
             Cancel
