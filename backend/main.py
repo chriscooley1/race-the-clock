@@ -6,7 +6,7 @@ from models import User, Sequence, SequenceCreate, Collection, CollectionCreate,
 from jose import jwt, jwk
 from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError, JWTError
 from datetime import datetime, timedelta
-from typing import List, Optional
+from typing import List, Optional, Dict
 import logging
 import os
 from passlib.context import CryptContext
@@ -603,6 +603,29 @@ logger.handlers = []  # Clear any existing handlers
 handler = logging.StreamHandler()
 handler.setFormatter(MountainTimeFormatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
 logger.addHandler(handler)
+
+class CollectionIdsRequest(BaseModel):
+    collection_ids: List[int]
+
+@app.post("/collections/check-subscriptions-batch", response_model=Dict[str, bool])
+async def check_subscriptions_batch(
+    request: CollectionIdsRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    try:
+        subscriptions = db.query(Collection).filter(
+            Collection.user_id == current_user.user_id,
+            Collection.collection_id.in_(request.collection_ids)
+        ).all()
+        
+        return {
+            str(collection.collection_id): True 
+            for collection in subscriptions
+        }
+    except Exception as e:
+        logger.error(f"Error checking subscriptions batch: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error checking subscriptions")
 
 if __name__ == "__main__":
     init_db()

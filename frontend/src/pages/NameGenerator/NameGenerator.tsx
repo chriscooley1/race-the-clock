@@ -351,7 +351,7 @@ const NameGenerator: React.FC = () => {
       {/* Toggle button (always visible) */}
       <button
         type="button"
-        className="border border-black bg-light-blue hover:bg-hover-blue active:bg-active-blue fixed right-4 top-[70px] rounded-full p-4 font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
+        className="fixed right-4 top-[70px] flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
         onClick={handleToggleRightSide}
       >
         {showRightSide ? "-" : "+"}

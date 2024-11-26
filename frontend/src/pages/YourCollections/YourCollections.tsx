@@ -513,8 +513,8 @@ const YourCollections: React.FC = () => {
                 onClick={() => navigate("/new-collection")}
                 className="collection-card flex min-w-[375px] cursor-pointer flex-col items-center justify-center rounded-lg border-4 border-dashed border-gray-300 p-4 transition-all duration-300 hover:border-blue-500 hover:bg-gray-50"
               >
-                <div className="mb-4 rounded-full bg-gray-100 p-4">
-                  <svg className="size-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="mb-4 rounded-full border border-black bg-green-500 p-4">
+                  <svg className="size-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                   </svg>
                 </div>
