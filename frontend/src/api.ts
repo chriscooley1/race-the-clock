@@ -613,3 +613,29 @@ export const submitFeedback = async (
     throw new Error("Failed to submit feedback. Please try again.");
   }
 };
+
+export const checkSubscriptionsBatch = async (
+  collectionIds: number[],
+  getAccessTokenSilently: () => Promise<string>
+): Promise<Record<string, boolean>> => {
+  try {
+    const token = await getAccessTokenSilently();
+    console.log("Sending batch check request for collections:", collectionIds);
+    const response = await axios.post(
+      `${API_BASE_URL}/collections/check-subscriptions-batch`,
+      { collection_ids: collectionIds }, // Wrap in an object
+      {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+      }
+    );
+    console.log("Batch check response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error in batch subscription check:", error);
+    handleApiError(error);
+    return {};
+  }
+};
