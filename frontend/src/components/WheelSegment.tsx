@@ -31,7 +31,7 @@ const WheelSegment: React.FC<WheelSegmentProps> = ({
       <button
         type="button"
         onClick={onRemove}
-        className="rounded bg-red-500 px-2 py-1 text-white transition duration-300 hover:bg-red-600"
+        className="rounded border border-black bg-red-500 px-2 py-1 text-white transition duration-300 hover:bg-red-600"
       >
         Remove
       </button>
