@@ -130,7 +130,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   const val = e.target.value;
                   setMinutes(val === "" ? "" : parseInt(val) || 0);
                 }}
-                className="w-20 rounded border border-gray-300 p-1 text-sm"
+                className="w-20 rounded border border-black p-1 text-sm"
                 placeholder="Min"
                 title="Minutes"
                 min={0}
@@ -148,7 +148,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   const val = e.target.value;
                   setSeconds(val === "" ? "" : parseFloat(val) || 0);
                 }}
-                className="w-20 rounded border border-gray-300 p-1 text-sm"
+                className="w-20 rounded border border-black p-1 text-sm"
                 placeholder="Sec"
                 title="Seconds"
                 min={0}
@@ -187,7 +187,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 onChange={(e) =>
                   setAnswerDisplayTime(parseInt(e.target.value) || 3)
                 }
-                className="w-20 rounded border border-gray-300 p-1 text-sm"
+                className="w-20 rounded border border-black p-1 text-sm"
                 placeholder="Seconds"
                 title="Answer Display Time"
                 min={1}
@@ -208,7 +208,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   setTimerSeconds(0); // Reset timer seconds when switching to timer
                 }
               }}
-              className="rounded border border-gray-300 p-1 text-sm"
+              className="rounded border border-black p-1 text-sm"
             >
               <option value="collection">End on Collection</option>
               <option value="timer">End on Timer</option>
@@ -230,7 +230,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   onChange={(e) =>
                     setTimerMinutes(parseInt(e.target.value) || 0)
                   }
-                  className="w-20 rounded border border-gray-300 p-1 text-sm"
+                  className="w-20 rounded border border-black p-1 text-sm"
                   placeholder="Min"
                   title="Timer Minutes"
                   min={0}
@@ -242,7 +242,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   onChange={(e) =>
                     setTimerSeconds(parseInt(e.target.value) || 0)
                   }
-                  className="w-20 rounded border border-gray-300 p-1 text-sm"
+                  className="w-20 rounded border border-black p-1 text-sm"
                   placeholder="Sec"
                   title="Timer Seconds"
                   min={0}
@@ -253,7 +253,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
           )}
           <button
             type="button"
-            className="rounded bg-green-500 px-4 py-2 text-sm font-bold text-white transition duration-300 hover:bg-green-600"
+            className="rounded border border-black bg-green-500 px-4 py-2 text-sm font-bold text-white transition duration-300 hover:bg-green-600"
             onClick={handleStartClick}
           >
             Start Session
