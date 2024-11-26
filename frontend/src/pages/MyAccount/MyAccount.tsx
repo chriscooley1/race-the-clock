@@ -102,14 +102,14 @@ const MyAccount: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen flex-col items-center justify-center px-4 py-8 ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} my-account mt-4`}
+      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4 py-8 md:ml-[250px]"
       style={{
         color: theme.originalTextColor,
         backgroundColor: theme.backgroundColor,
       }}
     >
       <div
-        className={`w-full max-w-md rounded-lg p-16 shadow-md`}
+        className="w-full max-w-md rounded-lg p-8 shadow-md"
         style={{
           backgroundColor: theme.backgroundColor,
           color: theme.originalTextColor,
@@ -157,7 +157,7 @@ const MyAccount: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
       >
         Give Feedback
       </button>

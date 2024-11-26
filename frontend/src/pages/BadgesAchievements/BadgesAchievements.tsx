@@ -82,10 +82,12 @@ const BadgesAchievements: React.FC = () => {
 
   return (
     <div
-      className={`badges-achievements flex min-h-screen w-full flex-col items-center px-4 pt-[50px] ${
-        theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-      } mt-4`}
-      style={{ color: theme.originalTextColor }}
+      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4 py-8 md:ml-[250px]"
+      style={{
+        color: theme.originalTextColor,
+        backgroundColor: theme.backgroundColor,
+        marginTop: "65px", // Account for navbar height
+      }}
     >
       <h1 className="mb-8 text-3xl font-bold">Badges & Achievements</h1>
       <p>
