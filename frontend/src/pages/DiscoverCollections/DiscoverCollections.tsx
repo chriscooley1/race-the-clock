@@ -391,44 +391,54 @@ const DiscoverCollections: React.FC = () => {
               return (
                 <div
                   key={collection.collection_id}
-                  className="flex flex-col items-center justify-start rounded-lg border border-gray-300 p-4"
-                  style={{ backgroundColor: lightColor }}
+                  className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
+                  style={{ backgroundColor: "white" }}
                 >
-                  <h2
-                    className="mb-2 w-full rounded-md p-2 text-center text-lg font-bold text-black"
-                    style={{ backgroundColor: baseColor }}
-                  >
-                    {collection.name}
-                  </h2>
-                  <p
-                    className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
-                  >
-                    Created by:{" "}
-                    {collection.creator_display_name || collection.creator_username || "Anonymous"}
-                  </p>
-                  <p
-                    className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
-                  >
-                    Category: 
-                    <span className={`ml-2 inline-block rounded-full px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
-                      {collection.category}
-                    </span>
-                  </p>
-                  <p
-                    className={`mb-2 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
-                  >
-                    {itemCount} items in collection
-                  </p>
-                  <button
-                    type="button"
-                    className="preview-collection-button rounded-md px-4 py-2 text-sm font-bold text-black transition duration-300 hover:scale-105 active:scale-95"
-                    style={{ backgroundColor: baseColor }}
-                    onClick={() => openModal(collection)}
-                  >
-                    {subscriptionStatus[collection.collection_id]
-                      ? "Already Subscribed"
-                      : "Preview Collection"}
-                  </button>
+                  <div className="flex h-full w-full flex-col">
+                    <h2
+                      className="border-5 w-full rounded-t-lg border-b-0 border-black p-2.5 text-center text-xl font-bold text-black"
+                      style={{ backgroundColor: baseColor }}
+                    >
+                      {collection.name}
+                    </h2>
+                    <div
+                      className="border-5 flex h-full w-full flex-col rounded-b-lg border-black"
+                      style={{ 
+                        backgroundColor: lightColor,
+                        transition: "background-color 0.3s ease"
+                      }}
+                    >
+                      <div className="flex h-full w-full flex-col p-4">
+                        <div className="mb-auto text-center">
+                          <p className="mb-1 text-base font-bold text-black">
+                            {itemCount} {itemCount === 1 ? "item" : "items"} in collection
+                          </p>
+                          <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+                            Created by:{" "}
+                            {collection.creator_display_name || collection.creator_username || "Anonymous"}
+                          </p>
+                          <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+                            Category:{" "}
+                            <span className={`ml-2 inline-block rounded-full px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
+                              {collection.category}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="mt-auto pt-4">
+                          <button
+                            type="button"
+                            className="preview-collection-button w-full cursor-pointer rounded-lg border-4 border-black p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 active:scale-95"
+                            style={{ backgroundColor: baseColor }}
+                            onClick={() => openModal(collection)}
+                          >
+                            {subscriptionStatus[collection.collection_id]
+                              ? "Already Subscribed"
+                              : "Preview Collection"}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               );
             })}
