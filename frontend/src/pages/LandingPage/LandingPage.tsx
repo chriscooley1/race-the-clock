@@ -42,14 +42,14 @@ const LandingPage: React.FC = () => {
         <button
           type="button"
           onClick={handleSignup}
-          className="register-button bg-light-blue transition-background-transform hover:bg-hover-blue active:bg-active-blue mb-2.5 w-full cursor-pointer rounded border border-gray-300 py-2.5 text-sm font-bold uppercase text-black hover:scale-105 active:scale-95 sm:text-base"
+          className="register-button bg-light-blue transition-background-transform hover:bg-hover-blue active:bg-active-blue mb-2.5 w-full cursor-pointer rounded border border-black py-2.5 text-sm font-bold uppercase text-black hover:scale-105 active:scale-95 sm:text-base"
         >
           Register
         </button>
         <button
           type="button"
           onClick={handleLogin}
-          className="already-registered-button bg-light-blue transition-background-transform hover:bg-hover-blue active:bg-active-blue w-full cursor-pointer rounded border border-gray-300 py-2.5 text-sm font-bold uppercase text-black hover:scale-105 active:scale-95 sm:text-base"
+          className="already-registered-button bg-light-blue transition-background-transform hover:bg-hover-blue active:bg-active-blue w-full cursor-pointer rounded border border-black py-2.5 text-sm font-bold uppercase text-black hover:scale-105 active:scale-95 sm:text-base"
         >
           Already Registered
         </button>
@@ -58,7 +58,7 @@ const LandingPage: React.FC = () => {
       <button
         type="button"
         onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
         Give Feedback
       </button>
