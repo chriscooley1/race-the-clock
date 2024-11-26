@@ -132,8 +132,8 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
             disabled={isSubscribed}
             className={`rounded px-6 py-2 font-bold text-white transition-all ${
               isSubscribed
-                ? "cursor-not-allowed bg-gray-400"
-                : "bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
+                ? "cursor-not-allowed border border-black bg-gray-400"
+                : "border border-black bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
             }`}
           >
             {isSubscribed ? "Already Subscribed" : "Subscribe to Collection"}
@@ -141,7 +141,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="rounded bg-red-500 px-6 py-2 font-bold text-white hover:bg-red-600 active:bg-red-700"
+            className="rounded border border-black bg-red-500 px-6 py-2 font-bold text-white hover:bg-red-600 active:bg-red-700"
           >
             Close Preview
           </button>
