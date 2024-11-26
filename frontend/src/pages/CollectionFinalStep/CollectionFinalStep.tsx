@@ -440,7 +440,7 @@ const CollectionFinalStep: React.FC = () => {
       style={{ color: theme.originalTextColor }}
     >
       <h1 className="collection-final-step text-4xl font-bold">
-        Step 3 - Custom
+        Step 3 - Create Your Own Collection
       </h1>
       <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
       <p className="mb-4">
