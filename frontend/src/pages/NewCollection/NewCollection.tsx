@@ -139,7 +139,7 @@ const NewCollection: React.FC = () => {
         <h1 className="text-3xl font-bold">New Collection</h1>
 
         {visibilityStates.isCollectionNameVisible && (
-          <div className="mb-4 max-w-[300px]">
+          <div className="mb-4 max-w-[300px] border border-black">
             <input
               type="text"
               id="collectionName"
@@ -160,7 +160,7 @@ const NewCollection: React.FC = () => {
             </label>
             <select
               id="categorySelect"
-              className={`font-teacher w-full rounded border border-[var(--text-color)] p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+              className={`font-teacher w-full rounded border border-black p-2 text-center text-base ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
@@ -193,7 +193,7 @@ const NewCollection: React.FC = () => {
           <button
             type="button"
             onClick={handleNext}
-            className="submit-collection-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-gray-300 p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+            className="submit-collection-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-black p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
           >
             Next
           </button>
@@ -212,7 +212,7 @@ const NewCollection: React.FC = () => {
         <button
           type="button"
           onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
         >
           Give Feedback
         </button>
