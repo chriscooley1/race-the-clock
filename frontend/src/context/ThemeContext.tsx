@@ -68,58 +68,28 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       const savedTheme = localStorage.getItem("app-theme");
       if (savedTheme) {
         const parsedTheme = JSON.parse(savedTheme);
+        
+        // Ensure colorblind adjustments only happen when enabled
+        const displayTextColor = parsedTheme.isColorblindMode
+          ? adjustColor(parsedTheme.originalTextColor || parsedTheme.textColor, parsedTheme.colorblindType)
+          : parsedTheme.originalTextColor || parsedTheme.textColor;
+          
+        const displayBackgroundColor = parsedTheme.isColorblindMode
+          ? adjustColor(parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor, parsedTheme.colorblindType)
+          : parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor;
 
-        // Immediately set CSS variables for fonts
-        const cssFont = (font: string) => font.replace(/^["'](.+)["']$/, "$1");
-
-        document.documentElement.style.setProperty(
-          "--font-family",
-          cssFont(parsedTheme.font || '"KG What The Teacher Wants"'),
-        );
-        document.documentElement.style.setProperty(
-          "--heading-font-family",
-          cssFont(parsedTheme.headingFont || '"KG What The Teacher Wants"'),
-        );
-        document.documentElement.style.setProperty(
-          "--button-font-family",
-          cssFont(parsedTheme.buttonFont || '"KG What The Teacher Wants"'),
-        );
-
-        // Immediately set CSS variables
-        const currentBackgroundColor =
-          parsedTheme.displayBackgroundColor || parsedTheme.backgroundColor;
-        document.documentElement.style.setProperty(
-          "--background-color",
-          currentBackgroundColor,
-        );
-        document.documentElement.style.setProperty(
-          "--display-background-color",
-          currentBackgroundColor,
-        );
-
-        // Ensure we preserve the background and text colors
-        const themeWithColors = {
+        return {
           ...parsedTheme,
-          displayBackgroundColor:
-            parsedTheme.displayBackgroundColor || parsedTheme.backgroundColor,
-          displayTextColor:
-            parsedTheme.displayTextColor || parsedTheme.textColor,
-          originalBackgroundColor:
-            parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor,
-          originalTextColor:
-            parsedTheme.originalTextColor || parsedTheme.textColor,
+          displayTextColor,
+          displayBackgroundColor,
           adjustColorForColorblindness: (color: string) =>
-            parsedTheme.isColorblindMode
-              ? adjustColor(color, parsedTheme.colorblindType)
-              : color,
+            parsedTheme.isColorblindMode ? adjustColor(color, parsedTheme.colorblindType) : color,
         };
-
-        return themeWithColors;
       }
     } catch (error) {
       console.error("Error loading theme from localStorage:", error);
     }
-
+    
     // Default theme
     return {
       ...colorSchemes[2],
@@ -336,8 +306,15 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
         displayTextColor: adjustedTextColor,
         displayBackgroundColor: adjustedBackgroundColor,
       }));
+    } else {
+      // Ensure we reset to original colors when colorblind mode is off
+      setTheme((prevTheme) => ({
+        ...prevTheme,
+        displayTextColor: prevTheme.originalTextColor || prevTheme.textColor,
+        displayBackgroundColor: prevTheme.originalBackgroundColor || prevTheme.backgroundColor,
+      }));
     }
-  }, []); // Empty dependency array means this runs once on mount
+  }, [theme.isColorblindMode]); // Add dependency on colorblind mode
 
   // Modify the useEffect that handles theme changes
   useEffect(() => {
