@@ -103,7 +103,11 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (location.pathname === "/collection-setup") {
-      const state = location.state as { category?: string; type?: string; dotCountType?: string };
+      const state = location.state as {
+        category?: string;
+        type?: string;
+        dotCountType?: string;
+      };
       if (state) {
         setCategory(state.category || "default");
         setType(state.type || "default");
@@ -200,7 +204,7 @@ const App: React.FC = () => {
           visibilityStates,
           category,
           type,
-          dotCountType
+          dotCountType,
         );
       case "/collection-final-step":
         visibilityStates.isSaveButtonVisible = true;

@@ -28,7 +28,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
       const viewportHeight = window.innerHeight;
       const targetRect = target.getBoundingClientRect();
       const targetPosition = targetRect.top + window.scrollY;
-      
+
       // Calculate offset to position element in the middle of viewport
       const offset = viewportHeight / 3;
       const offsetPosition = targetPosition - offset;
@@ -37,7 +37,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
       setTimeout(() => {
         window.scrollTo({
           top: offsetPosition,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }, 100);
     }
@@ -47,7 +47,10 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
     const { status, index, action, type } = data;
 
     // Handle tour completion and closing
-    if (["finished", "skipped"].includes(status as string) || type === "tour:end") {
+    if (
+      ["finished", "skipped"].includes(status as string) ||
+      type === "tour:end"
+    ) {
       completeTour(tourName);
       onComplete();
       return;
@@ -82,7 +85,11 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
 
   // Initial scroll for the first step
   useEffect(() => {
-    if (isRunning && steps[currentStep] && typeof steps[currentStep].target === "string") {
+    if (
+      isRunning &&
+      steps[currentStep] &&
+      typeof steps[currentStep].target === "string"
+    ) {
       scrollToTarget(steps[currentStep].target);
     }
   }, [isRunning, currentStep, steps]);

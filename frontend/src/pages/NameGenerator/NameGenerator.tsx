@@ -277,7 +277,7 @@ const NameGenerator: React.FC = () => {
               <button
                 type="button"
                 onClick={handleSpin}
-                className="spin-button mt-4 max-w-md rounded border border-black bg-light-blue px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 hover:bg-hover-blue active:scale-95 active:bg-active-blue"
+                className="spin-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-4 max-w-md rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
               >
                 Spin the Wheel
               </button>
@@ -319,7 +319,7 @@ const NameGenerator: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleAddName}
-                  className="add-name-button border border-black bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+                  className="add-name-button bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
                 >
                   Add
                 </button>

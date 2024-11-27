@@ -68,14 +68,21 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       const savedTheme = localStorage.getItem("app-theme");
       if (savedTheme) {
         const parsedTheme = JSON.parse(savedTheme);
-        
+
         // Ensure colorblind adjustments only happen when enabled
         const displayTextColor = parsedTheme.isColorblindMode
-          ? adjustColor(parsedTheme.originalTextColor || parsedTheme.textColor, parsedTheme.colorblindType)
+          ? adjustColor(
+              parsedTheme.originalTextColor || parsedTheme.textColor,
+              parsedTheme.colorblindType,
+            )
           : parsedTheme.originalTextColor || parsedTheme.textColor;
-          
+
         const displayBackgroundColor = parsedTheme.isColorblindMode
-          ? adjustColor(parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor, parsedTheme.colorblindType)
+          ? adjustColor(
+              parsedTheme.originalBackgroundColor ||
+                parsedTheme.backgroundColor,
+              parsedTheme.colorblindType,
+            )
           : parsedTheme.originalBackgroundColor || parsedTheme.backgroundColor;
 
         return {
@@ -83,13 +90,15 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
           displayTextColor,
           displayBackgroundColor,
           adjustColorForColorblindness: (color: string) =>
-            parsedTheme.isColorblindMode ? adjustColor(color, parsedTheme.colorblindType) : color,
+            parsedTheme.isColorblindMode
+              ? adjustColor(color, parsedTheme.colorblindType)
+              : color,
         };
       }
     } catch (error) {
       console.error("Error loading theme from localStorage:", error);
     }
-    
+
     // Default theme
     return {
       ...colorSchemes[2],
@@ -311,7 +320,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       setTheme((prevTheme) => ({
         ...prevTheme,
         displayTextColor: prevTheme.originalTextColor || prevTheme.textColor,
-        displayBackgroundColor: prevTheme.originalBackgroundColor || prevTheme.backgroundColor,
+        displayBackgroundColor:
+          prevTheme.originalBackgroundColor || prevTheme.backgroundColor,
       }));
     }
   }, [theme.isColorblindMode]); // Add dependency on colorblind mode

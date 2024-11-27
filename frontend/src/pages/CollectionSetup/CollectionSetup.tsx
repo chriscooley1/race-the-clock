@@ -95,7 +95,7 @@ const CollectionSetup: React.FC = () => {
     visibilityStates,
     category,
     type,
-    dotCountType
+    dotCountType,
   );
 
   // Example of updating visibility states based on some condition
@@ -502,7 +502,8 @@ const CollectionSetup: React.FC = () => {
         <h2 className="text-2xl font-bold">Choose Your Collection Method:</h2>
         <div className="flex flex-col items-center space-y-4">
           <p className="text-center text-lg">
-            Stay on this page to generate random items, or click below to create custom items
+            Stay on this page to generate random items, or click below to create
+            custom items
           </p>
           <button
             type="button"
@@ -797,10 +798,7 @@ const CollectionSetup: React.FC = () => {
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {previewSequence.map((item, index) => (
-              <div
-                key={index}
-                className="rounded-md border border-black p-2"
-              >
+              <div key={index} className="rounded-md border border-black p-2">
                 <p className="text-center">{item.name}</p>
                 {item.svg && (
                   <img

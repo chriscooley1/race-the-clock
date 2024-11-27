@@ -478,8 +478,8 @@ const YourCollections: React.FC = () => {
   );
 
   useEffect(() => {
-    setVisibilityStates(prevState => ({
-      ...prevState,  // Preserve existing values
+    setVisibilityStates((prevState) => ({
+      ...prevState, // Preserve existing values
       isCollectionCardVisible: collections.length > 0,
       isStartCollectionButtonVisible: collections.length > 0,
       isEditCollectionButtonVisible: collections.length > 0,
@@ -491,7 +491,7 @@ const YourCollections: React.FC = () => {
   }, [collections, showModal, isEditModalOpen, isDuplicateModalOpen]);
 
   return (
-    <div className="your-collections-page min-h-screen p-4 pt-[175px] pl-[270px]">
+    <div className="your-collections-page min-h-screen p-4 pl-[270px] pt-[175px]">
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}
@@ -509,17 +509,31 @@ const YourCollections: React.FC = () => {
               ref={provided.innerRef}
               className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3"
             >
-              <div 
+              <div
                 onClick={() => navigate("/new-collection")}
                 className="collection-card flex min-w-[375px] cursor-pointer flex-col items-center justify-center rounded-lg border-4 border-dashed border-gray-300 p-4 transition-all duration-300 hover:border-blue-500 hover:bg-gray-50"
               >
                 <div className="mb-4 rounded-full border border-black bg-green-500 p-4">
-                  <svg className="size-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  <svg
+                    className="size-12 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-700">Create New Collection</h3>
-                <p className="mt-2 text-sm text-gray-500">Click to add a new collection</p>
+                <h3 className="text-xl font-bold text-gray-700">
+                  Create New Collection
+                </h3>
+                <p className="mt-2 text-sm text-gray-500">
+                  Click to add a new collection
+                </p>
               </div>
 
               {filteredCollections.map((collection, index) => (
@@ -541,8 +555,9 @@ const YourCollections: React.FC = () => {
                       <CollectionContent
                         collection={collection}
                         baseColor={adjustColorForTheme(
-                          collectionColorSchemes[index % collectionColorSchemes.length]
-                            .backgroundColor,
+                          collectionColorSchemes[
+                            index % collectionColorSchemes.length
+                          ].backgroundColor,
                         )}
                         handleStartCollection={handleStartCollection}
                         handleEditButtonClick={handleEditButtonClick}
@@ -605,7 +620,7 @@ const YourCollections: React.FC = () => {
                 value={selectedCollectionToDuplicate?.collection_id || ""}
                 onChange={(e) => {
                   const collection = collections.find(
-                    (col) => col.collection_id === Number(e.target.value)
+                    (col) => col.collection_id === Number(e.target.value),
                   );
                   setSelectedCollectionToDuplicate(collection || null);
                 }}
@@ -712,30 +727,36 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
   };
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex size-full flex-col">
       <h1
         className="border-5 w-full rounded-t-lg border-b-0 border-black p-2.5 text-center text-xl font-bold text-black"
         style={{ backgroundColor: baseColor }}
       >
         {collection.name}
       </h1>
-      <div 
-        className="border-5 flex h-full w-full flex-col rounded-b-lg border-black"
-        style={{ 
-          backgroundColor: baseColor ? lightenColor(baseColor, 0.7) : lightenColor("#FFFFFF", 0.7),
-          transition: "background-color 0.3s ease"
+      <div
+        className="border-5 flex size-full flex-col rounded-b-lg border-black"
+        style={{
+          backgroundColor: baseColor
+            ? lightenColor(baseColor, 0.7)
+            : lightenColor("#FFFFFF", 0.7),
+          transition: "background-color 0.3s ease",
         }}
       >
         {/* Content wrapper with padding */}
-        <div className="flex h-full w-full flex-col p-4">
+        <div className="flex size-full flex-col p-4">
           {/* Info section - added text-center to center all text */}
           <div className="mb-auto text-center">
             <p className="mb-1 text-base font-bold text-black">
               {itemCount} {itemCount === 1 ? "item" : "items"} in collection
             </p>
-            <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+            <p
+              className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
+            >
               Category:{" "}
-              <span className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${getCategoryColor(collection.category)}`}>
+              <span
+                className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${getCategoryColor(collection.category)}`}
+              >
                 {collection.category}
               </span>
             </p>
@@ -746,7 +767,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
 
           {/* Buttons section */}
           <div className="mt-auto pt-4">
-            <div className="flex justify-center mb-2.5">
+            <div className="mb-2.5 flex justify-center">
               <button
                 type="button"
                 className="start-collection-button w-2/3 cursor-pointer rounded-lg border-4 border-black bg-green-600 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"

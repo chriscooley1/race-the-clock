@@ -15,7 +15,10 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     textareaRef.current?.focus();
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
@@ -68,7 +71,10 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-      <div ref={modalRef} className="w-full max-w-md rounded-lg border border-black bg-white p-6">
+      <div
+        ref={modalRef}
+        className="w-full max-w-md rounded-lg border border-black bg-white p-6"
+      >
         <h2 className="mb-4 text-xl font-bold text-gray-800">Feedback</h2>
         {success ? (
           <p className="text-green-600">Thank you for your feedback!</p>

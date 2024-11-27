@@ -39,5 +39,5 @@ export const getDefaultVisibilityStates = (): VisibilityStates => ({
   isEditCollectionModalVisible: false,
   isDuplicateCollectionModalVisible: false,
   isCollectionPreviewModalVisible: false,
-  isNextButtonVisible: false
-}); 
+  isNextButtonVisible: false,
+});

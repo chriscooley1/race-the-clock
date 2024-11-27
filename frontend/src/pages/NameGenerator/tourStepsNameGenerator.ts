@@ -28,7 +28,8 @@ export const tourStepsNameGenerator = (
     },
     {
       target: "ul.list-none", // Updated selector to match the actual HTML
-      content: "Here are the names on the wheel. You can edit or remove names from this list.",
+      content:
+        "Here are the names on the wheel. You can edit or remove names from this list.",
       ...(visibilityStates.isNamesListVisible ? { isOpen: true } : {}),
     },
   ];
@@ -41,7 +42,8 @@ export const tourStepsNameGenerator = (
       return visibilityStates.isAddNameButtonVisible;
     if (step.target === ".spin-button")
       return visibilityStates.isSpinButtonVisible;
-    if (step.target === "ul.list-none")  // Updated selector here too
+    if (step.target === "ul.list-none")
+      // Updated selector here too
       return visibilityStates.isNamesListVisible;
     return true;
   });

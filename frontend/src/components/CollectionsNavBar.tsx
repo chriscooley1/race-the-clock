@@ -28,14 +28,15 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   ];
 
   const getCategoryButtonColor = (category: string) => {
-    const categoryColor = categoryColors[category as keyof typeof categoryColors];
+    const categoryColor =
+      categoryColors[category as keyof typeof categoryColors];
     return selectedCategory === category
       ? `${categoryColor} text-white border border-black`
       : `bg-gray-200 text-gray-700 hover:${categoryColor} hover:text-white border border-black dark:bg-gray-700 dark:text-gray-300 dark:hover:${categoryColor}`;
   };
 
   return (
-    <div className="fixed inset-x-0 top-[47px] z-40 mt-4 bg-heisenberg-blue shadow-md md:left-[250px] dark:bg-gray-800">
+    <div className="bg-heisenberg-blue fixed inset-x-0 top-[47px] z-40 mt-4 shadow-md md:left-[250px] dark:bg-gray-800">
       <div className="flex w-full flex-col px-4 py-2">
         <div className="mb-2 flex w-full overflow-x-auto">
           {categories.map((category) => (
@@ -44,7 +45,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
               key={category}
               onClick={() => onSelectCategory(category)}
               className={`mr-2 grow whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${getCategoryButtonColor(
-                category
+                category,
               )}`}
             >
               {category}

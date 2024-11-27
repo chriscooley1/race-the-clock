@@ -246,7 +246,7 @@ const CollectionFinalStep: React.FC = () => {
       const content = decoded.replace(/<\/?svg[^>]*>/g, "");
       return content;
     });
-    
+
     const combinedSvgContent = `
       <svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">
         <g>
@@ -254,13 +254,18 @@ const CollectionFinalStep: React.FC = () => {
         </g>
       </svg>
     `;
-    
+
     return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(combinedSvgContent.trim())}`;
   };
 
   const handleAddNumberSenseItem = () => {
     const svgs = dots.map((dot) => {
-      const svg = generateCountingSvg(dot.count, dot.color, dot.shape, dot.position);
+      const svg = generateCountingSvg(
+        dot.count,
+        dot.color,
+        dot.shape,
+        dot.position,
+      );
       console.log("Generated SVG:", svg);
       return svg;
     });
@@ -680,7 +685,8 @@ const CollectionFinalStep: React.FC = () => {
               <>
                 <div className="flex flex-col items-center">
                   <label htmlFor="new-item-input" className="mb-2 text-sm">
-                    Type your item below and click the + button to add it to your collection
+                    Type your item below and click the + button to add it to
+                    your collection
                   </label>
                   <div className="relative flex w-full items-center">
                     <input
@@ -689,7 +695,9 @@ const CollectionFinalStep: React.FC = () => {
                       value={newItem}
                       onChange={(e) => setNewItem(e.target.value)}
                       className={`font-teacher w-full rounded-md border border-black p-2 pr-24 ${
-                        theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"
+                        theme.isDarkMode
+                          ? "bg-gray-700 text-white"
+                          : "bg-white text-black"
                       }`}
                       placeholder={`Enter new ${
                         category === "Science"

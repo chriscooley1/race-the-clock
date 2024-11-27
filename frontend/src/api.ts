@@ -344,12 +344,12 @@ export const createCollectionFromForm = async (
 export const fetchPublicCollections = async () => {
   try {
     const response = await axios.get<Collection[]>(
-      `${API_BASE_URL}/collections/public`
+      `${API_BASE_URL}/collections/public`,
     );
-    
+
     // Log the response to verify creator information
     console.log("Fetched public collections:", response.data);
-    
+
     return response.data;
   } catch (error) {
     console.error("Error fetching public collections:", error);
@@ -491,9 +491,9 @@ export const searchPublicCollections = async (
     const response = await axios.get<Collection[]>(
       `${API_BASE_URL}/collections/search`,
       {
-        params: { 
+        params: {
           query,
-          searchType 
+          searchType,
         },
       },
     );
@@ -616,7 +616,7 @@ export const submitFeedback = async (
 
 export const checkSubscriptionsBatch = async (
   collectionIds: number[],
-  getAccessTokenSilently: () => Promise<string>
+  getAccessTokenSilently: () => Promise<string>,
 ): Promise<Record<string, boolean>> => {
   try {
     const token = await getAccessTokenSilently();
@@ -625,11 +625,11 @@ export const checkSubscriptionsBatch = async (
       `${API_BASE_URL}/collections/check-subscriptions-batch`,
       { collection_ids: collectionIds }, // Wrap in an object
       {
-        headers: { 
+        headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-      }
+      },
     );
     console.log("Batch check response:", response.data);
     return response.data;

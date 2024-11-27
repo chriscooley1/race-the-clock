@@ -167,7 +167,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
                   />
                   <button
                     type="button"
-                    className="flex size-[42px] items-center justify-center rounded-lg border border-black bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600 ml-8"
+                    className="ml-8 flex size-[42px] items-center justify-center rounded-lg border border-black bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600"
                     onClick={() => handleRemoveItem(index)}
                   >
                     &times;

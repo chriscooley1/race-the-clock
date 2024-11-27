@@ -172,9 +172,12 @@ const Settings: React.FC = () => {
 
   const handleColorThemeChange = (color: ColorScheme) => {
     setTheme((prevTheme) => {
-      const newDisplayTextColor = color.backgroundColor.toLowerCase() === "#000000" 
-        ? "#FFFFFF" 
-        : getLuminance(color.backgroundColor) < 0.5 ? "#FFFFFF" : "#000000";
+      const newDisplayTextColor =
+        color.backgroundColor.toLowerCase() === "#000000"
+          ? "#FFFFFF"
+          : getLuminance(color.backgroundColor) < 0.5
+            ? "#FFFFFF"
+            : "#000000";
 
       const newTheme = {
         ...color,
@@ -236,7 +239,7 @@ const Settings: React.FC = () => {
     if (color.toLowerCase() === "#000000") {
       return false;
     }
-    
+
     return (
       theme.displayTextColor === color ||
       theme.backgroundColor === color ||
@@ -390,14 +393,13 @@ const Settings: React.FC = () => {
             {getAdjustedColorOptions().map((color) => (
               <div
                 key={color.name}
-                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 
-                  ${theme.name === color.name ? "border-4 border-black" : ""}
-                  ${isColorDisabled(color.adjustedValue) ? "opacity-50 cursor-not-allowed" : ""}`}
-                style={{ 
+                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""} ${isColorDisabled(color.adjustedValue) ? "cursor-not-allowed opacity-50" : ""}`}
+                style={{
                   backgroundColor: color.adjustedValue,
-                  ...(theme.name === color.name && color.adjustedValue.toLowerCase() === "#000000" 
-                    ? { backgroundColor: "#404040" } 
-                    : {})
+                  ...(theme.name === color.name &&
+                  color.adjustedValue.toLowerCase() === "#000000"
+                    ? { backgroundColor: "#404040" }
+                    : {}),
                 }}
                 onClick={() => {
                   if (!isColorDisabled(color.adjustedValue)) {
@@ -422,9 +424,7 @@ const Settings: React.FC = () => {
             {getAdjustedTextColorOptions().map((color) => (
               <div
                 key={color.name}
-                className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 
-                  ${theme.displayTextColor === color.adjustedValue ? "border-4 border-black" : ""}
-                  ${isColorDisabled(color.adjustedValue) ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.displayTextColor === color.adjustedValue ? "border-4 border-black" : ""} ${isColorDisabled(color.adjustedValue) ? "cursor-not-allowed opacity-50" : ""}`}
                 style={{ backgroundColor: color.adjustedValue }}
                 onClick={() => {
                   if (!isColorDisabled(color.adjustedValue)) {
