@@ -81,6 +81,12 @@ const parseDescription = (
   }
 };
 
+declare global {
+  interface Window {
+    savePreferenceTimeout: ReturnType<typeof setTimeout> | null;
+  }
+}
+
 const YourCollections: React.FC = () => {
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [collections, setCollections] = useState<Collection[]>([]);
@@ -445,29 +451,34 @@ const YourCollections: React.FC = () => {
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination || sortOption !== "custom") {
-      // If there's no destination or the sort mode is not "custom", do nothing
       return;
     }
 
-    // Perform reordering in "custom" sort mode
-    const updatedCollections = Array.from(filteredCollections);
-    const [reorderedItem] = updatedCollections.splice(result.source.index, 1);
-    updatedCollections.splice(result.destination.index, 0, reorderedItem);
+    const { source, destination } = result;
 
-    // Update state with new order
-    setFilteredCollections(updatedCollections);
-    setCollections((prevCollections) =>
-      prevCollections.map(
-        (col) =>
-          updatedCollections.find(
-            (item) => item.collection_id === col.collection_id,
-          ) || col,
-      ),
-    );
+    const newFilteredCollections = Array.from(filteredCollections);
+    const [movedItem] = newFilteredCollections.splice(source.index, 1);
+    newFilteredCollections.splice(destination.index, 0, movedItem);
 
-    // Save the "custom" sort preference in localStorage
-    setSortOption("custom");
-    localStorage.setItem("sortPreference", "custom");
+    setFilteredCollections(newFilteredCollections);
+
+    setCollections((prevCollections) => {
+      const collectionOrder = new Map(
+        newFilteredCollections.map((col) => [col.collection_id, col])
+      );
+
+      return prevCollections.map((col) =>
+        collectionOrder.get(col.collection_id) || col
+      );
+    });
+
+    if (window.savePreferenceTimeout) {
+      clearTimeout(window.savePreferenceTimeout);
+    }
+    window.savePreferenceTimeout = setTimeout(() => {
+      localStorage.setItem("sortPreference", "custom");
+      window.savePreferenceTimeout = null;
+    }, 500);
   };
 
   const adjustColorForTheme = useCallback(
@@ -550,6 +561,7 @@ const YourCollections: React.FC = () => {
                       className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
                       style={{
                         backgroundColor: "white",
+                        ...provided.draggableProps.style,
                       }}
                     >
                       <CollectionContent
@@ -557,7 +569,7 @@ const YourCollections: React.FC = () => {
                         baseColor={adjustColorForTheme(
                           collectionColorSchemes[
                             index % collectionColorSchemes.length
-                          ].backgroundColor,
+                          ].backgroundColor
                         )}
                         handleStartCollection={handleStartCollection}
                         handleEditButtonClick={handleEditButtonClick}
