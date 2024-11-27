@@ -104,7 +104,10 @@ class Collection(SQLModel, table=True):
     creator_display_name: Optional[str] = None
     creator_username: Optional[str] = None
     user: User = Relationship(back_populates="collections")
-    items: List["Item"] = Relationship(back_populates="collection")
+    items: List["Item"] = Relationship(
+        back_populates="collection",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+    )
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class CollectionCreate(SQLModel):
@@ -131,6 +134,7 @@ class Item(ItemBase, table=True):
     item_id: Optional[int] = Field(default=None, primary_key=True)
     collection_id: int = Field(foreign_key="collections.collection_id")
     collection: "Collection" = Relationship(back_populates="items")
+    count: Optional[int] = Field(default=1)
 
 class ItemCreate(ItemBase):
     pass

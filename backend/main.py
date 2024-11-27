@@ -21,6 +21,7 @@ from dotenv import load_dotenv
 import pytz
 from pydantic import BaseModel
 from github_integration import GitHubIssueCreator
+import json
 
 from database import get_db, get_engine
 
@@ -217,7 +218,6 @@ async def create_collection(
     db: Session = Depends(get_db), 
     current_user: User = Depends(get_current_user)
 ):
-    # Get the current time in Mountain Time
     mst_time = datetime.now(TIMEZONE)
     
     db_collection = Collection(
@@ -225,13 +225,28 @@ async def create_collection(
         description=collection.description,
         status=collection.status or "private",  
         category=collection.category,
-        # stage=collection.stage,  # Keep this line commented out for future use
         user_id=current_user.user_id,
-        created_at=mst_time  # Set the created_at time to Mountain Time
+        created_at=mst_time
     )
     db.add(db_collection)
     db.commit()
     db.refresh(db_collection)
+
+    # Parse the collection data from the description field
+    try:
+        items_data = json.loads(collection.description)
+        for item_data in items_data:
+            db_item = Item(
+                name=item_data["name"],
+                collection_id=db_collection.collection_id,
+                count=item_data.get("count", 1)  # Default to 1 if count is not provided
+            )
+            db.add(db_item)
+        db.commit()
+    except json.JSONDecodeError:
+        logger.error("Failed to parse collection items data")
+        raise HTTPException(status_code=400, detail="Invalid items data format")
+
     return db_collection
 
 @app.get("/users/me/collections", response_model=List[CollectionRead])
@@ -265,13 +280,32 @@ async def update_collection(
     return db_collection
 
 @app.delete("/collections/{collection_id}")
-async def delete_collection(collection_id: int, db: Session = Depends(get_db)):
-    db_collection = db.get(Collection, collection_id)
+async def delete_collection(
+    collection_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    # First verify the collection exists and belongs to the user
+    db_collection = db.query(Collection).filter(
+        Collection.collection_id == collection_id,
+        Collection.user_id == current_user.user_id
+    ).first()
+    
     if not db_collection:
         raise HTTPException(status_code=404, detail="Collection not found")
-    db.delete(db_collection)
-    db.commit()
-    return {"detail": "Collection deleted successfully"}
+
+    try:
+        # First delete all items associated with this collection
+        db.query(Item).filter(Item.collection_id == collection_id).delete()
+        
+        # Then delete the collection itself
+        db.delete(db_collection)
+        db.commit()
+        return {"detail": "Collection deleted successfully"}
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error deleting collection: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to delete collection")
 
 @app.get("/collections/public", response_model=List[CollectionRead])
 async def get_public_collections(db: Session = Depends(get_db)):
