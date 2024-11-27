@@ -122,7 +122,9 @@ const config: Config = {
   },
   safelist: [
     ...colorSchemes.map((scheme) => `bg-[${scheme.backgroundColor}]`),
-    ...colorSchemes.map((scheme) => `bg-[${lightenColor(scheme.backgroundColor, 0.7)}]`),
+    ...colorSchemes.map(
+      (scheme) => `bg-[${lightenColor(scheme.backgroundColor, 0.7)}]`,
+    ),
     ...colorSchemes.map((scheme) => `text-[${scheme.textColor}]`),
     // Add the custom classes to the safelist
     "font-teacher",
@@ -158,7 +160,7 @@ const config: Config = {
     "dark:hover:bg-green-500",
     "dark:hover:bg-purple-500",
     "dark:hover:bg-yellow-500",
-    "dark:hover:bg-red-500"
+    "dark:hover:bg-red-500",
   ],
   plugins: [],
 };

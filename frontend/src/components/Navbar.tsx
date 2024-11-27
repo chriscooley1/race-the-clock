@@ -169,7 +169,7 @@ const Navbar: React.FC<NavbarProps> = ({
           visibilityStates,
           "default",
           "default",
-          "fixed"
+          "fixed",
         );
         tourName = "collectionSetup";
         break;
@@ -246,7 +246,7 @@ const Navbar: React.FC<NavbarProps> = ({
         {(location.pathname === "/fullscreen-display" || hasBackButton) && (
           <button
             type="button"
-            className="border border-black bg-custom-red hover:bg-custom-red-dark rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
+            className="bg-custom-red hover:bg-custom-red-dark rounded border border-black px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
             onClick={onBack || handleBack}
           >
             Back
@@ -255,7 +255,7 @@ const Navbar: React.FC<NavbarProps> = ({
         {location.pathname === "/fullscreen-display" && onPauseResume && (
           <button
             type="button"
-            className="border border-black bg-custom-green hover:bg-custom-green-dark rounded px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
+            className="bg-custom-green hover:bg-custom-green-dark rounded border border-black px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
             onClick={onPauseResume}
           >
             {isPaused ? "Resume" : "Pause"}

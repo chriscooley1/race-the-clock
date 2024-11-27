@@ -5,14 +5,14 @@ export const tourStepsCollectionSetup = (
   visibilityStates: VisibilityStates,
   category: string,
   type: string,
-  dotCountType?: string
+  dotCountType?: string,
 ): Step[] => {
   const steps: Step[] = [
     {
       target: ".collection-setup",
       content: "Set up your collection here. Fill in the necessary details.",
       disableBeacon: true,
-    }
+    },
   ];
 
   // Add category-specific steps
@@ -41,7 +41,7 @@ export const tourStepsCollectionSetup = (
           target: "#maxDots",
           content: "Set the maximum number of dots for random generation.",
           ...(visibilityStates.isMaxDotsVisible ? { isOpen: true } : {}),
-        }
+        },
       );
     }
 
@@ -56,11 +56,13 @@ export const tourStepsCollectionSetup = (
         target: "#dot-shape",
         content: "Choose the shape for your dots.",
         ...(visibilityStates.isDotShapeVisible ? { isOpen: true } : {}),
-      }
+      },
     );
   } else {
     // Non-Number Sense steps
-    if (!["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(type)) {
+    if (
+      !["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(type)
+    ) {
       steps.push({
         target: "#itemCount",
         content: "Specify the quantity of items you want to generate.",
@@ -74,13 +76,17 @@ export const tourStepsCollectionSetup = (
     {
       target: "#collectionItemCount",
       content: "Define how many items will be included in the collection.",
-      ...(visibilityStates.isCollectionItemCountVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isCollectionItemCountVisible
+        ? { isOpen: true }
+        : {}),
     },
     {
       target: ".generate-random-sequence-button",
       content: "Click here to generate a random sequence of items.",
-      ...(visibilityStates.isGenerateRandomSequenceButtonVisible ? { isOpen: true } : {}),
-    }
+      ...(visibilityStates.isGenerateRandomSequenceButtonVisible
+        ? { isOpen: true }
+        : {}),
+    },
   );
 
   // Add preview and action steps if sequence is generated
@@ -88,7 +94,9 @@ export const tourStepsCollectionSetup = (
     steps.push({
       target: ".generated-sequence-preview",
       content: "Preview your generated sequence here.",
-      ...(visibilityStates.isGeneratedSequencePreviewVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isGeneratedSequencePreviewVisible
+        ? { isOpen: true }
+        : {}),
     });
   }
 
@@ -103,7 +111,7 @@ export const tourStepsCollectionSetup = (
       target: ".next-button",
       content: "Proceed to save your collection.",
       ...(visibilityStates.isNextButtonVisible ? { isOpen: true } : {}),
-    }
+    },
   );
 
   // Filter out steps based on visibility states
@@ -117,10 +125,12 @@ export const tourStepsCollectionSetup = (
       "#collectionItemCount": visibilityStates.isCollectionItemCountVisible,
       "#dot-color": visibilityStates.isDotColorVisible,
       "#dot-shape": visibilityStates.isDotShapeVisible,
-      ".generate-random-sequence-button": visibilityStates.isGenerateRandomSequenceButtonVisible,
-      ".generated-sequence-preview": visibilityStates.isGeneratedSequencePreviewVisible,
+      ".generate-random-sequence-button":
+        visibilityStates.isGenerateRandomSequenceButtonVisible,
+      ".generated-sequence-preview":
+        visibilityStates.isGeneratedSequencePreviewVisible,
       ".clear-button": visibilityStates.isClearButtonVisible,
-      ".next-button": visibilityStates.isNextButtonVisible
+      ".next-button": visibilityStates.isNextButtonVisible,
     };
 
     return target in visibilityMap ? visibilityMap[target] : true;
