@@ -21,6 +21,7 @@ import { tourStepsCollectionSetup } from "./tourStepsCollectionSetup";
 import { Step } from "react-joyride";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
+import { v4 as uuidv4 } from "uuid";
 
 type Operation =
   | "multiplication"
@@ -28,6 +29,13 @@ type Operation =
   | "subtraction"
   | "division"
   | "PeriodicElement";
+
+interface ImageWithCount {
+  id: string;
+  file: File;
+  preview: string;
+  count: number;
+}
 
 const CollectionSetup: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -89,6 +97,7 @@ const CollectionSetup: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [images, setImages] = useState<ImageWithCount[]>([]);
 
   // Define the steps variable
   const steps: Step[] = tourStepsCollectionSetup(
@@ -240,18 +249,27 @@ const CollectionSetup: React.FC = () => {
         const reader = new FileReader();
         reader.onloadend = () => {
           const newItem = {
-            name: selectedFile.name,
-            svg: reader.result as string,
+            id: uuidv4(),
+            file: selectedFile,
+            preview: reader.result as string,
             count: 1,
           };
-          setSequence((prevSequence) => [...prevSequence, newItem]);
-          setPreviewSequence((prevPreview) => [...prevPreview, newItem]);
-          setIsGenerated(true);
+          setImages((prevImages) => [...prevImages, newItem]);
         };
 
         reader.readAsDataURL(selectedFile);
       });
     }
+  };
+
+  const handleImageCountChange = (imageId: string, newCount: number) => {
+    setImages(prevImages =>
+      prevImages.map(image =>
+        image.id === imageId
+          ? { ...image, count: newCount }
+          : image
+      )
+    );
   };
 
   const generateRandomSequence = () => {
@@ -850,6 +868,23 @@ const CollectionSetup: React.FC = () => {
       </button>
 
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+      {images.length > 0 && (
+        <div className="mt-4">
+          {images.map(image => (
+            <div key={image.id}>
+              <img src={image.preview} alt="Preview" className="h-20 w-20" />
+              <label htmlFor={`count-${image.id}`} className="sr-only">Image count</label>
+              <input
+                id={`count-${image.id}`}
+                type="number"
+                value={image.count}
+                onChange={(e) => handleImageCountChange(image.id, parseInt(e.target.value))}
+                min="1"
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

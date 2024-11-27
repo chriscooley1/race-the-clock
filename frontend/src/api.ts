@@ -291,7 +291,6 @@ export const saveCollection = async (
   getAccessTokenSilently: () => Promise<string>,
 ) => {
   try {
-    console.log("Saving collection with name:", collectionName);
     const token = await getAccessTokenSilently();
     const response = await axios.post(
       `${API_BASE_URL}/collections`,
@@ -307,7 +306,6 @@ export const saveCollection = async (
         headers: { Authorization: `Bearer ${token}` },
       },
     );
-    console.log("Collection saved successfully:", response.data);
     return response.data;
   } catch (error) {
     handleApiError(error);

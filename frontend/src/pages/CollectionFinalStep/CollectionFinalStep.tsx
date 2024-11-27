@@ -30,6 +30,13 @@ interface LocationState {
   type?: string;
 }
 
+interface ImageWithCount {
+  id: string;
+  file: File;
+  preview: string;
+  count: number;
+}
+
 const CollectionFinalStep: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -81,9 +88,7 @@ const CollectionFinalStep: React.FC = () => {
   // Add this new state
   const [selectedPositions, setSelectedPositions] = useState<number[]>([1]);
 
-  const [images, setImages] = useState<
-    { id: string; file: File; preview: string }[]
-  >([]);
+  const [images, setImages] = useState<ImageWithCount[]>([]);
 
   // Initialize visibilityStates with all properties
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -404,9 +409,20 @@ const CollectionFinalStep: React.FC = () => {
         id: uuidv4(),
         file,
         preview: URL.createObjectURL(file),
+        count: 1, // Default count
       }));
       setImages((prevImages) => [...prevImages, ...newImages]);
     }
+  };
+
+  const handleImageCountChange = (imageId: string, newCount: number) => {
+    setImages(prevImages =>
+      prevImages.map(image =>
+        image.id === imageId
+          ? { ...image, count: newCount }
+          : image
+      )
+    );
   };
 
   const handleRemoveImage = (id: string) => {
@@ -418,6 +434,7 @@ const CollectionFinalStep: React.FC = () => {
       id: items.length + 1,
       name: image.file.name,
       svg: image.preview,
+      count: image.count, // Include the count in the item
     }));
     setItems([...items, ...newItems]);
     setImages([]);
@@ -792,6 +809,22 @@ const CollectionFinalStep: React.FC = () => {
                     alt={image.file.name}
                     className="size-24 object-cover"
                   />
+                  {category === "Number Sense" && (
+                    <div className="mt-2">
+                      <label className="block text-sm font-bold">
+                        Number of items in image:
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        value={image.count}
+                        onChange={(e) => handleImageCountChange(image.id, parseInt(e.target.value) || 1)}
+                        className="w-full rounded border border-gray-300 p-1 text-center"
+                        aria-label={`Number of items in ${image.file.name}`}
+                        title={`Number of items in ${image.file.name}`}
+                      />
+                    </div>
+                  )}
                   <button
                     type="button"
                     onClick={() => handleRemoveImage(image.id)}
