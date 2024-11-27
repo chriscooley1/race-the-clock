@@ -159,7 +159,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
                   <input
                     type="text"
                     id={`item-${index}`}
-                    className="w-full rounded-l border border-black bg-white p-2 text-center text-black"
+                    className="w-full rounded-lg border border-black bg-white p-2 text-center text-black"
                     value={item.name}
                     onChange={(e) => handleChangeItem(index, e.target.value)}
                     placeholder={`Enter item ${index + 1}`}
@@ -167,7 +167,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
                   />
                   <button
                     type="button"
-                    className="flex size-[42px] items-center justify-center rounded-r border border-black bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600"
+                    className="flex size-[42px] items-center justify-center rounded-lg border border-black bg-red-500 text-2xl text-white transition duration-300 hover:bg-red-600 ml-8"
                     onClick={() => handleRemoveItem(index)}
                   >
                     &times;
