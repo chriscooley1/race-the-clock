@@ -330,7 +330,10 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
                 src={currentItem.svg}
                 alt={currentItem.name}
                 style={{ maxWidth: "100%", maxHeight: "100%" }}
-                onError={(e) => console.error("Error loading image:", e)}
+                onError={(e) => {
+                  console.error("Error loading image:", e);
+                  console.log("Attempted SVG source:", currentItem.svg);
+                }}
               />
             ) : (
               <h1

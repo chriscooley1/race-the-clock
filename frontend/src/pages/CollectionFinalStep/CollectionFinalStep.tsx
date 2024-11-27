@@ -238,24 +238,35 @@ const CollectionFinalStep: React.FC = () => {
   };
 
   const combineSvgs = (svgs: string[]): string => {
-    console.log("SVGs to combine:", svgs);
     const svgWidth = 200;
     const svgHeight = 200;
-    const decodedSvgs = svgs.map((svg) =>
-      decodeURIComponent(svg.split(",")[1]),
-    );
-    const combinedSvgContent = decodedSvgs.join("");
-    const result = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">${combinedSvgContent}</svg>`;
-    console.log("Combined SVG:", result);
-    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(result)}`;
+    const decodedSvgs = svgs.map((svg) => {
+      const decoded = decodeURIComponent(svg.split(",")[1]);
+      // Extract just the inner content of each SVG
+      const content = decoded.replace(/<\/?svg[^>]*>/g, "");
+      return content;
+    });
+    
+    const combinedSvgContent = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">
+        <g>
+          ${decodedSvgs.join("")}
+        </g>
+      </svg>
+    `;
+    
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(combinedSvgContent.trim())}`;
   };
 
   const handleAddNumberSenseItem = () => {
-    const svgs = dots.map((dot) =>
-      generateCountingSvg(dot.count, dot.color, dot.shape, dot.position),
-    );
+    const svgs = dots.map((dot) => {
+      const svg = generateCountingSvg(dot.count, dot.color, dot.shape, dot.position);
+      console.log("Generated SVG:", svg);
+      return svg;
+    });
 
     const combinedSvg = combineSvgs(svgs);
+    console.log("Combined SVG:", combinedSvg);
 
     const newItem = {
       id: items.length + 1,
