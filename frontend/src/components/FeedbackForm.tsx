@@ -9,10 +9,22 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     textareaRef.current?.focus();
-  }, []);
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,9 +59,16 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e as unknown as React.FormEvent);
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-      <div className="w-full max-w-md rounded-lg border border-black bg-white p-6">
+      <div ref={modalRef} className="w-full max-w-md rounded-lg border border-black bg-white p-6">
         <h2 className="mb-4 text-xl font-bold text-gray-800">Feedback</h2>
         {success ? (
           <p className="text-green-600">Thank you for your feedback!</p>
@@ -63,6 +82,7 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               onChange={(e) => setMessage(e.target.value)}
               rows={4}
               required
+              onKeyDown={handleKeyDown}
             />
             {error && <p className="text-red-500">{error}</p>}
             <div className="flex justify-end space-x-2">

@@ -10,6 +10,7 @@ import { getLuminance } from "../../utils/colorUtils";
 import FeedbackForm from "../../components/FeedbackForm";
 import Navbar from "../../components/Navbar";
 import { useTour } from "../../context/TourContext";
+import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -243,6 +244,26 @@ const Settings: React.FC = () => {
     );
   };
 
+  // Function to get adjusted color options based on colorblind type
+  const getAdjustedColorOptions = () => {
+    return colorOptions.map((color) => ({
+      ...color,
+      adjustedValue: theme.isColorblindMode
+        ? adjustColorForColorblindness(color.value, theme.colorblindType)
+        : color.value,
+    }));
+  };
+
+  // Function to get adjusted text color options based on colorblind type
+  const getAdjustedTextColorOptions = () => {
+    return colorOptions.map((color) => ({
+      ...color,
+      adjustedValue: theme.isColorblindMode
+        ? adjustColorForColorblindness(color.value, theme.colorblindType)
+        : color.value,
+    }));
+  };
+
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center pl-[250px] pt-[50px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
@@ -366,20 +387,20 @@ const Settings: React.FC = () => {
         <div className="mb-4">
           <label className="mb-2 block font-bold">Color Theme:</label>
           <div className="flex flex-wrap">
-            {colorOptions.map((color) => (
+            {getAdjustedColorOptions().map((color) => (
               <div
                 key={color.name}
                 className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 
                   ${theme.name === color.name ? "border-4 border-black" : ""}
-                  ${isColorDisabled(color.value) ? "opacity-50 cursor-not-allowed" : ""}`}
+                  ${isColorDisabled(color.adjustedValue) ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={{ 
-                  backgroundColor: color.value,
-                  ...(theme.name === color.name && color.value.toLowerCase() === "#000000" 
+                  backgroundColor: color.adjustedValue,
+                  ...(theme.name === color.name && color.adjustedValue.toLowerCase() === "#000000" 
                     ? { backgroundColor: "#404040" } 
                     : {})
                 }}
                 onClick={() => {
-                  if (!isColorDisabled(color.value)) {
+                  if (!isColorDisabled(color.adjustedValue)) {
                     const newTheme = colorSchemes.find(
                       (scheme) => scheme.name === color.name,
                     );
@@ -398,16 +419,16 @@ const Settings: React.FC = () => {
             Text Color for Full Screen Display:
           </label>
           <div className="flex flex-wrap">
-            {colorOptions.map((color) => (
+            {getAdjustedTextColorOptions().map((color) => (
               <div
                 key={color.name}
                 className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 
-                  ${theme.displayTextColor === color.value ? "border-4 border-black" : ""}
-                  ${isColorDisabled(color.value) ? "opacity-50 cursor-not-allowed" : ""}`}
-                style={{ backgroundColor: color.value }}
+                  ${theme.displayTextColor === color.adjustedValue ? "border-4 border-black" : ""}
+                  ${isColorDisabled(color.adjustedValue) ? "opacity-50 cursor-not-allowed" : ""}`}
+                style={{ backgroundColor: color.adjustedValue }}
                 onClick={() => {
-                  if (!isColorDisabled(color.value)) {
-                    handleTextColorChange(color.value);
+                  if (!isColorDisabled(color.adjustedValue)) {
+                    handleTextColorChange(color.adjustedValue);
                   }
                 }}
               />
