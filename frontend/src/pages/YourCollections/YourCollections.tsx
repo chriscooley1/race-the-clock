@@ -548,39 +548,64 @@ const YourCollections: React.FC = () => {
               </div>
 
               {filteredCollections.map((collection, index) => (
-                <Draggable
-                  key={collection.collection_id}
-                  draggableId={collection.collection_id.toString()}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
-                      style={{
-                        backgroundColor: "white",
-                        ...provided.draggableProps.style,
-                      }}
-                    >
-                      <CollectionContent
-                        collection={collection}
-                        baseColor={adjustColorForTheme(
-                          collectionColorSchemes[
-                            index % collectionColorSchemes.length
-                          ].backgroundColor
-                        )}
-                        handleStartCollection={handleStartCollection}
-                        handleEditButtonClick={handleEditButtonClick}
-                        handleDeleteCollection={handleDeleteCollection}
-                        formatDate={formatDate}
-                        completionCount={0}
-                        theme={theme}
-                      />
-                    </div>
-                  )}
-                </Draggable>
+                sortOption === "custom" ? (
+                  <Draggable
+                    key={collection.collection_id}
+                    draggableId={collection.collection_id.toString()}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
+                        style={{
+                          backgroundColor: "white",
+                          ...provided.draggableProps.style,
+                        }}
+                      >
+                        <CollectionContent
+                          collection={collection}
+                          baseColor={adjustColorForTheme(
+                            collectionColorSchemes[
+                              index % collectionColorSchemes.length
+                            ].backgroundColor
+                          )}
+                          handleStartCollection={handleStartCollection}
+                          handleEditButtonClick={handleEditButtonClick}
+                          handleDeleteCollection={handleDeleteCollection}
+                          formatDate={formatDate}
+                          completionCount={0}
+                          theme={theme}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ) : (
+                  <div
+                    key={collection.collection_id}
+                    className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
+                    style={{
+                      backgroundColor: "white",
+                    }}
+                  >
+                    <CollectionContent
+                      collection={collection}
+                      baseColor={adjustColorForTheme(
+                        collectionColorSchemes[
+                          index % collectionColorSchemes.length
+                        ].backgroundColor
+                      )}
+                      handleStartCollection={handleStartCollection}
+                      handleEditButtonClick={handleEditButtonClick}
+                      handleDeleteCollection={handleDeleteCollection}
+                      formatDate={formatDate}
+                      completionCount={0}
+                      theme={theme}
+                    />
+                  </div>
+                )
               ))}
               {provided.placeholder}
             </div>
