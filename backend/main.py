@@ -124,9 +124,11 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
     logger.info(f"Querying user: {username}, Result: {user}")
     if user is None:
         # Create the user if not found
+        display_name = payload.get("name", "") or email or username  # Get name from Auth0 token, fallback to email or username
         new_user = User(
             username=username, 
-            email=email, 
+            email=email,
+            display_name=display_name,  # Set initial display_name
             hashed_password="",  # No password since Auth0 handles auth
             role="student"  # Set default role
         )
