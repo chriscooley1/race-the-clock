@@ -415,11 +415,14 @@ const CollectionFinalStep: React.FC = () => {
     }
   };
 
-  const handleImageCountChange = (imageId: string, newCount: number) => {
+  const handleImageCountChange = (imageId: string, newCount: number | null) => {
     setImages(prevImages =>
       prevImages.map(image =>
         image.id === imageId
-          ? { ...image, count: newCount }
+          ? { 
+              ...image, 
+              count: newCount === null ? 0 : newCount // Allow null/empty values
+            }
           : image
       )
     );
@@ -815,13 +818,18 @@ const CollectionFinalStep: React.FC = () => {
                         Number of items in image:
                       </label>
                       <input
+                        id={`count-${image.id}`}
                         type="number"
-                        min="1"
-                        value={image.count}
-                        onChange={(e) => handleImageCountChange(image.id, parseInt(e.target.value) || 1)}
-                        className="w-full rounded border border-gray-300 p-1 text-center"
-                        aria-label={`Number of items in ${image.file.name}`}
-                        title={`Number of items in ${image.file.name}`}
+                        value={image.count || ""} // Use empty string when count is 0
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          handleImageCountChange(
+                            image.id, 
+                            value === "" ? null : parseInt(value)
+                          );
+                        }}
+                        min="0" // Changed from 1 to 0 to allow empty field
+                        className="ml-2 w-16 rounded border border-gray-300 px-2 py-1"
                       />
                     </div>
                   )}

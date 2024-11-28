@@ -434,25 +434,15 @@ const DiscoverCollections: React.FC = () => {
                             <div className="flex size-full flex-col p-4">
                               <div className="mb-auto text-center">
                                 <p className="mb-1 text-base font-bold text-black">
-                                  {itemCount}{" "}
-                                  {itemCount === 1 ? "item" : "items"} in
-                                  collection
+                                  {itemCount} {itemCount === 1 ? "item" : "items"} in collection
                                 </p>
-                                <p
-                                  className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
-                                >
+                                <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
                                   Created by:{" "}
-                                  {collection.creator_display_name ||
-                                    collection.creator_username ||
-                                    "Anonymous"}
+                                  {collection.creator_display_name || "Anonymous"}
                                 </p>
-                                <p
-                                  className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
-                                >
+                                <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
                                   Category:{" "}
-                                  <span
-                                    className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}
-                                  >
+                                  <span className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
                                     {collection.category}
                                   </span>
                                 </p>
