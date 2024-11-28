@@ -252,9 +252,9 @@ const CollectionSetup: React.FC = () => {
             id: uuidv4(),
             file: selectedFile,
             preview: reader.result as string,
-            count: 1,
+            count: category === "Number Sense" ? 1 : undefined,
           };
-          setImages((prevImages) => [...prevImages, newItem]);
+          setImages((prevImages) => [...prevImages, newItem as ImageWithCount]);
         };
 
         reader.readAsDataURL(selectedFile);
@@ -445,21 +445,30 @@ const CollectionSetup: React.FC = () => {
   };
 
   const handleSaveCollection = async () => {
-    console.log("User data before saving collection:", currentUser); // Debugging log for user data
+    console.log("User data before saving collection:", currentUser);
 
     try {
       if (!currentUser || !currentUser.username) {
         throw new Error("Current user is undefined");
       }
 
-      // Use previewSequence instead of sequence
-      const collectionData = previewSequence.map((item, index) => ({
-        id: index + 1,
-        name: item.name,
-        svg: item.svg,
-        count: item.count,
-        file: file.length > 0 ? file[0].name : null,
-      }));
+      // Create collection data based on whether we have images or sequence
+      let collectionData;
+      if (file.length > 0) {
+        collectionData = images.map(image => ({
+          name: image.file.name,
+          svg: image.preview, // Use preview as svg to store the image data
+          count: category === "Number Sense" ? image.count : 1,
+          type: "image" // Add type to identify this as an image item
+        }));
+      } else {
+        collectionData = previewSequence.map((item, index) => ({
+          id: index + 1,
+          name: item.name,
+          svg: item.svg,
+          type: "sequence" // Add type to identify this as a sequence item
+        }));
+      }
 
       console.log("Saving collection with data:", {
         username: currentUser.username,
@@ -469,6 +478,7 @@ const CollectionSetup: React.FC = () => {
         category,
         type,
       });
+
       await saveCollection(
         currentUser.username,
         collectionName,
@@ -873,14 +883,18 @@ const CollectionSetup: React.FC = () => {
           {images.map(image => (
             <div key={image.id}>
               <img src={image.preview} alt="Preview" className="h-20 w-20" />
-              <label htmlFor={`count-${image.id}`} className="sr-only">Image count</label>
-              <input
-                id={`count-${image.id}`}
-                type="number"
-                value={image.count}
-                onChange={(e) => handleImageCountChange(image.id, parseInt(e.target.value))}
-                min="1"
-              />
+              {category === "Number Sense" && (
+                <>
+                  <label htmlFor={`count-${image.id}`} className="sr-only">Image count</label>
+                  <input
+                    id={`count-${image.id}`}
+                    type="number"
+                    value={image.count}
+                    onChange={(e) => handleImageCountChange(image.id, parseInt(e.target.value))}
+                    min="1"
+                  />
+                </>
+              )}
             </div>
           ))}
         </div>
