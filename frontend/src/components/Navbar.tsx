@@ -34,6 +34,17 @@ interface NavbarProps {
   setShowFeedback: (show: boolean) => void;
 }
 
+const navigationItems = [
+  { path: "/your-collections", icon: "📚", label: "Collections" },
+  { path: "/new-collection", icon: "➕", label: "New" },
+  { path: "/discover-collections", icon: "🔍", label: "Discover" },
+  { path: "/name-generator", icon: "🎲", label: "Names" },
+  { path: "/games", icon: "🎮", label: "Games" },
+  { path: "/reports", icon: "📊", label: "Reports" },
+  { path: "/badges-achievements", icon: "🏆", label: "Badges" },
+  { path: "/resources", icon: "📖", label: "Resources" }
+];
+
 const Navbar: React.FC<NavbarProps> = ({
   isPaused,
   onPauseResume,
@@ -281,11 +292,22 @@ const Navbar: React.FC<NavbarProps> = ({
           </button>
         )}
       </div>
-      <div
-        className="grow cursor-pointer text-center text-base font-bold text-gray-800 md:text-xl dark:text-white"
-        onClick={handleTitleClick}
-      >
-        <img src={mainLogo} alt="Main Logo" className="h-16" />
+      <div className="flex grow items-center justify-center space-x-6">
+        <img src={mainLogo} alt="Main Logo" className="h-16 cursor-pointer" onClick={handleTitleClick} />
+        
+        <nav className="hidden md:flex space-x-4">
+          {navigationItems.map((item) => (
+            <button
+              type="button"
+              key={item.path}
+              onClick={() => handleNavigate(item.path)}
+              className="flex flex-col items-center justify-center px-3 py-2 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors duration-200 dark:text-white dark:hover:bg-gray-700"
+            >
+              <span className="text-2xl mb-1">{item.icon}</span>
+              <span className="text-xs font-medium">{item.label}</span>
+            </button>
+          ))}
+        </nav>
       </div>
       <div
         ref={hamburgerRef}

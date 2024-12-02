@@ -5,7 +5,6 @@ import { Step } from "react-joyride";
 import { VisibilityStates } from "./types/VisibilityStates";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
@@ -267,7 +266,6 @@ const App: React.FC = () => {
                 setShowFeedback={setShowFeedback}
               />
               <div className="flex pt-[70px]">
-                {!hideSidebar && <Sidebar />}
                 <div
                   className={`grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area flex flex-col items-center`}
                 >

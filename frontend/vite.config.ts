@@ -35,20 +35,18 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           entryFileNames: `assets/[name].[hash].js`,
           chunkFileNames: `assets/[name].[hash].js`,
           assetFileNames: `assets/[name].[hash].[ext]`,
-          manualChunks(id) {
-            if (id.includes("node_modules")) {
-              return id
-                .toString()
-                .split("node_modules/")[1]
-                .split("/")[0]
-                .toString();
-            }
+          manualChunks: {
+            "react-icons": ["react-icons"],
+            // ... other chunks
           },
         },
       },
       outDir: "dist",
-      chunkSizeWarningLimit: 1000,
+      chunkSizeWarningLimit: 1500,
       sourcemap: true,
+    },
+    optimizeDeps: {
+      include: ["react-icons"],
     },
     server: {
       host: "0.0.0.0",

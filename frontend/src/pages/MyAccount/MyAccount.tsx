@@ -37,11 +37,12 @@ const MyAccount: React.FC = () => {
         const userProfile = await getCurrentUser(getAccessTokenSilently);
         // If no display_name is set, update it with the Auth0 name
         if (!userProfile.display_name && user?.name) {
+          const displayName = user.name.includes("|") ? user.name.split("|")[1] : user.name;
           await updateDisplayName(
-            { display_name: user.name },
+            { display_name: displayName },
             getAccessTokenSilently,
           );
-          userProfile.display_name = user.name;
+          userProfile.display_name = displayName;
         }
         setUserData(userProfile);
         // Set initial role from user profile
@@ -126,7 +127,7 @@ const MyAccount: React.FC = () => {
                 className="mb-4 size-24 rounded-full border border-black"
               />
               <h2 className="text-xl font-semibold">
-                {userData?.display_name || user.name}
+                {userData?.display_name || (user?.name?.includes("|") ? user.name.split("|")[1] : user.name)}
               </h2>
               <p
                 className={`${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}
