@@ -502,7 +502,7 @@ const YourCollections: React.FC = () => {
   }, [collections, showModal, isEditModalOpen, isDuplicateModalOpen]);
 
   return (
-    <div className="your-collections-page min-h-screen p-4 pt-[175px]">
+    <div className="your-collections-page min-h-screen p-4 pt-[125px]">
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}

@@ -470,7 +470,7 @@ const CollectionFinalStep: React.FC = () => {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col items-center pt-[70px] ${
+      className={`flex min-h-screen w-full flex-col items-center pt-[20px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
       style={{ color: theme.originalTextColor }}

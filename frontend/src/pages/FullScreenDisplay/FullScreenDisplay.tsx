@@ -137,7 +137,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         "--background-color",
         theme.backgroundColor,
       );
-      onExitFullScreen(); // Ensure this is called to reset sidebar
+      onExitFullScreen();
     };
   }, [
     onEnterFullScreen,
@@ -425,7 +425,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         setShowFeedback={setShowFeedback}
       />
       <div
-        className="full-screen-display relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 pt-[70px] transition-colors duration-300"
+        className="full-screen-display relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
         style={{
           color: theme.displayTextColor || theme.textColor,
           backgroundColor: theme.displayBackgroundColor || theme.backgroundColor,

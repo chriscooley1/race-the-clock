@@ -45,11 +45,10 @@ const MultipleWordsGame: React.FC = () => {
 
   return (
     <div
-      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4 py-8"
+      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4"
       style={{
         color: theme.originalTextColor,
         backgroundColor: theme.backgroundColor,
-        marginTop: "70px", // Updated to match other pages
       }}
     >
       <button
