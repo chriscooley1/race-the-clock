@@ -502,7 +502,10 @@ const YourCollections: React.FC = () => {
   }, [collections, showModal, isEditModalOpen, isDuplicateModalOpen]);
 
   return (
-    <div className="your-collections-page min-h-screen p-4 pl-[270px] pt-[175px]">
+    <div
+      className="flex min-h-screen w-full flex-col items-center px-4 pt-[125px]"
+      style={{ color: theme.originalTextColor }}
+    >
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}
@@ -518,96 +521,98 @@ const YourCollections: React.FC = () => {
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3"
+              className="grid-container w-full"
             >
-              <div
-                onClick={() => navigate("/new-collection")}
-                className="collection-card flex min-w-[375px] cursor-pointer flex-col items-center justify-center rounded-lg border-4 border-dashed border-gray-300 p-4 transition-all duration-300 hover:border-blue-500 hover:bg-gray-50"
-              >
-                <div className="mb-4 rounded-full border border-black bg-green-500 p-4">
-                  <svg
-                    className="size-12 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-700">
-                  Create New Collection
-                </h3>
-                <p className="mt-2 text-sm text-gray-500">
-                  Click to add a new collection
-                </p>
-              </div>
-
-              {filteredCollections.map((collection, index) => (
-                sortOption === "custom" ? (
-                  <Draggable
-                    key={collection.collection_id}
-                    draggableId={collection.collection_id.toString()}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
-                        style={{
-                          backgroundColor: "white",
-                          ...provided.draggableProps.style,
-                        }}
-                      >
-                        <CollectionContent
-                          collection={collection}
-                          baseColor={adjustColorForTheme(
-                            collectionColorSchemes[
-                              index % collectionColorSchemes.length
-                            ].backgroundColor
-                          )}
-                          handleStartCollection={handleStartCollection}
-                          handleEditButtonClick={handleEditButtonClick}
-                          handleDeleteCollection={handleDeleteCollection}
-                          formatDate={formatDate}
-                          completionCount={0}
-                          theme={theme}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ) : (
-                  <div
-                    key={collection.collection_id}
-                    className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
-                    style={{
-                      backgroundColor: "white",
-                    }}
-                  >
-                    <CollectionContent
-                      collection={collection}
-                      baseColor={adjustColorForTheme(
-                        collectionColorSchemes[
-                          index % collectionColorSchemes.length
-                        ].backgroundColor
-                      )}
-                      handleStartCollection={handleStartCollection}
-                      handleEditButtonClick={handleEditButtonClick}
-                      handleDeleteCollection={handleDeleteCollection}
-                      formatDate={formatDate}
-                      completionCount={0}
-                      theme={theme}
-                    />
+              <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div
+                  onClick={() => navigate("/new-collection")}
+                  className="collection-card flex min-w-[375px] cursor-pointer flex-col items-center justify-center rounded-lg border-4 border-dashed border-gray-300 p-4 transition-all duration-300 hover:border-blue-500 hover:bg-gray-50"
+                >
+                  <div className="mb-4 rounded-full border border-black bg-green-500 p-4">
+                    <svg
+                      className="size-12 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
                   </div>
-                )
-              ))}
-              {provided.placeholder}
+                  <h3 className="text-xl font-bold text-gray-700">
+                    Create New Collection
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-500">
+                    Click to add a new collection
+                  </p>
+                </div>
+
+                {filteredCollections.map((collection, index) => (
+                  sortOption === "custom" ? (
+                    <Draggable
+                      key={collection.collection_id}
+                      draggableId={collection.collection_id.toString()}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
+                          style={{
+                            backgroundColor: "white",
+                            ...provided.draggableProps.style,
+                          }}
+                        >
+                          <CollectionContent
+                            collection={collection}
+                            baseColor={adjustColorForTheme(
+                              collectionColorSchemes[
+                                index % collectionColorSchemes.length
+                              ].backgroundColor
+                            )}
+                            handleStartCollection={handleStartCollection}
+                            handleEditButtonClick={handleEditButtonClick}
+                            handleDeleteCollection={handleDeleteCollection}
+                            formatDate={formatDate}
+                            completionCount={0}
+                            theme={theme}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ) : (
+                    <div
+                      key={collection.collection_id}
+                      className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
+                      style={{
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <CollectionContent
+                        collection={collection}
+                        baseColor={adjustColorForTheme(
+                          collectionColorSchemes[
+                            index % collectionColorSchemes.length
+                          ].backgroundColor
+                        )}
+                        handleStartCollection={handleStartCollection}
+                        handleEditButtonClick={handleEditButtonClick}
+                        handleDeleteCollection={handleDeleteCollection}
+                        formatDate={formatDate}
+                        completionCount={0}
+                        theme={theme}
+                      />
+                    </div>
+                  )
+                ))}
+                {provided.placeholder}
+              </div>
             </div>
           )}
         </Droppable>

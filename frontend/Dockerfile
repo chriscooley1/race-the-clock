@@ -10,8 +10,8 @@ COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm ci
 
-# Install additional dependencies (including @hello-pangea/dnd)
-RUN npm install uuid @types/uuid @hello-pangea/dnd
+# Install additional dependencies (including @hello-pangea/dnd and react-icons)
+RUN npm install uuid @types/uuid @hello-pangea/dnd react-icons
 
 # Copy the rest of the application code
 COPY . .

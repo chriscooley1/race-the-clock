@@ -5,7 +5,6 @@ import { Step } from "react-joyride";
 import { VisibilityStates } from "./types/VisibilityStates";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
@@ -56,7 +55,6 @@ const App: React.FC = () => {
 
   const { theme } = useTheme();
   const location = useLocation();
-  const [hideSidebar, setHideSidebar] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isTourRunning, setIsTourRunning] = useState(false);
   const [currentTourStep, setCurrentTourStep] = useState(0);
@@ -70,11 +68,8 @@ const App: React.FC = () => {
     console.log("App state changed");
     console.log("isTourRunning:", isTourRunning);
     console.log("currentTourStep:", currentTourStep);
-    const hiddenRoutes = ["/", "/fullscreen-display", "/math-collection"];
-    setHideSidebar(hiddenRoutes.includes(location.pathname));
   }, [
     location.pathname,
-    hideSidebar,
     isFullScreen,
     isTourRunning,
     currentTourStep,
@@ -257,9 +252,7 @@ const App: React.FC = () => {
         <CompletionProvider>
           <TourProvider>
             <FontPreloader />
-            <div
-              className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
-            >
+            <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
               <Navbar
                 onStartTour={handleTourStart}
                 setTourName={setCurrentTourName}
@@ -267,10 +260,7 @@ const App: React.FC = () => {
                 setShowFeedback={setShowFeedback}
               />
               <div className="flex pt-[70px]">
-                {!hideSidebar && <Sidebar />}
-                <div
-                  className={`grow ${hideSidebar ? "ml-0" : "ml-[250px]"} main-content-area flex flex-col items-center`}
-                >
+                <div className="grow main-content-area flex flex-col items-center">
                   <Routes>
                     <Route path="/" element={<LandingPage />} />
                     <Route

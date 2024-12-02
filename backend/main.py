@@ -92,52 +92,50 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
                     "e": key["e"],
                     "alg": key.get("alg", "RS256")
                 }
-        if rsa_key:
-            payload = jwt.decode(
-                token,
-                jwk.construct(rsa_key),
-                algorithms=[rsa_key["alg"]],
-                audience=AUTH0_AUDIENCE,
-                issuer=f"https://{AUTH0_DOMAIN}/",
-            )
-            username: str = payload.get("sub")
-            email: str = payload.get("email")  # Fetch email if available
-            if username is None:
-                raise credentials_exception
-        else:
+        
+        if not rsa_key:
             raise credentials_exception
-    except ExpiredSignatureError:
-        logger.warning("Token has expired")
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired")
-    except JWTClaimsError:
-        logger.warning("Invalid claims")
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid claims")
-    except JWTError:
-        logger.warning("JWT Error")
-        raise credentials_exception
-    except Exception as e:
-        logger.error(f"Unexpected error during token validation: {type(e).__name__}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
-
-    # Check if user exists, if not, create the user
-    user = db.query(User).filter(User.username == username).first()
-    logger.info(f"Querying user: {username}, Result: {user}")
-    if user is None:
-        # Create the user if not found
-        display_name = payload.get("name", "") or email or username  # Get name from Auth0 token, fallback to email or username
-        new_user = User(
-            username=username, 
-            email=email,
-            display_name=display_name,  # Set initial display_name
-            hashed_password="",  # No password since Auth0 handles auth
-            role="student"  # Set default role
+            
+        payload = jwt.decode(
+            token,
+            jwk.construct(rsa_key),
+            algorithms=[rsa_key["alg"]],
+            audience=AUTH0_AUDIENCE,
+            issuer=f"https://{AUTH0_DOMAIN}/",
         )
-        db.add(new_user)
-        db.commit()
-        db.refresh(new_user)
-        user = new_user
-
-    return user
+        
+        username: str = payload.get("sub")
+        email: str = payload.get("email")
+        name: str = payload.get("name", "").strip()
+        
+        # Clean up the name if it contains the Auth0 ID
+        if name and "|" in name:
+            name = name.split("|")[1].strip()
+        
+        user = db.query(User).filter(User.username == username).first()
+        
+        if user is None:
+            # Create new user with proper display name
+            user = User(
+                username=username,
+                email=email,
+                display_name=name or email or username.split("|")[1],
+                hashed_password="",
+                role="student"
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+        elif not user.display_name or user.display_name == username or "|" in user.display_name:
+            # Update existing user's display name if it's not set or contains Auth0 ID
+            user.display_name = name or email or username.split("|")[1]
+            db.commit()
+            db.refresh(user)
+        
+        return user
+    except Exception as e:
+        logger.error(f"Error in get_current_user: {str(e)}")
+        raise credentials_exception
 
 # User Endpoints
 @app.get("/users/me/", response_model=User)
