@@ -87,6 +87,10 @@ const config: Config = {
       spacing: {
         navbar: "50px",
         "15": "3.75rem",
+        "navbar-height": "65px",
+        "navbar-with-collections": "125px",
+        "content-padding": "65px",
+        "content-padding-with-collections": "125px"
       },
       zIndex: {
         modal: "1000",

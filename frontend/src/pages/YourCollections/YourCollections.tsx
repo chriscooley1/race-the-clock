@@ -502,10 +502,7 @@ const YourCollections: React.FC = () => {
   }, [collections, showModal, isEditModalOpen, isDuplicateModalOpen]);
 
   return (
-    <div
-      className="flex min-h-screen w-full flex-col items-center px-4 pt-[125px]"
-      style={{ color: theme.originalTextColor }}
-    >
+    <div className="page-container page-container-with-collections">
       <CollectionsNavBar
         onSelectCategory={handleSelectCategory}
         selectedCategory={selectedCategory}

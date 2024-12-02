@@ -36,7 +36,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   };
 
   return (
-    <div className="bg-heisenberg-blue fixed inset-x-0 top-[47px] z-40 mt-4 shadow-md dark:bg-gray-800">
+    <div className="fixed inset-x-0 top-navbar-height z-40 mt-4 bg-heisenberg-blue shadow-md dark:bg-gray-800">
       <div className="flex w-full flex-col px-4 py-2">
         <div className="mb-2 flex w-full overflow-x-auto">
           {categories.map((category) => (
