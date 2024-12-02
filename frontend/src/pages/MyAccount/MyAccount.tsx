@@ -102,7 +102,7 @@ const MyAccount: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4">
+    <div className="flex min-h-screen flex-col items-center px-4">
       <div
         className="w-full max-w-md rounded-lg p-8 shadow-md"
         style={{
