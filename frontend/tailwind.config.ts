@@ -85,7 +85,6 @@ const config: Config = {
         "shake-it-off": ['"KG Shake It Off"', "Comic Neue", "sans-serif"],
       },
       spacing: {
-        sidebar: "250px",
         navbar: "50px",
         "15": "3.75rem",
       },

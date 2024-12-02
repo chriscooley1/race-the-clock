@@ -70,17 +70,17 @@ const TimedChallenges: React.FC = () => {
 
   return (
     <div
-      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4 py-8 md:ml-[250px]"
+      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4 py-8"
       style={{
         color: theme.originalTextColor,
         backgroundColor: theme.backgroundColor,
-        marginTop: "65px", // Account for navbar height
+        marginTop: "70px", // Updated to match other pages
       }}
     >
       <button
         type="button"
         onClick={handleBack}
-        className="fixed left-4 top-20 z-40 rounded border border-black bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 md:left-[270px]"
+        className="fixed left-4 top-20 z-40 rounded border border-black bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
       >
         Back to Games
       </button>

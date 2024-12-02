@@ -41,11 +41,11 @@ const Games: React.FC = () => {
 
   return (
     <div
-      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4 py-8 md:ml-[250px]"
+      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4 py-8"
       style={{
         color: theme.originalTextColor,
         backgroundColor: theme.backgroundColor,
-        marginTop: "65px", // Account for navbar height
+        marginTop: "70px", // Updated to match other pages
       }}
     >
       <h1 className="mb-8 text-3xl font-bold">Games</h1>

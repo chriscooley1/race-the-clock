@@ -239,17 +239,13 @@ const NameGenerator: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`name-generator flex min-h-screen flex-col items-center justify-center pl-[250px] pt-[100px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"} mt-4`}
+      className={`name-generator flex min-h-screen flex-col items-center justify-center pt-[70px] ${
+        theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
+      }`}
       style={{
-        backgroundColor:
-          theme.backgroundImage === "none"
-            ? theme.backgroundColor
-            : "transparent",
+        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
         color: theme.displayTextColor || theme.textColor,
-        backgroundImage:
-          theme.backgroundImage !== "none"
-            ? `url(${theme.backgroundImage})`
-            : "none",
+        backgroundImage: theme.backgroundImage !== "none" ? `url(${theme.backgroundImage})` : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

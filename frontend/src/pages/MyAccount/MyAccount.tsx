@@ -102,13 +102,7 @@ const MyAccount: React.FC = () => {
   };
 
   return (
-    <div
-      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4 py-8 md:ml-[250px]"
-      style={{
-        color: theme.originalTextColor,
-        backgroundColor: theme.backgroundColor,
-      }}
-    >
+    <div className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4 py-8">
       <div
         className="w-full max-w-md rounded-lg p-8 shadow-md"
         style={{
