@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "../../context/ThemeContext";
 import { tourStepsGames } from "./tourStepsGames";
 import GuidedTour from "../../components/GuidedTour";
 import { Link } from "react-router-dom";
 import FeedbackForm from "../../components/FeedbackForm";
 
 const Games: React.FC = () => {
-  const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
@@ -40,13 +38,7 @@ const Games: React.FC = () => {
   };
 
   return (
-    <div
-      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4"
-      style={{
-        color: theme.originalTextColor,
-        backgroundColor: theme.backgroundColor,
-      }}
-    >
+    <div className="page-container">
       <h1 className="mb-8 text-3xl font-bold">Games</h1>
       <p>
         Welcome to the Games page! Here are some fun activities to enhance

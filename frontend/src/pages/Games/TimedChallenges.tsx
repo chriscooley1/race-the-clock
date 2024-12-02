@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "../../context/ThemeContext";
 import { fetchCollections } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsTimedChallenges } from "./tourStepsTimedChallenges";
@@ -26,7 +25,6 @@ interface Item {
 }
 
 const TimedChallenges: React.FC = () => {
-  const { theme } = useTheme();
   const { getAccessTokenSilently } = useAuth0();
   const [collections, setCollections] = useState<Collection[]>([]); // State to hold collections
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
@@ -69,13 +67,7 @@ const TimedChallenges: React.FC = () => {
   };
 
   return (
-    <div
-      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4"
-      style={{
-        color: theme.originalTextColor,
-        backgroundColor: theme.backgroundColor,
-      }}
-    >
+    <div className="page-container">
       <button
         type="button"
         onClick={handleBack}

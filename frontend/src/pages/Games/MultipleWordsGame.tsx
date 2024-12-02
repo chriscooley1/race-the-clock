@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useTheme } from "../../context/ThemeContext";
 import FeedbackForm from "../../components/FeedbackForm";
 import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMultipleWords } from "./tourStepsMultipleWords";
@@ -7,7 +6,6 @@ import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
 
 const MultipleWordsGame: React.FC = () => {
-  const { theme } = useTheme();
   const { isGuidedTourEnabled } = useTour();
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const [connections, setConnections] = useState<{ [key: string]: string }>({});
@@ -44,13 +42,7 @@ const MultipleWordsGame: React.FC = () => {
   };
 
   return (
-    <div
-      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4"
-      style={{
-        color: theme.originalTextColor,
-        backgroundColor: theme.backgroundColor,
-      }}
-    >
+    <div className="page-container">
       <button
         type="button"
         onClick={handleBack}
