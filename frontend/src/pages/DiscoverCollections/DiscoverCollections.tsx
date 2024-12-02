@@ -310,10 +310,7 @@ const DiscoverCollections: React.FC = () => {
   }, [user, getAccessTokenSilently]);
 
   return (
-    <div
-      className="flex min-h-screen w-full flex-col items-center px-4 pt-[20px]"
-      style={{ color: theme.originalTextColor }}
-    >
+    <div className="page-container">
       <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
         Discover Public Collections
       </h1>

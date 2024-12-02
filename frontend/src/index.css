@@ -108,3 +108,14 @@ body {
  * "KG What The Teacher Wants" and "KG Shake It Off" by Kimberly Geswein
  * Used with permission - https://www.kimberlygeswein.com
  */
+
+@layer utilities {
+  .page-container {
+    @apply flex min-h-screen w-full flex-col items-center px-4;
+    padding-top: var(--navbar-padding, 65px);
+  }
+
+  .page-container-with-collections {
+    --navbar-padding: 125px;
+  }
+}
