@@ -268,7 +268,7 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center px-4">
+    <div className="page-container">
       {theme.backgroundImage && theme.backgroundImage !== "none" && (
         <div
           style={{

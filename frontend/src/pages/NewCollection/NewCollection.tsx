@@ -128,10 +128,7 @@ const NewCollection: React.FC = () => {
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   return (
-    <div
-      className={`flex min-h-screen w-full flex-col items-center pt-[20px] ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
-      style={{ color: theme.originalTextColor }}
-    >
+    <div className="page-container">
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
         <h1 className="new-collection-page text-4xl font-bold">
           Step 1 - Create
