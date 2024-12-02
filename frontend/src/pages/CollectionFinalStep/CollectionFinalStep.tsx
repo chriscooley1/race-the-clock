@@ -469,411 +469,413 @@ const CollectionFinalStep: React.FC = () => {
   }
 
   return (
-    <div
-      className={`flex min-h-screen w-full flex-col items-center pt-[20px] ${
-        theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-      }`}
-      style={{ color: theme.originalTextColor }}
-    >
-      <h1 className="collection-final-step text-4xl font-bold">
-        Step 3 - Create Your Own Collection
-      </h1>
-      <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
-      <p className="mb-4">
-        To add another item to this Collection, click the add button below.
-      </p>
-      <div className="mb-4 flex flex-col items-center text-center">
-        {category === "Math" && initialType === "mathProblems" ? (
-          <>
-            <label htmlFor="first-number-select">First Number:</label>
-            <select
-              id="first-number-select"
-              value={firstNumber}
-              onChange={(e) => setFirstNumber(Number(e.target.value))}
-              className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
-            >
-              {Array.from({ length: 10 }, (_, i) => (
-                <option key={i} value={i + 1}>
-                  {i + 1}
-                </option>
-              ))}
-            </select>
-            <label htmlFor="operator-select">Operator:</label>
-            <select
-              id="operator-select"
-              value={operator}
-              onChange={(e) => setOperator(e.target.value)}
-              className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
-            >
-              <option value="addition">+</option>
-              <option value="subtraction">-</option>
-              <option value="multiplication">×</option>
-              <option value="division">÷</option>
-            </select>
-            <label htmlFor="second-number-select">Second Number:</label>
-            <select
-              id="second-number-select"
-              value={secondNumber}
-              onChange={(e) => setSecondNumber(Number(e.target.value))}
-              className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
-            >
-              {Array.from({ length: 10 }, (_, i) => (
-                <option key={i} value={i + 1}>
-                  {i + 1}
-                </option>
-              ))}
-            </select>
-            <button
-              type="button"
-              onClick={handleAddMathProblem}
-              className="add-math-problem-button mb-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
-            >
-              Add Math Problem
-            </button>
-          </>
-        ) : (
-          <>
-            {category === "Number Sense" ? (
-              <>
-                {dots.map((dot, index) => (
-                  <div key={index} className="mb-4 w-full">
-                    <h4 className="mb-2 text-lg font-bold">Dot {index + 1}</h4>
-                    <label
-                      htmlFor={`dot-position-${index}`}
-                      className="mb-2 block"
-                    >
-                      Select dot position:
-                    </label>
-                    <select
-                      id={`dot-position-${index}`}
-                      value={dot.position}
-                      onChange={(e) =>
-                        handleDotChange(index, "position", e.target.value)
-                      }
-                      className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
-                    >
-                      {[
-                        ...new Set([
-                          parseInt(dot.position),
-                          ...availablePositions,
-                        ]),
-                      ]
-                        .sort((a, b) => a - b)
-                        .map((pos) => (
-                          <option key={`pos-${pos}`} value={pos.toString()}>
-                            Position {pos}
+    <div className="page-container">
+      <div
+        className={`flex min-h-screen w-full flex-col items-center pt-[20px] ${
+          theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
+        }`}
+        style={{ color: theme.originalTextColor }}
+      >
+        <h1 className="collection-final-step text-4xl font-bold">
+          Step 3 - Create Your Own Collection
+        </h1>
+        <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
+        <p className="mb-4">
+          To add another item to this Collection, click the add button below.
+        </p>
+        <div className="mb-4 flex flex-col items-center text-center">
+          {category === "Math" && initialType === "mathProblems" ? (
+            <>
+              <label htmlFor="first-number-select">First Number:</label>
+              <select
+                id="first-number-select"
+                value={firstNumber}
+                onChange={(e) => setFirstNumber(Number(e.target.value))}
+                className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
+              >
+                {Array.from({ length: 10 }, (_, i) => (
+                  <option key={i} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="operator-select">Operator:</label>
+              <select
+                id="operator-select"
+                value={operator}
+                onChange={(e) => setOperator(e.target.value)}
+                className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
+              >
+                <option value="addition">+</option>
+                <option value="subtraction">-</option>
+                <option value="multiplication">×</option>
+                <option value="division">÷</option>
+              </select>
+              <label htmlFor="second-number-select">Second Number:</label>
+              <select
+                id="second-number-select"
+                value={secondNumber}
+                onChange={(e) => setSecondNumber(Number(e.target.value))}
+                className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
+              >
+                {Array.from({ length: 10 }, (_, i) => (
+                  <option key={i} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={handleAddMathProblem}
+                className="add-math-problem-button mb-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
+              >
+                Add Math Problem
+              </button>
+            </>
+          ) : (
+            <>
+              {category === "Number Sense" ? (
+                <>
+                  {dots.map((dot, index) => (
+                    <div key={index} className="mb-4 w-full">
+                      <h4 className="mb-2 text-lg font-bold">Dot {index + 1}</h4>
+                      <label
+                        htmlFor={`dot-position-${index}`}
+                        className="mb-2 block"
+                      >
+                        Select dot position:
+                      </label>
+                      <select
+                        id={`dot-position-${index}`}
+                        value={dot.position}
+                        onChange={(e) =>
+                          handleDotChange(index, "position", e.target.value)
+                        }
+                        className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
+                      >
+                        {[
+                          ...new Set([
+                            parseInt(dot.position),
+                            ...availablePositions,
+                          ]),
+                        ]
+                          .sort((a, b) => a - b)
+                          .map((pos) => (
+                            <option key={`pos-${pos}`} value={pos.toString()}>
+                              Position {pos}
+                            </option>
+                          ))}
+                      </select>
+                      <label
+                        htmlFor={`dot-color-${index}`}
+                        className="mb-2 block"
+                      >
+                        Select dot color:
+                      </label>
+                      <select
+                        id={`dot-color-${index}`}
+                        value={dot.color}
+                        onChange={(e) =>
+                          handleDotChange(index, "color", e.target.value)
+                        }
+                        className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
+                      >
+                        {["blue", "green", "red", "purple", "orange"].map(
+                          (color) => (
+                            <option key={color} value={color}>
+                              {color}
+                            </option>
+                          ),
+                        )}
+                      </select>
+                      <label
+                        htmlFor={`dot-shape-${index}`}
+                        className="mb-2 block"
+                      >
+                        Select dot shape:
+                      </label>
+                      <select
+                        id={`dot-shape-${index}`}
+                        value={dot.shape}
+                        onChange={(e) =>
+                          handleDotChange(index, "shape", e.target.value)
+                        }
+                        className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
+                      >
+                        {["circle", "square", "triangle"].map((shape) => (
+                          <option key={shape} value={shape}>
+                            {shape}
                           </option>
                         ))}
-                    </select>
-                    <label
-                      htmlFor={`dot-color-${index}`}
-                      className="mb-2 block"
-                    >
-                      Select dot color:
-                    </label>
-                    <select
-                      id={`dot-color-${index}`}
-                      value={dot.color}
-                      onChange={(e) =>
-                        handleDotChange(index, "color", e.target.value)
-                      }
-                      className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
-                    >
-                      {["blue", "green", "red", "purple", "orange"].map(
-                        (color) => (
-                          <option key={color} value={color}>
-                            {color}
-                          </option>
-                        ),
+                      </select>
+                      {dots.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveDot(index)}
+                          className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white"
+                        >
+                          Remove Dot
+                        </button>
                       )}
-                    </select>
-                    <label
-                      htmlFor={`dot-shape-${index}`}
-                      className="mb-2 block"
-                    >
-                      Select dot shape:
-                    </label>
-                    <select
-                      id={`dot-shape-${index}`}
-                      value={dot.shape}
-                      onChange={(e) =>
-                        handleDotChange(index, "shape", e.target.value)
-                      }
-                      className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-center text-black"
-                    >
-                      {["circle", "square", "triangle"].map((shape) => (
-                        <option key={shape} value={shape}>
-                          {shape}
-                        </option>
-                      ))}
-                    </select>
-                    {dots.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveDot(index)}
-                        className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white"
-                      >
-                        Remove Dot
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={handleAddDot}
-                  className="add-dot-button mb-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
-                >
-                  Add Another Dot
-                </button>
-                <button
-                  type="button"
-                  onClick={handleAddNumberSenseItem}
-                  className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
-                  title="Add Number Sense Item"
-                >
-                  +
-                </button>
-              </>
-            ) : category === "Science" && initialType === "periodicTable" ? (
-              <>
-                <label htmlFor="element-select" className="mb-2">
-                  Select an element:
-                </label>
-                <select
-                  id="element-select"
-                  value={selectedElement}
-                  onChange={handleElementSelect}
-                  className="font-teacher mb-4 w-full rounded-md border border-black p-2"
-                >
-                  <option value="">Select an element</option>
-                  {Object.values(periodicTable).map((element) => (
-                    <option
-                      key={element.atomicNumber}
-                      value={JSON.stringify(element)}
-                    >
-                      {element.symbol} - {element.name} - {element.atomicNumber}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={handleAddItem}
-                  className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
-                  title="Add Item"
-                >
-                  +
-                </button>
-              </>
-            ) : category === "Science" || category === "Nursing" ? (
-              <>
-                <label htmlFor="term-select" className="mb-2">
-                  Select a {category.toLowerCase()} term:
-                </label>
-                <select
-                  id="term-select"
-                  value={selectedTerm}
-                  onChange={handleTermSelect}
-                  className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-black"
-                >
-                  <option value="">Select a term</option>
-                  {terms.map((term, index) => (
-                    <option key={index} value={term}>
-                      {term}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor="custom-term-input" className="mb-2">
-                  Or enter a custom {category.toLowerCase()} term:
-                </label>
-                <input
-                  type="text"
-                  id="custom-term-input"
-                  value={customTerm}
-                  onChange={handleCustomTermChange}
-                  className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-black"
-                  placeholder={`Enter custom ${category.toLowerCase()} term`}
-                />
-                <button
-                  type="button"
-                  onClick={handleAddTerm}
-                  className="mb-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
-                >
-                  Add Term
-                </button>
-              </>
-            ) : (
-              <>
-                <div className="flex flex-col items-center">
-                  <label htmlFor="new-item-input" className="mb-2 text-sm">
-                    Type your item below and click the + button to add it to
-                    your collection
-                  </label>
-                  <div className="relative flex w-full items-center">
-                    <input
-                      type="text"
-                      id="new-item-input"
-                      value={newItem}
-                      onChange={(e) => setNewItem(e.target.value)}
-                      className={`font-teacher w-full rounded-md border border-black p-2 pr-24 ${
-                        theme.isDarkMode
-                          ? "bg-gray-700 text-white"
-                          : "bg-white text-black"
-                      }`}
-                      placeholder={`Enter new ${
-                        category === "Science"
-                          ? "science term"
-                          : category === "Nursing"
-                            ? "nursing term"
-                            : "item"
-                      }`}
-                    />
-                    <div className="absolute right-0 flex items-center pr-2">
-                      {newItem && (
-                        <span className="mr-2 animate-pulse text-sm text-blue-500">
-                          Click + to add →
-                        </span>
-                      )}
-                      <button
-                        type="button"
-                        onClick={handleAddItem}
-                        className={`flex size-10 items-center justify-center rounded-full ${
-                          newItem
-                            ? "border border-black bg-green-500 hover:bg-green-600"
-                            : "border border-black bg-gray-400"
-                        } text-2xl text-white transition duration-300`}
-                        title="Add Item"
-                        disabled={!newItem}
-                      >
-                        +
-                      </button>
                     </div>
-                  </div>
-                </div>
-              </>
-            )}
-          </>
-        )}
-      </div>
-      {visibilityStates.isItemPreviewVisible && (
-        <div className="item-preview mt-4 grid grid-cols-3 gap-4">
-          {items.map((item) => (
-            <div key={item.id} className="mb-2 flex items-center">
-              <input
-                type="text"
-                className="font-teacher mr-2 grow rounded-md border border-gray-300 p-2"
-                value={item.name}
-                readOnly
-                title={`Item ${item.id}: ${item.name}`}
-              />
-              <button
-                className="rounded-md bg-red-500 px-2 py-1 text-white transition duration-300 hover:bg-red-600"
-                type="button"
-                onClick={() => handleRemoveItem(item.id)}
-                title="Remove Item"
-              >
-                x
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-      {visibilityStates.isSaveButtonVisible && (
-        <button
-          className="save-collection-button rounded-md border border-black bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
-          type="button"
-          onClick={handleSaveCollection}
-          title="Save Collection"
-        >
-          Save Collection
-        </button>
-      )}
-      {visibilityStates.isImageUploadVisible && (
-        <div className="mb-4 flex flex-col items-center text-center">
-          <label
-            htmlFor="image-upload"
-            className="add-image-button mb-2 mt-4 cursor-pointer rounded-md border border-black bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
-          >
-            Upload Images
-          </label>
-          <input
-            id="image-upload"
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageUpload}
-            className="hidden"
-          />
-          {images.length > 0 && (
-            <div className="item-preview mt-4 grid grid-cols-3 gap-4">
-              {images.map((image) => (
-                <div key={image.id} className="relative">
-                  <img
-                    src={image.preview}
-                    alt={image.file.name}
-                    className="size-24 object-cover"
-                  />
-                  {category === "Number Sense" && (
-                    <div className="mt-2">
-                      <label className="block text-sm font-bold">
-                        Number of items in image:
-                      </label>
-                      <input
-                        id={`count-${image.id}`}
-                        type="number"
-                        value={image.count || ""} // Use empty string when count is 0
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          handleImageCountChange(
-                            image.id, 
-                            value === "" ? null : parseInt(value)
-                          );
-                        }}
-                        min="0" // Changed from 1 to 0 to allow empty field
-                        className="ml-2 w-16 rounded border border-gray-300 px-2 py-1"
-                      />
-                    </div>
-                  )}
+                  ))}
                   <button
                     type="button"
-                    onClick={() => handleRemoveImage(image.id)}
-                    className="absolute -right-2 -top-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white"
+                    onClick={handleAddDot}
+                    className="add-dot-button mb-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
                   >
-                    X
+                    Add Another Dot
                   </button>
-                </div>
-              ))}
-            </div>
-          )}
-          {images.length > 0 && (
-            <button
-              type="button"
-              onClick={handleAddImageItem}
-              className="mt-4 rounded-md bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
-            >
-              Add Images to Collection
-            </button>
+                  <button
+                    type="button"
+                    onClick={handleAddNumberSenseItem}
+                    className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+                    title="Add Number Sense Item"
+                  >
+                    +
+                  </button>
+                </>
+              ) : category === "Science" && initialType === "periodicTable" ? (
+                <>
+                  <label htmlFor="element-select" className="mb-2">
+                    Select an element:
+                  </label>
+                  <select
+                    id="element-select"
+                    value={selectedElement}
+                    onChange={handleElementSelect}
+                    className="font-teacher mb-4 w-full rounded-md border border-black p-2"
+                  >
+                    <option value="">Select an element</option>
+                    {Object.values(periodicTable).map((element) => (
+                      <option
+                        key={element.atomicNumber}
+                        value={JSON.stringify(element)}
+                      >
+                        {element.symbol} - {element.name} - {element.atomicNumber}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={handleAddItem}
+                    className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+                    title="Add Item"
+                  >
+                    +
+                  </button>
+                </>
+              ) : category === "Science" || category === "Nursing" ? (
+                <>
+                  <label htmlFor="term-select" className="mb-2">
+                    Select a {category.toLowerCase()} term:
+                  </label>
+                  <select
+                    id="term-select"
+                    value={selectedTerm}
+                    onChange={handleTermSelect}
+                    className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-black"
+                  >
+                    <option value="">Select a term</option>
+                    {terms.map((term, index) => (
+                      <option key={index} value={term}>
+                        {term}
+                      </option>
+                    ))}
+                  </select>
+                  <label htmlFor="custom-term-input" className="mb-2">
+                    Or enter a custom {category.toLowerCase()} term:
+                  </label>
+                  <input
+                    type="text"
+                    id="custom-term-input"
+                    value={customTerm}
+                    onChange={handleCustomTermChange}
+                    className="font-teacher mb-2 w-full rounded-md border border-black p-2 text-black"
+                    placeholder={`Enter custom ${category.toLowerCase()} term`}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddTerm}
+                    className="mb-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
+                  >
+                    Add Term
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-col items-center">
+                    <label htmlFor="new-item-input" className="mb-2 text-sm">
+                      Type your item below and click the + button to add it to
+                      your collection
+                    </label>
+                    <div className="relative flex w-full items-center">
+                      <input
+                        type="text"
+                        id="new-item-input"
+                        value={newItem}
+                        onChange={(e) => setNewItem(e.target.value)}
+                        className={`font-teacher w-full rounded-md border border-black p-2 pr-24 ${
+                          theme.isDarkMode
+                            ? "bg-gray-700 text-white"
+                            : "bg-white text-black"
+                        }`}
+                        placeholder={`Enter new ${
+                          category === "Science"
+                            ? "science term"
+                            : category === "Nursing"
+                              ? "nursing term"
+                              : "item"
+                        }`}
+                      />
+                      <div className="absolute right-0 flex items-center pr-2">
+                        {newItem && (
+                          <span className="mr-2 animate-pulse text-sm text-blue-500">
+                            Click + to add →
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          onClick={handleAddItem}
+                          className={`flex size-10 items-center justify-center rounded-full ${
+                            newItem
+                              ? "border border-black bg-green-500 hover:bg-green-600"
+                              : "border border-black bg-gray-400"
+                          } text-2xl text-white transition duration-300`}
+                          title="Add Item"
+                          disabled={!newItem}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </>
           )}
         </div>
-      )}
-      {/* Add the GuidedTour component here */}
-      <GuidedTour
-        steps={steps}
-        isRunning={isTourRunning}
-        onComplete={handleTourComplete}
-        currentStep={currentTourStep}
-        onStepChange={handleTourStepChange}
-        tourName="collectionFinalStep"
-      />
-      {/* Button to show feedback form */}
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
-      {/* Render FeedbackForm */}
+        {visibilityStates.isItemPreviewVisible && (
+          <div className="item-preview mt-4 grid grid-cols-3 gap-4">
+            {items.map((item) => (
+              <div key={item.id} className="mb-2 flex items-center">
+                <input
+                  type="text"
+                  className="font-teacher mr-2 grow rounded-md border border-gray-300 p-2"
+                  value={item.name}
+                  readOnly
+                  title={`Item ${item.id}: ${item.name}`}
+                />
+                <button
+                  className="rounded-md bg-red-500 px-2 py-1 text-white transition duration-300 hover:bg-red-600"
+                  type="button"
+                  onClick={() => handleRemoveItem(item.id)}
+                  title="Remove Item"
+                >
+                  x
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        {visibilityStates.isSaveButtonVisible && (
+          <button
+            className="save-collection-button rounded-md border border-black bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+            type="button"
+            onClick={handleSaveCollection}
+            title="Save Collection"
+          >
+            Save Collection
+          </button>
+        )}
+        {visibilityStates.isImageUploadVisible && (
+          <div className="mb-4 flex flex-col items-center text-center">
+            <label
+              htmlFor="image-upload"
+              className="add-image-button mb-2 mt-4 cursor-pointer rounded-md border border-black bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
+            >
+              Upload Images
+            </label>
+            <input
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+            {images.length > 0 && (
+              <div className="item-preview mt-4 grid grid-cols-3 gap-4">
+                {images.map((image) => (
+                  <div key={image.id} className="relative">
+                    <img
+                      src={image.preview}
+                      alt={image.file.name}
+                      className="size-24 object-cover"
+                    />
+                    {category === "Number Sense" && (
+                      <div className="mt-2">
+                        <label className="block text-sm font-bold">
+                          Number of items in image:
+                        </label>
+                        <input
+                          id={`count-${image.id}`}
+                          type="number"
+                          value={image.count || ""} // Use empty string when count is 0
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            handleImageCountChange(
+                              image.id, 
+                              value === "" ? null : parseInt(value)
+                            );
+                          }}
+                          min="0" // Changed from 1 to 0 to allow empty field
+                          className="ml-2 w-16 rounded border border-gray-300 px-2 py-1"
+                        />
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(image.id)}
+                      className="absolute -right-2 -top-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white"
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            {images.length > 0 && (
+              <button
+                type="button"
+                onClick={handleAddImageItem}
+                className="mt-4 rounded-md bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+              >
+                Add Images to Collection
+              </button>
+            )}
+          </div>
+        )}
+        {/* Add the GuidedTour component here */}
+        <GuidedTour
+          steps={steps}
+          isRunning={isTourRunning}
+          onComplete={handleTourComplete}
+          currentStep={currentTourStep}
+          onStepChange={handleTourStepChange}
+          tourName="collectionFinalStep"
+        />
+        {/* Button to show feedback form */}
+        <button
+          type="button"
+          onClick={() => setShowFeedback(true)}
+          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+        >
+          Give Feedback
+        </button>
+        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
+        {/* Render FeedbackForm */}
+      </div>
     </div>
   );
 };
