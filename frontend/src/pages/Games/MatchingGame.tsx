@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useTheme } from "../../context/ThemeContext";
 import FeedbackForm from "../../components/FeedbackForm";
 import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMatchingGame } from "./tourStepsMatchingGame";
@@ -7,7 +6,6 @@ import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
 
 const MatchingGame: React.FC = () => {
-  const { theme } = useTheme();
   const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const [matches, setMatches] = useState<{ [key: string]: boolean }>({});
@@ -36,13 +34,7 @@ const MatchingGame: React.FC = () => {
   };
 
   return (
-    <div
-      className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4"
-      style={{
-        color: theme.originalTextColor,
-        backgroundColor: theme.backgroundColor,
-      }}
-    >
+    <div className="page-container">
       <button
         type="button"
         onClick={handleBack}

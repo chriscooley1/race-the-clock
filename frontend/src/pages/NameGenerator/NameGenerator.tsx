@@ -239,7 +239,7 @@ const NameGenerator: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`name-generator flex min-h-screen flex-col items-center justify-center pt-[20px] ${
+      className={`name-generator page-container ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`}
       style={{
