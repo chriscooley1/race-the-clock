@@ -88,64 +88,62 @@ const Reports: React.FC = () => {
   };
 
   return (
-    <div className="page-container">
-      <div
-        className="flex min-h-[calc(100vh-65px)] flex-col items-center px-4"
-        style={{
-          color: theme.originalTextColor,
-          backgroundColor: theme.backgroundColor,
-        }}
+    <div
+      className="page-container"
+      style={{
+        color: theme.originalTextColor,
+        backgroundColor: theme.backgroundColor,
+      }}
+    >
+      <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
+      <p>View detailed reports of user performance after each session.</p>
+      {isLoading ? (
+        <p>Loading reports...</p>
+      ) : (
+        <div className="reports-overview">
+          <h2>Reports Overview</h2>
+          <ul>
+            {reports.map((report) => (
+              <li key={report.report_id}>
+                <p>Total Items: {report.total_items}</p>
+                <p>Time Taken: {report.time_taken} seconds</p>
+                <p>Missed Items: {report.missed_items}</p>
+                <p>Skipped Items: {report.skipped_items}</p>
+                <p>
+                  Created At: {new Date(report.created_at).toLocaleString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <h2>Your Collections</h2>
+          <ul>
+            {collections.map((collection) => (
+              <li key={collection.collection_id}>
+                {collection.name} - Completed: {getCompletionCount(collection)}{" "}
+                times
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
       >
-        <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
-        <p>View detailed reports of user performance after each session.</p>
-        {isLoading ? (
-          <p>Loading reports...</p>
-        ) : (
-          <div className="reports-overview">
-            <h2>Reports Overview</h2>
-            <ul>
-              {reports.map((report) => (
-                <li key={report.report_id}>
-                  <p>Total Items: {report.total_items}</p>
-                  <p>Time Taken: {report.time_taken} seconds</p>
-                  <p>Missed Items: {report.missed_items}</p>
-                  <p>Skipped Items: {report.skipped_items}</p>
-                  <p>
-                    Created At: {new Date(report.created_at).toLocaleString()}
-                  </p>
-                </li>
-              ))}
-            </ul>
-            <h2>Your Collections</h2>
-            <ul>
-              {collections.map((collection) => (
-                <li key={collection.collection_id}>
-                  {collection.name} - Completed: {getCompletionCount(collection)}{" "}
-                  times
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
+        Give Feedback
+      </button>
 
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 
-        <GuidedTour
-          steps={steps}
-          isRunning={isTourRunning}
-          onComplete={handleTourComplete}
-          currentStep={currentTourStep}
-          onStepChange={(step) => setCurrentTourStep(step)}
-          tourName="reports"
-        />
-      </div>
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={(step) => setCurrentTourStep(step)}
+        tourName="reports"
+      />
     </div>
   );
 };
