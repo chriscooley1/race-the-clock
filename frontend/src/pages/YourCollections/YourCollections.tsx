@@ -665,11 +665,8 @@ const YourCollections: React.FC = () => {
                 }}
                 className="font-teacher w-full rounded border p-2 text-base"
                 style={{
-                  backgroundColor: adjustColorForColorblindness(
-                    theme.backgroundColor,
-                  ),
-                  color: adjustColorForColorblindness(theme.textColor),
-                  borderColor: adjustColorForColorblindness(theme.textColor),
+                  backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+                  color: theme.isDarkMode ? "#FFFFFF" : "#000000",
                 }}
                 aria-label="Select a collection to duplicate"
               >

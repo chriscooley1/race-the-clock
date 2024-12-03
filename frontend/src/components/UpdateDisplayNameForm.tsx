@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { updateDisplayName } from "../api";
+import { useTheme } from "../context/ThemeContext";
 
 interface UpdateDisplayNameFormProps {
   className?: string;
@@ -33,6 +34,8 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
     }
   };
 
+  const { theme } = useTheme();
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleUpdateDisplayName();
@@ -51,6 +54,10 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
         onChange={(e) => {
           console.log("Display name input changed:", e.target.value);
           setDisplayName(e.target.value);
+        }}
+        style={{
+          backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+          color: theme.isDarkMode ? "#FFFFFF" : "#000000",
         }}
         onKeyDown={handleKeyDown}
         placeholder="Enter your display name"

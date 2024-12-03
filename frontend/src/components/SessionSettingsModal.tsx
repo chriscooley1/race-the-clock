@@ -191,6 +191,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                 placeholder="Seconds"
                 title="Answer Display Time"
                 min={1}
+                style={{
+                  backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+                  color: theme.isDarkMode ? "#FFFFFF" : "#000000",
+                }}
                 onKeyDown={handleKeyDown}
               />
             </div>
