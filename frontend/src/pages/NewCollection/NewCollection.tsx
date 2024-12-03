@@ -128,7 +128,7 @@ const NewCollection: React.FC = () => {
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   return (
-    <div className="page-container">
+    <div className="page-container mt-4">
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
         <h1 className="new-collection-page text-4xl font-bold">
           Step 1 - Create

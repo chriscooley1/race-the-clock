@@ -310,7 +310,7 @@ const DiscoverCollections: React.FC = () => {
   }, [user, getAccessTokenSilently]);
 
   return (
-    <div className="page-container">
+    <div className="page-container mt-6">
       <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
         Discover Public Collections
       </h1>
