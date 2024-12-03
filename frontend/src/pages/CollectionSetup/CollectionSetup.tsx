@@ -529,26 +529,6 @@ const CollectionSetup: React.FC = () => {
         <h1 className="collection-setup text-4xl font-bold">Step 2 - Setup</h1>
         <h2 className="text-3xl font-bold">Collection: {collectionName}</h2>
         <h3 className="mb-4 text-2xl font-semibold">Category: {category}</h3>
-        <div className="mb-8 flex flex-col items-center space-y-4">
-          <h2 className="text-2xl font-bold">Choose Your Collection Method:</h2>
-          <div className="flex flex-col items-center space-y-4">
-            <p className="text-center text-lg">
-              Stay on this page to generate random items, or click below to create
-              custom items
-            </p>
-            <button
-              type="button"
-              className="rounded-lg border border-black bg-green-500 px-6 py-3 font-bold text-white transition-all duration-300 hover:bg-green-600"
-              onClick={() => {
-                navigate("/collection-final-step", {
-                  state: { collectionName, isPublic, category, sequence, type },
-                });
-              }}
-            >
-              Create Custom Items
-            </button>
-          </div>
-        </div>
         <div className="mb-4 flex w-full max-w-3xl flex-col items-center space-y-4">
           {category !== "Number Sense" ? (
             <>
@@ -813,13 +793,31 @@ const CollectionSetup: React.FC = () => {
               </button>
             </div>
           ) : (
-            <button
-              type="button"
-              className="next-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-black p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
-              onClick={handleNext}
-            >
-              Next
-            </button>
+            <div className="flex flex-col items-center space-y-4">
+              <button
+                type="button"
+                className="next-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-black p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+                onClick={handleNext}
+              >
+                Save Collection
+              </button>
+              
+              <div className="text-center">
+                <p className="mb-2 font-bold">- OR -</p>
+                <p className="mb-4 text-sm">Want to create your own custom items instead?</p>
+                <button
+                  type="button"
+                  className="rounded-lg border border-black bg-green-500 px-6 py-3 font-bold text-white transition-all duration-300 hover:bg-green-600"
+                  onClick={() => {
+                    navigate("/collection-final-step", {
+                      state: { collectionName, isPublic, category, sequence, type },
+                    });
+                  }}
+                >
+                  Create Custom Items →
+                </button>
+              </div>
+            </div>
           )}
         </div>
         {isGenerated && (
