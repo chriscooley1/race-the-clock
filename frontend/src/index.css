@@ -112,10 +112,10 @@ body {
 @layer utilities {
   .page-container {
     @apply flex min-h-screen w-full flex-col items-center px-4;
-    padding-top: var(--navbar-padding, 65px);
+    padding-top: var(--navbar-padding, 115px);
   }
 
   .page-container-with-collections {
-    --navbar-padding: 125px;
+    --navbar-padding: 175px;
   }
 }

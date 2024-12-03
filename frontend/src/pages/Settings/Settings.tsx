@@ -286,7 +286,7 @@ const Settings: React.FC = () => {
         />
       )}
       <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
-      <div className="absolute right-4 top-[65px] z-10 mt-4">
+      <div className="absolute right-4 top-[65px] z-10 mt-16">
         <label className="flex items-center">
           <input
             type="checkbox"
@@ -297,7 +297,7 @@ const Settings: React.FC = () => {
           Toggle Dark Mode
         </label>
       </div>
-      <div className="absolute right-4 top-[90px] z-10 mt-4">
+      <div className="absolute right-4 top-[90px] z-10 mt-16">
         <label className="flex items-center">
           <input
             type="checkbox"

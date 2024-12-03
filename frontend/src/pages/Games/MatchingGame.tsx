@@ -38,7 +38,7 @@ const MatchingGame: React.FC = () => {
       <button
         type="button"
         onClick={handleBack}
-        className="fixed left-4 top-20 z-40 rounded border border-black bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+        className="fixed left-4 top-20 z-40 mt-12 rounded border border-black bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
       >
         Back to Games
       </button>

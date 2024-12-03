@@ -251,7 +251,7 @@ const Navbar: React.FC<NavbarProps> = ({
   return (
     <div
       className="bg-heisenberg-blue fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
-      style={{ height: "65px" }}
+      style={{ height: "115px" }}
     >
       <div className="flex items-center space-x-2">
         {(location.pathname === "/fullscreen-display" || hasBackButton) && (
@@ -293,7 +293,7 @@ const Navbar: React.FC<NavbarProps> = ({
         )}
       </div>
       <div className="flex grow items-center justify-center space-x-6">
-        <img src={mainLogo} alt="Main Logo" className="h-16 cursor-pointer" onClick={handleTitleClick} />
+        <img src={mainLogo} alt="Main Logo" className="h-20 cursor-pointer" onClick={handleTitleClick} />
         
         <nav className="hidden md:flex space-x-4">
           {navigationItems.map((item) => (
@@ -301,10 +301,10 @@ const Navbar: React.FC<NavbarProps> = ({
               type="button"
               key={item.path}
               onClick={() => handleNavigate(item.path)}
-              className="flex flex-col items-center justify-center px-3 py-2 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors duration-200 dark:text-white dark:hover:bg-gray-700"
+              className="flex flex-col items-center justify-center px-8 py-2 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors duration-200 dark:text-white dark:hover:bg-gray-700"
             >
-              <span className="text-2xl mb-1">{item.icon}</span>
-              <span className="text-xs font-medium">{item.label}</span>
+              <span className="text-3xl mb-1">{item.icon}</span>
+              <span className="text-s font-medium">{item.label}</span>
             </button>
           ))}
         </nav>
