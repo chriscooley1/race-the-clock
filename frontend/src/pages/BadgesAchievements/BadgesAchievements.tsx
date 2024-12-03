@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "../../context/ThemeContext";
 import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
 import { useCompletion } from "../../context/CompletionContext";
 import FeedbackForm from "../../components/FeedbackForm";
 
 const BadgesAchievements: React.FC = () => {
-  const { theme } = useTheme();
   const [badges, setBadges] = useState<string[]>([]);
   const [achievements, setAchievements] = useState<string[]>([]);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -83,10 +81,6 @@ const BadgesAchievements: React.FC = () => {
   return (
     <div
       className="page-container"
-      style={{
-        color: theme.originalTextColor,
-        backgroundColor: theme.backgroundColor,
-      }}
     >
       <h1 className="mb-8 text-3xl font-bold">Badges & Achievements</h1>
       <p>

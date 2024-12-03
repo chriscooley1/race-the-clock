@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "../../context/ThemeContext";
 import { tourStepsResources } from "./tourStepsResources";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
@@ -16,7 +15,6 @@ interface InstructionalVideo {
 }
 
 const Resources: React.FC = () => {
-  const { theme } = useTheme();
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [videos, setVideos] = useState<InstructionalVideo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -95,10 +93,6 @@ const Resources: React.FC = () => {
   return (
     <div
       className="page-container"
-      style={{
-        color: theme.originalTextColor,
-        backgroundColor: theme.backgroundColor,
-      }}
     >
       <h1 className="mb-8 text-3xl font-bold">Resources</h1>
 

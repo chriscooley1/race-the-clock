@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getCurrentUser, updateDisplayName } from "../../api";
 import UpdateDisplayNameForm from "../../components/UpdateDisplayNameForm";
-import { useTheme } from "../../context/ThemeContext";
 import { tourStepsMyAccount } from "./tourStepsMyAccount";
 import GuidedTour from "../../components/GuidedTour";
 import { updateUserRole } from "../../api";
@@ -19,14 +18,12 @@ interface UserData {
 const MyAccount: React.FC = () => {
   const { user, getAccessTokenSilently } = useAuth0();
   const [userData, setUserData] = useState<UserData | null>(null);
-  const { theme } = useTheme();
-
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [role, setRole] = useState<string>(
     localStorage.getItem("userRole") || "student",
   );
-  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable without visibility states
   const steps = tourStepsMyAccount(); // Create tour steps without visibility states
@@ -103,13 +100,7 @@ const MyAccount: React.FC = () => {
 
   return (
     <div className="page-container">
-      <div
-        className="w-full max-w-md rounded-lg p-8 shadow-md"
-        style={{
-          backgroundColor: theme.backgroundColor,
-          color: theme.originalTextColor,
-        }}
-      >
+      <div className="w-full max-w-md rounded-lg bg-theme-bg p-8 shadow-md text-theme-text">
         <h1 className="mb-6 text-center text-3xl font-bold">My Account</h1>
 
         {user ? (
@@ -123,18 +114,12 @@ const MyAccount: React.FC = () => {
               <h2 className="text-xl font-semibold">
                 {userData?.display_name || (user?.name?.includes("|") ? user.name.split("|")[1] : user.name)}
               </h2>
-              <p
-                className={`${theme.isDarkMode ? "text-gray-300" : "text-gray-600"}`}
-              >
+              <p className="dark:text-gray-300 text-gray-600">
                 {user.email}
               </p>
             </div>
             <UpdateDisplayNameForm
               className="update-display-name-form mb-4"
-              style={{
-                backgroundColor: theme.backgroundColor,
-                color: theme.originalTextColor,
-              }}
               onDisplayNameUpdate={handleDisplayNameUpdate}
             />
             <div className="flex justify-center">
