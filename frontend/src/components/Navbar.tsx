@@ -253,43 +253,70 @@ const Navbar: React.FC<NavbarProps> = ({
       className="bg-heisenberg-blue fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
       style={{ height: "115px" }}
     >
-      <div className="flex items-center space-x-2">
-        {(location.pathname === "/fullscreen-display" || hasBackButton) && (
-          <button
-            type="button"
-            className="bg-custom-red hover:bg-custom-red-dark rounded border border-black px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
-            onClick={onBack || handleBack}
-          >
-            Back
-          </button>
-        )}
-        {location.pathname === "/fullscreen-display" && onPauseResume && (
-          <button
-            type="button"
-            className="bg-custom-green hover:bg-custom-green-dark rounded border border-black px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
-            onClick={onPauseResume}
-          >
-            {isPaused ? "Resume" : "Pause"}
-          </button>
-        )}
-        {isGuidedTourEnabled && (
-          <button
-            type="button"
-            onClick={handleStartTour}
-            className="rounded border border-black bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
-          >
-            Start Tour
-          </button>
-        )}
-        {/* Conditionally render the feedback button only for FullScreenDisplay */}
-        {location.pathname === "/fullscreen-display" && (
-          <button
-            type="button"
-            onClick={() => setShowFeedback(true)}
-            className="hover:bg-light-blue-600 ml-4 rounded border border-black bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
-          >
-            Give Feedback
-          </button>
+      <div className="flex flex-col space-y-2">
+        {location.pathname === "/fullscreen-display" ? (
+          <>
+            {/* Top row for Back and Pause/Resume */}
+            <div className="flex items-center space-x-2">
+              <button
+                type="button"
+                className="bg-custom-red hover:bg-custom-red-dark rounded border border-black px-3 py-1.5 text-sm font-bold text-white transition-colors duration-300"
+                onClick={onBack || handleBack}
+              >
+                Back
+              </button>
+              {onPauseResume && (
+                <button
+                  type="button"
+                  className="bg-custom-green hover:bg-custom-green-dark rounded border border-black px-3 py-1.5 text-sm font-bold text-white transition-colors duration-300"
+                  onClick={onPauseResume}
+                >
+                  {isPaused ? "Resume" : "Pause"}
+                </button>
+              )}
+            </div>
+            {/* Bottom row for Tour and Feedback - with smaller text and padding */}
+            <div className="flex items-center space-x-2">
+              {isGuidedTourEnabled && (
+                <button
+                  type="button"
+                  onClick={handleStartTour}
+                  className="rounded border border-black bg-blue-500 px-2 py-1 text-xs font-medium text-white transition-colors duration-300 hover:bg-blue-600"
+                >
+                  Start Tour
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setShowFeedback(true)}
+                className="hover:bg-light-blue-600 rounded border border-black bg-blue-500 px-2 py-1 text-xs font-medium text-white transition-colors duration-300"
+              >
+                Give Feedback
+              </button>
+            </div>
+          </>
+        ) : (
+          // Regular layout for other pages
+          <div className="flex items-center space-x-2">
+            {hasBackButton && (
+              <button
+                type="button"
+                className="bg-custom-red hover:bg-custom-red-dark rounded border border-black px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
+                onClick={onBack || handleBack}
+              >
+                Back
+              </button>
+            )}
+            {isGuidedTourEnabled && (
+              <button
+                type="button"
+                onClick={handleStartTour}
+                className="rounded border border-black bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
+              >
+                Start Tour
+              </button>
+            )}
+          </div>
         )}
       </div>
       <div className="flex grow items-center justify-center space-x-6">
