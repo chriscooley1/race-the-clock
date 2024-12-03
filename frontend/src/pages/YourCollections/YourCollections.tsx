@@ -335,22 +335,33 @@ const YourCollections: React.FC = () => {
   const handleDuplicateConfirm = async () => {
     if (!selectedCollectionToDuplicate) return;
     try {
-      const duplicatedCollection = await duplicateCollection(
+      setIsLoading(true);
+      // Duplicate the collection
+      await duplicateCollection(
         selectedCollectionToDuplicate,
         getAccessTokenSilently,
       );
-      setCollections((prevCollections) => [
-        ...prevCollections,
-        duplicatedCollection,
-      ]);
+      
+      // Fetch fresh data after duplication
+      const refreshedCollections = await fetchCollections(
+        getAccessTokenSilently,
+      );
+      
+      // Update collections with fresh data
+      setCollections(refreshedCollections);
+      
+      // Filter and sort the fresh data
       filterAndSortCollections(
-        [...collections, duplicatedCollection],
+        refreshedCollections,
         selectedCategory,
         sortOption,
       );
+      
       setDuplicateModalOpen(false);
     } catch (error) {
       console.error("Error duplicating collection:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
