@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "../../context/ThemeContext";
 import { fetchReports, fetchCollections } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsReports } from "./tourStepsReports";
@@ -24,7 +23,6 @@ interface Collection {
 }
 
 const Reports: React.FC = () => {
-  const { theme } = useTheme();
   const { getAccessTokenSilently } = useAuth0();
   const [reports, setReports] = useState<Report[]>([]); // State to hold reports
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
@@ -88,13 +86,7 @@ const Reports: React.FC = () => {
   };
 
   return (
-    <div
-      className="page-container"
-      style={{
-        color: theme.originalTextColor,
-        backgroundColor: theme.backgroundColor,
-      }}
-    >
+    <div className="page-container">
       <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
       <p>View detailed reports of user performance after each session.</p>
       {isLoading ? (
