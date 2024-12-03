@@ -258,8 +258,8 @@ const NameGenerator: React.FC = () => {
           <div
             className={`flex flex-col items-center ${showRightSide ? "w-1/2" : "w-full"}`}
           >
-            <div className="relative flex w-full max-w-[500px] flex-col items-center">
-              <NameWheel
+            <div className="relative flex w-full max-w-[500px] flex-col items-center" style={{ marginTop: "-80px" }}>
+            <NameWheel
                 names={nameList}
                 isSpinning={isSpinning}
                 spinData={spinData}
@@ -296,7 +296,7 @@ const NameGenerator: React.FC = () => {
               showRightSide
                 ? "w-1/2 opacity-100"
                 : "w-0 overflow-hidden opacity-0"
-            }`}
+            }`} style={{ marginTop: "-80px" }}
           >
             {visibilityStates.isNameInputVisible && (
               <div className="mb-5 flex items-center">
