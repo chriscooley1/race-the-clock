@@ -780,7 +780,7 @@ const CollectionFinalStep: React.FC = () => {
         )}
         {visibilityStates.isSaveButtonVisible && (
           <button
-            className="save-collection-button rounded-md border border-black bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+            className="save-collection-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-black p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
             type="button"
             onClick={handleSaveCollection}
             title="Save Collection"

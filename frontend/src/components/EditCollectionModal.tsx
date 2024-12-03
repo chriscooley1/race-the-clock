@@ -180,7 +180,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
         <div className="mt-6 flex w-full justify-around">
           <button
             type="button"
-            className="rounded border border-black bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+            className="rounded border border-black bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
             onClick={handleSave}
           >
             Save Collection
