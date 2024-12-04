@@ -111,7 +111,12 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           {/* Resources Button */}
           <button
             type="button"
-            onClick={() => navigate("/resources")}
+            onClick={() => {
+              console.log("Resources button clicked - attempting navigation");
+              navigate("/resources", { replace: false });
+              console.log("Navigation completed");
+              setIsAccountDropdownOpen(false);
+            }}
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
             Resources

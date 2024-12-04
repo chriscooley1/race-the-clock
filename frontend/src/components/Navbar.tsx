@@ -41,11 +41,11 @@ interface NavbarProps {
 }
 
 const navigationItems = [
-  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-18 h-18 mt-20" />, label: "Collections" },
-  { path: "/new-collection", icon: <img src={newIcon} alt="New" className="w-18 h-18" />, label: "New" },
-  { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-18 h-18" />, label: "Discover" },
-  { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-18 h-18" />, label: "Games" },
-  { path: "/name-generator", icon: <img src={spinnerIcon} alt="Spinner" className="w-18 h-18" />, label: "Spinner" },
+  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-18 h-18 mt-20" /> },
+  { path: "/new-collection", icon: <img src={newIcon} alt="New" className="w-18 h-18" />},
+  { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-18 h-18" /> },
+  { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-18 h-18" /> },
+  { path: "/name-generator", icon: <img src={spinnerIcon} alt="Spinner" className="w-18 h-18" /> },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -254,7 +254,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <div
-      className="bg-black inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
+      className="bg-black inset-x-0 top-0 z-[50] flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
       style={{ height: "200px" }}
     >
       <div className="flex flex-col space-y-2">
@@ -336,12 +336,11 @@ const Navbar: React.FC<NavbarProps> = ({
               type="button"
               key={item.path}
               onClick={() => handleNavigate(item.path)}
-              className="flex flex-col items-center justify-center px-6 py-2 text-white rounded-lg transition-all duration-300 overflow-visible pointer-events-auto"
-              style={{ clipPath: 'inset(0)' }}
+              className="group flex flex-col items-center justify-center px-6 py-2 text-white transition-all duration-300"
             >
-              <span className="text-6xl pointer-events-none">
+              <div className="relative h-24 w-24 flex items-center justify-center">
                 {typeof item.icon === "string" ? item.icon : item.icon}
-              </span>
+              </div>
             </button>
           ))}
         </nav>
