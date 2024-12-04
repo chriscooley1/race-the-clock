@@ -31,20 +31,21 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
     const categoryColor =
       categoryColors[category as keyof typeof categoryColors];
     return selectedCategory === category
-      ? `${categoryColor} text-white border border-black`
-      : `bg-gray-200 text-gray-700 hover:${categoryColor} hover:text-white border border-black dark:bg-gray-700 dark:text-gray-300 dark:hover:${categoryColor}`;
+      ? `${categoryColor} text-white`
+      : `text-white hover:${categoryColor} hover:text-white`;
   };
 
   return (
     <div className="fixed inset-x-0 top-navbar-height z-40 bg-black text-white shadow-md dark:bg-gray-800">
-      <div className="flex w-full flex-col px-4 py-2">
-        <div className="mb-2 flex w-full overflow-x-auto">
+      <div className="flex w-full items-center justify-between px-6 py-3">
+        {/* Left side - Categories */}
+        <div className="flex space-x-6">
           {categories.map((category) => (
             <button
               type="button"
               key={category}
               onClick={() => onSelectCategory(category)}
-              className={`mr-2 grow whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${getCategoryButtonColor(
+              className={`text-lg font-semibold transition-colors duration-300 ${getCategoryButtonColor(
                 category,
               )}`}
             >
@@ -52,7 +53,9 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             </button>
           ))}
         </div>
-        <div className="flex items-center justify-center text-white">
+
+        {/* Right side - Controls */}
+        <div className="flex items-center space-x-4">
           <div className="flex items-center">
             <label htmlFor="sortSelect" className="mr-2 text-sm">
               Sort by:
@@ -73,14 +76,14 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           <button
             type="button"
             onClick={onDuplicateCollection}
-            className="ml-4 rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
+            className="rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
           >
             Duplicate Collection
           </button>
           <button
             type="button"
             onClick={() => setShowFeedback(true)}
-            className="ml-4 rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
+            className="rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
           >
             Give Feedback
           </button>
