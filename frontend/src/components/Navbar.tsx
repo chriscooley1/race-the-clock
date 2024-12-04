@@ -3,7 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTour } from "../context/TourContext";
 import { Step } from "react-joyride";
-import mainLogo from "../assets/main-logo.png";
+import newIcon from "../assets/new.png";
+import discoverIcon from "../assets/discover.png";
+import gamesIcon from "../assets/games.png";
+import spinnerIcon from "../assets/spinner.png";
+import collectionsIcon from "../assets/collections.png";
+import raceTheClockIcon from "../assets/race-the-clock-logo-colorful.png";
 
 import { tourStepsYourCollections } from "../pages/YourCollections/tourStepsYourCollections";
 import { tourStepsNewCollection } from "../pages/NewCollection/tourStepsNewCollection";
@@ -35,11 +40,11 @@ interface NavbarProps {
 }
 
 const navigationItems = [
-  { path: "/your-collections", icon: "📚", label: "Collections" },
-  { path: "/new-collection", icon: "➕", label: "New" },
-  { path: "/discover-collections", icon: "🔍", label: "Discover" },
-  { path: "/name-generator", icon: "🎲", label: "Names" },
-  { path: "/games", icon: "🎮", label: "Games" },
+  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-18 h-18" />, label: "Collections" },
+  { path: "/new-collection", icon: <img src={newIcon} alt="New" className="w-18 h-18" />, label: "New" },
+  { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-18 h-18" />, label: "Discover" },
+  { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-18 h-18" />, label: "Games" },
+  { path: "/name-generator", icon: <img src={spinnerIcon} alt="Spinner" className="w-18 h-18" />, label: "Spinner" },
   { path: "/reports", icon: "📊", label: "Reports" },
   { path: "/badges-achievements", icon: "🏆", label: "Badges" },
   { path: "/resources", icon: "📖", label: "Resources" }
@@ -250,7 +255,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <div
-      className="bg-white fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
+      className="bg-black fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
       style={{ height: "200px" }}
     >
       <div className="flex flex-col space-y-2">
@@ -320,8 +325,8 @@ const Navbar: React.FC<NavbarProps> = ({
       </div>
       <div className="flex grow items-center justify-center space-x-8">
         <img 
-          src={mainLogo} 
-          alt="Main Logo" 
+          src={raceTheClockIcon} 
+          alt="raceTheClockIcon" 
           className="h-40 cursor-pointer transition-all duration-300" 
           onClick={handleTitleClick} 
         />
@@ -332,13 +337,10 @@ const Navbar: React.FC<NavbarProps> = ({
               type="button"
               key={item.path}
               onClick={() => handleNavigate(item.path)}
-              className="flex flex-col items-center justify-center px-6 py-2 text-gray-800 hover:bg-gray-100 rounded-lg transition-all duration-300 dark:text-white dark:hover:bg-gray-700"
+              className="flex flex-col items-center justify-center px-6 py-2 text-white hover:bg-gray-700 rounded-lg transition-all duration-300"
             >
-              <span className="text-6xl mb-2">
-                {item.icon}
-              </span>
-              <span className="font-medium text-base">
-                {item.label}
+              <span className="text-6xl">
+                {typeof item.icon === "string" ? item.icon : item.icon}
               </span>
             </button>
           ))}
