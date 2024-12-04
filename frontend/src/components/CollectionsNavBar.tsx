@@ -1,34 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface CollectionsNavBarProps {
-  onSelectCategory: (category: string) => void;
-  selectedCategory: string;
-  sortOption: string;
-  onSortChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  onDuplicateCollection: () => void;
-  setShowFeedback: (show: boolean) => void;
-}
-
-const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
-  onSelectCategory,
-  selectedCategory,
-  sortOption,
-  onSortChange,
-  onDuplicateCollection,
-  setShowFeedback,
-}) => {
+const CollectionsNavBar: React.FC = () => {
   const navigate = useNavigate();
-  const categories = [
-    "All Collections",
-    "Math",
-    "Language Arts",
-    "Number Sense",
-    "Science",
-    "Nursing",
-  ];
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
 
   return (
@@ -120,73 +94,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
             Resources
-          </button>
-
-          {/* Categories Dropdown */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center space-x-2 rounded border border-black px-4 py-2 text-lg font-semibold hover:bg-gray-100"
-            >
-              <span>{selectedCategory || "Categories"}</span>
-              <span className="ml-2">▼</span>
-            </button>
-
-            {isDropdownOpen && (
-              <div className="absolute left-0 top-full mt-1 w-48 rounded border border-gray-200 bg-white shadow-lg">
-                {categories.map((category) => (
-                  <button
-                    type="button"
-                    key={category}
-                    onClick={() => {
-                      onSelectCategory(category);
-                      setIsDropdownOpen(false);
-                    }}
-                    className={`w-full px-4 py-2 text-left text-lg transition-colors duration-300 hover:bg-gray-100 ${
-                      selectedCategory === category ? "bg-gray-100 font-semibold" : ""
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Right side - Controls */}
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center">
-            <label htmlFor="sortSelect" className="mr-2 text-sm">
-              Sort by:
-            </label>
-            <select
-              id="sortSelect"
-              value={sortOption}
-              onChange={onSortChange}
-              className="font-teacher w-40 rounded border border-black bg-white p-2 text-base text-black"
-            >
-              <option value="name">Name</option>
-              <option value="alphabetical">Alphabetical</option>
-              <option value="category">Category</option>
-              <option value="date">Date</option>
-              <option value="custom">Custom</option>
-            </select>
-          </div>
-          <button
-            type="button"
-            onClick={onDuplicateCollection}
-            className="rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
-          >
-            Duplicate Collection
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowFeedback(true)}
-            className="rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
-          >
-            Give Feedback
           </button>
         </div>
       </div>
