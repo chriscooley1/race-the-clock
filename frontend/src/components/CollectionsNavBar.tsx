@@ -32,7 +32,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
 
   return (
-    <div className="fixed inset-x-0 top-navbar-height z-[51] bg-white text-black shadow-md dark:bg-gray-800">
+    <div className="inset-x-0 top-navbar-height z-[51] bg-white text-black shadow-md dark:bg-gray-800">
       <div className="flex w-full items-center justify-between px-6 py-3">
         {/* Left side - Navigation Items */}
         <div className="flex items-center space-x-4">

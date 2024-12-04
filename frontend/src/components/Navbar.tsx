@@ -254,7 +254,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <div
-      className="bg-black fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
+      className="bg-black inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
       style={{ height: "200px" }}
     >
       <div className="flex flex-col space-y-2">

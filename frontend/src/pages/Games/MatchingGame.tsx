@@ -4,7 +4,6 @@ import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMatchingGame } from "./tourStepsMatchingGame";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout";
 
 const MatchingGame: React.FC = () => {
   const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
@@ -35,74 +34,68 @@ const MatchingGame: React.FC = () => {
   };
 
   return (
-    <Layout
-      onStartTour={() => setIsTourRunning(true)}
-      setTourName={() => {}}
-      setCurrentTourStep={setCurrentTourStep}
-    >
-      <div className="page-container">
-        <button
-          type="button"
-          onClick={handleBack}
-          className="fixed left-4 z-40 mt-[20px] rounded border border-black bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-        >
-          Back to Games
-        </button>
-        <h1 className="mb-8 text-3xl font-bold">Matching Game</h1>
-        {!isGameStarted ? (
-          <div className="game-instructions">
-            <p>Match the letters with the corresponding images!</p>
-            <button
-              type="button"
-              onClick={startGame}
-              className="start-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-black p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
-            >
-              Start Game
-            </button>
-          </div>
-        ) : (
-          <div className="game-board">
-            <p>Game is starting...</p>
-            <div className="flex">
-              <div className="words-section">
-                {words.map((word) => (
-                  <div
-                    key={word}
-                    onClick={() => handleMatch(word)}
-                    className="m-2 cursor-pointer"
-                  >
-                    {word} {matches[word] && "✓"}
-                  </div>
-                ))}
-              </div>
-              <div className="cards-section">
-                {images.map((image) => (
-                  <div key={image} className="m-2">
-                    {image}
-                  </div>
-                ))}
-              </div>
+    <div className="page-container">
+      <button
+        type="button"
+        onClick={handleBack}
+        className="fixed left-4 z-40 mt-[20px] rounded border border-black bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+      >
+        Back to Games
+      </button>
+      <h1 className="mb-8 text-3xl font-bold">Matching Game</h1>
+      {!isGameStarted ? (
+        <div className="game-instructions">
+          <p>Match the letters with the corresponding images!</p>
+          <button
+            type="button"
+            onClick={startGame}
+            className="start-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-5 max-w-[300px] cursor-pointer rounded border border-black p-2.5 text-base font-bold uppercase text-black transition-all duration-300 hover:scale-105 active:scale-95"
+          >
+            Start Game
+          </button>
+        </div>
+      ) : (
+        <div className="game-board">
+          <p>Game is starting...</p>
+          <div className="flex">
+            <div className="words-section">
+              {words.map((word) => (
+                <div
+                  key={word}
+                  onClick={() => handleMatch(word)}
+                  className="m-2 cursor-pointer"
+                >
+                  {word} {matches[word] && "✓"}
+                </div>
+              ))}
+            </div>
+            <div className="cards-section">
+              {images.map((image) => (
+                <div key={image} className="m-2">
+                  {image}
+                </div>
+              ))}
             </div>
           </div>
-        )}
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
-        <GuidedTour
-          steps={tourStepsMatchingGame()}
-          isRunning={isTourRunning && isGuidedTourEnabled}
-          onComplete={handleTourComplete}
-          currentStep={currentTourStep}
-          onStepChange={setCurrentTourStep}
-          tourName="matchingGame"
-        />
-      </div>
-    </Layout>
+        </div>
+      )}
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+      >
+        Give Feedback
+      </button>
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+      <GuidedTour
+        steps={tourStepsMatchingGame()}
+        isRunning={isTourRunning && isGuidedTourEnabled}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="matchingGame"
+      />
+    </div>
   );
 };
 

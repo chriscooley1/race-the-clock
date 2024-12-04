@@ -8,7 +8,6 @@ import {
 } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import SessionSettingsModal from "../../components/SessionSettingsModal";
-import CollectionsNavBar from "../../components/CollectionsNavBar";
 import EditCollectionModal from "../../components/EditCollectionModal";
 import axios from "axios";
 import {
@@ -514,15 +513,6 @@ const YourCollections: React.FC = () => {
 
   return (
     <div className="page-container page-container-with-collections mt-16">
-      <CollectionsNavBar
-        onSelectCategory={handleSelectCategory}
-        selectedCategory={selectedCategory}
-        sortOption={sortOption}
-        onSortChange={handleSortChange}
-        onDuplicateCollection={handleDuplicateCollection}
-        setShowFeedback={setShowFeedback}
-      />
-
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="collections">
           {(provided) => (

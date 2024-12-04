@@ -6,7 +6,6 @@ import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout";
 
 // Define the Collection interface
 interface Collection {
@@ -68,58 +67,52 @@ const TimedChallenges: React.FC = () => {
   };
 
   return (
-    <Layout
-      onStartTour={() => setIsTourRunning(true)}
-      setTourName={() => {}}
-      setCurrentTourStep={setCurrentTourStep}
-    >
-      <div className="page-container">
-        <button
-          type="button"
-          onClick={handleBack}
-          className="fixed left-4 z-40 mt-[20px] rounded border border-black bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-        >
-          Back to Games
-        </button>
-        <h1 className="mb-8 text-3xl font-bold">Timed Challenges</h1>
-        <p>Complete as many challenges as you can within the time limit!</p>
-        {isLoading ? (
-          <p>Loading collections...</p>
-        ) : (
-          <div className="collections-overview">
-            <h2>Your Collections</h2>
-            <ul>
-              {collections.map((collection: Collection) => (
-                <li key={collection.collection_id}>
-                  {collection.name} - {getItemsCount(collection.description)}{" "}
-                  items
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {/* Add your game logic and UI here */}
-        {/* Button to show feedback form */}
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
-        {/* Render FeedbackForm */}
-        {/* Add the GuidedTour component here */}
-        <GuidedTour
-          steps={steps}
-          isRunning={isTourRunning && isGuidedTourEnabled}
-          onComplete={handleTourComplete}
-          currentStep={currentTourStep}
-          onStepChange={setCurrentTourStep}
-          tourName="timedChallenges"
-        />
-      </div>
-    </Layout>
+    <div className="page-container">
+      <button
+        type="button"
+        onClick={handleBack}
+        className="fixed left-4 z-40 mt-[20px] rounded border border-black bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+      >
+        Back to Games
+      </button>
+      <h1 className="mb-8 text-3xl font-bold">Timed Challenges</h1>
+      <p>Complete as many challenges as you can within the time limit!</p>
+      {isLoading ? (
+        <p>Loading collections...</p>
+      ) : (
+        <div className="collections-overview">
+          <h2>Your Collections</h2>
+          <ul>
+            {collections.map((collection: Collection) => (
+              <li key={collection.collection_id}>
+                {collection.name} - {getItemsCount(collection.description)}{" "}
+                items
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {/* Add your game logic and UI here */}
+      {/* Button to show feedback form */}
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+      >
+        Give Feedback
+      </button>
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
+      {/* Render FeedbackForm */}
+      {/* Add the GuidedTour component here */}
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning && isGuidedTourEnabled}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="timedChallenges"
+      />
+    </div>
   );
 };
 

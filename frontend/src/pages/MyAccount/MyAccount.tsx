@@ -7,7 +7,6 @@ import GuidedTour from "../../components/GuidedTour";
 import { updateUserRole } from "../../api";
 import RoleSelection from "../../components/RoleSelection";
 import UserRoleFeatures from "../../components/UserRoleFeatures";
-import Layout from "../../components/Layout";
 
 interface UserData {
   display_name?: string;
@@ -23,7 +22,6 @@ const MyAccount: React.FC = () => {
   const [role, setRole] = useState<string>(
     localStorage.getItem("userRole") || "student",
   );
-  const [tourName, setTourName] = useState<string>("myAccount");
 
   // Define the steps variable without visibility states
   const steps = tourStepsMyAccount(); // Create tour steps without visibility states
@@ -99,47 +97,40 @@ const MyAccount: React.FC = () => {
   };
 
   return (
-    <Layout
-      onStartTour={() => setIsTourRunning(true)}
-      setTourName={setTourName}
-      setCurrentTourStep={setCurrentTourStep}
-      tourName={tourName}
-    >
-      <div className="page-container">
-        <div className="w-full max-w-md rounded-lg bg-theme-bg p-8 shadow-md text-theme-text">
-          <h1 className="mb-6 text-center text-3xl font-bold">My Account</h1>
+    <div className="page-container">
+      <div className="w-full max-w-md rounded-lg bg-theme-bg p-8 shadow-md text-theme-text">
+        <h1 className="mb-6 text-center text-3xl font-bold">My Account</h1>
 
-          {user ? (
-            <div className="space-y-4">
-              <div className="user-profile flex flex-col items-center">
-                <img
-                  src={user.picture}
-                  alt={user.name}
-                  className="mb-4 size-24 rounded-full border border-black"
-                />
-                <h2 className="text-xl font-semibold">
-                  {userData?.display_name || (user?.name?.includes("|") ? user.name.split("|")[1] : user.name)}
-                </h2>
-                <p className="dark:text-gray-300 text-gray-600">
-                  {user.email}
-                </p>
-              </div>
-              <UpdateDisplayNameForm
-                className="update-display-name-form mb-4"
-                onDisplayNameUpdate={handleDisplayNameUpdate}
+        {user ? (
+          <div className="space-y-4">
+            <div className="user-profile flex flex-col items-center">
+              <img
+                src={user.picture}
+                alt={user.name}
+                className="mb-4 size-24 rounded-full border border-black"
               />
-              <div className="flex justify-center">
-                <RoleSelection
-                  onRoleChange={handleRoleChange}
-                  initialRole={userData?.role || role}
-                />
-              </div>
+              <h2 className="text-xl font-semibold">
+                {userData?.display_name || (user?.name?.includes("|") ? user.name.split("|")[1] : user.name)}
+              </h2>
+              <p className="dark:text-gray-300 text-gray-600">
+                {user.email}
+              </p>
             </div>
-          ) : (
-            <p className="text-center">Loading user information...</p>
-          )}
-          <UserRoleFeatures role={role} />
-        </div>
+            <UpdateDisplayNameForm
+              className="update-display-name-form mb-4"
+              onDisplayNameUpdate={handleDisplayNameUpdate}
+            />
+            <div className="flex justify-center">
+              <RoleSelection
+                onRoleChange={handleRoleChange}
+                initialRole={userData?.role || role}
+              />
+            </div>
+          </div>
+        ) : (
+          <p className="text-center">Loading user information...</p>
+        )}
+        <UserRoleFeatures role={role} />
 
         <GuidedTour
           steps={steps}
@@ -150,7 +141,7 @@ const MyAccount: React.FC = () => {
           tourName="myAccount"
         />
       </div>
-    </Layout>
+    </div>
   );
 };
 

@@ -3,7 +3,6 @@ import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
 import { useCompletion } from "../../context/CompletionContext";
 import FeedbackForm from "../../components/FeedbackForm";
-import Layout from "../../components/Layout";
 
 const BadgesAchievements: React.FC = () => {
   const [badges, setBadges] = useState<string[]>([]);
@@ -11,7 +10,6 @@ const BadgesAchievements: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
-  const [tourName, setTourName] = useState<string>("badgesAchievements");
 
   const { completionCounts } = useCompletion();
 
@@ -66,98 +64,91 @@ const BadgesAchievements: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const tourCompleted = localStorage.getItem(`tourCompleted_${tourName}`);
+    const tourCompleted = localStorage.getItem(`tourCompleted_badgesAchievements`);
     if (!tourCompleted) {
       setIsTourRunning(true);
     }
-  }, [tourName]);
+  }, []);
 
   const handleTourComplete = () => {
     setIsTourRunning(false);
-    localStorage.setItem(`tourCompleted_${tourName}`, "true");
+    localStorage.setItem(`tourCompleted_badgesAchievements`, "true");
   };
 
   // Call the function without arguments
   const steps = tourStepsBadgesAchievements();
 
   return (
-    <Layout
-      onStartTour={() => setIsTourRunning(true)}
-      setTourName={setTourName}
-      setCurrentTourStep={setCurrentTourStep}
-      tourName={tourName}
-    >
-      <div className="page-container">
-        <h1 className="mb-8 text-3xl font-bold">Badges & Achievements</h1>
-        <p>
-          Badges and Achievements: Create badges for students who achieve specific
-          goals, like "Read 60 Letters in a Minute" or "Complete an Advanced
-          Session."
-        </p>
-        <p>
-          Milestones for Teachers: Teachers can set milestones for their students,
-          rewarding them as they improve, fostering motivation.
-        </p>
+    <div className="page-container">
+      <h1 className="mb-8 text-3xl font-bold">Badges & Achievements</h1>
+      <p>
+        Badges and Achievements: Create badges for students who achieve specific
+        goals, like "Read 60 Letters in a Minute" or "Complete an Advanced
+        Session."
+      </p>
+      <p>
+        Milestones for Teachers: Teachers can set milestones for their students,
+        rewarding them as they improve, fostering motivation.
+      </p>
 
-        <div className="mt-8 w-full max-w-2xl">
-          <div className="badges-section">
-            <h2 className="text-2xl font-semibold">Badges</h2>
-            <ul className="list-disc pl-5">
-              {badges.length > 0 ? (
-                badges.map((badge, index) => <li key={index}>{badge}</li>)
-              ) : (
-                <li>No badges available.</li>
-              )}
-            </ul>
-          </div>
-
-          <div className="achievements-section mt-8">
-            <h2 className="text-2xl font-semibold">Achievements</h2>
-            <ul className="list-disc pl-5">
-              {achievements.length > 0 ? (
-                achievements.map((achievement, index) => (
-                  <li key={index}>{achievement}</li>
-                ))
-              ) : (
-                <li>No achievements available.</li>
-              )}
-            </ul>
-          </div>
-
-          <h2 className="text-2xl font-semibold">Completion Counts</h2>
-          <ul>
-            {Object.entries(completionCounts).length > 0 ? (
-              Object.entries(completionCounts).map(([collectionId, count]) => (
-                <li key={collectionId}>
-                  Collection ID {collectionId}: Completed {count} times
-                </li>
-              ))
+      <div className="mt-8 w-full max-w-2xl">
+        <div className="badges-section">
+          <h2 className="text-2xl font-semibold">Badges</h2>
+          <ul className="list-disc pl-5">
+            {badges.length > 0 ? (
+              badges.map((badge, index) => <li key={index}>{badge}</li>)
             ) : (
-              <li>No completion counts available.</li>
+              <li>No badges available.</li>
             )}
           </ul>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
+        <div className="achievements-section mt-8">
+          <h2 className="text-2xl font-semibold">Achievements</h2>
+          <ul className="list-disc pl-5">
+            {achievements.length > 0 ? (
+              achievements.map((achievement, index) => (
+                <li key={index}>{achievement}</li>
+              ))
+            ) : (
+              <li>No achievements available.</li>
+            )}
+          </ul>
+        </div>
 
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
-
-        <GuidedTour
-          steps={steps}
-          isRunning={isTourRunning}
-          onComplete={handleTourComplete}
-          currentStep={currentTourStep}
-          onStepChange={setCurrentTourStep}
-          tourName={tourName}
-        />
+        <h2 className="text-2xl font-semibold">Completion Counts</h2>
+        <ul>
+          {Object.entries(completionCounts).length > 0 ? (
+            Object.entries(completionCounts).map(([collectionId, count]) => (
+              <li key={collectionId}>
+                Collection ID {collectionId}: Completed {count} times
+              </li>
+            ))
+          ) : (
+            <li>No completion counts available.</li>
+          )}
+        </ul>
       </div>
-    </Layout>
+
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+      >
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="badgesAchievements"
+      />
+    </div>
   );
 };
 
