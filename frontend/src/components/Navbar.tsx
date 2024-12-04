@@ -40,7 +40,7 @@ interface NavbarProps {
 }
 
 const navigationItems = [
-  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-18 h-18" />, label: "Collections" },
+  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-18 h-18 mt-20" />, label: "Collections" },
   { path: "/new-collection", icon: <img src={newIcon} alt="New" className="w-18 h-18" />, label: "New" },
   { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-18 h-18" />, label: "Discover" },
   { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-18 h-18" />, label: "Games" },
@@ -334,9 +334,10 @@ const Navbar: React.FC<NavbarProps> = ({
               type="button"
               key={item.path}
               onClick={() => handleNavigate(item.path)}
-              className="flex flex-col items-center justify-center px-6 py-2 text-white hover:bg-gray-700 rounded-lg transition-all duration-300"
+              className="flex flex-col items-center justify-center px-6 py-2 text-white rounded-lg transition-all duration-300 overflow-visible pointer-events-auto"
+              style={{ clipPath: 'inset(0)' }}
             >
-              <span className="text-6xl">
+              <span className="text-6xl pointer-events-none">
                 {typeof item.icon === "string" ? item.icon : item.icon}
               </span>
             </button>
