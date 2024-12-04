@@ -88,7 +88,8 @@ const config: Config = {
         navbar: "50px",
         "15": "3.75rem",
         "navbar-height": "200px",
-        "navbar-with-collections": "260px",
+        "collections-navbar-height": "64px",
+        "total-navbar-height": "264px",
         "content-padding": "200px",
         "content-padding-with-collections": "260px"
       },
