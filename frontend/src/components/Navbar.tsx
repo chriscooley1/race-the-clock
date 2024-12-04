@@ -250,7 +250,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <div
-      className="bg-heisenberg-blue fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
+      className="bg-white fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
       style={{ height: "115px" }}
     >
       <div className="flex flex-col space-y-2">

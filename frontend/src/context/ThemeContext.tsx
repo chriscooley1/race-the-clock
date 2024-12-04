@@ -108,10 +108,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       font: '"KG What The Teacher Wants"',
       headingFont: '"KG What The Teacher Wants"',
       buttonFont: '"KG What The Teacher Wants"',
-      originalTextColor: colorSchemes[2].textColor,
-      originalBackgroundColor: colorSchemes[2].backgroundColor,
-      displayTextColor: colorSchemes[2].textColor,
-      displayBackgroundColor: colorSchemes[2].backgroundColor,
+      originalTextColor: "#000000",
+      originalBackgroundColor: "#FFFFFF",
+      displayTextColor: "#000000",
+      displayBackgroundColor: "#FFFFFF",
       adjustColorForColorblindness: (color: string) => color,
     };
   };
