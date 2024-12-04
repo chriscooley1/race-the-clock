@@ -25,6 +25,7 @@ import { useCompletion } from "../../context/CompletionContext";
 import FeedbackForm from "../../components/FeedbackForm";
 import { categoryColors } from "../../constants/categoryColors";
 import { lightenColor } from "../../utils/colorUtils";
+import feedbackIcon from "../../assets/feedback.png";
 
 interface Collection {
   collection_id: number;
@@ -570,15 +571,6 @@ const YourCollections: React.FC = () => {
         >
           Duplicate Collection
         </button>
-
-        {/* Give Feedback Button */}
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
-        >
-          Give Feedback
-        </button>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -794,6 +786,20 @@ const YourCollections: React.FC = () => {
       />
 
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+
+      {/* Add Feedback Icon */}
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="fixed bottom-8 right-8 z-50 transition-transform hover:scale-110 active:scale-95"
+        aria-label="Open Feedback Form"
+      >
+        <img 
+          src={feedbackIcon} 
+          alt="Feedback" 
+          className="w-12 h-12 cursor-pointer"
+        />
+      </button>
     </div>
   );
 };
