@@ -429,19 +429,17 @@ export const fetchCollections = async (
   getAccessTokenSilently: () => Promise<string>,
 ) => {
   try {
-    console.log("Fetching collections...");
-    console.log("API_BASE_URL:", API_BASE_URL);
+    console.log("Attempting to fetch collections...");
+    console.log("Collections fetch completed");
     const token = await getAccessTokenSilently();
-    console.log("Token received:", token ? "Token exists" : "No token");
     const url = `${API_BASE_URL}/users/me/collections`;
-    console.log("Fetching from URL:", url);
     const response = await axios.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("Fetched collections:", response.data);
     return response.data;
-  } catch (error) {
-    console.error("Error fetching collections:", error);
+  } catch (error: unknown) {
+    console.error("Error fetching collections:", (error as Error).message);
     if (axios.isAxiosError(error)) {
       console.error("Axios error details:", {
         message: error.message,
