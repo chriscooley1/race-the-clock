@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useTour } from "../context/TourContext";
 import { Step } from "react-joyride";
 import newIcon from "../assets/new.png";
@@ -59,45 +58,13 @@ const Navbar: React.FC<NavbarProps> = ({
   setShowFeedback,
   currentTourName,
 }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const menuRef = useRef<HTMLDivElement>(null);
-  const hamburgerRef = useRef<HTMLDivElement>(null);
-  const { logout } = useAuth0();
   const { isGuidedTourEnabled } = useTour();
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        hamburgerRef.current &&
-        !hamburgerRef.current.contains(event.target as Node)
-      ) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleLogout = () => {
-    console.log("Logging out...");
-    logout({ logoutParams: { returnTo: window.location.origin } });
-    setMenuOpen(false);
-  };
 
   const handleNavigate = (path: string) => {
     console.log("Navigating to:", path);
     navigate(path);
-    setMenuOpen(false);
   };
 
   const handleBack = () => {
@@ -279,7 +246,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 </button>
               )}
             </div>
-            {/* Bottom row for Tour and Feedback - with smaller text and padding */}
+            {/* Bottom row for Tour and Feedback */}
             <div className="flex items-center space-x-2">
               {isGuidedTourEnabled && (
                 <button
@@ -318,7 +285,7 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 Start {currentTourName} Tour
               </button>
-              )}
+            )}
           </div>
         )}
       </div>
@@ -345,43 +312,6 @@ const Navbar: React.FC<NavbarProps> = ({
           ))}
         </nav>
       </div>
-      <div
-        ref={hamburgerRef}
-        className="flex h-[25px] w-[30px] cursor-pointer flex-col justify-between"
-        onClick={handleMenuToggle}
-      >
-        <div className="h-[3px] bg-gray-800 dark:bg-white"></div>
-        <div className="h-[3px] bg-gray-800 dark:bg-white"></div>
-        <div className="h-[3px] bg-gray-800 dark:bg-white"></div>
-      </div>
-      {menuOpen && (
-        <div
-          ref={menuRef}
-          className="absolute right-0 top-[50px] z-[1001] w-full rounded-b bg-white p-2 shadow-md md:w-48 dark:bg-gray-700"
-        >
-          <button
-            type="button"
-            className="hover:text-hover-blue w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 dark:text-white"
-            onClick={() => handleNavigate("/my-account")}
-          >
-            My Account
-          </button>
-          <button
-            type="button"
-            className="hover:text-hover-blue w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 dark:text-white"
-            onClick={() => handleNavigate("/settings")}
-          >
-            Settings
-          </button>
-          <button
-            type="button"
-            className="hover:text-hover-blue w-full px-4 py-3 text-left text-gray-800 transition-colors duration-300 dark:text-white"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
-      )}
     </div>
   );
 };

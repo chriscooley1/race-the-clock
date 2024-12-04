@@ -1,9 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CollectionsNavBar: React.FC = () => {
   const navigate = useNavigate();
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
+  const accountDropdownRef = useRef<HTMLDivElement>(null);
+  const { logout } = useAuth0();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        accountDropdownRef.current &&
+        !accountDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsAccountDropdownOpen(false);
+      }
+    };
+
+    if (isAccountDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isAccountDropdownOpen]);
+
+  const handleLogout = () => {
+    logout({ logoutParams: { returnTo: window.location.origin } });
+    setIsAccountDropdownOpen(false);
+  };
 
   return (
     <div className="inset-x-0 top-navbar-height z-[51] bg-white text-black shadow-md dark:bg-gray-800">
@@ -36,7 +63,7 @@ const CollectionsNavBar: React.FC = () => {
           </button>
 
           {/* Account Dropdown */}
-          <div className="relative">
+          <div className="relative" ref={accountDropdownRef}>
             <button
               type="button"
               onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
@@ -47,7 +74,17 @@ const CollectionsNavBar: React.FC = () => {
             </button>
 
             {isAccountDropdownOpen && (
-              <div className="absolute left-0 top-full mt-1 w-48 rounded border border-gray-200 bg-white shadow-lg">
+              <div className="absolute left-0 top-full mt-1 w-48 rounded border border-gray-200 bg-white shadow-lg z-[60]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate("/my-account");
+                    setIsAccountDropdownOpen(false);
+                  }}
+                  className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
+                >
+                  My Account
+                </button>
                 <button
                   type="button"
                   onClick={() => {
@@ -77,6 +114,13 @@ const CollectionsNavBar: React.FC = () => {
                   className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
                 >
                   Settings
+                </button>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
+                >
+                  Logout
                 </button>
               </div>
             )}
