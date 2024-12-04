@@ -304,28 +304,30 @@ const NameGenerator: React.FC = () => {
             }`} style={{ marginTop: "-80px" }}
           >
             {visibilityStates.isNameInputVisible && (
-              <div className="mb-5 flex items-center">
-                <label htmlFor="nameInput" className="mr-2 whitespace-nowrap">
-                  Add a Name:
-                </label>
-                <input
-                  type="text"
-                  id="nameInput"
-                  value={nameInput}
-                  onChange={(e) => setNameInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className={`font-teacher mr-2 rounded border border-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"} p-2 text-center text-base`}
-                  placeholder="Enter a name"
-                />
-                {visibilityStates.isAddNameButtonVisible && (
-                  <button
-                    type="button"
-                    onClick={handleAddName}
-                    className="add-name-button bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
-                  >
-                    Add
-                  </button>
-                )}
+              <div className="mb-5 flex w-full flex-col items-center">
+                <div className="flex items-center">
+                  <label htmlFor="nameInput" className="mr-2 whitespace-nowrap">
+                    Add a Name:
+                  </label>
+                  <input
+                    type="text"
+                    id="nameInput"
+                    value={nameInput}
+                    onChange={(e) => setNameInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    className={`font-teacher mr-2 rounded border border-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"} p-2 text-center text-base`}
+                    placeholder="Enter a name"
+                  />
+                  {visibilityStates.isAddNameButtonVisible && (
+                    <button
+                      type="button"
+                      onClick={handleAddName}
+                      className="add-name-button bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+                    >
+                      Add
+                    </button>
+                  )}
+                </div>
               </div>
             )}
 
