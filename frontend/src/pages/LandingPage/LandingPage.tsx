@@ -31,7 +31,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="page-container" style={{ marginTop: "-80px" }}>
+    <div className="page-container">
       <div
         className={`flex min-h-screen w-full flex-col items-center justify-center p-5 text-center ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
         style={{ color: theme.originalTextColor }}
