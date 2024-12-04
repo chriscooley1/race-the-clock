@@ -38,8 +38,8 @@ const navigationItems = [
   { path: "/your-collections", icon: "📚", label: "Collections" },
   { path: "/new-collection", icon: "➕", label: "New" },
   { path: "/discover-collections", icon: "🔍", label: "Discover" },
-  { path: "/name-generator", icon: "🎲", label: "Names" },
   { path: "/games", icon: "🎮", label: "Games" },
+  { path: "/name-generator", icon: "🎲", label: "Spinner" },
   { path: "/reports", icon: "📊", label: "Reports" },
   { path: "/badges-achievements", icon: "🏆", label: "Badges" },
   { path: "/resources", icon: "📖", label: "Resources" }
