@@ -43,30 +43,32 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
 
   return (
     <div
-      className={`update-display-name-form mt-5 flex w-full max-w-[300px] flex-col items-center ${className}`}
+      className={`update-display-name-form mt-5 flex w-full flex-col items-center ${className}`}
       style={style}
     >
-      <input
-        type="text"
-        className="font-teacher mb-4 w-full rounded-md border border-black p-2 text-base"
-        value={displayName}
-        onChange={(e) => {
-          setDisplayName(e.target.value);
-        }}
-        style={{
-          backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
-          color: theme.isDarkMode ? "#FFFFFF" : "#000000",
-        }}
-        onKeyDown={handleKeyDown}
-        placeholder="Enter your display name"
-      />
-      <button
-        type="button"
-        className="w-full cursor-pointer rounded-md border border-none border-black bg-blue-600 px-5 py-3 text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-blue-700 active:scale-95 active:bg-blue-800 md:w-auto"
-        onClick={handleUpdateDisplayName}
-      >
-        Update Display Name
-      </button>
+      <div className="w-full max-w-[300px] flex flex-col items-center">
+        <input
+          type="text"
+          className="font-teacher mb-4 w-full rounded-md border border-black p-2 text-center text-base"
+          value={displayName}
+          onChange={(e) => {
+            setDisplayName(e.target.value);
+          }}
+          style={{
+            backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
+            color: theme.isDarkMode ? "#FFFFFF" : "#000000",
+          }}
+          onKeyDown={handleKeyDown}
+          placeholder="Enter your display name"
+        />
+        <button
+          type="button"
+          className="cursor-pointer rounded-md border border-none border-black bg-blue-600 px-5 py-3 text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-blue-700 active:scale-95 active:bg-blue-800"
+          onClick={handleUpdateDisplayName}
+        >
+          Update Display Name
+        </button>
+      </div>
     </div>
   );
 };
