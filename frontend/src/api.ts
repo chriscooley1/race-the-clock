@@ -2,8 +2,6 @@ import axios from "axios";
 import { User } from "@auth0/auth0-react";
 import { AxiosError } from "axios";
 
-console.log("All environment variables:", import.meta.env);
-console.log("VITE_API_BASE_URL from env:", import.meta.env.VITE_API_BASE_URL);
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   (window.location.hostname.includes("staging")
@@ -13,8 +11,6 @@ const API_BASE_URL =
 if (!API_BASE_URL) {
   console.error("VITE_API_BASE_URL is not set in the environment variables");
 }
-
-console.log("API_BASE_URL:", API_BASE_URL);
 
 interface Item {
   id: number;

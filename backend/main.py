@@ -59,10 +59,9 @@ app.add_middleware(
 # Single middleware function to log requests
 @app.middleware("http")
 async def log_requests(request, call_next):
-    logger.info(f"Received request: {request.method} {request.url.path}")
+    logger.info(f"Received request: {request.method}")
     try:
         response = await call_next(request)
-        logger.info(f"Sending response: Status {response.status_code}")
         return response
     except Exception as e:
         logger.error(f"Error processing request: {type(e).__name__}")
@@ -132,9 +131,10 @@ async def get_current_user(authorization: str = Header(...), db: Session = Depen
             db.commit()
             db.refresh(user)
         
+        logger.info("Fetched current user.")
         return user
     except Exception as e:
-        logger.error(f"Error in get_current_user: {str(e)}")
+        logger.error(f"Error in get_current_user: {type(e).__name__}")
         raise credentials_exception
 
 # User Endpoints
@@ -564,11 +564,8 @@ def get_github_issue_creator():
 
 # Update the feedback endpoint
 @app.post("/api/feedback")
-async def submit_feedback(
-    feedback_data: dict,
-    db: Session = Depends(get_db)
-):
-    logger.info(f"Received feedback: {feedback_data}")
+async def submit_feedback(feedback_data: dict, db: Session = Depends(get_db)):
+    logger.info("Received feedback from user.")
     try:
         # Create new Feedback instance with Mountain Time
         current_time = datetime.now(TIMEZONE)
