@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import cartIcon from "../assets/cart.png";
 
 const CollectionsNavBar: React.FC = () => {
   const navigate = useNavigate();
@@ -138,6 +139,16 @@ const CollectionsNavBar: React.FC = () => {
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
             Resources
+          </button>
+        </div>
+
+        {/* Add Cart Icon to right side */}
+        <div className="flex items-center">
+          <button
+            type="button"
+            className="flex items-center justify-center hover:opacity-80 transition-opacity"
+          >
+            <img src={cartIcon} alt="Shopping Cart" className="w-8 h-8" />
           </button>
         </div>
       </div>
