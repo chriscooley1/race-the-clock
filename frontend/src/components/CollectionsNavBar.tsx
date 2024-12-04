@@ -31,12 +31,12 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
     const categoryColor =
       categoryColors[category as keyof typeof categoryColors];
     return selectedCategory === category
-      ? `${categoryColor} text-white`
-      : `text-white hover:${categoryColor} hover:text-white`;
+      ? `${categoryColor} text-black`
+      : `text-black hover:${categoryColor} hover:text-black`;
   };
 
   return (
-    <div className="fixed inset-x-0 top-navbar-height z-40 bg-black text-white shadow-md dark:bg-gray-800">
+    <div className="fixed inset-x-0 top-navbar-height z-40 bg-white text-black shadow-md dark:bg-gray-800">
       <div className="flex w-full items-center justify-between px-6 py-3">
         {/* Left side - Categories */}
         <div className="flex space-x-6">
