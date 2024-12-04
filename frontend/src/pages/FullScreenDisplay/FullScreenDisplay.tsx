@@ -411,6 +411,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   return (
     <>
       <Navbar
+        currentTourName={tourName}
         isPaused={isPaused}
         onPauseResume={handlePauseResume}
         onStartTour={handleStartTour}

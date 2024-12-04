@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { tourStepsResources } from "./tourStepsResources";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
+import Layout from "../../components/Layout";
 
 interface FAQ {
   question: string;
@@ -91,71 +92,75 @@ const Resources: React.FC = () => {
   }, []);
 
   return (
-    <div
-      className="page-container"
+    <Layout
+      onStartTour={() => setIsTourRunning(true)}
+      setTourName={() => {}}
+      setCurrentTourStep={setCurrentTourStep}
     >
-      <h1 className="mb-8 text-3xl font-bold">Resources</h1>
+      <div className="page-container">
+        <h1 className="mb-8 text-3xl font-bold">Resources</h1>
 
-      {isLoading ? (
-        <p>Loading resources...</p>
-      ) : (
-        <>
-          <section className="mb-8 w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index}>
-                  <h3 className="mb-2 text-xl font-medium">{faq.question}</h3>
-                  <p>{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-          <section className="w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">
-              Instructional Videos
-            </h2>
-            <div className="space-y-6">
-              {videos.map((video, index) => (
-                <div key={index}>
-                  <h3 className="mb-2 text-xl font-medium">{video.title}</h3>
-                  <p>{video.description}</p>
-                  <a
-                    href={video.videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline"
-                  >
-                    Watch Video
-                  </a>
-                </div>
-              ))}
-            </div>
-          </section>
-        </>
-      )}
+        {isLoading ? (
+          <p>Loading resources...</p>
+        ) : (
+          <>
+            <section className="mb-8 w-full max-w-3xl">
+              <h2 className="mb-4 text-2xl font-semibold">
+                Frequently Asked Questions
+              </h2>
+              <div className="space-y-4">
+                {faqs.map((faq, index) => (
+                  <div key={index}>
+                    <h3 className="mb-2 text-xl font-medium">{faq.question}</h3>
+                    <p>{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+            <section className="w-full max-w-3xl">
+              <h2 className="mb-4 text-2xl font-semibold">
+                Instructional Videos
+              </h2>
+              <div className="space-y-6">
+                {videos.map((video, index) => (
+                  <div key={index}>
+                    <h3 className="mb-2 text-xl font-medium">{video.title}</h3>
+                    <p>{video.description}</p>
+                    <a
+                      href={video.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline"
+                    >
+                      Watch Video
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
 
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+        <button
+          type="button"
+          onClick={() => setShowFeedback(true)}
+          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+        >
+          Give Feedback
+        </button>
 
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 
-      <GuidedTour
-        steps={steps}
-        isRunning={isTourRunning}
-        onComplete={handleTourComplete}
-        currentStep={currentTourStep}
-        onStepChange={handleTourStepChange}
-        tourName="resources"
-      />
-    </div>
+        <GuidedTour
+          steps={steps}
+          isRunning={isTourRunning}
+          onComplete={handleTourComplete}
+          currentStep={currentTourStep}
+          onStepChange={handleTourStepChange}
+          tourName="resources"
+        />
+      </div>
+    </Layout>
   );
 };
 
