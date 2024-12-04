@@ -198,6 +198,13 @@ const Settings: React.FC = () => {
     });
   };
 
+  const handleToggleDarkMode = () => {
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      isDarkMode: !prevTheme.isDarkMode,
+    }));
+  };
+
   const handleGuidedTourToggle = () => {
     setIsGuidedTourEnabled((prev) => {
       const newValue = !prev;
@@ -269,7 +276,16 @@ const Settings: React.FC = () => {
     >
       <div className="page-container mt-[20px] flex flex-col items-center">
         <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
-        <div className="mb-6 flex w-full space-x-6">
+        <div className="mb-6 flex w-full justify-center space-x-6">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              checked={theme.isDarkMode}
+              onChange={handleToggleDarkMode}
+              className="mr-2"
+            />
+            Enable Dark Mode
+          </label>
           <label className="flex items-center">
             <input
               type="checkbox"
@@ -454,6 +470,13 @@ const Settings: React.FC = () => {
           Give Feedback
         </button>
         {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+        <button
+          type="button"
+          onClick={handleGuidedTourToggle}
+          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+        >
+          Toggle Guided Tour
+        </button>
         <GuidedTour
           steps={steps}
           isRunning={isTourRunning && isGuidedTourEnabled}
