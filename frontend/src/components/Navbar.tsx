@@ -45,9 +45,6 @@ const navigationItems = [
   { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-18 h-18" />, label: "Discover" },
   { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-18 h-18" />, label: "Games" },
   { path: "/name-generator", icon: <img src={spinnerIcon} alt="Spinner" className="w-18 h-18" />, label: "Spinner" },
-  { path: "/reports", icon: "📊", label: "Reports" },
-  { path: "/badges-achievements", icon: "🏆", label: "Badges" },
-  { path: "/resources", icon: "📖", label: "Resources" }
 ];
 
 const Navbar: React.FC<NavbarProps> = ({
