@@ -249,6 +249,7 @@ const App: React.FC = () => {
             <FontPreloader />
             <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
               <Layout
+                setShowFeedback={setShowFeedback}
                 onStartTour={() => setIsTourRunning(true)}
                 setTourName={setCurrentTourName}
                 setCurrentTourStep={setCurrentTourStep}
