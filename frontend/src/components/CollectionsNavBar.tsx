@@ -36,7 +36,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   };
 
   return (
-    <div className="fixed inset-x-0 top-navbar-height z-40 bg-heisenberg-blue shadow-md dark:bg-gray-800">
+    <div className="fixed inset-x-0 top-navbar-height z-40 bg-black text-white shadow-md dark:bg-gray-800">
       <div className="flex w-full flex-col px-4 py-2">
         <div className="mb-2 flex w-full overflow-x-auto">
           {categories.map((category) => (
@@ -52,7 +52,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             </button>
           ))}
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center text-white">
           <div className="flex items-center">
             <label htmlFor="sortSelect" className="mr-2 text-sm">
               Sort by:
