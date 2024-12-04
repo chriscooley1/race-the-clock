@@ -95,8 +95,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
               : color,
         };
       }
-    } catch (error) {
-      console.error("Error loading theme from localStorage:", error);
+    } catch {
+      console.error("Error loading theme");
     }
 
     // Default theme
@@ -350,7 +350,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       return;
     }
 
-    console.log("Applying theme:", theme);
+    console.log("Applying theme changes");
 
     // Ensure we're using the correct colors based on colorblind mode
     const effectiveTheme = {

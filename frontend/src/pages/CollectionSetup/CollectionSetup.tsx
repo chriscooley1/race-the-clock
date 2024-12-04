@@ -445,7 +445,7 @@ const CollectionSetup: React.FC = () => {
   };
 
   const handleSaveCollection = async () => {
-    console.log("User data before saving collection:", currentUser);
+    console.log("Preparing to save collection");
 
     try {
       if (!currentUser || !currentUser.username) {
@@ -470,14 +470,7 @@ const CollectionSetup: React.FC = () => {
         }));
       }
 
-      console.log("Saving collection with data:", {
-        username: currentUser.username,
-        collectionName,
-        collectionData,
-        isPublic,
-        category,
-        type,
-      });
+      console.log("Collection saved successfully");
 
       await saveCollection(
         currentUser.username,

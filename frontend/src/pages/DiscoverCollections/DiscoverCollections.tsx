@@ -204,7 +204,7 @@ const DiscoverCollections: React.FC = () => {
     }
 
     try {
-      console.log(`Searching collections by ${searchType}:`, searchQuery);
+      console.log("Searching collections");
       const searchResults = await searchPublicCollections(
         searchQuery,
         searchType,
@@ -228,7 +228,7 @@ const DiscoverCollections: React.FC = () => {
   };
 
   const openModal = async (collection: APICollection) => {
-    console.log("Opening modal for collection:", collection);
+    console.log("Opening collection preview");
     const parsedCollection: Collection = {
       ...collection,
       items: parseDescription(collection.description),
