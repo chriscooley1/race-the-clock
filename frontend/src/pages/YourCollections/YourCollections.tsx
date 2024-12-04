@@ -183,7 +183,7 @@ const YourCollections: React.FC = () => {
         const fetchedCollections = await fetchCollections(
           getAccessTokenSilently,
         );
-        console.log("Loaded collections:", fetchedCollections);
+        console.log("Collections loaded:", fetchedCollections.length);
         if (Array.isArray(fetchedCollections)) {
           setCollections(
             fetchedCollections.filter(
@@ -204,7 +204,7 @@ const YourCollections: React.FC = () => {
           console.error("Unexpected data format:", fetchedCollections);
         }
       } catch (error) {
-        console.error("Error loading collections:", error);
+        console.error("Error loading collections. Please try again later.");
         if (axios.isAxiosError(error)) {
           console.error("Axios error details:", {
             message: error.message,

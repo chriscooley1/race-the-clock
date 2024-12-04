@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
+import { AxiosError } from "axios";
 
 // Define the Report interface
 interface Report {
@@ -41,7 +42,11 @@ const Reports: React.FC = () => {
         const fetchedReports = await fetchReports(getAccessTokenSilently);
         setReports(fetchedReports);
       } catch (error) {
-        console.error("Error loading reports:", error);
+        if (error instanceof AxiosError) {
+          console.error("Failed to load reports - Status:", error.response?.status);
+        } else {
+          console.error("Error loading reports");
+        }
       } finally {
         setIsLoading(false);
       }
@@ -53,12 +58,14 @@ const Reports: React.FC = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const fetchedCollections = await fetchCollections(
-          getAccessTokenSilently,
-        );
+        const fetchedCollections = await fetchCollections(getAccessTokenSilently);
         setCollections(fetchedCollections);
       } catch (error) {
-        console.error("Error loading collections:", error);
+        if (error instanceof AxiosError) {
+          console.error("Failed to load collections - Status:", error.response?.status);
+        } else {
+          console.error("Error loading collections");
+        }
       }
     };
 
@@ -142,8 +149,8 @@ const Reports: React.FC = () => {
 
 // Helper function to get completion count for a collection
 const getCompletionCount = (collection: Collection): number => {
-  console.log(`Getting completion count for collection: ${collection.name}`);
-  return Math.floor(Math.random() * 10); // Example: random count for demonstration
+  console.log(`Getting completion count for collection ID: ${collection.collection_id}`);
+  return Math.floor(Math.random() * 10);
 };
 
 export default Reports;
