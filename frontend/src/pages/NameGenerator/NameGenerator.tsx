@@ -263,7 +263,7 @@ const NameGenerator: React.FC = () => {
           <div
             className={`flex flex-col items-center ${showRightSide ? "w-1/2" : "w-full"}`}
           >
-            <div className="relative flex w-full max-w-[500px] flex-col items-center" style={{ marginTop: "-80px" }}>
+            <div className="relative flex w-full max-w-[500px] flex-col items-center" style={{ marginTop: "-180px" }}>
             <NameWheel
                 names={nameList}
                 isSpinning={isSpinning}
@@ -279,7 +279,7 @@ const NameGenerator: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleSpin}
-                  className="spin-button bg-light-blue hover:bg-hover-blue active:bg-active-blue mt-4 max-w-md rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+                  className="spin-button bg-light-blue hover:bg-hover-blue active:bg-active-blue max-w-md rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
                 >
                   Spin the Wheel
                 </button>
@@ -301,7 +301,7 @@ const NameGenerator: React.FC = () => {
               showRightSide
                 ? "w-1/2 opacity-100"
                 : "w-0 overflow-hidden opacity-0"
-            }`} style={{ marginTop: "-80px" }}
+            }`} style={{ marginTop: "-180px" }}
           >
             {visibilityStates.isNameInputVisible && (
               <div className="mb-5 flex w-full flex-col items-center">
@@ -355,7 +355,7 @@ const NameGenerator: React.FC = () => {
         {/* Toggle button (always visible) */}
         <button
           type="button"
-          className="fixed right-4 top-[70px] mt-14 flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+          className="fixed right-4 top-[200px] mt-6 flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
           onClick={handleToggleRightSide}
         >
           {showRightSide ? "-" : "+"}

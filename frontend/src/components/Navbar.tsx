@@ -251,7 +251,7 @@ const Navbar: React.FC<NavbarProps> = ({
   return (
     <div
       className="bg-white fixed inset-x-0 top-0 z-50 flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
-      style={{ height: "115px" }}
+      style={{ height: "200px" }}
     >
       <div className="flex flex-col space-y-2">
         {location.pathname === "/fullscreen-display" ? (
@@ -296,12 +296,11 @@ const Navbar: React.FC<NavbarProps> = ({
             </div>
           </>
         ) : (
-          // Regular layout for other pages
           <div className="flex items-center space-x-2">
             {hasBackButton && (
               <button
                 type="button"
-                className="bg-custom-red hover:bg-custom-red-dark rounded border border-black px-2 py-1 text-sm font-bold text-white transition-colors duration-300 md:px-4 md:py-2 md:text-base"
+                className="bg-custom-red hover:bg-custom-red-dark rounded border border-black px-3 py-2 text-base font-bold text-white transition-colors duration-300"
                 onClick={onBack || handleBack}
               >
                 Back
@@ -311,7 +310,7 @@ const Navbar: React.FC<NavbarProps> = ({
               <button
                 type="button"
                 onClick={handleStartTour}
-                className="rounded border border-black bg-blue-500 px-2 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600 md:px-4 md:py-2 md:text-base"
+                className="rounded border border-black bg-blue-500 px-3 py-2 text-base font-bold text-white transition-colors duration-300 hover:bg-blue-600"
               >
                 Start Tour
               </button>
@@ -319,19 +318,28 @@ const Navbar: React.FC<NavbarProps> = ({
           </div>
         )}
       </div>
-      <div className="flex grow items-center justify-center space-x-6">
-        <img src={mainLogo} alt="Main Logo" className="h-20 cursor-pointer" onClick={handleTitleClick} />
+      <div className="flex grow items-center justify-center space-x-8">
+        <img 
+          src={mainLogo} 
+          alt="Main Logo" 
+          className="h-40 cursor-pointer transition-all duration-300" 
+          onClick={handleTitleClick} 
+        />
         
-        <nav className="hidden md:flex space-x-4">
+        <nav className="hidden md:flex space-x-6">
           {navigationItems.map((item) => (
             <button
               type="button"
               key={item.path}
               onClick={() => handleNavigate(item.path)}
-              className="flex flex-col items-center justify-center px-8 py-2 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors duration-200 dark:text-white dark:hover:bg-gray-700"
+              className="flex flex-col items-center justify-center px-6 py-2 text-gray-800 hover:bg-gray-100 rounded-lg transition-all duration-300 dark:text-white dark:hover:bg-gray-700"
             >
-              <span className="text-3xl mb-1">{item.icon}</span>
-              <span className="text-s font-medium">{item.label}</span>
+              <span className="text-6xl mb-2">
+                {item.icon}
+              </span>
+              <span className="font-medium text-base">
+                {item.label}
+              </span>
             </button>
           ))}
         </nav>
