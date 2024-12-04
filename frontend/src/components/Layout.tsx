@@ -1,8 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
 import CollectionsNavBar from "./CollectionsNavBar";
-import { useState } from "react";
-import FeedbackForm from "./FeedbackForm";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -10,6 +8,7 @@ interface LayoutProps {
   setTourName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
   tourName?: string;
+  setShowFeedback: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -17,39 +16,20 @@ const Layout: React.FC<LayoutProps> = ({
   onStartTour,
   setTourName,
   setCurrentTourStep,
+  setShowFeedback,
   tourName = "default"
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
-  const [sortOption, setSortOption] = useState<string>("date");
-  const [showFeedback, setShowFeedback] = useState(false);
-
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(event.target.value);
-  };
-
-  const handleDuplicateCollection = () => {
-    // Implement if needed
-  };
-
   return (
     <div>
       <Navbar
+        setShowFeedback={setShowFeedback}
         onStartTour={onStartTour}
         setTourName={setTourName}
         setCurrentTourStep={setCurrentTourStep}
-        setShowFeedback={setShowFeedback}
         currentTourName={tourName}
       />
-      <CollectionsNavBar
-        onSelectCategory={setSelectedCategory}
-        selectedCategory={selectedCategory}
-        sortOption={sortOption}
-        onSortChange={handleSortChange}
-        onDuplicateCollection={handleDuplicateCollection}
-        setShowFeedback={setShowFeedback}
-      />
+      <CollectionsNavBar />
       {children}
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
     </div>
   );
 };
