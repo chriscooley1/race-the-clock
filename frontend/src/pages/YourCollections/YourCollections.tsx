@@ -111,6 +111,15 @@ const YourCollections: React.FC = () => {
   const { theme, adjustColorForColorblindness } = useTheme();
   const { updateCompletionCount } = useCompletion();
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const categories = [
+    "All Collections",
+    "Math",
+    "Language Arts",
+    "Number Sense",
+    "Science",
+    "Nursing",
+  ];
 
   // Visibility states for the tour
   const [visibilityStates, setVisibilityStates] = useState<VisibilityStates>({
@@ -496,12 +505,6 @@ const YourCollections: React.FC = () => {
     }));
   }, [collections, showModal, isEditModalOpen, isDuplicateModalOpen]);
 
-  const handleSelectCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const category = event.target.value;
-    setSelectedCategory(category);
-    filterAndSortCollections(collections, category, sortOption);
-  };
-
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newSortOption = event.target.value;
     setSortOption(newSortOption);
@@ -511,22 +514,41 @@ const YourCollections: React.FC = () => {
 
   return (
     <div className="page-container page-container-with-collections mt-16">
-      <div className="mb-4 flex items-center justify-between">
-        <select
-          aria-label="Select a category"
-          id="category-select"
-          value={selectedCategory}
-          onChange={handleSelectCategory}
-          className="rounded border p-2"
-        >
-          <option value="All Collections">All Collections</option>
-          {Object.keys(categoryColors).map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+      <div className="mb-4 flex items-center justify-between space-x-4">
+        {/* Categories Dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center space-x-2 rounded border border-black px-4 py-2 text-lg font-semibold hover:bg-gray-100"
+          >
+            <span>{selectedCategory || "Categories"}</span>
+            <span className="ml-2">▼</span>
+          </button>
 
+          {isDropdownOpen && (
+            <div className="absolute left-0 top-full mt-1 w-48 rounded border border-gray-200 bg-white shadow-lg z-10">
+              {categories.map((category) => (
+                <button
+                  type="button"
+                  key={category}
+                  onClick={() => {
+                    setSelectedCategory(category);
+                    setIsDropdownOpen(false);
+                    filterAndSortCollections(collections, category, sortOption);
+                  }}
+                  className={`w-full px-4 py-2 text-left text-lg transition-colors duration-300 hover:bg-gray-100 ${
+                    selectedCategory === category ? "bg-gray-100 font-semibold" : ""
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Sort by Dropdown */}
         <select
           aria-label="Sort collections"
           id="sort-select"
@@ -539,6 +561,24 @@ const YourCollections: React.FC = () => {
           <option value="category">Sort by Category</option>
           <option value="custom">Custom Order</option>
         </select>
+
+        {/* Duplicate Collection Button */}
+        <button
+          type="button"
+          onClick={() => setDuplicateModalOpen(true)}
+          className="rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
+        >
+          Duplicate Collection
+        </button>
+
+        {/* Give Feedback Button */}
+        <button
+          type="button"
+          onClick={() => setShowFeedback(true)}
+          className="rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
+        >
+          Give Feedback
+        </button>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
