@@ -41,11 +41,11 @@ interface NavbarProps {
 }
 
 const navigationItems = [
-  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-18 h-18 mt-20" /> },
-  { path: "/new-collection", icon: <img src={newIcon} alt="New" className="w-18 h-18" />},
-  { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-18 h-18" /> },
-  { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-18 h-18" /> },
-  { path: "/name-generator", icon: <img src={spinnerIcon} alt="Spinner" className="w-18 h-18" /> },
+  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-40 h-40 mt-20" /> },
+  { path: "/new-collection", icon: <img src={newIcon} alt="New" className="w-32 h-32" />},
+  { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-32 h-32" /> },
+  { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-32 h-32" /> },
+  { path: "/name-generator", icon: <img src={spinnerIcon} alt="Spinner" className="w-32 h-32" /> },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -326,19 +326,19 @@ const Navbar: React.FC<NavbarProps> = ({
         <img 
           src={raceTheClockIcon} 
           alt="raceTheClockIcon" 
-          className="h-40 cursor-pointer transition-all duration-300" 
+          className="h-48 cursor-pointer transition-all duration-300 hover:scale-105" 
           onClick={handleTitleClick} 
         />
         
-        <nav className="hidden md:flex space-x-6">
+        <nav className="hidden md:flex space-x-8">
           {navigationItems.map((item) => (
             <button
               type="button"
               key={item.path}
               onClick={() => handleNavigate(item.path)}
-              className="group flex flex-col items-center justify-center px-6 py-2 text-white transition-all duration-300"
+              className="group flex flex-col items-center justify-center px-4 py-2 text-white transition-all duration-300 hover:scale-105"
             >
-              <div className="relative h-24 w-24 flex items-center justify-center">
+              <div className="relative flex items-center justify-center">
                 {typeof item.icon === "string" ? item.icon : item.icon}
               </div>
             </button>
