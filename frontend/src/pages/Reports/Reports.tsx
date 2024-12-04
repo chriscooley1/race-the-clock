@@ -5,6 +5,7 @@ import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
 import { AxiosError } from "axios";
+import Layout from "../../components/Layout";
 
 // Define the Report interface
 interface Report {
@@ -93,57 +94,63 @@ const Reports: React.FC = () => {
   };
 
   return (
-    <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
-      <p>View detailed reports of user performance after each session.</p>
-      {isLoading ? (
-        <p>Loading reports...</p>
-      ) : (
-        <div className="reports-overview">
-          <h2>Reports Overview</h2>
-          <ul>
-            {reports.map((report) => (
-              <li key={report.report_id}>
-                <p>Total Items: {report.total_items}</p>
-                <p>Time Taken: {report.time_taken} seconds</p>
-                <p>Missed Items: {report.missed_items}</p>
-                <p>Skipped Items: {report.skipped_items}</p>
-                <p>
-                  Created At: {new Date(report.created_at).toLocaleString()}
-                </p>
-              </li>
-            ))}
-          </ul>
-          <h2>Your Collections</h2>
-          <ul>
-            {collections.map((collection) => (
-              <li key={collection.collection_id}>
-                {collection.name} - Completed: {getCompletionCount(collection)}{" "}
-                times
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+    <Layout
+      onStartTour={() => setIsTourRunning(true)}
+      setTourName={() => {}}
+      setCurrentTourStep={setCurrentTourStep}
+    >
+      <div className="page-container">
+        <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
+        <p>View detailed reports of user performance after each session.</p>
+        {isLoading ? (
+          <p>Loading reports...</p>
+        ) : (
+          <div className="reports-overview">
+            <h2>Reports Overview</h2>
+            <ul>
+              {reports.map((report) => (
+                <li key={report.report_id}>
+                  <p>Total Items: {report.total_items}</p>
+                  <p>Time Taken: {report.time_taken} seconds</p>
+                  <p>Missed Items: {report.missed_items}</p>
+                  <p>Skipped Items: {report.skipped_items}</p>
+                  <p>
+                    Created At: {new Date(report.created_at).toLocaleString()}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <h2>Your Collections</h2>
+            <ul>
+              {collections.map((collection) => (
+                <li key={collection.collection_id}>
+                  {collection.name} - Completed: {getCompletionCount(collection)}{" "}
+                  times
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={() => setShowFeedback(true)}
+          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+        >
+          Give Feedback
+        </button>
 
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 
-      <GuidedTour
-        steps={steps}
-        isRunning={isTourRunning}
-        onComplete={handleTourComplete}
-        currentStep={currentTourStep}
-        onStepChange={(step) => setCurrentTourStep(step)}
-        tourName="reports"
-      />
-    </div>
+        <GuidedTour
+          steps={steps}
+          isRunning={isTourRunning}
+          onComplete={handleTourComplete}
+          currentStep={currentTourStep}
+          onStepChange={(step) => setCurrentTourStep(step)}
+          tourName="reports"
+        />
+      </div>
+    </Layout>
   );
 };
 
