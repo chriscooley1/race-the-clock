@@ -9,6 +9,7 @@ interface LayoutProps {
   onStartTour: () => void;
   setTourName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
+  tourName?: string;
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -16,6 +17,7 @@ const Layout: React.FC<LayoutProps> = ({
   onStartTour,
   setTourName,
   setCurrentTourStep,
+  tourName = "default"
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("All Collections");
   const [sortOption, setSortOption] = useState<string>("date");
@@ -36,6 +38,7 @@ const Layout: React.FC<LayoutProps> = ({
         setTourName={setTourName}
         setCurrentTourStep={setCurrentTourStep}
         setShowFeedback={setShowFeedback}
+        currentTourName={tourName}
       />
       <CollectionsNavBar
         onSelectCategory={setSelectedCategory}

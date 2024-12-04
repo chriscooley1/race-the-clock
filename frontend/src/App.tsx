@@ -254,6 +254,7 @@ const App: React.FC = () => {
             <FontPreloader />
             <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
               <Navbar
+                currentTourName={currentTourName}
                 onStartTour={handleTourStart}
                 setTourName={setCurrentTourName}
                 setCurrentTourStep={setCurrentTourStep}

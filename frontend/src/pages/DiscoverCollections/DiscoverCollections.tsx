@@ -18,6 +18,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import FeedbackForm from "../../components/FeedbackForm";
 import { categoryColors } from "../../constants/categoryColors";
+import Layout from "../../components/Layout";
 
 interface Item {
   id: number;
@@ -310,188 +311,193 @@ const DiscoverCollections: React.FC = () => {
   }, [user, getAccessTokenSilently]);
 
   return (
-    <div className="page-container mt-6">
-      <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
-        Discover Public Collections
-      </h1>
-      {user && <p className="mb-4">Welcome, {userDisplayName}</p>}
-      <div className="mb-4 w-full max-w-md">
-        <div className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:items-center">
-          <select
-            value={searchType}
-            onChange={(e) =>
-              setSearchType(e.target.value as "name" | "creator")
-            }
-            className={`rounded-md border border-black p-2 ${
-              theme.isDarkMode
-                ? "bg-gray-700 text-white"
-                : "bg-white text-black"
-            }`}
-            aria-label="Search type selector"
-          >
-            <option value="name">Search by Name</option>
-            <option value="creator">Search by Creator</option>
-          </select>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={`Search by ${searchType === "name" ? "collection name" : "creator"}`}
-            className={`search-collections-input rounded-md border border-black p-2 ${
-              theme.isDarkMode
-                ? "bg-gray-700 text-white"
-                : "bg-white text-black"
-            }`}
-          />
-          <button
-            type="button"
-            onClick={handleSearch}
-            className={`search-collections-button rounded-md border border-black px-4 py-2 font-bold ${
-              theme.isDarkMode
-                ? "bg-gray-700 text-white"
-                : "bg-green-500 text-white"
-            }`}
-          >
-            Search
-          </button>
+    <Layout
+      onStartTour={() => setIsTourRunning(true)}
+      setTourName={() => {}}
+      setCurrentTourStep={setCurrentTourStep}
+    >
+      <div className="page-container mt-6">
+        <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
+          Discover Public Collections
+        </h1>
+        {user && <p className="mb-4">Welcome, {userDisplayName}</p>}
+        <div className="mb-4 w-full max-w-md">
+          <div className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:items-center">
+            <select
+              value={searchType}
+              onChange={(e) =>
+                setSearchType(e.target.value as "name" | "creator")
+              }
+              className={`rounded-md border border-black p-2 ${
+                theme.isDarkMode
+                  ? "bg-gray-700 text-white"
+                  : "bg-white text-black"
+              }`}
+              aria-label="Search type selector"
+            >
+              <option value="name">Search by Name</option>
+              <option value="creator">Search by Creator</option>
+            </select>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={`Search by ${searchType === "name" ? "collection name" : "creator"}`}
+              className={`search-collections-input rounded-md border border-black p-2 ${
+                theme.isDarkMode
+                  ? "bg-gray-700 text-white"
+                  : "bg-white text-black"
+              }`}
+            />
+            <button
+              type="button"
+              onClick={handleSearch}
+              className={`search-collections-button rounded-md border border-black px-4 py-2 font-bold ${
+                theme.isDarkMode
+                  ? "bg-gray-700 text-white"
+                  : "bg-green-500 text-white"
+              }`}
+            >
+              Search
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="mb-4 w-full max-w-md">
-        <div className="flex flex-col items-center justify-center sm:flex-row sm:items-center">
-          <label
-            htmlFor="sortSelect"
-            className="mb-2 text-sm font-bold sm:mb-0 sm:mr-2"
-          >
-            Sort collections by:
-          </label>
-          <select
-            id="sortSelect"
-            value={sortOption}
-            onChange={handleSortChange}
-            className={`sort-collections-select rounded-md border border-black p-2 ${
-              theme.isDarkMode
-                ? "bg-gray-700 text-white"
-                : "bg-white text-black"
-            }`}
-            aria-label="Sort collections"
-          >
-            <option value="date">Date</option>
-            <option value="alphabetical">Alphabetical</option>
-            <option value="itemCount">Item Count</option>
-            <option value="category">Category</option>
-          </select>
+        <div className="mb-4 w-full max-w-md">
+          <div className="flex flex-col items-center justify-center sm:flex-row sm:items-center">
+            <label
+              htmlFor="sortSelect"
+              className="mb-2 text-sm font-bold sm:mb-0 sm:mr-2"
+            >
+              Sort collections by:
+            </label>
+            <select
+              id="sortSelect"
+              value={sortOption}
+              onChange={handleSortChange}
+              className={`sort-collections-select rounded-md border border-black p-2 ${
+                theme.isDarkMode
+                  ? "bg-gray-700 text-white"
+                  : "bg-white text-black"
+              }`}
+              aria-label="Sort collections"
+            >
+              <option value="date">Date</option>
+              <option value="alphabetical">Alphabetical</option>
+              <option value="itemCount">Item Count</option>
+              <option value="category">Category</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+        <button
+          type="button"
+          onClick={() => setShowFeedback(true)}
+          className="mt-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
+        >
+          Give Feedback
+        </button>
 
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
-      {isLoading ? (
-        <div className="flex min-h-[200px] items-center justify-center">
-          <div className="size-12 animate-spin rounded-full border-b-2 border-gray-900"></div>
-        </div>
-      ) : (
-        <div className="grid-container w-full">
-          {Object.entries(groupedCollections).map(
-            ([category, categoryCollections]) => (
-              <div key={category} className="mb-8 w-full">
-                <h2 className="mb-4 text-xl font-bold">{category}</h2>
-                <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {categoryCollections.map((collection, index) => {
-                    const baseColor = adjustColorForTheme(
-                      collectionColorSchemes[
-                        index % collectionColorSchemes.length
-                      ].backgroundColor,
-                    );
-                    const lightColor = baseColor
-                      ? lightenColor(baseColor, 0.7)
-                      : "";
-                    const itemCount =
-                      collection.item_count ?? collection.items?.length ?? 0;
-                    return (
-                      <div
-                        key={collection.collection_id}
-                        className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
-                        style={{ backgroundColor: "white" }}
-                      >
-                        <div className="flex size-full flex-col">
-                          <h2
-                            className="border-5 w-full rounded-t-lg border-b-0 border-black p-2.5 text-center text-xl font-bold text-black"
-                            style={{ backgroundColor: baseColor }}
-                          >
-                            {collection.name}
-                          </h2>
-                          <div
-                            className="border-5 flex size-full flex-col rounded-b-lg border-black"
-                            style={{
-                              backgroundColor: lightColor,
-                              transition: "background-color 0.3s ease",
-                            }}
-                          >
-                            <div className="flex size-full flex-col p-4">
-                              <div className="mb-auto text-center">
-                                <p className="mb-1 text-base font-bold text-black">
-                                  {itemCount} {itemCount === 1 ? "item" : "items"} in collection
-                                </p>
-                                <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
-                                  Created by:{" "}
-                                  {collection.creator_display_name || "Anonymous"}
-                                </p>
-                                <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
-                                  Category:{" "}
-                                  <span className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
-                                    {collection.category}
-                                  </span>
-                                </p>
-                              </div>
-                              <div className="mt-auto pt-4">
-                                <button
-                                  type="button"
-                                  className="preview-collection-button w-full cursor-pointer rounded-lg border-4 border-black p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 active:scale-95"
-                                  style={{ backgroundColor: baseColor }}
-                                  onClick={() => openModal(collection)}
-                                >
-                                  {subscriptionStatus[collection.collection_id]
-                                    ? "Already Subscribed"
-                                    : "Preview Collection"}
-                                </button>
+        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+        {isLoading ? (
+          <div className="flex min-h-[200px] items-center justify-center">
+            <div className="size-12 animate-spin rounded-full border-b-2 border-gray-900"></div>
+          </div>
+        ) : (
+          <div className="grid-container w-full">
+            {Object.entries(groupedCollections).map(
+              ([category, categoryCollections]) => (
+                <div key={category} className="mb-8 w-full">
+                  <h2 className="mb-4 text-xl font-bold">{category}</h2>
+                  <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {categoryCollections.map((collection, index) => {
+                      const baseColor = adjustColorForTheme(
+                        collectionColorSchemes[
+                          index % collectionColorSchemes.length
+                        ].backgroundColor,
+                      );
+                      const lightColor = baseColor
+                        ? lightenColor(baseColor, 0.7)
+                        : "";
+                      const itemCount =
+                        collection.item_count ?? collection.items?.length ?? 0;
+                      return (
+                        <div
+                          key={collection.collection_id}
+                          className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
+                          style={{ backgroundColor: "white" }}
+                        >
+                          <div className="flex size-full flex-col">
+                            <h2
+                              className="border-5 w-full rounded-t-lg border-b-0 border-black p-2.5 text-center text-xl font-bold text-black"
+                              style={{ backgroundColor: baseColor }}
+                            >
+                              {collection.name}
+                            </h2>
+                            <div
+                              className="border-5 flex size-full flex-col rounded-b-lg border-black"
+                              style={{
+                                backgroundColor: lightColor,
+                                transition: "background-color 0.3s ease",
+                              }}
+                            >
+                              <div className="flex size-full flex-col p-4">
+                                <div className="mb-auto text-center">
+                                  <p className="mb-1 text-base font-bold text-black">
+                                    {itemCount} {itemCount === 1 ? "item" : "items"} in collection
+                                  </p>
+                                  <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+                                    Created by:{" "}
+                                    {collection.creator_display_name || "Anonymous"}
+                                  </p>
+                                  <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+                                    Category:{" "}
+                                    <span className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
+                                      {collection.category}
+                                    </span>
+                                  </p>
+                                </div>
+                                <div className="mt-auto pt-4">
+                                  <button
+                                    type="button"
+                                    className="preview-collection-button w-full cursor-pointer rounded-lg border-4 border-black p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 active:scale-95"
+                                    style={{ backgroundColor: baseColor }}
+                                    onClick={() => openModal(collection)}
+                                  >
+                                    {subscriptionStatus[collection.collection_id]
+                                      ? "Already Subscribed"
+                                      : "Preview Collection"}
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ),
-          )}
-        </div>
-      )}
-      {activeCollection && (
-        <CollectionPreviewModal
-          collection={activeCollection}
-          onClose={closeModal}
-          isSubscribed={activeCollection.isSubscribed || false}
-          onSubscribe={handleSubscribe}
+              ),
+            )}
+          </div>
+        )}
+        {activeCollection && (
+          <CollectionPreviewModal
+            collection={activeCollection}
+            onClose={closeModal}
+            isSubscribed={activeCollection.isSubscribed || false}
+            onSubscribe={handleSubscribe}
+          />
+        )}
+        <GuidedTour
+          steps={steps}
+          isRunning={isTourRunning}
+          onComplete={handleTourComplete}
+          currentStep={currentTourStep}
+          onStepChange={handleTourStepChange}
+          tourName="discoverCollections"
         />
-      )}
-      {/* Add the GuidedTour component here */}
-      <GuidedTour
-        steps={steps}
-        isRunning={isTourRunning}
-        onComplete={handleTourComplete}
-        currentStep={currentTourStep}
-        onStepChange={handleTourStepChange}
-        tourName="discoverCollections"
-      />
-    </div>
+      </div>
+    </Layout>
   );
 };
 

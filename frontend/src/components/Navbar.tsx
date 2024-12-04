@@ -37,6 +37,7 @@ interface NavbarProps {
   setTourName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
   setShowFeedback: (show: boolean) => void;
+  currentTourName: string;
 }
 
 const navigationItems = [
@@ -56,6 +57,7 @@ const Navbar: React.FC<NavbarProps> = ({
   setTourName,
   setCurrentTourStep,
   setShowFeedback,
+  currentTourName,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -285,7 +287,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   onClick={handleStartTour}
                   className="rounded border border-black bg-blue-500 px-2 py-1 text-xs font-medium text-white transition-colors duration-300 hover:bg-blue-600"
                 >
-                  Start Tour
+                  Start {currentTourName} Tour
                 </button>
               )}
               <button
@@ -314,9 +316,9 @@ const Navbar: React.FC<NavbarProps> = ({
                 onClick={handleStartTour}
                 className="rounded border border-black bg-blue-500 px-3 py-2 text-base font-bold text-white transition-colors duration-300 hover:bg-blue-600"
               >
-                Start Tour
+                Start {currentTourName} Tour
               </button>
-            )}
+              )}
           </div>
         )}
       </div>

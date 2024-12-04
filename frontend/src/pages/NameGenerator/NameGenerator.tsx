@@ -8,6 +8,7 @@ import { tourStepsNameGenerator } from "./tourStepsNameGenerator";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import FeedbackForm from "../../components/FeedbackForm";
+import Layout from "../../components/Layout";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
@@ -242,147 +243,156 @@ const NameGenerator: React.FC = () => {
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   return (
-    <div className="page-container">
-      <div
-        ref={containerRef}
-        className={`name-generator page-container ${
-          theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-        }`}
-        style={{
-          backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
-          color: theme.displayTextColor || theme.textColor,
-          backgroundImage: theme.backgroundImage !== "none" ? `url(${theme.backgroundImage})` : "none",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
+    <Layout
+      onStartTour={() => setIsTourRunning(true)}
+      setTourName={() => {}}
+      setCurrentTourStep={setCurrentTourStep}
+    >
+      <div className="page-container" style={{ marginTop: "20px" }}>
         <div
-          className={`flex w-full max-w-5xl justify-between px-2 ${showRightSide ? "" : "justify-center"}`}
+          ref={containerRef}
+          className={`name-generator ${
+            theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
+          }`}
+          style={{
+            backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+            color: theme.displayTextColor || theme.textColor,
+            backgroundImage: theme.backgroundImage !== "none" ? `url(${theme.backgroundImage})` : "none",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
-          {/* Left side (centered when right side is hidden) */}
           <div
-            className={`flex flex-col items-center ${showRightSide ? "w-1/2" : "w-full"}`}
+            className={`flex w-full max-w-5xl justify-between px-2 ${showRightSide ? "" : "justify-center"}`}
           >
-            <div className="relative flex w-full max-w-[500px] flex-col items-center" style={{ marginTop: "-180px" }}>
-            <NameWheel
-                names={nameList}
-                isSpinning={isSpinning}
-                spinData={spinData}
-                onNameSelected={handleNameSelected}
-                stopSpinning={() => {
-                  setIsSpinning(false);
-                  setSpinData(null);
-                }}
-              />
+            {/* Left side (centered when right side is hidden) */}
+            <div
+              className={`flex flex-col items-center ${showRightSide ? "w-1/2" : "w-full"}`}
+            >
+              <div className="relative flex w-full max-w-[500px] flex-col items-center">
+              <NameWheel
+                  names={nameList}
+                  isSpinning={isSpinning}
+                  spinData={spinData}
+                  onNameSelected={handleNameSelected}
+                  stopSpinning={() => {
+                    setIsSpinning(false);
+                    setSpinData(null);
+                  }}
+                />
 
-              {visibilityStates.isSpinButtonVisible && (
-                <button
-                  type="button"
-                  onClick={handleSpin}
-                  className="spin-button bg-light-blue hover:bg-hover-blue active:bg-active-blue max-w-md rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
-                >
-                  Spin the Wheel
-                </button>
+                {visibilityStates.isSpinButtonVisible && (
+                  <button
+                    type="button"
+                    onClick={handleSpin}
+                    className="spin-button bg-light-blue hover:bg-hover-blue active:bg-active-blue max-w-md rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+                  >
+                    Spin the Wheel
+                  </button>
+                )}
+              </div>
+
+              {/* Move selected name display here, below the spin button */}
+              {selectedName && (
+                <div className="mt-4 text-center">
+                  <h2 className="text-2xl font-bold">Selected:</h2>
+                  <p className="text-xl">{selectedName}</p>
+                </div>
               )}
             </div>
 
-            {/* Move selected name display here, below the spin button */}
-            {selectedName && (
-              <div className="mt-4 text-center">
-                <h2 className="text-2xl font-bold">Selected:</h2>
-                <p className="text-xl">{selectedName}</p>
-              </div>
-            )}
-          </div>
-
-          {/* Right side (hidden by default, shown when triggered) */}
-          <div
-            className={`ml-8 flex flex-col transition-all duration-300 ${
-              showRightSide
-                ? "w-1/2 opacity-100"
-                : "w-0 overflow-hidden opacity-0"
-            }`} style={{ marginTop: "-180px" }}
-          >
-            {visibilityStates.isNameInputVisible && (
-              <div className="mb-5 flex w-full flex-col items-center">
-                <div className="flex items-center">
-                  <label htmlFor="nameInput" className="mr-2 whitespace-nowrap">
-                    Add a Name:
-                  </label>
-                  <input
-                    type="text"
-                    id="nameInput"
-                    value={nameInput}
-                    onChange={(e) => setNameInput(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    className={`font-teacher mr-2 rounded border border-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"} p-2 text-center text-base`}
-                    placeholder="Enter a name"
-                  />
-                  {visibilityStates.isAddNameButtonVisible && (
-                    <button
-                      type="button"
-                      onClick={handleAddName}
-                      className="add-name-button bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
-                    >
-                      Add
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {visibilityStates.isNamesListVisible && (
-              <div className="flex w-full flex-col items-center">
-                <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
-                <ul className="list-none p-0 text-center">
-                  {nameList.map((name, index) => (
-                    <WheelSegment
-                      key={index}
-                      name={name}
-                      index={index}
-                      angle={0}
-                      radius={150}
-                      onRemove={() => handleRemoveName(index)}
-                      onEdit={(newName) => handleEditName(index, newName)}
+            {/* Right side (hidden by default, shown when triggered) */}
+            <div
+              className={`ml-8 flex flex-col transition-all duration-300 ${
+                showRightSide
+                  ? "w-1/2 opacity-100"
+                  : "w-0 overflow-hidden opacity-0"
+              }`} style={{ marginTop: "-180px" }}
+            >
+              {visibilityStates.isNameInputVisible && (
+                <div className="mb-5 flex w-full flex-col items-center">
+                  <div className="flex items-center">
+                    <label htmlFor="nameInput" className="mr-2 whitespace-nowrap">
+                      Add a Name:
+                    </label>
+                    <input
+                      type="text"
+                      id="nameInput"
+                      value={nameInput}
+                      onChange={(e) => setNameInput(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      className={`font-teacher mr-2 rounded border border-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"} p-2 text-center text-base`}
+                      placeholder="Enter a name"
                     />
-                  ))}
-                </ul>
-              </div>
-            )}
+                    {visibilityStates.isAddNameButtonVisible && (
+                      <button
+                        type="button"
+                        onClick={handleAddName}
+                        className="add-name-button bg-light-blue hover:bg-hover-blue active:bg-active-blue rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+                      >
+                        Add
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {visibilityStates.isNamesListVisible && (
+                <div className="flex w-full flex-col items-center">
+                  <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
+                  <ul className="list-none p-0 text-center">
+                    {nameList.map((name, index) => (
+                      <WheelSegment
+                        key={index}
+                        name={name}
+                        index={index}
+                        angle={0}
+                        radius={150}
+                        onRemove={() => handleRemoveName(index)}
+                        onEdit={(newName) => handleEditName(index, newName)}
+                      />
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* Toggle button (always visible) */}
+          <button
+            type="button"
+            className="fixed right-4 mt-6 flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+            onClick={handleToggleRightSide}
+            style={{
+              top: "calc(200px + var(--navbar-height) + 20px)"
+            }}
+          >
+            {showRightSide ? "-" : "+"}
+          </button>
+
+          {/* Add the GuidedTour component here */}
+          <GuidedTour
+            steps={steps}
+            isRunning={isTourRunning}
+            onComplete={handleTourComplete}
+            currentStep={currentTourStep}
+            onStepChange={handleTourStepChange}
+            tourName="nameGenerator"
+          />
+
+          {/* Button to show feedback form */}
+          <button
+            type="button"
+            onClick={() => setShowFeedback(true)}
+            className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+          >
+            Give Feedback
+          </button>
+
+          {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
         </div>
-
-        {/* Toggle button (always visible) */}
-        <button
-          type="button"
-          className="fixed right-4 top-[200px] mt-6 flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
-          onClick={handleToggleRightSide}
-        >
-          {showRightSide ? "-" : "+"}
-        </button>
-
-        {/* Add the GuidedTour component here */}
-        <GuidedTour
-          steps={steps}
-          isRunning={isTourRunning}
-          onComplete={handleTourComplete} // Use the new handler
-          currentStep={currentTourStep}
-          onStepChange={handleTourStepChange} // Pass the step change handler
-          tourName="nameGenerator"
-        />
-
-        {/* Button to show feedback form */}
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
-
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       </div>
-    </div>
+    </Layout>
   );
 };
 
