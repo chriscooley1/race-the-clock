@@ -92,7 +92,7 @@ const YourCollections: React.FC = () => {
   const [filteredCollections, setFilteredCollections] = useState<Collection[]>(
     [],
   );
-  const [selectedCategory, setSelectedCategory] =
+  const [selectedCategory, setSelectedCategory] = 
     useState<string>("All Collections");
   const [sortOption, setSortOption] = useState<string>(
     localStorage.getItem("sortPreference") || "date",
@@ -327,10 +327,6 @@ const YourCollections: React.FC = () => {
     setEditModalOpen(true);
   };
 
-  const handleDuplicateCollection = () => {
-    setDuplicateModalOpen(true);
-  };
-
   const handleDuplicateConfirm = async () => {
     if (!selectedCollectionToDuplicate) return;
     try {
@@ -433,17 +429,6 @@ const YourCollections: React.FC = () => {
     }
   };
 
-  const handleSelectCategory = (category: string) => {
-    setSelectedCategory(category);
-  };
-
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newSortOption = event.target.value;
-    setSortOption(newSortOption);
-    localStorage.setItem("sortPreference", newSortOption);
-    filterAndSortCollections(collections, selectedCategory, newSortOption);
-  };
-
   const formatDate = (dateString: string): string => {
     if (!dateString) return "Unknown Date";
     const date = new Date(dateString);
@@ -511,8 +496,51 @@ const YourCollections: React.FC = () => {
     }));
   }, [collections, showModal, isEditModalOpen, isDuplicateModalOpen]);
 
+  const handleSelectCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const category = event.target.value;
+    setSelectedCategory(category);
+    filterAndSortCollections(collections, category, sortOption);
+  };
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSortOption = event.target.value;
+    setSortOption(newSortOption);
+    localStorage.setItem("sortPreference", newSortOption);
+    filterAndSortCollections(collections, selectedCategory, newSortOption);
+  };
+
   return (
     <div className="page-container page-container-with-collections mt-16">
+      <div className="mb-4 flex items-center justify-between">
+        <select
+          aria-label="Select a category"
+          id="category-select"
+          value={selectedCategory}
+          onChange={handleSelectCategory}
+          className="rounded border p-2"
+        >
+          <option value="All Collections">All Collections</option>
+          {Object.keys(categoryColors).map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+
+        <select
+          aria-label="Sort collections"
+          id="sort-select"
+          value={sortOption}
+          onChange={handleSortChange}
+          className="rounded border p-2"
+        >
+          <option value="date">Sort by Date</option>
+          <option value="alphabetical">Sort Alphabetically</option>
+          <option value="category">Sort by Category</option>
+          <option value="custom">Custom Order</option>
+        </select>
+      </div>
+
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="collections">
           {(provided) => (
