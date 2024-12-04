@@ -301,7 +301,7 @@ const NameGenerator: React.FC = () => {
               showRightSide
                 ? "w-1/2 opacity-100"
                 : "w-0 overflow-hidden opacity-0"
-            }`} style={{ marginTop: "-180px" }}
+            }`}
           >
             {visibilityStates.isNameInputVisible && (
               <div className="mb-5 flex w-full flex-col items-center">
@@ -355,10 +355,13 @@ const NameGenerator: React.FC = () => {
         {/* Toggle button (always visible) */}
         <button
           type="button"
-          className="fixed right-4 mt-6 flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+          className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
           onClick={handleToggleRightSide}
           style={{
-            top: "calc(200px + var(--navbar-height) + 20px)"
+            position: "absolute",
+            top: "calc(210px + 56px + 1rem)", // Navbar (200px) + CollectionsNavBar (56px) + spacing
+            right: "1rem",
+            zIndex: 40 // Below the navbars (which are 50 and 51)
           }}
         >
           {showRightSide ? "-" : "+"}

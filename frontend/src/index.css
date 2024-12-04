@@ -29,6 +29,7 @@
     --font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
     --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
     --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+    --collections-navbar-height: 64px;
   }
 
   body {
@@ -88,6 +89,7 @@
   --font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
   --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
   --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+  --collections-navbar-height: 64px;
 }
 
 /* Apply the CSS variables to the body */
