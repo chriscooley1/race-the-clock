@@ -11,8 +11,8 @@ interface EditCollectionModalProps {
     collectionName: string,
     isPublic: boolean,
   ) => void;
-  type: string; // Added type prop
-  isPublic: boolean; // New prop to indicate if the collection is public
+  type: string;
+  isPublic: boolean;
 }
 
 const EditCollectionModal: React.FC<EditCollectionModalProps> = ({

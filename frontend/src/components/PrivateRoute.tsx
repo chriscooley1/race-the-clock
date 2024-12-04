@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 interface PrivateRouteProps {
   element: JSX.Element;
@@ -8,14 +9,16 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
   const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
   const [isRedirecting, setIsRedirecting] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isAuthenticated && !isLoading && !isRedirecting) {
       console.log("User not authenticated. Redirecting to login.");
       setIsRedirecting(true);
       loginWithRedirect();
+      navigate("/");
     }
-  }, [isAuthenticated, isLoading, isRedirecting, loginWithRedirect]);
+  }, [isAuthenticated, isLoading, isRedirecting, loginWithRedirect, navigate]);
 
   if (isLoading || isRedirecting) {
     return (
