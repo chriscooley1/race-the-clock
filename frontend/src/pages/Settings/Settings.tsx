@@ -198,13 +198,6 @@ const Settings: React.FC = () => {
     });
   };
 
-  const handleToggleDarkMode = () => {
-    setTheme((prevTheme) => ({
-      ...prevTheme,
-      isDarkMode: !prevTheme.isDarkMode,
-    }));
-  };
-
   const handleGuidedTourToggle = () => {
     setIsGuidedTourEnabled((prev) => {
       const newValue = !prev;
@@ -274,41 +267,14 @@ const Settings: React.FC = () => {
       setTourName={setTourName}
       setCurrentTourStep={setCurrentTourStep}
     >
-      <div className="page-container">
-        {theme.backgroundImage && theme.backgroundImage !== "none" && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundImage: `url(${theme.backgroundImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              zIndex: -1,
-            }}
-          />
-        )}
+      <div className="page-container mt-[20px] flex flex-col items-center">
         <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
-        <div className="absolute right-4 top-[150px] z-10 mt-16">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={theme.isDarkMode}
-              onChange={handleToggleDarkMode}
-              className="mr-2"
-            />
-            Toggle Dark Mode
-          </label>
-        </div>
-        <div className="absolute right-4 top-[180px] z-10 mt-16">
+        <div className="mb-6 flex w-full space-x-6">
           <label className="flex items-center">
             <input
               type="checkbox"
               checked={isGuidedTourEnabled}
-              onChange={handleGuidedTourToggle}
+              onChange={(e) => setIsGuidedTourEnabled(e.target.checked)}
               className="mr-2"
             />
             Enable Guided Tour
