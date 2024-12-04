@@ -46,7 +46,7 @@ const MultipleWordsGame: React.FC = () => {
       <button
         type="button"
         onClick={handleBack}
-        className="fixed left-4 top-20 z-40 mt-12 rounded border border-black bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+        className="fixed left-4 z-40 mt-[20px] rounded border border-black bg-red-500 px-4 py-2 text-white hover:bg-red-600"
       >
         Back to Games
       </button>
