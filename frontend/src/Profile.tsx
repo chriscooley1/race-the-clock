@@ -14,7 +14,6 @@ const Profile = () => {
       const domain = import.meta.env.VITE_AUTH0_DOMAIN;
 
       try {
-        console.log("Fetching user metadata...");
         const accessToken = await getAccessTokenSilently({
           authorizationParams: {
             audience: `https://${domain}/api/v2/`,
@@ -31,7 +30,6 @@ const Profile = () => {
         });
 
         const { user_metadata } = await metadataResponse.json();
-        console.log("User metadata fetched:", user_metadata);
         setUserMetadata(user_metadata);
       } catch (e) {
         const error = e as Error;

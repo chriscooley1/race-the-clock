@@ -271,12 +271,12 @@ const CollectionFinalStep: React.FC = () => {
         dot.shape,
         dot.position,
       );
-      console.log("Generated SVG:", svg);
+      console.log("SVG generated successfully");
       return svg;
     });
 
     const combinedSvg = combineSvgs(svgs);
-    console.log("Combined SVG:", combinedSvg);
+    console.log("SVGs combined successfully");
 
     const newItem = {
       id: items.length + 1,
@@ -284,7 +284,7 @@ const CollectionFinalStep: React.FC = () => {
       svg: combinedSvg,
       count: dots.reduce((sum, dot) => sum + dot.count, 0),
     };
-    console.log("New item SVG:", newItem.svg);
+    console.log("Item added successfully");
     setItems([...items, newItem]);
 
     // Reset available positions after adding the item
@@ -299,7 +299,7 @@ const CollectionFinalStep: React.FC = () => {
 
   const handleSaveCollection = async () => {
     if (!currentUser) {
-      console.error("Current user is not set");
+      console.error("User authentication required");
       return;
     }
 
@@ -310,15 +310,7 @@ const CollectionFinalStep: React.FC = () => {
         count: item.count,
       }));
 
-      console.log("Saving collection with data:", {
-        username: currentUser.username,
-        collectionName,
-        collectionData,
-        isPublic,
-        category,
-        type: initialType || "custom", // Changed from type to initialType
-      });
-
+      console.log("Preparing to save collection");
       await saveCollection(
         currentUser.username,
         collectionName,
@@ -330,7 +322,7 @@ const CollectionFinalStep: React.FC = () => {
       );
       navigate("/your-collections");
     } catch (error) {
-      console.error("Error saving collection:", error);
+      console.error("Error saving collection", error);
       alert("There was an error saving your collection. Please try again.");
     }
   };

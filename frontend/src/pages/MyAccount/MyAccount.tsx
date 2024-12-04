@@ -52,7 +52,7 @@ const MyAccount: React.FC = () => {
           startTour();
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user data", error);
       }
     };
 
@@ -64,7 +64,7 @@ const MyAccount: React.FC = () => {
       setIsTourRunning(true);
       setCurrentTourStep(0); // Reset to the first step
     } else {
-      console.warn("No steps available for the tour.");
+      console.warn("No steps available for the tour");
     }
   };
 
@@ -75,16 +75,16 @@ const MyAccount: React.FC = () => {
   };
 
   const handleRoleChange = async (newRole: string) => {
-    console.log("Changing role to:", newRole);
+    console.log("Attempting role change");
     if (user && user.sub) {
       const token = await getAccessTokenSilently();
       try {
         const updatedUser = await updateUserRole(user.sub, newRole, token);
-        console.log("Role updated successfully:", updatedUser);
+        console.log("Role updated successfully", updatedUser);
         setRole(newRole); // Update the local state
         localStorage.setItem("userRole", newRole);
       } catch (error) {
-        console.error("Error updating role:", error);
+        console.error("Error updating role", error);
       }
     } else {
       console.error("User is not authenticated");

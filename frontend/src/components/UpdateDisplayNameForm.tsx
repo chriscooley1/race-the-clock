@@ -19,7 +19,6 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
 
   const handleUpdateDisplayName = async () => {
     try {
-      console.log("Attempting to update display name:", displayName);
       await updateDisplayName(
         { display_name: displayName },
         getAccessTokenSilently,
@@ -52,7 +51,6 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
         className="font-teacher mb-4 w-full rounded-md border border-black p-2 text-base"
         value={displayName}
         onChange={(e) => {
-          console.log("Display name input changed:", e.target.value);
           setDisplayName(e.target.value);
         }}
         style={{

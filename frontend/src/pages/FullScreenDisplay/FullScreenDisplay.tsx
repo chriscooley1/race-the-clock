@@ -50,7 +50,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log("FullScreenDisplay state:", location.state);
+  console.log("FullScreenDisplay initialized");
   const {
     sequence,
     speed,
@@ -61,13 +61,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     timerMinutes,
     timerSeconds,
   } = location.state as FullScreenDisplayState;
-  console.log("Destructured values:", {
-    sequence,
-    speed,
-    shuffle,
-    category,
-    type,
-  });
+  console.log("Session configuration loaded");
   const { theme } = useTheme();
   const [index, setIndex] = useState(0);
   const [shuffledSequence, setShuffledSequence] = useState<SequenceItem[]>([]);

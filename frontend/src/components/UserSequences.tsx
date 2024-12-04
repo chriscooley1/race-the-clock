@@ -8,12 +8,12 @@ const UserSequences: React.FC = () => {
   const fetchData = useCallback(async () => {
     try {
       if (user?.sub) {
-        console.log("Fetching sequences for user:", user.sub);
-        const sequences = await getSequences(user.sub, getAccessTokenSilently);
-        console.log("Fetched sequences:", sequences);
+        console.log("Fetching user sequences");
+        await getSequences(user.sub, getAccessTokenSilently);
+        console.log("Sequences fetched successfully");
       }
-    } catch (error) {
-      console.error("Error fetching sequences", error);
+    } catch {
+      console.error("Error fetching sequences");
     }
   }, [getAccessTokenSilently, user?.sub]);
 

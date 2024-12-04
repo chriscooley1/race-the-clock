@@ -65,7 +65,6 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      console.log("Cleaning up event listener for handleClickOutside");
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);

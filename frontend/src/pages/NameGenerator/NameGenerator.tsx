@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import NameWheel from "../../components/NameWheel";
 import WheelSegment from "../../components/WheelSegment";
@@ -105,7 +105,7 @@ const NameGenerator: React.FC = () => {
       const response = await axios.get(`${API_URL}/namelists/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("API Response:", response.data);
+      console.log("Name list loaded successfully");
       if (response.data.length > 0) {
         const latestNameList = response.data[0];
         setNameListId(latestNameList.namelist_id);
@@ -124,29 +124,35 @@ const NameGenerator: React.FC = () => {
 
   const saveNameList = async (updatedList: string[] = nameList) => {
     try {
-      console.log("Saving name list:", updatedList);
+      console.log("Saving name list...");
       const token = await getAccessTokenSilently();
       const data = { name: "My Name List", names: updatedList };
+      
       if (nameListId) {
-        console.log("Updating existing list with ID:", nameListId);
-        const response = await axios.put(
+        console.log("Updating existing list");
+        await axios.put(
           `${API_URL}/namelists/${nameListId}`,
           data,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
         );
-        console.log("Update response:", response.data);
+        console.log("List updated successfully");
       } else {
         console.log("Creating new list");
         const response = await axios.post(`${API_URL}/namelists/`, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("Create response:", response.data);
+        console.log("List created successfully");
+        // We need this response to get the new nameListId
         setNameListId(response.data.namelist_id);
       }
     } catch (error) {
-      console.error("Error saving name list:", error);
+      if (error instanceof AxiosError) {
+        console.error("API Error:", error.message);
+      } else {
+        console.error("Error saving name list", error);
+      }
     }
   };
 
@@ -189,7 +195,6 @@ const NameGenerator: React.FC = () => {
       const totalDegrees = spinRevolutions * 360 + targetDegrees;
 
       console.log("--- Spin Initialization ---");
-      console.log("Names List:", nameList);
       console.log("Degrees Per Slice:", degreesPerSlice);
       console.log("Random Selected Index:", selectedIndex);
       console.log("Target Degrees:", targetDegrees);
@@ -203,7 +208,7 @@ const NameGenerator: React.FC = () => {
   const [selectedName, setSelectedName] = useState<string | null>(null);
 
   const handleNameSelected = (name: string) => {
-    console.log(`nameSelected: ${name}`);
+    console.log("Name selected");
     setIsSpinning(false);
     setSelectedName(name);
   };

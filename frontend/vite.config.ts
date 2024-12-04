@@ -5,8 +5,6 @@ import { resolve } from "path";
 export default defineConfig(({ mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd(), "");
 
-  console.log("Loaded environment variables:", env);
-
   return {
     plugins: [react()],
     base: "/",
