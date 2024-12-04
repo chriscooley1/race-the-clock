@@ -77,7 +77,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       "Starting session with timer values:",
       timerMinutes,
       timerSeconds,
-    ); // Debug log
+    );
     onStart(
       typeof minutes === "number" ? minutes : 0,
       typeof seconds === "number" ? seconds : 0,
