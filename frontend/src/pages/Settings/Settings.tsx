@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useTheme,
   setThemeWithColorAdjustment,
@@ -8,10 +8,8 @@ import { tourStepsSettings } from "./tourStepsSettings";
 import GuidedTour from "../../components/GuidedTour";
 import { getLuminance } from "../../utils/colorUtils";
 import FeedbackForm from "../../components/FeedbackForm";
-import Navbar from "../../components/Navbar";
 import { useTour } from "../../context/TourContext";
 import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
-import Layout from "../../components/Layout";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -45,19 +43,11 @@ const Settings: React.FC = () => {
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [tourName, setTourName] = useState<string>("settings");
-  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
+  const tourName = "settings";
+  
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
-  const steps = tourStepsSettings(); // Remove the visibilityStates parameter
-
-  const startTour = useCallback(() => {
-    const tourCompleted = localStorage.getItem(`tourCompleted_${tourName}`);
-    console.log("Starting tour, tourCompleted:", tourCompleted);
-    if (isGuidedTourEnabled) {
-      setIsTourRunning(true);
-      setCurrentTourStep(0);
-    }
-  }, [tourName, isGuidedTourEnabled]);
+  const steps = tourStepsSettings();
 
   const handleTourComplete = () => {
     console.log(`Tour ${tourName} completed`);
@@ -269,233 +259,221 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <Layout
-      onStartTour={() => setIsTourRunning(true)}
-      setTourName={setTourName}
-      setCurrentTourStep={setCurrentTourStep}
-    >
-      <div className="page-container mt-[20px] flex flex-col items-center">
-        <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
-        <div className="mb-6 flex w-full justify-center space-x-6">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={theme.isDarkMode}
-              onChange={handleToggleDarkMode}
-              className="mr-2"
-            />
-            Enable Dark Mode
-          </label>
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={isGuidedTourEnabled}
-              onChange={(e) => setIsGuidedTourEnabled(e.target.checked)}
-              className="mr-2"
-            />
-            Enable Guided Tour
-          </label>
-        </div>
-        <div className="w-full space-y-6 px-4 md:px-8">
-          <div>
-            <h2 className="mb-2 text-xl font-semibold">Main Font</h2>
-            <select
-              value={theme.font}
-              onChange={handleFontChange}
-              className="main-font rounded border border-black bg-white p-2 text-black"
-              title="Select main font"
-            >
-              {fonts.map((font) => {
-                const fontName = font.replace(/^["'](.+)["']$/, "$1");
-                return (
-                  <option
-                    key={font}
-                    value={font}
-                    style={{ fontFamily: fontName }}
-                  >
-                    {fontName}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-
-          <div>
-            <h2 className="mb-2 text-xl font-semibold">Heading Font</h2>
-            <select
-              value={theme.headingFont}
-              onChange={handleHeadingFontChange}
-              className="heading-font rounded border border-black bg-white p-2 text-black"
-              title="Select heading font"
-            >
-              {fonts.map((font) => {
-                const fontName = font.replace(/^["'](.+)["']$/, "$1");
-                return (
-                  <option
-                    key={font}
-                    value={font}
-                    style={{ fontFamily: fontName }}
-                  >
-                    {fontName}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-
-          <div>
-            <h2 className="mb-2 text-xl font-semibold">Button Font</h2>
-            <select
-              value={theme.buttonFont}
-              onChange={handleButtonFontChange}
-              className="button-font rounded border border-black bg-white p-2 text-black"
-              title="Select button font"
-            >
-              {fonts.map((font) => {
-                const fontName = font.replace(/^["'](.+)["']$/, "$1");
-                return (
-                  <option
-                    key={font}
-                    value={font}
-                    style={{ fontFamily: fontName }}
-                  >
-                    {fontName}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-
-          <div className="mb-4">
-            <label className="mb-2 block font-bold">Color Theme:</label>
-            <div className="flex flex-wrap">
-              {getAdjustedColorOptions().map((color) => (
-                <div
-                  key={color.name}
-                  className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""} ${isColorDisabled(color.adjustedValue) ? "cursor-not-allowed opacity-50" : ""}`}
-                  style={{
-                    backgroundColor: color.adjustedValue,
-                    ...(theme.name === color.name &&
-                    color.adjustedValue.toLowerCase() === "#000000"
-                      ? { backgroundColor: "#404040" }
-                      : {}),
-                  }}
-                  onClick={() => {
-                    if (!isColorDisabled(color.adjustedValue)) {
-                      const newTheme = colorSchemes.find(
-                        (scheme) => scheme.name === color.name,
-                      );
-                      if (newTheme) {
-                        handleColorThemeChange(newTheme);
-                      }
-                    }
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <label className="mb-2 block font-bold">
-              Text Color for Full Screen Display:
-            </label>
-            <div className="flex flex-wrap">
-              {getAdjustedTextColorOptions().map((color) => (
-                <div
-                  key={color.name}
-                  className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.displayTextColor === color.adjustedValue ? "border-4 border-black" : ""} ${isColorDisabled(color.adjustedValue) ? "cursor-not-allowed opacity-50" : ""}`}
-                  style={{ backgroundColor: color.adjustedValue }}
-                  onClick={() => {
-                    if (!isColorDisabled(color.adjustedValue)) {
-                      handleTextColorChange(color.adjustedValue);
-                    }
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h2 className="mb-2 text-xl font-semibold">Accessibility</h2>
-            <div className="space-y-2">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={theme.isColorblindMode}
-                  onChange={handleColorblindModeChange}
-                  className="accessibility mr-2"
-                />
-                Enable Colorblind Mode
-              </label>
-              {theme.isColorblindMode && (
-                <select
-                  value={theme.colorblindType}
-                  onChange={handleColorblindTypeChange}
-                  className="w-full max-w-xs rounded border p-2 text-black"
-                  title="Select colorblind type"
-                >
-                  {colorblindTypes.map((type) => (
-                    <option key={type} value={type.toLowerCase()}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <h2 className="mb-2 text-xl font-semibold">Background Theme</h2>
-            <select
-              value={theme.backgroundImage}
-              onChange={handleBackgroundThemeChange}
-              className="background-theme rounded border border-black bg-white p-2 text-black"
-              title="Select background theme"
-            >
-              {backgroundThemes.map((theme) => (
-                <option key={theme.name} value={theme.value}>
-                  {theme.name}
-                </option>
-              ))}
-            </select>
-            <p>Current background image: {theme.backgroundImage}</p>
-          </div>
-        </div>
-        {/* Button to show feedback form */}
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
-        <button
-          type="button"
-          onClick={handleGuidedTourToggle}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Toggle Guided Tour
-        </button>
-        <GuidedTour
-          steps={steps}
-          isRunning={isTourRunning && isGuidedTourEnabled}
-          onComplete={handleTourComplete}
-          currentStep={currentTourStep}
-          onStepChange={setCurrentTourStep}
-          tourName={tourName}
-        />
-        <Navbar
-          currentTourName={tourName}
-          isPaused={false}
-          onPauseResume={() => {}}
-          onStartTour={startTour}
-          setTourName={setTourName}
-          setCurrentTourStep={setCurrentTourStep}
-          setShowFeedback={setShowFeedback}
-        />
+    <div className="page-container mt-[20px] flex flex-col items-center">
+      <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
+      <div className="mb-6 flex w-full justify-center space-x-6">
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={theme.isDarkMode}
+            onChange={handleToggleDarkMode}
+            className="mr-2"
+          />
+          Enable Dark Mode
+        </label>
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={isGuidedTourEnabled}
+            onChange={(e) => setIsGuidedTourEnabled(e.target.checked)}
+            className="mr-2"
+          />
+          Enable Guided Tour
+        </label>
       </div>
-    </Layout>
+      <div className="w-full space-y-6 px-4 md:px-8">
+        <div>
+          <h2 className="mb-2 text-xl font-semibold">Main Font</h2>
+          <select
+            value={theme.font}
+            onChange={handleFontChange}
+            className="main-font rounded border border-black bg-white p-2 text-black"
+            title="Select main font"
+          >
+            {fonts.map((font) => {
+              const fontName = font.replace(/^["'](.+)["']$/, "$1");
+              return (
+                <option
+                  key={font}
+                  value={font}
+                  style={{ fontFamily: fontName }}
+                >
+                  {fontName}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
+        <div>
+          <h2 className="mb-2 text-xl font-semibold">Heading Font</h2>
+          <select
+            value={theme.headingFont}
+            onChange={handleHeadingFontChange}
+            className="heading-font rounded border border-black bg-white p-2 text-black"
+            title="Select heading font"
+          >
+            {fonts.map((font) => {
+              const fontName = font.replace(/^["'](.+)["']$/, "$1");
+              return (
+                <option
+                  key={font}
+                  value={font}
+                  style={{ fontFamily: fontName }}
+                >
+                  {fontName}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
+        <div>
+          <h2 className="mb-2 text-xl font-semibold">Button Font</h2>
+          <select
+            value={theme.buttonFont}
+            onChange={handleButtonFontChange}
+            className="button-font rounded border border-black bg-white p-2 text-black"
+            title="Select button font"
+          >
+            {fonts.map((font) => {
+              const fontName = font.replace(/^["'](.+)["']$/, "$1");
+              return (
+                <option
+                  key={font}
+                  value={font}
+                  style={{ fontFamily: fontName }}
+                >
+                  {fontName}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label className="mb-2 block font-bold">Color Theme:</label>
+          <div className="flex flex-wrap">
+            {getAdjustedColorOptions().map((color) => (
+              <div
+                key={color.name}
+                className={`color-theme m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.name === color.name ? "border-4 border-black" : ""} ${isColorDisabled(color.adjustedValue) ? "cursor-not-allowed opacity-50" : ""}`}
+                style={{
+                  backgroundColor: color.adjustedValue,
+                  ...(theme.name === color.name &&
+                  color.adjustedValue.toLowerCase() === "#000000"
+                    ? { backgroundColor: "#404040" }
+                    : {}),
+                }}
+                onClick={() => {
+                  if (!isColorDisabled(color.adjustedValue)) {
+                    const newTheme = colorSchemes.find(
+                      (scheme) => scheme.name === color.name,
+                    );
+                    if (newTheme) {
+                      handleColorThemeChange(newTheme);
+                    }
+                  }
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <label className="mb-2 block font-bold">
+            Text Color for Full Screen Display:
+          </label>
+          <div className="flex flex-wrap">
+            {getAdjustedTextColorOptions().map((color) => (
+              <div
+                key={color.name}
+                className={`text-color m-1 inline-block size-8 cursor-pointer border border-black transition-all duration-300 ${theme.displayTextColor === color.adjustedValue ? "border-4 border-black" : ""} ${isColorDisabled(color.adjustedValue) ? "cursor-not-allowed opacity-50" : ""}`}
+                style={{ backgroundColor: color.adjustedValue }}
+                onClick={() => {
+                  if (!isColorDisabled(color.adjustedValue)) {
+                    handleTextColorChange(color.adjustedValue);
+                  }
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="mb-2 text-xl font-semibold">Accessibility</h2>
+          <div className="space-y-2">
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                checked={theme.isColorblindMode}
+                onChange={handleColorblindModeChange}
+                className="accessibility mr-2"
+              />
+              Enable Colorblind Mode
+            </label>
+            {theme.isColorblindMode && (
+              <select
+                value={theme.colorblindType}
+                onChange={handleColorblindTypeChange}
+                className="w-full max-w-xs rounded border p-2 text-black"
+                title="Select colorblind type"
+              >
+                {colorblindTypes.map((type) => (
+                  <option key={type} value={type.toLowerCase()}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="mb-2 text-xl font-semibold">Background Theme</h2>
+          <select
+            value={theme.backgroundImage}
+            onChange={handleBackgroundThemeChange}
+            className="background-theme rounded border border-black bg-white p-2 text-black"
+            title="Select background theme"
+          >
+            {backgroundThemes.map((theme) => (
+              <option key={theme.name} value={theme.value}>
+                {theme.name}
+              </option>
+            ))}
+          </select>
+          <p>Current background image: {theme.backgroundImage}</p>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+      >
+        Give Feedback
+      </button>
+
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+
+      <button
+        type="button"
+        onClick={handleGuidedTourToggle}
+        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
+      >
+        Toggle Guided Tour
+      </button>
+
+      <GuidedTour
+        steps={steps}
+        isRunning={isTourRunning && isGuidedTourEnabled}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName={tourName}
+      />
+    </div>
   );
 };
 

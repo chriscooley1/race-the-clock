@@ -4,7 +4,6 @@ import { useTheme } from "./context/ThemeContext";
 import { Step } from "react-joyride";
 import { VisibilityStates } from "./types/VisibilityStates";
 import PrivateRoute from "./components/PrivateRoute";
-import Navbar from "./components/Navbar";
 import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
 import ErrorBoundary from "./components/ErrorBoundary";
 import GuidedTour from "./components/GuidedTour";
@@ -12,6 +11,7 @@ import { TourProvider } from "./context/TourContext";
 import FeedbackForm from "./components/FeedbackForm";
 import FontPreloader from "./components/FontPreloader";
 import { CompletionProvider } from "./context/CompletionContext";
+import Layout from "./components/Layout";
 
 // Import your tour steps here
 import { tourStepsYourCollections } from "./pages/YourCollections/tourStepsYourCollections";
@@ -78,11 +78,6 @@ const App: React.FC = () => {
   const handleTourComplete = () => {
     setIsTourRunning(false);
     localStorage.setItem("tourCompleted", "true");
-  };
-
-  const handleTourStart = () => {
-    setIsTourRunning(true);
-    setCurrentTourStep(0);
   };
 
   const handleTourStepChange = (step: number) => {
@@ -253,156 +248,152 @@ const App: React.FC = () => {
           <TourProvider>
             <FontPreloader />
             <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
-              <Navbar
-                currentTourName={currentTourName}
-                onStartTour={handleTourStart}
+              <Layout
+                onStartTour={() => setIsTourRunning(true)}
                 setTourName={setCurrentTourName}
                 setCurrentTourStep={setCurrentTourStep}
-                setShowFeedback={setShowFeedback}
-              />
-              <div className="flex pt-[70px]">
-                <div className="grow main-content-area flex flex-col items-center">
-                  <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                    <Route
-                      path="/fullscreen-display"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute
-                            element={
-                              <FullScreenDisplay
-                                onEnterFullScreen={() => setIsFullScreen(true)}
-                                onExitFullScreen={() => setIsFullScreen(false)}
-                                setShowFeedback={setShowFeedback}
-                              />
-                            }
-                          />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/your-collections"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<YourCollections />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/new-collection"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<NewCollection />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/discover-collections"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<DiscoverCollections />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/collection-setup"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<CollectionSetup />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/collection-final-step"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<CollectionFinalStep />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/name-generator"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<NameGenerator />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/resources"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<Resources />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/settings"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<Settings />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/my-account"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<MyAccount />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/games"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<Games />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/games/matching-game"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<MatchingGame />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/games/multiple-words-game"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<MultipleWordsGame />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/games/timed-challenges"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<TimedChallenges />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/reports"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<Reports />} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/badges-achievements"
-                      element={
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <PrivateRoute element={<BadgesAchievements />} />
-                        </Suspense>
-                      }
-                    />
-                  </Routes>
-                </div>
-              </div>
+                tourName={currentTourName}
+              >
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route
+                    path="/fullscreen-display"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute
+                          element={
+                            <FullScreenDisplay
+                              onEnterFullScreen={() => setIsFullScreen(true)}
+                              onExitFullScreen={() => setIsFullScreen(false)}
+                              setShowFeedback={setShowFeedback}
+                            />
+                          }
+                        />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/your-collections"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<YourCollections />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/new-collection"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<NewCollection />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/discover-collections"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<DiscoverCollections />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/collection-setup"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<CollectionSetup />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/collection-final-step"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<CollectionFinalStep />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/name-generator"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<NameGenerator />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/resources"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<Resources />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/settings"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<Settings />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/my-account"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<MyAccount />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/games"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<Games />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/games/matching-game"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<MatchingGame />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/games/multiple-words-game"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<MultipleWordsGame />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/games/timed-challenges"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<TimedChallenges />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/reports"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<Reports />} />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/badges-achievements"
+                    element={
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute element={<BadgesAchievements />} />
+                      </Suspense>
+                    }
+                  />
+                </Routes>
+              </Layout>
               <GuidedTour
                 steps={getTourSteps()}
                 isRunning={isTourRunning}
