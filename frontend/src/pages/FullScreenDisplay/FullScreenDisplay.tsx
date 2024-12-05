@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
-import Navbar from "../../components/Navbar";
 import { tourStepsFullScreenDisplay } from "./tourStepsFullScreenDisplay";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
@@ -47,7 +46,6 @@ interface SequenceItem {
 const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   onEnterFullScreen,
   onExitFullScreen,
-  setShowFeedback,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -71,7 +69,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [progress, setProgress] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [stopCondition, setStopCondition] = useState("collection");
-  const [tourName, setTourName] = useState<string>("");
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
@@ -410,68 +407,95 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   };
 
   return (
-    <>
-      <Navbar
-        currentTourName={tourName}
-        isPaused={isPaused}
-        onPauseResume={handlePauseResume}
-        onStartTour={handleStartTour}
-        setTourName={setTourName}
-        setCurrentTourStep={setCurrentTourStep}
-        setShowFeedback={setShowFeedback}
-      />
-      <div
-        className="full-screen-display relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
-        style={{
-          color: theme.displayTextColor || theme.textColor,
-          backgroundColor: theme.displayBackgroundColor || theme.backgroundColor,
-        }}
-        onClick={handleScreenClick}
-      >
-        {renderContent()}
+    <div
+      className="full-screen-display relative m-0 flex h-screen w-screen items-center justify-center overflow-hidden p-0 transition-colors duration-300"
+      style={{
+        color: theme.displayTextColor || theme.textColor,
+        backgroundColor: theme.displayBackgroundColor || theme.backgroundColor,
+      }}
+      onClick={handleScreenClick}
+    >
+      {/* Control buttons in top-left corner */}
+      <div className="absolute left-4 top-4 z-50 flex flex-col gap-2">
         <button
           type="button"
-          className="w-15 h-15 previous-button absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
-          onClick={handlePrevious}
+          className="bg-custom-red hover:bg-custom-red-dark rounded border border-black px-3 py-1.5 text-sm font-bold text-white transition-colors duration-300"
+          onClick={handleEndSession}
         >
-          ←
+          Back
         </button>
         <button
           type="button"
-          className="w-15 h-15 next-button absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
-          onClick={handleNext}
+          className="bg-custom-green hover:bg-custom-green-dark rounded border border-black px-3 py-1.5 text-sm font-bold text-white transition-colors duration-300"
+          onClick={handlePauseResume}
         >
-          →
+          {isPaused ? "Resume" : "Pause"}
         </button>
-        <div className="progress-indicator fixed inset-x-2.5 bottom-2.5 h-2.5 rounded-full border border-black bg-white/30">
-          <div
-            className="h-full rounded-full border border-black bg-green-500 transition-all duration-300 ease-in-out"
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-        <div
-          className="fixed bottom-7 left-2.5 text-xs"
-          style={{ color: theme.displayTextColor || theme.textColor }}
-        >
-          {Math.round(progress)}% Complete
-        </div>
+      </div>
+
+      {/* Tour and Feedback buttons in top-right corner */}
+      <div className="absolute right-4 top-4 z-50 flex flex-col gap-2">
         {isGuidedTourEnabled && (
-          <GuidedTour
-            steps={steps}
-            isRunning={isTourRunning}
-            onComplete={handleTourComplete}
-            currentStep={currentTourStep}
-            onStepChange={setCurrentTourStep}
-            tourName={tourName}
-          />
+          <button
+            type="button"
+            onClick={handleStartTour}
+            className="rounded border border-black bg-blue-500 px-2 py-1 text-xs font-medium text-white transition-colors duration-300 hover:bg-blue-600"
+          >
+            Start Full Screen Display Tour
+          </button>
         )}
         <FeedbackIcon onClick={() => setIsFeedbackVisible(true)} />
       </div>
 
+      {/* Main content */}
+      {renderContent()}
+
+      {/* Navigation buttons */}
+      <button
+        type="button"
+        className="w-15 h-15 previous-button absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
+        onClick={handlePrevious}
+      >
+        ←
+      </button>
+      <button
+        type="button"
+        className="w-15 h-15 next-button absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
+        onClick={handleNext}
+      >
+        →
+      </button>
+
+      {/* Progress indicator */}
+      <div className="progress-indicator fixed inset-x-2.5 bottom-2.5 h-2.5 rounded-full border border-black bg-white/30">
+        <div
+          className="h-full rounded-full border border-black bg-green-500 transition-all duration-300 ease-in-out"
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
+      <div
+        className="fixed bottom-7 left-2.5 text-xs"
+        style={{ color: theme.displayTextColor || theme.textColor }}
+      >
+        {Math.round(progress)}% Complete
+      </div>
+
+      {/* Tour and Feedback components */}
+      {isGuidedTourEnabled && (
+        <GuidedTour
+          steps={steps}
+          isRunning={isTourRunning}
+          onComplete={handleTourComplete}
+          currentStep={currentTourStep}
+          onStepChange={setCurrentTourStep}
+          tourName="fullScreenDisplay"
+        />
+      )}
+
       {isFeedbackVisible && (
         <FeedbackForm onClose={() => setIsFeedbackVisible(false)} />
       )}
-    </>
+    </div>
   );
 };
 
