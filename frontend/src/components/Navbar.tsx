@@ -25,6 +25,8 @@ import { tourStepsReports } from "../pages/Reports/tourStepsReports";
 import { tourStepsBadgesAchievements } from "../pages/BadgesAchievements/tourStepsBadgesAchievements";
 import { tourStepsMatchingGame } from "../pages/Games/tourStepsMatchingGame";
 import { tourStepsMultipleWords } from "../pages/Games/tourStepsMultipleWords";
+import { tourStepsShop } from "../pages/Shop/tourStepsShop";
+import { tourStepsAbout } from "../pages/About/tourStepsAbout";
 import { getDefaultVisibilityStates } from "../utils/tourHelpers";
 
 interface NavbarProps {
@@ -219,6 +221,14 @@ const Navbar: React.FC<NavbarProps> = ({
       case "/games/multiple-words-game":
         steps = tourStepsMultipleWords();
         tourName = "multipleWords";
+        break;
+      case "/shop":
+        steps = tourStepsShop();
+        tourName = "shop";
+        break;
+      case "/about":
+        steps = tourStepsAbout();
+        tourName = "about";
         break;
       default:
         steps = [];

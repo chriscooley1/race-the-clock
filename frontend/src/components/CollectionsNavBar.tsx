@@ -57,6 +57,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           {/* About Button */}
           <button
             type="button"
+            onClick={() => navigate("/about")}
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
             About
@@ -65,6 +66,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           {/* Shop Button */}
           <button
             type="button"
+            onClick={() => navigate("/shop")}
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
             Shop

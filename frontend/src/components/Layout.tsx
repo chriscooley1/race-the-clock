@@ -22,7 +22,6 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <div>
       <Navbar
-        setShowFeedback={setShowFeedback}
         onStartTour={onStartTour}
         setTourName={setTourName}
         setCurrentTourStep={setCurrentTourStep}
