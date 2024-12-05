@@ -195,14 +195,6 @@ const Settings: React.FC = () => {
     }));
   };
 
-  const handleGuidedTourToggle = () => {
-    setIsGuidedTourEnabled((prev) => {
-      const newValue = !prev;
-      localStorage.setItem("guidedTourEnabled", JSON.stringify(newValue));
-      return newValue;
-    });
-  };
-
   // Load the guided tour preference from localStorage
   useEffect(() => {
     const storedPreference = localStorage.getItem("guidedTourEnabled");
@@ -456,14 +448,6 @@ const Settings: React.FC = () => {
       </button>
 
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
-
-      <button
-        type="button"
-        onClick={handleGuidedTourToggle}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Toggle Guided Tour
-      </button>
 
       <GuidedTour
         steps={steps}

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import cartIcon from "../assets/cart.png";
+import cartIcon from "../assets/cart.jpeg";
 
 const CollectionsNavBar: React.FC = () => {
   const navigate = useNavigate();
