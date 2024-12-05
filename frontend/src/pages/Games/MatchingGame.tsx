@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import FeedbackForm from "../../components/FeedbackForm";
 import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMatchingGame } from "./tourStepsMatchingGame";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 const MatchingGame: React.FC = () => {
   const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const [matches, setMatches] = useState<{ [key: string]: boolean }>({});
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const words = ["A", "B", "C"];
@@ -81,9 +78,6 @@ const MatchingGame: React.FC = () => {
         </div>
       )}
 
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       <GuidedTour
         steps={tourStepsMatchingGame()}
         isRunning={isTourRunning && isGuidedTourEnabled}

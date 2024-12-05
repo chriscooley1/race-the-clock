@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react";
 import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
 import { useCompletion } from "../../context/CompletionContext";
-import FeedbackForm from "../../components/FeedbackForm";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 const BadgesAchievements: React.FC = () => {
   const [badges, setBadges] = useState<string[]>([]);
   const [achievements, setAchievements] = useState<string[]>([]);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   const { completionCounts } = useCompletion();
 
@@ -65,7 +62,9 @@ const BadgesAchievements: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const tourCompleted = localStorage.getItem(`tourCompleted_badgesAchievements`);
+    const tourCompleted = localStorage.getItem(
+      `tourCompleted_badgesAchievements`,
+    );
     if (!tourCompleted) {
       setIsTourRunning(true);
     }
@@ -130,10 +129,6 @@ const BadgesAchievements: React.FC = () => {
           )}
         </ul>
       </div>
-
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 
       <GuidedTour
         steps={steps}

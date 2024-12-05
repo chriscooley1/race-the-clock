@@ -22,10 +22,8 @@ import { tourStepsYourCollections } from "./tourStepsYourCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { useCompletion } from "../../context/CompletionContext";
-import FeedbackForm from "../../components/FeedbackForm";
 import { categoryColors } from "../../constants/categoryColors";
 import { lightenColor } from "../../utils/colorUtils";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 interface Collection {
   collection_id: number;
@@ -93,7 +91,7 @@ const YourCollections: React.FC = () => {
   const [filteredCollections, setFilteredCollections] = useState<Collection[]>(
     [],
   );
-  const [selectedCategory, setSelectedCategory] = 
+  const [selectedCategory, setSelectedCategory] =
     useState<string>("All Collections");
   const [sortOption, setSortOption] = useState<string>(
     localStorage.getItem("sortPreference") || "date",
@@ -111,7 +109,6 @@ const YourCollections: React.FC = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { theme, adjustColorForColorblindness } = useTheme();
   const { updateCompletionCount } = useCompletion();
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const categories = [
     "All Collections",
@@ -346,22 +343,22 @@ const YourCollections: React.FC = () => {
         selectedCollectionToDuplicate,
         getAccessTokenSilently,
       );
-      
+
       // Fetch fresh data after duplication
       const refreshedCollections = await fetchCollections(
         getAccessTokenSilently,
       );
-      
+
       // Update collections with fresh data
       setCollections(refreshedCollections);
-      
+
       // Filter and sort the fresh data
       filterAndSortCollections(
         refreshedCollections,
         selectedCategory,
         sortOption,
       );
-      
+
       setDuplicateModalOpen(false);
     } catch (error) {
       console.error("Error duplicating collection:", error);
@@ -469,11 +466,11 @@ const YourCollections: React.FC = () => {
 
     setCollections((prevCollections) => {
       const collectionOrder = new Map(
-        newFilteredCollections.map((col) => [col.collection_id, col])
+        newFilteredCollections.map((col) => [col.collection_id, col]),
       );
 
-      return prevCollections.map((col) =>
-        collectionOrder.get(col.collection_id) || col
+      return prevCollections.map(
+        (col) => collectionOrder.get(col.collection_id) || col,
       );
     });
 
@@ -528,7 +525,7 @@ const YourCollections: React.FC = () => {
           </button>
 
           {isDropdownOpen && (
-            <div className="absolute left-0 top-full mt-1 w-48 rounded border border-gray-200 bg-white shadow-lg z-10">
+            <div className="absolute left-0 top-full z-10 mt-1 w-48 rounded border border-gray-200 bg-white shadow-lg">
               {categories.map((category) => (
                 <button
                   type="button"
@@ -539,7 +536,9 @@ const YourCollections: React.FC = () => {
                     filterAndSortCollections(collections, category, sortOption);
                   }}
                   className={`w-full px-4 py-2 text-left text-lg transition-colors duration-300 hover:bg-gray-100 ${
-                    selectedCategory === category ? "bg-gray-100 font-semibold" : ""
+                    selectedCategory === category
+                      ? "bg-gray-100 font-semibold"
+                      : ""
                   }`}
                 >
                   {category}
@@ -609,7 +608,7 @@ const YourCollections: React.FC = () => {
                   </p>
                 </div>
 
-                {filteredCollections.map((collection, index) => (
+                {filteredCollections.map((collection, index) =>
                   sortOption === "custom" ? (
                     <Draggable
                       key={collection.collection_id}
@@ -632,7 +631,7 @@ const YourCollections: React.FC = () => {
                             baseColor={adjustColorForTheme(
                               collectionColorSchemes[
                                 index % collectionColorSchemes.length
-                              ].backgroundColor
+                              ].backgroundColor,
                             )}
                             handleStartCollection={handleStartCollection}
                             handleEditButtonClick={handleEditButtonClick}
@@ -657,7 +656,7 @@ const YourCollections: React.FC = () => {
                         baseColor={adjustColorForTheme(
                           collectionColorSchemes[
                             index % collectionColorSchemes.length
-                          ].backgroundColor
+                          ].backgroundColor,
                         )}
                         handleStartCollection={handleStartCollection}
                         handleEditButtonClick={handleEditButtonClick}
@@ -667,8 +666,8 @@ const YourCollections: React.FC = () => {
                         theme={theme}
                       />
                     </div>
-                  )
-                ))}
+                  ),
+                )}
                 {provided.placeholder}
               </div>
             </div>
@@ -785,9 +784,6 @@ const YourCollections: React.FC = () => {
         tourName="yourCollections"
       />
 
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
     </div>
   );
 };

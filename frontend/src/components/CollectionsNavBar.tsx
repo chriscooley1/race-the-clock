@@ -8,7 +8,9 @@ interface CollectionsNavBarProps {
   setShowFeedback: (show: boolean) => void;
 }
 
-const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({ setShowFeedback }) => {
+const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
+  setShowFeedback,
+}) => {
   const navigate = useNavigate();
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
@@ -39,14 +41,14 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({ setShowFeedback }
   };
 
   return (
-    <div className="inset-x-0 top-navbar-height z-[51] bg-white text-black shadow-md dark:bg-gray-800">
+    <div className="top-navbar-height inset-x-0 z-[51] bg-white text-black shadow-md dark:bg-gray-800">
       <div className="flex w-full items-center justify-between px-6 py-3">
         {/* Left side - Navigation Items */}
         <div className="flex items-center space-x-4">
           {/* Home Button */}
           <button
             type="button"
-            onClick={() => navigate('/your-collections')}
+            onClick={() => navigate("/your-collections")}
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
             Home
@@ -80,7 +82,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({ setShowFeedback }
             </button>
 
             {isAccountDropdownOpen && (
-              <div className="absolute left-0 top-full mt-1 w-48 rounded border border-gray-200 bg-white shadow-lg z-[60]">
+              <div className="absolute left-0 top-full z-[60] mt-1 w-48 rounded border border-gray-200 bg-white shadow-lg">
                 <button
                   type="button"
                   onClick={() => {
@@ -148,15 +150,15 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({ setShowFeedback }
         </div>
 
         {/* Right side - Cart and Feedback */}
-        <div className="flex items-center space-x-8 relative">
-          <div className="scale-150 transform hover:scale-160 transition-transform">
+        <div className="relative flex items-center space-x-8">
+          <div className="hover:scale-160 scale-150 transition-transform">
             <FeedbackIcon onClick={() => setShowFeedback(true)} />
           </div>
           <button
             type="button"
-            className="scale-150 transform hover:scale-160 transition-transform"
+            className="hover:scale-160 scale-150 transition-transform"
           >
-            <img src={cartIcon} alt="Shopping Cart" className="w-8 h-8" />
+            <img src={cartIcon} alt="Shopping Cart" className="size-8" />
           </button>
         </div>
       </div>

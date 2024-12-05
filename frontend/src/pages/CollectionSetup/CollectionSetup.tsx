@@ -20,9 +20,7 @@ import { VisibilityStates } from "../../types/VisibilityStates";
 import { tourStepsCollectionSetup } from "./tourStepsCollectionSetup";
 import { Step } from "react-joyride";
 import GuidedTour from "../../components/GuidedTour";
-import FeedbackForm from "../../components/FeedbackForm";
 import { v4 as uuidv4 } from "uuid";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 type Operation =
   | "multiplication"
@@ -97,7 +95,6 @@ const CollectionSetup: React.FC = () => {
   });
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
   const [images, setImages] = useState<ImageWithCount[]>([]);
 
   // Define the steps variable
@@ -264,12 +261,10 @@ const CollectionSetup: React.FC = () => {
   };
 
   const handleImageCountChange = (imageId: string, newCount: number) => {
-    setImages(prevImages =>
-      prevImages.map(image =>
-        image.id === imageId
-          ? { ...image, count: newCount }
-          : image
-      )
+    setImages((prevImages) =>
+      prevImages.map((image) =>
+        image.id === imageId ? { ...image, count: newCount } : image,
+      ),
     );
   };
 
@@ -456,18 +451,18 @@ const CollectionSetup: React.FC = () => {
       // Create collection data based on whether we have images or sequence
       let collectionData;
       if (file.length > 0) {
-        collectionData = images.map(image => ({
+        collectionData = images.map((image) => ({
           name: image.file.name,
           svg: image.preview, // Use preview as svg to store the image data
           count: category === "Number Sense" ? image.count : 1,
-          type: "image" // Add type to identify this as an image item
+          type: "image", // Add type to identify this as an image item
         }));
       } else {
         collectionData = previewSequence.map((item, index) => ({
           id: index + 1,
           name: item.name,
           svg: item.svg,
-          type: "sequence" // Add type to identify this as a sequence item
+          type: "sequence", // Add type to identify this as a sequence item
         }));
       }
 
@@ -553,7 +548,9 @@ const CollectionSetup: React.FC = () => {
                     <>
                       <option value="letters">Uppercase Letters</option>
                       <option value="randomLowercase">Lowercase Letters</option>
-                      <option value="randomMixedCase">Mixed Case Letters</option>
+                      <option value="randomMixedCase">
+                        Mixed Case Letters
+                      </option>
                       <option value="alphabet">Full Alphabet</option>
                     </>
                   )}
@@ -795,16 +792,24 @@ const CollectionSetup: React.FC = () => {
               >
                 Save Collection
               </button>
-              
+
               <div className="text-center">
                 <p className="mb-2 font-bold">- OR -</p>
-                <p className="mb-4 text-sm">Want to create your own custom items instead?</p>
+                <p className="mb-4 text-sm">
+                  Want to create your own custom items instead?
+                </p>
                 <button
                   type="button"
                   className="rounded-lg border border-black bg-green-500 px-6 py-3 font-bold text-white transition-all duration-300 hover:bg-green-600"
                   onClick={() => {
                     navigate("/collection-final-step", {
-                      state: { collectionName, isPublic, category, sequence, type },
+                      state: {
+                        collectionName,
+                        isPublic,
+                        category,
+                        sequence,
+                        type,
+                      },
                     });
                   }}
                 >
@@ -865,22 +870,26 @@ const CollectionSetup: React.FC = () => {
           tourName="collectionSetup"
         />
 
-        <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
         {images.length > 0 && (
           <div className="mt-4">
-            {images.map(image => (
+            {images.map((image) => (
               <div key={image.id}>
-                <img src={image.preview} alt="Preview" className="h-20 w-20" />
+                <img src={image.preview} alt="Preview" className="size-20" />
                 {category === "Number Sense" && (
                   <>
-                    <label htmlFor={`count-${image.id}`} className="sr-only">Image count</label>
+                    <label htmlFor={`count-${image.id}`} className="sr-only">
+                      Image count
+                    </label>
                     <input
                       id={`count-${image.id}`}
                       type="number"
                       value={image.count}
-                      onChange={(e) => handleImageCountChange(image.id, parseInt(e.target.value))}
+                      onChange={(e) =>
+                        handleImageCountChange(
+                          image.id,
+                          parseInt(e.target.value),
+                        )
+                      }
                       min="1"
                     />
                   </>

@@ -7,12 +7,9 @@ const LoginButton = () => {
   const fetchData = async () => {
     try {
       const token = await getAccessTokenSilently();
-      await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/namelists/`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      await axios.get(`${import.meta.env.VITE_API_BASE_URL}/namelists/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     } catch (error) {
       console.error("Error fetching data:", error);
     }

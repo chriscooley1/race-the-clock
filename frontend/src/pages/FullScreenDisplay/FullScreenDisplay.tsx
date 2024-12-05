@@ -444,7 +444,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
             Start Full Screen Display Tour
           </button>
         )}
-        <div className="scale-150 transform hover:scale-160 transition-transform">
+        <div className="hover:scale-160 scale-150 transition-transform">
           <FeedbackIcon onClick={() => setIsFeedbackVisible(true)} />
         </div>
       </div>

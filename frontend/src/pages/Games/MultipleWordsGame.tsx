@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import FeedbackForm from "../../components/FeedbackForm";
 import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMultipleWords } from "./tourStepsMultipleWords";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 const MultipleWordsGame: React.FC = () => {
   const { isGuidedTourEnabled } = useTour();
@@ -12,7 +10,6 @@ const MultipleWordsGame: React.FC = () => {
   const [connections, setConnections] = useState<{ [key: string]: string }>({});
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const words = ["Word1", "Word2", "Word3"];
@@ -89,9 +86,6 @@ const MultipleWordsGame: React.FC = () => {
         </div>
       )}
 
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       <GuidedTour
         steps={tourStepsMultipleWords()}
         isRunning={isTourRunning && isGuidedTourEnabled}

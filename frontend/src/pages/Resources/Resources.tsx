@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { tourStepsResources } from "./tourStepsResources";
 import GuidedTour from "../../components/GuidedTour";
-import FeedbackForm from "../../components/FeedbackForm";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 interface FAQ {
   question: string;
@@ -21,7 +19,6 @@ const Resources: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable without visibility states
   const steps = tourStepsResources(); // Create tour steps without visibility states
@@ -135,10 +132,6 @@ const Resources: React.FC = () => {
           </section>
         </>
       )}
-
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 
       <GuidedTour
         steps={steps}

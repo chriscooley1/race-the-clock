@@ -3,8 +3,6 @@ import { fetchReports, fetchCollections } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
-import FeedbackForm from "../../components/FeedbackForm";
-import FeedbackIcon from "../../components/FeedbackIcon";
 import { AxiosError } from "axios";
 
 // Define the Report interface
@@ -32,7 +30,6 @@ const Reports: React.FC = () => {
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable without visibility states
   const steps = tourStepsReports(); // Create tour steps without visibility states
@@ -44,7 +41,10 @@ const Reports: React.FC = () => {
         setReports(fetchedReports);
       } catch (error) {
         if (error instanceof AxiosError) {
-          console.error("Failed to load reports - Status:", error.response?.status);
+          console.error(
+            "Failed to load reports - Status:",
+            error.response?.status,
+          );
         } else {
           console.error("Error loading reports");
         }
@@ -59,11 +59,16 @@ const Reports: React.FC = () => {
   useEffect(() => {
     const loadCollections = async () => {
       try {
-        const fetchedCollections = await fetchCollections(getAccessTokenSilently);
+        const fetchedCollections = await fetchCollections(
+          getAccessTokenSilently,
+        );
         setCollections(fetchedCollections);
       } catch (error) {
         if (error instanceof AxiosError) {
-          console.error("Failed to load collections - Status:", error.response?.status);
+          console.error(
+            "Failed to load collections - Status:",
+            error.response?.status,
+          );
         } else {
           console.error("Error loading collections");
         }
@@ -127,10 +132,6 @@ const Reports: React.FC = () => {
         </div>
       )}
 
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
-
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}
@@ -145,7 +146,9 @@ const Reports: React.FC = () => {
 
 // Helper function to get completion count for a collection
 const getCompletionCount = (collection: Collection): number => {
-  console.log(`Getting completion count for collection ID: ${collection.collection_id}`);
+  console.log(
+    `Getting completion count for collection ID: ${collection.collection_id}`,
+  );
   return Math.floor(Math.random() * 10);
 };
 

@@ -13,13 +13,13 @@ const FeedbackIcon: React.FC<FeedbackIconProps> = ({ onClick }) => {
       className="transition-transform hover:scale-110 active:scale-95"
       aria-label="Open Feedback Form"
     >
-      <img 
-        src={feedbackIcon} 
-        alt="Feedback" 
-        className="w-8 h-8 cursor-pointer"
+      <img
+        src={feedbackIcon}
+        alt="Feedback"
+        className="size-8 cursor-pointer"
       />
     </button>
   );
 };
 
-export default FeedbackIcon; 
+export default FeedbackIcon;

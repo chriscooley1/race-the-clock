@@ -17,7 +17,7 @@ const Layout: React.FC<LayoutProps> = ({
   setTourName,
   setCurrentTourStep,
   setShowFeedback,
-  tourName = "default"
+  tourName = "default",
 }) => {
   return (
     <div>

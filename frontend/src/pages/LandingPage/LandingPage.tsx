@@ -37,8 +37,8 @@ const LandingPage: React.FC = () => {
         className={`flex min-h-screen w-full flex-col items-center justify-center p-5 text-center ${theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"}`}
         style={{ color: theme.originalTextColor }}
       >
-        <div className="absolute top-4 right-4">
-          <div className="scale-150 transform hover:scale-160 transition-transform">
+        <div className="absolute right-4 top-4">
+          <div className="hover:scale-160 scale-150 transition-transform">
             <FeedbackIcon onClick={() => setShowFeedback(true)} />
           </div>
         </div>
@@ -62,7 +62,9 @@ const LandingPage: React.FC = () => {
           </button>
         </div>
 
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
+        {showFeedback && (
+          <FeedbackForm onClose={() => setShowFeedback(false)} />
+        )}
       </div>
     </div>
   );

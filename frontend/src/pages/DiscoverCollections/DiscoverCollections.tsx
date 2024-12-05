@@ -16,9 +16,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsDiscoverCollections } from "./tourStepsDiscoverCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
-import FeedbackForm from "../../components/FeedbackForm";
 import { categoryColors } from "../../constants/categoryColors";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 interface Item {
   id: number;
@@ -84,7 +82,6 @@ const DiscoverCollections: React.FC = () => {
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
   const [userDisplayName, setUserDisplayName] = useState<string>("");
   const [searchType, setSearchType] = useState<"name" | "creator">("name");
   const [isLoading, setIsLoading] = useState(true);
@@ -385,9 +382,6 @@ const DiscoverCollections: React.FC = () => {
         </div>
       </div>
 
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       {isLoading ? (
         <div className="flex min-h-[200px] items-center justify-center">
           <div className="size-12 animate-spin rounded-full border-b-2 border-gray-900"></div>
@@ -433,15 +427,24 @@ const DiscoverCollections: React.FC = () => {
                             <div className="flex size-full flex-col p-4">
                               <div className="mb-auto text-center">
                                 <p className="mb-1 text-base font-bold text-black">
-                                  {itemCount} {itemCount === 1 ? "item" : "items"} in collection
+                                  {itemCount}{" "}
+                                  {itemCount === 1 ? "item" : "items"} in
+                                  collection
                                 </p>
-                                <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+                                <p
+                                  className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
+                                >
                                   Created by:{" "}
-                                  {collection.creator_display_name || "Anonymous"}
+                                  {collection.creator_display_name ||
+                                    "Anonymous"}
                                 </p>
-                                <p className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}>
+                                <p
+                                  className={`mb-1 text-sm ${theme.isDarkMode ? "text-white" : "text-black"}`}
+                                >
                                   Category:{" "}
-                                  <span className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}>
+                                  <span
+                                    className={`ml-2 inline-block rounded-full border border-black px-3 py-1 text-white ${categoryColors[collection.category as keyof typeof categoryColors] || "bg-gray-500"}`}
+                                  >
                                     {collection.category}
                                   </span>
                                 </p>
