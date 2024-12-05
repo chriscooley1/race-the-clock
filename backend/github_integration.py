@@ -31,9 +31,12 @@ class GitHubIssueCreator:
             route = page_url.split("/")[-1] or "home"
             route = route.replace("-", " ").title()
             
-            # Use Mountain Time for the title
-            mst_time = datetime.now(timezone("America/Denver"))
-            title = f"{display_name} - {route} - {mst_time.strftime('%Y-%m-%d %H:%M:%S MST')}"
+            # Get first 50 characters of message for the title
+            message_preview = feedback_data["message"][:50]
+            if len(feedback_data["message"]) > 50:
+                message_preview += "..."
+            
+            title = f"{display_name} - {route} - {message_preview}"
             
             body = f"""
 ## {display_name}
