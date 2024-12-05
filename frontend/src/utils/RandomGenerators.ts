@@ -147,7 +147,7 @@ export const generateMathProblems = (
       default:
         throw new Error(`Unsupported operation: ${operation}`);
     }
-    problems.push(`${num1} ${operationSymbol[operation]} ${num2}|${answer}`);
+    problems.push(`${num1} ${operationSymbol[operation]} ${num2} = ${answer}`);
   }
   return problems;
 };

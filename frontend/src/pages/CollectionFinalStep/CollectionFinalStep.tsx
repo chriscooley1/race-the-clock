@@ -368,7 +368,7 @@ const CollectionFinalStep: React.FC = () => {
         operatorSymbol = "+";
     }
     const problemString = `${firstNumber} ${operatorSymbol} ${secondNumber}`;
-    const newItem = `${problemString}|${answer}`;
+    const newItem = `${problemString} = ${answer}`;
 
     setItems([...items, { id: items.length + 1, name: newItem }]);
   };
