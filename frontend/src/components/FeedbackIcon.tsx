@@ -10,13 +10,13 @@ const FeedbackIcon: React.FC<FeedbackIconProps> = ({ onClick }) => {
     <button
       type="button"
       onClick={onClick}
-      className="fixed bottom-8 right-8 z-50 transition-transform hover:scale-110 active:scale-95"
+      className="transition-transform hover:scale-110 active:scale-95"
       aria-label="Open Feedback Form"
     >
       <img 
         src={feedbackIcon} 
         alt="Feedback" 
-        className="w-16 h-16 cursor-pointer"
+        className="w-8 h-8 cursor-pointer"
       />
     </button>
   );

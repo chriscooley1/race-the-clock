@@ -2,8 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import cartIcon from "../assets/cart.jpeg";
+import FeedbackIcon from "./FeedbackIcon";
 
-const CollectionsNavBar: React.FC = () => {
+interface CollectionsNavBarProps {
+  setShowFeedback: (show: boolean) => void;
+}
+
+const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({ setShowFeedback }) => {
   const navigate = useNavigate();
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
@@ -142,11 +147,14 @@ const CollectionsNavBar: React.FC = () => {
           </button>
         </div>
 
-        {/* Add Cart Icon to right side */}
-        <div className="flex items-center">
+        {/* Right side - Cart and Feedback */}
+        <div className="flex items-center space-x-8 relative">
+          <div className="scale-150 transform hover:scale-160 transition-transform">
+            <FeedbackIcon onClick={() => setShowFeedback(true)} />
+          </div>
           <button
             type="button"
-            className="flex items-center justify-center hover:opacity-80 transition-opacity"
+            className="scale-150 transform hover:scale-160 transition-transform"
           >
             <img src={cartIcon} alt="Shopping Cart" className="w-8 h-8" />
           </button>
