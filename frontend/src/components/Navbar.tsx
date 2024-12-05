@@ -40,11 +40,11 @@ interface NavbarProps {
 }
 
 const navigationItems = [
-  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-40 h-40 mt-20" /> },
-  { path: "/new-collection", icon: <img src={newIcon} alt="New" className="w-32 h-32" />},
-  { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-32 h-32" /> },
-  { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-32 h-32" /> },
-  { path: "/name-generator", icon: <img src={spinnerIcon} alt="Spinner" className="w-32 h-32" /> },
+  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-40 h-40" /> },
+  { path: "/new-collection", icon: <img src={newIcon} alt="New" className="w-40 h-40" />},
+  { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-40 h-40" /> },
+  { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-40 h-40" /> },
+  { path: "/name-generator", icon: <img src={spinnerIcon} alt="Spinner" className="w-40 h-40" /> },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({
