@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
+import FeedbackIcon from "../../components/FeedbackIcon";
 import { AxiosError } from "axios";
 
 // Define the Report interface
@@ -126,13 +127,7 @@ const Reports: React.FC = () => {
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+      <FeedbackIcon onClick={() => setShowFeedback(true)} />
 
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 

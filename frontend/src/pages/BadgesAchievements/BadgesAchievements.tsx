@@ -3,6 +3,7 @@ import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
 import { useCompletion } from "../../context/CompletionContext";
 import FeedbackForm from "../../components/FeedbackForm";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 const BadgesAchievements: React.FC = () => {
   const [badges, setBadges] = useState<string[]>([]);
@@ -130,13 +131,7 @@ const BadgesAchievements: React.FC = () => {
         </ul>
       </div>
 
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+      <FeedbackIcon onClick={() => setShowFeedback(true)} />
 
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { tourStepsResources } from "./tourStepsResources";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 interface FAQ {
   question: string;
@@ -135,13 +136,7 @@ const Resources: React.FC = () => {
         </>
       )}
 
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+      <FeedbackIcon onClick={() => setShowFeedback(true)} />
 
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 

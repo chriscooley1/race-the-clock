@@ -15,6 +15,7 @@ import { tourStepsCollectionFinalStep } from "./tourStepsCollectionFinalStep";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 // Export the function to avoid the "unused" error
 // createTourSteps will be used in future implementation
@@ -857,14 +858,9 @@ const CollectionFinalStep: React.FC = () => {
           onStepChange={handleTourStepChange}
           tourName="collectionFinalStep"
         />
-        {/* Button to show feedback form */}
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
+
+        <FeedbackIcon onClick={() => setShowFeedback(true)} />
+
         {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
         {/* Render FeedbackForm */}
       </div>

@@ -22,6 +22,7 @@ import { Step } from "react-joyride";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
 import { v4 as uuidv4 } from "uuid";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 type Operation =
   | "multiplication"
@@ -863,13 +864,8 @@ const CollectionSetup: React.FC = () => {
           onStepChange={handleTourStepChange}
           tourName="collectionSetup"
         />
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
+
+        <FeedbackIcon onClick={() => setShowFeedback(true)} />
 
         {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
         {images.length > 0 && (

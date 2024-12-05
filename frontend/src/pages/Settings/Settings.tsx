@@ -8,6 +8,7 @@ import { tourStepsSettings } from "./tourStepsSettings";
 import GuidedTour from "../../components/GuidedTour";
 import { getLuminance } from "../../utils/colorUtils";
 import FeedbackForm from "../../components/FeedbackForm";
+import FeedbackIcon from "../../components/FeedbackIcon";
 import { useTour } from "../../context/TourContext";
 import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
 
@@ -439,13 +440,7 @@ const Settings: React.FC = () => {
         </div>
       </div>
 
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+      <FeedbackIcon onClick={() => setShowFeedback(true)} />
 
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 

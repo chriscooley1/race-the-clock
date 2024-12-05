@@ -4,6 +4,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMultipleWords } from "./tourStepsMultipleWords";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 const MultipleWordsGame: React.FC = () => {
   const { isGuidedTourEnabled } = useTour();
@@ -87,13 +88,9 @@ const MultipleWordsGame: React.FC = () => {
           </div>
         </div>
       )}
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+
+      <FeedbackIcon onClick={() => setShowFeedback(true)} />
+
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       <GuidedTour
         steps={tourStepsMultipleWords()}

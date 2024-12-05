@@ -6,6 +6,7 @@ import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 // Define the Collection interface
 interface Collection {
@@ -93,14 +94,9 @@ const TimedChallenges: React.FC = () => {
         </div>
       )}
       {/* Add your game logic and UI here */}
-      {/* Button to show feedback form */}
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+
+      <FeedbackIcon onClick={() => setShowFeedback(true)} />
+
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
       {/* Render FeedbackForm */}
       {/* Add the GuidedTour component here */}
