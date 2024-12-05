@@ -338,7 +338,6 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         );
       }
     } else if (category === "Math" && type === "mathProblems") {
-      const [problem, answer] = currentItem.name.split("|");
       if (showAnswer) {
         return (
           <div className="flex size-full items-center justify-center">
@@ -353,7 +352,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="text-6xl font-bold text-orange-600">
-                  {answer}
+                  {currentItem.count}
                 </span>
               </div>
             </div>
@@ -362,10 +361,8 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       } else {
         return (
           <div className="flex size-full items-center justify-center">
-            <h1
-              className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(problem)}`}
-            >
-              {problem}
+            <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
+              {currentItem.name}
             </h1>
           </div>
         );

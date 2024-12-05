@@ -368,9 +368,13 @@ const CollectionFinalStep: React.FC = () => {
         operatorSymbol = "+";
     }
     const problemString = `${firstNumber} ${operatorSymbol} ${secondNumber}`;
-    const newItem = `${problemString} = ${answer}`;
-
-    setItems([...items, { id: items.length + 1, name: newItem }]);
+    
+    // Create a new item with both problem and answer
+    setItems([...items, { 
+      id: items.length + 1, 
+      name: problemString,
+      count: answer
+    }]);
   };
 
   const handleTermSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
