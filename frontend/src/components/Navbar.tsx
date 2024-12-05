@@ -35,7 +35,6 @@ interface NavbarProps {
   onStartTour: () => void;
   setTourName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
-  setShowFeedback: (show: boolean) => void;
   currentTourName: string;
 }
 
@@ -70,7 +69,6 @@ const Navbar: React.FC<NavbarProps> = ({
   onStartTour,
   setTourName,
   setCurrentTourStep,
-  setShowFeedback,
   currentTourName,
 }) => {
   const navigate = useNavigate();
@@ -261,7 +259,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 </button>
               )}
             </div>
-            {/* Bottom row for Tour and Feedback */}
+            {/* Bottom row for Tour */}
             <div className="flex items-center space-x-2">
               {isGuidedTourEnabled && (
                 <button
@@ -272,13 +270,6 @@ const Navbar: React.FC<NavbarProps> = ({
                   Start {currentTourName} Tour
                 </button>
               )}
-              <button
-                type="button"
-                onClick={() => setShowFeedback(true)}
-                className="hover:bg-light-blue-600 rounded border border-black bg-blue-500 px-2 py-1 text-xs font-medium text-white transition-colors duration-300"
-              >
-                Give Feedback
-              </button>
             </div>
           </>
         ) : (
