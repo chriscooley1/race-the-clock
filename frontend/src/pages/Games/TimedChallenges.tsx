@@ -3,10 +3,8 @@ import { fetchCollections } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsTimedChallenges } from "./tourStepsTimedChallenges";
 import GuidedTour from "../../components/GuidedTour";
-import FeedbackForm from "../../components/FeedbackForm";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 // Define the Collection interface
 interface Collection {
@@ -31,7 +29,6 @@ const TimedChallenges: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
   const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
   const navigate = useNavigate();
 
   // Define the steps variable
@@ -94,11 +91,6 @@ const TimedChallenges: React.FC = () => {
         </div>
       )}
       {/* Add your game logic and UI here */}
-
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
-      {/* Render FeedbackForm */}
       {/* Add the GuidedTour component here */}
       <GuidedTour
         steps={steps}

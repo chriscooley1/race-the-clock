@@ -40,11 +40,26 @@ interface NavbarProps {
 }
 
 const navigationItems = [
-  { path: "/your-collections", icon: <img src={collectionsIcon} alt="Collections" className="w-40 h-40" /> },
-  { path: "/new-collection", icon: <img src={newIcon} alt="New" className="w-40 h-40" />},
-  { path: "/discover-collections", icon: <img src={discoverIcon} alt="Discover" className="w-40 h-40" /> },
-  { path: "/games", icon: <img src={gamesIcon} alt="Games" className="w-40 h-40" /> },
-  { path: "/name-generator", icon: <img src={spinnerIcon} alt="Spinner" className="w-40 h-40" /> },
+  {
+    path: "/your-collections",
+    icon: <img src={collectionsIcon} alt="Collections" className="size-40" />,
+  },
+  {
+    path: "/new-collection",
+    icon: <img src={newIcon} alt="New" className="size-40" />,
+  },
+  {
+    path: "/discover-collections",
+    icon: <img src={discoverIcon} alt="Discover" className="size-40" />,
+  },
+  {
+    path: "/games",
+    icon: <img src={gamesIcon} alt="Games" className="size-40" />,
+  },
+  {
+    path: "/name-generator",
+    icon: <img src={spinnerIcon} alt="Spinner" className="size-40" />,
+  },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -221,7 +236,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <div
-      className="bg-black inset-x-0 top-0 z-[50] flex items-center justify-between px-2 shadow-md md:px-5 dark:bg-gray-800"
+      className="inset-x-0 top-0 z-50 flex items-center justify-between bg-black px-2 shadow-md md:px-5 dark:bg-gray-800"
       style={{ height: "200px" }}
     >
       <div className="flex flex-col space-y-2">
@@ -290,14 +305,14 @@ const Navbar: React.FC<NavbarProps> = ({
         )}
       </div>
       <div className="flex grow items-center justify-center space-x-8">
-        <img 
-          src={raceTheClockIcon} 
-          alt="raceTheClockIcon" 
-          className="h-48 cursor-pointer transition-all duration-300 hover:scale-105" 
-          onClick={handleTitleClick} 
+        <img
+          src={raceTheClockIcon}
+          alt="raceTheClockIcon"
+          className="h-48 cursor-pointer transition-all duration-300 hover:scale-105"
+          onClick={handleTitleClick}
         />
-        
-        <nav className="hidden md:flex space-x-8">
+
+        <nav className="hidden space-x-8 md:flex">
           {navigationItems.map((item) => (
             <button
               type="button"

@@ -7,8 +7,6 @@ import GuidedTour from "../../components/GuidedTour";
 import { updateUserRole } from "../../api";
 import RoleSelection from "../../components/RoleSelection";
 import UserRoleFeatures from "../../components/UserRoleFeatures";
-import FeedbackIcon from "../../components/FeedbackIcon";
-import FeedbackForm from "../../components/FeedbackForm";
 
 interface UserData {
   display_name?: string;
@@ -24,7 +22,6 @@ const MyAccount: React.FC = () => {
   const [role, setRole] = useState<string>(
     localStorage.getItem("userRole") || "student",
   );
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable without visibility states
   const steps = tourStepsMyAccount(); // Create tour steps without visibility states
@@ -35,7 +32,9 @@ const MyAccount: React.FC = () => {
         const userProfile = await getCurrentUser(getAccessTokenSilently);
         // If no display_name is set, update it with the Auth0 name
         if (!userProfile.display_name && user?.name) {
-          const displayName = user.name.includes("|") ? user.name.split("|")[1] : user.name;
+          const displayName = user.name.includes("|")
+            ? user.name.split("|")[1]
+            : user.name;
           await updateDisplayName(
             { display_name: displayName },
             getAccessTokenSilently,
@@ -101,7 +100,7 @@ const MyAccount: React.FC = () => {
 
   return (
     <div className="page-container">
-      <div className="w-full max-w-md rounded-lg bg-theme-bg p-8 shadow-md text-theme-text">
+      <div className="bg-theme-bg text-theme-text w-full max-w-md rounded-lg p-8 shadow-md">
         <h1 className="mb-6 text-center text-3xl font-bold">My Account</h1>
 
         {user ? (
@@ -113,11 +112,12 @@ const MyAccount: React.FC = () => {
                 className="mb-4 size-24 rounded-full border border-black"
               />
               <h2 className="text-xl font-semibold">
-                {userData?.display_name || (user?.name?.includes("|") ? user.name.split("|")[1] : user.name)}
+                {userData?.display_name ||
+                  (user?.name?.includes("|")
+                    ? user.name.split("|")[1]
+                    : user.name)}
               </h2>
-              <p className="dark:text-gray-300 text-gray-600">
-                {user.email}
-              </p>
+              <p className="text-gray-600 dark:text-gray-300">{user.email}</p>
             </div>
             <UpdateDisplayNameForm
               className="update-display-name-form mb-4"
@@ -134,10 +134,6 @@ const MyAccount: React.FC = () => {
           <p className="text-center">Loading user information...</p>
         )}
         <UserRoleFeatures role={role} />
-
-        <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 
         <GuidedTour
           steps={steps}

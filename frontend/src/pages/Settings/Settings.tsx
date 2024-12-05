@@ -7,8 +7,6 @@ import { ColorScheme, colorSchemes } from "../../constants/colorSchemes";
 import { tourStepsSettings } from "./tourStepsSettings";
 import GuidedTour from "../../components/GuidedTour";
 import { getLuminance } from "../../utils/colorUtils";
-import FeedbackForm from "../../components/FeedbackForm";
-import FeedbackIcon from "../../components/FeedbackIcon";
 import { useTour } from "../../context/TourContext";
 import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
 
@@ -45,8 +43,6 @@ const Settings: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const tourName = "settings";
-  
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   const steps = tourStepsSettings();
 
@@ -439,10 +435,6 @@ const Settings: React.FC = () => {
           <p>Current background image: {theme.backgroundImage}</p>
         </div>
       </div>
-
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 
       <GuidedTour
         steps={steps}

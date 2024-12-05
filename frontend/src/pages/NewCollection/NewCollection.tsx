@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { tourStepsNewCollection } from "./tourStepsNewCollection";
 import GuidedTour from "../../components/GuidedTour";
-import FeedbackForm from "../../components/FeedbackForm";
 import { VisibilityStates } from "../../types/VisibilityStates";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -122,8 +120,6 @@ const NewCollection: React.FC = () => {
     }));
   }, []); // Add dependencies as needed
 
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
-
   return (
     <div className="page-container mt-4">
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
@@ -202,10 +198,6 @@ const NewCollection: React.FC = () => {
           onStepChange={handleTourStepChange}
           tourName="newCollection"
         />
-
-        <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       </div>
     </div>
   );

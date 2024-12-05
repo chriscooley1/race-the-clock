@@ -91,7 +91,7 @@ const config: Config = {
         "collections-navbar-height": "64px",
         "total-navbar-height": "264px",
         "content-padding": "200px",
-        "content-padding-with-collections": "260px"
+        "content-padding-with-collections": "260px",
       },
       zIndex: {
         modal: "1000",

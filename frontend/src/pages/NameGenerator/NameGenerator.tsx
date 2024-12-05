@@ -7,8 +7,6 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsNameGenerator } from "./tourStepsNameGenerator";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
-import FeedbackForm from "../../components/FeedbackForm";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
@@ -128,16 +126,12 @@ const NameGenerator: React.FC = () => {
       console.log("Saving name list...");
       const token = await getAccessTokenSilently();
       const data = { name: "My Name List", names: updatedList };
-      
+
       if (nameListId) {
         console.log("Updating existing list");
-        await axios.put(
-          `${API_URL}/namelists/${nameListId}`,
-          data,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        await axios.put(`${API_URL}/namelists/${nameListId}`, data, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         console.log("List updated successfully");
       } else {
         console.log("Creating new list");
@@ -240,8 +234,6 @@ const NameGenerator: React.FC = () => {
     };
   }, []);
 
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
-
   return (
     <div className="page-container" style={{ marginTop: "20px" }}>
       <div
@@ -250,9 +242,15 @@ const NameGenerator: React.FC = () => {
           theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
         }`}
         style={{
-          backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+          backgroundColor:
+            theme.backgroundImage === "none"
+              ? theme.backgroundColor
+              : "transparent",
           color: theme.displayTextColor || theme.textColor,
-          backgroundImage: theme.backgroundImage !== "none" ? `url(${theme.backgroundImage})` : "none",
+          backgroundImage:
+            theme.backgroundImage !== "none"
+              ? `url(${theme.backgroundImage})`
+              : "none",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -265,7 +263,7 @@ const NameGenerator: React.FC = () => {
             className={`flex flex-col items-center ${showRightSide ? "w-1/2" : "w-full"}`}
           >
             <div className="relative flex w-full max-w-[500px] flex-col items-center">
-            <NameWheel
+              <NameWheel
                 names={nameList}
                 isSpinning={isSpinning}
                 spinData={spinData}
@@ -362,7 +360,7 @@ const NameGenerator: React.FC = () => {
             position: "absolute",
             top: "calc(210px + 56px + 1rem)", // Navbar (200px) + CollectionsNavBar (56px) + spacing
             right: "1rem",
-            zIndex: 40 // Below the navbars (which are 50 and 51)
+            zIndex: 40, // Below the navbars (which are 50 and 51)
           }}
         >
           {showRightSide ? "-" : "+"}
@@ -377,10 +375,6 @@ const NameGenerator: React.FC = () => {
           onStepChange={handleTourStepChange}
           tourName="nameGenerator"
         />
-
-        <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       </div>
     </div>
   );

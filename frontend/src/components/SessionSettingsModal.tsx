@@ -40,10 +40,12 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
     return savedSeconds ? parseFloat(savedSeconds) : 0;
   });
   const [shuffle, setShuffle] = useState(false);
-  const [answerDisplayTime, setAnswerDisplayTime] = useState<number | "">(() => {
-    const savedTime = localStorage.getItem("lastUsedAnswerDisplayTime");
-    return savedTime ? parseInt(savedTime) : 3;
-  });
+  const [answerDisplayTime, setAnswerDisplayTime] = useState<number | "">(
+    () => {
+      const savedTime = localStorage.getItem("lastUsedAnswerDisplayTime");
+      return savedTime ? parseInt(savedTime) : 3;
+    },
+  );
   const [stopCondition, setStopCondition] = useState("collection");
   const [timerMinutes, setTimerMinutes] = useState(0);
   const [timerSeconds, setTimerSeconds] = useState(0);
@@ -76,8 +78,9 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
 
   const handleStartClick = () => {
     const calculatedSpeed = calculateSpeed();
-    const finalAnswerDisplayTime = typeof answerDisplayTime === "number" ? answerDisplayTime : 3;
-    
+    const finalAnswerDisplayTime =
+      typeof answerDisplayTime === "number" ? answerDisplayTime : 3;
+
     onStart(
       typeof minutes === "number" ? minutes : 0,
       typeof seconds === "number" ? seconds : 0,
@@ -189,7 +192,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
                   const newTime = val === "" ? "" : parseInt(val) || 3;
                   setAnswerDisplayTime(newTime);
                   if (typeof newTime === "number") {
-                    localStorage.setItem("lastUsedAnswerDisplayTime", newTime.toString());
+                    localStorage.setItem(
+                      "lastUsedAnswerDisplayTime",
+                      newTime.toString(),
+                    );
                   }
                 }}
                 className="w-20 rounded border border-black p-1 text-sm"

@@ -14,8 +14,6 @@ import { v4 as uuidv4 } from "uuid";
 import { tourStepsCollectionFinalStep } from "./tourStepsCollectionFinalStep";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import GuidedTour from "../../components/GuidedTour";
-import FeedbackForm from "../../components/FeedbackForm";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 // Export the function to avoid the "unused" error
 // createTourSteps will be used in future implementation
@@ -409,15 +407,15 @@ const CollectionFinalStep: React.FC = () => {
   };
 
   const handleImageCountChange = (imageId: string, newCount: number | null) => {
-    setImages(prevImages =>
-      prevImages.map(image =>
+    setImages((prevImages) =>
+      prevImages.map((image) =>
         image.id === imageId
-          ? { 
-              ...image, 
-              count: newCount === null ? 0 : newCount // Allow null/empty values
+          ? {
+              ...image,
+              count: newCount === null ? 0 : newCount, // Allow null/empty values
             }
-          : image
-      )
+          : image,
+      ),
     );
   };
 
@@ -454,8 +452,6 @@ const CollectionFinalStep: React.FC = () => {
       setIsTourRunning(true); // Start the tour if not completed
     }
   }, []);
-
-  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
   if (!currentUser) {
     return <div>Loading user information...</div>;
@@ -531,7 +527,9 @@ const CollectionFinalStep: React.FC = () => {
                 <>
                   {dots.map((dot, index) => (
                     <div key={index} className="mb-4 w-full">
-                      <h4 className="mb-2 text-lg font-bold">Dot {index + 1}</h4>
+                      <h4 className="mb-2 text-lg font-bold">
+                        Dot {index + 1}
+                      </h4>
                       <label
                         htmlFor={`dot-position-${index}`}
                         className="mb-2 block"
@@ -645,7 +643,8 @@ const CollectionFinalStep: React.FC = () => {
                         key={element.atomicNumber}
                         value={JSON.stringify(element)}
                       >
-                        {element.symbol} - {element.name} - {element.atomicNumber}
+                        {element.symbol} - {element.name} -{" "}
+                        {element.atomicNumber}
                       </option>
                     ))}
                   </select>
@@ -818,8 +817,8 @@ const CollectionFinalStep: React.FC = () => {
                           onChange={(e) => {
                             const value = e.target.value;
                             handleImageCountChange(
-                              image.id, 
-                              value === "" ? null : parseInt(value)
+                              image.id,
+                              value === "" ? null : parseInt(value),
                             );
                           }}
                           min="0" // Changed from 1 to 0 to allow empty field
@@ -858,11 +857,6 @@ const CollectionFinalStep: React.FC = () => {
           onStepChange={handleTourStepChange}
           tourName="collectionFinalStep"
         />
-
-        <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
-        {/* Render FeedbackForm */}
       </div>
     </div>
   );

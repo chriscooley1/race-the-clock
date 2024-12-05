@@ -46,7 +46,7 @@ const UpdateDisplayNameForm: React.FC<UpdateDisplayNameFormProps> = ({
       className={`update-display-name-form mt-5 flex w-full flex-col items-center ${className}`}
       style={style}
     >
-      <div className="w-full max-w-[300px] flex flex-col items-center">
+      <div className="flex w-full max-w-[300px] flex-col items-center">
         <input
           type="text"
           className="font-teacher mb-4 w-full rounded-md border border-black p-2 text-center text-base"

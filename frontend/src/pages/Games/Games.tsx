@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { tourStepsGames } from "./tourStepsGames";
 import GuidedTour from "../../components/GuidedTour";
 import { Link } from "react-router-dom";
-import FeedbackForm from "../../components/FeedbackForm";
-import FeedbackIcon from "../../components/FeedbackIcon";
 
 const Games: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false); // State for feedback form visibility
 
   useEffect(() => {
     // Simulate loading data or setup
@@ -71,11 +68,6 @@ const Games: React.FC = () => {
           </Link>
         </div>
       )}
-
-      <FeedbackIcon onClick={() => setShowFeedback(true)} />
-
-      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
-      {/* Render FeedbackForm */}
       {/* Add the GuidedTour component here */}
       <GuidedTour
         steps={tourStepsGames()} // Pass the steps without visibility states

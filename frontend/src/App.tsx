@@ -69,12 +69,7 @@ const App: React.FC = () => {
     console.log("App state changed");
     console.log("isTourRunning:", isTourRunning);
     console.log("currentTourStep:", currentTourStep);
-  }, [
-    location.pathname,
-    isFullScreen,
-    isTourRunning,
-    currentTourStep,
-  ]);
+  }, [location.pathname, isFullScreen, isTourRunning, currentTourStep]);
 
   const handleTourComplete = () => {
     setIsTourRunning(false);
@@ -284,7 +279,9 @@ const App: React.FC = () => {
         <CompletionProvider>
           <TourProvider>
             <FontPreloader />
-            <div className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}>
+            <div
+              className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
+            >
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route
@@ -317,7 +314,9 @@ const App: React.FC = () => {
                   path="/new-collection"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={renderContent(<NewCollection />)} />
+                      <PrivateRoute
+                        element={renderContent(<NewCollection />)}
+                      />
                     </Suspense>
                   }
                 />
@@ -325,7 +324,9 @@ const App: React.FC = () => {
                   path="/discover-collections"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={renderContent(<DiscoverCollections />)} />
+                      <PrivateRoute
+                        element={renderContent(<DiscoverCollections />)}
+                      />
                     </Suspense>
                   }
                 />
@@ -333,7 +334,9 @@ const App: React.FC = () => {
                   path="/collection-setup"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={renderContent(<CollectionSetup />)} />
+                      <PrivateRoute
+                        element={renderContent(<CollectionSetup />)}
+                      />
                     </Suspense>
                   }
                 />
@@ -341,7 +344,9 @@ const App: React.FC = () => {
                   path="/collection-final-step"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={renderContent(<CollectionFinalStep />)} />
+                      <PrivateRoute
+                        element={renderContent(<CollectionFinalStep />)}
+                      />
                     </Suspense>
                   }
                 />
@@ -349,7 +354,9 @@ const App: React.FC = () => {
                   path="/name-generator"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={renderContent(<NameGenerator />)} />
+                      <PrivateRoute
+                        element={renderContent(<NameGenerator />)}
+                      />
                     </Suspense>
                   }
                 />
@@ -397,7 +404,9 @@ const App: React.FC = () => {
                   path="/games/multiple-words-game"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={renderContent(<MultipleWordsGame />)} />
+                      <PrivateRoute
+                        element={renderContent(<MultipleWordsGame />)}
+                      />
                     </Suspense>
                   }
                 />
@@ -405,7 +414,9 @@ const App: React.FC = () => {
                   path="/games/timed-challenges"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={renderContent(<TimedChallenges />)} />
+                      <PrivateRoute
+                        element={renderContent(<TimedChallenges />)}
+                      />
                     </Suspense>
                   }
                 />
@@ -421,7 +432,9 @@ const App: React.FC = () => {
                   path="/badges-achievements"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={renderContent(<BadgesAchievements />)} />
+                      <PrivateRoute
+                        element={renderContent(<BadgesAchievements />)}
+                      />
                     </Suspense>
                   }
                 />
