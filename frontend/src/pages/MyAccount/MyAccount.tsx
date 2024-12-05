@@ -7,6 +7,8 @@ import GuidedTour from "../../components/GuidedTour";
 import { updateUserRole } from "../../api";
 import RoleSelection from "../../components/RoleSelection";
 import UserRoleFeatures from "../../components/UserRoleFeatures";
+import FeedbackIcon from "../../components/FeedbackIcon";
+import FeedbackForm from "../../components/FeedbackForm";
 
 interface UserData {
   display_name?: string;
@@ -22,6 +24,7 @@ const MyAccount: React.FC = () => {
   const [role, setRole] = useState<string>(
     localStorage.getItem("userRole") || "student",
   );
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Define the steps variable without visibility states
   const steps = tourStepsMyAccount(); // Create tour steps without visibility states
@@ -131,6 +134,10 @@ const MyAccount: React.FC = () => {
           <p className="text-center">Loading user information...</p>
         )}
         <UserRoleFeatures role={role} />
+
+        <FeedbackIcon onClick={() => setShowFeedback(true)} />
+
+        {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
 
         <GuidedTour
           steps={steps}

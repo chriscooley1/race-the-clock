@@ -6,6 +6,7 @@ import { tourStepsFullScreenDisplay } from "./tourStepsFullScreenDisplay";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
 import { useTour } from "../../context/TourContext";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 interface CollectionItem {
   name: string;
@@ -464,6 +465,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
             tourName={tourName}
           />
         )}
+        <FeedbackIcon onClick={() => setIsFeedbackVisible(true)} />
       </div>
 
       {isFeedbackVisible && (
