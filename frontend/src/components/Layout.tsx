@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = ({
         setCurrentTourStep={setCurrentTourStep}
         currentTourName={tourName}
       />
-      <CollectionsNavBar />
+      <CollectionsNavBar setShowFeedback={setShowFeedback} />
       {children}
     </div>
   );
