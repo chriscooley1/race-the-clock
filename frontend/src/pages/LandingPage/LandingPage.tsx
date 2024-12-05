@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTheme } from "../../context/ThemeContext";
 import FeedbackForm from "../../components/FeedbackForm";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 const LandingPage: React.FC = () => {
   const { loginWithRedirect } = useAuth0();
@@ -56,13 +57,8 @@ const LandingPage: React.FC = () => {
           </button>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
+        <FeedbackIcon onClick={() => setShowFeedback(true)} />
+
         {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       </div>
     </div>

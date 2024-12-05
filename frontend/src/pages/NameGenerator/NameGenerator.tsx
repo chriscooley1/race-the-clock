@@ -8,6 +8,7 @@ import { tourStepsNameGenerator } from "./tourStepsNameGenerator";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import FeedbackForm from "../../components/FeedbackForm";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 const NameGenerator: React.FC = () => {
   const [nameInput, setNameInput] = useState<string>("");
@@ -377,14 +378,7 @@ const NameGenerator: React.FC = () => {
           tourName="nameGenerator"
         />
 
-        {/* Button to show feedback form */}
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
+        <FeedbackIcon onClick={() => setShowFeedback(true)} />
 
         {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       </div>

@@ -18,6 +18,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import FeedbackForm from "../../components/FeedbackForm";
 import { categoryColors } from "../../constants/categoryColors";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 interface Item {
   id: number;
@@ -383,13 +384,8 @@ const DiscoverCollections: React.FC = () => {
           </select>
         </div>
       </div>
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded-md border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+
+      <FeedbackIcon onClick={() => setShowFeedback(true)} />
 
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       {isLoading ? (

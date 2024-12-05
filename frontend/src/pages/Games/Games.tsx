@@ -3,6 +3,7 @@ import { tourStepsGames } from "./tourStepsGames";
 import GuidedTour from "../../components/GuidedTour";
 import { Link } from "react-router-dom";
 import FeedbackForm from "../../components/FeedbackForm";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 const Games: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
@@ -70,14 +71,9 @@ const Games: React.FC = () => {
           </Link>
         </div>
       )}
-      {/* Button to show feedback form */}
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+
+      <FeedbackIcon onClick={() => setShowFeedback(true)} />
+
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}{" "}
       {/* Render FeedbackForm */}
       {/* Add the GuidedTour component here */}

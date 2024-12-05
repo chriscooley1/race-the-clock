@@ -5,6 +5,7 @@ import { tourStepsNewCollection } from "./tourStepsNewCollection";
 import GuidedTour from "../../components/GuidedTour";
 import FeedbackForm from "../../components/FeedbackForm";
 import { VisibilityStates } from "../../types/VisibilityStates";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -202,13 +203,7 @@ const NewCollection: React.FC = () => {
           tourName="newCollection"
         />
 
-        <button
-          type="button"
-          onClick={() => setShowFeedback(true)}
-          className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-        >
-          Give Feedback
-        </button>
+        <FeedbackIcon onClick={() => setShowFeedback(true)} />
 
         {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       </div>

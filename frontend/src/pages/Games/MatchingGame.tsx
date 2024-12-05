@@ -4,6 +4,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMatchingGame } from "./tourStepsMatchingGame";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
+import FeedbackIcon from "../../components/FeedbackIcon";
 
 const MatchingGame: React.FC = () => {
   const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
@@ -79,13 +80,9 @@ const MatchingGame: React.FC = () => {
           </div>
         </div>
       )}
-      <button
-        type="button"
-        onClick={() => setShowFeedback(true)}
-        className="mt-4 rounded border border-black bg-blue-500 px-4 py-2 text-white"
-      >
-        Give Feedback
-      </button>
+
+      <FeedbackIcon onClick={() => setShowFeedback(true)} />
+
       {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
       <GuidedTour
         steps={tourStepsMatchingGame()}
