@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Joyride, { Step } from "react-joyride";
 import { useTour } from "../context/TourContext";
 import { ExtendedCallBackProps } from "../context/TourContext";
+import { useLocation } from "react-router-dom";
 
 interface GuidedTourProps {
   steps: Step[];
@@ -10,6 +11,7 @@ interface GuidedTourProps {
   currentStep: number;
   onStepChange: (step: number) => void;
   tourName: string;
+  onStart?: () => void;
 }
 
 const GuidedTour: React.FC<GuidedTourProps> = ({
@@ -19,8 +21,15 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   currentStep,
   onStepChange,
   tourName,
+  onStart,
 }) => {
-  const { completeTour, isGuidedTourEnabled } = useTour();
+  const { completeTour, isGuidedTourEnabled, resetTourState } = useTour();
+  const location = useLocation();
+
+  useEffect(() => {
+    resetTourState();
+    onStepChange(0);
+  }, [location.pathname]);
 
   const scrollToTarget = (selector: string) => {
     const target = document.querySelector(selector);
@@ -46,6 +55,11 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   const handleJoyrideCallback = (data: ExtendedCallBackProps) => {
     const { status, index, action, type } = data;
 
+    // Handle tour start
+    if (type === "tour:start" && onStart) {
+      onStart();
+    }
+
     // Handle tour completion and closing
     if (
       ["finished", "skipped"].includes(status as string) ||
@@ -53,6 +67,9 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
     ) {
       completeTour(tourName);
       onComplete();
+      resetTourState();
+      onStepChange(0);
+      document.dispatchEvent(new Event("tourSkipped"));
       return;
     }
 
@@ -62,6 +79,9 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
       if (action === "next" && index === steps.length - 1) {
         completeTour(tourName);
         onComplete();
+        resetTourState();
+        onStepChange(0);
+        document.dispatchEvent(new Event("tourSkipped"));
         return;
       }
 

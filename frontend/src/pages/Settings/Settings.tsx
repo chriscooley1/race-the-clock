@@ -51,7 +51,26 @@ const Settings: React.FC = () => {
     console.log(`Tour ${tourName} completed`);
     localStorage.setItem(`tourCompleted_${tourName}`, "true");
     setIsTourRunning(false);
+    setCurrentTourStep(0);
   };
+
+  const handleStartTour = () => {
+    setCurrentTourStep(0);
+    setIsTourRunning(true);
+  };
+
+  useEffect(() => {
+    const handleTourReset = () => {
+      setCurrentTourStep(0);
+      setIsTourRunning(false);
+    };
+
+    document.addEventListener("tourSkipped", handleTourReset);
+    
+    return () => {
+      document.removeEventListener("tourSkipped", handleTourReset);
+    };
+  }, []);
 
   const handleTextColorChange = (color: string) => {
     console.log("Text color selected:", color);
@@ -498,6 +517,7 @@ const Settings: React.FC = () => {
         currentStep={currentTourStep}
         onStepChange={setCurrentTourStep}
         tourName={tourName}
+        onStart={handleStartTour}
       />
     </div>
   );

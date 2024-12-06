@@ -17,6 +17,7 @@ interface TourContextType {
   toursCompleted: Record<string, boolean>;
   startTour: (steps: Step[]) => void;
   completeTour: (tourName: string) => void;
+  resetTourState: () => void;
   isTourRunning: boolean;
   setIsTourRunning: (isRunning: boolean) => void;
   isGuidedTourEnabled: boolean;
@@ -69,8 +70,14 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
       localStorage.setItem("toursCompleted", JSON.stringify(updatedTours));
     }
     setIsTourRunning(false);
-    setCurrentTourStep(-1); // Reset the step to -1 to fully stop the tour
+    setCurrentTourStep(0); // Reset to 0 instead of -1 to prepare for next tour
     console.log(`Tour "${tourName}" completed and stored in localStorage`);
+  };
+
+  // Add a new function to reset tour state
+  const resetTourState = () => {
+    setIsTourRunning(false);
+    setCurrentTourStep(0);
   };
 
   return (
@@ -79,6 +86,7 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
         toursCompleted,
         startTour,
         completeTour,
+        resetTourState,
         isTourRunning,
         setIsTourRunning,
         isGuidedTourEnabled,
