@@ -78,7 +78,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
               className="flex items-center space-x-2 rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
             >
               <span>Account</span>
-              <span className="ml-2">▼</span>
+              <span className="ml-2"></span>
             </button>
 
             {isAccountDropdownOpen && (
