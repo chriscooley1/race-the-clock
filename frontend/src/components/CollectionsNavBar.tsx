@@ -163,13 +163,13 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
         </div>
 
         {/* Right side - Cart and Feedback */}
-        <div className="relative flex items-center space-x-8">
-          <div className="hover:scale-160 scale-150 transition-transform">
+        <div className="relative flex items-center space-x-10 mt-2">
+          <div className="scale-[1.75] transition-transform hover:scale-[1.85]">
             <FeedbackIcon onClick={() => setShowFeedback(true)} />
           </div>
           <button
             type="button"
-            className="hover:scale-160 scale-150 transition-transform"
+            className="scale-[1.75] transition-transform hover:scale-[1.85]"
           >
             <img src={cartIcon} alt="Shopping Cart" className="size-8" />
           </button>
