@@ -7,7 +7,6 @@ interface LayoutProps {
   onStartTour: () => void;
   setTourName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
-  tourName?: string;
   setShowFeedback: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -17,7 +16,6 @@ const Layout: React.FC<LayoutProps> = ({
   setTourName,
   setCurrentTourStep,
   setShowFeedback,
-  tourName = "default",
 }) => {
   return (
     <div>
@@ -25,9 +23,11 @@ const Layout: React.FC<LayoutProps> = ({
         onStartTour={onStartTour}
         setTourName={setTourName}
         setCurrentTourStep={setCurrentTourStep}
-        currentTourName={tourName}
       />
-      <CollectionsNavBar setShowFeedback={setShowFeedback} />
+      <CollectionsNavBar 
+        setShowFeedback={setShowFeedback}
+        onStartTour={onStartTour}
+      />
       {children}
     </div>
   );

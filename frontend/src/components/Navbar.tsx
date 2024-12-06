@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useTour } from "../context/TourContext";
 import { Step } from "react-joyride";
 import newIcon from "../assets/new.png";
 import discoverIcon from "../assets/discover.png";
@@ -37,7 +36,6 @@ interface NavbarProps {
   onStartTour: () => void;
   setTourName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTourStep: React.Dispatch<React.SetStateAction<number>>;
-  currentTourName: string;
 }
 
 const navigationItems = [
@@ -71,11 +69,9 @@ const Navbar: React.FC<NavbarProps> = ({
   onStartTour,
   setTourName,
   setCurrentTourStep,
-  currentTourName,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isGuidedTourEnabled } = useTour();
 
   const handleNavigate = (path: string) => {
     console.log("Navigating to:", path);
@@ -90,6 +86,7 @@ const Navbar: React.FC<NavbarProps> = ({
     navigate("/your-collections");
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleStartTour = useCallback(() => {
     const visibilityStates = getDefaultVisibilityStates();
 
@@ -271,15 +268,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </div>
             {/* Bottom row for Tour */}
             <div className="flex items-center space-x-2">
-              {isGuidedTourEnabled && (
-                <button
-                  type="button"
-                  onClick={handleStartTour}
-                  className="rounded border border-black bg-blue-500 px-2 py-1 text-xs font-medium text-white transition-colors duration-300 hover:bg-blue-600"
-                >
-                  Start {currentTourName} Tour
-                </button>
-              )}
+              {/* No guided tour button in the Navbar */}
             </div>
           </>
         ) : (
@@ -291,15 +280,6 @@ const Navbar: React.FC<NavbarProps> = ({
                 onClick={onBack || handleBack}
               >
                 Back
-              </button>
-            )}
-            {isGuidedTourEnabled && (
-              <button
-                type="button"
-                onClick={handleStartTour}
-                className="rounded border border-black bg-blue-500 px-3 py-2 text-base font-bold text-white transition-colors duration-300 hover:bg-blue-600"
-              >
-                Start {currentTourName} Tour
               </button>
             )}
           </div>

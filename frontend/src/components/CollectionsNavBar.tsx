@@ -1,20 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useTour } from "../context/TourContext";
 import cartIcon from "../assets/cart.jpeg";
 import FeedbackIcon from "./FeedbackIcon";
 
 interface CollectionsNavBarProps {
   setShowFeedback: (show: boolean) => void;
+  onStartTour: () => void;
 }
 
 const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   setShowFeedback,
+  onStartTour,
 }) => {
   const navigate = useNavigate();
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth0();
+  const { isGuidedTourEnabled } = useTour();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -138,15 +142,24 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           <button
             type="button"
             onClick={() => {
-              console.log("Resources button clicked - attempting navigation");
               navigate("/resources", { replace: false });
-              console.log("Navigation completed");
               setIsAccountDropdownOpen(false);
             }}
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
             Resources
           </button>
+
+          {/* Add Guided Tour Button */}
+          {isGuidedTourEnabled && (
+            <button
+              type="button"
+              onClick={onStartTour}
+              className="rounded border border-black bg-blue-500 px-3 py-2 text-base font-bold text-white transition-colors duration-300 hover:bg-blue-600"
+            >
+              Start Tour
+            </button>
+          )}
         </div>
 
         {/* Right side - Cart and Feedback */}
