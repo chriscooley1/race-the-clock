@@ -457,6 +457,21 @@ const CollectionFinalStep: React.FC = () => {
     }
   }, []);
 
+  // Update the handler name and event type
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && newItem.trim()) {
+      event.preventDefault();
+      handleAddItem();
+      // Focus back on the input after a short delay to allow state update
+      setTimeout(() => {
+        const input = document.getElementById("new-item-input");
+        if (input) {
+          input.focus();
+        }
+      }, 0);
+    }
+  };
+
   if (!currentUser) {
     return <div>Loading user information...</div>;
   }
@@ -758,6 +773,7 @@ const CollectionFinalStep: React.FC = () => {
                         id="new-item-input"
                         value={newItem}
                         onChange={(e) => setNewItem(e.target.value)}
+                        onKeyDown={handleKeyDown}
                         className={`font-teacher w-full rounded-md border border-black p-2 pr-24 ${
                           theme.isDarkMode
                             ? "bg-gray-700 text-white"
@@ -770,6 +786,8 @@ const CollectionFinalStep: React.FC = () => {
                               ? "nursing term"
                               : "item"
                         }`}
+                        autoFocus
+                        tabIndex={0}
                       />
                       <div className="absolute right-0 flex items-center pr-2">
                         {newItem && (
