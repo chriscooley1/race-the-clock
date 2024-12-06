@@ -338,35 +338,35 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
         );
       }
     } else if (category === "Math" && type === "mathProblems") {
-      if (showAnswer) {
-        return (
-          <div className="flex size-full items-center justify-center">
-            <div className="relative">
-              <svg viewBox="0 0 200 200" className="size-64">
-                <polygon
-                  points="100,10 40,180 190,60 10,60 160,180"
-                  fill="yellow"
-                  stroke="orange"
-                  strokeWidth="5"
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-6xl font-bold text-orange-600">
-                  {currentItem.count}
-                </span>
+      return (
+        <div className="flex size-full flex-col items-center justify-center gap-4">
+          {/* Math Problem */}
+          <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
+            {currentItem.name}
+          </h1>
+          
+          {/* Answer (only shown when showAnswer is true) */}
+          {showAnswer && (
+            <div className="flex flex-col items-center justify-center">
+              <div className="relative">
+                <svg viewBox="0 0 200 200" className="size-64">
+                  <polygon
+                    points="100,10 40,180 190,60 10,60 160,180"
+                    fill="yellow"
+                    stroke="orange"
+                    strokeWidth="5"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-6xl font-bold text-orange-600">
+                    {currentItem.count}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        );
-      } else {
-        return (
-          <div className="flex size-full items-center justify-center">
-            <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
-              {currentItem.name}
-            </h1>
-          </div>
-        );
-      }
+          )}
+        </div>
+      );
     } else if (category === "Choose File" || currentItem.svg) {
       return (
         <div className="flex size-full items-center justify-center">
