@@ -379,12 +379,20 @@ const NameGenerator: React.FC = () => {
           onClick={handleToggleRightSide}
           style={{
             position: "absolute",
-            top: "calc(210px + 56px + 1rem)", // Navbar (200px) + CollectionsNavBar (56px) + spacing
+            top: "calc(210px + 56px + 1rem)",
             right: "1rem",
-            zIndex: 40, // Below the navbars (which are 50 and 51)
+            zIndex: 40,
           }}
+          title={showRightSide ? "Hide name input panel" : "Show name input panel"}
         >
-          {showRightSide ? "-" : "+"}
+          <div className="relative flex items-center">
+            {!showRightSide && (
+              <span className="absolute right-12 whitespace-nowrap animate-pulse text-sm text-blue-500 bg-white px-2 py-1 rounded border border-gray-300">
+                Click to add names →
+              </span>
+            )}
+            {showRightSide ? "-" : "+"}
+          </div>
         </button>
 
         {/* Add the GuidedTour component here */}
