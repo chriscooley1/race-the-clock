@@ -233,6 +233,25 @@ const NameGenerator: React.FC = () => {
     };
   }, []);
 
+  const handleDragStart = (event: React.DragEvent<HTMLLIElement>, index: number) => {
+    event.dataTransfer.setData("text/plain", index.toString());
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLLIElement>) => {
+    event.preventDefault(); // Prevent default to allow drop
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLLIElement>, index: number) => {
+    const draggedIndex = Number(event.dataTransfer.getData("text/plain"));
+    if (draggedIndex !== index) {
+      const updatedList = [...nameList];
+      const [movedItem] = updatedList.splice(draggedIndex, 1); // Remove the dragged item
+      updatedList.splice(index, 0, movedItem); // Insert it at the new position
+      setNameList(updatedList);
+      saveNameList(updatedList); // Save the updated list
+    }
+  };
+
   return (
     <div className="page-container" style={{ marginTop: "20px" }}>
       <div
@@ -342,6 +361,9 @@ const NameGenerator: React.FC = () => {
                       radius={150}
                       onRemove={() => handleRemoveName(index)}
                       onEdit={(newName) => handleEditName(index, newName)}
+                      onDragStart={(event) => handleDragStart(event as React.DragEvent<HTMLLIElement>, index)}
+                      onDragOver={(event) => handleDragOver(event as React.DragEvent<HTMLLIElement>)}
+                      onDrop={(event) => handleDrop(event as React.DragEvent<HTMLLIElement>, index)}
                     />
                   ))}
                 </ul>
