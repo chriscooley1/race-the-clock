@@ -225,7 +225,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               }}
               className="rounded border border-black p-1 text-sm"
             >
-              <option value="collection">End on Collection</option>
+              <option value="collection">End When Collection Completes</option>
               <option value="timer">End on Timer</option>
             </select>
           </div>
