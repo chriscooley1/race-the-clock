@@ -106,12 +106,20 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       onClick={handleBackgroundClick}
     >
       <div
-        className="w-full max-w-sm rounded-lg p-4 shadow-xl"
+        className="w-full max-w-sm rounded-lg p-4 shadow-xl relative"
         style={{
           backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
           color: theme.isDarkMode ? "#FFFFFF" : "#000000",
         }}
       >
+        <button
+          type="button"
+          className="absolute top-2 right-2 rounded border border-black bg-red-500 px-2 py-1 text-white transition duration-300 hover:bg-red-600" // Positioned in the upper right corner
+          onClick={onClose}
+          aria-label="Close"
+        >
+          &times;
+        </button>
         <h2 className="mb-2 text-center text-xl font-bold">{collectionName}</h2>
         <div className="space-y-3">
           <div className="flex flex-col items-center">
@@ -225,7 +233,7 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               }}
               className="rounded border border-black p-1 text-sm"
             >
-              <option value="collection">End on Collection</option>
+              <option value="collection">End When Collection Completes</option>
               <option value="timer">End on Timer</option>
             </select>
           </div>

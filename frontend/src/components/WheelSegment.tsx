@@ -8,6 +8,9 @@ interface WheelSegmentProps {
   radius: number; // Radius of the wheel for text positioning (not used here but kept for consistency)
   onRemove: () => void;
   onEdit: (newName: string) => void;
+  onDragStart: (e: React.DragEvent, index: number) => void;
+  onDragOver: (e: React.DragEvent) => void;
+  onDrop: (e: React.DragEvent, index: number) => void;
 }
 
 const WheelSegment: React.FC<WheelSegmentProps> = ({
@@ -15,11 +18,21 @@ const WheelSegment: React.FC<WheelSegmentProps> = ({
   index,
   onRemove,
   onEdit,
+  onDragStart,
+  onDragOver,
+  onDrop,
+  
 }) => {
   const { theme } = useTheme();
 
   return (
-    <li className="mb-2 flex items-center">
+    <li
+      className="mb-2 flex items-center"
+      draggable
+      onDragStart={(e) => onDragStart(e, index)}
+      onDragOver={(e) => onDragOver(e)}
+      onDrop={(e) => onDrop(e, index)}
+    >
       <input
         type="text"
         value={name}

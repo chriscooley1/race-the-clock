@@ -96,10 +96,6 @@ const YourCollections: React.FC = () => {
   const [sortOption, setSortOption] = useState<string>(
     localStorage.getItem("sortPreference") || "date",
   );
-  const [isDuplicateModalOpen, setDuplicateModalOpen] =
-    useState<boolean>(false);
-  const [selectedCollectionToDuplicate, setSelectedCollectionToDuplicate] =
-    useState<Collection | null>(null);
   const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -231,18 +227,18 @@ const YourCollections: React.FC = () => {
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)
       ) {
-        setDuplicateModalOpen(false);
+        setEditModalOpen(false);
       }
     };
 
-    if (isDuplicateModalOpen) {
+    if (isEditModalOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isDuplicateModalOpen]);
+  }, [isEditModalOpen]);
 
   const filterAndSortCollections = (
     collections: Collection[],
@@ -334,32 +330,14 @@ const YourCollections: React.FC = () => {
     setEditModalOpen(true);
   };
 
-  const handleDuplicateConfirm = async () => {
-    if (!selectedCollectionToDuplicate) return;
+  const handleDuplicateConfirm = async (collection: Collection) => {
     try {
       setIsLoading(true);
-      // Duplicate the collection
-      await duplicateCollection(
-        selectedCollectionToDuplicate,
-        getAccessTokenSilently,
-      );
+      await duplicateCollection(collection, getAccessTokenSilently);
 
-      // Fetch fresh data after duplication
-      const refreshedCollections = await fetchCollections(
-        getAccessTokenSilently,
-      );
-
-      // Update collections with fresh data
+      const refreshedCollections = await fetchCollections(getAccessTokenSilently);
       setCollections(refreshedCollections);
-
-      // Filter and sort the fresh data
-      filterAndSortCollections(
-        refreshedCollections,
-        selectedCategory,
-        sortOption,
-      );
-
-      setDuplicateModalOpen(false);
+      filterAndSortCollections(refreshedCollections, selectedCategory, sortOption);
     } catch (error) {
       console.error("Error duplicating collection:", error);
     } finally {
@@ -499,9 +477,8 @@ const YourCollections: React.FC = () => {
       isDeleteCollectionButtonVisible: collections.length > 0,
       isSessionSettingsModalVisible: showModal,
       isEditCollectionModalVisible: isEditModalOpen,
-      isDuplicateCollectionModalVisible: isDuplicateModalOpen,
     }));
-  }, [collections, showModal, isEditModalOpen, isDuplicateModalOpen]);
+  }, [collections, showModal, isEditModalOpen]);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newSortOption = event.target.value;
@@ -561,15 +538,6 @@ const YourCollections: React.FC = () => {
           <option value="category">Sort by Category</option>
           <option value="custom">Custom Order</option>
         </select>
-
-        {/* Duplicate Collection Button */}
-        <button
-          type="button"
-          onClick={() => setDuplicateModalOpen(true)}
-          className="rounded border border-black bg-blue-500 px-4 py-2 text-sm font-bold uppercase text-white transition duration-300 hover:scale-105 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
-        >
-          Duplicate Collection
-        </button>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -636,6 +604,7 @@ const YourCollections: React.FC = () => {
                             handleStartCollection={handleStartCollection}
                             handleEditButtonClick={handleEditButtonClick}
                             handleDeleteCollection={handleDeleteCollection}
+                            handleDuplicateConfirm={handleDuplicateConfirm}
                             formatDate={formatDate}
                             completionCount={0}
                             theme={theme}
@@ -661,6 +630,7 @@ const YourCollections: React.FC = () => {
                         handleStartCollection={handleStartCollection}
                         handleEditButtonClick={handleEditButtonClick}
                         handleDeleteCollection={handleDeleteCollection}
+                        handleDuplicateConfirm={handleDuplicateConfirm}
                         formatDate={formatDate}
                         completionCount={0}
                         theme={theme}
@@ -699,79 +669,6 @@ const YourCollections: React.FC = () => {
           isPublic={selectedCollection.status === "public"}
         />
       )}
-      {isDuplicateModalOpen && (
-        <div className="fixed inset-0 z-[1001] flex items-center justify-center bg-black bg-opacity-50">
-          <div
-            ref={modalRef}
-            className="font-teacher relative z-[1002] w-1/4 max-w-[600px] rounded-lg p-5 text-center shadow-lg"
-            style={{
-              backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
-              color: theme.isDarkMode ? "#FFFFFF" : "#000000",
-            }}
-          >
-            <h2 className="mb-4 text-2xl font-bold">Duplicate Collection</h2>
-            <div className="mb-4">
-              <label htmlFor="duplicate-collection-select" className="sr-only">
-                Select a collection to duplicate
-              </label>
-              <select
-                id="duplicate-collection-select"
-                value={selectedCollectionToDuplicate?.collection_id || ""}
-                onChange={(e) => {
-                  const collection = collections.find(
-                    (col) => col.collection_id === Number(e.target.value),
-                  );
-                  setSelectedCollectionToDuplicate(collection || null);
-                }}
-                className="font-teacher w-full rounded border p-2 text-base"
-                style={{
-                  backgroundColor: theme.isDarkMode ? "#1F1F1F" : "#FFFFFF",
-                  color: theme.isDarkMode ? "#FFFFFF" : "#000000",
-                }}
-                aria-label="Select a collection to duplicate"
-              >
-                <option value="">Select a collection to duplicate</option>
-                {collections.map((collection) => (
-                  <option
-                    key={collection.collection_id}
-                    value={collection.collection_id}
-                  >
-                    {collection.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex justify-center space-x-4">
-              <button
-                type="button"
-                onClick={handleDuplicateConfirm}
-                className="rounded border border-black bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 active:scale-95"
-                style={{
-                  backgroundColor: adjustColorForColorblindness(
-                    theme.isDarkMode ? "#4CAF50" : "#45a049",
-                  ),
-                  color: "white",
-                }}
-              >
-                Duplicate
-              </button>
-              <button
-                type="button"
-                onClick={() => setDuplicateModalOpen(false)}
-                className="rounded border border-black bg-red-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:scale-105 active:scale-95"
-                style={{
-                  backgroundColor: adjustColorForColorblindness(
-                    theme.isDarkMode ? "#f44336" : "#d32f2f",
-                  ),
-                  color: "white",
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
       {isLoading && <div>Loading...</div>}
 
       {/* Add the GuidedTour component here */}
@@ -794,6 +691,7 @@ interface CollectionContentProps {
   handleStartCollection: (id: number) => void;
   handleEditButtonClick: (collection: Collection) => void;
   handleDeleteCollection: (id: number) => void;
+  handleDuplicateConfirm: (collection: Collection) => void;
   formatDate: (dateString: string) => string;
   completionCount: number;
   theme: {
@@ -810,6 +708,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
   handleStartCollection,
   handleEditButtonClick,
   handleDeleteCollection,
+  handleDuplicateConfirm,
   formatDate,
   theme,
 }) => {
@@ -878,6 +777,13 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
                 onClick={() => handleEditButtonClick(collection)}
               >
                 Edit
+              </button>
+              <button
+                type="button"
+                className="duplicate-collection-button flex-1 cursor-pointer rounded-lg border-4 border-black bg-blue-500 p-2 text-base font-bold text-black transition-all duration-300 hover:scale-105 hover:opacity-80 active:scale-95"
+                onClick={() => handleDuplicateConfirm(collection)}
+              >
+                Duplicate
               </button>
               <button
                 type="button"

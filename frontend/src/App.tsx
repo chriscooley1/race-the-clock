@@ -257,7 +257,6 @@ const App: React.FC = () => {
         setTourName={setCurrentTourName}
         setCurrentTourStep={setCurrentTourStep}
         setShowFeedback={setShowFeedback}
-        tourName={currentTourName}
       >
         {element}
       </Layout>
