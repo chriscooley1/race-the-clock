@@ -685,7 +685,7 @@ const YourCollections: React.FC = () => {
             textColor: "#000000",
           }}
           category={selectedCollection.category}
-          type={selectedCollection.type}
+          type={selectedCollection.type || "mathProblems"}
         />
       )}
       {isEditModalOpen && selectedCollection && (

@@ -524,6 +524,53 @@ const CollectionFinalStep: React.FC = () => {
               >
                 Add Math Problem
               </button>
+              {/* Preview of current items */}
+              <div className="mt-6 w-full">
+                <h3 className="mb-4 text-xl font-bold">Collection Items:</h3>
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+                  {items.map((item) => (
+                    <div key={item.id} className="relative rounded-md border border-black p-4">
+                      {/* Display problem or item name */}
+                      <p className="text-center text-lg">{item.name}</p>
+                      
+                      {/* Display answer for math problems */}
+                      {category === "Math" && initialType === "mathProblems" && (
+                        <div className="mt-2">
+                          <label className="block text-sm font-bold text-gray-600">
+                            Answer:
+                          </label>
+                          <input
+                            title="Answer"
+                            placeholder="Answer"
+                            type="number"
+                            value={item.count || ""}
+                            readOnly
+                            className="w-full rounded border border-gray-300 bg-gray-100 px-2 py-1 text-center"
+                          />
+                        </div>
+                      )}
+
+                      {/* Display SVG if it exists */}
+                      {item.svg && (
+                        <img
+                          src={item.svg}
+                          alt={item.name}
+                          className="mt-2 h-auto w-full"
+                        />
+                      )}
+
+                      {/* Delete button */}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveItem(item.id)}
+                        className="absolute -right-2 -top-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white"
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </>
           ) : (
             <>

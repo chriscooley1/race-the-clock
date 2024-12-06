@@ -828,6 +828,21 @@ const CollectionSetup: React.FC = () => {
               {previewSequence.map((item, index) => (
                 <div key={index} className="rounded-md border border-black p-2">
                   <p className="text-center">{item.name}</p>
+                  {category === "Math" && type === "mathProblems" && (
+                    <div className="mt-2">
+                      <label className="block text-sm font-bold text-gray-600">
+                        Answer:
+                      </label>
+                      <input
+                        title="Answer"
+                        placeholder="Answer"
+                        type="number"
+                        value={item.count || ""}
+                        readOnly
+                        className="w-full rounded border border-gray-300 bg-gray-100 px-2 py-1 text-center"
+                      />
+                    </div>
+                  )}
                   {item.svg && (
                     <img
                       src={item.svg}
