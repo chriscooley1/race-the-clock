@@ -54,7 +54,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             Home
           </button>
 
-          {/* About Button */}
           <button
             type="button"
             onClick={() => navigate("/about")}
@@ -63,7 +62,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             About
           </button>
 
-          {/* Shop Button */}
           <button
             type="button"
             onClick={() => navigate("/shop")}
@@ -80,11 +78,21 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
               className="flex items-center space-x-2 rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
             >
               <span>Account</span>
-              <span className="ml-2">▼</span>
+              <span className="ml-2"></span>
             </button>
 
             {isAccountDropdownOpen && (
               <div className="absolute left-0 top-full z-[60] mt-1 w-48 rounded border border-gray-200 bg-white shadow-lg">
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate("/badges-achievements");
+                    setIsAccountDropdownOpen(false);
+                  }}
+                  className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
+                >
+                  Badges
+                </button>
                 <button
                   type="button"
                   onClick={() => {
@@ -104,16 +112,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
                   className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
                 >
                   Reports
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    navigate("/badges-achievements");
-                    setIsAccountDropdownOpen(false);
-                  }}
-                  className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
-                >
-                  Badges
                 </button>
                 <button
                   type="button"
