@@ -125,8 +125,8 @@ const NameWheel: React.FC<NameWheelProps> = ({
       controls.start({
         rotate: [lastLandedDegrees, totalRotation],
         transition: {
-          duration: 5,
-          ease: "easeInOut",
+          duration: 8,
+          ease: [0.32, 0, 0.24, 1],
         },
       });
 
@@ -162,7 +162,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
         setLastLandedDegrees(totalRotation % 360);
         onNameSelected(names[selectedIndex]);
         stopSpinning();
-      }, 5000);
+      }, 8000);
     }
   }, [
     isSpinning,
