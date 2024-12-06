@@ -42,7 +42,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
       ctx.arc(canvasSize / 2, canvasSize / 2, radius, 0, 2 * Math.PI);
       ctx.fillStyle = theme.backgroundColor;
       ctx.fill();
-      ctx.strokeStyle = theme.isDarkMode ? "#444" : "#ddd";
+      ctx.strokeStyle = "#000000";
       ctx.lineWidth = 2;
       ctx.stroke();
 
@@ -176,7 +176,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
 
   return (
     <div className="relative inline-block">
-      <div className="absolute left-1/2 top-0 z-10 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-red-500"></div>
+      <div className="absolute left-1/2 top-0 z-10 size-0 -translate-x-1/2 border-x-[20px] border-t-[40px] border-x-transparent border-t-black"></div>
       <motion.div animate={controls} className="inline-block">
         <canvas ref={canvasRef} />
       </motion.div>
