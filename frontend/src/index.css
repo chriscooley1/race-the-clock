@@ -30,6 +30,7 @@
     --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
     --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
     --collections-navbar-height: 64px;
+    --display-font-family: var(--font-family);
   }
 
   body {
@@ -90,6 +91,7 @@
   --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
   --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
   --collections-navbar-height: 64px;
+  --display-font-family: var(--font-family);
 }
 
 /* Apply the CSS variables to the body */
@@ -113,4 +115,12 @@ body {
   .page-container {
     @apply flex min-h-screen w-full flex-col items-center px-4;
   }
+}
+
+/* Add specific styles for the full screen display text */
+.full-screen-display h1,
+.full-screen-display h2,
+.full-screen-display h3,
+.full-screen-display span {
+  font-family: var(--display-font-family);
 }

@@ -83,6 +83,7 @@ const config: Config = {
         custom: ["KG What The Teacher Wants", "Comic Neue", "sans-serif"],
         teacher: ["KG What The Teacher Wants", "Comic Neue", "sans-serif"],
         "shake-it-off": ['"KG Shake It Off"', "Comic Neue", "sans-serif"],
+        display: ["var(--display-font-family)"],
       },
       spacing: {
         navbar: "50px",
@@ -165,6 +166,7 @@ const config: Config = {
     "dark:hover:bg-purple-500",
     "dark:hover:bg-yellow-500",
     "dark:hover:bg-red-500",
+    "font-display",
   ],
   plugins: [],
 };

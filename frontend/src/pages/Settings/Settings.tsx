@@ -36,6 +36,7 @@ const Settings: React.FC = () => {
     setFont,
     setHeadingFont,
     setButtonFont,
+    setDisplayFont,
   } = useTheme();
 
   const { isGuidedTourEnabled, setIsGuidedTourEnabled } = useTour();
@@ -139,6 +140,18 @@ const Settings: React.FC = () => {
     );
   };
 
+  const handleDisplayFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedFont = e.target.value;
+    const cssFont = selectedFont.replace(/^["'](.+)["']$/, "$1");
+    const formattedFont = cssFont === "Baloo 2" ? '"Baloo 2"' : cssFont;
+
+    setDisplayFont(selectedFont);
+    document.documentElement.style.setProperty(
+      "--display-font-family",
+      formattedFont,
+    );
+  };
+
   const handleBackgroundThemeChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -180,6 +193,7 @@ const Settings: React.FC = () => {
         adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
         displayTextColor: newDisplayTextColor,
         textColor: newDisplayTextColor,
+        displayFont: prevTheme.displayFont,
       };
       return setThemeWithColorAdjustment(newTheme);
     });
@@ -325,6 +339,29 @@ const Settings: React.FC = () => {
           </select>
         </div>
 
+        <div>
+          <h2 className="mb-2 text-xl font-semibold">Full Screen Display Font</h2>
+          <select
+            value={theme.displayFont}
+            onChange={handleDisplayFontChange}
+            className="display-font rounded border border-black bg-white p-2 text-black"
+            title="Select full screen display font"
+          >
+            {fonts.map((font) => {
+              const fontName = font.replace(/^["'](.+)["']$/, "$1");
+              return (
+                <option
+                  key={font}
+                  value={font}
+                  style={{ fontFamily: fontName }}
+                >
+                  {fontName}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
         <div className="mb-4">
           <label className="mb-2 block font-bold">Color Theme:</label>
           <div className="flex flex-wrap">
@@ -418,6 +455,39 @@ const Settings: React.FC = () => {
             ))}
           </select>
           <p>Current background image: {theme.backgroundImage}</p>
+        </div>
+
+        <div>
+          <h2 className="mb-2 text-xl font-semibold">Full Screen Display Font</h2>
+          <select
+            value={theme.displayFont || theme.font}
+            onChange={(e) => {
+              const selectedFont = e.target.value;
+              const cssFont = selectedFont.replace(/^["'](.+)["']$/, "$1");
+              const formattedFont = cssFont === "Baloo 2" ? '"Baloo 2"' : cssFont;
+              
+              setDisplayFont(selectedFont);
+              document.documentElement.style.setProperty(
+                "--display-font-family",
+                formattedFont.includes(" ") ? `"${formattedFont}"` : formattedFont
+              );
+            }}
+            className="display-font rounded border border-black bg-white p-2 text-black"
+            title="Select display font"
+          >
+            {fonts.map((font) => {
+              const fontName = font.replace(/^["'](.+)["']$/, "$1");
+              return (
+                <option
+                  key={font}
+                  value={font}
+                  style={{ fontFamily: fontName }}
+                >
+                  {fontName}
+                </option>
+              );
+            })}
+          </select>
         </div>
       </div>
 

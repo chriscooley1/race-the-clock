@@ -283,11 +283,12 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   console.log("Current item:", shuffledSequence[index]);
 
   const getTextClass = (text: string) => {
-    if (text.length <= 4) return "text-[clamp(25vw,30vw,35vw)]";
-    if (text.length <= 7) return "text-[clamp(15vw,19vw,23vw)]";
-    if (text.length <= 12) return "text-[clamp(8vw,12vw,16vw)]";
-    if (text.length <= 15) return "text-[clamp(5vw,9vw,13vw)]";
-    return "text-[clamp(2vw,6vw,10vw)]"; // For very long text
+    const baseClass = "font-[var(--display-font-family)] ";
+    if (text.length <= 4) return baseClass + "text-[clamp(25vw,30vw,35vw)]";
+    if (text.length <= 7) return baseClass + "text-[clamp(15vw,19vw,23vw)]";
+    if (text.length <= 12) return baseClass + "text-[clamp(8vw,12vw,16vw)]";
+    if (text.length <= 15) return baseClass + "text-[clamp(5vw,9vw,13vw)]";
+    return baseClass + "text-[clamp(2vw,6vw,10vw)]";
   };
 
   const renderContent = () => {
