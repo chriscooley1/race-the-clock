@@ -99,6 +99,14 @@ const About: React.FC = () => {
       {/* Legal Documentation Section */}
       <section className="mt-8 w-full max-w-3xl">
         <h2 className="mb-4 text-2xl font-semibold">Legal Information</h2>
+        
+        {/* Trademark Notice */}
+        <div className="mb-6 prose prose-sm">
+          <h3 className="text-xl font-medium">Trademark Notice</h3>
+          <p>Race The Clock™ and associated branding are trademarks used to identify our educational services.</p>
+        </div>
+
+        {/* Font Licensing */}
         <div className="prose prose-sm">
           <h3 className="text-xl font-medium">Font Licensing</h3>
           <p>This website uses licensed fonts from Bunny On A Cloud.</p>
