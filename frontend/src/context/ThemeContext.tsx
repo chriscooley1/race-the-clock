@@ -29,6 +29,7 @@ interface Theme {
   headingFont: string;
   buttonFont: string;
   adjustColorForColorblindness: (color: string) => string;
+  displayFont: string;
 }
 
 interface ThemeContextType {
@@ -45,6 +46,7 @@ interface ThemeContextType {
   setHeadingFont: (font: string) => void;
   setButtonFont: (font: string) => void;
   setMainTextColor: (color: string) => void;
+  setDisplayFont: (font: string) => void;
 }
 
 // Move the function outside of the ThemeProvider
@@ -113,6 +115,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       displayTextColor: "#000000",
       displayBackgroundColor: "#FFFFFF",
       adjustColorForColorblindness: (color: string) => color,
+      displayFont: '"KG What The Teacher Wants"',
     };
   };
 
@@ -294,6 +297,11 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     }));
   };
 
+  const setDisplayFont = (font: string) => {
+    setTheme((prevTheme) => ({ ...prevTheme, displayFont: font }));
+    document.documentElement.style.setProperty("--display-font-family", font);
+  };
+
   // Add a new ref to track initial load
   const isInitialLoad = useRef(true);
 
@@ -445,6 +453,12 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       theme.buttonFont,
     );
 
+    // Add this line to update the display font
+    document.documentElement.style.setProperty(
+      "--display-font-family",
+      theme.displayFont || theme.font,
+    );
+
     console.log("Theme applied");
   }, [theme]);
 
@@ -463,6 +477,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
     setHeadingFont,
     setButtonFont,
     setMainTextColor,
+    setDisplayFont,
   };
 
   return (
