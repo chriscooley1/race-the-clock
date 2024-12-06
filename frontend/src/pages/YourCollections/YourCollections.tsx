@@ -488,7 +488,7 @@ const YourCollections: React.FC = () => {
   };
 
   return (
-    <div className="page-container page-container-with-collections mt-6">
+    <div className="your-collections-page page-container page-container-with-collections mt-6">
       <div className="mb-4 flex items-center justify-between space-x-4">
         {/* Categories Dropdown */}
         <div className="relative">
