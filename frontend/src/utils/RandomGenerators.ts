@@ -125,8 +125,8 @@ const operationSymbol = {
 export const generateMathProblems = (
   count: number,
   operation: keyof typeof operationSymbol,
-): string[] => {
-  const problems: string[] = [];
+): { problem: string; answer: number }[] => {
+  const problems: { problem: string; answer: number }[] = [];
   for (let i = 0; i < count; i++) {
     const num1 = Math.floor(Math.random() * 10) + 1;
     const num2 = Math.floor(Math.random() * 10) + 1;
@@ -142,12 +142,15 @@ export const generateMathProblems = (
         answer = num1 * num2;
         break;
       case "division":
-        answer = Math.round((num1 / num2) * 100) / 100; // Round to 2 decimal places
+        answer = Math.round((num1 / num2) * 100) / 100;
         break;
       default:
         throw new Error(`Unsupported operation: ${operation}`);
     }
-    problems.push(`${num1} ${operationSymbol[operation]} ${num2}|${answer}`);
+    problems.push({
+      problem: `${num1} ${operationSymbol[operation]} ${num2}`,
+      answer: answer
+    });
   }
   return problems;
 };

@@ -356,13 +356,13 @@ const CollectionSetup: React.FC = () => {
         break;
       case "mathProblems":
         if (operation && operation !== "PeriodicElement") {
-          generatedSequence = generateMathProblems(itemCount, operation).map(
-            (problem) => ({ name: problem }),
-          );
+          const mathProblems = generateMathProblems(itemCount, operation);
+          generatedSequence = mathProblems.map((item) => ({
+            name: item.problem,
+            count: item.answer
+          }));
         } else {
-          console.error(
-            "Math Problems selected but operation is not set or is PeriodicElement",
-          );
+          console.error("Math Problems selected but operation is not set or is PeriodicElement");
         }
         break;
       case "numberSense": {
