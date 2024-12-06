@@ -70,7 +70,7 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50">
       <div
         ref={modalRef}
         className="w-full max-w-md rounded-lg border border-black bg-white p-6"
