@@ -54,7 +54,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             Home
           </button>
 
-          {/* About Button */}
           <button
             type="button"
             onClick={() => navigate("/about")}
@@ -63,7 +62,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             About
           </button>
 
-          {/* Shop Button */}
           <button
             type="button"
             onClick={() => navigate("/shop")}
@@ -88,6 +86,16 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
                 <button
                   type="button"
                   onClick={() => {
+                    navigate("/badges-achievements");
+                    setIsAccountDropdownOpen(false);
+                  }}
+                  className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
+                >
+                  Badges
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
                     navigate("/my-account");
                     setIsAccountDropdownOpen(false);
                   }}
@@ -104,16 +112,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
                   className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
                 >
                   Reports
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    navigate("/badges-achievements");
-                    setIsAccountDropdownOpen(false);
-                  }}
-                  className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
-                >
-                  Badges
                 </button>
                 <button
                   type="button"
