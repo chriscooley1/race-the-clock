@@ -185,13 +185,6 @@ const Settings: React.FC = () => {
     });
   };
 
-  const handleToggleDarkMode = () => {
-    setTheme((prevTheme) => ({
-      ...prevTheme,
-      isDarkMode: !prevTheme.isDarkMode,
-    }));
-  };
-
   // Load the guided tour preference from localStorage
   useEffect(() => {
     const storedPreference = localStorage.getItem("guidedTourEnabled");
@@ -250,15 +243,6 @@ const Settings: React.FC = () => {
   return (
     <div className="page-container mt-[20px] flex flex-col items-center">
       <div className="absolute right-6 top-[280px] flex flex-col space-y-2">
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            checked={theme.isDarkMode}
-            onChange={handleToggleDarkMode}
-            className="mr-2"
-          />
-          Enable Dark Mode
-        </label>
         <label className="flex items-center">
           <input
             type="checkbox"
