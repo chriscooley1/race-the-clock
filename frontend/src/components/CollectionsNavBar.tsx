@@ -51,7 +51,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
         <div className="flex items-center space-x-4">
           <button
             type="button"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/your-collections")}
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
             Home
