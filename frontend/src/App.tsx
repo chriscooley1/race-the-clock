@@ -12,7 +12,6 @@ import FeedbackForm from "./components/FeedbackForm";
 import FontPreloader from "./components/FontPreloader";
 import { CompletionProvider } from "./context/CompletionContext";
 import Layout from "./components/Layout";
-import Home from "./pages/Home/Home";
 
 // Import your tour steps here
 import { tourStepsYourCollections } from "./pages/YourCollections/tourStepsYourCollections";
@@ -35,6 +34,7 @@ import { tourStepsShop } from "./pages/Shop/tourStepsShop";
 import { tourStepsAbout } from "./pages/About/tourStepsAbout";
 
 // Import your page components here
+import Home from "./pages/Home/Home";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
 import YourCollections from "./pages/YourCollections/YourCollections";
@@ -54,6 +54,7 @@ import Reports from "./pages/Reports/Reports";
 import BadgesAchievements from "./pages/BadgesAchievements/BadgesAchievements";
 import Shop from "./pages/Shop/Shop";
 import About from "./pages/About/About";
+import Credits from "./pages/Credits/Credits";
 
 const App: React.FC = () => {
   console.log("App component rendered");
@@ -231,6 +232,8 @@ const App: React.FC = () => {
         return tourStepsShop();
       case "/about":
         return tourStepsAbout();
+      case "/credits":
+        return [];
       default:
         return [];
     }
@@ -443,6 +446,14 @@ const App: React.FC = () => {
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
                       <PrivateRoute element={renderContent(<About />)} />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/credits"
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <PrivateRoute element={renderContent(<Credits />)} />
                     </Suspense>
                   }
                 />
