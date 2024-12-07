@@ -83,28 +83,8 @@ const config: Config = {
         custom: ["KG What The Teacher Wants", "Comic Neue", "sans-serif"],
         teacher: ["KG What The Teacher Wants", "Comic Neue", "sans-serif"],
         "shake-it-off": ['"KG Shake It Off"', "Comic Neue", "sans-serif"],
-        "happy-writing-boxes-no-letters": [
-          "HappyWritingBoxes-NoLetters",
-          "Comic Neue",
-          "sans-serif",
-        ],
-        "happy-writing-boxes-regular": [
-          "HappyWritingBoxes-Regular",
-          "Comic Neue",
-          "sans-serif",
-        ],
         "happy-writing-dots-regular": [
           "HappyWritingDots-Regular",
-          "Comic Neue",
-          "sans-serif",
-        ],
-        "happy-writing-handwriting-regular": [
-          "HappyWritingHandwriting-Regular",
-          "Comic Neue",
-          "sans-serif",
-        ],
-        "happy-writing-letter-formation-regular": [
-          "HappyWritingLetterFormation-Regular",
           "Comic Neue",
           "sans-serif",
         ],
@@ -115,11 +95,6 @@ const config: Config = {
         ],
         "happy-writing-neat-regular": [
           "HappyWritingNeat-Regular",
-          "Comic Neue",
-          "sans-serif",
-        ],
-        "happy-writing-neat-guides-regular": [
-          "HappyWritingNeatGuides-Regular",
           "Comic Neue",
           "sans-serif",
         ],
@@ -138,18 +113,8 @@ const config: Config = {
           "Comic Neue",
           "sans-serif",
         ],
-        "happy-writing-outlines-dots-inside-regular": [
-          "HappyWritingOutlinesDotsInside-Regular",
-          "Comic Neue",
-          "sans-serif",
-        ],
         "happy-writing-outlines-thick-regular": [
           "HappyWritingOutlinesThick-Regular",
-          "Comic Neue",
-          "sans-serif",
-        ],
-        "happy-writing-outlines-tracing-regular": [
-          "HappyWritingOutlinesTracing-Regular",
           "Comic Neue",
           "sans-serif",
         ],
@@ -160,11 +125,6 @@ const config: Config = {
         ],
         "happy-writing-tracing-guides-regular": [
           "HappyWritingTracingGuides-Regular",
-          "Comic Neue",
-          "sans-serif",
-        ],
-        "happy-writing-handwriting-lines-only": [
-          "HappyWritingHandwriting-LinesOnly",
           "Comic Neue",
           "sans-serif",
         ],
