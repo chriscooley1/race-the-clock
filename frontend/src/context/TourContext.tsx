@@ -58,8 +58,17 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
     );
   }, [isGuidedTourEnabled]);
 
+  const resetTourState = () => {
+    setIsTourRunning(false);
+    setCurrentTourStep(0);
+    // Clear any stored tour state in localStorage
+    localStorage.removeItem("currentTourStep");
+  };
+
   const startTour = (tourSteps: Step[]) => {
-    setIsTourRunning(true); // Set the tour running state
+    resetTourState(); // Reset state before starting new tour
+    setIsTourRunning(true);
+    setCurrentTourStep(0);
     console.log("Starting tour with steps:", tourSteps);
   };
 
@@ -69,15 +78,7 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
       setToursCompleted(updatedTours);
       localStorage.setItem("toursCompleted", JSON.stringify(updatedTours));
     }
-    setIsTourRunning(false);
-    setCurrentTourStep(0); // Reset to 0 instead of -1 to prepare for next tour
-    console.log(`Tour "${tourName}" completed and stored in localStorage`);
-  };
-
-  // Add a new function to reset tour state
-  const resetTourState = () => {
-    setIsTourRunning(false);
-    setCurrentTourStep(0);
+    resetTourState();
   };
 
   return (

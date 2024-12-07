@@ -26,9 +26,35 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   const { completeTour, isGuidedTourEnabled, resetTourState } = useTour();
   const location = useLocation();
 
+  // Filter steps based on element visibility
+  const visibleSteps = steps.filter(step => {
+    if (typeof step.target === "string") {
+      const element = document.querySelector(step.target);
+      if (!element) return false;
+      
+      // Check if element is visible
+      const style = window.getComputedStyle(element);
+      return style.display !== "none" && 
+             style.visibility !== "hidden" && 
+             style.opacity !== "0";
+    }
+    return true;
+  });
+
+  // Update current step if it's beyond the available steps
   useEffect(() => {
-    resetTourState();
-    onStepChange(0);
+    if (currentStep >= visibleSteps.length) {
+      onStepChange(0);
+    }
+  }, [visibleSteps.length, currentStep]);
+
+  // Reset tour state when component unmounts or location changes
+  useEffect(() => {
+    return () => {
+      resetTourState();
+      onStepChange(0);
+      onComplete();
+    };
   }, [location.pathname]);
 
   const scrollToTarget = (selector: string) => {
@@ -69,36 +95,24 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
       onComplete();
       resetTourState();
       onStepChange(0);
-      document.dispatchEvent(new Event("tourSkipped"));
       return;
     }
 
     // Handle step transitions
     if (type === "step:after") {
-      // Add check for last step completion
-      if (action === "next" && index === steps.length - 1) {
+      if (action === "next" && index === visibleSteps.length - 1) {
         completeTour(tourName);
         onComplete();
         resetTourState();
         onStepChange(0);
-        document.dispatchEvent(new Event("tourSkipped"));
         return;
       }
 
-      if (action === "next" && index < steps.length - 1) {
+      // Handle normal step transitions
+      if (action === "next" && index < visibleSteps.length - 1) {
         onStepChange(index + 1);
-        // Pre-emptively scroll to the next target
-        const nextStep = steps[index + 1];
-        if (nextStep && typeof nextStep.target === "string") {
-          scrollToTarget(nextStep.target);
-        }
       } else if (action === "prev" && index > 0) {
         onStepChange(index - 1);
-        // Scroll to the previous target
-        const prevStep = steps[index - 1];
-        if (prevStep && typeof prevStep.target === "string") {
-          scrollToTarget(prevStep.target);
-        }
       }
     }
   };
@@ -107,24 +121,24 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   useEffect(() => {
     if (
       isRunning &&
-      steps[currentStep] &&
-      typeof steps[currentStep].target === "string"
+      visibleSteps[currentStep] &&
+      typeof visibleSteps[currentStep].target === "string"
     ) {
-      scrollToTarget(steps[currentStep].target);
+      scrollToTarget(visibleSteps[currentStep].target);
     }
-  }, [isRunning, currentStep, steps]);
+  }, [isRunning, currentStep, visibleSteps]);
 
   return (
     <Joyride
-      steps={steps}
-      run={isRunning && isGuidedTourEnabled}
+      steps={visibleSteps}
+      run={isRunning && isGuidedTourEnabled && visibleSteps.length > 0}
       continuous
       showSkipButton
       showProgress
       stepIndex={currentStep}
-      scrollToFirstStep={false} // Disable default scroll behavior
+      scrollToFirstStep={false}
       scrollOffset={100}
-      disableScrolling // Disable default scroll behavior
+      disableScrolling
       styles={{
         options: {
           primaryColor: "#007bff",
@@ -142,7 +156,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
       }}
       floaterProps={{
         disableAnimation: true,
-        placement: "center", // This helps with positioning
+        placement: "center",
       }}
       callback={handleJoyrideCallback}
     />
