@@ -49,7 +49,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
       <div className="flex w-full items-center justify-between px-6 py-3">
         {/* Left side - Navigation Items */}
         <div className="flex items-center space-x-4">
-          {/* Home Button */}
           <button
             type="button"
             onClick={() => navigate("/your-collections")}
@@ -127,13 +126,6 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
                 >
                   Settings
                 </button>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="w-full px-4 py-2 text-left text-lg hover:bg-gray-100"
-                >
-                  Logout
-                </button>
               </div>
             )}
           </div>
@@ -150,6 +142,14 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             Resources
           </button>
 
+          <button
+            type="button"
+            onClick={() => navigate("/credits")}
+            className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
+          >
+            Credits
+          </button>
+
           {/* Add Guided Tour Button */}
           {isGuidedTourEnabled && (
             <button
@@ -162,8 +162,15 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           )}
         </div>
 
-        {/* Right side - Cart and Feedback */}
+        {/* Right side - Logout, Cart and Feedback */}
         <div className="relative flex items-center space-x-10 mt-2">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
+          >
+            Logout
+          </button>
           <div className="scale-[1.75] transition-transform hover:scale-[1.85]">
             <FeedbackIcon onClick={() => setShowFeedback(true)} />
           </div>

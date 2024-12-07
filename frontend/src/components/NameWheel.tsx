@@ -52,7 +52,7 @@ const NameWheel: React.FC<NameWheelProps> = ({
         ctx.moveTo(canvasSize / 2, canvasSize / 2);
         ctx.arc(canvasSize / 2, canvasSize / 2, radius, 0, 2 * Math.PI);
         ctx.closePath();
-        ctx.fillStyle = `hsl(200, 70%, ${theme.isDarkMode ? "60%" : "70%"})`;
+        ctx.fillStyle = "#b0f2ff";
         ctx.fill();
         ctx.stroke();
 
