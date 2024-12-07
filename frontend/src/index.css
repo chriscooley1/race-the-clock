@@ -17,37 +17,8 @@
 }
 
 @font-face {
-  font-family: "HappyWritingBoxes-NoLetters";
-  src: url("/fonts/HappyWritingBoxes-NoLetters.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "HappyWritingBoxes-Regular";
-  src: url("/fonts/HappyWritingBoxes-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
   font-family: "HappyWritingDots-Regular";
   src: url("/fonts/HappyWritingDots-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "HappyWritingHandwriting-Regular";
-  src: url("/fonts/HappyWritingHandwriting-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "HappyWritingLetterFormation-Regular";
-  src: url("/fonts/HappyWritingLetterFormation-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -62,13 +33,6 @@
 @font-face {
   font-family: "HappyWritingNeat-Regular";
   src: url("/fonts/HappyWritingNeat-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "HappyWritingNeatGuides-Regular";
-  src: url("/fonts/HappyWritingNeatGuides-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -95,22 +59,8 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "HappyWritingOutlinesDotsInside-Regular";
-  src: url("/fonts/HappyWritingOutlinesDotsInside-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
   font-family: "HappyWritingOutlinesThick-Regular";
   src: url("/fonts/HappyWritingOutlinesThick-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "HappyWritingOutlinesTracing-Regular";
-  src: url("/fonts/HappyWritingOutlinesTracing-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -125,13 +75,6 @@
 @font-face {
   font-family: "HappyWritingTracingGuides-Regular";
   src: url("/fonts/HappyWritingTracingGuides-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "HappyWritingHandwriting-LinesOnly";
-  src: url("/fonts/HappyWritingHandwriting-LinesOnly.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
