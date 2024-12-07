@@ -12,6 +12,7 @@ import FeedbackForm from "./components/FeedbackForm";
 import FontPreloader from "./components/FontPreloader";
 import { CompletionProvider } from "./context/CompletionContext";
 import Layout from "./components/Layout";
+import Home from "./pages/Home/Home";
 
 // Import your tour steps here
 import { tourStepsYourCollections } from "./pages/YourCollections/tourStepsYourCollections";
@@ -273,7 +274,8 @@ const App: React.FC = () => {
               className={`min-h-screen ${theme.className} ${isFullScreen ? "fullscreen" : ""} ${theme.isDarkMode ? "dark" : ""}`}
             >
               <Routes>
-                <Route path="/" element={<LandingPage />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<LandingPage />} />
                 <Route
                   path="/fullscreen-display"
                   element={

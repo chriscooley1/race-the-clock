@@ -49,10 +49,9 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
       <div className="flex w-full items-center justify-between px-6 py-3">
         {/* Left side - Navigation Items */}
         <div className="flex items-center space-x-4">
-          {/* Home Button */}
           <button
             type="button"
-            onClick={() => navigate("/your-collections")}
+            onClick={() => navigate("/")}
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
             Home
