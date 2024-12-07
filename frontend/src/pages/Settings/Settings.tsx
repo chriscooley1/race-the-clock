@@ -475,39 +475,6 @@ const Settings: React.FC = () => {
           </select>
           <p>Current background image: {theme.backgroundImage}</p>
         </div>
-
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">Full Screen Display Font</h2>
-          <select
-            value={theme.displayFont || theme.font}
-            onChange={(e) => {
-              const selectedFont = e.target.value;
-              const cssFont = selectedFont.replace(/^["'](.+)["']$/, "$1");
-              const formattedFont = cssFont === "Baloo 2" ? '"Baloo 2"' : cssFont;
-              
-              setDisplayFont(selectedFont);
-              document.documentElement.style.setProperty(
-                "--display-font-family",
-                formattedFont.includes(" ") ? `"${formattedFont}"` : formattedFont
-              );
-            }}
-            className="display-font rounded border border-black bg-white p-2 text-black"
-            title="Select display font"
-          >
-            {fonts.map((font) => {
-              const fontName = font.replace(/^["'](.+)["']$/, "$1");
-              return (
-                <option
-                  key={font}
-                  value={font}
-                  style={{ fontFamily: fontName }}
-                >
-                  {fontName}
-                </option>
-              );
-            })}
-          </select>
-        </div>
       </div>
 
       <GuidedTour
