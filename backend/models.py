@@ -11,6 +11,8 @@ from sqlalchemy.types import TypeDecorator
 # Add this custom type for Mountain Time
 class MountainDateTime(TypeDecorator):
     impl = DateTime
+    cache_ok = True
+    
     def process_bind_param(self, value, dialect):
         if value is not None:
             return value.astimezone(pytz.UTC)
@@ -63,6 +65,7 @@ class User(SQLModel, table=True):
     collections: List["Collection"] = Relationship(back_populates="user")
     namelists: List[NameList] = Relationship(back_populates="user")
     role: str = Field(default="student")
+    completions: List["CompletionRecord"] = Relationship(back_populates="user")
 
 # Add this class for role updates
 class RoleUpdate(BaseModel):
@@ -109,6 +112,7 @@ class Collection(SQLModel, table=True):
         sa_relationship_kwargs={"cascade": "all, delete-orphan"}
     )
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    completions: List["CompletionRecord"] = Relationship(back_populates="collection")
 
 class CollectionCreate(SQLModel):
     name: str
@@ -153,3 +157,23 @@ class Feedback(SQLModel, table=True):
         sa_column=Column(MountainDateTime, default=lambda: datetime.now(timezone("America/Denver")))
     )
     user_id: Optional[int] = Field(default=None, foreign_key="users.user_id")
+
+class CompletionRecord(SQLModel, table=True):
+    __tablename__ = "completion_records"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    collection_id: int = Field(foreign_key="collections.collection_id")
+    user_id: int = Field(foreign_key="users.user_id")
+    completed_at: datetime = Field(
+        sa_column=Column(MountainDateTime, default=lambda: datetime.now(timezone("America/Denver")))
+    )
+    collection: Collection = Relationship(back_populates="completions")
+    user: User = Relationship(back_populates="completions")
+
+class ReportResponse(BaseModel):
+    report_id: int
+    user_id: int
+    total_items: int
+    time_taken: float
+    missed_items: int
+    skipped_items: int
+    created_at: datetime

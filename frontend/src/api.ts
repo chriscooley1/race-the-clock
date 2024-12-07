@@ -631,3 +631,36 @@ export const checkSubscriptionsBatch = async (
     return {};
   }
 };
+
+export const fetchCompletionCounts = async (
+  getAccessTokenSilently: () => Promise<string>
+): Promise<Record<number, number>> => {
+  try {
+    const token = await getAccessTokenSilently();
+    const response = await axios.get(`${API_BASE_URL}/collections/completion-counts`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    return {};
+  }
+};
+
+export const completeCollection = async (
+  collectionId: number,
+  getAccessTokenSilently: () => Promise<string>
+): Promise<void> => {
+  try {
+    const token = await getAccessTokenSilently();
+    await axios.post(
+      `${API_BASE_URL}/collections/${collectionId}/complete`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  } catch (error) {
+    handleApiError(error);
+  }
+};

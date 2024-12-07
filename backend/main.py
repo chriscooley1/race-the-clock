@@ -2,7 +2,23 @@ from fastapi import FastAPI, Depends, HTTPException, status, Header, Query
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
-from models import User, Sequence, SequenceCreate, Collection, CollectionCreate, CollectionRead, Item, UserCreate, DisplayNameUpdate, NameList, NameListCreate, NameListRead, Feedback
+from models import (
+    User, 
+    Sequence, 
+    SequenceCreate, 
+    Collection, 
+    CollectionCreate, 
+    CollectionRead, 
+    Item, 
+    UserCreate, 
+    DisplayNameUpdate, 
+    NameList, 
+    NameListCreate, 
+    NameListRead, 
+    Feedback,
+    CompletionRecord,
+    ReportResponse
+)
 from jose import jwt, jwk
 from jose.exceptions import JWKError, ExpiredSignatureError, JWTClaimsError, JWTError
 from datetime import datetime, timedelta
@@ -22,6 +38,7 @@ import pytz
 from pydantic import BaseModel
 from github_integration import GitHubIssueCreator
 import json
+from sqlalchemy import func
 
 from database import get_db, get_engine
 
@@ -657,6 +674,84 @@ async def check_subscriptions_batch(
     except Exception as e:
         logger.error(f"Error checking subscriptions batch: {str(e)}")
         raise HTTPException(status_code=500, detail="Error checking subscriptions")
+
+@app.get("/collections/completion-counts")
+async def get_completion_counts(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    try:
+        counts = db.query(Collection.collection_id, func.count(CompletionRecord.id))\
+                  .join(CompletionRecord, Collection.collection_id == CompletionRecord.collection_id)\
+                  .filter(CompletionRecord.user_id == current_user.user_id)\
+                  .group_by(Collection.collection_id)\
+                  .all()
+        
+        return {str(cid): count for cid, count in counts}
+    except Exception as e:
+        logger.error(f"Error fetching completion counts: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error fetching completion counts")
+
+# Add this endpoint before the if __name__ == "__main__": block
+@app.get("/reports", response_model=List[ReportResponse])
+async def get_reports(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    try:
+        reports = []
+        # Join with Collection to get item counts
+        completion_records = db.query(CompletionRecord, Collection)\
+            .join(Collection, CompletionRecord.collection_id == Collection.collection_id)\
+            .filter(CompletionRecord.user_id == current_user.user_id)\
+            .order_by(CompletionRecord.completed_at.desc())\
+            .all()
+
+        logger.info(f"Found {len(completion_records)} completion records for user {current_user.user_id}")
+
+        for i, (record, collection) in enumerate(completion_records):
+            # Get items count for this collection
+            items_count = db.query(func.count(Item.item_id))\
+                .filter(Item.collection_id == collection.collection_id)\
+                .scalar() or 0
+                
+            logger.info(f"Collection {collection.collection_id} has {items_count} items")
+
+            report = ReportResponse(
+                report_id=i + 1,
+                user_id=current_user.user_id,
+                total_items=items_count,
+                time_taken=60.0,  # This should be calculated based on actual completion time
+                missed_items=0,   # This should be tracked during completion
+                skipped_items=0,  # This should be tracked during completion
+                created_at=record.completed_at
+            )
+            reports.append(report)
+
+        return reports
+    except Exception as e:
+        logger.error(f"Error fetching reports: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error fetching reports: {str(e)}")
+
+@app.post("/collections/{collection_id}/complete")
+async def complete_collection(
+    collection_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    try:
+        completion_record = CompletionRecord(
+            collection_id=collection_id,
+            user_id=current_user.user_id,
+            completed_at=datetime.now(timezone("America/Denver"))
+        )
+        db.add(completion_record)
+        db.commit()
+        logger.info(f"Created completion record: collection_id={collection_id}, user_id={current_user.user_id}")
+        return {"message": "Collection completion recorded successfully"}
+    except Exception as e:
+        logger.error(f"Error recording completion: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error recording completion")
 
 if __name__ == "__main__":
     init_db()
