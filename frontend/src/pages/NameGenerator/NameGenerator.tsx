@@ -274,11 +274,15 @@ const NameGenerator: React.FC = () => {
         }}
       >
         <div
-          className={`flex w-full max-w-5xl justify-between px-2 ${showRightSide ? "" : "justify-center"}`}
+          className={`flex w-full max-w-5xl justify-between px-2 ${
+            showRightSide ? "gap-16" : "justify-center"
+          }`}
         >
           {/* Left side (centered when right side is hidden) */}
           <div
-            className={`flex flex-col items-center ${showRightSide ? "w-1/2" : "w-full"}`}
+            className={`flex flex-col items-center ${
+              showRightSide ? "w-1/2 pl-8" : "w-full"
+            }`}
           >
             <div className="relative flex w-full max-w-[500px] flex-col items-center">
               <NameWheel
@@ -314,9 +318,9 @@ const NameGenerator: React.FC = () => {
 
           {/* Right side (hidden by default, shown when triggered) */}
           <div
-            className={`ml-8 flex flex-col transition-all duration-300 ${
+            className={`flex flex-col transition-all duration-300 ${
               showRightSide
-                ? "w-1/2 opacity-100"
+                ? "w-1/2 opacity-100 pr-8"
                 : "w-0 overflow-hidden opacity-0"
             }`}
           >
