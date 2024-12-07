@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchReports, fetchCollections } from "../../api";
+import { fetchReports, fetchCollections, fetchCompletionCounts } from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
@@ -20,6 +20,7 @@ interface Report {
 interface Collection {
   collection_id: number;
   name: string;
+  completion_count?: number;
 }
 
 const Reports: React.FC = () => {
@@ -27,6 +28,7 @@ const Reports: React.FC = () => {
   const [reports, setReports] = useState<Report[]>([]); // State to hold reports
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
   const [collections, setCollections] = useState<Collection[]>([]); // State to hold collections
+  const [completionCounts, setCompletionCounts] = useState<Record<number, number>>({});
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
@@ -63,6 +65,10 @@ const Reports: React.FC = () => {
           getAccessTokenSilently,
         );
         setCollections(fetchedCollections);
+        
+        // Fetch completion counts for all collections
+        const counts = await fetchCompletionCounts(getAccessTokenSilently);
+        setCompletionCounts(counts);
       } catch (error) {
         if (error instanceof AxiosError) {
           console.error(
@@ -96,6 +102,11 @@ const Reports: React.FC = () => {
     console.log("Tour completed");
     setIsTourRunning(false); // Reset the tour running state
     localStorage.setItem("tourCompleted", "true"); // Mark the tour as completed
+  };
+
+  // Update the getCompletionCount function to use actual data
+  const getCompletionCount = (collection: Collection): number => {
+    return completionCounts[collection.collection_id] || 0;
   };
 
   return (
@@ -142,14 +153,6 @@ const Reports: React.FC = () => {
       />
     </div>
   );
-};
-
-// Helper function to get completion count for a collection
-const getCompletionCount = (collection: Collection): number => {
-  console.log(
-    `Getting completion count for collection ID: ${collection.collection_id}`,
-  );
-  return Math.floor(Math.random() * 10);
 };
 
 export default Reports;
