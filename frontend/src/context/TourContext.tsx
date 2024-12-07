@@ -17,6 +17,7 @@ interface TourContextType {
   toursCompleted: Record<string, boolean>;
   startTour: (steps: Step[]) => void;
   completeTour: (tourName: string) => void;
+  resetTourState: () => void;
   isTourRunning: boolean;
   setIsTourRunning: (isRunning: boolean) => void;
   isGuidedTourEnabled: boolean;
@@ -57,8 +58,17 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
     );
   }, [isGuidedTourEnabled]);
 
+  const resetTourState = () => {
+    setIsTourRunning(false);
+    setCurrentTourStep(0);
+    // Clear any stored tour state in localStorage
+    localStorage.removeItem("currentTourStep");
+  };
+
   const startTour = (tourSteps: Step[]) => {
-    setIsTourRunning(true); // Set the tour running state
+    resetTourState(); // Reset state before starting new tour
+    setIsTourRunning(true);
+    setCurrentTourStep(0);
     console.log("Starting tour with steps:", tourSteps);
   };
 
@@ -68,9 +78,7 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
       setToursCompleted(updatedTours);
       localStorage.setItem("toursCompleted", JSON.stringify(updatedTours));
     }
-    setIsTourRunning(false);
-    setCurrentTourStep(-1); // Reset the step to -1 to fully stop the tour
-    console.log(`Tour "${tourName}" completed and stored in localStorage`);
+    resetTourState();
   };
 
   return (
@@ -79,6 +87,7 @@ export const TourProvider: React.FC<{ children: ReactNode }> = ({
         toursCompleted,
         startTour,
         completeTour,
+        resetTourState,
         isTourRunning,
         setIsTourRunning,
         isGuidedTourEnabled,
