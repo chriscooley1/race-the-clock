@@ -111,6 +111,23 @@ const Settings: React.FC = () => {
     "Baloo 2",
     '"KG What The Teacher Wants"',
     '"KG Shake It Off"',
+    "HappyWritingBoxes-NoLetters",
+    "HappyWritingBoxes-Regular",
+    "HappyWritingDots-Regular",
+    "HappyWritingHandwriting-Regular",
+    "HappyWritingLetterFormation-Regular",
+    "HappyWritingLetterMiniCircles-Regular",
+    "HappyWritingNeat-Regular",
+    "HappyWritingNeatGuides-Regular",
+    "HappyWritingOutlineDashes-Regular",
+    "HappyWritingOutlineDots-Regular",
+    "HappyWritingOutlines-Regular",
+    "HappyWritingOutlinesDotsInside-Regular",
+    "HappyWritingOutlinesThick-Regular",
+    "HappyWritingOutlinesTracing-Regular",
+    "HappyWritingTracing-Regular",
+    "HappyWritingTracingGuides-Regular",
+    "HappyWritingHandwriting-LinesOnly",
   ];
 
   const backgroundThemes = [

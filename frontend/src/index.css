@@ -16,6 +16,127 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "HappyWritingBoxes-NoLetters";
+  src: url("/fonts/HappyWritingBoxes-NoLetters.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HappyWritingBoxes-Regular";
+  src: url("/fonts/HappyWritingBoxes-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingDots-Regular";
+  src: url("/fonts/HappyWritingDots-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingHandwriting-Regular";
+  src: url("/fonts/HappyWritingHandwriting-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingLetterFormation-Regular";
+  src: url("/fonts/HappyWritingLetterFormation-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingMiniCircles-Regular";
+  src: url("/fonts/HappyWritingMiniCircles-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingNeat-Regular";
+  src: url("/fonts/HappyWritingNeat-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingNeatGuides-Regular";
+  src: url("/fonts/HappyWritingNeatGuides-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingOutlineDashes-Regular";
+  src: url("/fonts/HappyWritingOutlineDashes-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingOutlineDots-Regular";
+  src: url("/fonts/HappyWritingOutlineDots-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingOutlines-Regular";
+  src: url("/fonts/HappyWritingOutlines-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingOutlinesDotsInside-Regular";
+  src: url("/fonts/HappyWritingOutlinesDotsInside-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingOutlinesThick-Regular";
+  src: url("/fonts/HappyWritingOutlinesThick-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingOutlinesTracing-Regular";
+  src: url("/fonts/HappyWritingOutlinesTracing-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingTracing-Regular";
+  src: url("/fonts/HappyWritingTracing-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingTracingGuides-Regular";
+  src: url("/fonts/HappyWritingTracingGuides-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "HappyWritingHandwriting-LinesOnly";
+  src: url("/fonts/HappyWritingHandwriting-LinesOnly.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

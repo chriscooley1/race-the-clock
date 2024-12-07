@@ -14,6 +14,91 @@ const FontPreloader = () => {
           url: "/fonts/KGShakeItOff.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
+        {
+          family: "HappyWritingBoxes-NoLetters",
+          url: "/fonts/HappyWritingBoxes-NoLetters.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingBoxes-Regular",
+          url: "/fonts/HappyWritingBoxes-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingDots-Regular",
+          url: "/fonts/HappyWritingDots-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingHandwriting-Regular",
+          url: "/fonts/HappyWritingHandwriting-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingLetterFormation-Regular",
+          url: "/fonts/HappyWritingLetterFormation-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingLetterMiniCircles-Regular",
+          url: "/fonts/HappyWritingLetterMiniCircles-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingNeat-Regular",
+          url: "/fonts/HappyWritingNeat-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingNeatGuides-Regular",
+          url: "/fonts/HappyWritingNeatGuides-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingOutlineDashes-Regular",
+          url: "/fonts/HappyWritingOutlineDashes-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingOutlineDots-Regular",
+          url: "/fonts/HappyWritingOutlineDots-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingOutlines-Regular",
+          url: "/fonts/HappyWritingOutlines-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingOutlinesDotsInside-Regular",
+          url: "/fonts/HappyWritingOutlinesDotsInside-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingOutlinesThick-Regular",
+          url: "/fonts/HappyWritingOutlinesThick-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingOutlinesTracing-Regular",
+          url: "/fonts/HappyWritingOutlinesTracing-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingTracing-Regular",
+          url: "/fonts/HappyWritingTracing-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingTracingGuides-Regular",
+          url: "/fonts/HappyWritingTracingGuides-Regular.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
+        {
+          family: "HappyWritingHandwriting-LinesOnly",
+          url: "/fonts/HappyWritingHandwriting-LinesOnly.ttf",
+          descriptors: { style: "normal", weight: "400" },
+        },
       ];
 
       try {
