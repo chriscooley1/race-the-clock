@@ -4,6 +4,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { useTour } from "../../context/TourContext";
 import raceTheClockLogo from "../../assets/race-the-clock-logo-colorful.png";
 import Layout from "../../components/Layout";
+import BubbleText from "../../components/BubbleText";
 
 const Home: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -93,15 +94,8 @@ const Home: React.FC = () => {
           {/* Features Section */}
           <section className="bg-gray-100 px-4 py-12">
             <div className="relative mb-12 text-center">
-              <h2 className="relative z-10 text-4xl font-bold">
-                <span className="relative">
-                  Features
-                  <span className="absolute -bottom-2 left-0 h-4 w-full" style={{
-                    background: "linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 100%)",
-                    opacity: "0.3",
-                    borderRadius: "4px"
-                  }}></span>
-                </span>
+            <h2 className="relative z-10 text-4xl">
+                <BubbleText>Features</BubbleText>
               </h2>
             </div>
             <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
@@ -128,15 +122,8 @@ const Home: React.FC = () => {
           <section className="bg-white px-4 py-12">
             <div className="relative mb-8 flex items-center justify-center">
               <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-              <h2 className="relative z-10 bg-white px-6 text-4xl font-bold">
-                <span className="relative">
-                  Coming Soon
-                  <span className="absolute -bottom-2 left-0 h-4 w-full" style={{
-                    background: "linear-gradient(90deg, #FFD93D 0%, #FF6B6B 100%)",
-                    opacity: "0.3",
-                    borderRadius: "4px"
-                  }}></span>
-                </span>
+              <h2 className="relative z-10 text-4xl">
+                <BubbleText>Coming Soon</BubbleText>
               </h2>
             </div>
             <div className="mx-auto max-w-4xl">
