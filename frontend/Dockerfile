@@ -7,11 +7,10 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm ci
-
-# Install additional dependencies (including @hello-pangea/dnd and react-icons)
-RUN npm install uuid @types/uuid @hello-pangea/dnd react-icons
+# Install all dependencies with overrides for deep-equal
+RUN npm install --legacy-peer-deps && \
+    npm install uuid @types/uuid @hello-pangea/dnd react-icons && \
+    npm install @gilbarbara/deep-equal@0.3.1 --save-exact
 
 # Copy the rest of the application code
 COPY . .
