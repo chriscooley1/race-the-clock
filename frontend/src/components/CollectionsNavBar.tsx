@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTour } from "../context/TourContext";
 import cartIcon from "../assets/cart.jpeg";
@@ -15,10 +15,12 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   onStartTour,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
-  const { logout } = useAuth0();
+  const { logout, loginWithRedirect } = useAuth0();
   const { isGuidedTourEnabled } = useTour();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -42,6 +44,15 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   const handleLogout = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
     setIsAccountDropdownOpen(false);
+  };
+
+  const handleLogin = () => {
+    try {
+      localStorage.setItem("preLoginPath", window.location.pathname);
+    } catch (error) {
+      console.error("Error accessing localStorage:", error);
+    }
+    loginWithRedirect({ appState: { returnTo: "/your-collections" } });
   };
 
   return (
@@ -162,14 +173,14 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           )}
         </div>
 
-        {/* Right side - Logout, Cart and Feedback */}
+        {/* Right side - Login/Logout, Cart and Feedback */}
         <div className="relative flex items-center space-x-10 mt-2">
           <button
             type="button"
-            onClick={handleLogout}
+            onClick={isHomePage ? handleLogin : handleLogout}
             className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
           >
-            Logout
+            {isHomePage ? "Login" : "Logout"}
           </button>
           <div className="scale-[1.75] transition-transform hover:scale-[1.85]">
             <FeedbackIcon onClick={() => setShowFeedback(true)} />
