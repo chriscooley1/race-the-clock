@@ -6,6 +6,9 @@
   "engines": {
     "node": ">=20.0.0"
   },
+  "resolutions": {
+    "@gilbarbara/deep-equal": "^0.3.1"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
