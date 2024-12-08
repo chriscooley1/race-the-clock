@@ -21,6 +21,7 @@ import { tourStepsCollectionSetup } from "./tourStepsCollectionSetup";
 import { Step } from "react-joyride";
 import GuidedTour from "../../components/GuidedTour";
 import { v4 as uuidv4 } from "uuid";
+import BubbleText from "../../components/BubbleText";
 
 type Operation =
   | "multiplication"
@@ -512,9 +513,15 @@ const CollectionSetup: React.FC = () => {
       <div className={`flex min-h-screen w-full flex-col items-center pt-[20px] ${
         theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
       }`} style={{ color: theme.originalTextColor }}>
-        <h1 className="collection-setup text-4xl font-bold">Step 2 - Setup</h1>
-        <h2 className="text-3xl font-bold">Collection: {collectionName}</h2>
-        <h3 className="mb-4 text-2xl font-semibold">Category: {category}</h3>
+        <h1 className="collection-setup text-4xl font-bold">
+          <BubbleText>Step 2 - Setup</BubbleText>
+        </h1>
+        <h2 className="text-3xl font-bold">
+          <BubbleText>Collection: {collectionName}</BubbleText>
+        </h2>
+        <h3 className="mb-4 text-2xl font-semibold">
+          <BubbleText>Category: {category}</BubbleText>
+        </h3>
 
         <div className="mb-4 w-full max-w-4xl px-4">
           <div className="mb-8 rounded-lg border border-gray-300 bg-white p-6 shadow-md dark:bg-gray-700">

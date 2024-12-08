@@ -17,6 +17,7 @@ import { tourStepsDiscoverCollections } from "./tourStepsDiscoverCollections";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import { categoryColors } from "../../constants/categoryColors";
+import BubbleText from "../../components/BubbleText";
 
 interface Item {
   id: number;
@@ -310,7 +311,7 @@ const DiscoverCollections: React.FC = () => {
   return (
     <div className="page-container mt-6">
       <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
-        Discover Public Collections
+        <BubbleText>Discover Public Collections</BubbleText>
       </h1>
       {user && <p className="mb-4">Welcome, {userDisplayName}</p>}
       <div className="mb-4 w-full max-w-md">

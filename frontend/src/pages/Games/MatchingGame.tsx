@@ -3,6 +3,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMatchingGame } from "./tourStepsMatchingGame";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
+import BubbleText from "../../components/BubbleText";
 
 const MatchingGame: React.FC = () => {
   const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
@@ -40,7 +41,9 @@ const MatchingGame: React.FC = () => {
       >
         Back to Games
       </button>
-      <h1 className="mb-8 text-3xl font-bold">Matching Game</h1>
+      <h1 className="mb-8 text-3xl font-bold">
+        <BubbleText>Matching Game</BubbleText>
+      </h1>
       {!isGameStarted ? (
         <div className="game-instructions">
           <p>Match the letters with the corresponding images!</p>

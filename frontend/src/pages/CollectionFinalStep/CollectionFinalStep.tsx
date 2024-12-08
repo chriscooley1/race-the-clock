@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 import { tourStepsCollectionFinalStep } from "./tourStepsCollectionFinalStep";
 import { VisibilityStates } from "../../types/VisibilityStates";
 import GuidedTour from "../../components/GuidedTour";
+import BubbleText from "../../components/BubbleText";
 
 // Export the function to avoid the "unused" error
 // createTourSteps will be used in future implementation
@@ -485,9 +486,11 @@ const CollectionFinalStep: React.FC = () => {
         style={{ color: theme.originalTextColor }}
       >
         <h1 className="collection-final-step text-4xl font-bold">
-          Step 3 - Create Your Own Collection
+          <BubbleText>Step 3 - Create Your Own Collection</BubbleText>
         </h1>
-        <h1 className="text-3xl font-bold">Collection: {collectionName}</h1>
+        <h1 className="text-3xl font-bold">
+          <BubbleText>Collection: {collectionName}</BubbleText>
+        </h1>
         <p className="mb-4">
           To add another item to this Collection, click the add button below.
         </p>

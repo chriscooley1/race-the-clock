@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { tourStepsAbout } from "./tourStepsAbout";
 import GuidedTour from "../../components/GuidedTour";
+import BubbleText from "../../components/BubbleText";
 
 const About: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -24,8 +25,10 @@ const About: React.FC = () => {
 
   return (
     <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">About Race The Clock</h1>
-      
+      <h1 className="mb-8 text-3xl font-bold">
+        <BubbleText>About Race The Clock</BubbleText>
+      </h1>
+
       {/* Mission Statement */}
       <section className="mb-12 w-full max-w-3xl">
         <p className="text-lg leading-relaxed">

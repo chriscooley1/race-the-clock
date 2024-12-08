@@ -3,6 +3,7 @@ import { tourStepsShop } from "./tourStepsShop";
 import GuidedTour from "../../components/GuidedTour";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth0 } from "@auth0/auth0-react";
+import BubbleText from "../../components/BubbleText";
 
 const Shop: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -45,8 +46,10 @@ const Shop: React.FC = () => {
         }`}
         style={{ color: theme.originalTextColor }}
       >
-        <h1 className="mb-8 text-3xl font-bold">Race The Clock Premium</h1>
-        
+        <h1 className="mb-8 text-3xl font-bold">
+          <BubbleText>Race The Clock Premium</BubbleText>
+        </h1>
+
         <div className="mx-auto max-w-2xl">
           <div className={`rounded-lg border p-8 shadow-lg ${
             theme.isDarkMode ? "border-gray-600 bg-gray-700" : "border-black bg-white"

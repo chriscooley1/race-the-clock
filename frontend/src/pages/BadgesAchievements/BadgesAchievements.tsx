@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
 import { useCompletion } from "../../context/CompletionContext";
+import BubbleText from "../../components/BubbleText";
 
 const BadgesAchievements: React.FC = () => {
   const [badges, setBadges] = useState<string[]>([]);
@@ -80,7 +81,9 @@ const BadgesAchievements: React.FC = () => {
 
   return (
     <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">Badges & Achievements</h1>
+      <h1 className="mb-8 text-3xl font-bold">
+        <BubbleText>Badges & Achievements</BubbleText>
+      </h1>
       <p>
         Badges and Achievements: Create badges for students who achieve specific
         goals, like "Read 60 Letters in a Minute" or "Complete an Advanced
