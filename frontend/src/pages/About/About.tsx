@@ -1,113 +1,190 @@
 import React, { useEffect, useState } from "react";
 import { tourStepsAbout } from "./tourStepsAbout";
 import GuidedTour from "../../components/GuidedTour";
+import { useTour } from "../../context/TourContext";
+import raceTheClockLogo from "../../assets/race-the-clock-logo-colorful.png";
+import Layout from "../../components/Layout";
 import BubbleText from "../../components/BubbleText";
+import FeedbackForm from "../../components/FeedbackForm";
 
 const About: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const { toursCompleted } = useTour();
 
+  // Start tour when component mounts if it hasn't been completed
   useEffect(() => {
-    const tourCompleted = localStorage.getItem("tourCompleted");
-    if (!tourCompleted) {
+    if (!toursCompleted["home"]) {
       setIsTourRunning(true);
     }
-  }, []);
+  }, [toursCompleted]);
 
   const handleTourComplete = () => {
     setIsTourRunning(false);
-    localStorage.setItem("tourCompleted", "true");
   };
 
-  const handleTourStepChange = (step: number) => {
-    setCurrentTourStep(step);
+  const handleStartTour = () => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0);
   };
 
   return (
-    <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">
-        <BubbleText>About Race The Clock</BubbleText>
-      </h1>
+    <>
+      <Layout
+        onStartTour={handleStartTour}
+        setTourName={() => {}}
+        setCurrentTourStep={setCurrentTourStep}
+        setShowFeedback={setShowFeedback}
+      >
+        <div className="min-h-screen bg-white">
+          {/* Main Content with curved sections */}
+          <div className="relative">
+            {/* Hero Section */}
+            <section className="bg-white px-4 py-12">
+              <div className="mx-auto max-w-4xl text-center">
+                <img
+                  src={raceTheClockLogo}
+                  alt="Race The Clock"
+                  className="mx-auto mb-8 h-24"
+                />
+                <p className="mb-8 text-lg">
+                  Race The Clock is an innovative, web-based learning tool designed to help 
+                  students of all ages improve their recognition and recall skills across various 
+                  subjects. Race the Clock can benefit:
+                </p>
+                
+                <ul className="mx-auto mb-8 max-w-md space-y-2 text-left">
+                  <li>•Elementary School Teachers</li>
+                  <li>•High School Teachers</li>
+                  <li>•Higher Education professors and students</li>
+                  <li>•Students of all ages practicing recognition skills</li>
+                  <li>•Adult learners in specialized fields</li>
+                </ul>
 
-      {/* Mission Statement */}
-      <section className="mb-12 w-full max-w-3xl">
-        <p className="text-lg leading-relaxed">
-          Race The Clock is an innovative, web-based learning tool designed to help students 
-          of all ages improve their recognition and recall skills across various subjects. 
-          Our platform originated as a solution for kindergarten teachers to help students 
-          achieve the goal of reading 60 letters per minute, and has evolved into a versatile 
-          learning tool for students of all ages.
-        </p>
-      </section>
+                <p className="text-lg">
+                  Our platform originated as a solution for early childhood teachers to help 
+                  students achieve the goal of reading 60 letters per minute and has evolved 
+                  into a versatile learning tool for students of all ages.
+                </p>
+              </div>
+            </section>
 
-      {/* Current Features */}
-      <section className="mb-12 w-full max-w-3xl">
-        <h2 className="mb-4 text-2xl font-semibold">Current Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-white rounded-lg shadow-sm">
-            <h3 className="text-lg font-medium mb-2">Custom Collections</h3>
-            <p>Create and customize your own learning collections with letters, numbers, words, and more.</p>
+            {/* Curved Divider */}
+            <div className="relative h-24">
+              <svg
+                viewBox="0 0 1440 100"
+                className="absolute bottom-0 left-0 h-full w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,0 C480,100 960,100 1440,0 L1440,100 L0,100 Z"
+                  className="fill-gray-100"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 1440 100"
+                className="absolute bottom-1 left-0 h-full w-full opacity-30"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,20 C480,120 960,120 1440,20 L1440,100 L0,100 Z"
+                  className="fill-gray-300"
+                />
+              </svg>
+            </div>
+
+            {/* Features Section */}
+            <section className="bg-gray-100 px-4 py-12">
+              <div className="relative mb-12 text-center">
+              <h2 className="relative z-10 text-4xl">
+                  <BubbleText>Features</BubbleText>
+                </h2>
+              </div>
+              <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
+                <div className="text-center">
+                  <h3 className="mb-2 text-xl font-bold text-pink-500">Custom Collections</h3>
+                  <p>Create and customize your own collections with letters, numbers, pictures, words, and more.</p>
+                </div>
+                <div className="text-center">
+                  <h3 className="mb-2 text-xl font-bold text-blue-400">Adjustable Speed</h3>
+                  <p>Control the display speed to match your students' current skill levels</p>
+                </div>
+                <div className="text-center">
+                  <h3 className="mb-2 text-xl font-bold text-green-500">Full Screen Practice</h3>
+                  <p>Distraction-free practice mode for focused learning session.</p>
+                </div>
+                <div className="text-center">
+                  <h3 className="mb-2 text-xl font-bold text-purple-500">Theme Customization</h3>
+                  <p>Personalize your experience with different themes and color options.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* Coming Soon Section */}
+            <section className="bg-white px-4 py-12">
+              <div className="relative mb-8 flex items-center justify-center">
+                <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                <h2 className="relative z-10 text-4xl">
+                  <BubbleText>Coming Soon</BubbleText>
+                </h2>
+              </div>
+              <div className="mx-auto max-w-4xl">
+                <ul className="space-y-4 text-center">
+                  <li className="text-orange-500">Name generator</li>
+                  <p>Generate a random name for your collection</p>
+                  <li className="text-orange-500">Games</li>
+                  <p>Earn badges and achievements as you progress in your learning journey</p>
+                  <li className="text-orange-500">Advanced Analytics</li>
+                  <p>Detailed insights and progress tracking for teachers and learners</p>
+                  <li className="text-orange-500">Interactive Games</li>
+                  <p>Engaging matching games and interactive learning activities</p>
+                  <li className="text-orange-500">Student Reports</li>
+                  <p>Track and manage individual student progress and achievements</p>
+                </ul>
+              </div>
+            </section>
+
+            {/* Footer Links */}
+            <footer className="bg-black px-4 py-8 text-white">
+              <div className="mx-auto flex max-w-4xl justify-around">
+                <div>
+                  <ul className="space-y-2">
+                    <li>Contact us</li>
+                    <li>Resources and Tutorials</li>
+                    <li>FAQ's</li>
+                    <li>Account</li>
+                    <li>Shop</li>
+                  </ul>
+                </div>
+                <div>
+                  <ul className="space-y-2">
+                    <li>Collections</li>
+                    <li>Create</li>
+                    <li>Discover</li>
+                    <li>Games</li>
+                    <li>Spinner</li>
+                  </ul>
+                </div>
+              </div>
+            </footer>
           </div>
-          <div className="p-4 bg-white rounded-lg shadow-sm">
-            <h3 className="text-lg font-medium mb-2">Adjustable Speed</h3>
-            <p>Control the display speed to match your students' current skill levels.</p>
-          </div>
-          <div className="p-4 bg-white rounded-lg shadow-sm">
-            <h3 className="text-lg font-medium mb-2">Full Screen Practice</h3>
-            <p>Distraction-free practice mode for focused learning sessions.</p>
-          </div>
-          <div className="p-4 bg-white rounded-lg shadow-sm">
-            <h3 className="text-lg font-medium mb-2">Theme Customization</h3>
-            <p>Personalize your experience with different themes and color options.</p>
-          </div>
+
+          <GuidedTour
+            steps={tourStepsAbout()}
+            isRunning={isTourRunning}
+            onComplete={handleTourComplete}
+            currentStep={currentTourStep}
+            onStepChange={(step) => setCurrentTourStep(step)}
+            tourName="about"
+          />
         </div>
-      </section>
+      </Layout>
 
-      {/* Coming Soon */}
-      <section className="mb-12 w-full max-w-3xl">
-        <h2 className="mb-4 text-2xl font-semibold">Coming Soon</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-medium mb-2">Gamification</h3>
-            <p>Earn badges and achievements as you progress in your learning journey.</p>
-          </div>
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-medium mb-2">Advanced Analytics</h3>
-            <p>Detailed insights and progress tracking for teachers and learners.</p>
-          </div>
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-medium mb-2">Interactive Games</h3>
-            <p>Engaging matching games and interactive learning activities.</p>
-          </div>
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-medium mb-2">Student Reports</h3>
-            <p>Track and manage individual student progress and achievements.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Target Audience */}
-      <section className="mb-12 w-full max-w-3xl">
-        <h2 className="mb-4 text-2xl font-semibold">Who It's For</h2>
-        <div className="prose prose-sm">
-          <ul className="list-disc pl-5">
-            <li className="mb-2">Kindergarten teachers helping students achieve reading goals</li>
-            <li className="mb-2">Elementary school teachers across various subjects</li>
-            <li className="mb-2">Students of all ages practicing recognition skills</li>
-            <li className="mb-2">Adult learners in specialized fields</li>
-          </ul>
-        </div>
-      </section>
-
-      <GuidedTour
-        steps={tourStepsAbout()}
-        isRunning={isTourRunning}
-        onComplete={handleTourComplete}
-        currentStep={currentTourStep}
-        onStepChange={handleTourStepChange}
-        tourName="about"
-      />
-    </div>
+      {showFeedback && (
+        <FeedbackForm onClose={() => setShowFeedback(false)} />
+      )}
+    </>
   );
 };
 
