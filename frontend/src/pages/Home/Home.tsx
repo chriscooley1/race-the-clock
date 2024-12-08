@@ -142,10 +142,15 @@ const Home: React.FC = () => {
             <div className="mx-auto max-w-4xl">
               <ul className="space-y-4 text-center">
                 <li className="text-orange-500">Name generator</li>
-                <li className="text-yellow-500">Games</li>
-                <li className="text-blue-500">Advanced Analytics</li>
-                <li className="text-green-500">Interactive Games</li>
-                <li className="text-purple-500">Student Reports</li>
+                <p>Generate a random name for your collection</p>
+                <li className="text-orange-500">Games</li>
+                <p>Earn badges and achievements as you progress in your learning journey</p>
+                <li className="text-orange-500">Advanced Analytics</li>
+                <p>Detailed insights and progress tracking for teachers and learners</p>
+                <li className="text-orange-500">Interactive Games</li>
+                <p>Engaging matching games and interactive learning activities</p>
+                <li className="text-orange-500">Student Reports</li>
+                <p>Track and manage individual student progress and achievements</p>
               </ul>
             </div>
           </section>
@@ -154,7 +159,6 @@ const Home: React.FC = () => {
           <footer className="bg-black px-4 py-8 text-white">
             <div className="mx-auto flex max-w-4xl justify-around">
               <div>
-                <h3 className="mb-4 font-bold">Resources</h3>
                 <ul className="space-y-2">
                   <li>Contact us</li>
                   <li>Resources and Tutorials</li>
@@ -164,8 +168,8 @@ const Home: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="mb-4 font-bold">Collections</h3>
                 <ul className="space-y-2">
+                  <li>Collections</li>
                   <li>Create</li>
                   <li>Discover</li>
                   <li>Games</li>
