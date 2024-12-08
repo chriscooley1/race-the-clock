@@ -9,7 +9,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div>
+  <div>
       <div className="page-container">
         <div className="absolute right-4 top-4"></div>
         <button
@@ -19,7 +19,6 @@ const Home: React.FC = () => {
         >
           Login
         </button>
-      </div>
 
       <h1 className="text-center text-4xl font-bold mb-8">Race The Clock</h1>
       
@@ -107,6 +106,7 @@ const Home: React.FC = () => {
           </ul>
         </div>
       </footer>
+    </div>
     </div>
   );
 };
