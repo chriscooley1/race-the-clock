@@ -15,10 +15,18 @@ class MountainDateTime(TypeDecorator):
     
     def process_bind_param(self, value, dialect):
         if value is not None:
+            # Check if the datetime is naive (has no timezone)
+            if value.tzinfo is None:
+                # If naive, assume it's in Mountain Time and make it aware
+                mountain_tz = pytz.timezone("America/Denver")
+                value = mountain_tz.localize(value)
             return value.astimezone(pytz.UTC)
+            
     def process_result_value(self, value, dialect):
         if value is not None:
-            return pytz.UTC.localize(value).astimezone(pytz.timezone("America/Denver"))
+            if value.tzinfo is None:
+                value = pytz.UTC.localize(value)
+            return value.astimezone(pytz.timezone("America/Denver"))
 
 class UserCreate(BaseModel):
     username: str
@@ -112,7 +120,10 @@ class Collection(SQLModel, table=True):
         sa_relationship_kwargs={"cascade": "all, delete-orphan"}
     )
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    completions: List["CompletionRecord"] = Relationship(back_populates="collection")
+    completions: List["CompletionRecord"] = Relationship(
+        back_populates="collection",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+    )
 
 class CollectionCreate(SQLModel):
     name: str

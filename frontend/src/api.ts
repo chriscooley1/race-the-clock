@@ -272,7 +272,12 @@ export const deleteCollection = async (
     console.log("Collection deleted successfully.");
     return response.data;
   } catch (error) {
-    handleApiError(error);
+    console.error("Failed to delete collection:", error);
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data?.detail || "Unknown error occurred";
+      throw new Error(`Failed to delete collection: ${errorMessage}`);
+    }
+    throw error;
   }
 };
 
