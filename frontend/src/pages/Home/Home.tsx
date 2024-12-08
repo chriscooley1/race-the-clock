@@ -1,64 +1,42 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
+import { tourStepsHome } from "./tourStepsHome";
+import GuidedTour from "../../components/GuidedTour";
+import { useTour } from "../../context/TourContext";
+import CollectionsNavBar from "../../components/CollectionsNavBar";
 
 const Home: React.FC = () => {
-  const navigate = useNavigate();
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+  const { toursCompleted } = useTour();
 
-  // Simplified versions of the required props for Navbar
-  const dummySetTourName = () => {};
-  const dummySetCurrentTourStep = () => {};
-  const dummyOnStartTour = () => {};
+  // Start tour when component mounts if it hasn't been completed
+  useEffect(() => {
+    if (!toursCompleted["home"]) {
+      setIsTourRunning(true);
+    }
+  }, [toursCompleted]);
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false);
+  };
+
+  const handleStartTour = () => {
+    setIsTourRunning(true);
+    setCurrentTourStep(0);
+  };
 
   return (
     <div className="min-h-screen">
-      {/* Add Navbar */}
       <Navbar
-        onStartTour={dummyOnStartTour}
-        setTourName={dummySetTourName}
-        setCurrentTourStep={dummySetCurrentTourStep}
+        onStartTour={handleStartTour}
+        setTourName={() => {}}
+        setCurrentTourStep={setCurrentTourStep}
       />
-
-      {/* Modified Collections Navigation Bar */}
-      <div className="top-navbar-height inset-x-0 z-[51] bg-white text-black shadow-md">
-        <div className="flex w-full items-center justify-between px-6 py-3">
-          {/* Left side - Navigation Items */}
-          <div className="flex items-center space-x-4">
-            <button
-              type="button"
-              onClick={() => navigate("/about")}
-              className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
-            >
-              About
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate("/resources")}
-              className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
-            >
-              Resources
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate("/credits")}
-              className="rounded px-4 py-2 text-lg font-semibold hover:bg-gray-100"
-            >
-              Credits
-            </button>
-          </div>
-
-          {/* Right side - Login Button */}
-          <button
-            type="button"
-            onClick={() => navigate("/login")}
-            className="rounded border border-black bg-blue-500 px-4 py-2 text-lg font-bold text-white transition-colors duration-300 hover:bg-blue-600"
-          >
-            Login
-          </button>
-        </div>
-      </div>
+      <CollectionsNavBar
+        setShowFeedback={() => {}}
+        onStartTour={handleStartTour}
+      />
 
       {/* Main Content */}
       <div className="mx-auto max-w-4xl px-4 py-8">
@@ -114,6 +92,15 @@ const Home: React.FC = () => {
         {/* ... Coming Soon section ... */}
         {/* ... Footer section ... */}
       </div>
+
+      <GuidedTour
+        steps={tourStepsHome()}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={(step) => setCurrentTourStep(step)}
+        tourName="home"
+      />
     </div>
   );
 };
