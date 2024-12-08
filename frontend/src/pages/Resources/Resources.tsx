@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { tourStepsResources } from "./tourStepsResources";
 import GuidedTour from "../../components/GuidedTour";
+import BubbleText from "../../components/BubbleText";
 
 interface FAQ {
   question: string;
@@ -90,7 +91,9 @@ const Resources: React.FC = () => {
 
   return (
     <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">Resources</h1>
+      <h1 className="mb-8 text-3xl font-bold">
+        <BubbleText>Resources</BubbleText>
+      </h1>
 
       {isLoading ? (
         <p>Loading resources...</p>

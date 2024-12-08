@@ -3,6 +3,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { tourStepsMultipleWords } from "./tourStepsMultipleWords";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
+import BubbleText from "../../components/BubbleText";
 
 const MultipleWordsGame: React.FC = () => {
   const { isGuidedTourEnabled } = useTour();
@@ -48,7 +49,9 @@ const MultipleWordsGame: React.FC = () => {
       >
         Back to Games
       </button>
-      <h1 className="mb-8 text-3xl font-bold">Multiple Words Game</h1>
+      <h1 className="mb-8 text-3xl font-bold">
+        <BubbleText>Multiple Words Game</BubbleText>
+      </h1>
       {!isGameStarted ? (
         <div className="game-instructions">
           <p>Drag and connect words to their corresponding cards!</p>

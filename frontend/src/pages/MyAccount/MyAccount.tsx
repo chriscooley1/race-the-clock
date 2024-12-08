@@ -7,6 +7,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { updateUserRole } from "../../api";
 import RoleSelection from "../../components/RoleSelection";
 import UserRoleFeatures from "../../components/UserRoleFeatures";
+import BubbleText from "../../components/BubbleText";
 
 interface UserData {
   display_name?: string;
@@ -101,7 +102,9 @@ const MyAccount: React.FC = () => {
   return (
     <div className="page-container">
       <div className="bg-theme-bg text-theme-text w-full max-w-md rounded-lg p-8 shadow-md">
-        <h1 className="mb-6 text-center text-3xl font-bold">My Account</h1>
+        <h1 className="mb-6 text-center text-3xl font-bold">
+          <BubbleText>My Account</BubbleText>
+        </h1>
 
         {user ? (
           <div className="space-y-4">

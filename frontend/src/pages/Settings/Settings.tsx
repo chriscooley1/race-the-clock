@@ -9,6 +9,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { getLuminance } from "../../utils/colorUtils";
 import { useTour } from "../../context/TourContext";
 import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
+import BubbleText from "../../components/BubbleText";
 
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
@@ -296,7 +297,9 @@ const Settings: React.FC = () => {
         </label>
       </div>
 
-      <h1 className="settings mb-8 text-3xl font-bold">Settings</h1>
+      <h1 className="settings mb-8 text-3xl font-bold">
+        <BubbleText>Settings</BubbleText>
+      </h1>
       <div className="w-full space-y-6 px-4 md:px-8">
         <div>
           <h2 className="mb-2 text-xl font-semibold">Main Font</h2>

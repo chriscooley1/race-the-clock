@@ -4,6 +4,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { tourStepsNewCollection } from "./tourStepsNewCollection";
 import GuidedTour from "../../components/GuidedTour";
 import { VisibilityStates } from "../../types/VisibilityStates";
+import BubbleText from "../../components/BubbleText";
 
 const NewCollection: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -124,9 +125,11 @@ const NewCollection: React.FC = () => {
     <div className="page-container mt-4">
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
         <h1 className="new-collection-page text-4xl font-bold">
-          Step 1 - Create
+          <BubbleText>Step 1 - Create</BubbleText>
         </h1>
-        <h1 className="text-3xl font-bold">New Collection</h1>
+        <h1 className="text-3xl font-bold">
+          <BubbleText>New Collection</BubbleText>
+        </h1>
 
         {visibilityStates.isCollectionNameVisible && (
           <div className="mb-4 max-w-[300px] border border-black">

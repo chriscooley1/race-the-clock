@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
 import { AxiosError } from "axios";
+import BubbleText from "../../components/BubbleText";
 
 // Define the Report interface
 interface Report {
@@ -111,7 +112,9 @@ const Reports: React.FC = () => {
 
   return (
     <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">User Performance Reports</h1>
+      <h1 className="mb-8 text-3xl font-bold">
+        <BubbleText>User Performance Reports</BubbleText>
+      </h1>
       <p>View detailed reports of user performance after each session.</p>
       {isLoading ? (
         <p>Loading reports...</p>

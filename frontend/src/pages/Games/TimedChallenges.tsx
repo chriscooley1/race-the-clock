@@ -5,6 +5,7 @@ import { tourStepsTimedChallenges } from "./tourStepsTimedChallenges";
 import GuidedTour from "../../components/GuidedTour";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
+import BubbleText from "../../components/BubbleText";
 
 // Define the Collection interface
 interface Collection {
@@ -73,7 +74,9 @@ const TimedChallenges: React.FC = () => {
       >
         Back to Games
       </button>
-      <h1 className="mb-8 text-3xl font-bold">Timed Challenges</h1>
+      <h1 className="mb-8 text-3xl font-bold">
+        <BubbleText>Timed Challenges</BubbleText>
+      </h1>
       <p>Complete as many challenges as you can within the time limit!</p>
       {isLoading ? (
         <p>Loading collections...</p>

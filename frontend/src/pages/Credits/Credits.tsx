@@ -1,5 +1,6 @@
 import React from "react";
 import creditsButton from "../../assets/credits-button.png";
+import BubbleText from "../../components/BubbleText";
 
 const Credits: React.FC = () => {
   return (
@@ -11,7 +12,9 @@ const Credits: React.FC = () => {
           className="absolute -right-32 top-0 w-32"
         />
         
-        <h1 className="mb-8 text-6xl font-bold">Credits</h1>
+        <h1 className="mb-8 text-6xl font-bold">
+          <BubbleText>Credits</BubbleText>
+        </h1>
         
         <div className="max-w-2xl">
           <h2 className="mb-4 text-3xl">A special thanks given to:</h2>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { tourStepsGames } from "./tourStepsGames";
 import GuidedTour from "../../components/GuidedTour";
 import { Link } from "react-router-dom";
-
+import BubbleText from "../../components/BubbleText";
 const Games: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -37,7 +37,9 @@ const Games: React.FC = () => {
 
   return (
     <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">Games</h1>
+      <h1 className="mb-8 text-3xl font-bold">
+        <BubbleText>Games</BubbleText>
+      </h1>
       <p>
         Welcome to the Games page! Here are some fun activities to enhance
         engagement.
