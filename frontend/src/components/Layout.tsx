@@ -18,17 +18,23 @@ const Layout: React.FC<LayoutProps> = ({
   setShowFeedback,
 }) => {
   return (
-    <div>
-      <Navbar
-        onStartTour={onStartTour}
-        setTourName={setTourName}
-        setCurrentTourStep={setCurrentTourStep}
-      />
-      <CollectionsNavBar 
-        setShowFeedback={setShowFeedback}
-        onStartTour={onStartTour}
-      />
-      {children}
+    <div className="flex min-h-screen flex-col">
+      <div className="fixed inset-x-0 top-0 z-50">
+        <Navbar
+          onStartTour={onStartTour}
+          setTourName={setTourName}
+          setCurrentTourStep={setCurrentTourStep}
+        />
+      </div>
+      <div className="fixed inset-x-0 top-[200px] z-40">
+        <CollectionsNavBar 
+          setShowFeedback={setShowFeedback}
+          onStartTour={onStartTour}
+        />
+      </div>
+      <div className="mt-[264px]">
+        {children}
+      </div>
     </div>
   );
 };
