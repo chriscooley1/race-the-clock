@@ -179,6 +179,18 @@ body {
   .page-container {
     @apply flex min-h-screen w-full flex-col items-center px-4;
   }
+
+  .wave-transition {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .section-header span {
+    transition: color 0.3s ease;
+  }
+
+  .section-header:hover span {
+    color: #4ECDC4;
+  }
 }
 
 /* Add specific styles for the full screen display text */

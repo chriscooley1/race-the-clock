@@ -68,23 +68,42 @@ const Home: React.FC = () => {
 
           {/* Curved Divider */}
           <div className="relative h-24">
-            <div className="absolute inset-0">
-              <svg
-                viewBox="0 0 1440 100"
-                className="h-full w-full"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0,0 C480,100 960,100 1440,0 L1440,100 L0,100 Z"
-                  className="fill-white"
-                />
-              </svg>
-            </div>
+            <svg
+              viewBox="0 0 1440 100"
+              className="absolute bottom-0 left-0 h-full w-full"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M0,0 C480,100 960,100 1440,0 L1440,100 L0,100 Z"
+                className="fill-gray-100"
+              />
+            </svg>
+            <svg
+              viewBox="0 0 1440 100"
+              className="absolute bottom-1 left-0 h-full w-full opacity-30"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M0,20 C480,120 960,120 1440,20 L1440,100 L0,100 Z"
+                className="fill-gray-300"
+              />
+            </svg>
           </div>
 
           {/* Features Section */}
           <section className="bg-gray-100 px-4 py-12">
-            <h2 className="mb-12 text-center text-4xl font-bold">Features</h2>
+            <div className="relative mb-12 text-center">
+              <h2 className="relative z-10 text-4xl font-bold">
+                <span className="relative">
+                  Features
+                  <span className="absolute -bottom-2 left-0 h-4 w-full" style={{
+                    background: "linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 100%)",
+                    opacity: "0.3",
+                    borderRadius: "4px"
+                  }}></span>
+                </span>
+              </h2>
+            </div>
             <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
               <div className="text-center">
                 <h3 className="mb-2 text-xl font-bold text-pink-500">Custom Collections</h3>
@@ -107,7 +126,19 @@ const Home: React.FC = () => {
 
           {/* Coming Soon Section */}
           <section className="bg-white px-4 py-12">
-            <h2 className="mb-8 text-center text-4xl font-bold">Coming Soon</h2>
+            <div className="relative mb-8 flex items-center justify-center">
+              <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+              <h2 className="relative z-10 bg-white px-6 text-4xl font-bold">
+                <span className="relative">
+                  Coming Soon
+                  <span className="absolute -bottom-2 left-0 h-4 w-full" style={{
+                    background: "linear-gradient(90deg, #FFD93D 0%, #FF6B6B 100%)",
+                    opacity: "0.3",
+                    borderRadius: "4px"
+                  }}></span>
+                </span>
+              </h2>
+            </div>
             <div className="mx-auto max-w-4xl">
               <ul className="space-y-4 text-center">
                 <li className="text-orange-500">Name generator</li>
