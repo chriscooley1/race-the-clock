@@ -58,7 +58,7 @@ const Shop: React.FC = () => {
               <h2 className="mb-6 text-center text-2xl font-bold">Single License</h2>
               
               <div className="mb-8">
-                <div className="mb-6 text-center text-4xl font-bold">$29.99</div>
+                <div className="mb-6 text-center text-4xl font-bold">$29.95</div>
                 <p className="mb-4 text-center">One-time purchase for lifetime access</p>
               </div>
 
@@ -107,7 +107,7 @@ const Shop: React.FC = () => {
               <h2 className="mb-6 text-center text-2xl font-bold">Multi License Pack</h2>
               
               <div className="mb-8">
-                <div className="mb-6 text-center text-4xl font-bold">$59.99</div>
+                <div className="mb-6 text-center text-4xl font-bold">$69.95</div>
                 <p className="mb-4 text-center">One-time purchase for 5 lifetime licenses</p>
               </div>
 
@@ -124,7 +124,7 @@ const Shop: React.FC = () => {
                   </li>
                   <li className="flex items-center">
                     <span className="mr-2">✓</span>
-                    20% Cost Savings
+                    50% Cost Savings
                   </li>
                   <li className="flex items-center">
                     <span className="mr-2">✓</span>
