@@ -78,24 +78,26 @@ const Home: React.FC = () => {
                 preserveAspectRatio="none"
               >
                 <path
-                  d="M0,0 C480,100 960,100 1440,0 L1440,100 L0,100 Z"
+                  d="M0,50 Q720,100 1440,50 L1440,100 L0,100 Z"
                   className="fill-gray-100"
-                />
-              </svg>
-              <svg
-                viewBox="0 0 1440 100"
-                className="absolute bottom-1 left-0 h-full w-full opacity-30"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0,20 C480,120 960,120 1440,20 L1440,100 L0,100 Z"
-                  className="fill-gray-300"
                 />
               </svg>
             </div>
 
             {/* Features Section */}
             <section className="bg-gray-100 px-4 py-12">
+              <div className="relative h-24">
+                <svg
+                  viewBox="0 0 1440 100"
+                  className="absolute bottom-0 left-0 h-full w-full"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M0,50 C360,20 720,80 1440,50 L1440,100 L0,100 Z"
+                    className="fill-gray-100"
+                  />
+                </svg>
+              </div>
               <div className="relative mb-12 text-center">
               <h2 className="relative z-10 text-4xl">
                   <BubbleText>Features</BubbleText>
@@ -121,10 +123,35 @@ const Home: React.FC = () => {
               </div>
             </section>
 
+            {/* Wave divider between Features and Coming Soon */}
+            <div className="relative h-24">
+              <svg
+                viewBox="0 0 1440 100"
+                className="absolute bottom-0 left-0 h-full w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,50 C360,20 720,80 1440,50 L1440,100 L0,100 Z"
+                  className="fill-white"
+                />
+              </svg>
+            </div>
+
             {/* Coming Soon Section */}
             <section className="bg-white px-4 py-12">
+              <div className="relative h-24">
+                <svg
+                  viewBox="0 0 1440 100"
+                  className="absolute bottom-0 left-0 h-full w-full"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M0,50 C360,20 720,80 1440,50 L1440,100 L0,100 Z"
+                    className="fill-gray-100"
+                  />
+                </svg>
+              </div>
               <div className="relative mb-8 flex items-center justify-center">
-                <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
                 <h2 className="relative z-10 text-4xl">
                   <BubbleText>Coming Soon</BubbleText>
                 </h2>
@@ -144,6 +171,20 @@ const Home: React.FC = () => {
                 </ul>
               </div>
             </section>
+
+            {/* Footer Section - Add a wave divider before the footer */}
+            <div className="relative h-24">
+              <svg
+                viewBox="0 0 1440 100"
+                className="absolute bottom-0 left-0 h-full w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,50 C360,20 720,80 1440,50 L1440,100 L0,100 Z"
+                  className="fill-black"
+                />
+              </svg>
+            </div>
 
             {/* Footer Links */}
             <footer className="bg-black px-4 py-8 text-white">
