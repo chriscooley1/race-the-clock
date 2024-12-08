@@ -27,4 +27,4 @@ const BubbleText: React.FC<BubbleTextProps> = ({
   );
 };
 
-export default BubbleText; 
+export default BubbleText;
