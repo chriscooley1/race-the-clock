@@ -302,27 +302,37 @@ async def delete_collection(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    # First verify the collection exists and belongs to the user
-    db_collection = db.query(Collection).filter(
-        Collection.collection_id == collection_id,
-        Collection.user_id == current_user.user_id
-    ).first()
-    
-    if not db_collection:
-        raise HTTPException(status_code=404, detail="Collection not found")
-
     try:
-        # First delete all items associated with this collection
-        db.query(Item).filter(Item.collection_id == collection_id).delete()
+        # First verify the collection exists and belongs to the user
+        db_collection = db.query(Collection).filter(
+            Collection.collection_id == collection_id,
+            Collection.user_id == current_user.user_id
+        ).first()
         
-        # Then delete the collection itself
+        if not db_collection:
+            raise HTTPException(status_code=404, detail="Collection not found")
+
+        # Log the deletion attempt
+        logger.info(f"Attempting to delete collection {collection_id} for user {current_user.user_id}")
+        
+        # Delete completion records first
+        db.query(CompletionRecord).filter(
+            CompletionRecord.collection_id == collection_id
+        ).delete(synchronize_session=False)
+        
+        # Then delete the collection
         db.delete(db_collection)
         db.commit()
+        
+        logger.info(f"Successfully deleted collection {collection_id}")
         return {"detail": "Collection deleted successfully"}
     except Exception as e:
         db.rollback()
-        logger.error(f"Error deleting collection: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to delete collection")
+        logger.error(f"Error deleting collection {collection_id}: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Failed to delete collection: {str(e)}"
+        )
 
 @app.get("/collections/public", response_model=List[CollectionRead])
 async def get_public_collections(db: Session = Depends(get_db)):
