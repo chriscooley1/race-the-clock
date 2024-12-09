@@ -16,47 +16,47 @@ const FontPreloader = () => {
         },
         {
           family: "HappyWritingDots-Regular",
-          url: "/fonts/HappyWritingDots-Regular.otf",
+          url: "/fonts/HappyWritingDots-Regular.woff2",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingLetterMiniCircles-Regular",
-          url: "/fonts/HappyWritingLetterMiniCircles-Regular.otf",
+          url: "/fonts/HappyWritingLetterMiniCircles-Regular.woff2",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingNeat-Regular",
-          url: "/fonts/HappyWritingNeat-Regular.otf",
+          url: "/fonts/HappyWritingNeat-Regular.woff2",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingOutlineDashes-Regular",
-          url: "/fonts/HappyWritingOutlineDashes-Regular.otf",
+          url: "/fonts/HappyWritingOutlineDashes-Regular.woff2",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingOutlineDots-Regular",
-          url: "/fonts/HappyWritingOutlineDots-Regular.otf",
+          url: "/fonts/HappyWritingOutlineDots-Regular.woff2",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingOutlines-Regular",
-          url: "/fonts/HappyWritingOutlines-Regular.otf",
+          url: "/fonts/HappyWritingOutlines-Regular.woff2",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingOutlinesThick-Regular",
-          url: "/fonts/HappyWritingOutlinesThick-Regular.otf",
+          url: "/fonts/HappyWritingOutlinesThick-Regular.woff2",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingTracing-Regular",
-          url: "/fonts/HappyWritingTracing-Regular.otf",
+          url: "/fonts/HappyWritingTracing-Regular.woff2",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingTracingGuides-Regular",
-          url: "/fonts/HappyWritingTracingGuides-Regular.otf",
+          url: "/fonts/HappyWritingTracingGuides-Regular.woff2",
           descriptors: { style: "normal", weight: "400" },
         },
       ];
@@ -83,7 +83,11 @@ const FontPreloader = () => {
             }
             const fontFace = new FontFace(
               font.family,
-              `local("${font.family}"), url(${font.url}) format("opentype")`
+              `local("${font.family}"),
+               url(${font.url.replace('.otf', '.woff2')}) format("woff2"),
+               url(${font.url.replace('.otf', '.woff')}) format("woff"),
+               url(${font.url}) format("opentype"),
+               url(${font.url.replace('.otf', '.ttf')}) format("truetype")`
             );
             const loadedFont = await fontFace.load();
             document.fonts.add(loadedFont);
