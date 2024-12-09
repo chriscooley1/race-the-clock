@@ -714,27 +714,40 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
 }) => {
   const itemCount = getItemsCount(collection.description);
 
-  // Add this helper function to ensure we get the correct color
   const getCategoryColor = (category: string) => {
     const color = categoryColors[category as keyof typeof categoryColors];
-    return color || "bg-gray-500"; // Fallback color if none found
+    return color || "bg-gray-500";
   };
+
+  const ensureValidColor = (color: string) => {
+    return color && color.startsWith("#") ? color : "#FFFFFF";
+  };
+
+  const getLightenedBackgroundColor = () => {
+    const validBaseColor = ensureValidColor(baseColor);
+    const lightened = lightenColor(validBaseColor, 0.7);
+    return lightened;
+  };
+
+  const headerColor = ensureValidColor(baseColor);
+  const contentColor = getLightenedBackgroundColor();
 
   return (
     <div className="flex size-full flex-col">
       <h1
         className="border-5 w-full rounded-t-lg border-b-0 border-black p-2.5 text-center text-xl font-bold text-black"
-        style={{ backgroundColor: baseColor }}
+        style={{ 
+          backgroundColor: headerColor,
+          transition: "background-color 0.3s ease"
+        }}
       >
         {collection.name}
       </h1>
       <div
         className="border-5 flex size-full flex-col rounded-b-lg border-black"
         style={{
-          backgroundColor: baseColor
-            ? lightenColor(baseColor, 0.7)
-            : lightenColor("#FFFFFF", 0.7),
-          transition: "background-color 0.3s ease",
+          backgroundColor: contentColor,
+          transition: "background-color 0.3s ease"
         }}
       >
         {/* Content wrapper with padding */}
