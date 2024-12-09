@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import CollectionsNavBar from "./CollectionsNavBar";
+import Footer from "./Footer";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -32,9 +33,10 @@ const Layout: React.FC<LayoutProps> = ({
           onStartTour={onStartTour}
         />
       </div>
-      <div className="mt-[264px]">
+      <div className="mt-[264px] flex-grow">
         {children}
       </div>
+      <Footer />
     </div>
   );
 };
