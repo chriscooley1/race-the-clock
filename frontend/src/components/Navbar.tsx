@@ -25,7 +25,7 @@ import { tourStepsBadgesAchievements } from "../pages/BadgesAchievements/tourSte
 import { tourStepsMatchingGame } from "../pages/Games/tourStepsMatchingGame";
 import { tourStepsMultipleWords } from "../pages/Games/tourStepsMultipleWords";
 import { tourStepsShop } from "../pages/Shop/tourStepsShop";
-import { tourStepsAbout } from "../pages/About/tourStepsAbout";
+import { tourStepsAbout } from "../pages/Home/tourStepsAbout";
 import { getDefaultVisibilityStates } from "../utils/tourHelpers";
 
 interface NavbarProps {
