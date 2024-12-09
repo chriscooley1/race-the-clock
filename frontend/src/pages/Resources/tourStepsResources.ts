@@ -4,7 +4,7 @@ import { Step } from "react-joyride";
 export const tourStepsResources = (): Step[] => {
   const steps: Step[] = [
     {
-      target: ".resources", // Target the main container
+      target: "h1.mb-8",
       content: "Find helpful resources here.",
       disableBeacon: true,
     },

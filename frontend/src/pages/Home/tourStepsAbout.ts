@@ -3,25 +3,37 @@ import { Step } from "react-joyride";
 export const tourStepsAbout = (): Step[] => {
   const steps: Step[] = [
     {
-      target: "h1.mb-8",
-      content: "This is the About page where you can learn more about our platform.",
+      target: "h1",
+      content: "Welcome to Race The Clock! Let's take a quick tour of the home page.",
       disableBeacon: true,
     },
     {
-      target: ".mission-statement",
-      content: "Learn about our mission and vision.",
+      target: ".top-navbar-height",
+      content: "Use this navigation bar to explore different sections of the site.",
     },
     {
-      target: ".team-section",
-      content: "Meet our dedicated team members.",
+      target: "button[onClick*='/login']",
+      content: "Click here to log in and access all features.",
     },
     {
-      target: ".contact-info",
-      content: "Find out how to get in touch with us.",
+      target: "section:first-of-type",
+      content: "Learn about who can benefit from Race The Clock and its origins.",
     },
     {
-      target: ".footer",
-      content: "Check out our social media links and additional resources.",
+      target: ".grid",
+      content: "Discover our key features, including custom collections, speed controls, and more.",
+    },
+    {
+      target: "section.bg-white:nth-of-type(2) h2",
+      content: "Explore our features that enhance your learning experience.",
+    },
+    {
+      target: "section.bg-white:nth-of-type(3) h2",
+      content: "Stay tuned for upcoming features that will be available soon!",
+    },
+    {
+      target: "ul.space-y-4",
+      content: "Check out the exciting upcoming features we have planned.",
     }
   ];
 

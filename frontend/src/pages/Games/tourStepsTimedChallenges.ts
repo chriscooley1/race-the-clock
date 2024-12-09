@@ -4,14 +4,9 @@ import { Step } from "react-joyride";
 export const tourStepsTimedChallenges = (): Step[] => {
   const steps: Step[] = [
     {
-      target: ".timed-challenges", // Target the main container
-      content: "Participate in timed challenges here.",
-      disableBeacon: true,
-    },
-    {
       target: "h1.mb-8", // Target the main title
-      content:
-        "This is the Timed Challenges page where you can test your skills.",
+      content: "This is the Timed Challenges page where you can test your skills.",
+      disableBeacon: true,
     },
     {
       target: ".collections-overview", // Target the collections overview component
@@ -19,6 +14,5 @@ export const tourStepsTimedChallenges = (): Step[] => {
     },
   ];
 
-  // Return all steps without filtering
   return steps;
 };

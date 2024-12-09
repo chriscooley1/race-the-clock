@@ -7,8 +7,8 @@ export const tourStepsNewCollection = (
 ): Step[] => {
   const steps: Step[] = [
     {
-      target: ".new-collection-page", // Target the main container
-      content: "Create a new collection here. Fill in the details below.",
+      target: "h1.new-collection-page", // Target the title
+      content: "This is where you can create a new collection. Fill in the details below.",
       disableBeacon: true,
     },
     {

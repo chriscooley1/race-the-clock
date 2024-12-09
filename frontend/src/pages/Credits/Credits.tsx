@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import creditsButton from "../../assets/credits-button.png";
 import BubbleText from "../../components/BubbleText";
+import { tourStepsCredits } from "./tourStepsCredits";
+import GuidedTour from "../../components/GuidedTour";
 
 const Credits: React.FC = () => {
+  const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
+  const [currentTourStep, setCurrentTourStep] = useState<number>(0);
+
+
+  useEffect(() => {
+    const tourCompleted = localStorage.getItem(`tourCompleted_credits`);
+    if (!tourCompleted) {
+      setIsTourRunning(true);
+    }
+  }, []);
+
+  const handleTourComplete = () => {
+    setIsTourRunning(false);
+    localStorage.setItem(`tourCompleted_credits`, "true");
+  };
+
   return (
     <div className="flex flex-col items-center p-8">
       <div className="relative max-w-2xl w-full">
@@ -56,6 +74,14 @@ const Credits: React.FC = () => {
           </div>
         </div>
       </div>
+      <GuidedTour
+        steps={tourStepsCredits()}
+        isRunning={isTourRunning}
+        onComplete={handleTourComplete}
+        currentStep={currentTourStep}
+        onStepChange={setCurrentTourStep}
+        tourName="credits"
+      />
     </div>
   );
 };
