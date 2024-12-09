@@ -4,7 +4,6 @@ import { tourStepsHome } from "./tourStepsHome";
 import { tourStepsAbout } from "./tourStepsAbout";
 import GuidedTour from "../../components/GuidedTour";
 import { useTour } from "../../context/TourContext";
-import raceTheClockLogo from "../../assets/race-the-clock-logo-colorful.png";
 import Layout from "../../components/Layout";
 import BubbleText from "../../components/BubbleText";
 import FeedbackForm from "../../components/FeedbackForm";
@@ -39,12 +38,12 @@ const Home: React.FC = () => {
       <div className="relative">
         {/* Hero Section */}
         <section className="bg-white px-4 py-12">
+          <div className="relative mb-12 text-center">
+            <h2 className="relative z-10 text-4xl">
+              <BubbleText>Race The Clock</BubbleText>
+            </h2>
+          </div>
           <div className="mx-auto max-w-4xl text-center">
-            <img
-              src={raceTheClockLogo}
-              alt="Race The Clock"
-              className="mx-auto mb-8 h-24"
-            />
             <p className="mb-8 text-lg">
               Race The Clock is an innovative, web-based learning tool designed to help 
               students of all ages improve their recognition and recall skills across various 
