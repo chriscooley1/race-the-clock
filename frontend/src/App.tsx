@@ -35,7 +35,6 @@ import { tourStepsAbout } from "./pages/About/tourStepsAbout";
 
 // Import your page components here
 import Home from "./pages/Home/Home";
-import LandingPage from "./pages/LandingPage/LandingPage";
 import FullScreenDisplay from "./pages/FullScreenDisplay/FullScreenDisplay";
 import YourCollections from "./pages/YourCollections/YourCollections";
 import NewCollection from "./pages/NewCollection/NewCollection";
@@ -278,7 +277,6 @@ const App: React.FC = () => {
             >
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<LandingPage />} />
                 <Route
                   path="/fullscreen-display"
                   element={
