@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
                 <a href="/resources" className="hover:text-gray-300">Resources and Tutorials</a>
               </li>
               <li>
-                <a href="/about" className="hover:text-gray-300">FAQ's</a>
+                <a href="/resources" className="hover:text-gray-300">FAQ's</a>
               </li>
               <li>
                 <a href="/my-account" className="hover:text-gray-300">Account</a>
