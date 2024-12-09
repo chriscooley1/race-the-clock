@@ -234,6 +234,7 @@ const Navbar: React.FC<NavbarProps> = ({
         break;
     }
 
+    // Start the tour immediately
     onStartTour();
     setTourName(tourName);
     setCurrentTourStep(0);

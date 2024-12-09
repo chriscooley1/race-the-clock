@@ -65,7 +65,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
       const targetPosition = targetRect.top + window.scrollY;
 
       // Calculate offset to position element in the middle of viewport
-      const offset = viewportHeight / 3;
+      const offset = viewportHeight / 2;
       const offsetPosition = targetPosition - offset;
 
       // Smooth scroll with a slight delay to ensure UI updates

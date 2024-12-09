@@ -3,8 +3,8 @@ import { Step } from "react-joyride";
 export const tourStepsBadgesAchievements = (): Step[] => {
   const steps: Step[] = [
     {
-      target: ".badges-achievements",
-      content: "Check your badges and achievements here.",
+      target: "h1.mb-8",
+      content: "This is the Badges & Achievements page where you can track your progress.",
       disableBeacon: true,
     },
     {
@@ -16,9 +16,8 @@ export const tourStepsBadgesAchievements = (): Step[] => {
       content: "This section lists all your completed achievements.",
     },
     {
-      target: "h1.mb-8",
-      content:
-        "This is the Badges & Achievements page where you can track progress.",
+      target: ".completion-counts-section",
+      content: "Here you can see how many times you've completed each collection.",
     },
   ];
 

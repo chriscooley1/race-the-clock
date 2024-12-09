@@ -4,8 +4,7 @@ export const tourStepsFullScreenDisplay = (): Step[] => {
   const steps: Step[] = [
     {
       target: ".full-screen-display", // Target the main display area
-      content:
-        "This is the full screen display where you can view your content.",
+      content: "This is the full screen display where you can view your content.",
       disableBeacon: true,
     },
     {
@@ -30,6 +29,5 @@ export const tourStepsFullScreenDisplay = (): Step[] => {
     },
   ];
 
-  // Return all steps without filtering
   return steps;
 };

@@ -3,7 +3,7 @@ import { Step } from "react-joyride";
 export const tourStepsMultipleWords = (): Step[] => {
   const steps: Step[] = [
     {
-      target: ".multiple-words-container",
+      target: "h1.mb-8",
       content: "Welcome to the Multiple Words Game!",
       disableBeacon: true,
     },

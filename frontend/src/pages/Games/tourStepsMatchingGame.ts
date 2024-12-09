@@ -3,7 +3,7 @@ import { Step } from "react-joyride";
 export const tourStepsMatchingGame = (): Step[] => {
   const steps: Step[] = [
     {
-      target: ".matching-game-container",
+      target: "h1.mb-8",
       content: "Welcome to the Matching Game!",
       disableBeacon: true,
     },
