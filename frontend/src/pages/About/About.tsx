@@ -70,30 +70,6 @@ const About: React.FC = () => {
               </div>
             </section>
 
-            {/* Curved Divider */}
-            <div className="relative h-24">
-              <svg
-                viewBox="0 0 1440 100"
-                className="absolute bottom-0 left-0 h-full w-full"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0,0 C480,100 960,100 1440,0 L1440,100 L0,100 Z"
-                  className="fill-gray-100"
-                />
-              </svg>
-              <svg
-                viewBox="0 0 1440 100"
-                className="absolute bottom-1 left-0 h-full w-full opacity-30"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0,20 C480,120 960,120 1440,20 L1440,100 L0,100 Z"
-                  className="fill-gray-300"
-                />
-              </svg>
-            </div>
-
             {/* Features Section - Updated top wave */}
             <section className="bg-white">
               <div className="relative h-24">
@@ -192,20 +168,40 @@ const About: React.FC = () => {
               <div className="mx-auto flex max-w-4xl justify-around">
                 <div>
                   <ul className="space-y-2">
-                    <li>Contact us</li>
-                    <li>Resources and Tutorials</li>
-                    <li>FAQ's</li>
-                    <li>Account</li>
-                    <li>Shop</li>
+                    <li>
+                      <a href="/about" className="hover:text-gray-300">Contact us</a>
+                    </li>
+                    <li>
+                      <a href="/resources" className="hover:text-gray-300">Resources and Tutorials</a>
+                    </li>
+                    <li>
+                      <a href="/about" className="hover:text-gray-300">FAQ's</a>
+                    </li>
+                    <li>
+                      <a href="/my-account" className="hover:text-gray-300">Account</a>
+                    </li>
+                    <li>
+                      <a href="/shop" className="hover:text-gray-300">Shop</a>
+                    </li>
                   </ul>
                 </div>
                 <div>
                   <ul className="space-y-2">
-                    <li>Collections</li>
-                    <li>Create</li>
-                    <li>Discover</li>
-                    <li>Games</li>
-                    <li>Spinner</li>
+                    <li>
+                      <a href="/your-collections" className="hover:text-gray-300">Collections</a>
+                    </li>
+                    <li>
+                      <a href="/new-collection" className="hover:text-gray-300">Create</a>
+                    </li>
+                    <li>
+                      <a href="/discover-collections" className="hover:text-gray-300">Discover</a>
+                    </li>
+                    <li>
+                      <a href="/games" className="hover:text-gray-300">Games</a>
+                    </li>
+                    <li>
+                      <a href="/name-generator" className="hover:text-gray-300">Spinner</a>
+                    </li>
                   </ul>
                 </div>
               </div>
