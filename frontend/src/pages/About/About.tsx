@@ -15,7 +15,7 @@ const About: React.FC = () => {
 
   // Start tour when component mounts if it hasn't been completed
   useEffect(() => {
-    if (!toursCompleted["home"]) {
+    if (!toursCompleted["about"]) {
       setIsTourRunning(true);
     }
   }, [toursCompleted]);
@@ -94,8 +94,21 @@ const About: React.FC = () => {
               </svg>
             </div>
 
-            {/* Features Section */}
-            <section className="bg-gray-100 px-4 py-12">
+            {/* Features Section - Updated top wave */}
+            <section className="bg-white">
+              <div className="relative h-24">
+                <svg
+                  viewBox="0 0 1440 320"
+                  className="absolute bottom-0 left-0 h-full w-full"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M0,160 C360,320 720,0 1080,160 C1260,240 1440,160 1440,160"
+                    className="fill-none stroke-black stroke-2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
               <div className="relative mb-12 text-center">
               <h2 className="relative z-10 text-4xl">
                   <BubbleText>Features</BubbleText>
@@ -121,10 +134,24 @@ const About: React.FC = () => {
               </div>
             </section>
 
+            {/* Wave divider between Features and Coming Soon */}
+            <div className="relative h-24">
+              <svg
+                viewBox="0 0 1440 320"
+                className="absolute bottom-0 left-0 h-full w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,160 C360,320 720,0 1080,160 C1260,240 1440,160 1440,160"
+                  className="fill-none stroke-black stroke-2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+
             {/* Coming Soon Section */}
             <section className="bg-white px-4 py-12">
               <div className="relative mb-8 flex items-center justify-center">
-                <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
                 <h2 className="relative z-10 text-4xl">
                   <BubbleText>Coming Soon</BubbleText>
                 </h2>
@@ -144,6 +171,21 @@ const About: React.FC = () => {
                 </ul>
               </div>
             </section>
+
+            {/* Footer Section wave */}
+            <div className="relative h-24">
+              <svg
+                viewBox="0 0 1440 320"
+                className="absolute bottom-0 left-0 h-full w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,160 C360,320 720,0 1080,160 L1440,320 L0,320 Z"
+                  className="fill-black stroke-black stroke-4"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
 
             {/* Footer Links */}
             <footer className="bg-black px-4 py-8 text-white">
