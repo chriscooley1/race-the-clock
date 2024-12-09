@@ -70,31 +70,18 @@ const Home: React.FC = () => {
               </div>
             </section>
 
-            {/* Curved Divider */}
-            <div className="relative h-24">
-              <svg
-                viewBox="0 0 1440 100"
-                className="absolute bottom-0 left-0 h-full w-full"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0,50 Q720,100 1440,50 L1440,100 L0,100 Z"
-                  className="fill-gray-100"
-                />
-              </svg>
-            </div>
-
-            {/* Features Section */}
-            <section className="bg-gray-100 px-4 py-12">
+            {/* Features Section - Updated top wave */}
+            <section className="bg-white">
               <div className="relative h-24">
                 <svg
-                  viewBox="0 0 1440 100"
+                  viewBox="0 0 1440 320"
                   className="absolute bottom-0 left-0 h-full w-full"
                   preserveAspectRatio="none"
                 >
                   <path
-                    d="M0,50 C360,20 720,80 1440,50 L1440,100 L0,100 Z"
-                    className="fill-gray-100"
+                    d="M0,160 C360,320 720,0 1080,160 C1260,240 1440,160 1440,160"
+                    className="fill-none stroke-black stroke-2"
+                    strokeLinecap="round"
                   />
                 </svg>
               </div>
@@ -126,31 +113,20 @@ const Home: React.FC = () => {
             {/* Wave divider between Features and Coming Soon */}
             <div className="relative h-24">
               <svg
-                viewBox="0 0 1440 100"
+                viewBox="0 0 1440 320"
                 className="absolute bottom-0 left-0 h-full w-full"
                 preserveAspectRatio="none"
               >
                 <path
-                  d="M0,50 C360,20 720,80 1440,50 L1440,100 L0,100 Z"
-                  className="fill-white"
+                  d="M0,160 C360,320 720,0 1080,160 C1260,240 1440,160 1440,160"
+                  className="fill-none stroke-black stroke-2"
+                  strokeLinecap="round"
                 />
               </svg>
             </div>
 
             {/* Coming Soon Section */}
             <section className="bg-white px-4 py-12">
-              <div className="relative h-24">
-                <svg
-                  viewBox="0 0 1440 100"
-                  className="absolute bottom-0 left-0 h-full w-full"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0,50 C360,20 720,80 1440,50 L1440,100 L0,100 Z"
-                    className="fill-gray-100"
-                  />
-                </svg>
-              </div>
               <div className="relative mb-8 flex items-center justify-center">
                 <h2 className="relative z-10 text-4xl">
                   <BubbleText>Coming Soon</BubbleText>
@@ -172,16 +148,17 @@ const Home: React.FC = () => {
               </div>
             </section>
 
-            {/* Footer Section - Add a wave divider before the footer */}
+            {/* Footer Section wave */}
             <div className="relative h-24">
               <svg
-                viewBox="0 0 1440 100"
+                viewBox="0 0 1440 320"
                 className="absolute bottom-0 left-0 h-full w-full"
                 preserveAspectRatio="none"
               >
                 <path
-                  d="M0,50 C360,20 720,80 1440,50 L1440,100 L0,100 Z"
-                  className="fill-black"
+                  d="M0,160 C360,320 720,0 1080,160 L1440,320 L0,320 Z"
+                  className="fill-black stroke-black stroke-4"
+                  strokeLinecap="round"
                 />
               </svg>
             </div>
@@ -191,20 +168,40 @@ const Home: React.FC = () => {
               <div className="mx-auto flex max-w-4xl justify-around">
                 <div>
                   <ul className="space-y-2">
-                    <li>Contact us</li>
-                    <li>Resources and Tutorials</li>
-                    <li>FAQ's</li>
-                    <li>Account</li>
-                    <li>Shop</li>
+                    <li>
+                      <a href="/about" className="hover:text-gray-300">Contact us</a>
+                    </li>
+                    <li>
+                      <a href="/resources" className="hover:text-gray-300">Resources and Tutorials</a>
+                    </li>
+                    <li>
+                      <a href="/about" className="hover:text-gray-300">FAQ's</a>
+                    </li>
+                    <li>
+                      <a href="/my-account" className="hover:text-gray-300">Account</a>
+                    </li>
+                    <li>
+                      <a href="/shop" className="hover:text-gray-300">Shop</a>
+                    </li>
                   </ul>
                 </div>
                 <div>
                   <ul className="space-y-2">
-                    <li>Collections</li>
-                    <li>Create</li>
-                    <li>Discover</li>
-                    <li>Games</li>
-                    <li>Spinner</li>
+                    <li>
+                      <a href="/your-collections" className="hover:text-gray-300">Collections</a>
+                    </li>
+                    <li>
+                      <a href="/new-collection" className="hover:text-gray-300">Create</a>
+                    </li>
+                    <li>
+                      <a href="/discover-collections" className="hover:text-gray-300">Discover</a>
+                    </li>
+                    <li>
+                      <a href="/games" className="hover:text-gray-300">Games</a>
+                    </li>
+                    <li>
+                      <a href="/name-generator" className="hover:text-gray-300">Spinner</a>
+                    </li>
                   </ul>
                 </div>
               </div>

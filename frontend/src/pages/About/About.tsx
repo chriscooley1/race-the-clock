@@ -15,7 +15,7 @@ const About: React.FC = () => {
 
   // Start tour when component mounts if it hasn't been completed
   useEffect(() => {
-    if (!toursCompleted["home"]) {
+    if (!toursCompleted["about"]) {
       setIsTourRunning(true);
     }
   }, [toursCompleted]);
@@ -70,32 +70,21 @@ const About: React.FC = () => {
               </div>
             </section>
 
-            {/* Curved Divider */}
-            <div className="relative h-24">
-              <svg
-                viewBox="0 0 1440 100"
-                className="absolute bottom-0 left-0 h-full w-full"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0,0 C480,100 960,100 1440,0 L1440,100 L0,100 Z"
-                  className="fill-gray-100"
-                />
-              </svg>
-              <svg
-                viewBox="0 0 1440 100"
-                className="absolute bottom-1 left-0 h-full w-full opacity-30"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0,20 C480,120 960,120 1440,20 L1440,100 L0,100 Z"
-                  className="fill-gray-300"
-                />
-              </svg>
-            </div>
-
-            {/* Features Section */}
-            <section className="bg-gray-100 px-4 py-12">
+            {/* Features Section - Updated top wave */}
+            <section className="bg-white">
+              <div className="relative h-24">
+                <svg
+                  viewBox="0 0 1440 320"
+                  className="absolute bottom-0 left-0 h-full w-full"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M0,160 C360,320 720,0 1080,160 C1260,240 1440,160 1440,160"
+                    className="fill-none stroke-black stroke-2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
               <div className="relative mb-12 text-center">
               <h2 className="relative z-10 text-4xl">
                   <BubbleText>Features</BubbleText>
@@ -121,10 +110,24 @@ const About: React.FC = () => {
               </div>
             </section>
 
+            {/* Wave divider between Features and Coming Soon */}
+            <div className="relative h-24">
+              <svg
+                viewBox="0 0 1440 320"
+                className="absolute bottom-0 left-0 h-full w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,160 C360,320 720,0 1080,160 C1260,240 1440,160 1440,160"
+                  className="fill-none stroke-black stroke-2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+
             {/* Coming Soon Section */}
             <section className="bg-white px-4 py-12">
               <div className="relative mb-8 flex items-center justify-center">
-                <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
                 <h2 className="relative z-10 text-4xl">
                   <BubbleText>Coming Soon</BubbleText>
                 </h2>
@@ -145,25 +148,60 @@ const About: React.FC = () => {
               </div>
             </section>
 
+            {/* Footer Section wave */}
+            <div className="relative h-24">
+              <svg
+                viewBox="0 0 1440 320"
+                className="absolute bottom-0 left-0 h-full w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,160 C360,320 720,0 1080,160 L1440,320 L0,320 Z"
+                  className="fill-black stroke-black stroke-4"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+
             {/* Footer Links */}
             <footer className="bg-black px-4 py-8 text-white">
               <div className="mx-auto flex max-w-4xl justify-around">
                 <div>
                   <ul className="space-y-2">
-                    <li>Contact us</li>
-                    <li>Resources and Tutorials</li>
-                    <li>FAQ's</li>
-                    <li>Account</li>
-                    <li>Shop</li>
+                    <li>
+                      <a href="/about" className="hover:text-gray-300">Contact us</a>
+                    </li>
+                    <li>
+                      <a href="/resources" className="hover:text-gray-300">Resources and Tutorials</a>
+                    </li>
+                    <li>
+                      <a href="/about" className="hover:text-gray-300">FAQ's</a>
+                    </li>
+                    <li>
+                      <a href="/my-account" className="hover:text-gray-300">Account</a>
+                    </li>
+                    <li>
+                      <a href="/shop" className="hover:text-gray-300">Shop</a>
+                    </li>
                   </ul>
                 </div>
                 <div>
                   <ul className="space-y-2">
-                    <li>Collections</li>
-                    <li>Create</li>
-                    <li>Discover</li>
-                    <li>Games</li>
-                    <li>Spinner</li>
+                    <li>
+                      <a href="/your-collections" className="hover:text-gray-300">Collections</a>
+                    </li>
+                    <li>
+                      <a href="/new-collection" className="hover:text-gray-300">Create</a>
+                    </li>
+                    <li>
+                      <a href="/discover-collections" className="hover:text-gray-300">Discover</a>
+                    </li>
+                    <li>
+                      <a href="/games" className="hover:text-gray-300">Games</a>
+                    </li>
+                    <li>
+                      <a href="/name-generator" className="hover:text-gray-300">Spinner</a>
+                    </li>
                   </ul>
                 </div>
               </div>
