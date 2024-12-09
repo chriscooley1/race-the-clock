@@ -20,7 +20,11 @@
 
 @font-face {
   font-family: "HappyWritingDots-Regular";
-  src: url("/fonts/HappyWritingDots-Regular.otf") format("opentype");
+  src: local("HappyWritingDots-Regular"),
+       url("/fonts/HappyWritingDots-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingDots-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingDots-Regular.otf") format("opentype"),
+       url("/fonts/HappyWritingDots-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -28,7 +32,11 @@
 }
 @font-face {
   font-family: "HappyWritingMiniCircles-Regular";
-  src: url("/fonts/HappyWritingMiniCircles-Regular.otf") format("truetype");
+  src: local("HappyWritingMiniCircles-Regular"),
+       url("/fonts/HappyWritingMiniCircles-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingMiniCircles-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingMiniCircles-Regular.otf") format("opentype"),
+       url("/fonts/HappyWritingMiniCircles-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -36,7 +44,11 @@
 }
 @font-face {
   font-family: "HappyWritingNeat-Regular";
-  src: url("/fonts/HappyWritingNeat-Regular.otf") format("truetype");
+  src: local("HappyWritingNeat-Regular"),
+       url("/fonts/HappyWritingNeat-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingNeat-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingNeat-Regular.otf") format("opentype"),
+       url("/fonts/HappyWritingNeat-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -44,7 +56,11 @@
 }
 @font-face {
   font-family: "HappyWritingOutlineDashes-Regular";
-  src: url("/fonts/HappyWritingOutlineDashes-Regular.otf") format("truetype");
+  src: local("HappyWritingOutlineDashes-Regular"),
+       url("/fonts/HappyWritingOutlineDashes-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingOutlineDashes-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingOutlineDashes-Regular.otf") format("opentype"),
+       url("/fonts/HappyWritingOutlineDashes-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -52,7 +68,11 @@
 }
 @font-face {
   font-family: "HappyWritingOutlineDots-Regular";
-  src: url("/fonts/HappyWritingOutlineDots-Regular.otf") format("truetype");
+  src: local("HappyWritingOutlineDots-Regular"),
+       url("/fonts/HappyWritingOutlineDots-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingOutlineDots-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingOutlineDots-Regular.otf") format("opentype"),
+       url("/fonts/HappyWritingOutlineDots-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -60,7 +80,11 @@
 }
 @font-face {
   font-family: "HappyWritingOutlines-Regular";
-  src: url("/fonts/HappyWritingOutlines-Regular.otf") format("truetype");
+  src: local("HappyWritingOutlines-Regular"),
+       url("/fonts/HappyWritingOutlines-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingOutlines-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingOutlines-Regular.otf") format("opentype"),
+       url("/fonts/HappyWritingOutlines-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -68,7 +92,11 @@
 }
 @font-face {
   font-family: "HappyWritingOutlinesThick-Regular";
-  src: url("/fonts/HappyWritingOutlinesThick-Regular.otf") format("truetype");
+  src: local("HappyWritingOutlinesThick-Regular"),
+       url("/fonts/HappyWritingOutlinesThick-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingOutlinesThick-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingOutlinesThick-Regular.otf") format("opentype"),
+       url("/fonts/HappyWritingOutlinesThick-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -76,7 +104,11 @@
 }
 @font-face {
   font-family: "HappyWritingTracing-Regular";
-  src: url("/fonts/HappyWritingTracing-Regular.otf") format("truetype");
+  src: local("HappyWritingTracing-Regular"),
+       url("/fonts/HappyWritingTracing-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingTracing-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingTracing-Regular.otf") format("opentype"),
+       url("/fonts/HappyWritingTracing-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -84,7 +116,11 @@
 }
 @font-face {
   font-family: "HappyWritingTracingGuides-Regular";
-  src: url("/fonts/HappyWritingTracingGuides-Regular.otf") format("truetype");
+  src: local("HappyWritingTracingGuides-Regular"),
+       url("/fonts/HappyWritingTracingGuides-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingTracingGuides-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingTracingGuides-Regular.otf") format("opentype"),
+       url("/fonts/HappyWritingTracingGuides-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
