@@ -22,6 +22,18 @@ export const tourStepsHome = (): Step[] => {
     {
       target: ".grid",
       content: "Discover our key features, including custom collections, speed controls, and more.",
+    },
+    {
+      target: "section.bg-white:nth-of-type(2) h2",
+      content: "Explore our features that enhance your learning experience.",
+    },
+    {
+      target: "section.bg-white:nth-of-type(3) h2",
+      content: "Stay tuned for upcoming features that will be available soon!",
+    },
+    {
+      target: "ul.space-y-4",
+      content: "Check out the exciting upcoming features we have planned.",
     }
   ];
 
