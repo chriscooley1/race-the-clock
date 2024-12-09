@@ -143,6 +143,9 @@ const Settings: React.FC = () => {
       "--font-family",
       cssFont.includes(" ") ? `"${cssFont}"` : cssFont,
     );
+
+    // Log the selected font for testing
+    console.log("Selected font:", selectedFont);
   };
 
   const handleHeadingFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
