@@ -31,7 +31,7 @@ import { tourStepsBadgesAchievements } from "./pages/BadgesAchievements/tourStep
 import { tourStepsMatchingGame } from "./pages/Games/tourStepsMatchingGame";
 import { tourStepsMultipleWords } from "./pages/Games/tourStepsMultipleWords";
 import { tourStepsShop } from "./pages/Shop/tourStepsShop";
-import { tourStepsAbout } from "./pages/About/tourStepsAbout";
+import { tourStepsAbout } from "./pages/Home/tourStepsAbout";
 
 // Import your page components here
 import Home from "./pages/Home/Home";
@@ -52,7 +52,6 @@ import TimedChallenges from "./pages/Games/TimedChallenges";
 import Reports from "./pages/Reports/Reports";
 import BadgesAchievements from "./pages/BadgesAchievements/BadgesAchievements";
 import Shop from "./pages/Shop/Shop";
-import About from "./pages/About/About";
 import Credits from "./pages/Credits/Credits";
 
 const App: React.FC = () => {
@@ -443,7 +442,7 @@ const App: React.FC = () => {
                   path="/about"
                   element={
                     <Suspense fallback={<div>Loading...</div>}>
-                      <PrivateRoute element={renderContent(<About />)} />
+                      <PrivateRoute element={<Home />} />
                     </Suspense>
                   }
                 />
