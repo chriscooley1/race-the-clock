@@ -16,59 +16,58 @@ const FontPreloader = () => {
         },
         {
           family: "HappyWritingDots-Regular",
-          url: "/fonts/HappyWritingDots-Regular.ttf",
+          url: "/fonts/HappyWritingDots-Regular.otf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingLetterMiniCircles-Regular",
-          url: "/fonts/HappyWritingLetterMiniCircles-Regular.ttf",
+          url: "/fonts/HappyWritingLetterMiniCircles-Regular.otf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingNeat-Regular",
-          url: "/fonts/HappyWritingNeat-Regular.ttf",
+          url: "/fonts/HappyWritingNeat-Regular.otf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingOutlineDashes-Regular",
-          url: "/fonts/HappyWritingOutlineDashes-Regular.ttf",
+          url: "/fonts/HappyWritingOutlineDashes-Regular.otf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingOutlineDots-Regular",
-          url: "/fonts/HappyWritingOutlineDots-Regular.ttf",
+          url: "/fonts/HappyWritingOutlineDots-Regular.otf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingOutlines-Regular",
-          url: "/fonts/HappyWritingOutlines-Regular.ttf",
+          url: "/fonts/HappyWritingOutlines-Regular.otf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingOutlinesThick-Regular",
-          url: "/fonts/HappyWritingOutlinesThick-Regular.ttf",
+          url: "/fonts/HappyWritingOutlinesThick-Regular.otf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingTracing-Regular",
-          url: "/fonts/HappyWritingTracing-Regular.ttf",
+          url: "/fonts/HappyWritingTracing-Regular.otf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "HappyWritingTracingGuides-Regular",
-          url: "/fonts/HappyWritingTracingGuides-Regular.ttf",
+          url: "/fonts/HappyWritingTracingGuides-Regular.otf",
           descriptors: { style: "normal", weight: "400" },
         },
       ];
 
       try {
-        // Check if fonts are already loaded
         const loadedFonts = Array.from(document.fonts.values()).map((font) =>
-          font.family.replace(/["']/g, ""),
+          font.family.replace(/["']/g, "")
         );
 
         const fontsToLoad = fonts.filter(
-          (font) => !loadedFonts.includes(font.family),
+          (font) => !loadedFonts.includes(font.family)
         );
 
         if (fontsToLoad.length === 0) {
@@ -76,27 +75,36 @@ const FontPreloader = () => {
           return;
         }
 
-        // Load new fonts
-        const fontFaces = await Promise.all(
-          fontsToLoad.map(async (font) => {
+        const fontLoadPromises = fontsToLoad.map(async (font) => {
+          try {
+            const response = await fetch(font.url);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const fontFace = new FontFace(
               font.family,
-              `url(${font.url})`,
-              font.descriptors,
+              `local("${font.family}"), url(${font.url}) format("opentype")`
             );
-            await fontFace.load();
-            document.fonts.add(fontFace);
-            return fontFace;
-          }),
-        );
+            const loadedFont = await fontFace.load();
+            document.fonts.add(loadedFont);
+            console.log(`Successfully loaded font: ${font.family}`);
+            return loadedFont;
+          } catch (error) {
+            console.warn(`Failed to load font ${font.family}:`, error);
+            return null;
+          }
+        });
 
-        console.log(
-          "Successfully loaded fonts:",
-          fontFaces.map((f) => f.family).join(", "),
-        );
+        const loadedFontFaces = await Promise.allSettled(fontLoadPromises);
+        const successfulFonts = loadedFontFaces
+          .filter((result) => result.status === "fulfilled" && result.value)
+          .map((result) => (result as PromiseFulfilledResult<FontFace>).value.family);
+
+        if (successfulFonts.length > 0) {
+          console.log("Successfully loaded fonts:", successfulFonts.join(", "));
+        }
       } catch (err) {
-        console.error("Error loading fonts:", err);
-        // Continue without custom fonts - fallback fonts will be used
+        console.error("Error in font loading process:", err);
       }
     };
 

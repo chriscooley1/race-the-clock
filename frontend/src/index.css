@@ -6,6 +6,7 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 
 @font-face {
@@ -14,70 +15,80 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 
 @font-face {
   font-family: "HappyWritingDots-Regular";
-  src: url("/fonts/HappyWritingDots-Regular.ttf") format("truetype");
+  src: url("/fonts/HappyWritingDots-Regular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 @font-face {
   font-family: "HappyWritingMiniCircles-Regular";
-  src: url("/fonts/HappyWritingMiniCircles-Regular.ttf") format("truetype");
+  src: url("/fonts/HappyWritingMiniCircles-Regular.otf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 @font-face {
   font-family: "HappyWritingNeat-Regular";
-  src: url("/fonts/HappyWritingNeat-Regular.ttf") format("truetype");
+  src: url("/fonts/HappyWritingNeat-Regular.otf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 @font-face {
   font-family: "HappyWritingOutlineDashes-Regular";
-  src: url("/fonts/HappyWritingOutlineDashes-Regular.ttf") format("truetype");
+  src: url("/fonts/HappyWritingOutlineDashes-Regular.otf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 @font-face {
   font-family: "HappyWritingOutlineDots-Regular";
-  src: url("/fonts/HappyWritingOutlineDots-Regular.ttf") format("truetype");
+  src: url("/fonts/HappyWritingOutlineDots-Regular.otf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 @font-face {
   font-family: "HappyWritingOutlines-Regular";
-  src: url("/fonts/HappyWritingOutlines-Regular.ttf") format("truetype");
+  src: url("/fonts/HappyWritingOutlines-Regular.otf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 @font-face {
   font-family: "HappyWritingOutlinesThick-Regular";
-  src: url("/fonts/HappyWritingOutlinesThick-Regular.ttf") format("truetype");
+  src: url("/fonts/HappyWritingOutlinesThick-Regular.otf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 @font-face {
   font-family: "HappyWritingTracing-Regular";
-  src: url("/fonts/HappyWritingTracing-Regular.ttf") format("truetype");
+  src: url("/fonts/HappyWritingTracing-Regular.otf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 @font-face {
   font-family: "HappyWritingTracingGuides-Regular";
-  src: url("/fonts/HappyWritingTracingGuides-Regular.ttf") format("truetype");
+  src: url("/fonts/HappyWritingTracingGuides-Regular.otf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  fallback: "Comic Neue";
 }
 
 @tailwind base;
