@@ -573,29 +573,35 @@ export const submitFeedback = async (
   message: string,
   displayName: string,
   getAccessTokenSilently: () => Promise<string>,
+  images?: File[]
 ) => {
   try {
     const headers: Record<string, string> = {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     };
 
-    // Only add authorization header if getAccessTokenSilently is provided
     try {
       const token = await getAccessTokenSilently();
       headers.Authorization = `Bearer ${token}`;
     } catch {
-      // Continue without auth token for anonymous feedback
       console.log("Submitting anonymous feedback");
+    }
+
+    const formData = new FormData();
+    formData.append("message", message);
+    formData.append("page_url", window.location.href);
+    formData.append("display_name", displayName);
+    
+    if (images) {
+      images.forEach((image, index) => {
+        formData.append(`image_${index}`, image);
+      });
     }
 
     const response = await axios.post(
       `${API_BASE_URL}/api/feedback`,
-      {
-        message,
-        page_url: window.location.href,
-        display_name: displayName,
-      },
-      { headers },
+      formData,
+      { headers }
     );
 
     return response.data;
@@ -604,7 +610,7 @@ export const submitFeedback = async (
     if (axios.isAxiosError(error)) {
       throw new Error(
         error.response?.data?.detail ||
-          "Failed to submit feedback. Please try again.",
+          "Failed to submit feedback. Please try again."
       );
     }
     throw new Error("Failed to submit feedback. Please try again.");
