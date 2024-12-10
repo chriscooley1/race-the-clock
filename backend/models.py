@@ -112,6 +112,7 @@ class Collection(SQLModel, table=True):
     user_id: int = Field(foreign_key="users.user_id")
     status: str = Field(default="private")
     category: str
+    is_public: bool = Field(default=False)
     creator_display_name: Optional[str] = None
     creator_username: Optional[str] = None
     user: User = Relationship(back_populates="collections")
@@ -138,6 +139,13 @@ class CollectionRead(CollectionBase):
     status: str
     creator_display_name: Optional[str] = None
     creator_username: Optional[str] = None
+
+class CollectionUpdate(SQLModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    status: Optional[str] = None
+    category: Optional[str] = None
+    is_public: Optional[bool] = None
 
 # Item Models
 class ItemBase(SQLModel):

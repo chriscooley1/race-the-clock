@@ -9,6 +9,7 @@ from models import (
     Collection, 
     CollectionCreate, 
     CollectionRead, 
+    CollectionUpdate,
     Item, 
     UserCreate, 
     DisplayNameUpdate, 
@@ -282,19 +283,33 @@ async def get_collection_items(collection_id: int, db: Session = Depends(get_db)
 
 @app.put("/collections/{collection_id}", response_model=Collection)
 async def update_collection(
-    collection_id: int, 
-    updated_collection: CollectionCreate, 
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    collection_id: int,
+    collection_data: CollectionUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
 ):
-    db_collection = db.get(Collection, collection_id)
-    if not db_collection:
-        raise HTTPException(status_code=404, detail="Collection not found")
-    for key, value in updated_collection.dict().items():
-        setattr(db_collection, key, value)
-    db.commit()
-    db.refresh(db_collection)
-    return db_collection
+    try:
+        # Get the existing collection
+        db_collection = db.query(Collection).filter(
+            Collection.collection_id == collection_id,
+            Collection.user_id == current_user.user_id
+        ).first()
+        
+        if not db_collection:
+            raise HTTPException(status_code=404, detail="Collection not found")
+        
+        # Update only the fields that are provided
+        update_data = collection_data.dict(exclude_unset=True)
+        for key, value in update_data.items():
+            setattr(db_collection, key, value)
+        
+        db.commit()
+        db.refresh(db_collection)
+        return db_collection
+        
+    except Exception as e:
+        logger.error(f"Error updating collection: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error updating collection")
 
 @app.delete("/collections/{collection_id}")
 async def delete_collection(
