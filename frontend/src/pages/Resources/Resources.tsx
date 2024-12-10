@@ -60,7 +60,7 @@ const Resources: React.FC = () => {
         },
         {
           question: "How can I track my progress?",
-          answer: "You can view your progress in the dashboard.",
+          answer: "You can view your progress by going to the reports page.",
         },
       ]);
 
