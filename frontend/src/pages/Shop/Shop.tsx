@@ -130,6 +130,14 @@ const Shop: React.FC = () => {
                     <span className="mr-2">✓</span>
                     Team Analytics Dashboard
                   </li>
+                  <li className="flex items-center opacity-0">
+                    <span className="mr-2">✓</span>
+                    Spacer
+                  </li>
+                  <li className="flex items-center opacity-0">
+                    <span className="mr-2">✓</span>
+                    Spacer
+                  </li>
                 </ul>
               </div>
 
