@@ -4,12 +4,14 @@ import GuidedTour from "../../components/GuidedTour";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth0 } from "@auth0/auth0-react";
 import BubbleText from "../../components/BubbleText";
+import { useCart } from "../../context/CartContext";
 
 const Shop: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const { theme } = useTheme();
   const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { addItem } = useCart();
 
   useEffect(() => {
     const tourCompleted = localStorage.getItem("tourCompleted");
@@ -27,15 +29,22 @@ const Shop: React.FC = () => {
     setCurrentTourStep(step);
   };
 
-  const handleSubscribe = () => {
+  const handleSubscribe = (licenseType: "single" | "multi") => {
     if (!isAuthenticated) {
       loginWithRedirect({
         appState: { returnTo: "/shop" },
       });
       return;
     }
-    // TODO: Implement subscription purchase logic
-    console.log("Subscription purchase clicked");
+    
+    const newItem = {
+      name: licenseType === "single" ? "Single License" : "Multi License Pack",
+      price: licenseType === "single" ? 29.95 : 69.95,
+      quantity: 1
+    };
+    
+    addItem(newItem);
+    alert("Item added to cart!");
   };
 
   return (
@@ -94,7 +103,7 @@ const Shop: React.FC = () => {
 
               <button
                 type="button"
-                onClick={handleSubscribe}
+                onClick={() => handleSubscribe("single")}
                 className="w-full rounded-lg bg-blue-500 px-6 py-3 text-lg font-bold text-white transition-all hover:bg-blue-600 active:bg-blue-700"
               >
                 {isAuthenticated ? "Purchase Single License" : "Sign in to Purchase"}
@@ -143,7 +152,7 @@ const Shop: React.FC = () => {
 
               <button
                 type="button"
-                onClick={handleSubscribe}
+                onClick={() => handleSubscribe("multi")}
                 className="w-full rounded-lg bg-blue-500 px-6 py-3 text-lg font-bold text-white transition-all hover:bg-blue-600 active:bg-blue-700"
               >
                 {isAuthenticated ? "Purchase Multi License Pack" : "Sign in to Purchase"}

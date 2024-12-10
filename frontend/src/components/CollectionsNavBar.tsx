@@ -2,8 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTour } from "../context/TourContext";
+import { useCart } from "../context/CartContext";
 import cartIcon from "../assets/cart.jpeg";
 import FeedbackIcon from "./FeedbackIcon";
+import Cart from "./Cart";
 
 interface CollectionsNavBarProps {
   setShowFeedback: (show: boolean) => void;
@@ -17,10 +19,14 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
   const { logout, loginWithRedirect } = useAuth0();
   const { isGuidedTourEnabled } = useTour();
+  const { items, removeItem, updateQuantity } = useCart();
   const isHomePage = location.pathname === "/";
+
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -185,14 +191,30 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           <div className="scale-[1.75] transition-transform hover:scale-[1.85]">
             <FeedbackIcon onClick={() => setShowFeedback(true)} />
           </div>
-          <button
-            type="button"
-            className="scale-[1.75] transition-transform hover:scale-[1.85]"
-          >
-            <img src={cartIcon} alt="Shopping Cart" className="size-8" />
-          </button>
+          <div className="flex items-center space-x-6">
+            <button
+              type="button"
+              onClick={() => setIsCartOpen(true)}
+              className="relative scale-[1.75] transition-transform hover:scale-[1.85]"
+            >
+              <img src={cartIcon} alt="Shopping Cart" className="size-8" />
+              {totalItems > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </div>
+
+      <Cart
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        items={items}
+        onRemoveItem={removeItem}
+        onUpdateQuantity={updateQuantity}
+      />
     </div>
   );
 };
