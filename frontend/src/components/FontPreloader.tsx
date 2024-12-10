@@ -20,11 +20,6 @@ const FontPreloader = () => {
           descriptors: { style: "normal", weight: "400" },
         },
         {
-          family: "Happy Writing Letter Mini Circles Regular",
-          url: "/fonts/HappyWritingLetterMiniCircles-Regular.ttf",
-          descriptors: { style: "normal", weight: "400" },
-        },
-        {
           family: "Happy Writing Neat Regular",
           url: "/fonts/HappyWritingNeat-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },

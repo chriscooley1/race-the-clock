@@ -113,7 +113,6 @@ const Settings: React.FC = () => {
     "KG What The Teacher Wants",
     "KG Shake It Off",
     "Happy Writing Dots Regular",
-    "Happy Writing Letter Mini Circles Regular",
     "Happy Writing Neat Regular",
     "Happy Writing Outline Dashes Regular",
     "Happy Writing Outline Dots Regular",
