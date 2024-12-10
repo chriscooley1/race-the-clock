@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useTour } from "../context/TourContext";
 import cartIcon from "../assets/cart.jpeg";
 import FeedbackIcon from "./FeedbackIcon";
+import Cart from "./Cart";
 
 interface CollectionsNavBarProps {
   setShowFeedback: (show: boolean) => void;
@@ -21,6 +22,8 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   const { logout, loginWithRedirect } = useAuth0();
   const { isGuidedTourEnabled } = useTour();
   const isHomePage = location.pathname === "/";
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -53,6 +56,10 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
       console.error("Error accessing localStorage:", error);
     }
     loginWithRedirect({ appState: { returnTo: "/your-collections" } });
+  };
+
+  const handleRemoveFromCart = (index: number) => {
+    setCartItems(prev => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -187,12 +194,20 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           </div>
           <button
             type="button"
+            onClick={() => setIsCartOpen(true)}
             className="scale-[1.75] transition-transform hover:scale-[1.85]"
           >
             <img src={cartIcon} alt="Shopping Cart" className="size-8" />
           </button>
         </div>
       </div>
+
+      <Cart
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        items={cartItems}
+        onRemoveItem={handleRemoveFromCart}
+      />
     </div>
   );
 };

@@ -34,8 +34,22 @@ const Shop: React.FC = () => {
       });
       return;
     }
-    // TODO: Implement subscription purchase logic
-    console.log("Subscription purchase clicked");
+    
+    // Get existing cart items from localStorage
+    const existingCart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    
+    // Add new item to cart
+    const newItem = {
+      name: isAuthenticated ? "Single License" : "Multi License Pack",
+      price: isAuthenticated ? 29.95 : 69.95,
+      quantity: 1
+    };
+    
+    // Update localStorage
+    localStorage.setItem("cartItems", JSON.stringify([...existingCart, newItem]));
+    
+    // Show confirmation
+    alert("Item added to cart!");
   };
 
   return (
