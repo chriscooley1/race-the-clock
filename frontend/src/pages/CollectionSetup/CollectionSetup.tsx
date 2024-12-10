@@ -438,7 +438,7 @@ const CollectionSetup: React.FC = () => {
     setSequence([]);
     setPreviewSequence([]);
     setFile([]);
-    // setNumberSenseItems([]);
+    setImages([]);
   };
 
   const handleSaveCollection = async () => {
@@ -502,6 +502,11 @@ const CollectionSetup: React.FC = () => {
   const deleteItem = (index: number) => {
     const updatedSequence = previewSequence.filter((_, i) => i !== index);
     setPreviewSequence(updatedSequence); // Set the updated sequence
+  };
+
+  // Add this handler function near your other handlers
+  const handleRemoveImage = (id: string) => {
+    setImages((prevImages) => prevImages.filter((image) => image.id !== id));
   };
 
   if (!currentUser) {
@@ -880,30 +885,31 @@ const CollectionSetup: React.FC = () => {
               )}
               {images.length > 0 && (
                 <div className="mt-4">
-                  {images.map((image) => (
-                    <div key={image.id}>
-                      <img src={image.preview} alt="Preview" className="size-20" />
-                      {category === "Number Sense" && (
-                        <>
-                          <label htmlFor={`count-${image.id}`} className="sr-only">
-                            Image count
-                          </label>
+                  <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+                    {images.map((image) => (
+                      <div key={image.id} className="relative">
+                        <img src={image.preview} alt="Preview" className="size-24 object-cover" />
+                        {category === "Number Sense" && (
                           <input
-                            id={`count-${image.id}`}
+                            title="Count"
+                            placeholder="Count"
                             type="number"
                             value={image.count}
-                            onChange={(e) =>
-                              handleImageCountChange(
-                                image.id,
-                                parseInt(e.target.value),
-                              )
-                            }
+                            onChange={(e) => handleImageCountChange(image.id, parseInt(e.target.value))}
                             min="1"
+                            className="mt-2 w-full rounded border border-gray-300 px-2 py-1"
                           />
-                        </>
-                      )}
-                    </div>
-                  ))}
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveImage(image.id)}
+                          className="absolute -right-2 -top-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white"
+                        >
+                          X
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

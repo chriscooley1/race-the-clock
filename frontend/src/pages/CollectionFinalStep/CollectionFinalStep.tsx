@@ -473,6 +473,15 @@ const CollectionFinalStep: React.FC = () => {
     }
   };
 
+  // Add the clear handler function
+  const handleClear = () => {
+    setItems([]);
+    setImages([]);
+    setDots([{ position: "1", color: "blue", shape: "circle", count: 1 }]);
+    setSelectedPositions([1]);
+    setAvailablePositions(Array.from({ length: 25 }, (_, i) => i + 1));
+  };
+
   if (!currentUser) {
     return <div>Loading user information...</div>;
   }
@@ -544,7 +553,25 @@ const CollectionFinalStep: React.FC = () => {
               </button>
               {/* Preview of current items */}
               <div className="mt-6 w-full">
-                <h3 className="mb-4 text-xl font-bold">Collection Items:</h3>
+                <div className="mb-4 flex items-center justify-between">
+                  <h3 className="text-xl font-bold">Collection Items:</h3>
+                  <div className="space-x-2">
+                    <button
+                      type="button"
+                      className="rounded-md bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-600"
+                      onClick={handleClear}
+                    >
+                      Clear All
+                    </button>
+                    <button
+                      type="button"
+                      className="rounded-md bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-600"
+                      onClick={handleSaveCollection}
+                    >
+                      Save Collection
+                    </button>
+                  </div>
+                </div>
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
                   {items.map((item) => (
                     <div key={item.id} className="relative rounded-md border border-black p-4">
