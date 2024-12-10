@@ -498,7 +498,7 @@ const CollectionFinalStep: React.FC = () => {
           <BubbleText>Step 3 - Create Your Own Collection</BubbleText>
         </h1>
         <h1 className="text-3xl font-bold">
-          <BubbleText>Collection: {collectionName}</BubbleText>
+          <BubbleText>{`Collection: ${collectionName}`}</BubbleText>
         </h1>
         <p className="mb-4">
           To add another item to this Collection, click the add button below.
