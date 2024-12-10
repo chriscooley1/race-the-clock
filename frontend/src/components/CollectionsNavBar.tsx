@@ -26,6 +26,8 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   const { items, removeItem, updateQuantity } = useCart();
   const isHomePage = location.pathname === "/";
 
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -189,13 +191,20 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
           <div className="scale-[1.75] transition-transform hover:scale-[1.85]">
             <FeedbackIcon onClick={() => setShowFeedback(true)} />
           </div>
-          <button
-            type="button"
-            onClick={() => setIsCartOpen(true)}
-            className="scale-[1.75] transition-transform hover:scale-[1.85]"
-          >
-            <img src={cartIcon} alt="Shopping Cart" className="size-8" />
-          </button>
+          <div className="flex items-center space-x-6">
+            <button
+              type="button"
+              onClick={() => setIsCartOpen(true)}
+              className="relative scale-[1.75] transition-transform hover:scale-[1.85]"
+            >
+              <img src={cartIcon} alt="Shopping Cart" className="size-8" />
+              {totalItems > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
