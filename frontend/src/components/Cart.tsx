@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 
 interface CartItem {
@@ -16,6 +16,23 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem }) => {
   const { theme } = useTheme();
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -24,6 +41,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem }) => 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-50">
       <div 
+        ref={modalRef}
         className={`relative w-full max-w-md rounded-lg p-6 shadow-xl ${
           theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
         }`}
