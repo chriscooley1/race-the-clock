@@ -29,7 +29,7 @@ const Shop: React.FC = () => {
     setCurrentTourStep(step);
   };
 
-  const handleSubscribe = () => {
+  const handleSubscribe = (licenseType: "single" | "multi") => {
     if (!isAuthenticated) {
       loginWithRedirect({
         appState: { returnTo: "/shop" },
@@ -38,8 +38,8 @@ const Shop: React.FC = () => {
     }
     
     const newItem = {
-      name: isAuthenticated ? "Single License" : "Multi License Pack",
-      price: isAuthenticated ? 29.95 : 69.95,
+      name: licenseType === "single" ? "Single License" : "Multi License Pack",
+      price: licenseType === "single" ? 29.95 : 69.95,
       quantity: 1
     };
     
@@ -103,7 +103,7 @@ const Shop: React.FC = () => {
 
               <button
                 type="button"
-                onClick={handleSubscribe}
+                onClick={() => handleSubscribe("single")}
                 className="w-full rounded-lg bg-blue-500 px-6 py-3 text-lg font-bold text-white transition-all hover:bg-blue-600 active:bg-blue-700"
               >
                 {isAuthenticated ? "Purchase Single License" : "Sign in to Purchase"}
@@ -152,7 +152,7 @@ const Shop: React.FC = () => {
 
               <button
                 type="button"
-                onClick={handleSubscribe}
+                onClick={() => handleSubscribe("multi")}
                 className="w-full rounded-lg bg-blue-500 px-6 py-3 text-lg font-bold text-white transition-all hover:bg-blue-600 active:bg-blue-700"
               >
                 {isAuthenticated ? "Purchase Multi License Pack" : "Sign in to Purchase"}

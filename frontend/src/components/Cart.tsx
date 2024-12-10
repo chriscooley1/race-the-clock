@@ -12,9 +12,10 @@ interface CartProps {
   onClose: () => void;
   items: CartItem[];
   onRemoveItem?: (index: number) => void;
+  onUpdateQuantity?: (index: number, quantity: number) => void;
 }
 
-const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem }) => {
+const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem, onUpdateQuantity }) => {
   const { theme } = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -72,15 +73,34 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem }) => 
                     <h3 className="font-semibold">{item.name}</h3>
                     <p>${item.price.toFixed(2)} × {item.quantity}</p>
                   </div>
-                  {onRemoveItem && (
-                    <button
-                      type="button"
-                      onClick={() => onRemoveItem(index)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      Remove
-                    </button>
-                  )}
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => onUpdateQuantity?.(index, Math.max(1, item.quantity - 1))}
+                        className="rounded-full bg-gray-200 px-2 py-1 text-black hover:bg-gray-300"
+                      >
+                        -
+                      </button>
+                      <span className="w-8 text-center">{item.quantity}</span>
+                      <button
+                        type="button"
+                        onClick={() => onUpdateQuantity?.(index, item.quantity + 1)}
+                        className="rounded-full bg-gray-200 px-2 py-1 text-black hover:bg-gray-300"
+                      >
+                        +
+                      </button>
+                    </div>
+                    {onRemoveItem && (
+                      <button
+                        type="button"
+                        onClick={() => onRemoveItem(index)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

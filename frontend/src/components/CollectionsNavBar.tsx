@@ -23,7 +23,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
   const accountDropdownRef = useRef<HTMLDivElement>(null);
   const { logout, loginWithRedirect } = useAuth0();
   const { isGuidedTourEnabled } = useTour();
-  const { items, removeItem } = useCart();
+  const { items, removeItem, updateQuantity } = useCart();
   const isHomePage = location.pathname === "/";
 
   useEffect(() => {
@@ -204,6 +204,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
         onClose={() => setIsCartOpen(false)}
         items={items}
         onRemoveItem={removeItem}
+        onUpdateQuantity={updateQuantity}
       />
     </div>
   );
