@@ -34,6 +34,7 @@ interface FullScreenDisplayState {
   answerDisplayTime: number;
   timerMinutes: number;
   timerSeconds: number;
+  stopCondition: string;
 }
 
 interface SequenceItem {
@@ -57,6 +58,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
     category,
     type,
     answerDisplayTime,
+    stopCondition: initialStopCondition,
     timerMinutes,
     timerSeconds,
   } = location.state as FullScreenDisplayState;
@@ -68,7 +70,7 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [stopCondition, setStopCondition] = useState("collection");
+  const [stopCondition, setStopCondition] = useState(initialStopCondition);
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
@@ -223,16 +225,26 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
   ]);
 
   useEffect(() => {
-    if (stopCondition === "timer") {
-      const totalTimerSeconds = timerMinutes * 60 + timerSeconds; // Calculate total timer seconds
-      console.log(`Timer set for ${totalTimerSeconds} seconds`); // Debug log
-      const timer = setTimeout(() => {
-        console.log("Timer expired, ending session."); // Debug log
-        handleEndSession(); // Call the function to handle session end
-      }, totalTimerSeconds * 1000); // Convert to milliseconds
-      return () => clearTimeout(timer);
+    if (stopCondition === "timer" && timerMinutes >= 0 && timerSeconds >= 0) {
+      const totalTimerMilliseconds = (timerMinutes * 60 + timerSeconds) * 1000;
+      console.log(`Timer set for ${totalTimerMilliseconds}ms`);
+
+      const timerEndTime = Date.now() + totalTimerMilliseconds;
+
+      const checkTimer = setInterval(() => {
+        const remainingTime = timerEndTime - Date.now();
+        if (remainingTime <= 0) {
+          console.log("Timer expired, ending session.");
+          clearInterval(checkTimer);
+          handleEndSession();
+        }
+      }, 1000);
+
+      return () => {
+        clearInterval(checkTimer);
+      };
     }
-  }, [stopCondition, timerMinutes, timerSeconds, handleEndSession]); // Add timer dependencies
+  }, [stopCondition, timerMinutes, timerSeconds, handleEndSession]);
 
   const handlePauseResume = () => {
     setIsPaused(!isPaused);
