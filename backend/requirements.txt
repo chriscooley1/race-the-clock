@@ -18,3 +18,4 @@ pytest-asyncio
 pyjwt
 secure-smtplib
 PyGithub
+Pillow
