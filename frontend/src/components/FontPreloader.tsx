@@ -16,47 +16,47 @@ const FontPreloader = () => {
         },
         {
           family: "Happy Writing Dots Regular",
-          url: "/fonts/HappyWritingDots-Regular.woff2",
+          url: "/fonts/HappyWritingDots-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "Happy Writing Letter Mini Circles Regular",
-          url: "/fonts/HappyWritingLetterMiniCircles-Regular.woff2",
+          url: "/fonts/HappyWritingLetterMiniCircles-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "Happy Writing Neat Regular",
-          url: "/fonts/HappyWritingNeat-Regular.woff2",
+          url: "/fonts/HappyWritingNeat-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "Happy Writing Outline Dashes Regular",
-          url: "/fonts/HappyWritingOutlineDashes-Regular.woff2",
+          url: "/fonts/HappyWritingOutlineDashes-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "Happy Writing Outline Dots Regular",
-          url: "/fonts/HappyWritingOutlineDots-Regular.woff2",
+          url: "/fonts/HappyWritingOutlineDots-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "Happy Writing Outlines Regular",
-          url: "/fonts/HappyWritingOutlines-Regular.woff2",
+          url: "/fonts/HappyWritingOutlines-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "Happy Writing Outlines Thick Regular",
-          url: "/fonts/HappyWritingOutlinesThick-Regular.woff2",
+          url: "/fonts/HappyWritingOutlinesThick-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "Happy Writing Tracing Regular",
-          url: "/fonts/HappyWritingTracing-Regular.woff2",
+          url: "/fonts/HappyWritingTracing-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
         {
           family: "Happy Writing Tracing Guides Regular",
-          url: "/fonts/HappyWritingTracingGuides-Regular.woff2",
+          url: "/fonts/HappyWritingTracingGuides-Regular.ttf",
           descriptors: { style: "normal", weight: "400" },
         },
       ];
