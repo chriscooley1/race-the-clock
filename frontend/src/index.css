@@ -19,8 +19,8 @@
 }
 
 @font-face {
-  font-family: "HappyWritingDots-Regular";
-  src: local("HappyWritingDots-Regular"),
+  font-family: "Happy Writing Dots Regular";
+  src: local("Happy Writing Dots Regular"),
        url("/fonts/HappyWritingDots-Regular.woff2") format("woff2"),
        url("/fonts/HappyWritingDots-Regular.woff") format("woff"),
        url("/fonts/HappyWritingDots-Regular.otf") format("opentype"),
@@ -31,11 +31,11 @@
   fallback: "Comic Neue";
 }
 @font-face {
-  font-family: "HappyWritingMiniCircles-Regular";
-  src: local("HappyWritingMiniCircles-Regular"),
-       url("/fonts/HappyWritingMiniCircles-Regular.woff2") format("woff2"),
-       url("/fonts/HappyWritingMiniCircles-Regular.woff") format("woff"),
-       url("/fonts/HappyWritingMiniCircles-Regular.otf") format("opentype"),
+  font-family: "Happy Writing Letter Mini Circles Regular";
+  src: local("Happy Writing Letter Mini Circles Regular"),
+       url("/fonts/HappyWritingLetterMiniCircles-Regular.woff2") format("woff2"),
+       url("/fonts/HappyWritingLetterMiniCircles-Regular.woff") format("woff"),
+       url("/fonts/HappyWritingLetterMiniCircles-Regular.otf") format("opentype"),
        url("/fonts/HappyWritingMiniCircles-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
@@ -43,8 +43,8 @@
   fallback: "Comic Neue";
 }
 @font-face {
-  font-family: "HappyWritingNeat-Regular";
-  src: local("HappyWritingNeat-Regular"),
+  font-family: "Happy Writing Neat Regular";
+  src: local("Happy Writing Neat Regular"),
        url("/fonts/HappyWritingNeat-Regular.woff2") format("woff2"),
        url("/fonts/HappyWritingNeat-Regular.woff") format("woff"),
        url("/fonts/HappyWritingNeat-Regular.otf") format("opentype"),
@@ -55,8 +55,8 @@
   fallback: "Comic Neue";
 }
 @font-face {
-  font-family: "HappyWritingOutlineDashes-Regular";
-  src: local("HappyWritingOutlineDashes-Regular"),
+  font-family: "Happy Writing Outline Dashes Regular";
+  src: local("Happy Writing Outline Dashes Regular"),
        url("/fonts/HappyWritingOutlineDashes-Regular.woff2") format("woff2"),
        url("/fonts/HappyWritingOutlineDashes-Regular.woff") format("woff"),
        url("/fonts/HappyWritingOutlineDashes-Regular.otf") format("opentype"),
@@ -67,8 +67,8 @@
   fallback: "Comic Neue";
 }
 @font-face {
-  font-family: "HappyWritingOutlineDots-Regular";
-  src: local("HappyWritingOutlineDots-Regular"),
+  font-family: "Happy Writing Outline Dots Regular";
+  src: local("Happy Writing Outline Dots Regular"),
        url("/fonts/HappyWritingOutlineDots-Regular.woff2") format("woff2"),
        url("/fonts/HappyWritingOutlineDots-Regular.woff") format("woff"),
        url("/fonts/HappyWritingOutlineDots-Regular.otf") format("opentype"),
@@ -79,8 +79,8 @@
   fallback: "Comic Neue";
 }
 @font-face {
-  font-family: "HappyWritingOutlines-Regular";
-  src: local("HappyWritingOutlines-Regular"),
+  font-family: "Happy Writing Outlines Regular";
+  src: local("Happy Writing Outlines Regular"),
        url("/fonts/HappyWritingOutlines-Regular.woff2") format("woff2"),
        url("/fonts/HappyWritingOutlines-Regular.woff") format("woff"),
        url("/fonts/HappyWritingOutlines-Regular.otf") format("opentype"),
@@ -91,8 +91,8 @@
   fallback: "Comic Neue";
 }
 @font-face {
-  font-family: "HappyWritingOutlinesThick-Regular";
-  src: local("HappyWritingOutlinesThick-Regular"),
+  font-family: "Happy Writing Outlines Thick Regular";
+  src: local("Happy Writing Outlines Thick Regular"),
        url("/fonts/HappyWritingOutlinesThick-Regular.woff2") format("woff2"),
        url("/fonts/HappyWritingOutlinesThick-Regular.woff") format("woff"),
        url("/fonts/HappyWritingOutlinesThick-Regular.otf") format("opentype"),
@@ -103,8 +103,8 @@
   fallback: "Comic Neue";
 }
 @font-face {
-  font-family: "HappyWritingTracing-Regular";
-  src: local("HappyWritingTracing-Regular"),
+  font-family: "Happy Writing Tracing Regular";
+  src: local("Happy Writing Tracing Regular"),
        url("/fonts/HappyWritingTracing-Regular.woff2") format("woff2"),
        url("/fonts/HappyWritingTracing-Regular.woff") format("woff"),
        url("/fonts/HappyWritingTracing-Regular.otf") format("opentype"),
@@ -115,8 +115,8 @@
   fallback: "Comic Neue";
 }
 @font-face {
-  font-family: "HappyWritingTracingGuides-Regular";
-  src: local("HappyWritingTracingGuides-Regular"),
+  font-family: "Happy Writing Tracing Guides Regular";
+  src: local("Happy Writing Tracing Guides Regular"),
        url("/fonts/HappyWritingTracingGuides-Regular.woff2") format("woff2"),
        url("/fonts/HappyWritingTracingGuides-Regular.woff") format("woff"),
        url("/fonts/HappyWritingTracingGuides-Regular.otf") format("opentype"),
