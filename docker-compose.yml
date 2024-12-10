@@ -17,6 +17,9 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    volumes:
+      - ./backend:/app
+      - feedback_images:/app/uploads/feedback_images
 
   frontend:
     build: ./frontend
@@ -37,6 +40,7 @@ services:
 
 volumes:
   postgres_data:
+  feedback_images:
 
 networks:
   app-network:
