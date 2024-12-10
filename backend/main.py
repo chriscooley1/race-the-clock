@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Header, Query
+from fastapi import FastAPI, Depends, HTTPException, status, Header, Query, File, UploadFile, Form
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select
@@ -40,6 +40,7 @@ from pydantic import BaseModel
 from github_integration import GitHubIssueCreator
 import json
 from sqlalchemy import func
+import shutil
 
 from database import get_db, get_engine
 
@@ -606,46 +607,58 @@ def get_github_issue_creator():
 
 # Update the feedback endpoint
 @app.post("/api/feedback")
-async def submit_feedback(feedback_data: dict, db: Session = Depends(get_db)):
+async def submit_feedback(
+    message: str = Form(...),
+    page_url: str = Form(...),
+    display_name: str = Form(...),
+    files: List[UploadFile] = File(None),
+    db: Session = Depends(get_db)
+):
     logger.info("Received feedback from user.")
     try:
         # Create new Feedback instance with Mountain Time
         current_time = datetime.now(TIMEZONE)
+        
+        # Save images if provided
+        image_paths = []
+        if files:
+            upload_dir = "uploads/feedback_images"
+            os.makedirs(upload_dir, exist_ok=True)
+            
+            for file in files:
+                file_path = f"{upload_dir}/{current_time.strftime('%Y%m%d_%H%M%S')}_{file.filename}"
+                with open(file_path, "wb") as buffer:
+                    shutil.copyfileobj(file.file, buffer)
+                image_paths.append(file_path)
+        
         feedback = Feedback(
-            message=feedback_data["message"],
-            page_url=feedback_data["page_url"],
+            message=message,
+            page_url=page_url,
             created_at=current_time,
-            user_id=None
+            user_id=None,
+            image_paths=image_paths
         )
         
-        # Add to database
         db.add(feedback)
         db.commit()
         db.refresh(feedback)
 
-        # Get display name from feedback data
-        display_name = feedback_data.get("display_name", "Anonymous User")
-
-        # Try to create GitHub issue if integration is available
+        # Create GitHub issue with images
         github_creator = get_github_issue_creator()
         if github_creator:
             try:
                 issue_number = github_creator.create_feedback_issue({
-                    "message": feedback_data["message"],
-                    "page_url": feedback_data["page_url"],
-                    "created_at": current_time.strftime("%Y-%m-%d %H:%M:%S MST"),  # Add MST timezone indicator
-                    "display_name": display_name
+                    "message": message,
+                    "page_url": page_url,
+                    "created_at": current_time.strftime("%Y-%m-%d %H:%M:%S MST"),
+                    "display_name": display_name,
+                    "image_paths": image_paths
                 })
                 logger.info(f"Created GitHub issue #{issue_number} for feedback")
             except Exception as e:
                 logger.error(f"Failed to create GitHub issue: {str(e)}")
-        else:
-            logger.info("Skipping GitHub issue creation - integration not available")
         
         return {"status": "success", "message": "Feedback submitted successfully"}
-    except KeyError as e:
-        logger.error(f"Missing required field in feedback data: {str(e)}")
-        raise HTTPException(status_code=400, detail=f"Missing required field: {str(e)}")
     except Exception as e:
         logger.error(f"Error submitting feedback: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))

@@ -7,6 +7,7 @@ import sqlalchemy as sa
 from sqlalchemy import Column, DateTime
 from sqlalchemy.sql import func
 from sqlalchemy.types import TypeDecorator
+from sqlalchemy.dialects.postgresql import JSON
 
 # Add this custom type for Mountain Time
 class MountainDateTime(TypeDecorator):
@@ -176,6 +177,7 @@ class Feedback(SQLModel, table=True):
         sa_column=Column(MountainDateTime, default=lambda: datetime.now(timezone("America/Denver")))
     )
     user_id: Optional[int] = Field(default=None, foreign_key="users.user_id")
+    image_paths: List[str] = Field(default_factory=list, sa_column=Column(JSON))
 
 class CompletionRecord(SQLModel, table=True):
     __tablename__ = "completion_records"
