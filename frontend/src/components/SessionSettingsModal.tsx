@@ -46,7 +46,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
       return savedTime ? parseInt(savedTime) : 3;
     },
   );
-  const [stopCondition, setStopCondition] = useState("collection");
+  const [stopCondition, setStopCondition] = useState(() => {
+    const savedStopCondition = localStorage.getItem("lastUsedStopCondition");
+    return savedStopCondition || "collection";
+  });
   const [timerMinutes, setTimerMinutes] = useState(0);
   const [timerSeconds, setTimerSeconds] = useState(0);
 
@@ -226,9 +229,10 @@ const SessionSettingsModal: React.FC<SessionSettingsModalProps> = ({
               onChange={(e) => {
                 const selectedCondition = e.target.value;
                 setStopCondition(selectedCondition);
+                localStorage.setItem("lastUsedStopCondition", selectedCondition);
                 if (selectedCondition === "timer") {
-                  setTimerMinutes(0); // Reset timer minutes when switching to timer
-                  setTimerSeconds(0); // Reset timer seconds when switching to timer
+                  setTimerMinutes(0);
+                  setTimerSeconds(0);
                 }
               }}
               className="rounded border border-black p-1 text-sm"
