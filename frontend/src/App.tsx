@@ -154,10 +154,10 @@ const App: React.FC = () => {
         visibilityStates.isStartCollectionButtonVisible = true;
         visibilityStates.isEditCollectionButtonVisible = true;
         visibilityStates.isDeleteCollectionButtonVisible = true;
-        visibilityStates.isSessionSettingsModalVisible = false;
-        visibilityStates.isEditCollectionModalVisible = false;
-        visibilityStates.isDuplicateCollectionModalVisible = false;
-        visibilityStates.isCollectionPreviewModalVisible = false;
+        visibilityStates.isSessionSettingsModalVisible = true;
+        visibilityStates.isEditCollectionModalVisible = true;
+        visibilityStates.isDuplicateCollectionModalVisible = true;
+        visibilityStates.isCollectionPreviewModalVisible = true;
         return tourStepsYourCollections(visibilityStates);
       case "/new-collection":
         visibilityStates.isCollectionNameVisible = true;

@@ -37,6 +37,7 @@ interface Collection {
   items: Item[];
   type: string;
   status: string;
+  is_public: boolean;
 }
 
 interface Item {
@@ -294,19 +295,26 @@ const YourCollections: React.FC = () => {
           getAccessTokenSilently,
         );
 
+        // Update both collections and filteredCollections
         setCollections((prevCollections) =>
           prevCollections.map((col) =>
-            col.collection_id === updatedCollection.collection_id
+            col.collection_id === selectedCollection.collection_id
               ? updatedCollection
               : col,
           ),
         );
-        setSelectedCollection(updatedCollection);
 
-        const refreshedCollections = await fetchCollections(
-          getAccessTokenSilently,
+        // Update filteredCollections as well
+        setFilteredCollections((prevFiltered) =>
+          prevFiltered.map((col) =>
+            col.collection_id === selectedCollection.collection_id
+              ? updatedCollection
+              : col,
+          ),
         );
-        setCollections(refreshedCollections);
+
+        setSelectedCollection(updatedCollection);
+        setEditModalOpen(false);
       }
     } catch (error) {
       console.error("Error updating collection:", error);
