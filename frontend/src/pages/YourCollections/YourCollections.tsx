@@ -383,6 +383,8 @@ const YourCollections: React.FC = () => {
     textColor: string,
     answerDisplayTime: number,
     stopCondition: string,
+    timerMinutes: number,
+    timerSeconds: number,
   ) => {
     if (selectedCollection) {
       // Save the last used time settings
@@ -413,6 +415,8 @@ const YourCollections: React.FC = () => {
           type: selectedCollection.type,
           answerDisplayTime,
           stopCondition,
+          timerMinutes,
+          timerSeconds,
         },
       });
       setShowModal(false);
