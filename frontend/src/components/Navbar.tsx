@@ -41,23 +41,23 @@ interface NavbarProps {
 const navigationItems = [
   {
     path: "/your-collections",
-    icon: <img src={collectionsIcon} alt="Collections" className="size-40" />,
+    icon: <img src={collectionsIcon} alt="Collections" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
   },
   {
     path: "/new-collection",
-    icon: <img src={newIcon} alt="New" className="size-40" />,
+    icon: <img src={newIcon} alt="New" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
   },
   {
     path: "/discover-collections",
-    icon: <img src={discoverIcon} alt="Discover" className="size-40" />,
+    icon: <img src={discoverIcon} alt="Discover" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
   },
   {
     path: "/games",
-    icon: <img src={gamesIcon} alt="Games" className="size-40" />,
+    icon: <img src={gamesIcon} alt="Games" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
   },
   {
     path: "/name-generator",
-    icon: <img src={spinnerIcon} alt="Spinner" className="size-40" />,
+    icon: <img src={spinnerIcon} alt="Spinner" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
   },
 ];
 
@@ -286,27 +286,28 @@ const Navbar: React.FC<NavbarProps> = ({
           </div>
         )}
       </div>
-      <div className="flex grow items-center justify-center">
-        <img
-          src={raceTheClockIcon}
-          alt="raceTheClockIcon"
-          className="h-48 cursor-pointer transition-all duration-300 hover:scale-105"
-          onClick={handleTitleClick}
-        />
-
-        <nav className="hidden space-x-4 sm:space-x-6 md:flex md:space-x-8 lg:space-x-12">
-          {navigationItems.map((item) => (
-            <button
-              type="button"
-              key={item.path}
-              onClick={() => handleNavigate(item.path)}
-              className="group flex flex-col items-center justify-center px-4 py-2 text-white transition-all duration-300 hover:scale-105"
-            >
-              <div className="relative flex items-center justify-center">
-                {typeof item.icon === "string" ? item.icon : item.icon}
-              </div>
-            </button>
-          ))}
+      <div className="flex grow justify-center">
+        <nav className="hidden md:flex md:items-center">
+          <div className="flex items-center gap-4 md:gap-8 lg:gap-16 xl:gap-24 2xl:gap-32">
+            <img
+              src={raceTheClockIcon}
+              alt="raceTheClockIcon"
+              className="h-28 md:h-36 lg:h-48 cursor-pointer transition-all duration-300 hover:scale-105"
+              onClick={handleTitleClick}
+            />
+            {navigationItems.map((item) => (
+              <button
+                type="button"
+                key={item.path}
+                onClick={() => handleNavigate(item.path)}
+                className="group flex flex-col items-center justify-center px-1 py-2 text-white transition-all duration-300 hover:scale-105"
+              >
+                <div className="relative flex items-center justify-center">
+                  {typeof item.icon === "string" ? item.icon : item.icon}
+                </div>
+              </button>
+            ))}
+          </div>
         </nav>
       </div>
     </div>
