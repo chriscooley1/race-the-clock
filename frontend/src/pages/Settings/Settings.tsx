@@ -118,6 +118,7 @@ const Settings: React.FC = () => {
   };
 
   const fonts = [
+    "Happy Paragraphs Regular",
     "Comic Neue",
     "Arial",
     "Verdana",
@@ -139,7 +140,6 @@ const Settings: React.FC = () => {
     "Happy Medium Regular",
     "Happy Medium Shadow Regular",
     "Happy Neat Handwriting Regular",
-    "Happy Paragraphs Regular",
     "Happy Task Card Labels Regular",
     "Happy Titles Regular",
   ];
@@ -364,16 +364,6 @@ const Settings: React.FC = () => {
       <h1 className={`settings inherit mb-8 text-3xl font-bold`}>
         <BubbleText>Settings</BubbleText>
       </h1>
-      <div className="w-full max-w-[300px] mb-6">
-        <button
-          type="button"
-          onClick={handleResetToDefaults}
-          className="w-full rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 transition-colors"
-          title="Reset all settings to default values"
-        >
-          Reset to Default Settings
-        </button>
-      </div>
       <div className="w-full space-y-6 px-4 md:px-8">
         <div>
           <h2 className="inherit mb-2 text-xl font-semibold">Main Font</h2>
@@ -469,33 +459,9 @@ const Settings: React.FC = () => {
           </select>
         </div>
 
-        <div className="mb-4">
-          <label className="inherit mb-2 block font-bold">
-            Full Screen Display Font:
-          </label>
-          <select
-            value={theme.displayFont}
-            onChange={handleDisplayFontChange}
-            className="w-full max-w-xs rounded border p-2 text-black"
-            title="Select full screen display font"
-          >
-            {fonts.map((font) => {
-              const fontName = font.replace(/^["'](.+)["']$/, "$1");
-              return (
-                <option
-                  key={font}
-                  value={font}
-                  style={{ fontFamily: fontName }}
-                >
-                  {fontName}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-
         <div className="mb-4 text-left w-full">
           <button
+            type="button"
             onClick={handleResetToDefaults}
             className="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 transition-colors"
             title="Reset all settings to default values"
