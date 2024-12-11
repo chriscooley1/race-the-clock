@@ -286,7 +286,7 @@ const Navbar: React.FC<NavbarProps> = ({
           </div>
         )}
       </div>
-      <div className="flex grow items-center justify-center space-x-8">
+      <div className="flex grow items-center justify-center">
         <img
           src={raceTheClockIcon}
           alt="raceTheClockIcon"
@@ -294,7 +294,7 @@ const Navbar: React.FC<NavbarProps> = ({
           onClick={handleTitleClick}
         />
 
-        <nav className="hidden space-x-8 md:flex">
+        <nav className="hidden space-x-4 sm:space-x-6 md:flex md:space-x-8 lg:space-x-12">
           {navigationItems.map((item) => (
             <button
               type="button"
