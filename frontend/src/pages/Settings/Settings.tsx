@@ -289,8 +289,14 @@ const Settings: React.FC = () => {
     }));
   };
 
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || getLuminance(backgroundColor) < 0.5
+      ? "text-white"
+      : "text-black";
+  };
+
   return (
-    <div className="page-container mt-[20px] flex flex-col items-center">
+    <div className={`page-container mt-[20px] flex flex-col items-center ${getTextColorClass(theme.backgroundColor)}`}>
       <div className="absolute right-6 top-[280px] flex flex-col space-y-2">
         <label className="flex items-center">
           <input
@@ -303,12 +309,12 @@ const Settings: React.FC = () => {
         </label>
       </div>
 
-      <h1 className="settings mb-8 text-3xl font-bold">
+      <h1 className={`settings mb-8 text-3xl font-bold inherit`}>
         <BubbleText>Settings</BubbleText>
       </h1>
       <div className="w-full space-y-6 px-4 md:px-8">
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Main Font</h2>
+          <h2 className="mb-2 text-xl font-semibold inherit">Main Font</h2>
           <select
             value={theme.font}
             onChange={handleFontChange}
@@ -331,7 +337,7 @@ const Settings: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Heading Font</h2>
+          <h2 className="mb-2 text-xl font-semibold inherit">Heading Font</h2>
           <select
             value={theme.headingFont}
             onChange={handleHeadingFontChange}
@@ -354,7 +360,7 @@ const Settings: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Button Font</h2>
+          <h2 className="mb-2 text-xl font-semibold inherit">Button Font</h2>
           <select
             value={theme.buttonFont}
             onChange={handleButtonFontChange}
@@ -377,7 +383,7 @@ const Settings: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Full Screen Display Font</h2>
+          <h2 className="mb-2 text-xl font-semibold inherit">Full Screen Display Font</h2>
           <select
             value={theme.displayFont}
             onChange={handleDisplayFontChange}
@@ -400,7 +406,7 @@ const Settings: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label className="mb-2 block font-bold">Color Theme:</label>
+          <label className="mb-2 block font-bold inherit">Color Theme:</label>
           <div className="flex flex-wrap">
             {getAdjustedColorOptions().map((color) => (
               <div
@@ -429,7 +435,7 @@ const Settings: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label className="mb-2 block font-bold">
+          <label className="mb-2 block font-bold inherit">
             Text Color for Full Screen Display:
           </label>
           <div className="flex flex-wrap">
@@ -449,7 +455,7 @@ const Settings: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Accessibility</h2>
+          <h2 className="mb-2 text-xl font-semibold inherit">Accessibility</h2>
           <div className="space-y-2">
             <label className="flex items-center">
               <input
@@ -478,7 +484,7 @@ const Settings: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Background Theme</h2>
+          <h2 className="mb-2 text-xl font-semibold inherit">Background Theme</h2>
           <select
             value={theme.backgroundImage}
             onChange={handleBackgroundThemeChange}
