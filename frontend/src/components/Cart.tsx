@@ -15,13 +15,22 @@ interface CartProps {
   onUpdateQuantity?: (index: number, quantity: number) => void;
 }
 
-const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem, onUpdateQuantity }) => {
+const Cart: React.FC<CartProps> = ({
+  isOpen,
+  onClose,
+  items,
+  onRemoveItem,
+  onUpdateQuantity,
+}) => {
   const { theme } = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
@@ -37,11 +46,14 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem, onUpd
 
   if (!isOpen) return null;
 
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-50">
-      <div 
+      <div
         ref={modalRef}
         className={`relative w-full max-w-md rounded-lg p-6 shadow-xl ${
           theme.isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
@@ -63,7 +75,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem, onUpd
           <>
             <div className="mb-4 max-h-[60vh] overflow-y-auto">
               {items.map((item, index) => (
-                <div 
+                <div
                   key={index}
                   className={`mb-2 flex items-center justify-between rounded-lg p-3 ${
                     theme.isDarkMode ? "bg-gray-700" : "bg-gray-100"
@@ -71,13 +83,20 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem, onUpd
                 >
                   <div>
                     <h3 className="font-semibold">{item.name}</h3>
-                    <p>${item.price.toFixed(2)} × {item.quantity}</p>
+                    <p>
+                      ${item.price.toFixed(2)} × {item.quantity}
+                    </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
-                        onClick={() => onUpdateQuantity?.(index, Math.max(1, item.quantity - 1))}
+                        onClick={() =>
+                          onUpdateQuantity?.(
+                            index,
+                            Math.max(1, item.quantity - 1),
+                          )
+                        }
                         className="rounded-full bg-gray-200 px-2 py-1 text-black hover:bg-gray-300"
                       >
                         -
@@ -85,7 +104,9 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemoveItem, onUpd
                       <span className="w-8 text-center">{item.quantity}</span>
                       <button
                         type="button"
-                        onClick={() => onUpdateQuantity?.(index, item.quantity + 1)}
+                        onClick={() =>
+                          onUpdateQuantity?.(index, item.quantity + 1)
+                        }
                         className="rounded-full bg-gray-200 px-2 py-1 text-black hover:bg-gray-300"
                       >
                         +

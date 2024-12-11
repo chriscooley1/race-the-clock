@@ -360,10 +360,12 @@ const CollectionSetup: React.FC = () => {
           const mathProblems = generateMathProblems(itemCount, operation);
           generatedSequence = mathProblems.map((item) => ({
             name: item.problem,
-            count: item.answer
+            count: item.answer,
           }));
         } else {
-          console.error("Math Problems selected but operation is not set or is PeriodicElement");
+          console.error(
+            "Math Problems selected but operation is not set or is PeriodicElement",
+          );
         }
         break;
       case "numberSense": {
@@ -529,11 +531,13 @@ const CollectionSetup: React.FC = () => {
 
   return (
     <div className="page-container">
-      <div className="flex min-h-screen w-full flex-col items-center pt-[20px]"
-        style={{ 
+      <div
+        className="flex min-h-screen w-full flex-col items-center pt-[20px]"
+        style={{
           backgroundColor: theme.backgroundColor,
-          color: theme.textColor 
-        }}>
+          color: theme.textColor,
+        }}
+      >
         <h1 className="collection-setup text-4xl font-bold">
           <BubbleText>Step 2 - Setup</BubbleText>
         </h1>
@@ -545,11 +549,15 @@ const CollectionSetup: React.FC = () => {
         </h3>
 
         <div className="mb-4 w-full max-w-4xl px-4">
-          <div className={`mx-auto mb-8 max-w-md rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+          <div
+            className={`mx-auto mb-8 max-w-md rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
             style={{
               borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
-            }}>
-            <h4 className="mb-4 text-center text-xl font-bold">Collection Settings</h4>
+            }}
+          >
+            <h4 className="mb-4 text-center text-xl font-bold">
+              Collection Settings
+            </h4>
             <div className="mx-auto space-y-4">
               {category !== "Number Sense" ? (
                 <>
@@ -572,14 +580,18 @@ const CollectionSetup: React.FC = () => {
                       {category === "Math" && (
                         <>
                           <option value="numbers">Numbers</option>
-                          <option value="numbersOneToHundred">Numbers 1-100</option>
+                          <option value="numbersOneToHundred">
+                            Numbers 1-100
+                          </option>
                           <option value="mathProblems">Math Problems</option>
                         </>
                       )}
                       {category === "Language Arts" && (
                         <>
                           <option value="letters">Uppercase Letters</option>
-                          <option value="randomLowercase">Lowercase Letters</option>
+                          <option value="randomLowercase">
+                            Lowercase Letters
+                          </option>
                           <option value="randomMixedCase">
                             Mixed Case Letters
                           </option>
@@ -638,7 +650,10 @@ const CollectionSetup: React.FC = () => {
                       value={dotCountType}
                       onChange={(e) => {
                         setDotCountType(e.target.value as "fixed" | "random");
-                        console.log("Dot count type changed to:", e.target.value); // Debugging log for dot count type change
+                        console.log(
+                          "Dot count type changed to:",
+                          e.target.value,
+                        ); // Debugging log for dot count type change
                       }}
                     >
                       <option value="fixed">Fixed</option>
@@ -746,11 +761,13 @@ const CollectionSetup: React.FC = () => {
                         console.log("Dot color changed to:", e.target.value); // Debugging log for dot color change
                       }}
                     >
-                      {["blue", "green", "red", "purple", "orange"].map((color) => (
-                        <option key={color} value={color}>
-                          {color}
-                        </option>
-                      ))}
+                      {["blue", "green", "red", "purple", "orange"].map(
+                        (color) => (
+                          <option key={color} value={color}>
+                            {color}
+                          </option>
+                        ),
+                      )}
                     </select>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -782,13 +799,16 @@ const CollectionSetup: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className={`rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+            <div
+              className={`rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
               style={{
                 borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
-              }}>
+              }}
+            >
               <h4 className="mb-4 text-xl font-bold">Generate Random Items</h4>
               <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
-                Quickly create a collection with randomly generated items based on your settings.
+                Quickly create a collection with randomly generated items based
+                on your settings.
               </p>
               <div className="mt-auto pt-[42px]">
                 <button
@@ -801,13 +821,16 @@ const CollectionSetup: React.FC = () => {
               </div>
             </div>
 
-            <div className={`rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+            <div
+              className={`rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
               style={{
                 borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
-              }}>
+              }}
+            >
               <h4 className="mb-4 text-xl font-bold">Create Custom Items</h4>
               <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
-                Create your own custom items or upload files for your collection.
+                Create your own custom items or upload files for your
+                collection.
               </p>
               <div className="space-y-4">
                 <input
@@ -824,7 +847,13 @@ const CollectionSetup: React.FC = () => {
                   className="w-full rounded-lg border border-black bg-blue-500 px-6 py-2 font-bold text-white transition-all duration-300 hover:bg-blue-600"
                   onClick={() => {
                     navigate("/collection-final-step", {
-                      state: { collectionName, isPublic, category, sequence, type },
+                      state: {
+                        collectionName,
+                        isPublic,
+                        category,
+                        sequence,
+                        type,
+                      },
                     });
                   }}
                 >
@@ -835,10 +864,12 @@ const CollectionSetup: React.FC = () => {
           </div>
 
           {(isGenerated || images.length > 0) && (
-            <div className={`mt-8 rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+            <div
+              className={`mt-8 rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
               style={{
                 borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
-              }}>
+              }}
+            >
               <div className="mb-4 flex items-center justify-between">
                 <h4 className="text-xl font-bold">Preview</h4>
                 <div className="space-x-2">
@@ -865,7 +896,10 @@ const CollectionSetup: React.FC = () => {
                   </h3>
                   <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
                     {previewSequence.map((item, index) => (
-                      <div key={index} className="rounded-md border border-black p-2">
+                      <div
+                        key={index}
+                        className="rounded-md border border-black p-2"
+                      >
                         <p className="text-center">{item.name}</p>
                         {category === "Math" && type === "mathProblems" && (
                           <div className="mt-2">
@@ -895,7 +929,8 @@ const CollectionSetup: React.FC = () => {
                             onClick={() =>
                               editItem(
                                 index,
-                                prompt("Edit item name:", item.name) || item.name,
+                                prompt("Edit item name:", item.name) ||
+                                  item.name,
                               )
                             }
                             className="text-blue-500"
@@ -920,14 +955,23 @@ const CollectionSetup: React.FC = () => {
                   <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
                     {images.map((image) => (
                       <div key={image.id} className="relative">
-                        <img src={image.preview} alt="Preview" className="size-24 object-cover" />
+                        <img
+                          src={image.preview}
+                          alt="Preview"
+                          className="size-24 object-cover"
+                        />
                         {category === "Number Sense" && (
                           <input
                             title="Count"
                             placeholder="Count"
                             type="number"
                             value={image.count}
-                            onChange={(e) => handleImageCountChange(image.id, parseInt(e.target.value))}
+                            onChange={(e) =>
+                              handleImageCountChange(
+                                image.id,
+                                parseInt(e.target.value),
+                              )
+                            }
                             min="1"
                             className="mt-2 w-full rounded border border-gray-300 px-2 py-1"
                           />

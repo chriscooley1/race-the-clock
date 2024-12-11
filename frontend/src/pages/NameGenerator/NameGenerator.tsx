@@ -185,7 +185,8 @@ const NameGenerator: React.FC = () => {
       const spinRevolutions = 5 + Math.random() * 3; // Increased from 2-5 to 5-8 full rotations
       const degreesPerSlice = 360 / nameList.length;
       const selectedIndex = Math.floor(Math.random() * nameList.length);
-      const targetDegrees = selectedIndex * degreesPerSlice + degreesPerSlice / 2;
+      const targetDegrees =
+        selectedIndex * degreesPerSlice + degreesPerSlice / 2;
       const totalDegrees = spinRevolutions * 360 + targetDegrees;
 
       console.log("--- Spin Initialization ---");
@@ -233,7 +234,10 @@ const NameGenerator: React.FC = () => {
     };
   }, []);
 
-  const handleDragStart = (event: React.DragEvent<HTMLLIElement>, index: number) => {
+  const handleDragStart = (
+    event: React.DragEvent<HTMLLIElement>,
+    index: number,
+  ) => {
     event.dataTransfer.setData("text/plain", index.toString());
   };
 
@@ -264,15 +268,25 @@ const NameGenerator: React.FC = () => {
         ref={containerRef}
         className={`name-generator ${getTextColorClass(theme.backgroundColor)}`}
         style={{
-          backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
-          backgroundImage: theme.backgroundImage !== "none" ? `url(${theme.backgroundImage})` : "none",
+          backgroundColor:
+            theme.backgroundImage === "none"
+              ? theme.backgroundColor
+              : "transparent",
+          backgroundImage:
+            theme.backgroundImage !== "none"
+              ? `url(${theme.backgroundImage})`
+              : "none",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className={`flex w-full max-w-5xl justify-between px-2 ${showRightSide ? "gap-16" : "justify-center"}`}>
+        <div
+          className={`flex w-full max-w-5xl justify-between px-2 ${showRightSide ? "gap-16" : "justify-center"}`}
+        >
           {/* Left side */}
-          <div className={`flex flex-col items-center ${showRightSide ? "w-1/2 pl-8" : "w-full"}`}>
+          <div
+            className={`flex flex-col items-center ${showRightSide ? "w-1/2 pl-8" : "w-full"}`}
+          >
             {/* Update text colors for the wheel section */}
             <div className="relative flex w-full max-w-[500px] flex-col items-center">
               <NameWheel
@@ -290,7 +304,7 @@ const NameGenerator: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleSpin}
-                  className="spin-button relative z-10 bg-light-blue hover:bg-hover-blue active:bg-active-blue w-full max-w-md rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
+                  className="spin-button bg-light-blue hover:bg-hover-blue active:bg-active-blue relative z-10 w-full max-w-md rounded border border-black px-4 py-2 font-bold uppercase text-black transition duration-300 hover:scale-105 active:scale-95"
                 >
                   Spin the Wheel
                 </button>
@@ -299,9 +313,9 @@ const NameGenerator: React.FC = () => {
 
             {/* Selected name display */}
             {selectedName && (
-              <div className="mt-4 text-center inherit">
-                <h2 className="text-2xl font-bold inherit">Selected:</h2>
-                <p className="text-xl inherit">{selectedName}</p>
+              <div className="inherit mt-4 text-center">
+                <h2 className="inherit text-2xl font-bold">Selected:</h2>
+                <p className="inherit text-xl">{selectedName}</p>
               </div>
             )}
           </div>
@@ -310,7 +324,7 @@ const NameGenerator: React.FC = () => {
           <div
             className={`flex flex-col transition-all duration-300 ${
               showRightSide
-                ? "w-1/2 opacity-100 pr-8"
+                ? "w-1/2 pr-8 opacity-100"
                 : "w-0 overflow-hidden opacity-0"
             }`}
           >
@@ -342,69 +356,91 @@ const NameGenerator: React.FC = () => {
               </div>
             )}
 
-          {/* Right side */}
-          <div className={`flex flex-col transition-all duration-300 inherit ${
-            showRightSide ? "w-1/2 opacity-100 pr-8" : "w-0 overflow-hidden opacity-0"
-          }`}>
-            {/* Names list */}
-            {visibilityStates.isNamesListVisible && (
-              <div className="flex w-full flex-col items-center">
-                <h2 className="mb-2 text-l font-bold inherit">Names on the Wheel:</h2>
-                <ul className="w-full max-w-md list-none p-0 text-center inherit">
-                  {nameList.map((name, index) => (
-                    <WheelSegment
-                      key={index}
-                      name={name}
-                      index={index}
-                      angle={0}
-                      radius={150}
-                      onRemove={() => handleRemoveName(index)}
-                      onEdit={(newName) => handleEditName(index, newName)}
-                      onDragStart={(event) => handleDragStart(event as React.DragEvent<HTMLLIElement>, index)}
-                      onDragOver={(event) => handleDragOver(event as React.DragEvent<HTMLLIElement>)}
-                      onDrop={(event) => handleDrop(event as React.DragEvent<HTMLLIElement>, index)}
-                    />
-                  ))}
-                </ul>
-              </div>
-            )}
+            {/* Right side */}
+            <div
+              className={`inherit flex flex-col transition-all duration-300 ${
+                showRightSide
+                  ? "w-1/2 pr-8 opacity-100"
+                  : "w-0 overflow-hidden opacity-0"
+              }`}
+            >
+              {/* Names list */}
+              {visibilityStates.isNamesListVisible && (
+                <div className="flex w-full flex-col items-center">
+                  <h2 className="text-l inherit mb-2 font-bold">
+                    Names on the Wheel:
+                  </h2>
+                  <ul className="inherit w-full max-w-md list-none p-0 text-center">
+                    {nameList.map((name, index) => (
+                      <WheelSegment
+                        key={index}
+                        name={name}
+                        index={index}
+                        angle={0}
+                        radius={150}
+                        onRemove={() => handleRemoveName(index)}
+                        onEdit={(newName) => handleEditName(index, newName)}
+                        onDragStart={(event) =>
+                          handleDragStart(
+                            event as React.DragEvent<HTMLLIElement>,
+                            index,
+                          )
+                        }
+                        onDragOver={(event) =>
+                          handleDragOver(
+                            event as React.DragEvent<HTMLLIElement>,
+                          )
+                        }
+                        onDrop={(event) =>
+                          handleDrop(
+                            event as React.DragEvent<HTMLLIElement>,
+                            index,
+                          )
+                        }
+                      />
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* Toggle button (always visible) */}
+          <button
+            type="button"
+            className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
+            onClick={handleToggleRightSide}
+            style={{
+              position: "absolute",
+              top: "calc(210px + 56px + 1rem)",
+              right: "1rem",
+              zIndex: 40,
+            }}
+            title={
+              showRightSide ? "Hide name input panel" : "Show name input panel"
+            }
+          >
+            <div className="relative flex items-center">
+              {!showRightSide && (
+                <span className="absolute right-12 animate-pulse whitespace-nowrap rounded border border-gray-300 bg-white px-2 py-1 text-sm text-blue-500">
+                  Click to add names →
+                </span>
+              )}
+              {showRightSide ? "-" : "+"}
+            </div>
+          </button>
+
+          {/* Add the GuidedTour component here */}
+          <GuidedTour
+            steps={steps}
+            isRunning={isTourRunning}
+            onComplete={handleTourComplete}
+            currentStep={currentTourStep}
+            onStepChange={handleTourStepChange}
+            tourName="nameGenerator"
+          />
         </div>
-
-        {/* Toggle button (always visible) */}
-        <button
-          type="button"
-          className="flex size-10 items-center justify-center rounded-full border border-black bg-green-500 text-2xl text-white transition duration-300 hover:bg-green-600"
-          onClick={handleToggleRightSide}
-          style={{
-            position: "absolute",
-            top: "calc(210px + 56px + 1rem)",
-            right: "1rem",
-            zIndex: 40,
-          }}
-          title={showRightSide ? "Hide name input panel" : "Show name input panel"}
-        >
-          <div className="relative flex items-center">
-            {!showRightSide && (
-              <span className="absolute right-12 whitespace-nowrap animate-pulse text-sm text-blue-500 bg-white px-2 py-1 rounded border border-gray-300">
-                Click to add names →
-              </span>
-            )}
-            {showRightSide ? "-" : "+"}
-          </div>
-        </button>
-
-        {/* Add the GuidedTour component here */}
-        <GuidedTour
-          steps={steps}
-          isRunning={isTourRunning}
-          onComplete={handleTourComplete}
-          currentStep={currentTourStep}
-          onStepChange={handleTourStepChange}
-          tourName="nameGenerator"
-        />
       </div>
-    </div>
     </div>
   );
 };

@@ -27,13 +27,17 @@ export const tourStepsDiscoverCollections = (
     },
     {
       target: ".preview-collection-button",
-      content: "Click to see more details about a collection and subscribe to it.",
+      content:
+        "Click to see more details about a collection and subscribe to it.",
       ...(visibilityStates.isPreviewButtonVisible ? { isOpen: true } : {}),
     },
     {
       target: ".collection-preview-modal",
-      content: "This modal shows details about the collection and allows you to subscribe.",
-      ...(visibilityStates.isCollectionPreviewModalVisible ? { isOpen: true } : {}),
+      content:
+        "This modal shows details about the collection and allows you to subscribe.",
+      ...(visibilityStates.isCollectionPreviewModalVisible
+        ? { isOpen: true }
+        : {}),
     },
   ];
 

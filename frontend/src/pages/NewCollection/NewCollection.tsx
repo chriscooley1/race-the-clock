@@ -128,12 +128,14 @@ const NewCollection: React.FC = () => {
   };
 
   return (
-    <div className={`page-container mt-4 ${getTextColorClass(theme.backgroundColor)}`}>
+    <div
+      className={`page-container mt-4 ${getTextColorClass(theme.backgroundColor)}`}
+    >
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
-        <h1 className="new-collection-page text-4xl font-bold inherit">
+        <h1 className="new-collection-page inherit text-4xl font-bold">
           <BubbleText>Step 1 - Create</BubbleText>
         </h1>
-        <h1 className="text-3xl font-bold inherit">
+        <h1 className="inherit text-3xl font-bold">
           <BubbleText>New Collection</BubbleText>
         </h1>
 
@@ -154,7 +156,7 @@ const NewCollection: React.FC = () => {
 
         {visibilityStates.isCategorySelectVisible && (
           <div className="mb-4 flex max-w-[300px] items-center justify-center">
-            <label htmlFor="categorySelect" className="mr-2 inherit">
+            <label htmlFor="categorySelect" className="inherit mr-2">
               Category:
             </label>
             <select
@@ -173,7 +175,7 @@ const NewCollection: React.FC = () => {
         )}
 
         {visibilityStates.isPublicCheckboxVisible && (
-          <div className="mt-2.5 flex items-center text-sm inherit">
+          <div className="inherit mt-2.5 flex items-center text-sm">
             <input
               type="checkbox"
               id="publicCheckbox"

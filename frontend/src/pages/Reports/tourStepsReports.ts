@@ -5,7 +5,8 @@ export const tourStepsReports = (): Step[] => {
   const steps: Step[] = [
     {
       target: "h1.mb-8",
-      content: "This is the Reports page where you can monitor user performance.",
+      content:
+        "This is the Reports page where you can monitor user performance.",
       disableBeacon: true,
     },
     {
@@ -14,7 +15,8 @@ export const tourStepsReports = (): Step[] => {
     },
     {
       target: ".reports-overview",
-      content: "This section provides an overview of user performance after each session.",
+      content:
+        "This section provides an overview of user performance after each session.",
     },
     {
       target: ".reports-overview ul",

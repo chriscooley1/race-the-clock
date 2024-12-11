@@ -180,7 +180,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
         </div>
 
         {/* Right side - Login/Logout, Cart and Feedback */}
-        <div className="relative flex items-center space-x-10 mt-2">
+        <div className="relative mt-2 flex items-center space-x-10">
           <button
             type="button"
             onClick={isHomePage ? handleLogin : handleLogout}
@@ -199,7 +199,7 @@ const CollectionsNavBar: React.FC<CollectionsNavBarProps> = ({
             >
               <img src={cartIcon} alt="Shopping Cart" className="size-8" />
               {totalItems > 0 && (
-                <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                <span className="absolute -right-2 -top-2 flex size-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                   {totalItems}
                 </span>
               )}

@@ -49,7 +49,9 @@ const MultipleWordsGame: React.FC = () => {
   };
 
   return (
-    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
+    <div
+      className={`page-container ${getTextColorClass(theme.backgroundColor)}`}
+    >
       <button
         type="button"
         onClick={handleBack}

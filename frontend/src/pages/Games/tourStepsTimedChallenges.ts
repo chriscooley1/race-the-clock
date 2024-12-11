@@ -5,7 +5,8 @@ export const tourStepsTimedChallenges = (): Step[] => {
   const steps: Step[] = [
     {
       target: "h1.mb-8", // Target the main title
-      content: "This is the Timed Challenges page where you can test your skills.",
+      content:
+        "This is the Timed Challenges page where you can test your skills.",
       disableBeacon: true,
     },
     {

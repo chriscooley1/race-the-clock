@@ -45,8 +45,10 @@ const Games: React.FC = () => {
   };
 
   return (
-    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
-      <h1 className="mb-8 text-3xl font-bold inherit">
+    <div
+      className={`page-container ${getTextColorClass(theme.backgroundColor)}`}
+    >
+      <h1 className="inherit mb-8 text-3xl font-bold">
         <BubbleText>Games</BubbleText>
       </h1>
       <p className="inherit">
@@ -57,19 +59,36 @@ const Games: React.FC = () => {
         <p className="inherit">Loading games...</p>
       ) : (
         <div className="w-full max-w-2xl">
-          <Link to="/games/matching-game" className="matching-game mt-8 block hover:opacity-80">
-            <h2 className="text-2xl font-semibold inherit">Matching Game</h2>
-            <p className="inherit">Match the letters with the corresponding images!</p>
+          <Link
+            to="/games/matching-game"
+            className="matching-game mt-8 block hover:opacity-80"
+          >
+            <h2 className="inherit text-2xl font-semibold">Matching Game</h2>
+            <p className="inherit">
+              Match the letters with the corresponding images!
+            </p>
           </Link>
 
-          <Link to="/games/multiple-words-game" className="multiple-words-game mt-8 block hover:opacity-80">
-            <h2 className="text-2xl font-semibold inherit">Multiple Words Game</h2>
-            <p className="inherit">Drag and connect words to their corresponding cards!</p>
+          <Link
+            to="/games/multiple-words-game"
+            className="multiple-words-game mt-8 block hover:opacity-80"
+          >
+            <h2 className="inherit text-2xl font-semibold">
+              Multiple Words Game
+            </h2>
+            <p className="inherit">
+              Drag and connect words to their corresponding cards!
+            </p>
           </Link>
 
-          <Link to="/games/timed-challenges" className="timed-challenges-game mt-8 block hover:opacity-80">
-            <h2 className="text-2xl font-semibold inherit">Timed Challenges</h2>
-            <p className="inherit">Complete as many challenges as you can within the time limit!</p>
+          <Link
+            to="/games/timed-challenges"
+            className="timed-challenges-game mt-8 block hover:opacity-80"
+          >
+            <h2 className="inherit text-2xl font-semibold">Timed Challenges</h2>
+            <p className="inherit">
+              Complete as many challenges as you can within the time limit!
+            </p>
           </Link>
         </div>
       )}

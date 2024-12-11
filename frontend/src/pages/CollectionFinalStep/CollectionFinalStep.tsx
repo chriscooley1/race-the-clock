@@ -369,13 +369,16 @@ const CollectionFinalStep: React.FC = () => {
         operatorSymbol = "+";
     }
     const problemString = `${firstNumber} ${operatorSymbol} ${secondNumber}`;
-    
+
     // Create a new item with both problem and answer
-    setItems([...items, { 
-      id: items.length + 1, 
-      name: problemString,
-      count: answer
-    }]);
+    setItems([
+      ...items,
+      {
+        id: items.length + 1,
+        name: problemString,
+        count: answer,
+      },
+    ]);
   };
 
   const handleTermSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -574,26 +577,30 @@ const CollectionFinalStep: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
                   {items.map((item) => (
-                    <div key={item.id} className="relative rounded-md border border-black p-4">
+                    <div
+                      key={item.id}
+                      className="relative rounded-md border border-black p-4"
+                    >
                       {/* Display problem or item name */}
                       <p className="text-center text-lg">{item.name}</p>
-                      
+
                       {/* Display answer for math problems */}
-                      {category === "Math" && initialType === "mathProblems" && (
-                        <div className="mt-2">
-                          <label className="block text-sm font-bold text-gray-600">
-                            Answer:
-                          </label>
-                          <input
-                            title="Answer"
-                            placeholder="Answer"
-                            type="number"
-                            value={item.count || ""}
-                            readOnly
-                            className="w-full rounded border border-gray-300 bg-gray-100 px-2 py-1 text-center"
-                          />
-                        </div>
-                      )}
+                      {category === "Math" &&
+                        initialType === "mathProblems" && (
+                          <div className="mt-2">
+                            <label className="block text-sm font-bold text-gray-600">
+                              Answer:
+                            </label>
+                            <input
+                              title="Answer"
+                              placeholder="Answer"
+                              type="number"
+                              value={item.count || ""}
+                              readOnly
+                              className="w-full rounded border border-gray-300 bg-gray-100 px-2 py-1 text-center"
+                            />
+                          </div>
+                        )}
 
                       {/* Display SVG if it exists */}
                       {item.svg && (

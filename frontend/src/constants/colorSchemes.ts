@@ -22,7 +22,11 @@ export const colorSchemes: ColorScheme[] = [
   { name: "Hawkbit", backgroundColor: "#ffd86f", textColor: "#333333" },
   { name: "Jasmine Green", backgroundColor: "#8cca43", textColor: "#FFFFFF" },
   { name: "Heisenberg Blue", backgroundColor: "#6fd7fe", textColor: "#333333" },
-  { name: "Middle Blue Purple", backgroundColor: "#8c6fbf", textColor: "#FFFFFF" },
+  {
+    name: "Middle Blue Purple",
+    backgroundColor: "#8c6fbf",
+    textColor: "#FFFFFF",
+  },
   { name: "Red Radish", backgroundColor: "#f63643", textColor: "#FFFFFF" },
   // { name: "Salmon Pink", backgroundColor: "#fa96a2", textColor: "#333333" },
   // { name: "Alesan", backgroundColor: "#f0ccb2", textColor: "#333333" },

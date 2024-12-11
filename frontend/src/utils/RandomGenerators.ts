@@ -149,7 +149,7 @@ export const generateMathProblems = (
     }
     problems.push({
       problem: `${num1} ${operationSymbol[operation]} ${num2}`,
-      answer: answer
+      answer: answer,
     });
   }
   return problems;

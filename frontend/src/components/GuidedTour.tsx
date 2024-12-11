@@ -27,16 +27,18 @@ const GuidedTour: React.FC<GuidedTourProps> = ({
   const location = useLocation();
 
   // Filter steps based on element visibility
-  const visibleSteps = steps.filter(step => {
+  const visibleSteps = steps.filter((step) => {
     if (typeof step.target === "string") {
       const element = document.querySelector(step.target);
       if (!element) return false;
-      
+
       // Check if element is visible
       const style = window.getComputedStyle(element);
-      return style.display !== "none" && 
-             style.visibility !== "hidden" && 
-             style.opacity !== "0";
+      return (
+        style.display !== "none" &&
+        style.visibility !== "hidden" &&
+        style.opacity !== "0"
+      );
     }
     return true;
   });

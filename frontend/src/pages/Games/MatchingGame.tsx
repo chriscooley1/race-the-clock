@@ -41,7 +41,9 @@ const MatchingGame: React.FC = () => {
   };
 
   return (
-    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
+    <div
+      className={`page-container ${getTextColorClass(theme.backgroundColor)}`}
+    >
       <button
         type="button"
         onClick={handleBack}
@@ -49,12 +51,14 @@ const MatchingGame: React.FC = () => {
       >
         Back to Games
       </button>
-      <h1 className="mb-8 text-3xl font-bold inherit">
+      <h1 className="inherit mb-8 text-3xl font-bold">
         <BubbleText>Matching Game</BubbleText>
       </h1>
       {!isGameStarted ? (
         <div className="game-instructions">
-          <p className="inherit">Match the letters with the corresponding images!</p>
+          <p className="inherit">
+            Match the letters with the corresponding images!
+          </p>
           <button
             type="button"
             onClick={startGame}
@@ -72,7 +76,7 @@ const MatchingGame: React.FC = () => {
                 <div
                   key={word}
                   onClick={() => handleMatch(word)}
-                  className="m-2 cursor-pointer inherit"
+                  className="inherit m-2 cursor-pointer"
                 >
                   {word} {matches[word] && "✓"}
                 </div>
@@ -80,7 +84,7 @@ const MatchingGame: React.FC = () => {
             </div>
             <div className="cards-section">
               {images.map((image) => (
-                <div key={image} className="m-2 inherit">
+                <div key={image} className="inherit m-2">
                   {image}
                 </div>
               ))}

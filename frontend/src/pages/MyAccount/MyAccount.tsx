@@ -120,7 +120,8 @@ const MyAccount: React.FC = () => {
 
   return (
     <div className="page-container">
-      <div className={`rounded-lg border p-8 shadow-lg ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+      <div
+        className={`rounded-lg border p-8 shadow-lg ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
         style={{
           borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
         }}

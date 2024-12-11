@@ -78,11 +78,11 @@ const FontPreloader = () => {
 
       try {
         const loadedFonts = Array.from(document.fonts.values()).map((font) =>
-          font.family.replace(/["']/g, "")
+          font.family.replace(/["']/g, ""),
         );
 
         const fontsToLoad = fonts.filter(
-          (font) => !loadedFonts.includes(font.family)
+          (font) => !loadedFonts.includes(font.family),
         );
 
         if (fontsToLoad.length === 0) {
@@ -99,10 +99,10 @@ const FontPreloader = () => {
             const fontFace = new FontFace(
               font.family,
               `local("${font.family}"),
-               url(${font.url.replace('.otf', '.woff2')}) format("woff2"),
-               url(${font.url.replace('.otf', '.woff')}) format("woff"),
+               url(${font.url.replace(".otf", ".woff2")}) format("woff2"),
+               url(${font.url.replace(".otf", ".woff")}) format("woff"),
                url(${font.url}) format("opentype"),
-               url(${font.url.replace('.otf', '.ttf')}) format("truetype")`
+               url(${font.url.replace(".otf", ".ttf")}) format("truetype")`,
             );
             const loadedFont = await fontFace.load();
             document.fonts.add(loadedFont);
@@ -117,7 +117,10 @@ const FontPreloader = () => {
         const loadedFontFaces = await Promise.allSettled(fontLoadPromises);
         const successfulFonts = loadedFontFaces
           .filter((result) => result.status === "fulfilled" && result.value)
-          .map((result) => (result as PromiseFulfilledResult<FontFace>).value.family);
+          .map(
+            (result) =>
+              (result as PromiseFulfilledResult<FontFace>).value.family,
+          );
 
         if (successfulFonts.length > 0) {
           console.log("Successfully loaded fonts:", successfulFonts.join(", "));

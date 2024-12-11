@@ -274,7 +274,8 @@ export const deleteCollection = async (
   } catch (error) {
     console.error("Failed to delete collection:", error);
     if (axios.isAxiosError(error)) {
-      const errorMessage = error.response?.data?.detail || "Unknown error occurred";
+      const errorMessage =
+        error.response?.data?.detail || "Unknown error occurred";
       throw new Error(`Failed to delete collection: ${errorMessage}`);
     }
     throw error;
@@ -573,7 +574,7 @@ export const submitFeedback = async (
   message: string,
   displayName: string,
   getAccessTokenSilently: () => Promise<string>,
-  images?: File[]
+  images?: File[],
 ) => {
   try {
     const headers: Record<string, string> = {
@@ -591,7 +592,7 @@ export const submitFeedback = async (
     formData.append("message", message);
     formData.append("page_url", window.location.href);
     formData.append("display_name", displayName);
-    
+
     if (images) {
       images.forEach((image, index) => {
         formData.append(`image_${index}`, image);
@@ -601,7 +602,7 @@ export const submitFeedback = async (
     const response = await axios.post(
       `${API_BASE_URL}/api/feedback`,
       formData,
-      { headers }
+      { headers },
     );
 
     return response.data;
@@ -610,7 +611,7 @@ export const submitFeedback = async (
     if (axios.isAxiosError(error)) {
       throw new Error(
         error.response?.data?.detail ||
-          "Failed to submit feedback. Please try again."
+          "Failed to submit feedback. Please try again.",
       );
     }
     throw new Error("Failed to submit feedback. Please try again.");
@@ -644,13 +645,16 @@ export const checkSubscriptionsBatch = async (
 };
 
 export const fetchCompletionCounts = async (
-  getAccessTokenSilently: () => Promise<string>
+  getAccessTokenSilently: () => Promise<string>,
 ): Promise<Record<number, number>> => {
   try {
     const token = await getAccessTokenSilently();
-    const response = await axios.get(`${API_BASE_URL}/collections/completion-counts`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.get(
+      `${API_BASE_URL}/collections/completion-counts`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -660,7 +664,7 @@ export const fetchCompletionCounts = async (
 
 export const completeCollection = async (
   collectionId: number,
-  getAccessTokenSilently: () => Promise<string>
+  getAccessTokenSilently: () => Promise<string>,
 ): Promise<void> => {
   try {
     const token = await getAccessTokenSilently();
@@ -669,7 +673,7 @@ export const completeCollection = async (
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
-      }
+      },
     );
   } catch (error) {
     handleApiError(error);

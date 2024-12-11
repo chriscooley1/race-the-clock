@@ -41,23 +41,49 @@ interface NavbarProps {
 const navigationItems = [
   {
     path: "/your-collections",
-    icon: <img src={collectionsIcon} alt="Collections" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
+    icon: (
+      <img
+        src={collectionsIcon}
+        alt="Collections"
+        className="size-24 md:size-28 lg:size-40"
+      />
+    ),
   },
   {
     path: "/new-collection",
-    icon: <img src={newIcon} alt="New" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
+    icon: (
+      <img src={newIcon} alt="New" className="size-24 md:size-28 lg:size-40" />
+    ),
   },
   {
     path: "/discover-collections",
-    icon: <img src={discoverIcon} alt="Discover" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
+    icon: (
+      <img
+        src={discoverIcon}
+        alt="Discover"
+        className="size-24 md:size-28 lg:size-40"
+      />
+    ),
   },
   {
     path: "/games",
-    icon: <img src={gamesIcon} alt="Games" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
+    icon: (
+      <img
+        src={gamesIcon}
+        alt="Games"
+        className="size-24 md:size-28 lg:size-40"
+      />
+    ),
   },
   {
     path: "/name-generator",
-    icon: <img src={spinnerIcon} alt="Spinner" className="h-24 w-24 md:h-28 md:w-28 lg:h-40 lg:w-40" />,
+    icon: (
+      <img
+        src={spinnerIcon}
+        alt="Spinner"
+        className="size-24 md:size-28 lg:size-40"
+      />
+    ),
   },
 ];
 
@@ -292,7 +318,7 @@ const Navbar: React.FC<NavbarProps> = ({
             <img
               src={raceTheClockIcon}
               alt="raceTheClockIcon"
-              className="h-28 md:h-36 lg:h-48 cursor-pointer transition-all duration-300 hover:scale-105"
+              className="h-28 cursor-pointer transition-all duration-300 hover:scale-105 md:h-36 lg:h-48"
               onClick={handleTitleClick}
             />
             {navigationItems.map((item) => (

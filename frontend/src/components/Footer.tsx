@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
       <div className="relative h-24">
         <svg
           viewBox="0 0 1440 320"
-          className="absolute bottom-0 left-0 h-full w-full"
+          className="absolute bottom-0 left-0 size-full"
           preserveAspectRatio="none"
         >
           <path
@@ -23,39 +23,57 @@ const Footer: React.FC = () => {
           <div>
             <ul className="space-y-2">
               <li>
-                <a href="/about" className="hover:text-gray-300">Contact Us</a>
+                <a href="/about" className="hover:text-gray-300">
+                  Contact Us
+                </a>
               </li>
               <li>
-                <a href="/resources" className="hover:text-gray-300">Help Center</a>
+                <a href="/resources" className="hover:text-gray-300">
+                  Help Center
+                </a>
               </li>
               <li>
-                <a href="/my-account" className="hover:text-gray-300">Account</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <ul className="space-y-2">
-              <li>
-                <a href="/your-collections" className="hover:text-gray-300">Collections</a>
-              </li>
-              <li>
-                <a href="/new-collection" className="hover:text-gray-300">Create</a>
-              </li>
-              <li>
-                <a href="/discover-collections" className="hover:text-gray-300">Discover</a>
+                <a href="/my-account" className="hover:text-gray-300">
+                  Account
+                </a>
               </li>
             </ul>
           </div>
           <div>
             <ul className="space-y-2">
               <li>
-                <a href="/shop" className="hover:text-gray-300">Shop</a>
+                <a href="/your-collections" className="hover:text-gray-300">
+                  Collections
+                </a>
               </li>
               <li>
-                <a href="/games" className="hover:text-gray-300">Games</a>
+                <a href="/new-collection" className="hover:text-gray-300">
+                  Create
+                </a>
               </li>
               <li>
-                <a href="/name-generator" className="hover:text-gray-300">Spinner</a>
+                <a href="/discover-collections" className="hover:text-gray-300">
+                  Discover
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul className="space-y-2">
+              <li>
+                <a href="/shop" className="hover:text-gray-300">
+                  Shop
+                </a>
+              </li>
+              <li>
+                <a href="/games" className="hover:text-gray-300">
+                  Games
+                </a>
+              </li>
+              <li>
+                <a href="/name-generator" className="hover:text-gray-300">
+                  Spinner
+                </a>
               </li>
             </ul>
           </div>
