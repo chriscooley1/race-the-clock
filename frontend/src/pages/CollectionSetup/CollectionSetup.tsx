@@ -456,20 +456,21 @@ const CollectionSetup: React.FC = () => {
       if (file.length > 0) {
         collectionData = images.map((image) => ({
           name: image.file.name,
-          svg: image.preview, // Use preview as svg to store the image data
-          count: category === "Number Sense" ? image.count : 1,
-          type: "image", // Add type to identify this as an image item
+          svg: image.preview,
+          count: category === "Number Sense" ? image.count : undefined,
+          type: "image",
         }));
       } else {
         collectionData = previewSequence.map((item, index) => ({
           id: index + 1,
           name: item.name,
           svg: item.svg,
-          type: "sequence", // Add type to identify this as a sequence item
+          count: item.count,
+          type: "sequence",
         }));
       }
 
-      console.log("Collection saved successfully");
+      console.log("Saving collection data:", collectionData);
 
       await saveCollection(
         currentUser.username,
