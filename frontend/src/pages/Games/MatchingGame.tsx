@@ -4,6 +4,7 @@ import { tourStepsMatchingGame } from "./tourStepsMatchingGame";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
 import BubbleText from "../../components/BubbleText";
+import { useTheme } from "../../context/ThemeContext";
 
 const MatchingGame: React.FC = () => {
   const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
@@ -11,9 +12,16 @@ const MatchingGame: React.FC = () => {
   const [matches, setMatches] = useState<{ [key: string]: boolean }>({});
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const navigate = useNavigate();
+  const { theme } = useTheme();
 
   const words = ["A", "B", "C"];
   const images = ["Image1", "Image2", "Image3"];
+
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
 
   const handleTourComplete = () => {
     setIsTourRunning(false);
@@ -33,7 +41,7 @@ const MatchingGame: React.FC = () => {
   };
 
   return (
-    <div className="page-container">
+    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
       <button
         type="button"
         onClick={handleBack}
@@ -41,12 +49,12 @@ const MatchingGame: React.FC = () => {
       >
         Back to Games
       </button>
-      <h1 className="mb-8 text-3xl font-bold">
+      <h1 className="mb-8 text-3xl font-bold inherit">
         <BubbleText>Matching Game</BubbleText>
       </h1>
       {!isGameStarted ? (
         <div className="game-instructions">
-          <p>Match the letters with the corresponding images!</p>
+          <p className="inherit">Match the letters with the corresponding images!</p>
           <button
             type="button"
             onClick={startGame}
@@ -57,14 +65,14 @@ const MatchingGame: React.FC = () => {
         </div>
       ) : (
         <div className="game-board">
-          <p>Game is starting...</p>
+          <p className="inherit">Game is starting...</p>
           <div className="flex">
             <div className="words-section">
               {words.map((word) => (
                 <div
                   key={word}
                   onClick={() => handleMatch(word)}
-                  className="m-2 cursor-pointer"
+                  className="m-2 cursor-pointer inherit"
                 >
                   {word} {matches[word] && "✓"}
                 </div>
@@ -72,7 +80,7 @@ const MatchingGame: React.FC = () => {
             </div>
             <div className="cards-section">
               {images.map((image) => (
-                <div key={image} className="m-2">
+                <div key={image} className="m-2 inherit">
                   {image}
                 </div>
               ))}

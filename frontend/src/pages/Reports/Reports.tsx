@@ -5,6 +5,7 @@ import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
 import { AxiosError } from "axios";
 import BubbleText from "../../components/BubbleText";
+import { useTheme } from "../../context/ThemeContext";
 
 // Define the Report interface
 interface Report {
@@ -36,6 +37,14 @@ const Reports: React.FC = () => {
 
   // Define the steps variable without visibility states
   const steps = tourStepsReports(); // Create tour steps without visibility states
+
+  const { theme } = useTheme();
+
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
 
   useEffect(() => {
     const loadReports = async () => {
@@ -111,41 +120,41 @@ const Reports: React.FC = () => {
   };
 
   return (
-    <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">
+    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
+      <h1 className="mb-8 text-3xl font-bold inherit">
         <BubbleText>User Performance Reports</BubbleText>
       </h1>
-      <p>View detailed reports of user performance after each session.</p>
+      <p className="inherit">View detailed reports of user performance after each session.</p>
+      
       {isLoading ? (
-        <p>Loading reports...</p>
+        <p className="inherit">Loading reports...</p>
       ) : (
         <div className="reports-overview">
-          <h2>Reports Overview</h2>
-          <ul>
+          <h2 className="text-2xl font-semibold mb-4 inherit">Reports Overview</h2>
+          <ul className="space-y-4">
             {reports.map((report) => (
-              <li key={report.report_id}>
-                <p>Total Items: {report.total_items}</p>
-                <p>Time Taken: {report.time_taken} seconds</p>
-                <p>Missed Items: {report.missed_items}</p>
-                <p>Skipped Items: {report.skipped_items}</p>
-                <p>
+              <li key={report.report_id} className="border rounded p-4 inherit">
+                <p className="inherit">Total Items: {report.total_items}</p>
+                <p className="inherit">Time Taken: {report.time_taken} seconds</p>
+                <p className="inherit">Missed Items: {report.missed_items}</p>
+                <p className="inherit">Skipped Items: {report.skipped_items}</p>
+                <p className="inherit">
                   Created At: {new Date(report.created_at).toLocaleString()}
                 </p>
               </li>
             ))}
           </ul>
-          <h2>Your Collections</h2>
-          <ul>
+          
+          <h2 className="text-2xl font-semibold mt-8 mb-4 inherit">Your Collections</h2>
+          <ul className="space-y-2">
             {collections.map((collection) => (
-              <li key={collection.collection_id}>
-                {collection.name} - Completed: {getCompletionCount(collection)}{" "}
-                times
+              <li key={collection.collection_id} className="inherit">
+                {collection.name} - Completed: {getCompletionCount(collection)} times
               </li>
             ))}
           </ul>
         </div>
       )}
-
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { tourStepsResources } from "./tourStepsResources";
 import GuidedTour from "../../components/GuidedTour";
 import BubbleText from "../../components/BubbleText";
+import { useTheme } from "../../context/ThemeContext";
 
 interface FAQ {
   question: string;
@@ -15,6 +16,7 @@ interface InstructionalVideo {
 }
 
 const Resources: React.FC = () => {
+  const { theme } = useTheme();
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [videos, setVideos] = useState<InstructionalVideo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -89,43 +91,50 @@ const Resources: React.FC = () => {
     loadData();
   }, []);
 
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
+
   return (
-    <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">
+    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
+      <h1 className="mb-8 text-3xl font-bold inherit">
         <BubbleText>Resources</BubbleText>
       </h1>
 
       {isLoading ? (
-        <p>Loading resources...</p>
+        <p className="inherit">Loading resources...</p>
       ) : (
         <>
           <section className="mb-8 w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">
+            <h2 className="mb-4 text-2xl font-semibold inherit">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index}>
-                  <h3 className="mb-2 text-xl font-medium">{faq.question}</h3>
-                  <p>{faq.answer}</p>
+                <div key={index} className="inherit">
+                  <h3 className="mb-2 text-xl font-medium inherit">{faq.question}</h3>
+                  <p className="inherit">{faq.answer}</p>
                 </div>
               ))}
             </div>
           </section>
+          
           <section className="w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold">
+            <h2 className="mb-4 text-2xl font-semibold inherit">
               Instructional Videos
             </h2>
             <div className="space-y-6">
               {videos.map((video, index) => (
-                <div key={index}>
-                  <h3 className="mb-2 text-xl font-medium">{video.title}</h3>
-                  <p>{video.description}</p>
+                <div key={index} className="inherit">
+                  <h3 className="mb-2 text-xl font-medium inherit">{video.title}</h3>
+                  <p className="inherit">{video.description}</p>
                   <a
                     href={video.videoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-500 underline"
+                    className="text-blue-500 hover:text-blue-600 underline"
                   >
                     Watch Video
                   </a>
@@ -135,7 +144,6 @@ const Resources: React.FC = () => {
           </section>
         </>
       )}
-
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning}

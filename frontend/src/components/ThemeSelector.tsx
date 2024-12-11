@@ -48,6 +48,7 @@ const ThemeSelector: React.FC = () => {
           adjustColorForColorblindness: (color: string) =>
             adjustColor(color, prevTheme.colorblindType),
           displayTextColor: newDisplayTextColor,
+          displayFont: prevTheme.displayFont,
         };
         return setThemeWithColorAdjustment(baseTheme);
       });
@@ -108,6 +109,7 @@ const ThemeSelector: React.FC = () => {
         originalBackgroundColor: color.backgroundColor,
         adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
         displayTextColor: newDisplayTextColor,
+        displayFont: prevTheme.displayFont,
       };
       return setThemeWithColorAdjustment(newTheme);
     });

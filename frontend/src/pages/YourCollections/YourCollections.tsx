@@ -24,6 +24,7 @@ import { VisibilityStates } from "../../types/VisibilityStates";
 import { useCompletion } from "../../context/CompletionContext";
 import { categoryColors } from "../../constants/categoryColors";
 import { lightenColor } from "../../utils/colorUtils";
+import BubbleText from "../../components/BubbleText";
 
 interface Collection {
   collection_id: number;
@@ -499,8 +500,18 @@ const YourCollections: React.FC = () => {
     filterAndSortCollections(collections, selectedCategory, newSortOption);
   };
 
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
+
   return (
-    <div className="your-collections-page page-container page-container-with-collections mt-6">
+    <div className={`your-collections-page page-container page-container-with-collections mt-6 ${getTextColorClass(theme.backgroundColor)}`}>
+      <h1 className="mb-8 text-3xl font-bold inherit">
+        <BubbleText>Your Collections</BubbleText>
+      </h1>
+
       <div className="mb-4 flex items-center justify-between space-x-4">
         {/* Categories Dropdown */}
         <div className="relative">
@@ -538,18 +549,22 @@ const YourCollections: React.FC = () => {
         </div>
 
         {/* Sort by Dropdown */}
-        <select
-          aria-label="Sort collections"
-          id="sort-select"
-          value={sortOption}
-          onChange={handleSortChange}
-          className="rounded border p-2"
-        >
-          <option value="date">Sort by Date</option>
-          <option value="alphabetical">Sort Alphabetically</option>
-          <option value="category">Sort by Category</option>
-          <option value="custom">Custom Order</option>
-        </select>
+        <div className="mb-4">
+          <label htmlFor="sortSelect" className="mr-2 font-bold inherit">
+            Sort by:
+          </label>
+          <select
+            id="sortSelect"
+            value={sortOption}
+            onChange={handleSortChange}
+            className={`rounded border p-2 ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+          >
+            <option value="date">Sort by Date</option>
+            <option value="alphabetical">Sort Alphabetically</option>
+            <option value="category">Sort by Category</option>
+            <option value="custom">Custom Order</option>
+          </select>
+        </div>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -580,10 +595,10 @@ const YourCollections: React.FC = () => {
                       />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-700">
+                  <h3 className="text-xl font-bold inherit">
                     Create New Collection
                   </h3>
-                  <p className="mt-2 text-sm text-gray-500">
+                  <p className="mt-2 text-sm inherit opacity-75">
                     Click to add a new collection
                   </p>
                 </div>
@@ -600,7 +615,7 @@ const YourCollections: React.FC = () => {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
+                          className={`collection-card min-w-[375px] rounded-lg border-4 p-4 shadow-lg ${getTextColorClass(theme.backgroundColor)}`}
                           style={{
                             backgroundColor: "white",
                             ...provided.draggableProps.style,
@@ -627,7 +642,7 @@ const YourCollections: React.FC = () => {
                   ) : (
                     <div
                       key={collection.collection_id}
-                      className="collection-card min-w-[375px] rounded-lg border-4 border-white p-4 shadow-lg"
+                      className={`collection-card min-w-[375px] rounded-lg border-4 p-4 shadow-lg ${getTextColorClass(theme.backgroundColor)}`}
                       style={{
                         backgroundColor: "white",
                       }}
@@ -681,7 +696,7 @@ const YourCollections: React.FC = () => {
           isPublic={selectedCollection.status === "public"}
         />
       )}
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <div className="inherit">Loading...</div>}
 
       {/* Add the GuidedTour component here */}
       <GuidedTour
