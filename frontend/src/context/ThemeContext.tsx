@@ -107,15 +107,15 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
       isColorblindMode: false,
       colorblindType: "protanopia",
       isDarkMode: false,
-      font: '"KG What The Teacher Wants"',
-      headingFont: '"KG What The Teacher Wants"',
-      buttonFont: '"KG What The Teacher Wants"',
+      font: '"font-happy-paragraphs-regular"',
+      headingFont: '"font-happy-paragraphs-regular"',
+      buttonFont: '"font-happy-paragraphs-regular"',
       originalTextColor: "#000000",
       originalBackgroundColor: "#FFFFFF",
       displayTextColor: "#000000",
       displayBackgroundColor: "#FFFFFF",
       adjustColorForColorblindness: (color: string) => color,
-      displayFont: '"KG What The Teacher Wants"',
+      displayFont: '"font-happy-paragraphs-regular"',
     };
   };
 

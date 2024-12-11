@@ -111,9 +111,9 @@
     --background-color: #ffffff;
     --display-text-color: var(--text-color);
     --display-background-color: var(--background-color);
-    --font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
-    --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
-    --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+    --font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
+    --heading-font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
+    --button-font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
     --collections-navbar-height: 64px;
     --display-font-family: var(--font-family);
   }
@@ -172,9 +172,9 @@
   --background-color: #ffffff;
   --display-text-color: var(--text-color);
   --display-background-color: var(--background-color);
-  --font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
-  --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
-  --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+  --font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
+  --heading-font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
+  --button-font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
   --collections-navbar-height: 64px;
   --display-font-family: var(--font-family);
 }
