@@ -59,7 +59,7 @@ const Shop: React.FC = () => {
       return "bg-gray-700";
     }
     if (theme.backgroundColor) {
-      return `bg-opacity-90 ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`;
+      return "bg-white";
     }
     return "bg-white";
   };
