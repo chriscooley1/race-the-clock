@@ -349,8 +349,8 @@ const NameGenerator: React.FC = () => {
             {/* Names list */}
             {visibilityStates.isNamesListVisible && (
               <div className="flex w-full flex-col items-center">
-                <h2 className="mb-2 text-xl font-bold inherit">Names on the Wheel:</h2>
-                <ul className="list-none p-0 text-center inherit">
+                <h2 className="mb-2 text-l font-bold inherit">Names on the Wheel:</h2>
+                <ul className="w-full max-w-md list-none p-0 text-center inherit">
                   {nameList.map((name, index) => (
                     <WheelSegment
                       key={index}
