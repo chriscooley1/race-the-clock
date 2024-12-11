@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
 
       {/* Footer Links */}
       <footer className="bg-black px-4 py-8 text-white">
-        <div className="mx-auto flex max-w-4xl justify-around">
+        <div className="mx-auto flex max-w-4xl justify-around gap-4 sm:gap-8 md:gap-16 lg:gap-24">
           <div>
             <ul className="space-y-2">
               <li>
