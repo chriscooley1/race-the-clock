@@ -78,7 +78,7 @@ const Home: React.FC = () => {
               preserveAspectRatio="none"
             >
               <path
-                d="M0,160 C360,320 720,0 1080,160 C1260,240 1440,160 1440,160"
+                d="M0,160 C480,400 960,-80 1440,160"
                 className="fill-none stroke-black stroke-2"
                 strokeLinecap="round"
               />
@@ -117,7 +117,7 @@ const Home: React.FC = () => {
             preserveAspectRatio="none"
           >
             <path
-              d="M0,160 C360,320 720,0 1080,160 C1260,240 1440,160 1440,160"
+              d="M0,160 C480,400 960,-80 1440,160"
               className="fill-none stroke-black stroke-2"
               strokeLinecap="round"
             />

@@ -11,9 +11,8 @@ const Footer: React.FC = () => {
           preserveAspectRatio="none"
         >
           <path
-            d="M0,160 C360,320 720,0 1080,160 L1440,320 L0,320 Z"
-            className="fill-black stroke-black stroke-4"
-            strokeLinecap="round"
+            d="M0,160 C480,400 960,-80 1440,160 L1440,320 L0,320 Z"
+            className="fill-black stroke-none"
           />
         </svg>
       </div>
