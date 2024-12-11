@@ -252,38 +252,28 @@ const NameGenerator: React.FC = () => {
     }
   };
 
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
+
   return (
     <div className="page-container" style={{ marginTop: "20px" }}>
       <div
         ref={containerRef}
-        className={`name-generator ${
-          theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-        }`}
+        className={`name-generator ${getTextColorClass(theme.backgroundColor)}`}
         style={{
-          backgroundColor:
-            theme.backgroundImage === "none"
-              ? theme.backgroundColor
-              : "transparent",
-          color: theme.displayTextColor || theme.textColor,
-          backgroundImage:
-            theme.backgroundImage !== "none"
-              ? `url(${theme.backgroundImage})`
-              : "none",
+          backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+          backgroundImage: theme.backgroundImage !== "none" ? `url(${theme.backgroundImage})` : "none",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div
-          className={`flex w-full max-w-5xl justify-between px-2 ${
-            showRightSide ? "gap-16" : "justify-center"
-          }`}
-        >
-          {/* Left side (centered when right side is hidden) */}
-          <div
-            className={`flex flex-col items-center ${
-              showRightSide ? "w-1/2 pl-8" : "w-full"
-            }`}
-          >
+        <div className={`flex w-full max-w-5xl justify-between px-2 ${showRightSide ? "gap-16" : "justify-center"}`}>
+          {/* Left side */}
+          <div className={`flex flex-col items-center ${showRightSide ? "w-1/2 pl-8" : "w-full"}`}>
+            {/* Update text colors for the wheel section */}
             <div className="relative flex w-full max-w-[500px] flex-col items-center">
               <NameWheel
                 names={nameList}
@@ -307,11 +297,11 @@ const NameGenerator: React.FC = () => {
               )}
             </div>
 
-            {/* Move selected name display here, below the spin button */}
+            {/* Selected name display */}
             {selectedName && (
-              <div className="mt-4 text-center">
-                <h2 className="text-2xl font-bold">Selected:</h2>
-                <p className="text-xl">{selectedName}</p>
+              <div className="mt-4 text-center inherit">
+                <h2 className="text-2xl font-bold inherit">Selected:</h2>
+                <p className="text-xl inherit">{selectedName}</p>
               </div>
             )}
           </div>
@@ -352,10 +342,15 @@ const NameGenerator: React.FC = () => {
               </div>
             )}
 
+          {/* Right side */}
+          <div className={`flex flex-col transition-all duration-300 inherit ${
+            showRightSide ? "w-1/2 opacity-100 pr-8" : "w-0 overflow-hidden opacity-0"
+          }`}>
+            {/* Names list */}
             {visibilityStates.isNamesListVisible && (
               <div className="flex w-full flex-col items-center">
-                <h2 className="mb-2 text-xl font-bold">Names on the Wheel:</h2>
-                <ul className="list-none p-0 text-center">
+                <h2 className="mb-2 text-xl font-bold inherit">Names on the Wheel:</h2>
+                <ul className="list-none p-0 text-center inherit">
                   {nameList.map((name, index) => (
                     <WheelSegment
                       key={index}
@@ -409,6 +404,7 @@ const NameGenerator: React.FC = () => {
           tourName="nameGenerator"
         />
       </div>
+    </div>
     </div>
   );
 };

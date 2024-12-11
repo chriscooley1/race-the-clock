@@ -3,6 +3,7 @@ import { tourStepsBadgesAchievements } from "./tourStepsBadgesAchievements";
 import GuidedTour from "../../components/GuidedTour";
 import { useCompletion } from "../../context/CompletionContext";
 import BubbleText from "../../components/BubbleText";
+import { useTheme } from "../../context/ThemeContext";
 
 const BadgesAchievements: React.FC = () => {
   const [badges, setBadges] = useState<string[]>([]);
@@ -11,6 +12,13 @@ const BadgesAchievements: React.FC = () => {
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
   const { completionCounts } = useCompletion();
+  const { theme } = useTheme();
+
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -80,24 +88,24 @@ const BadgesAchievements: React.FC = () => {
   const steps = tourStepsBadgesAchievements();
 
   return (
-    <div className="page-container">
-      <h1 className="mb-8 text-3xl font-bold">
+    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
+      <h1 className="mb-8 text-3xl font-bold inherit">
         <BubbleText>Badges & Achievements</BubbleText>
       </h1>
-      <p>
+      <p className="inherit">
         Badges and Achievements: Create badges for students who achieve specific
         goals, like "Read 60 Letters in a Minute" or "Complete an Advanced
         Session."
       </p>
-      <p>
+      <p className="inherit">
         Milestones for Teachers: Teachers can set milestones for their students,
         rewarding them as they improve, fostering motivation.
       </p>
 
       <div className="mt-8 w-full max-w-2xl">
         <div className="badges-section">
-          <h2 className="text-2xl font-semibold">Badges</h2>
-          <ul className="list-disc pl-5">
+          <h2 className="text-2xl font-semibold inherit">Badges</h2>
+          <ul className="list-disc pl-5 inherit">
             {badges.length > 0 ? (
               badges.map((badge, index) => <li key={index}>{badge}</li>)
             ) : (
@@ -107,8 +115,8 @@ const BadgesAchievements: React.FC = () => {
         </div>
 
         <div className="achievements-section mt-8">
-          <h2 className="text-2xl font-semibold">Achievements</h2>
-          <ul className="list-disc pl-5">
+          <h2 className="text-2xl font-semibold inherit">Achievements</h2>
+          <ul className="list-disc pl-5 inherit">
             {achievements.length > 0 ? (
               achievements.map((achievement, index) => (
                 <li key={index}>{achievement}</li>
@@ -119,8 +127,8 @@ const BadgesAchievements: React.FC = () => {
           </ul>
         </div>
 
-        <h2 className="text-2xl font-semibold">Completion Counts</h2>
-        <ul>
+        <h2 className="text-2xl font-semibold inherit">Completion Counts</h2>
+        <ul className="inherit">
           {Object.entries(completionCounts).length > 0 ? (
             Object.entries(completionCounts).map(([collectionId, count]) => (
               <li key={collectionId}>

@@ -308,12 +308,18 @@ const DiscoverCollections: React.FC = () => {
     fetchUserDisplayName();
   }, [user, getAccessTokenSilently]);
 
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
+
   return (
-    <div className="page-container mt-6">
-      <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl">
+    <div className={`page-container mt-6 ${getTextColorClass(theme.backgroundColor)}`}>
+      <h1 className="discover-collections-page mb-4 text-2xl font-bold sm:text-3xl inherit">
         <BubbleText>Discover Public Collections</BubbleText>
       </h1>
-      {user && <p className="mb-4">Welcome, {userDisplayName}</p>}
+      {user && <p className="mb-4 inherit">Welcome, {userDisplayName}</p>}
       <div className="mb-4 w-full max-w-md">
         <div className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:items-center">
           <select
@@ -384,15 +390,15 @@ const DiscoverCollections: React.FC = () => {
       </div>
 
       {isLoading ? (
-        <div className="flex min-h-[200px] items-center justify-center">
-          <div className="size-12 animate-spin rounded-full border-b-2 border-gray-900"></div>
+        <div className="flex min-h-[200px] items-center justify-center inherit">
+          <div className="size-12 animate-spin rounded-full border-b-2 border-current"></div>
         </div>
       ) : (
         <div className="grid-container w-full">
           {Object.entries(groupedCollections).map(
             ([category, categoryCollections]) => (
               <div key={category} className="mb-8 w-full">
-                <h2 className="mb-4 text-xl font-bold">{category}</h2>
+                <h2 className="mb-4 text-xl font-bold inherit">{category}</h2>
                 <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {categoryCollections.map((collection, index) => {
                     const baseColor = adjustColorForTheme(

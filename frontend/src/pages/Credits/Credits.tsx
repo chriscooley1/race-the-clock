@@ -3,11 +3,18 @@ import creditsButton from "../../assets/credits-button.png";
 import BubbleText from "../../components/BubbleText";
 import { tourStepsCredits } from "./tourStepsCredits";
 import GuidedTour from "../../components/GuidedTour";
+import { useTheme } from "../../context/ThemeContext";
 
 const Credits: React.FC = () => {
+  const { theme } = useTheme();
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
 
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
 
   useEffect(() => {
     const tourCompleted = localStorage.getItem(`tourCompleted_credits`);
@@ -22,7 +29,7 @@ const Credits: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-8">
+    <div className={`flex flex-col items-center p-8 ${getTextColorClass(theme.backgroundColor)}`}>
       <div className="relative max-w-2xl w-full">
         <img
           src={creditsButton}
@@ -30,21 +37,21 @@ const Credits: React.FC = () => {
           className="absolute -right-32 top-0 w-32"
         />
         
-        <h1 className="mb-8 text-6xl font-bold">
+        <h1 className="mb-8 text-6xl font-bold inherit">
           <BubbleText>Credits</BubbleText>
         </h1>
         
         <div className="max-w-2xl">
-          <h2 className="mb-4 text-3xl">A special thanks given to:</h2>
+          <h2 className="mb-4 text-3xl inherit">A special thanks given to:</h2>
           
           <div className="mb-8">
-            <p className="mb-2">
+            <p className="mb-2 inherit">
               Bunny on a cloud for the fonts and clipart. Check out the store and website here!
             </p>
             <div className="space-y-2">
               <a 
                 href="https://bunnyonacloud.com/"
-                className="block text-blue-600 hover:underline"
+                className="block text-blue-600 hover:text-blue-800 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -62,15 +69,15 @@ const Credits: React.FC = () => {
           </div>
 
           <div className="mb-8">
-            <h3 className="mb-4 text-2xl font-bold">Trademark Notice</h3>
-            <p>
+            <h3 className="mb-4 text-2xl font-bold inherit">Trademark Notice</h3>
+            <p className="inherit">
               Race The Clock™ and associated branding are trademarks used to identify our educational services.
             </p>
           </div>
 
-          <div className="text-lg">
-            <p>Website created by Chris Cooley</p>
-            <p>Design created by Carissa Cooley</p>
+          <div className="text-lg inherit">
+            <p className="inherit">Website created by Chris Cooley</p>
+            <p className="inherit">Design created by Carissa Cooley</p>
           </div>
         </div>
       </div>

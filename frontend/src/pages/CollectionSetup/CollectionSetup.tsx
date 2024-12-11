@@ -509,15 +509,31 @@ const CollectionSetup: React.FC = () => {
     setImages((prevImages) => prevImages.filter((image) => image.id !== id));
   };
 
+  const getCardBackgroundColor = () => {
+    if (theme.isDarkMode) {
+      return "bg-gray-700";
+    }
+    return "bg-white";
+  };
+
+  const getTextColorForBackground = (bgColor: string) => {
+    if (bgColor && theme.isDarkMode) {
+      return "text-white";
+    }
+    return "text-black";
+  };
+
   if (!currentUser) {
     return <div className="p-4 text-center">Loading user information...</div>;
   }
 
   return (
     <div className="page-container">
-      <div className={`flex min-h-screen w-full flex-col items-center pt-[20px] ${
-        theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-      }`} style={{ color: theme.originalTextColor }}>
+      <div className="flex min-h-screen w-full flex-col items-center pt-[20px]"
+        style={{ 
+          backgroundColor: theme.backgroundColor,
+          color: theme.textColor 
+        }}>
         <h1 className="collection-setup text-4xl font-bold">
           <BubbleText>Step 2 - Setup</BubbleText>
         </h1>
@@ -529,7 +545,10 @@ const CollectionSetup: React.FC = () => {
         </h3>
 
         <div className="mb-4 w-full max-w-4xl px-4">
-          <div className="mx-auto mb-8 max-w-md rounded-lg border border-gray-300 bg-white p-6 shadow-md dark:bg-gray-700">
+          <div className={`mx-auto mb-8 max-w-md rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+            style={{
+              borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
+            }}>
             <h4 className="mb-4 text-center text-xl font-bold">Collection Settings</h4>
             <div className="mx-auto space-y-4">
               {category !== "Number Sense" ? (
@@ -763,7 +782,10 @@ const CollectionSetup: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="rounded-lg border border-gray-300 bg-white p-6 shadow-md dark:bg-gray-700">
+            <div className={`rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+              style={{
+                borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
+              }}>
               <h4 className="mb-4 text-xl font-bold">Generate Random Items</h4>
               <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
                 Quickly create a collection with randomly generated items based on your settings.
@@ -779,7 +801,10 @@ const CollectionSetup: React.FC = () => {
               </div>
             </div>
 
-            <div className="rounded-lg border border-gray-300 bg-white p-6 shadow-md dark:bg-gray-700">
+            <div className={`rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+              style={{
+                borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
+              }}>
               <h4 className="mb-4 text-xl font-bold">Create Custom Items</h4>
               <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
                 Create your own custom items or upload files for your collection.
@@ -810,7 +835,10 @@ const CollectionSetup: React.FC = () => {
           </div>
 
           {(isGenerated || images.length > 0) && (
-            <div className="mt-8 rounded-lg border border-gray-300 bg-white p-6 shadow-md dark:bg-gray-700">
+            <div className={`mt-8 rounded-lg border p-6 shadow-md ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+              style={{
+                borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
+              }}>
               <div className="mb-4 flex items-center justify-between">
                 <h4 className="text-xl font-bold">Preview</h4>
                 <div className="space-x-2">

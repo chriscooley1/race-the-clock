@@ -121,13 +121,19 @@ const NewCollection: React.FC = () => {
     }));
   }, []); // Add dependencies as needed
 
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
+
   return (
-    <div className="page-container mt-4">
+    <div className={`page-container mt-4 ${getTextColorClass(theme.backgroundColor)}`}>
       <div className="mx-auto flex max-w-[600px] flex-col items-center">
-        <h1 className="new-collection-page text-4xl font-bold">
+        <h1 className="new-collection-page text-4xl font-bold inherit">
           <BubbleText>Step 1 - Create</BubbleText>
         </h1>
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-3xl font-bold inherit">
           <BubbleText>New Collection</BubbleText>
         </h1>
 
@@ -148,7 +154,7 @@ const NewCollection: React.FC = () => {
 
         {visibilityStates.isCategorySelectVisible && (
           <div className="mb-4 flex max-w-[300px] items-center justify-center">
-            <label htmlFor="categorySelect" className="mr-2">
+            <label htmlFor="categorySelect" className="mr-2 inherit">
               Category:
             </label>
             <select
@@ -167,7 +173,7 @@ const NewCollection: React.FC = () => {
         )}
 
         {visibilityStates.isPublicCheckboxVisible && (
-          <div className="mt-2.5 flex items-center text-sm">
+          <div className="mt-2.5 flex items-center text-sm inherit">
             <input
               type="checkbox"
               id="publicCheckbox"
@@ -176,7 +182,7 @@ const NewCollection: React.FC = () => {
               title="Share collection publicly"
               className={`relative mr-2.5 size-5 cursor-pointer appearance-none rounded border-2 ${theme.isDarkMode ? "border-gray-600 bg-gray-700" : "border-gray-300 bg-white"} checked:bg-blue-500 checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:text-sm checked:after:text-white checked:after:content-["✓"]`}
             />
-            <label htmlFor="publicCheckbox">
+            <label htmlFor="publicCheckbox" className="inherit">
               I want to share my collection publicly
             </label>
           </div>

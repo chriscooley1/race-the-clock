@@ -4,6 +4,7 @@ import { tourStepsMultipleWords } from "./tourStepsMultipleWords";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
 import BubbleText from "../../components/BubbleText";
+import { useTheme } from "../../context/ThemeContext";
 
 const MultipleWordsGame: React.FC = () => {
   const { isGuidedTourEnabled } = useTour();
@@ -12,6 +13,13 @@ const MultipleWordsGame: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const navigate = useNavigate();
+  const { theme } = useTheme();
+
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
 
   const words = ["Word1", "Word2", "Word3"];
   const images = ["Image1", "Image2", "Image3"];
@@ -41,7 +49,7 @@ const MultipleWordsGame: React.FC = () => {
   };
 
   return (
-    <div className="page-container">
+    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
       <button
         type="button"
         onClick={handleBack}

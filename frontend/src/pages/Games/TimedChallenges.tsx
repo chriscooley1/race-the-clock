@@ -6,6 +6,7 @@ import GuidedTour from "../../components/GuidedTour";
 import { useTour } from "../../context/TourContext";
 import { useNavigate } from "react-router-dom";
 import BubbleText from "../../components/BubbleText";
+import { useTheme } from "../../context/ThemeContext";
 
 // Define the Collection interface
 interface Collection {
@@ -31,6 +32,7 @@ const TimedChallenges: React.FC = () => {
   const { isGuidedTourEnabled, isTourRunning, setIsTourRunning } = useTour();
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
   const navigate = useNavigate();
+  const { theme } = useTheme();
 
   // Define the steps variable
   const steps = tourStepsTimedChallenges(); // Create tour steps without visibility states
@@ -65,8 +67,14 @@ const TimedChallenges: React.FC = () => {
     navigate("/games");
   };
 
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
+
   return (
-    <div className="page-container">
+    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
       <button
         type="button"
         onClick={handleBack}
@@ -74,27 +82,24 @@ const TimedChallenges: React.FC = () => {
       >
         Back to Games
       </button>
-      <h1 className="mb-8 text-3xl font-bold">
+      <h1 className="mb-8 text-3xl font-bold inherit">
         <BubbleText>Timed Challenges</BubbleText>
       </h1>
-      <p>Complete as many challenges as you can within the time limit!</p>
+      <p className="inherit">Complete as many challenges as you can within the time limit!</p>
       {isLoading ? (
-        <p>Loading collections...</p>
+        <p className="inherit">Loading collections...</p>
       ) : (
         <div className="collections-overview">
-          <h2>Your Collections</h2>
-          <ul>
+          <h2 className="inherit">Your Collections</h2>
+          <ul className="inherit">
             {collections.map((collection: Collection) => (
-              <li key={collection.collection_id}>
-                {collection.name} - {getItemsCount(collection.description)}{" "}
-                items
+              <li key={collection.collection_id} className="inherit">
+                {collection.name} - {getItemsCount(collection.description)} items
               </li>
             ))}
           </ul>
         </div>
       )}
-      {/* Add your game logic and UI here */}
-      {/* Add the GuidedTour component here */}
       <GuidedTour
         steps={steps}
         isRunning={isTourRunning && isGuidedTourEnabled}

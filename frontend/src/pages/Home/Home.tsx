@@ -8,6 +8,7 @@ import Layout from "../../components/Layout";
 import BubbleText from "../../components/BubbleText";
 import FeedbackForm from "../../components/FeedbackForm";
 import logo from "../../assets/full-logo.png";
+import { useTheme } from "../../context/ThemeContext";
 
 const Home: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -16,6 +17,7 @@ const Home: React.FC = () => {
   const { toursCompleted } = useTour();
   const location = useLocation();
   const isAboutPage = location.pathname === "/about";
+  const { theme } = useTheme();
 
   useEffect(() => {
     const tourType = isAboutPage ? "about" : "home";
@@ -33,12 +35,31 @@ const Home: React.FC = () => {
     setCurrentTourStep(0);
   };
 
+  const getTextColorClass = (backgroundColor: string) => {
+    return backgroundColor.toLowerCase() === "#000000" || theme.isDarkMode
+      ? "text-white"
+      : "text-black";
+  };
+
   const content = (
-    <div className="min-h-screen bg-white">
-      {/* Main Content with curved sections */}
+    <div 
+      className="min-h-screen"
+      style={{ 
+        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
+        backgroundImage: theme.backgroundImage !== "none" ? `url(${theme.backgroundImage})` : "none",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        color: theme.textColor
+      }}
+    >
       <div className="relative">
         {/* Hero Section */}
-        <section className="bg-white px-4 py-12">
+        <section 
+          className="px-4 py-12"
+          style={{ 
+            backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent"
+          }}
+        >
           <div className="relative mb-12 text-center">
             <img 
               src={logo} 
@@ -47,13 +68,13 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="mx-auto max-w-4xl text-center">
-            <p className="mb-8 text-lg">
+            <p className={`mb-8 text-lg ${getTextColorClass(theme.backgroundColor)}`}>
               Race The Clock is an innovative, web-based learning tool designed to help 
               students of all ages improve their recognition and recall skills across various 
               subjects. Race the Clock can benefit:
             </p>
             
-            <ul className="mx-auto mb-8 max-w-md space-y-2 text-left">
+            <ul className={`mx-auto mb-8 max-w-md space-y-2 text-left ${getTextColorClass(theme.backgroundColor)}`}>
               <li>•Elementary School Teachers</li>
               <li>•High School Teachers</li>
               <li>•Higher Education professors and students</li>
@@ -61,7 +82,7 @@ const Home: React.FC = () => {
               <li>•Adult learners in specialized fields</li>
             </ul>
 
-            <p className="text-lg">
+            <p className={`text-lg ${getTextColorClass(theme.backgroundColor)}`}>
               Our platform originated as a solution for early childhood teachers to help 
               students achieve the goal of reading 60 letters per minute and has evolved 
               into a versatile learning tool for students of all ages.
@@ -69,8 +90,13 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* Features Section - Updated top wave */}
-        <section className="bg-white">
+        {/* Features Section */}
+        <section 
+          className="relative"
+          style={{ 
+            backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent"
+          }}
+        >
           <div className="relative h-24">
             <svg
               viewBox="0 0 1440 320"
@@ -79,37 +105,45 @@ const Home: React.FC = () => {
             >
               <path
                 d="M0,160 C480,400 960,-80 1440,160"
-                className="fill-none stroke-black stroke-2"
+                className={`fill-none ${theme.isDarkMode ? "stroke-white" : "stroke-black"} stroke-2`}
                 strokeLinecap="round"
               />
             </svg>
           </div>
           <div className="relative mb-12 text-center">
-          <h2 className="relative z-10 text-4xl">
+            <h2 className={`relative z-10 text-4xl ${getTextColorClass(theme.backgroundColor)}`}>
               <BubbleText>Features</BubbleText>
             </h2>
           </div>
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
             <div className="text-center">
               <h3 className="mb-2 text-xl font-bold text-pink-500">Custom Collections</h3>
-              <p>Create and customize your own collections with letters, numbers, pictures, words, and more.</p>
+              <p className={getTextColorClass(theme.backgroundColor)}>
+                Create and customize your own collections with letters, numbers, pictures, words, and more.
+              </p>
             </div>
             <div className="text-center">
               <h3 className="mb-2 text-xl font-bold text-blue-400">Adjustable Speed</h3>
-              <p>Control the display speed to match your students' current skill levels</p>
+              <p className={getTextColorClass(theme.backgroundColor)}>
+                Control the display speed to match your students' current skill levels
+              </p>
             </div>
             <div className="text-center">
               <h3 className="mb-2 text-xl font-bold text-green-500">Full Screen Practice</h3>
-              <p>Distraction-free practice mode for focused learning session.</p>
+              <p className={getTextColorClass(theme.backgroundColor)}>
+                Distraction-free practice mode for focused learning session.
+              </p>
             </div>
             <div className="text-center">
               <h3 className="mb-2 text-xl font-bold text-purple-500">Theme Customization</h3>
-              <p>Personalize your experience with different themes and color options.</p>
+              <p className={getTextColorClass(theme.backgroundColor)}>
+                Personalize your experience with different themes and color options.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Wave divider between Features and Coming Soon */}
+        {/* Wave divider */}
         <div className="relative h-24">
           <svg
             viewBox="0 0 1440 320"
@@ -118,31 +152,46 @@ const Home: React.FC = () => {
           >
             <path
               d="M0,160 C480,400 960,-80 1440,160"
-              className="fill-none stroke-black stroke-2"
+              className={`fill-none ${theme.isDarkMode ? "stroke-white" : "stroke-black"} stroke-2`}
               strokeLinecap="round"
             />
           </svg>
         </div>
 
         {/* Coming Soon Section */}
-        <section className="bg-white px-4 py-12">
+        <section 
+          className="px-4 py-12"
+          style={{ 
+            backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent"
+          }}
+        >
           <div className="relative mb-8 flex items-center justify-center">
-            <h2 className="relative z-10 text-4xl">
+            <h2 className={`relative z-10 text-4xl ${getTextColorClass(theme.backgroundColor)}`}>
               <BubbleText>Coming Soon</BubbleText>
             </h2>
           </div>
           <div className="mx-auto max-w-4xl">
             <ul className="space-y-4 text-center">
               <li className="text-orange-500">Name generator</li>
-              <p>Generate a random name for your collection</p>
+              <p className={getTextColorClass(theme.backgroundColor)}>
+                Generate a random name for your collection
+              </p>
               <li className="text-orange-500">Games</li>
-              <p>Earn badges and achievements as you progress in your learning journey</p>
+              <p className={getTextColorClass(theme.backgroundColor)}>
+                Earn badges and achievements as you progress in your learning journey
+              </p>
               <li className="text-orange-500">Advanced Analytics</li>
-              <p>Detailed insights and progress tracking for teachers and learners</p>
+              <p className={getTextColorClass(theme.backgroundColor)}>
+                Detailed insights and progress tracking for teachers and learners
+              </p>
               <li className="text-orange-500">Interactive Games</li>
-              <p>Engaging matching games and interactive learning activities</p>
+              <p className={getTextColorClass(theme.backgroundColor)}>
+                Engaging matching games and interactive learning activities
+              </p>
               <li className="text-orange-500">Student Reports</li>
-              <p>Track and manage individual student progress and achievements</p>
+              <p className={getTextColorClass(theme.backgroundColor)}>
+                Track and manage individual student progress and achievements
+              </p>
             </ul>
           </div>
         </section>
