@@ -91,48 +91,63 @@ const config: Config = {
         custom: ["KG What The Teacher Wants", "Comic Neue", "sans-serif"],
         teacher: ["KG What The Teacher Wants", "Comic Neue", "sans-serif"],
         "shake-it-off": ['"KG Shake It Off"', "Comic Neue", "sans-serif"],
-        "happy-writing-dots-regular": [
-          "HappyWritingDots-Regular",
+        "happy-covers-regular": [
+          "HappyCovers-Regular",
           "Comic Neue",
           "sans-serif",
         ],
-        "happy-writing-letter-mini-circles-regular": [
-          "HappyWritingLetterMiniCircles-Regular",
+        "happy-covers-shadow-regular": [
+          "HappyCoversShadow-Regular",
           "Comic Neue",
           "sans-serif",
         ],
-        "happy-writing-neat-regular": [
-          "HappyWritingNeat-Regular",
+        "happy-fun-letters-regular": [
+          "HappyFunLetters-Regular",
           "Comic Neue",
           "sans-serif",
         ],
-        "happy-writing-outline-dashes-regular": [
-          "HappyWritingOutlineDashes-Regular",
+        "happy-fun-letters-titles-regular": [
+          "HappyFunLettersTitles-Regular",
           "Comic Neue",
           "sans-serif",
         ],
-        "happy-writing-outline-dots-regular": [
-          "HappyWritingOutlineDots-Regular",
+        "happy-fun-letters-titles-shadow-regular": [
+          "HappyFunLettersTitlesShadow-Regular",
           "Comic Neue",
           "sans-serif",
         ],
-        "happy-writing-outlines-regular": [
-          "HappyWritingOutlines-Regular",
+        "happy-letters-regular": [
+          "HappyLetters-Regular",
           "Comic Neue",
           "sans-serif",
         ],
-        "happy-writing-outlines-thick-regular": [
-          "HappyWritingOutlinesThick-Regular",
+        "happy-medium-regular": [
+          "HappyMedium-Regular",
           "Comic Neue",
           "sans-serif",
         ],
-        "happy-writing-tracing-regular": [
-          "HappyWritingTracing-Regular",
+        "happy-medium-shadow-regular": [
+          "HappyMediumShadow-Regular",
           "Comic Neue",
           "sans-serif",
         ],
-        "happy-writing-tracing-guides-regular": [
-          "HappyWritingTracingGuides-Regular",
+        "happy-neat-handwriting-regular": [
+          "HappyNeatHandwriting-Regular",
+          "Comic Neue",
+          "sans-serif",
+        ],
+        "happy-paragraphs-regular": [
+          "HappyParagraphs-Regular",
+          "Comic Neue",
+          "sans-serif",
+        ],
+        "happy-task-card-labels-regular": [
+          "HappyTaskCardLabels-Regular",
+          "Comic Neue",
+          "sans-serif",
+        ],
+        "happy-titles-regular": [
+          "HappyTitles-Regular",
           "Comic Neue",
           "sans-serif",
         ],
