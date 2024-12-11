@@ -7,6 +7,9 @@ export interface ColorScheme {
 
 // Define and export the color schemes
 export const colorSchemes: ColorScheme[] = [
+  // Neutral color schemes
+  { name: "White", backgroundColor: "#FFFFFF", textColor: "#333333" },
+  { name: "Black", backgroundColor: "#000000", textColor: "#FFFFFF" },
   // Primary color schemes
   { name: "Anakiwa", backgroundColor: "#b0f2ff", textColor: "#333333" },
   { name: "Hot Pink", backgroundColor: "#ff7ab0", textColor: "#FFFFFF" },
@@ -43,9 +46,6 @@ export const colorSchemes: ColorScheme[] = [
   { name: "Bright Cyan", backgroundColor: "#18FFFF", textColor: "#333333" },
   { name: "Cold Purple", backgroundColor: "#B39DDB", textColor: "#333333" },
   { name: "Mint Green", backgroundColor: "#00E676", textColor: "#333333" },
-  // Neutral color schemes
-  { name: "White", backgroundColor: "#FFFFFF", textColor: "#333333" },
-  { name: "Black", backgroundColor: "#000000", textColor: "#FFFFFF" },
 ];
 
 export const collectionColorSchemes = colorSchemes.filter(
