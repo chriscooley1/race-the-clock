@@ -522,10 +522,10 @@ const CollectionSetup: React.FC = () => {
           <BubbleText>Step 2 - Setup</BubbleText>
         </h1>
         <h2 className="text-3xl font-bold">
-          Collection: <BubbleText>{collectionName}</BubbleText>
+          <BubbleText>{`Collection: ${collectionName}`}</BubbleText>
         </h2>
         <h3 className="mb-4 text-2xl font-semibold">
-          Category: <BubbleText>{category}</BubbleText>
+          <BubbleText>{`Category: ${category}`}</BubbleText>
         </h3>
 
         <div className="mb-4 w-full max-w-4xl px-4">
