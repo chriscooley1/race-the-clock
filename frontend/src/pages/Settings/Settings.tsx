@@ -13,10 +13,10 @@ import BubbleText from "../../components/BubbleText";
 
 const DEFAULT_THEME = {
   name: "Anakiwa",
-  backgroundColor: "#b0f2ff",
+  backgroundColor: "#FFFFFF",
   textColor: "#333333",
   displayTextColor: "#333333",
-  displayBackgroundColor: "#b0f2ff",
+  displayBackgroundColor: "#FFFFFF",
   backgroundImage: "none",
   isColorblindMode: false,
   colorblindType: "none",
@@ -26,7 +26,7 @@ const DEFAULT_THEME = {
   buttonFont: '"font-happy-paragraphs-regular"',
   displayFont: '"font-happy-paragraphs-regular"',
   originalTextColor: "#333333",
-  originalBackgroundColor: "#b0f2ff",
+  originalBackgroundColor: "#FFFFFF",
 };
 
 const colorOptions = colorSchemes.map((scheme) => ({
