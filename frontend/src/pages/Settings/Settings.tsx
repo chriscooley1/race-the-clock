@@ -11,6 +11,24 @@ import { useTour } from "../../context/TourContext";
 import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
 import BubbleText from "../../components/BubbleText";
 
+const DEFAULT_THEME = {
+  name: "Anakiwa",
+  backgroundColor: "#b0f2ff",
+  textColor: "#333333",
+  displayTextColor: "#333333",
+  displayBackgroundColor: "#b0f2ff",
+  backgroundImage: "none",
+  isColorblindMode: false,
+  colorblindType: "none",
+  isDarkMode: false,
+  font: '"font-happy-paragraphs-regular"',
+  headingFont: '"font-happy-paragraphs-regular"',
+  buttonFont: '"font-happy-paragraphs-regular"',
+  displayFont: '"font-happy-paragraphs-regular"',
+  originalTextColor: "#333333",
+  originalBackgroundColor: "#b0f2ff",
+};
+
 const colorOptions = colorSchemes.map((scheme) => ({
   name: scheme.name,
   value: scheme.backgroundColor,
@@ -296,6 +314,37 @@ const Settings: React.FC = () => {
       : "text-black";
   };
 
+  const handleResetToDefaults = () => {
+    // Format the font names with proper quotes
+    const formattedFont = '"Happy Paragraphs Regular", "Comic Neue", sans-serif';
+    
+    // Reset theme context with properly formatted fonts
+    setTheme((prevTheme) => ({
+      ...DEFAULT_THEME,
+      adjustColorForColorblindness: prevTheme.adjustColorForColorblindness,
+      font: formattedFont,
+      headingFont: formattedFont,
+      buttonFont: formattedFont,
+      displayFont: formattedFont,
+    }));
+
+    // Reset individual font settings
+    setFont(formattedFont);
+    setHeadingFont(formattedFont);
+    setButtonFont(formattedFont);
+    setDisplayFont(formattedFont);
+
+    // Reset colors
+    setDisplayTextColor(DEFAULT_THEME.displayTextColor);
+
+    // Reset CSS variables with properly formatted fonts
+    document.documentElement.style.setProperty("--font-family", formattedFont);
+    document.documentElement.style.setProperty("--heading-font-family", formattedFont);
+    document.documentElement.style.setProperty("--button-font-family", formattedFont);
+    document.documentElement.style.setProperty("--display-font-family", formattedFont);
+    document.documentElement.style.setProperty("--background-image", "none");
+  };
+
   return (
     <div
       className={`page-container mt-[20px] flex flex-col items-center ${getTextColorClass(theme.backgroundColor)}`}
@@ -315,6 +364,16 @@ const Settings: React.FC = () => {
       <h1 className={`settings inherit mb-8 text-3xl font-bold`}>
         <BubbleText>Settings</BubbleText>
       </h1>
+      <div className="w-full max-w-[300px] mb-6">
+        <button
+          type="button"
+          onClick={handleResetToDefaults}
+          className="w-full rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 transition-colors"
+          title="Reset all settings to default values"
+        >
+          Reset to Default Settings
+        </button>
+      </div>
       <div className="w-full space-y-6 px-4 md:px-8">
         <div>
           <h2 className="inherit mb-2 text-xl font-semibold">Main Font</h2>
@@ -408,6 +467,41 @@ const Settings: React.FC = () => {
               );
             })}
           </select>
+        </div>
+
+        <div className="mb-4">
+          <label className="inherit mb-2 block font-bold">
+            Full Screen Display Font:
+          </label>
+          <select
+            value={theme.displayFont}
+            onChange={handleDisplayFontChange}
+            className="w-full max-w-xs rounded border p-2 text-black"
+            title="Select full screen display font"
+          >
+            {fonts.map((font) => {
+              const fontName = font.replace(/^["'](.+)["']$/, "$1");
+              return (
+                <option
+                  key={font}
+                  value={font}
+                  style={{ fontFamily: fontName }}
+                >
+                  {fontName}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
+        <div className="mb-4 text-left w-full">
+          <button
+            onClick={handleResetToDefaults}
+            className="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 transition-colors"
+            title="Reset all settings to default values"
+          >
+            Reset to Default Settings
+          </button>
         </div>
 
         <div className="mb-4">
