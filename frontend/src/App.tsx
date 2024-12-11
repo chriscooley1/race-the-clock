@@ -390,7 +390,9 @@ const App: React.FC = () => {
                     path="/games/matching-game"
                     element={
                       <Suspense fallback={<div>Loading...</div>}>
-                        <PrivateRoute element={renderContent(<MatchingGame />)} />
+                        <PrivateRoute
+                          element={renderContent(<MatchingGame />)}
+                        />
                       </Suspense>
                     }
                   />

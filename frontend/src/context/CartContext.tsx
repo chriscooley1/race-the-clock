@@ -16,7 +16,9 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [items, setItems] = useState<CartItem[]>(() => {
     const savedItems = localStorage.getItem("cartItems");
     return savedItems ? JSON.parse(savedItems) : [];
@@ -27,9 +29,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [items]);
 
   const addItem = (newItem: CartItem) => {
-    setItems(prevItems => {
+    setItems((prevItems) => {
       const existingItemIndex = prevItems.findIndex(
-        item => item.name === newItem.name
+        (item) => item.name === newItem.name,
       );
 
       if (existingItemIndex >= 0) {
@@ -43,11 +45,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const removeItem = (index: number) => {
-    setItems(prevItems => prevItems.filter((_, i) => i !== index));
+    setItems((prevItems) => prevItems.filter((_, i) => i !== index));
   };
 
   const updateQuantity = (index: number, quantity: number) => {
-    setItems(prevItems => {
+    setItems((prevItems) => {
       const updatedItems = [...prevItems];
       updatedItems[index].quantity = quantity;
       return updatedItems;
@@ -59,13 +61,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <CartContext.Provider value={{ 
-      items, 
-      addItem, 
-      removeItem, 
-      updateQuantity, 
-      clearCart 
-    }}>
+    <CartContext.Provider
+      value={{
+        items,
+        addItem,
+        removeItem,
+        updateQuantity,
+        clearCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
@@ -77,4 +81,4 @@ export const useCart = () => {
     throw new Error("useCart must be used within a CartProvider");
   }
   return context;
-}; 
+};

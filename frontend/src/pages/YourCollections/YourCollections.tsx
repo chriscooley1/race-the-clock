@@ -344,9 +344,15 @@ const YourCollections: React.FC = () => {
       setIsLoading(true);
       await duplicateCollection(collection, getAccessTokenSilently);
 
-      const refreshedCollections = await fetchCollections(getAccessTokenSilently);
+      const refreshedCollections = await fetchCollections(
+        getAccessTokenSilently,
+      );
       setCollections(refreshedCollections);
-      filterAndSortCollections(refreshedCollections, selectedCategory, sortOption);
+      filterAndSortCollections(
+        refreshedCollections,
+        selectedCategory,
+        sortOption,
+      );
     } catch (error) {
       console.error("Error duplicating collection:", error);
     } finally {
@@ -507,8 +513,10 @@ const YourCollections: React.FC = () => {
   };
 
   return (
-    <div className={`your-collections-page page-container page-container-with-collections mt-6 ${getTextColorClass(theme.backgroundColor)}`}>
-      <h1 className="mb-8 text-3xl font-bold inherit">
+    <div
+      className={`your-collections-page page-container page-container-with-collections mt-6 ${getTextColorClass(theme.backgroundColor)}`}
+    >
+      <h1 className="inherit mb-8 text-3xl font-bold">
         <BubbleText>Your Collections</BubbleText>
       </h1>
 
@@ -550,7 +558,7 @@ const YourCollections: React.FC = () => {
 
         {/* Sort by Dropdown */}
         <div className="mb-4">
-          <label htmlFor="sortSelect" className="mr-2 font-bold inherit">
+          <label htmlFor="sortSelect" className="inherit mr-2 font-bold">
             Sort by:
           </label>
           <select
@@ -595,10 +603,10 @@ const YourCollections: React.FC = () => {
                       />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold inherit">
+                  <h3 className="inherit text-xl font-bold">
                     Create New Collection
                   </h3>
-                  <p className="mt-2 text-sm inherit opacity-75">
+                  <p className="inherit mt-2 text-sm opacity-75">
                     Click to add a new collection
                   </p>
                 </div>
@@ -707,7 +715,6 @@ const YourCollections: React.FC = () => {
         onStepChange={handleTourStepChange}
         tourName="yourCollections"
       />
-
     </div>
   );
 };
@@ -763,9 +770,9 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
     <div className="flex size-full flex-col">
       <h1
         className="border-5 w-full rounded-t-lg border-b-0 border-black p-2.5 text-center text-xl font-bold text-black"
-        style={{ 
+        style={{
           backgroundColor: headerColor,
-          transition: "background-color 0.3s ease"
+          transition: "background-color 0.3s ease",
         }}
       >
         {collection.name}
@@ -774,7 +781,7 @@ const CollectionContent: React.FC<CollectionContentProps> = ({
         className="border-5 flex size-full flex-col rounded-b-lg border-black"
         style={{
           backgroundColor: contentColor,
-          transition: "background-color 0.3s ease"
+          transition: "background-color 0.3s ease",
         }}
       >
         {/* Content wrapper with padding */}

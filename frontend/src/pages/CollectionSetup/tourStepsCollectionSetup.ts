@@ -16,12 +16,16 @@ export const tourStepsCollectionSetup = (
     {
       target: "#collectionItemCount",
       content: "Define how many items will be included in the collection.",
-      ...(visibilityStates.isCollectionItemCountVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isCollectionItemCountVisible
+        ? { isOpen: true }
+        : {}),
     },
     {
       target: ".generate-random-sequence-button",
       content: "Click here to generate a random sequence of items.",
-      ...(visibilityStates.isGenerateRandomSequenceButtonVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isGenerateRandomSequenceButtonVisible
+        ? { isOpen: true }
+        : {}),
     },
   ];
 
@@ -70,7 +74,9 @@ export const tourStepsCollectionSetup = (
     );
   } else {
     // Non-Number Sense steps
-    if (!["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(type)) {
+    if (
+      !["numbersOneToHundred", "alphabet", "fullPeriodicTable"].includes(type)
+    ) {
       steps.push({
         target: "#itemCount",
         content: "Specify the quantity of items you want to generate.",
@@ -84,7 +90,9 @@ export const tourStepsCollectionSetup = (
     steps.push({
       target: ".generated-sequence-preview",
       content: "Preview your generated sequence here.",
-      ...(visibilityStates.isGeneratedSequencePreviewVisible ? { isOpen: true } : {}),
+      ...(visibilityStates.isGeneratedSequencePreviewVisible
+        ? { isOpen: true }
+        : {}),
     });
   }
 
@@ -113,8 +121,10 @@ export const tourStepsCollectionSetup = (
       "#collectionItemCount": visibilityStates.isCollectionItemCountVisible,
       "#dot-color": visibilityStates.isDotColorVisible,
       "#dot-shape": visibilityStates.isDotShapeVisible,
-      ".generate-random-sequence-button": visibilityStates.isGenerateRandomSequenceButtonVisible,
-      ".generated-sequence-preview": visibilityStates.isGeneratedSequencePreviewVisible,
+      ".generate-random-sequence-button":
+        visibilityStates.isGenerateRandomSequenceButtonVisible,
+      ".generated-sequence-preview":
+        visibilityStates.isGeneratedSequencePreviewVisible,
       ".clear-button": visibilityStates.isClearButtonVisible,
       ".next-button": visibilityStates.isNextButtonVisible,
     };

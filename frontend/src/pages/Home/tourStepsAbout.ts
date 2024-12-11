@@ -4,12 +4,14 @@ export const tourStepsAbout = (): Step[] => {
   const steps: Step[] = [
     {
       target: "h1",
-      content: "Welcome to Race The Clock! Let's take a quick tour of the home page.",
+      content:
+        "Welcome to Race The Clock! Let's take a quick tour of the home page.",
       disableBeacon: true,
     },
     {
       target: ".top-navbar-height",
-      content: "Use this navigation bar to explore different sections of the site.",
+      content:
+        "Use this navigation bar to explore different sections of the site.",
     },
     {
       target: "button[onClick*='/login']",
@@ -17,11 +19,13 @@ export const tourStepsAbout = (): Step[] => {
     },
     {
       target: "section:first-of-type",
-      content: "Learn about who can benefit from Race The Clock and its origins.",
+      content:
+        "Learn about who can benefit from Race The Clock and its origins.",
     },
     {
       target: ".grid",
-      content: "Discover our key features, including custom collections, speed controls, and more.",
+      content:
+        "Discover our key features, including custom collections, speed controls, and more.",
     },
     {
       target: "section.bg-white:nth-of-type(2) h2",
@@ -34,7 +38,7 @@ export const tourStepsAbout = (): Step[] => {
     {
       target: "ul.space-y-4",
       content: "Check out the exciting upcoming features we have planned.",
-    }
+    },
   ];
 
   return steps;

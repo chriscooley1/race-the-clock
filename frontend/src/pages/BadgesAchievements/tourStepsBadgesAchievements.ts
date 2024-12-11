@@ -4,7 +4,8 @@ export const tourStepsBadgesAchievements = (): Step[] => {
   const steps: Step[] = [
     {
       target: "h1.mb-8",
-      content: "This is the Badges & Achievements page where you can track your progress.",
+      content:
+        "This is the Badges & Achievements page where you can track your progress.",
       disableBeacon: true,
     },
     {
@@ -17,7 +18,8 @@ export const tourStepsBadgesAchievements = (): Step[] => {
     },
     {
       target: ".completion-counts-section",
-      content: "Here you can see how many times you've completed each collection.",
+      content:
+        "Here you can see how many times you've completed each collection.",
     },
   ];
 

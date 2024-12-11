@@ -21,7 +21,6 @@ const WheelSegment: React.FC<WheelSegmentProps> = ({
   onDragStart,
   onDragOver,
   onDrop,
-  
 }) => {
   const { theme } = useTheme();
 

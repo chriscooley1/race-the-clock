@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { fetchReports, fetchCollections, fetchCompletionCounts } from "../../api";
+import {
+  fetchReports,
+  fetchCollections,
+  fetchCompletionCounts,
+} from "../../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tourStepsReports } from "./tourStepsReports";
 import GuidedTour from "../../components/GuidedTour";
@@ -30,7 +34,9 @@ const Reports: React.FC = () => {
   const [reports, setReports] = useState<Report[]>([]); // State to hold reports
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
   const [collections, setCollections] = useState<Collection[]>([]); // State to hold collections
-  const [completionCounts, setCompletionCounts] = useState<Record<number, number>>({});
+  const [completionCounts, setCompletionCounts] = useState<
+    Record<number, number>
+  >({});
 
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
   const [currentTourStep, setCurrentTourStep] = useState<number>(0);
@@ -75,7 +81,7 @@ const Reports: React.FC = () => {
           getAccessTokenSilently,
         );
         setCollections(fetchedCollections);
-        
+
         // Fetch completion counts for all collections
         const counts = await fetchCompletionCounts(getAccessTokenSilently);
         setCompletionCounts(counts);
@@ -120,22 +126,30 @@ const Reports: React.FC = () => {
   };
 
   return (
-    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
-      <h1 className="mb-8 text-3xl font-bold inherit">
+    <div
+      className={`page-container ${getTextColorClass(theme.backgroundColor)}`}
+    >
+      <h1 className="inherit mb-8 text-3xl font-bold">
         <BubbleText>User Performance Reports</BubbleText>
       </h1>
-      <p className="inherit">View detailed reports of user performance after each session.</p>
-      
+      <p className="inherit">
+        View detailed reports of user performance after each session.
+      </p>
+
       {isLoading ? (
         <p className="inherit">Loading reports...</p>
       ) : (
         <div className="reports-overview">
-          <h2 className="text-2xl font-semibold mb-4 inherit">Reports Overview</h2>
+          <h2 className="inherit mb-4 text-2xl font-semibold">
+            Reports Overview
+          </h2>
           <ul className="space-y-4">
             {reports.map((report) => (
-              <li key={report.report_id} className="border rounded p-4 inherit">
+              <li key={report.report_id} className="inherit rounded border p-4">
                 <p className="inherit">Total Items: {report.total_items}</p>
-                <p className="inherit">Time Taken: {report.time_taken} seconds</p>
+                <p className="inherit">
+                  Time Taken: {report.time_taken} seconds
+                </p>
                 <p className="inherit">Missed Items: {report.missed_items}</p>
                 <p className="inherit">Skipped Items: {report.skipped_items}</p>
                 <p className="inherit">
@@ -144,12 +158,15 @@ const Reports: React.FC = () => {
               </li>
             ))}
           </ul>
-          
-          <h2 className="text-2xl font-semibold mt-8 mb-4 inherit">Your Collections</h2>
+
+          <h2 className="inherit mb-4 mt-8 text-2xl font-semibold">
+            Your Collections
+          </h2>
           <ul className="space-y-2">
             {collections.map((collection) => (
               <li key={collection.collection_id} className="inherit">
-                {collection.name} - Completed: {getCompletionCount(collection)} times
+                {collection.name} - Completed: {getCompletionCount(collection)}{" "}
+                times
               </li>
             ))}
           </ul>

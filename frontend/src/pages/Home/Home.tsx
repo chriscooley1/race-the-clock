@@ -42,39 +42,52 @@ const Home: React.FC = () => {
   };
 
   const content = (
-    <div 
+    <div
       className="min-h-screen"
-      style={{ 
-        backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent",
-        backgroundImage: theme.backgroundImage !== "none" ? `url(${theme.backgroundImage})` : "none",
+      style={{
+        backgroundColor:
+          theme.backgroundImage === "none"
+            ? theme.backgroundColor
+            : "transparent",
+        backgroundImage:
+          theme.backgroundImage !== "none"
+            ? `url(${theme.backgroundImage})`
+            : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        color: theme.textColor
+        color: theme.textColor,
       }}
     >
       <div className="relative">
         {/* Hero Section */}
-        <section 
+        <section
           className="px-4 py-12"
-          style={{ 
-            backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent"
+          style={{
+            backgroundColor:
+              theme.backgroundImage === "none"
+                ? theme.backgroundColor
+                : "transparent",
           }}
         >
           <div className="relative mb-12 text-center">
-            <img 
-              src={logo} 
-              alt="Race The Clock Logo" 
+            <img
+              src={logo}
+              alt="Race The Clock Logo"
               className="mx-auto h-auto max-w-md"
             />
           </div>
           <div className="mx-auto max-w-4xl text-center">
-            <p className={`mb-8 text-lg ${getTextColorClass(theme.backgroundColor)}`}>
-              Race The Clock is an innovative, web-based learning tool designed to help 
-              students of all ages improve their recognition and recall skills across various 
-              subjects. Race the Clock can benefit:
+            <p
+              className={`mb-8 text-lg ${getTextColorClass(theme.backgroundColor)}`}
+            >
+              Race The Clock is an innovative, web-based learning tool designed
+              to help students of all ages improve their recognition and recall
+              skills across various subjects. Race the Clock can benefit:
             </p>
-            
-            <ul className={`mx-auto mb-8 max-w-md space-y-2 text-left ${getTextColorClass(theme.backgroundColor)}`}>
+
+            <ul
+              className={`mx-auto mb-8 max-w-md space-y-2 text-left ${getTextColorClass(theme.backgroundColor)}`}
+            >
               <li>•Elementary School Teachers</li>
               <li>•High School Teachers</li>
               <li>•Higher Education professors and students</li>
@@ -82,25 +95,31 @@ const Home: React.FC = () => {
               <li>•Adult learners in specialized fields</li>
             </ul>
 
-            <p className={`text-lg ${getTextColorClass(theme.backgroundColor)}`}>
-              Our platform originated as a solution for early childhood teachers to help 
-              students achieve the goal of reading 60 letters per minute and has evolved 
-              into a versatile learning tool for students of all ages.
+            <p
+              className={`text-lg ${getTextColorClass(theme.backgroundColor)}`}
+            >
+              Our platform originated as a solution for early childhood teachers
+              to help students achieve the goal of reading 60 letters per minute
+              and has evolved into a versatile learning tool for students of all
+              ages.
             </p>
           </div>
         </section>
 
         {/* Features Section */}
-        <section 
+        <section
           className="relative"
-          style={{ 
-            backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent"
+          style={{
+            backgroundColor:
+              theme.backgroundImage === "none"
+                ? theme.backgroundColor
+                : "transparent",
           }}
         >
           <div className="relative h-24">
             <svg
               viewBox="0 0 1440 320"
-              className="absolute bottom-0 left-0 h-full w-full"
+              className="absolute bottom-0 left-0 size-full"
               preserveAspectRatio="none"
             >
               <path
@@ -111,33 +130,46 @@ const Home: React.FC = () => {
             </svg>
           </div>
           <div className="relative mb-12 text-center">
-            <h2 className={`relative z-10 text-4xl ${getTextColorClass(theme.backgroundColor)}`}>
+            <h2
+              className={`relative z-10 text-4xl ${getTextColorClass(theme.backgroundColor)}`}
+            >
               <BubbleText>Features</BubbleText>
             </h2>
           </div>
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
             <div className="text-center">
-              <h3 className="mb-2 text-xl font-bold text-pink-500">Custom Collections</h3>
+              <h3 className="mb-2 text-xl font-bold text-pink-500">
+                Custom Collections
+              </h3>
               <p className={getTextColorClass(theme.backgroundColor)}>
-                Create and customize your own collections with letters, numbers, pictures, words, and more.
+                Create and customize your own collections with letters, numbers,
+                pictures, words, and more.
               </p>
             </div>
             <div className="text-center">
-              <h3 className="mb-2 text-xl font-bold text-blue-400">Adjustable Speed</h3>
+              <h3 className="mb-2 text-xl font-bold text-blue-400">
+                Adjustable Speed
+              </h3>
               <p className={getTextColorClass(theme.backgroundColor)}>
-                Control the display speed to match your students' current skill levels
+                Control the display speed to match your students' current skill
+                levels
               </p>
             </div>
             <div className="text-center">
-              <h3 className="mb-2 text-xl font-bold text-green-500">Full Screen Practice</h3>
+              <h3 className="mb-2 text-xl font-bold text-green-500">
+                Full Screen Practice
+              </h3>
               <p className={getTextColorClass(theme.backgroundColor)}>
                 Distraction-free practice mode for focused learning session.
               </p>
             </div>
             <div className="text-center">
-              <h3 className="mb-2 text-xl font-bold text-purple-500">Theme Customization</h3>
+              <h3 className="mb-2 text-xl font-bold text-purple-500">
+                Theme Customization
+              </h3>
               <p className={getTextColorClass(theme.backgroundColor)}>
-                Personalize your experience with different themes and color options.
+                Personalize your experience with different themes and color
+                options.
               </p>
             </div>
           </div>
@@ -147,7 +179,7 @@ const Home: React.FC = () => {
         <div className="relative h-24">
           <svg
             viewBox="0 0 1440 320"
-            className="absolute bottom-0 left-0 h-full w-full"
+            className="absolute bottom-0 left-0 size-full"
             preserveAspectRatio="none"
           >
             <path
@@ -159,14 +191,19 @@ const Home: React.FC = () => {
         </div>
 
         {/* Coming Soon Section */}
-        <section 
+        <section
           className="px-4 py-12"
-          style={{ 
-            backgroundColor: theme.backgroundImage === "none" ? theme.backgroundColor : "transparent"
+          style={{
+            backgroundColor:
+              theme.backgroundImage === "none"
+                ? theme.backgroundColor
+                : "transparent",
           }}
         >
           <div className="relative mb-8 flex items-center justify-center">
-            <h2 className={`relative z-10 text-4xl ${getTextColorClass(theme.backgroundColor)}`}>
+            <h2
+              className={`relative z-10 text-4xl ${getTextColorClass(theme.backgroundColor)}`}
+            >
               <BubbleText>Coming Soon</BubbleText>
             </h2>
           </div>
@@ -178,11 +215,13 @@ const Home: React.FC = () => {
               </p>
               <li className="text-orange-500">Games</li>
               <p className={getTextColorClass(theme.backgroundColor)}>
-                Earn badges and achievements as you progress in your learning journey
+                Earn badges and achievements as you progress in your learning
+                journey
               </p>
               <li className="text-orange-500">Advanced Analytics</li>
               <p className={getTextColorClass(theme.backgroundColor)}>
-                Detailed insights and progress tracking for teachers and learners
+                Detailed insights and progress tracking for teachers and
+                learners
               </p>
               <li className="text-orange-500">Interactive Games</li>
               <p className={getTextColorClass(theme.backgroundColor)}>
@@ -219,9 +258,7 @@ const Home: React.FC = () => {
         tourName={isAboutPage ? "about" : "home"}
       />
 
-      {showFeedback && (
-        <FeedbackForm onClose={() => setShowFeedback(false)} />
-      )}
+      {showFeedback && <FeedbackForm onClose={() => setShowFeedback(false)} />}
     </>
   );
 };

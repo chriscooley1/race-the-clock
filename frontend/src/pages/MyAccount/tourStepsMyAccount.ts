@@ -18,7 +18,8 @@ export const tourStepsMyAccount = (): Step[] => {
     },
     {
       target: ".role-selection",
-      content: "Choose your role as either a teacher or student. Teachers can create and manage collections, while students can practice with assigned collections.",
+      content:
+        "Choose your role as either a teacher or student. Teachers can create and manage collections, while students can practice with assigned collections.",
     },
     {
       target: ".role-features",

@@ -7,7 +7,8 @@ export const tourStepsCollectionFinalStep = (
   const steps: Step[] = [
     {
       target: ".collection-final-step",
-      content: "This is the final step for your collection. Review your items before saving.",
+      content:
+        "This is the final step for your collection. Review your items before saving.",
       disableBeacon: true,
     },
     {

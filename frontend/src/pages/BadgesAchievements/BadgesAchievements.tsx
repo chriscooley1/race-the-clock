@@ -88,8 +88,10 @@ const BadgesAchievements: React.FC = () => {
   const steps = tourStepsBadgesAchievements();
 
   return (
-    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
-      <h1 className="mb-8 text-3xl font-bold inherit">
+    <div
+      className={`page-container ${getTextColorClass(theme.backgroundColor)}`}
+    >
+      <h1 className="inherit mb-8 text-3xl font-bold">
         <BubbleText>Badges & Achievements</BubbleText>
       </h1>
       <p className="inherit">
@@ -104,8 +106,8 @@ const BadgesAchievements: React.FC = () => {
 
       <div className="mt-8 w-full max-w-2xl">
         <div className="badges-section">
-          <h2 className="text-2xl font-semibold inherit">Badges</h2>
-          <ul className="list-disc pl-5 inherit">
+          <h2 className="inherit text-2xl font-semibold">Badges</h2>
+          <ul className="inherit list-disc pl-5">
             {badges.length > 0 ? (
               badges.map((badge, index) => <li key={index}>{badge}</li>)
             ) : (
@@ -115,8 +117,8 @@ const BadgesAchievements: React.FC = () => {
         </div>
 
         <div className="achievements-section mt-8">
-          <h2 className="text-2xl font-semibold inherit">Achievements</h2>
-          <ul className="list-disc pl-5 inherit">
+          <h2 className="inherit text-2xl font-semibold">Achievements</h2>
+          <ul className="inherit list-disc pl-5">
             {achievements.length > 0 ? (
               achievements.map((achievement, index) => (
                 <li key={index}>{achievement}</li>
@@ -127,7 +129,7 @@ const BadgesAchievements: React.FC = () => {
           </ul>
         </div>
 
-        <h2 className="text-2xl font-semibold inherit">Completion Counts</h2>
+        <h2 className="inherit text-2xl font-semibold">Completion Counts</h2>
         <ul className="inherit">
           {Object.entries(completionCounts).length > 0 ? (
             Object.entries(completionCounts).map(([collectionId, count]) => (

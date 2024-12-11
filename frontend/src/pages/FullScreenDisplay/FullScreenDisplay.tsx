@@ -354,10 +354,12 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       return (
         <div className="flex size-full flex-col items-center justify-center gap-4">
           {/* Math Problem */}
-          <h1 className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}>
+          <h1
+            className={`max-w-[90vw] break-words text-center leading-tight transition-all duration-300 ${getTextClass(currentItem.name)}`}
+          >
             {currentItem.name}
           </h1>
-          
+
           {/* Answer (only shown when showAnswer is true) */}
           {showAnswer && (
             <div className="flex flex-col items-center justify-center">
@@ -465,14 +467,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       {/* Navigation buttons */}
       <button
         type="button"
-        className="w-15 h-15 previous-button absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70 pb-[4px]"
+        className="w-15 h-15 previous-button absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 pb-[4px] text-5xl text-white transition-colors duration-300 hover:bg-black/70"
         onClick={handlePrevious}
       >
         ←
       </button>
       <button
         type="button"
-        className="w-15 h-15 next-button absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70 pb-[4px]"
+        className="w-15 h-15 next-button absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 pb-[4px] text-5xl text-white transition-colors duration-300 hover:bg-black/70"
         onClick={handleNext}
       >
         →

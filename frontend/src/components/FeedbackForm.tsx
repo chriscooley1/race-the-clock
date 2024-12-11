@@ -59,13 +59,22 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       if (isAuthenticated) {
         try {
           const userProfile = await getCurrentUser(getAccessTokenSilently);
-          displayName = userProfile?.display_name || user?.name || "Anonymous User";
+          displayName =
+            userProfile?.display_name || user?.name || "Anonymous User";
         } catch (error) {
-          console.warn("Could not get user profile, using Anonymous User", error);
+          console.warn(
+            "Could not get user profile, using Anonymous User",
+            error,
+          );
         }
       }
 
-      await submitFeedback(message, displayName, getAccessTokenSilently, images);
+      await submitFeedback(
+        message,
+        displayName,
+        getAccessTokenSilently,
+        images,
+      );
 
       setSuccess(true);
       setMessage("");
@@ -88,7 +97,7 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
       <div
         ref={modalRef}
         className="w-full max-w-md rounded-lg border border-black bg-white p-6"
@@ -108,11 +117,11 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               required
               onKeyDown={handleKeyDown}
             />
-            
+
             <div className="space-y-2">
               <label
                 htmlFor="feedback-image-upload"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="mb-1 block text-sm font-medium text-gray-700"
               >
                 Upload Images (Optional)
               </label>
@@ -134,23 +143,19 @@ const FeedbackForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               >
                 Add Images
               </button>
-              
+
               {imagePreviewUrls.length > 0 && (
-                <div 
+                <div
                   className="grid grid-cols-2 gap-2"
                   role="list"
                   aria-label="Uploaded images preview"
                 >
                   {imagePreviewUrls.map((url, index) => (
-                    <div 
-                      key={index} 
-                      className="relative"
-                      role="listitem"
-                    >
+                    <div key={index} className="relative" role="listitem">
                       <img
                         src={url}
                         alt={`Preview of uploaded image ${index + 1}`}
-                        className="h-24 w-24 rounded object-cover"
+                        className="size-24 rounded object-cover"
                       />
                       <button
                         type="button"

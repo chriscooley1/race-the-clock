@@ -3,26 +3,26 @@ export const lightenColor = (color: string, amount: number): string => {
   try {
     // Ensure we have a valid 6-digit hex color
     const hex = color.replace("#", "").padEnd(6, "0");
-    
+
     // Parse the RGB components
     const r = parseInt(hex.slice(0, 2), 16);
     const g = parseInt(hex.slice(2, 4), 16);
     const b = parseInt(hex.slice(4, 6), 16);
-    
+
     // Lighten each component
-    const lightenComponent = (c: number) => 
+    const lightenComponent = (c: number) =>
       Math.min(255, Math.round(c + (255 - c) * amount));
-    
+
     const lightR = lightenComponent(r);
     const lightG = lightenComponent(g);
     const lightB = lightenComponent(b);
-    
+
     // Convert back to hex
     const toHex = (n: number) => {
       const hex = n.toString(16);
       return hex.length === 1 ? "0" + hex : hex;
     };
-    
+
     return `#${toHex(lightR)}${toHex(lightG)}${toHex(lightB)}`;
   } catch (error) {
     console.error("Error lightening color:", error, "for color:", color);

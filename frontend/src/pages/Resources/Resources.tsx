@@ -98,8 +98,10 @@ const Resources: React.FC = () => {
   };
 
   return (
-    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
-      <h1 className="mb-8 text-3xl font-bold inherit">
+    <div
+      className={`page-container ${getTextColorClass(theme.backgroundColor)}`}
+    >
+      <h1 className="inherit mb-8 text-3xl font-bold">
         <BubbleText>Resources</BubbleText>
       </h1>
 
@@ -108,33 +110,37 @@ const Resources: React.FC = () => {
       ) : (
         <>
           <section className="mb-8 w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold inherit">
+            <h2 className="inherit mb-4 text-2xl font-semibold">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
                 <div key={index} className="inherit">
-                  <h3 className="mb-2 text-xl font-medium inherit">{faq.question}</h3>
+                  <h3 className="inherit mb-2 text-xl font-medium">
+                    {faq.question}
+                  </h3>
                   <p className="inherit">{faq.answer}</p>
                 </div>
               ))}
             </div>
           </section>
-          
+
           <section className="w-full max-w-3xl">
-            <h2 className="mb-4 text-2xl font-semibold inherit">
+            <h2 className="inherit mb-4 text-2xl font-semibold">
               Instructional Videos
             </h2>
             <div className="space-y-6">
               {videos.map((video, index) => (
                 <div key={index} className="inherit">
-                  <h3 className="mb-2 text-xl font-medium inherit">{video.title}</h3>
+                  <h3 className="inherit mb-2 text-xl font-medium">
+                    {video.title}
+                  </h3>
                   <p className="inherit">{video.description}</p>
                   <a
                     href={video.videoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-500 hover:text-blue-600 underline"
+                    className="text-blue-500 underline hover:text-blue-600"
                   >
                     Watch Video
                   </a>

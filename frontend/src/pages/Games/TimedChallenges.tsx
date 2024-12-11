@@ -74,7 +74,9 @@ const TimedChallenges: React.FC = () => {
   };
 
   return (
-    <div className={`page-container ${getTextColorClass(theme.backgroundColor)}`}>
+    <div
+      className={`page-container ${getTextColorClass(theme.backgroundColor)}`}
+    >
       <button
         type="button"
         onClick={handleBack}
@@ -82,10 +84,12 @@ const TimedChallenges: React.FC = () => {
       >
         Back to Games
       </button>
-      <h1 className="mb-8 text-3xl font-bold inherit">
+      <h1 className="inherit mb-8 text-3xl font-bold">
         <BubbleText>Timed Challenges</BubbleText>
       </h1>
-      <p className="inherit">Complete as many challenges as you can within the time limit!</p>
+      <p className="inherit">
+        Complete as many challenges as you can within the time limit!
+      </p>
       {isLoading ? (
         <p className="inherit">Loading collections...</p>
       ) : (
@@ -94,7 +98,8 @@ const TimedChallenges: React.FC = () => {
           <ul className="inherit">
             {collections.map((collection: Collection) => (
               <li key={collection.collection_id} className="inherit">
-                {collection.name} - {getItemsCount(collection.description)} items
+                {collection.name} - {getItemsCount(collection.description)}{" "}
+                items
               </li>
             ))}
           </ul>

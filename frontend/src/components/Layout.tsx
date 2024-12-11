@@ -28,14 +28,12 @@ const Layout: React.FC<LayoutProps> = ({
         />
       </div>
       <div className="fixed inset-x-0 top-[200px] z-40">
-        <CollectionsNavBar 
+        <CollectionsNavBar
           setShowFeedback={setShowFeedback}
           onStartTour={onStartTour}
         />
       </div>
-      <div className="mt-[264px] flex-grow">
-        {children}
-      </div>
+      <div className="mt-[264px] grow">{children}</div>
       <Footer />
     </div>
   );
