@@ -12,7 +12,7 @@ import { adjustColorForColorblindness } from "../../utils/colorAdjustment";
 import BubbleText from "../../components/BubbleText";
 
 const DEFAULT_THEME = {
-  name: "Anakiwa",
+  name: "White",
   backgroundColor: "#FFFFFF",
   textColor: "#333333",
   displayTextColor: "#333333",
