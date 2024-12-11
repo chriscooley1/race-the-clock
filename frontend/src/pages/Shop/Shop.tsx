@@ -47,13 +47,31 @@ const Shop: React.FC = () => {
     alert("Item added to cart!");
   };
 
+  const getTextColorForBackground = (bgColor: string) => {
+    if (bgColor && theme.isDarkMode) {
+      return "text-white";
+    }
+    return "text-black";
+  };
+
+  const getCardBackgroundColor = () => {
+    if (theme.isDarkMode) {
+      return "bg-gray-700";
+    }
+    if (theme.backgroundColor) {
+      return `bg-opacity-90 ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`;
+    }
+    return "bg-white";
+  };
+
   return (
     <div className="page-container">
       <div 
-        className={`flex min-h-screen w-full flex-col items-center pt-[20px] ${
-          theme.isDarkMode ? "bg-gray-800 text-white" : "text-black"
-        }`}
-        style={{ color: theme.originalTextColor }}
+        className={`flex min-h-screen w-full flex-col items-center pt-[20px]`}
+        style={{ 
+          backgroundColor: theme.backgroundColor,
+          color: theme.textColor 
+        }}
       >
         <h1 className="mb-8 text-3xl font-bold">
           <BubbleText>Race The Clock Premium</BubbleText>
@@ -61,9 +79,11 @@ const Shop: React.FC = () => {
 
         <div className="mx-auto max-w-4xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className={`rounded-lg border p-8 shadow-lg ${
-              theme.isDarkMode ? "border-gray-600 bg-gray-700" : "border-black bg-white"
-            }`}>
+            <div className={`rounded-lg border p-8 shadow-lg ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+              style={{
+                borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
+              }}
+            >
               <h2 className="mb-6 text-center text-2xl font-bold">Single License</h2>
               
               <div className="mb-8">
@@ -110,9 +130,11 @@ const Shop: React.FC = () => {
               </button>
             </div>
 
-            <div className={`rounded-lg border p-8 shadow-lg ${
-              theme.isDarkMode ? "border-gray-600 bg-gray-700" : "border-black bg-white"
-            }`}>
+            <div className={`rounded-lg border p-8 shadow-lg ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+              style={{
+                borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
+              }}
+            >
               <h2 className="mb-6 text-center text-2xl font-bold">Multi License Pack</h2>
               
               <div className="mb-8">
