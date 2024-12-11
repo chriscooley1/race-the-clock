@@ -124,8 +124,9 @@ const Home: React.FC = () => {
             >
               <path
                 d="M0,160 C480,400 960,-80 1440,160"
-                className={`fill-none ${theme.isDarkMode ? "stroke-white" : "stroke-black"} stroke-2`}
+                className={`fill-none ${theme.isDarkMode ? "stroke-white" : "stroke-black"}`}
                 strokeLinecap="round"
+                strokeWidth="8"
               />
             </svg>
           </div>
@@ -184,8 +185,9 @@ const Home: React.FC = () => {
           >
             <path
               d="M0,160 C480,400 960,-80 1440,160"
-              className={`fill-none ${theme.isDarkMode ? "stroke-white" : "stroke-black"} stroke-2`}
+              className={`fill-none ${theme.isDarkMode ? "stroke-white" : "stroke-black"}`}
               strokeLinecap="round"
+              strokeWidth="8"
             />
           </svg>
         </div>
