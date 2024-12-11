@@ -8,6 +8,7 @@ import { updateUserRole } from "../../api";
 import RoleSelection from "../../components/RoleSelection";
 import UserRoleFeatures from "../../components/UserRoleFeatures";
 import BubbleText from "../../components/BubbleText";
+import { useTheme } from "../../context/ThemeContext";
 
 interface UserData {
   display_name?: string;
@@ -23,6 +24,7 @@ const MyAccount: React.FC = () => {
   const [role, setRole] = useState<string>(
     localStorage.getItem("userRole") || "student",
   );
+  const { theme } = useTheme();
 
   // Define the steps variable without visibility states
   const steps = tourStepsMyAccount(); // Create tour steps without visibility states
@@ -99,9 +101,30 @@ const MyAccount: React.FC = () => {
     }));
   };
 
+  const getTextColorForBackground = (bgColor: string) => {
+    if (bgColor && theme.isDarkMode) {
+      return "text-white";
+    }
+    return "text-black";
+  };
+
+  const getCardBackgroundColor = () => {
+    if (theme.isDarkMode) {
+      return "bg-gray-700";
+    }
+    if (theme.backgroundColor) {
+      return `bg-opacity-90 ${theme.isDarkMode ? "bg-gray-700" : "bg-white"}`;
+    }
+    return "bg-white";
+  };
+
   return (
     <div className="page-container">
-      <div className="bg-theme-bg text-theme-text w-full max-w-md rounded-lg p-8 shadow-md">
+      <div className={`rounded-lg border p-8 shadow-lg ${getCardBackgroundColor()} ${getTextColorForBackground(theme.backgroundColor)}`}
+        style={{
+          borderColor: theme.isDarkMode ? "rgb(75, 85, 99)" : "black",
+        }}
+      >
         <h1 className="mb-6 text-center text-3xl font-bold">
           <BubbleText>My Account</BubbleText>
         </h1>
