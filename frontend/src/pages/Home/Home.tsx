@@ -7,6 +7,7 @@ import { useTour } from "../../context/TourContext";
 import Layout from "../../components/Layout";
 import BubbleText from "../../components/BubbleText";
 import FeedbackForm from "../../components/FeedbackForm";
+import logo from "../../assets/full-logo.png";
 
 const Home: React.FC = () => {
   const [isTourRunning, setIsTourRunning] = useState<boolean>(false);
@@ -39,9 +40,11 @@ const Home: React.FC = () => {
         {/* Hero Section */}
         <section className="bg-white px-4 py-12">
           <div className="relative mb-12 text-center">
-            <h2 className="relative z-10 text-4xl">
-              <BubbleText>Race The Clock</BubbleText>
-            </h2>
+            <img 
+              src={logo} 
+              alt="Race The Clock Logo" 
+              className="mx-auto h-auto max-w-md"
+            />
           </div>
           <div className="mx-auto max-w-4xl text-center">
             <p className="mb-8 text-lg">
