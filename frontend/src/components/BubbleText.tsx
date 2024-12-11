@@ -24,7 +24,7 @@ const BubbleText: React.FC<BubbleTextProps> = ({ children, className = "" }) => 
             style={{
               color: "transparent",
               WebkitTextStroke: "2px black",
-              fontFamily: "'Comic Sans MS', 'Chalkboard SE', sans-serif",
+              fontFamily: "'HappyParagraphs-Regular', 'Chalkboard SE', sans-serif",
               fontWeight: "bold",
               background: char === " " ? "transparent" : collectionColorSchemes[currentColorIndex % collectionColorSchemes.length].backgroundColor,
               WebkitBackgroundClip: char === " " ? "unset" : "text",

@@ -17,57 +17,85 @@
 }
 
 @font-face {
-  font-family: "Happy Writing Dots Regular";
-  src: url("/fonts/HappyWritingDots-Regular.ttf") format("truetype");
+  font-family: "Happy Covers Regular";
+  src: url("/fonts/HappyCovers-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Happy Writing Neat Regular";
-  src: url("/fonts/HappyWritingNeat-Regular.ttf") format("truetype");
+  font-family: "Happy Covers Shadow Regular";
+  src: url("/fonts/HappyCoversShadow-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Happy Writing Outline Dashes Regular";
-  src: url("/fonts/HappyWritingOutlineDashes-Regular.ttf") format("truetype");
+  font-family: "Happy Fun Letters Regular";
+  src: url("/fonts/HappyFunLetters-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Happy Writing Outline Dots Regular";
-  src: url("/fonts/HappyWritingOutlineDots-Regular.ttf") format("truetype");
+  font-family: "Happy Fun Letters Titles Regular";
+  src: url("/fonts/HappyFunLettersTitles-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Happy Writing Outlines Regular";
-  src: url("/fonts/HappyWritingOutlines-Regular.ttf") format("truetype");
+  font-family: "Happy Letters Titles Shadow Regular";
+  src: url("/fonts/HappyLettersTitlesShadow-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Happy Writing Outlines Thick Regular";
-  src: url("/fonts/HappyWritingOutlinesThick-Regular.ttf") format("truetype");
+  font-family: "Happy Letters Regular";
+  src: url("/fonts/HappyLetters-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Happy Writing Tracing Regular";
-  src: url("/fonts/HappyWritingTracing-Regular.ttf") format("truetype");
+  font-family: "Happy Medium Regular";
+  src: url("/fonts/HappyMedium-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Happy Writing Tracing Guides Regular";
-  src: url("/fonts/HappyWritingTracingGuides-Regular.ttf") format("truetype");
+  font-family: "Happy Medium Shadow Regular";
+  src: url("/fonts/HappyMediumShadow-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Happy Neat Handwriting Regular";
+  src: url("/fonts/HappyNeatHandwriting-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Happy Paragraphs Regular";
+  src: url("/fonts/HappyParagraphs-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Happy Task Card Labels Regular";
+  src: url("/fonts/HappyTaskCardLabels-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Happy Titles Regular";
+  src: url("/fonts/HappyTitles-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -83,9 +111,9 @@
     --background-color: #ffffff;
     --display-text-color: var(--text-color);
     --display-background-color: var(--background-color);
-    --font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
-    --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
-    --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+    --font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
+    --heading-font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
+    --button-font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
     --collections-navbar-height: 64px;
     --display-font-family: var(--font-family);
   }
@@ -144,9 +172,9 @@
   --background-color: #ffffff;
   --display-text-color: var(--text-color);
   --display-background-color: var(--background-color);
-  --font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
-  --heading-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
-  --button-font-family: "KG What The Teacher Wants", "Comic Neue", sans-serif;
+  --font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
+  --heading-font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
+  --button-font-family: "font-happy-paragraphs-regular", "Comic Neue", sans-serif;
   --collections-navbar-height: 64px;
   --display-font-family: var(--font-family);
 }

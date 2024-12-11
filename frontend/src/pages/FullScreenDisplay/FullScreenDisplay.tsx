@@ -465,14 +465,14 @@ const FullScreenDisplay: React.FC<FullScreenDisplayProps> = ({
       {/* Navigation buttons */}
       <button
         type="button"
-        className="w-15 h-15 previous-button absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
+        className="w-15 h-15 previous-button absolute left-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70 pb-[4px]"
         onClick={handlePrevious}
       >
         ←
       </button>
       <button
         type="button"
-        className="w-15 h-15 next-button absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70"
+        className="w-15 h-15 next-button absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full border border-black bg-black/50 text-5xl text-white transition-colors duration-300 hover:bg-black/70 pb-[4px]"
         onClick={handleNext}
       >
         →

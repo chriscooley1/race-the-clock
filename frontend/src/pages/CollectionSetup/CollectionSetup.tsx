@@ -530,234 +530,236 @@ const CollectionSetup: React.FC = () => {
 
         <div className="mb-4 w-full max-w-4xl px-4">
           <div className="mb-8 rounded-lg border border-gray-300 bg-white p-6 shadow-md dark:bg-gray-700">
-            <h4 className="mb-4 text-xl font-bold">Collection Settings</h4>
-            {category !== "Number Sense" ? (
-              <>
-                <div className="flex items-center space-x-4">
-                  <label
-                    htmlFor="typeSelect"
-                    className="whitespace-nowrap font-bold"
-                  >
-                    Type:
-                  </label>
-                  <select
-                    id="typeSelect"
-                    className="font-teacher rounded border border-black bg-white p-2 text-center text-black"
-                    value={type}
-                    onChange={(e) => {
-                      setType(e.target.value);
-                      console.log("Type changed to:", e.target.value); // Debugging log for type change
-                    }}
-                  >
-                    {category === "Math" && (
-                      <>
-                        <option value="numbers">Numbers</option>
-                        <option value="numbersOneToHundred">Numbers 1-100</option>
-                        <option value="mathProblems">Math Problems</option>
-                      </>
-                    )}
-                    {category === "Language Arts" && (
-                      <>
-                        <option value="letters">Uppercase Letters</option>
-                        <option value="randomLowercase">Lowercase Letters</option>
-                        <option value="randomMixedCase">
-                          Mixed Case Letters
-                        </option>
-                        <option value="alphabet">Full Alphabet</option>
-                      </>
-                    )}
-                    {category === "Science" && (
-                      <>
-                        <option value="periodicTable">Periodic Table</option>
-                        <option value="fullPeriodicTable">
-                          Full Periodic Table
-                        </option>
-                        <option value="scienceTerms">Science Terms</option>
-                      </>
-                    )}
-                    {category === "Nursing" && (
-                      <option value="nursingTerms">Nursing Terms</option>
-                    )}
-                  </select>
-                </div>
-                {!shouldHideQuantity(type) && (
+            <h4 className="mb-4 text-center text-xl font-bold">Collection Settings</h4>
+            <div className="mx-auto max-w-md space-y-4">
+              {category !== "Number Sense" ? (
+                <>
+                  <div className="flex items-center justify-between space-x-4">
+                    <label
+                      htmlFor="typeSelect"
+                      className="whitespace-nowrap font-bold"
+                    >
+                      Type:
+                    </label>
+                    <select
+                      id="typeSelect"
+                      className="font-teacher rounded border border-black bg-white p-2 text-center text-black"
+                      value={type}
+                      onChange={(e) => {
+                        setType(e.target.value);
+                        console.log("Type changed to:", e.target.value); // Debugging log for type change
+                      }}
+                    >
+                      {category === "Math" && (
+                        <>
+                          <option value="numbers">Numbers</option>
+                          <option value="numbersOneToHundred">Numbers 1-100</option>
+                          <option value="mathProblems">Math Problems</option>
+                        </>
+                      )}
+                      {category === "Language Arts" && (
+                        <>
+                          <option value="letters">Uppercase Letters</option>
+                          <option value="randomLowercase">Lowercase Letters</option>
+                          <option value="randomMixedCase">
+                            Mixed Case Letters
+                          </option>
+                          <option value="alphabet">Full Alphabet</option>
+                        </>
+                      )}
+                      {category === "Science" && (
+                        <>
+                          <option value="periodicTable">Periodic Table</option>
+                          <option value="fullPeriodicTable">
+                            Full Periodic Table
+                          </option>
+                          <option value="scienceTerms">Science Terms</option>
+                        </>
+                      )}
+                      {category === "Nursing" && (
+                        <option value="nursingTerms">Nursing Terms</option>
+                      )}
+                    </select>
+                  </div>
+                  {!shouldHideQuantity(type) && (
+                    <div className="flex items-center justify-between space-x-4">
+                      <label
+                        htmlFor="itemCount"
+                        className="whitespace-nowrap font-bold"
+                      >
+                        Number of Items in Collection:
+                      </label>
+                      <input
+                        type="number"
+                        id="itemCount"
+                        className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                        value={itemCount}
+                        min={1}
+                        onChange={(e) => {
+                          const count = parseInt(e.target.value, 10);
+                          setItemCount(count);
+                          console.log("Item count changed to:", count); // Debugging log for item count change
+                        }}
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
                   <div className="flex items-center space-x-4">
                     <label
-                      htmlFor="itemCount"
+                      htmlFor="dotCountType"
+                      className="whitespace-nowrap font-bold"
+                    >
+                      Dot Count Type:
+                    </label>
+                    <select
+                      id="dotCountType"
+                      className="font-teacher rounded-md border border-black p-2 text-center text-black"
+                      value={dotCountType}
+                      onChange={(e) => {
+                        setDotCountType(e.target.value as "fixed" | "random");
+                        console.log("Dot count type changed to:", e.target.value); // Debugging log for dot count type change
+                      }}
+                    >
+                      <option value="fixed">Fixed</option>
+                      <option value="random">Random</option>
+                    </select>
+                  </div>
+                  {dotCountType === "fixed" ? (
+                    <div className="flex items-center space-x-4">
+                      <label
+                        htmlFor="itemCount"
+                        className="whitespace-nowrap font-bold"
+                      >
+                        Number of Dots:
+                      </label>
+                      <input
+                        type="number"
+                        id="itemCount"
+                        className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                        value={itemCount}
+                        min={1}
+                        onChange={(e) => {
+                          const count = parseInt(e.target.value, 10);
+                          setItemCount(count);
+                          console.log("Item count changed to:", count); // Debugging log for item count change
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-center space-x-4">
+                        <label
+                          htmlFor="minDots"
+                          className="whitespace-nowrap font-bold"
+                        >
+                          Minimum Dots:
+                        </label>
+                        <input
+                          type="number"
+                          id="minDots"
+                          className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                          value={minDots}
+                          min={1}
+                          onChange={(e) => {
+                            const count = parseInt(e.target.value, 10);
+                            setMinDots(count);
+                            console.log("Minimum dots changed to:", count); // Debugging log for min dots change
+                          }}
+                        />
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <label
+                          htmlFor="maxDots"
+                          className="whitespace-nowrap font-bold"
+                        >
+                          Maximum Dots:
+                        </label>
+                        <input
+                          type="number"
+                          id="maxDots"
+                          className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                          value={maxDots}
+                          min={minDots}
+                          onChange={(e) => {
+                            const count = parseInt(e.target.value, 10);
+                            setMaxDots(count);
+                            console.log("Maximum dots changed to:", count); // Debugging log for max dots change
+                          }}
+                        />
+                      </div>
+                    </>
+                  )}
+                  <div className="flex items-center space-x-4">
+                    <label
+                      htmlFor="collectionItemCount"
                       className="whitespace-nowrap font-bold"
                     >
                       Number of Items in Collection:
                     </label>
                     <input
                       type="number"
-                      id="itemCount"
+                      id="collectionItemCount"
                       className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-                      value={itemCount}
+                      value={collectionItemCount}
                       min={1}
                       onChange={(e) => {
                         const count = parseInt(e.target.value, 10);
-                        setItemCount(count);
-                        console.log("Item count changed to:", count); // Debugging log for item count change
+                        setCollectionItemCount(count);
+                        console.log("Collection item count changed to:", count); // Debugging log for collection item count change
                       }}
                     />
                   </div>
-                )}
-              </>
-            ) : (
-              <>
-                <div className="flex items-center space-x-4">
-                  <label
-                    htmlFor="dotCountType"
-                    className="whitespace-nowrap font-bold"
-                  >
-                    Dot Count Type:
-                  </label>
-                  <select
-                    id="dotCountType"
-                    className="font-teacher rounded-md border border-black p-2 text-center text-black"
-                    value={dotCountType}
-                    onChange={(e) => {
-                      setDotCountType(e.target.value as "fixed" | "random");
-                      console.log("Dot count type changed to:", e.target.value); // Debugging log for dot count type change
-                    }}
-                  >
-                    <option value="fixed">Fixed</option>
-                    <option value="random">Random</option>
-                  </select>
-                </div>
-                {dotCountType === "fixed" ? (
                   <div className="flex items-center space-x-4">
                     <label
-                      htmlFor="itemCount"
+                      htmlFor="dot-color"
                       className="whitespace-nowrap font-bold"
                     >
-                      Number of Dots:
+                      Dot Color:
                     </label>
-                    <input
-                      type="number"
-                      id="itemCount"
-                      className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-                      value={itemCount}
-                      min={1}
+                    <select
+                      id="dot-color"
+                      className={`font-teacher rounded-md border border-black p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                      value={dotColor}
                       onChange={(e) => {
-                        const count = parseInt(e.target.value, 10);
-                        setItemCount(count);
-                        console.log("Item count changed to:", count); // Debugging log for item count change
+                        setDotColor(e.target.value);
+                        console.log("Dot color changed to:", e.target.value); // Debugging log for dot color change
                       }}
-                    />
+                    >
+                      {["blue", "green", "red", "purple", "orange"].map((color) => (
+                        <option key={color} value={color}>
+                          {color}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                ) : (
-                  <>
-                    <div className="flex items-center space-x-4">
-                      <label
-                        htmlFor="minDots"
-                        className="whitespace-nowrap font-bold"
-                      >
-                        Minimum Dots:
-                      </label>
-                      <input
-                        type="number"
-                        id="minDots"
-                        className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-                        value={minDots}
-                        min={1}
-                        onChange={(e) => {
-                          const count = parseInt(e.target.value, 10);
-                          setMinDots(count);
-                          console.log("Minimum dots changed to:", count); // Debugging log for min dots change
-                        }}
-                      />
-                    </div>
-                    <div className="flex items-center space-x-4">
-                      <label
-                        htmlFor="maxDots"
-                        className="whitespace-nowrap font-bold"
-                      >
-                        Maximum Dots:
-                      </label>
-                      <input
-                        type="number"
-                        id="maxDots"
-                        className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-                        value={maxDots}
-                        min={minDots}
-                        onChange={(e) => {
-                          const count = parseInt(e.target.value, 10);
-                          setMaxDots(count);
-                          console.log("Maximum dots changed to:", count); // Debugging log for max dots change
-                        }}
-                      />
-                    </div>
-                  </>
-                )}
-                <div className="flex items-center space-x-4">
-                  <label
-                    htmlFor="collectionItemCount"
-                    className="whitespace-nowrap font-bold"
-                  >
-                    Number of Items in Collection:
-                  </label>
-                  <input
-                    type="number"
-                    id="collectionItemCount"
-                    className={`font-teacher rounded-md border border-black p-2 text-center ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-                    value={collectionItemCount}
-                    min={1}
-                    onChange={(e) => {
-                      const count = parseInt(e.target.value, 10);
-                      setCollectionItemCount(count);
-                      console.log("Collection item count changed to:", count); // Debugging log for collection item count change
-                    }}
-                  />
-                </div>
-                <div className="flex items-center space-x-4">
-                  <label
-                    htmlFor="dot-color"
-                    className="whitespace-nowrap font-bold"
-                  >
-                    Dot Color:
-                  </label>
-                  <select
-                    id="dot-color"
-                    className={`font-teacher rounded-md border border-black p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-                    value={dotColor}
-                    onChange={(e) => {
-                      setDotColor(e.target.value);
-                      console.log("Dot color changed to:", e.target.value); // Debugging log for dot color change
-                    }}
-                  >
-                    {["blue", "green", "red", "purple", "orange"].map((color) => (
-                      <option key={color} value={color}>
-                        {color}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <label
-                    htmlFor="dot-shape"
-                    className="whitespace-nowrap font-bold"
-                  >
-                    Dot Shape:
-                  </label>
-                  <select
-                    id="dot-shape"
-                    className={`font-teacher rounded-md border border-black p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
-                    value={dotShape}
-                    onChange={(e) => {
-                      setDotShape(e.target.value);
-                      console.log("Dot shape changed to:", e.target.value); // Debugging log for dot shape change
-                    }}
-                  >
-                    {["circle", "square", "triangle"].map((shape) => (
-                      <option key={shape} value={shape}>
-                        {shape}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </>
-            )}
+                  <div className="flex items-center space-x-4">
+                    <label
+                      htmlFor="dot-shape"
+                      className="whitespace-nowrap font-bold"
+                    >
+                      Dot Shape:
+                    </label>
+                    <select
+                      id="dot-shape"
+                      className={`font-teacher rounded-md border border-black p-2 text-center text-black ${theme.isDarkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                      value={dotShape}
+                      onChange={(e) => {
+                        setDotShape(e.target.value);
+                        console.log("Dot shape changed to:", e.target.value); // Debugging log for dot shape change
+                      }}
+                    >
+                      {["circle", "square", "triangle"].map((shape) => (
+                        <option key={shape} value={shape}>
+                          {shape}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -766,13 +768,15 @@ const CollectionSetup: React.FC = () => {
               <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
                 Quickly create a collection with randomly generated items based on your settings.
               </p>
-              <button
-                type="button"
-                className="w-full rounded-md border border-black bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
-                onClick={generateRandomSequence}
-              >
-                Generate Random Sequence
-              </button>
+              <div className="mt-auto pt-[42px]">
+                <button
+                  type="button"
+                  className="w-full rounded-md border border-black bg-green-500 px-4 py-2 font-bold uppercase text-white transition duration-300 hover:bg-green-600"
+                  onClick={generateRandomSequence}
+                >
+                  Generate Random Sequence
+                </button>
+              </div>
             </div>
 
             <div className="rounded-lg border border-gray-300 bg-white p-6 shadow-md dark:bg-gray-700">
