@@ -529,9 +529,9 @@ const CollectionSetup: React.FC = () => {
         </h3>
 
         <div className="mb-4 w-full max-w-4xl px-4">
-          <div className="mb-8 rounded-lg border border-gray-300 bg-white p-6 shadow-md dark:bg-gray-700">
+          <div className="mx-auto mb-8 max-w-md rounded-lg border border-gray-300 bg-white p-6 shadow-md dark:bg-gray-700">
             <h4 className="mb-4 text-center text-xl font-bold">Collection Settings</h4>
-            <div className="mx-auto max-w-md space-y-4">
+            <div className="mx-auto space-y-4">
               {category !== "Number Sense" ? (
                 <>
                   <div className="flex items-center justify-between space-x-4">
