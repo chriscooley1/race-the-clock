@@ -154,13 +154,14 @@ const NameWheel: React.FC<NameWheelProps> = ({
 
         // New selection calculation
         const selectedIndex = Math.floor(normalizedDegrees / degreesPerSlice);
+        const selectedName = names[selectedIndex];
 
         console.log("Arrow Position (degrees):", normalizedDegrees);
         console.log("Selected Index:", selectedIndex);
-        console.log("Selected Name:", names[selectedIndex]);
+        console.log("Selected Name:", selectedName);
 
         setLastLandedDegrees(totalRotation % 360);
-        onNameSelected(names[selectedIndex]);
+        onNameSelected(selectedName);
         stopSpinning();
       }, 8000);
     }

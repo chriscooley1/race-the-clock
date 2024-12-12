@@ -52,27 +52,39 @@ const Reports: React.FC = () => {
       : "text-black";
   };
 
+  const [page, setPage] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [limit] = useState<number>(10);  // Fixed limit
+
   useEffect(() => {
     const loadReports = async () => {
       try {
-        const fetchedReports = await fetchReports(getAccessTokenSilently);
-        setReports(fetchedReports);
+        setIsLoading(true);
+        const data = await fetchReports(getAccessTokenSilently, page, limit);
+        setReports(data.reports);
+        setTotalCount(data.total_count);
       } catch (error) {
-        if (error instanceof AxiosError) {
-          console.error(
-            "Failed to load reports - Status:",
-            error.response?.status,
-          );
-        } else {
-          console.error("Error loading reports");
-        }
+        console.error("Failed to load reports", error);
       } finally {
         setIsLoading(false);
       }
     };
 
     loadReports();
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, page, limit]);
+
+  // Add pagination controls
+  const handleNextPage = () => {
+    if (page * limit < totalCount) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
 
   useEffect(() => {
     const loadCollections = async () => {
@@ -180,6 +192,26 @@ const Reports: React.FC = () => {
         onStepChange={(step) => setCurrentTourStep(step)}
         tourName="reports"
       />
+      {/* Pagination controls */}
+      <div className="flex justify-between mt-4">
+        <button 
+          type="button"
+          onClick={handlePrevPage} 
+          disabled={page === 1}
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span>Page {page} of {Math.ceil(totalCount / limit)}</span>
+        <button 
+          type="button"
+          onClick={handleNextPage} 
+          disabled={page * limit >= totalCount}
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

@@ -198,3 +198,9 @@ class ReportResponse(BaseModel):
     missed_items: int
     skipped_items: int
     created_at: datetime
+
+class ReportsResponse(BaseModel):
+    reports: List[ReportResponse]
+    total_count: int
+    page: int
+    limit: int

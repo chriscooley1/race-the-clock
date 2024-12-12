@@ -734,39 +734,54 @@ async def get_completion_counts(
 @app.get("/reports", response_model=List[ReportResponse])
 async def get_reports(
     current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    page: int = Query(1, ge=1),  # Page number, default to 1
+    limit: int = Query(10, ge=1, le=50)  # Limit per page, default 10, max 50
 ):
     try:
-        reports = []
-        # Join with Collection to get item counts
+        # Calculate offset
+        offset = (page - 1) * limit
+
+        # Query with pagination
         completion_records = db.query(CompletionRecord, Collection)\
             .join(Collection, CompletionRecord.collection_id == Collection.collection_id)\
             .filter(CompletionRecord.user_id == current_user.user_id)\
             .order_by(CompletionRecord.completed_at.desc())\
+            .offset(offset)\
+            .limit(limit)\
             .all()
 
-        logger.info(f"Found {len(completion_records)} completion records for user {current_user.user_id}")
+        logger.info(f"Fetched {len(completion_records)} completion records for user {current_user.user_id}")
 
+        reports = []
         for i, (record, collection) in enumerate(completion_records):
             # Get items count for this collection
             items_count = db.query(func.count(Item.item_id))\
                 .filter(Item.collection_id == collection.collection_id)\
                 .scalar() or 0
                 
-            logger.info(f"Collection {collection.collection_id} has {items_count} items")
-
             report = ReportResponse(
-                report_id=i + 1,
+                report_id=offset + i + 1,
                 user_id=current_user.user_id,
                 total_items=items_count,
-                time_taken=60.0,  # This should be calculated based on actual completion time
-                missed_items=0,   # This should be tracked during completion
-                skipped_items=0,  # This should be tracked during completion
+                time_taken=60.0,  # Placeholder, should be calculated dynamically
+                missed_items=0,
+                skipped_items=0,
                 created_at=record.completed_at
             )
             reports.append(report)
 
-        return reports
+        # Get total count for pagination metadata
+        total_count = db.query(func.count(CompletionRecord.id))\
+            .filter(CompletionRecord.user_id == current_user.user_id)\
+            .scalar()
+
+        return {
+            "reports": reports,
+            "total_count": total_count,
+            "page": page,
+            "limit": limit
+        }
     except Exception as e:
         logger.error(f"Error fetching reports: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error fetching reports: {str(e)}")
