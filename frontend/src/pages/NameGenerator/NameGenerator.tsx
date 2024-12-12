@@ -287,7 +287,14 @@ const NameGenerator: React.FC = () => {
           <div
             className={`flex flex-col items-center ${showRightSide ? "w-1/2 pl-8" : "w-full"}`}
           >
-            {/* Update text colors for the wheel section */}
+            {/* Selected name display - moved above the wheel */}
+            {selectedName && (
+              <div className="mb-4 text-center">
+                <h2 className="text-2xl font-bold">Selected Name:</h2>
+                <p className="text-3xl font-bold text-blue-600">{selectedName}</p>
+              </div>
+            )}
+
             <div className="relative flex w-full max-w-[500px] flex-col items-center">
               <NameWheel
                 names={nameList}
@@ -310,14 +317,6 @@ const NameGenerator: React.FC = () => {
                 </button>
               )}
             </div>
-
-            {/* Selected name display */}
-            {selectedName && (
-              <div className="inherit mt-4 text-center">
-                <h2 className="inherit text-2xl font-bold">Selected:</h2>
-                <p className="inherit text-xl">{selectedName}</p>
-              </div>
-            )}
           </div>
 
           {/* Right side (hidden by default, shown when triggered) */}
