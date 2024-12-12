@@ -137,12 +137,12 @@ const Resources: React.FC = () => {
                   <video 
                     controls 
                     className="mt-4 w-full max-w-md"
-                    onError={(e) => console.error('Video error:', e)}
+                    onError={(e) => console.error("Video error:", e)}
                   >
                     <source 
                       src={video.videoUrl} 
                       type="video/mp4"
-                      onError={(e) => console.error('Source error:', e)}
+                      onError={(e) => console.error("Source error:", e)}
                     />
                     Video playback is not supported
                   </video>
