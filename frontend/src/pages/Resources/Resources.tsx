@@ -67,22 +67,20 @@ const Resources: React.FC = () => {
       ]);
 
       // Example instructional videos
+      const baseUrl = import.meta.env.VITE_APP_BASE_URL || "";
+
       setVideos([
         {
-          title: "Your Collections",
-          description: "Overview of the Your Collections page.",
-          videoUrl: "https://www.example.com/video1",
+          title: "Live Video 1",
+          description: "First live video overview",
+          videoUrl: `${baseUrl}/videos/live1.mp4`,
         },
         {
-          title: "Discover Collections",
-          description: "How to use the Discover Collections page.",
-          videoUrl: "https://www.example.com/video2",
+          title: "Live Video 2", 
+          description: "Second live video overview",
+          videoUrl: `${baseUrl}/videos/live2.mp4`,
         },
-        {
-          title: "Name Generator",
-          description: "Guide on how to use the Name Generator feature.",
-          videoUrl: "https://www.example.com/video3",
-        },
+        // Keep your existing example videos if you want
       ]);
 
       setIsLoading(false);
@@ -136,14 +134,21 @@ const Resources: React.FC = () => {
                     {video.title}
                   </h3>
                   <p className="inherit">{video.description}</p>
-                  <a
-                    href={video.videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline hover:text-blue-600"
+                  <video 
+                    controls 
+                    className="mt-4 w-full max-w-md"
+                    onError={(e) => console.error('Video error:', e)}
                   >
-                    Watch Video
-                  </a>
+                    <source 
+                      src={video.videoUrl} 
+                      type="video/mp4"
+                      onError={(e) => console.error('Source error:', e)}
+                    />
+                    Video playback is not supported
+                  </video>
+                  <p className="text-sm text-gray-500">
+                    Video URL: {video.videoUrl}
+                  </p>
                 </div>
               ))}
             </div>
