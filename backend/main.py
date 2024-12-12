@@ -41,11 +41,6 @@ from github_integration import GitHubIssueCreator
 import json
 from sqlalchemy import func
 import shutil
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
-from fastapi_cache.decorator import cache
-from redis import asyncio as aioredis
-from fastapi.middleware.throttling import ThrottlingMiddleware
 
 from database import get_db, get_engine
 
@@ -719,7 +714,6 @@ async def check_subscriptions_batch(
         raise HTTPException(status_code=500, detail="Error checking subscriptions")
 
 @app.get("/collections/completion-counts")
-@cache(expire=300)  # Cache for 5 minutes
 async def get_completion_counts(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
@@ -740,20 +734,39 @@ async def get_completion_counts(
 @app.get("/reports", response_model=List[ReportResponse])
 async def get_reports(
     current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db),
-    skip: int = Query(default=0, ge=0),
-    limit: int = Query(default=10, le=100)
+    db: Session = Depends(get_db)
 ):
     try:
-        query = db.query(CompletionRecord, Collection)\
+        reports = []
+        # Join with Collection to get item counts
+        completion_records = db.query(CompletionRecord, Collection)\
             .join(Collection, CompletionRecord.collection_id == Collection.collection_id)\
             .filter(CompletionRecord.user_id == current_user.user_id)\
             .order_by(CompletionRecord.completed_at.desc())\
-            .offset(skip)\
-            .limit(limit)
-        
-        completion_records = query.all()
-        # Rest of your code...
+            .all()
+
+        logger.info(f"Found {len(completion_records)} completion records for user {current_user.user_id}")
+
+        for i, (record, collection) in enumerate(completion_records):
+            # Get items count for this collection
+            items_count = db.query(func.count(Item.item_id))\
+                .filter(Item.collection_id == collection.collection_id)\
+                .scalar() or 0
+                
+            logger.info(f"Collection {collection.collection_id} has {items_count} items")
+
+            report = ReportResponse(
+                report_id=i + 1,
+                user_id=current_user.user_id,
+                total_items=items_count,
+                time_taken=60.0,  # This should be calculated based on actual completion time
+                missed_items=0,   # This should be tracked during completion
+                skipped_items=0,  # This should be tracked during completion
+                created_at=record.completed_at
+            )
+            reports.append(report)
+
+        return reports
     except Exception as e:
         logger.error(f"Error fetching reports: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error fetching reports: {str(e)}")
@@ -777,18 +790,6 @@ async def complete_collection(
     except Exception as e:
         logger.error(f"Error recording completion: {str(e)}")
         raise HTTPException(status_code=500, detail="Error recording completion")
-
-# Add this to your app startup
-@app.on_event("startup")
-async def startup():
-    redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
-    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
-
-app.add_middleware(
-    ThrottlingMiddleware, 
-    rate_limit=100,  # requests
-    time_window=timedelta(minutes=1)  # per minute
-)
 
 if __name__ == "__main__":
     init_db()

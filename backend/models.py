@@ -181,10 +181,6 @@ class Feedback(SQLModel, table=True):
 
 class CompletionRecord(SQLModel, table=True):
     __tablename__ = "completion_records"
-    __table_args__ = (
-        sa.Index("idx_user_completion", "user_id", "completed_at"),
-        sa.Index("idx_collection_completion", "collection_id")
-    )
     id: Optional[int] = Field(default=None, primary_key=True)
     collection_id: int = Field(foreign_key="collections.collection_id")
     user_id: int = Field(foreign_key="users.user_id")
