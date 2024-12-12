@@ -533,13 +533,16 @@ export const checkSubscription = async (
 // Function to fetch reports
 export const fetchReports = async (
   getAccessTokenSilently: () => Promise<string>,
+  page: number = 1,
+  limit: number = 10
 ) => {
   try {
     const token = await getAccessTokenSilently();
     const response = await axios.get(`${API_BASE_URL}/reports`, {
       headers: { Authorization: `Bearer ${token}` },
+      params: { page, limit }
     });
-    return response.data; // Assuming the response data is an array of reports
+    return response.data; 
   } catch (error) {
     handleApiError(error);
   }
