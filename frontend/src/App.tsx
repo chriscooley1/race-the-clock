@@ -13,6 +13,7 @@ import FontPreloader from "./components/FontPreloader";
 import { CompletionProvider } from "./context/CompletionContext";
 import Layout from "./components/Layout";
 import { CartProvider } from "./context/CartContext";
+import Callback from "./components/Callback";
 
 // Import your tour steps here
 import { tourStepsYourCollections } from "./pages/YourCollections/tourStepsYourCollections";
@@ -458,6 +459,7 @@ const App: React.FC = () => {
                       </Suspense>
                     }
                   />
+                  <Route path="/callback" element={<Callback />} />
                 </Routes>
                 <GuidedTour
                   steps={getTourSteps()}
