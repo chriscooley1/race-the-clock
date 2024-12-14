@@ -30,18 +30,15 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     build: {
       rollupOptions: {
         output: {
-          entryFileNames: `assets/[name].[hash].js`,
-          chunkFileNames: `assets/[name].[hash].js`,
-          assetFileNames: `assets/[name].[hash].[ext]`,
-          manualChunks: {
-            "react-icons": ["react-icons"],
-            // ... other chunks
-          },
-        },
+          manualChunks: undefined,
+          assetFileNames: "assets/[name].[hash][extname]",
+          chunkFileNames: "assets/[name].[hash].js",
+          entryFileNames: "assets/[name].[hash].js",
+        }
       },
       outDir: "dist",
-      chunkSizeWarningLimit: 1500,
-      sourcemap: true,
+      assetsDir: "assets",
+      sourcemap: true
     },
     optimizeDeps: {
       include: ["react-icons"],
