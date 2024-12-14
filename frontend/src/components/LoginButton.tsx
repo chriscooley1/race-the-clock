@@ -1,23 +1,10 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
 
 const LoginButton = () => {
-  const { loginWithRedirect, getAccessTokenSilently } = useAuth0();
-
-  const fetchData = async () => {
-    try {
-      const token = await getAccessTokenSilently();
-      await axios.get(`${import.meta.env.VITE_API_BASE_URL}/namelists/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const { loginWithRedirect } = useAuth0();
 
   const handleLogin = async () => {
-    await loginWithRedirect();
-    await fetchData(); // Call fetchData after login
+    await loginWithRedirect(); // Only initiate login
   };
 
   return (
